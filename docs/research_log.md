@@ -128,3 +128,35 @@ by its fixed gain and deterministic switching threshold, not a general result.
 Ties and non-switchable regions are recorded separately rather than being
 labelled as rank reversals. The next scientific decision is analysis of M0
 results before any M1 work; M1 is not implemented or started here.
+
+## Decision 005 — Analytical M0.1 gap-dependent learning response
+
+Date: 2026-09-14.
+
+### Decision
+
+Interpret the M0 computational result critically: its 75.953% strict
+rank-reversal fraction is grid geometry under a selected parameter range, not
+an empirical prevalence estimate. The fixed conditional gain is an important
+structural assumption of that result. Document `models/model_M0_1_gap_dependent_learning.md`
+as an analytical extension of M0, not as M1 or a new complete model.
+
+### Result
+
+M0.1 permits gain, learnability, and training cost to depend on the observed
+quality gap. Within a strictly switchable interval, its central derivative is:
+
+```text
+V'(delta) = -K'(delta) + A_H p [ell'(delta) h(delta) + ell(delta)(g'(delta)-1)].
+```
+
+The theoretical objective is therefore reframed from showing that a
+frequency-gap score can fail to characterising the assumptions under which it
+is, or is not, a useful proxy for downstream intervention value. No novelty or
+empirical claim follows.
+
+### Next action
+
+Perform a narrow computational verification of the analytical response
+families, beginning with linear gain `g(delta)=a+b delta` and its boundary at
+`b=1`. M1 remains deferred; do not restart broad horizontal literature search.

@@ -328,3 +328,11 @@ scientific claim.
 The canonical sweep intentionally excludes `delta_z <= c`, where the cheap
 model is already preferred or initially tied. That setting is outside the M0
 failure/escalation intervention problem and is not analysed here.
+
+## 17. Analytical extension
+
+The fixed-gain assumption is relaxed analytically, without changing M0, in
+[M0.1 — Gap-dependent learning response](model_M0_1_gap_dependent_learning.md).
+M0.1 studies the conditions under which a current quality gap can be an
+informative proxy for intervention value once gain, learnability, or training
+cost may depend on that gap.

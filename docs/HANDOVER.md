@@ -86,9 +86,10 @@ relevant and with its own evidence status preserved.
 
 The broad horizontal audit is provisionally closed, not complete. Before
 starting further work, read checkpoint 002, the consolidated landscape, and
-`models/model_M0.md`. M0 now provides the minimal analytical isolation for H1;
-the next step is critical analysis toward M1, not further broad literature
-searching, an algorithm, or an experiment.
+`models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md`. M0 is
+formalized and computationally verified; M0.1 is analytically formalized. The
+next task is narrow computational verification of M0.1 response families, not
+M1, a broad landscape restart, or further model extension.
 
 ## New-session protocol
 
