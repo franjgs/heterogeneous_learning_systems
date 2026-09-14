@@ -184,3 +184,130 @@ M0.1 identities, not empirical claims about learning response or distillation.
 
 The next theoretical task is to characterise order-equivalence of
 `p_i delta_i` and `V_i` when task frequencies differ. Do not start M1.
+
+
+## Decision 007 — Return from H1 to the population-level HLS programme
+
+Date: 2026-09-14.
+
+### Decision
+
+Do not allow H1, RouteNLP, or further `frequency * quality_gap` mathematics to
+replace the repository-level programme. M0/M0.1 remain valid diagnostic work,
+but the central object is again the distribution of competences across a
+heterogeneous portfolio and its deliberate evolution through operation and
+learning.
+
+### Reason
+
+The original programme concerns multiple heterogeneous learners, potentially
+multiple teachers, dynamic routing, experience-driven learning, and deliberate
+management of specialization, redundancy, and complementarity. The value of a
+learner is not its isolated quality.
+
+### Consequence
+
+Create `research_origin_and_chronology.md` so future sessions reconstruct the
+chronology before proposing narrower work.
+
+## Decision 008 — K0 vertical audit of complementarity/homogenization mechanism
+
+Date: 2026-09-14.
+
+### Decision
+
+Audit vertically the candidate mechanism:
+
+```text
+knowledge transfer
+    -> loss of functional diversity/complementarity
+    -> loss of robustness/adaptability under shift
+```
+
+### Result
+
+The audit found strong precedents for homogenization in online KD,
+diversity-preserving KD, information loss in ordinary ensemble distillation,
+diversity for concept-drift adaptation, and KD under distribution shift.
+Continual-learning KD also provides evidence that distillation can preserve
+knowledge. Therefore no general claim such as `KD -> homogenization -> failure`
+is justified.
+
+The open system-level issue is narrower: how competence-changing actions alter
+the operational structure of a heterogeneous portfolio and its future value.
+
+## Decision 009 — Population-level correction and P1-P4 scaffolding
+
+Date: 2026-09-14.
+
+### Decision
+
+Replace single weak-learner/teacher reasoning with a portfolio view. Adopt the
+structural distinctions:
+
+```text
+individual failure != portfolio competence deficit
+individual improvement != portfolio improvement
+```
+
+Use P1-P4 as analytical scaffolding without promoting them to official RQs.
+
+### Current propositions
+
+- **P1 — Collective competence:** local failure/improvement must be evaluated
+  against portfolio coverage and operational alternatives.
+- **P2 — Local-collective misalignment:** a learning action preferred by a
+  local criterion can be inferior in downstream portfolio value.
+- **P3 — Evolution can outperform frozen routing:** competence evolution must
+  be tested against a strong frozen heterogeneous portfolio plus adaptive
+  router.
+- **P4 — Coupling advantage:** candidate strongest claim; a coupled
+  routing/competence-evolution system may outperform a strong decoupled system
+  using comparable components and resources.
+
+### Policy on prior work
+
+Do not discard pieces because they are known. Existing routing, distillation,
+active-learning, submodular/resource-allocation, continual-learning,
+diversity-preservation, or drift-detection methods can be adopted and cited.
+The desired contribution may combine known blocks with one or more original
+pieces, a new coupling/objective, and a demonstrable system-level property.
+Conversely, an unexplored combination alone is insufficient.
+
+## Decision 010 — Experimental validity is separate from experimental outcome
+
+Date: 2026-09-14.
+
+### Decision
+
+A poorly designed experiment must not be interpreted as proving or refuting the
+research hypothesis. Experimental validity and experimental outcome are
+separate records.
+
+### Required checks
+
+Every experiment must explicitly assess:
+
+1. construct validity;
+2. causal identification;
+3. comparison validity;
+4. external validity.
+
+Negative evidence counts against P2/P3/P4 only when the benchmark genuinely
+instantiates the mechanism, the intervention can affect it, the relevant
+horizon is observable, capacity is not a trivial confound, and strong
+baselines are correctly implemented.
+
+Positive evidence counts in favour only when weak baselines, compute/data
+advantages, tuning asymmetry, leakage, favourable shift selection, and
+post-hoc benchmark construction have been excluded.
+
+Synthetic tests provide causal control; realistic benchmarks provide external
+relevance. Neither alone establishes the full claim.
+
+### Next action
+
+Construct the smallest coherent portfolio model in which P1, P2, and P3 are
+simultaneously relevant, then test whether P4 can arise against a genuinely
+strong decoupled baseline. Formalization is a falsification tool, not the
+research objective itself.
