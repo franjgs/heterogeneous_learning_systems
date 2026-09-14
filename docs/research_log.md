@@ -41,3 +41,34 @@ not ``being the first paper to mention an idea.''
 
 Create and maintain a literature map before promoting additional research
 questions, methods, experiments, or formal models.
+
+## Decision 002 — Provisional consolidation of the landscape phase
+
+Date: 2026-09-14.
+
+### Decision
+
+Close the broad horizontal landscape phase provisionally and record its
+technical synthesis in `landscape/landscape_001_consolidated.md` and research
+checkpoint 002. This is a documentation decision, not a conclusion that the
+literature is complete or that the programme has a scientific gap.
+
+### Consolidated position
+
+The audit covered routing/RouteNLP, Machine Teaching and curriculum, Active
+Learning/Value of Information, bandits/resource allocation, capacity
+expansion/optimal control, continual/lifelong learning, and decision-focused
+optimization. The principal correction is that Machine Teaching must not be
+caricatured as fixed-single-target teaching: the audited literature includes
+iterative, learner-state-dependent, partially observed, and selective teaching
+mechanisms.
+
+H1 survives as a better-specified working hypothesis: the relevant comparison
+is whether an intervention should be valued by expected future portfolio
+operation rather than solely observed routing failure frequency and quality
+gap. No novelty claim follows. RQ0 remains the only official research question.
+
+### Next action
+
+Develop a minimal model and a synthetic falsification experiment only after
+documenting their assumptions. Neither is started by this decision.

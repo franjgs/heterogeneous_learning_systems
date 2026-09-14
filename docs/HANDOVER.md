@@ -1,7 +1,8 @@
 # Heterogeneous Learning Systems — Handover
 
 Last updated: 2026-09-14
-Repository state: initial landscape setup; no commit yet.
+Repository state: broad landscape phase provisionally consolidated; see
+`research_program_checkpoint_002.md` and `landscape/landscape_001_consolidated.md`.
 
 ## Purpose
 
@@ -83,11 +84,10 @@ relevant and with its own evidence status preserved.
 
 ## Next action
 
-Conduct a critical literature landscape audit. For each important work, record
-conceptual coverage, methodological maturity, evidence quality, practical
-limitations, and whether a scientifically meaningful open problem remains.
-Do not promote an application, design an algorithm, or start an experiment
-before that audit.
+The broad horizontal audit is provisionally closed, not complete. Before
+starting a minimal model, read checkpoint 002 and the consolidated landscape.
+The next phase must expose assumptions and falsification criteria before an
+algorithm or experiment is designed.
 
 ## New-session protocol
 
