@@ -219,3 +219,18 @@ Delta q_i = (Delta q_i1, ..., Delta q_iZ).
 ```
 
 M0.1 does not address forgetting, interference, specialisation, or portfolio coverage changes outside the target region. M1 is not started by this extension.
+
+## 17. Computational verification
+
+The analytical identities are implemented separately in `src/hls/m01.py`, with
+unit tests in `tests/test_m01.py` and reproducible checks in `experiments/m01/`.
+The checks recover the linear-response boundary at `b=1`, the proportional
+recovery boundary at `rho=1`, the exact unclipped linear-learnability boundary,
+and the one-for-one `-K'(delta)` shift for a linear training cost.
+
+Symmetric finite differences agree with the analytical derivatives at points
+strictly inside the canonical and switchable domain; boundary and kink points
+are rejected or masked. For `rho=0`, no point is both canonical and strictly
+switchable because its switching boundary is `delta=c`. This is a numerical
+verification of analytical identities only; it supplies no empirical evidence
+about gain, learnability, training cost, or distillation.

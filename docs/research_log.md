@@ -160,3 +160,27 @@ empirical claim follows.
 Perform a narrow computational verification of the analytical response
 families, beginning with linear gain `g(delta)=a+b delta` and its boundary at
 `b=1`. M1 remains deferred; do not restart broad horizontal literature search.
+
+## Decision 006 — Computational verification of M0.1 response identities
+
+Date: 2026-09-14.
+
+### Decision
+
+Implement a separate M0.1 verification module and narrow numerical checks,
+without modifying M0 or adding learning mechanisms.
+
+### Result
+
+Finite-difference checks recover the analytical linear-gain boundary `b=1`,
+the proportional-response boundary `rho=1`, the exact sign boundary for
+unclipped `ell(delta)=ell0+s delta`, and the one-for-one negative shift from a
+linear training-cost slope. Points outside `delta>c`, `h(delta)>0`, or the
+chosen strict learnability interval are rejected or masked. The `rho=0` case
+has no strictly switchable canonical interval. These are consistency checks of
+M0.1 identities, not empirical claims about learning response or distillation.
+
+### Next action
+
+The next theoretical task is to characterise order-equivalence of
+`p_i delta_i` and `V_i` when task frequencies differ. Do not start M1.

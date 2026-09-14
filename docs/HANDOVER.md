@@ -87,9 +87,11 @@ relevant and with its own evidence status preserved.
 The broad horizontal audit is provisionally closed, not complete. Before
 starting further work, read checkpoint 002, the consolidated landscape, and
 `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md`. M0 is
-formalized and computationally verified; M0.1 is analytically formalized. The
-next task is narrow computational verification of M0.1 response families, not
-M1, a broad landscape restart, or further model extension.
+formalized and computationally verified; M0.1 is analytically and
+computationally verified. The next scientific task is theoretical
+characterisation of `p_i delta_i` ordering versus `V_i` ordering when task
+frequencies differ, not M1, a broad landscape restart, or further model
+extension.
 
 ## New-session protocol
 
