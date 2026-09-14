@@ -85,9 +85,10 @@ relevant and with its own evidence status preserved.
 ## Next action
 
 The broad horizontal audit is provisionally closed, not complete. Before
-starting a minimal model, read checkpoint 002 and the consolidated landscape.
-The next phase must expose assumptions and falsification criteria before an
-algorithm or experiment is designed.
+starting further work, read checkpoint 002, the consolidated landscape, and
+`models/model_M0.md`. M0 now provides the minimal analytical isolation for H1;
+the next step is critical analysis toward M1, not further broad literature
+searching, an algorithm, or an experiment.
 
 ## New-session protocol
 

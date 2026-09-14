@@ -72,3 +72,33 @@ gap. No novelty claim follows. RQ0 remains the only official research question.
 
 Develop a minimal model and a synthetic falsification experiment only after
 documenting their assumptions. Neither is started by this decision.
+
+## Decision 003 — Formalization of M0
+
+Date: 2026-09-14.
+
+### Decision
+
+Formalize `models/model_M0.md` as a deliberately minimal working model for H1.
+M0 distinguishes observed failure severity, learnability, and downstream
+operational value without claiming to be the final HLS model.
+
+### Result
+
+M0 values an intervention as:
+
+```text
+V_z = -K_z + A_H p_z ell_z [g_z - m_z]_+.
+```
+
+It supplies a rank-reversal construction in which a frequency-gap baseline
+selects a different region from downstream operational value, and a
+perfect-gap-closure special case in which the quality gap cancels from the
+conditional downstream value. These results support mathematical coherence of
+H1, but are not by themselves considered a sufficient research contribution.
+
+### Limitations and next action
+
+M0 excludes cross-competence effects, forgetting, transfer, and realistic
+routing uncertainty. The next planned critical analysis is M1: vector-valued
+competence changes and interference. M1 is not formulated or started here.

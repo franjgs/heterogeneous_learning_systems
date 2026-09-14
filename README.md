@@ -186,6 +186,7 @@ RouteNLP is the current primary direct adversary. Machine Teaching appears relev
 - [Research questions](docs/research_questions.md)
 - [Research log](docs/research_log.md)
 - [Handover](docs/HANDOVER.md)
+- [M0 minimal competence-intervention model](docs/models/model_M0.md)
 - [Initial and consolidated landscape](docs/landscape/)
 - [Literature map](docs/literature/)
 
