@@ -1,0 +1,23 @@
+{
+  "resolution": 101,
+  "delta_domain": [
+    0.150001,
+    0.5
+  ],
+  "canonical_assumption": "delta_z > c, equivalently m_z > 0",
+  "canonical_epsilon": 1e-06,
+  "equal_parameters": {
+    "p": 0.5,
+    "learnability": 1.0,
+    "training_cost": 0.0,
+    "gain": 0.18
+  },
+  "cost_advantage": 0.15,
+  "H": 1,
+  "gamma": 1.0,
+  "canonical_core_band": [
+    0.15,
+    0.32999999999999996
+  ],
+  "tie_rule": "lowest region index"
+}

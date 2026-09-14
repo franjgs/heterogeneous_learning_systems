@@ -307,3 +307,24 @@ individual forgetting != system-level harm.
 ```
 
 No M1 equations are derived here.
+
+## 16. Computational verification
+
+The minimal implementation is in `src/hls/m0.py`, with unit tests in
+`tests/test_m0.py` and reproducible scripts in `experiments/m0/`. The scripts
+reproduce the numerical rank-reversal example, compute frequency-gap regret,
+and generate a two-region parameter sweep under the canonical M0 assumption
+`m_z > 0` for every region.
+
+For equal `p`, `ell`, `K`, and `g`, the sweep confirms the exact M0 boundaries
+`c < delta_z < c + g` for the switchable band and
+`delta_z >= c + g` for the non-switchable region. When both regions are
+strictly within the switchable band and their gaps differ, the
+frequency-gap score increases with `delta_z` while M0 intervention value
+decreases with it. This is a computational check of the fixed-gain,
+deterministic-switching structure already derived above; it introduces no new
+scientific claim.
+
+The canonical sweep intentionally excludes `delta_z <= c`, where the cheap
+model is already preferred or initially tied. That setting is outside the M0
+failure/escalation intervention problem and is not analysed here.

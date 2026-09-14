@@ -102,3 +102,29 @@ H1, but are not by themselves considered a sufficient research contribution.
 M0 excludes cross-competence effects, forgetting, transfer, and realistic
 routing uncertainty. The next planned critical analysis is M1: vector-valued
 competence changes and interference. M1 is not formulated or started here.
+
+## Decision 004 — M0 implementation and canonical regime verification
+
+Date: 2026-09-14.
+
+### Decision
+
+Create the minimal computational laboratory for M0: pure model functions,
+unit tests, a reproduction of the documented rank-reversal example, and a
+reproducible equal-parameter regime sweep.
+
+### Result
+
+The formulas are numerically verified and the documented rank reversal is
+reproduced. The canonical sweep is restricted to `m_z > 0` (`delta_z > c`) so
+that it does not mix regions where the cheap model already routes. Within the
+strict switchable band `c < delta_z < c + g`, it confirms the opposite
+monotonicity of frequency-gap score and M0 intervention value when the other
+region-level parameters are equal. This is an M0 structural observation caused
+by its fixed gain and deterministic switching threshold, not a general result.
+
+### Limitations and next action
+
+Ties and non-switchable regions are recorded separately rather than being
+labelled as rank reversals. The next scientific decision is analysis of M0
+results before any M1 work; M1 is not implemented or started here.
