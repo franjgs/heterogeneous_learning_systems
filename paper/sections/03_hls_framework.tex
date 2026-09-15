@@ -1,24 +1,15 @@
-\section{HLS framework}
+\section{Cross-domain foundations and related work}
 
-Let the provisional competence landscape be
-\begin{equation}
-\Ct=[c_{iz}(t)],
-\label{eq:landscape}
-\end{equation}
-where learner $i$ has effective competence on task region $z$. This is a conceptual state representation, not an assertion that competence is directly observable or identical to accuracy. A later model may distinguish a knowledge state $K_{iz,t}$ from operational capability $Q_{iz,t}=f_z(K_{iz,t};\theta_i)$.
+This section is organized by function within the architecture, not by ownership claims. The methodological rule is to import mechanisms and mathematical tools without importing or replacing the HLS research problem.
 
-At time $t$, demand $D_t$ and the competence landscape inform an operational decision $r_t$. Operation produces outcomes and experience $X_t$; a learning decision $a_t$ may then change competence:
-\begin{equation}
-(\Ct,D_t) \rightarrow r_t \rightarrow X_t \rightarrow a_t \rightarrow C_{t+1},
-\qquad
-C_{t+1}\sim P_C(C_{t+1}\mid \Ct,r_t,X_t,a_t,D_t).
-\label{eq:transition}
-\end{equation}
-One generic long-horizon expression is
-\begin{equation}
-J^\pi(C_0)=\E^\pi\!\left[\sum_t \gamma^t\bigl(R(\Ct,r_t,D_t)-K(a_t)\bigr)\right].
-\label{eq:generic-objective}
-\end{equation}
-Equation~\eqref{eq:generic-objective} is notation, not a contribution. The scientific content must come from defensible transition structure, constraints, strategy families, and comparison classes.
+\paragraph{Heterogeneous routing and hierarchical inference.} Dynamic routing systems such as RouteNLP and MixLLM provide direct precedents for selecting among heterogeneous models, including targeted distillation after routing failures in RouteNLP \citep{guo2026routenlp,wang2025mixllm}. They motivate strong routing baselines. They do not by themselves define a general competence organization or long-horizon portfolio objective.
 
-We call a policy \emph{deliberate competence evolution} when it selects competence-changing actions partly for their expected effect on future operation, rather than solely for immediate local learner improvement. The current operational optimum and the preferred long-horizon competence trajectory need not coincide; whether they differ in a meaningful HLS setting remains an open question.
+\paragraph{Learning, Machine Teaching, and knowledge transfer.} Iterative Machine Teaching studies learner-aware sequential intervention and incomplete learner information \citep{liu2017iterative,liu2018blackbox}. Iterative Classroom Teaching additionally treats heterogeneous learner states and rates, shared examples, grouping, orchestration cost, and a fixed exogenous target $w^*$ \citep{yeo2019iterativeclassroom}. These provide mechanisms for teaching heterogeneous learners, not a target competence allocation chosen from future collective operation. Selective transfer in continual learning further motivates non-scalar transition effects \citep{lee2021sharing}.
+
+\paragraph{Competence development and workforce skill allocation.} Borgonjon and Maenhout jointly model staffing, task assignment, learning-by-doing, forgetting, explicit training, shadow training, dynamic skill mix, and skill-dependent future operational efficiency \citep{borgonjon2024dynamic}. This is a serious structural precedent for dynamic operation and competence development. Its normative objective is workforce staffing cost under a prescribed task and scheduling environment; it does not alone establish RQ0 or a general artificial-learning portfolio objective. The repository's targeted audit records the exact bounded comparison.
+
+\paragraph{Distributed organizational knowledge and specialization.} Transactive-memory systems provide a conceptual account of who knows what, complementary expertise, coordination, path dependence, and knowledge reconfiguration \citep{argote2012transactive}. They show why collective capability need not reduce to isolated expertise, but they do not formulate a normative dynamic optimization that selects artificial learners' competence acquisitions by downstream operational utility.
+
+\paragraph{Portfolio, resource allocation, and dynamic adaptation.} Decision-aware active learning, graph-triggered allocation, and decision-focused optimization separate immediate prediction or reward from later decision value \citep{bickfordsmith2023prediction,filstroff2024targeted,genalti2024graph,elmachtoub2021smart,wang2023scalable}. The Gutjahr competence-development line, identified in the repository's cross-domain audit, is also an apparatus source for competence states, nonlinear efficiency mappings, trajectories, and strategic development; exact paper-bibliography entries remain a documented TODO rather than invented citations.
+
+The integration perspective is therefore not a claim that known components become novel by juxtaposition. It asks how their roles, assumptions, endogenous quantities, and comparison classes translate into an HLS architecture. A structural reduction to strong prior models is required before claiming any residual.

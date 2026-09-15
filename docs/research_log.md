@@ -370,3 +370,11 @@ The first directed theoretical audit examined dynamic workforce learning/trainin
 Borgonjon & Maenhout substantially raises the novelty bar because operation, learning, training, forgetting, shadow training, and future efficiency are already integrated. Argote & Ren removes isolated novelty claims around who-knows-what, complementary expertise, and reconfiguration. Yeo et al. removes isolated novelty claims around heterogeneous learner-aware sequential teaching toward a fixed target.
 
 None of these three papers alone establishes RQ0 or P4. The residual HLS question remains provisional and must now be tested by structural reduction against strong prior models; it is not promoted to a new official RQ. See `literature/targeted_theoretical_audit_001.md`.
+
+## Decision 016 — Reframe the paper around collaborative HLS architecture and competence evolution
+
+Date: 2026-09-15.
+
+Reframe `paper/` from a minimal-dynamic-theory draft into a working architecture-to-theory-to-validation paper. The paper now presents the provisional A1--A5 functional architecture, distinguishes work allocation from knowledge/learning allocation, and records a candidate competence-orchestration scaffold. Environmental dynamics are a condition for analysis, not a sixth architectural pillar.
+
+CR0--CR4 and their microverification are retained as preliminary model-scoped results. General integration theory remains under development and general experiments do not yet exist. This decision makes no novelty claim, does not change RQ0, and does not establish P4 or HLS superiority.

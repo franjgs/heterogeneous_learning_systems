@@ -1,6 +1,6 @@
 \section{Introduction}
 
-Heterogeneous learning systems (HLS) contain learners or models with different costs, latencies, capabilities, and learning responses. Their immediate operational question is familiar: which learner should serve the current task? A distinct question concerns the future: when should operation and learning be used to change who is competent at what?
+Modern AI systems can combine models, agents, or other learners with different quality, cost, latency, competence, and learning profiles. Their immediate operational question is familiar: which member should handle the current task? If members can learn, however, this view is incomplete. Operation can generate experience; capable interventions can generate potentially reusable knowledge; and learning can change future competence.
 
 The programme-level motivation is a feedback loop:
 \begin{equation}
@@ -11,8 +11,16 @@ The programme-level motivation is a feedback loop:
 \end{gathered}
 \label{eq:cycle}
 \end{equation}
-This draft studies only a minimal formalisation of that loop. It distinguishes exploiting current competence from shaping a future division of labour. The repository-level research question remains whether deliberate competence-allocation evolution can improve long-term performance relative to independently optimizing task allocation and knowledge transfer; this draft does not replace that question.
+The system consequently faces two linked allocation problems: work allocation and knowledge or learning allocation. Together they determine a future organization of competence, rather than only use a current one. We use a provisional hierarchical and collaborative language of inexpensive learners and capable teachers: teachers can provide service and potentially useful knowledge, while learners can absorb demand and adapt. These are functional roles, not fixed types.
 
-Closed-loop routing and learning already have direct operational precedent. For example, RouteNLP uses routing failures to select targeted distillation data and subsequently recalibrates routing \citep{guo2026routenlp}. This does not settle how a complete portfolio should evolve, nor does it imply that a minimal theory below is new. Rather, it motivates a careful distinction between a current routing decision and a competence-changing intervention with later operational consequences.
+Environmental dynamics make the distinction especially relevant. A persistent change in demand, costs, latency requirements, resources, constraints, or required competences can make a previously useful organization less suitable. Whether an HLS can deliberately reorganize its competences to create long-term value is a hypothesis, not an established response to change.
 
-The purpose of the paper is conservative. It documents: (i) a minimal HLS framework; (ii) several propositions that hold under explicit two-learner/two-task assumptions; and (iii) symbolic and numerical consistency checks. The propositions are model results, not empirical claims. In particular, they do not establish a general advantage for coupled routing and learning, nor do they establish the candidate coupling proposition P4.
+The repository-level research question is:
+\begin{quote}
+Can the deliberate evolution of competence allocation in a heterogeneous learning system improve its long-term performance compared with independently optimizing task allocation and knowledge transfer?
+\end{quote}
+This draft does not replace RQ0.
+
+Closed-loop routing and learning already have direct operational precedent. For example, RouteNLP uses routing failures to select targeted distillation data and subsequently recalibrates routing \citep{guo2026routenlp}. Cross-domain models also integrate work assignment, competence dynamics, and training \citep{borgonjon2024dynamic}. These precedents constrain component claims; they do not by themselves settle the programme-level question.
+
+The purpose of the paper is conservative. It documents a provisional HLS architecture, an integration-theory scaffold, and preliminary minimal analytical results with numerical consistency checks. The architecture and general theory are still being developed; general experiments do not yet exist. The results therefore do not establish novelty, general HLS superiority, realistic empirical validation, or the candidate coupling proposition P4.

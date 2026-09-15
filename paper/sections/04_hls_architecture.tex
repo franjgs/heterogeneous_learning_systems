@@ -1,0 +1,37 @@
+\section{Provisional collaborative HLS architecture}
+
+The architecture is a functional decomposition, not a proposed centralized algorithm or a claim that all HLS instances must use the same roles.
+
+\paragraph{A1: Distributed heterogeneous competence.} The population contains actors with different competences, costs, latencies, specializations, and learning capacities. Heterogeneity is relevant only insofar as it has functional value for the system; the architecture imposes no separate diversity-maximization objective.
+
+\paragraph{A2: Hierarchical and collaborative division of labour.} We provisionally call some functional roles \emph{students/learners} and \emph{teachers}. Students are often faster or cheaper and may be functionally specialized, so they should absorb substantial demand when appropriate. Teachers are often more capable but more costly or slower; they can solve tasks that students should not solve and can generate knowledge useful for later learning. These are roles, not rigid ontological types: an architecture may contain multiple teachers, multiple students, and horizontal heterogeneity among both.
+
+\paragraph{A3: Selective learning and knowledge allocation.} Work allocation and learning allocation are distinct as in Equation~\eqref{eq:two-allocations}. A teacher intervention can supply current service, diagnostic information, and reusable teaching material simultaneously. The architecture must decide which knowledge to retain, which competence to develop, and which recipient should receive it.
+
+\paragraph{A4: Competence-portfolio evolution.} The dynamic object is the trajectory $C_t\rightarrow C_{t+1}\rightarrow\cdots$, rather than an instruction to improve every member. \emph{Specialize}, \emph{broaden}, \emph{replicate}, and \emph{rebalance} are possible transformation families whose value depends on the environment and constraints; they are not independent results.
+
+\paragraph{A5: System-level orchestration.} A conceptual orchestration function integrates the architecture. It asks who should act now, when a teacher should intervene, what useful knowledge has been generated, who should learn it, and what competence organization should be built for later operation. No particular centralized implementation is assumed.
+
+\begin{figure}[t]
+\centering
+\fbox{\begin{minipage}{0.91\linewidth}
+\centering\small
+\textbf{Environment $E_t$ and demand} $\downarrow$ \quad \textbf{System-level orchestration (A5)}\\[2pt]
+\textbf{Work flow:} operational allocation $\longrightarrow$ students / teachers $\longrightarrow$ service and operational experience\\[2pt]
+\textbf{Knowledge flow:} experience or teacher output $\longrightarrow$ knowledge selection / learning allocation $\longrightarrow C_{t+1}$\\[2pt]
+$C_{t+1}$ feeds future operational allocation. Teachers can solve and provide potential knowledge; students can solve and learn. The two flows are distinct but coupled.
+\end{minipage}}
+\caption{Conceptual architecture of the working HLS model. This schematic is a design scaffold, not a finalized architecture or empirical result.}
+\label{fig:hls-architecture}
+\end{figure}
+
+The resulting coupled cycle is
+\begin{equation}
+\begin{aligned}
+C_t &\rightarrow \text{work allocation} \rightarrow \text{experience / teacher intervention}\\
+&\rightarrow \text{knowledge allocation} \rightarrow \text{learning} \rightarrow C_{t+1}\\
+&\rightarrow \text{future work allocation}.
+\end{aligned}
+\label{eq:hls-cycle}
+\end{equation}
+Environmental dynamics are not a sixth architectural pillar. They are a condition under which the same architecture can be studied: $E_{t+1}=E_t$ in a stationary regime, or $E_{t+1}\neq E_t$ when relevant environmental elements change.

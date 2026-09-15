@@ -1,6 +1,6 @@
-\section{Microverification}
+\section{Results: limited microverification}
 
-The numerical material is a consistency check designed to falsify implementation or algebraic errors in the stated minimal model. It is \emph{not} empirical validation of the HLS programme.
+The only results reported in this draft are numerical consistency checks designed to falsify implementation or algebraic errors in the stated minimal model. They are \emph{not} empirical validation of the HLS programme or its architecture.
 
 The symbolic Jacobian audit reproduces Equation~\eqref{eq:beta-critical}. For $(\eta,\delta)=(0.4,0.2)$, it gives $c^*=0.5$ and $\beta_c=2$. Below the threshold, perturbed trajectories return to the symmetric state. At the threshold, the assignment mode is marginal and finite-horizon relaxation is slow. Above the threshold, the chosen symmetric parameterisation yields opposite polarized outcomes for positive and negative perturbations (Figure~\ref{fig:specialization}). This is \textbf{NUMERICALLY-VERIFIED} for this implementation and parameter setting only.
 

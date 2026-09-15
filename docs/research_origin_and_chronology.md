@@ -239,7 +239,13 @@ The programme moved from searching for analogies to testing structural equivalen
 
 The novelty space narrowed, but RQ0 was not reduced by nominal or partial overlap. The next literature and theory work must attempt formal reductions and identify the exact residual assumptions, endogenous quantities, or comparison classes that prevent equivalence.
 
-## 18. Current position
+## 18. Paper reframing: architecture, theory, and validation
+
+The paper skeleton was then reframed so that the minimal 2x2 theory no longer determines the main narrative. Its working order is architecture/problem, integration theory, and experimental validation. The A1--A5 functional architecture distinguishes distributed heterogeneous competence, collaborative division of labour, selective knowledge allocation, portfolio evolution, and system-level orchestration.
+
+This is a documentation and communication correction, not a new theory result. The integration theory remains a scaffold and the general validation programme remains prospective. CR0--CR4 are retained as preliminary model-scoped evidence.
+
+## 19. Current position
 
 RQ0 remains the sole official hypothesis. The current object is HLS as an evolving distribution of competences: competence allocation can be a candidate system-level decision variable; operation determines current division of labour and may allocate formative experience; learning and transfer can change future competence allocation; and system value is conditioned on environment and horizon.
 
