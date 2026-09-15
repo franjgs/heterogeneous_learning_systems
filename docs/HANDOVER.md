@@ -1,7 +1,7 @@
 # Heterogeneous Learning Systems — Handover
 
-Last updated: 2026-09-14  
-Repository state: post-K0 conceptual consolidation; RQ0 unchanged; P1-P4 are analytical scaffolding.
+Last updated: 2026-09-15
+Repository state: programme-level HLS model consolidated; RQ0 unchanged; P1-P4 and CR0--CR4 remain subordinate analytical scaffolding.
 
 ## Mandatory first reads
 
@@ -9,13 +9,14 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 
 1. `README.md` — stable programme-level framing. **Do not rewrite it to follow every intermediate hypothesis.**
 2. `research_origin_and_chronology.md` — chronological origin and corrections; prevents subproblems from replacing the main idea.
-3. `research_program_checkpoint_003.md` — current scientific state.
-4. `research_questions.md` — official RQ0 and subordinate H1.
-5. `landscape/landscape_001_consolidated.md` and `literature/references.bib`.
-6. `research_strategy_cross_domain_toolkit.md` — use external mathematics without replacing the HLS problem.
-7. `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md` only as diagnostic history, not as the current centre.
-8. [theory_competence_evolution_minimal_model.md](theory_competence_evolution_minimal_model.md) and [experiments/microverification/](../experiments/microverification/) — CR0--CR4 minimal-model audit; not a general HLS result.
-9. [paper/](../paper/) — working LaTeX skeleton; preserve its model-scoped epistemic status.
+3. [general_research_model.md](general_research_model.md) — programme-level anchor: HLS as an evolving competence distribution.
+4. `research_program_checkpoint_003.md` — current scientific state.
+5. `research_questions.md` — official RQ0 and subordinate H1.
+6. `landscape/landscape_001_consolidated.md` and `literature/references.bib`.
+7. `research_strategy_cross_domain_toolkit.md` — use external mathematics without replacing the HLS problem.
+8. `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md` only as diagnostic history, not as the current centre.
+9. [theory_competence_evolution_minimal_model.md](theory_competence_evolution_minimal_model.md) and [experiments/microverification/](../experiments/microverification/) — CR0--CR4 minimal-model audit; not a general HLS result.
+10. [paper/](../paper/) — working LaTeX skeleton; preserve its model-scoped epistemic status.
 
 ## Central programme
 
@@ -100,12 +101,12 @@ The decoupled baseline must itself be strong and use comparable routing, learnin
 
 Current order:
 
-1. make P1-P3 simultaneously meaningful in the smallest coherent portfolio model;
-2. identify what information, if any, a strong decoupled routing+learning system lacks;
-3. determine whether that information can create a genuine P4 coupling advantage;
-4. only then design a larger algorithmic system and realistic experiments.
+1. preserve the whole-system view of HLS as an evolving distribution of usable competences;
+2. define small, physically meaningful competence transformations and the operational environments and horizons that give them collective value;
+3. identify non-trivial conditions, null cases, and strong comparisons under which deliberate evolution can matter beyond use or local improvement of today's portfolio;
+4. only then select the coupling, information, mathematical, or experimental machinery required for a well-specified test.
 
-Do not return to more M0/M0.1 algebra unless it directly supports this programme.
+Do not let CR0--CR4, reachability, P4, or another tractable mechanism replace this programme-level priority.
 
 ## Policy on existing pieces
 
@@ -179,9 +180,9 @@ A recent related paper is evidence of an active area, not automatically evidence
 
 ## Immediate next action
 
-Build the minimal portfolio-level formalization for P1-P3 and use it to ask whether P4 can hold against a strong decoupled baseline. The formal model is a device for exposing assumptions and counterexamples, not an end in itself.
+Use [general_research_model.md](general_research_model.md) as the programme anchor when deciding the next small formal or experimental step. The next step should clarify a system-level competence transformation, its operational value, its null cases, and fair adversaries; it should not expand a particular mechanism merely because it is mathematically tractable.
 
-Do not start a large experiment until the mechanism, adversaries, and validity conditions are explicit.
+Do not start a large experiment until the proposition, competence transformation, adversaries, matched information and resources, and validity conditions are explicit.
 
 ## Independent prior project
 

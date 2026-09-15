@@ -6,7 +6,7 @@ Dynamic task allocation, selective learning, and deliberate evolution of compete
 
 *This figure is a conceptual snapshot of the current research programme, not a claim of novelty or a finalized architecture.*
 
-This repository is a research-landscape and hypothesis-formation programme. It contains no validated algorithm, experiment, mathematical result, paper draft, or established novelty claim.
+This repository is a research programme about HLS as an evolving distribution of competences, not only a heterogeneous portfolio to be exploited. It contains no validated deployed algorithm, empirical evidence, or established novelty claim. Its minimal-model identities and microverifications are explicitly model-scoped consistency and falsification evidence, not general HLS results.
 
 ## 1. Research motivation
 
@@ -24,7 +24,7 @@ routing
     -> future routing
 ```
 
-This is neither merely a routing problem nor merely a knowledge-transfer problem: the two can be coupled through changes in the portfolio's effective competences.
+This is neither merely a routing problem nor merely a knowledge-transfer problem: operational decisions can determine who gains relevant experience, while learning and transfer can change the portfolio's future effective competences. The programme therefore asks whether deliberately shaping who will be competent at what can create greater long-term system value than simply optimizing current use and local improvement.
 
 ## 2. Working system abstraction
 
@@ -175,14 +175,15 @@ Early falsification is considered a successful research outcome.
 
 ## 11. Current status
 
-The broad programme remains open. The first concrete testable problem is whether competence-improvement actions in an operational heterogeneous model portfolio should be selected according to expected future system value rather than only observed routing failures.
+The broad programme remains open. Its general framing is an HLS as an evolving distribution of competences: operation gives the current distribution value, while experience, learning, and transfer may change a future division of labour. H1 and RouteNLP remain useful subordinate diagnostic material, not the programme's centre.
 
-RouteNLP is the current primary direct adversary. Machine Teaching appears relevant for modelling teaching cost and learnability, while Quality-Diversity motivates possible portfolio-level consequences of competence changes. The immediate next audit target is Active Learning / Value of Information / Experimental Design, while targeted Machine Teaching searches continue on target/task selection and downstream-utility-aware teaching.
+The next work should identify small, physically meaningful competence transformations, their collective operational consequences, their null cases, and fair strong adversaries before expanding a specific mechanism or experimental setting. See the [general research model](docs/general_research_model.md) for the programme-level orientation.
 
 ## 12. Repository map
 
 - [Research Programme Checkpoint 001](docs/research_program_checkpoint_001.md)
 - [Research Programme Checkpoint 002](docs/research_program_checkpoint_002.md)
+- [General research model](docs/general_research_model.md)
 - [Research questions](docs/research_questions.md)
 - [Research log](docs/research_log.md)
 - [Handover](docs/HANDOVER.md)
