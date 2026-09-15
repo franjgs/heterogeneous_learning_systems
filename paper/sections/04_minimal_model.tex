@@ -1,0 +1,31 @@
+\section{A minimal two-learner/two-task model}
+
+The following model is intentionally narrow. Learners $A,B$ and task regions $1,2$ have effective operational qualities
+\begin{equation}
+q_{iz}=c_{iz}-\lambda k_{iz}.
+\label{eq:quality}
+\end{equation}
+Each learner has unit operational capacity, giving two divisions of labour:
+\begin{equation}
+D=(A\!\rightarrow\!1,B\!\rightarrow\!2),\qquad
+X=(A\!\rightarrow\!2,B\!\rightarrow\!1).
+\label{eq:divisions}
+\end{equation}
+Their values and difference are
+\begin{equation}
+R_D=q_{A1}+q_{B2},\quad R_X=q_{A2}+q_{B1},\quad
+\Delta(C)=R_D-R_X.
+\label{eq:division-values}
+\end{equation}
+
+\subsection{Assumptions and separability null case}
+
+The model assumes two tasks, two learners, deterministic assignments, and no queues, abstention, mixed routing, transfer, interference, demand uncertainty, or shared training budget unless a later subsection explicitly introduces a coupling. It should not be read as a realistic HLS architecture.
+
+Before adding capacity coupling, consider task-separable rewards and transitions:
+\begin{equation}
+R(C,a)=R_1(C_1,a_1)+R_2(C_2,a_2),\qquad
+P(C'\mid C,a)=P_1(C'_1\mid C_1,a_1)P_2(C'_2\mid C_2,a_2).
+\label{eq:separable}
+\end{equation}
+When no shared constraint or information couples the tasks, the Bellman maximisation factors. This null case is essential: a joint state notation alone does not create a joint competence-evolution problem.

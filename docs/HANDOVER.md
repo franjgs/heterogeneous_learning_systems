@@ -15,6 +15,7 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 6. `research_strategy_cross_domain_toolkit.md` — use external mathematics without replacing the HLS problem.
 7. `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md` only as diagnostic history, not as the current centre.
 8. [theory_competence_evolution_minimal_model.md](theory_competence_evolution_minimal_model.md) and [experiments/microverification/](../experiments/microverification/) — CR0--CR4 minimal-model audit; not a general HLS result.
+9. [paper/](../paper/) — working LaTeX skeleton; preserve its model-scoped epistemic status.
 
 ## Central programme
 

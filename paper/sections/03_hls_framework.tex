@@ -1,0 +1,24 @@
+\section{HLS framework}
+
+Let the provisional competence landscape be
+\begin{equation}
+\Ct=[c_{iz}(t)],
+\label{eq:landscape}
+\end{equation}
+where learner $i$ has effective competence on task region $z$. This is a conceptual state representation, not an assertion that competence is directly observable or identical to accuracy. A later model may distinguish a knowledge state $K_{iz,t}$ from operational capability $Q_{iz,t}=f_z(K_{iz,t};\theta_i)$.
+
+At time $t$, demand $D_t$ and the competence landscape inform an operational decision $r_t$. Operation produces outcomes and experience $X_t$; a learning decision $a_t$ may then change competence:
+\begin{equation}
+(\Ct,D_t) \rightarrow r_t \rightarrow X_t \rightarrow a_t \rightarrow C_{t+1},
+\qquad
+C_{t+1}\sim P_C(C_{t+1}\mid \Ct,r_t,X_t,a_t,D_t).
+\label{eq:transition}
+\end{equation}
+One generic long-horizon expression is
+\begin{equation}
+J^\pi(C_0)=\E^\pi\!\left[\sum_t \gamma^t\bigl(R(\Ct,r_t,D_t)-K(a_t)\bigr)\right].
+\label{eq:generic-objective}
+\end{equation}
+Equation~\eqref{eq:generic-objective} is notation, not a contribution. The scientific content must come from defensible transition structure, constraints, strategy families, and comparison classes.
+
+We call a policy \emph{deliberate competence evolution} when it selects competence-changing actions partly for their expected effect on future operation, rather than solely for immediate local learner improvement. The current operational optimum and the preferred long-horizon competence trajectory need not coincide; whether they differ in a meaningful HLS setting remains an open question.

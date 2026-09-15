@@ -1,0 +1,87 @@
+\section{Theoretical results within the minimal model}
+
+\subsection{CR0: separability}
+\begin{proposition}[Separability null case]
+Under Equation~\eqref{eq:separable}, additive rewards, and no shared constraints, the two-task dynamic decision problem decomposes into independent per-task problems.
+\end{proposition}
+\begin{proof}
+Substitution of Equation~\eqref{eq:separable} into the Bellman recursion makes both the expectation and maximisation additive. Each action component can therefore be selected by the corresponding per-task maximisation.
+\end{proof}
+This is an \textbf{ESTABLISHED-IN-MODEL} null result. It ceases to apply when learner capacity, budget, data, teacher choice, interference, or a portfolio objective couples tasks.
+
+\subsection{CR1: finite threshold and complementary investments}
+Assume $Delta_0>0$, so $D$ is initially preferred. Improve $A2$ by $x\geq0$ and $B1$ by $y\geq0$, holding diagonal competences fixed. Then
+\begin{equation}
+\Delta'=\Delta_0-x-y,
+\qquad
+G(x,y)=[x+y-\Delta_0]_+.
+\label{eq:complementarity}
+\end{equation}
+\begin{proposition}[Finite competence threshold]
+Under the assumptions of Equation~\eqref{eq:complementarity}, two individually insufficient off-diagonal investments can jointly make $X$ preferable: if $x\leq\Delta_0$, $y\leq\Delta_0$, and $x+y>\Delta_0$, then $G(x,0)=G(0,y)=0$ while $G(x,y)>0$.
+\end{proposition}
+\begin{proof}
+The investments add $x+y$ to $R_X$ and leave $R_D$ fixed. The conclusion follows directly from the positive-part expression in Equation~\eqref{eq:complementarity}.
+\end{proof}
+This is \textbf{ESTABLISHED-IN-MODEL}; it does not include learning cost, uncertain gain, or side effects.
+
+\subsection{CR2: local specialization instability}
+For the symmetric learning-by-doing case, let
+\begin{equation}
+r_D=\sigma(\beta\Delta),\qquad r_X=1-r_D,
+\label{eq:router}
+\end{equation}
+and order the state as $(c_{A1},c_{B2},c_{A2},c_{B1})$. The dynamics are
+\begin{align}
+\dot c_{A1}&=\eta r_D(1-c_{A1})-\delta c_{A1}, &
+\dot c_{B2}&=\eta r_D(1-c_{B2})-\delta c_{B2}, \nonumber\\
+\dot c_{A2}&=\eta(1-r_D)(1-c_{A2})-\delta c_{A2}, &
+\dot c_{B1}&=\eta(1-r_D)(1-c_{B1})-\delta c_{B1}.
+\label{eq:lbd}
+\end{align}
+For positive $\eta,\delta$, the symmetric equilibrium is $c^*=\eta/(\eta+2\delta)$.
+
+\begin{proposition}[Local assignment-asymmetry threshold]
+At the symmetric equilibrium of Equation~\eqref{eq:lbd}, the assignment-asymmetry eigenvalue is
+\begin{equation}
+\lambda_{\mathrm{asym}}=-\frac{\eta+2\delta}{2}+\frac{2\eta\delta\beta}{\eta+2\delta}.
+\label{eq:lambda-asym}
+\end{equation}
+It is zero at
+\begin{equation}
+\beta_c^{(2\times2)}=\frac{(\eta+2\delta)^2}{4\delta\eta}.
+\label{eq:beta-critical}
+\end{equation}
+\end{proposition}
+\begin{proof}
+At $c^*$, define $s=(1,1,-1,-1)^T$, $L=(\eta+2\delta)/2$, and $\alpha=\eta\beta\delta/[2(\eta+2\delta)]$. The Jacobian is $J=-LI+\alpha ss^T$. Since $s^Ts=4$, it has three eigenvalues $-L$ and the eigenvalue in Equation~\eqref{eq:lambda-asym}; solving for zero gives Equation~\eqref{eq:beta-critical}.
+\end{proof}
+This is \textbf{ESTABLISHED-IN-MODEL} as a local stability result. It is not a global bifurcation theorem or a general claim that HLS should specialize.
+
+\subsection{CR3 and CR4: rebalancing with two actuators}
+Let $d_0>0$ be a scalar operational gap to a new division. Direct learning closes $x$ at cost $K_L(x)=ax$. If formative routing closes gap at $\dot d=-v$ and incurs instantaneous regret $d$, pure routing takes $\tau_R=d_0/v$ and has regret $K_R=d_0^2/(2v)$. With future advantage rate $g>0$,
+\begin{equation}
+H_R^*=\frac{d_0}{v}+\frac{d_0^2}{2vg},\qquad H_T^*=\frac{ad_0}{g}.
+\label{eq:pure-rebalancing}
+\end{equation}
+If routing covers $y$ and training covers $x=d_0-y$, the effective cost is
+\begin{equation}
+Q(y)=a(d_0-y)+\frac{y^2}{2v}+\frac{gy}{v},\qquad 0\leq y\leq d_0.
+\label{eq:q-y}
+\end{equation}
+\begin{proposition}[Two-actuator rebalancing]
+For $v,g>0$, Equation~\eqref{eq:q-y} is strictly convex and has solution
+\begin{equation}
+y^*=\clip(av-g,0,d_0),\qquad x^*=d_0-y^*.
+\label{eq:rebalancing-solution}
+\end{equation}
+Thus TRAIN applies when $av\leq g$, MIXED when $g<av<g+d_0$, and ROUTE when $av\geq g+d_0$. In the interior,
+\begin{equation}
+Q_M=ad_0-\frac{(av-g)^2}{2v},\qquad H^*=Q^*/g.
+\label{eq:mixed-cost}
+\end{equation}
+\end{proposition}
+\begin{proof}
+Equation~\eqref{eq:q-y} has $Q''(y)=1/v>0$ and $Q'(y)=-a+y/v+g/v$. Projection of its stationary point onto $[0,d_0]$ proves Equation~\eqref{eq:rebalancing-solution}; direct substitution proves Equation~\eqref{eq:mixed-cost}.
+\end{proof}
+These are \textbf{ESTABLISHED-IN-MODEL} control identities. Mixed optimality does not prove that a coupled HLS controller outperforms a fully informed modular controller.

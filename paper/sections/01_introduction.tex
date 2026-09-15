@@ -1,0 +1,18 @@
+\section{Introduction}
+
+Heterogeneous learning systems (HLS) contain learners or models with different costs, latencies, capabilities, and learning responses. Their immediate operational question is familiar: which learner should serve the current task? A distinct question concerns the future: when should operation and learning be used to change who is competent at what?
+
+The programme-level motivation is a feedback loop:
+\begin{equation}
+\begin{gathered}
+\text{heterogeneous learners} \rightarrow \text{operation and routing} \rightarrow \text{experience}\\
+\rightarrow \text{learning or transfer} \rightarrow \text{competence redistribution}\\
+\rightarrow \text{future operation}.
+\end{gathered}
+\label{eq:cycle}
+\end{equation}
+This draft studies only a minimal formalisation of that loop. It distinguishes exploiting current competence from shaping a future division of labour. The repository-level research question remains whether deliberate competence-allocation evolution can improve long-term performance relative to independently optimizing task allocation and knowledge transfer; this draft does not replace that question.
+
+Closed-loop routing and learning already have direct operational precedent. For example, RouteNLP uses routing failures to select targeted distillation data and subsequently recalibrates routing \citep{guo2026routenlp}. This does not settle how a complete portfolio should evolve, nor does it imply that a minimal theory below is new. Rather, it motivates a careful distinction between a current routing decision and a competence-changing intervention with later operational consequences.
+
+The purpose of the paper is conservative. It documents: (i) a minimal HLS framework; (ii) several propositions that hold under explicit two-learner/two-task assumptions; and (iii) symbolic and numerical consistency checks. The propositions are model results, not empirical claims. In particular, they do not establish a general advantage for coupled routing and learning, nor do they establish the candidate coupling proposition P4.
