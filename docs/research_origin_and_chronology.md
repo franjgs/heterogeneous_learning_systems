@@ -233,7 +233,13 @@ initial intuition
 
 This was not a linear sequence of successes. Corrections of focus are part of the scientific knowledge acquired. The final return to the general view did not reject CR0--CR4; it recognized that they are too small to replace the original HLS problem.
 
-## 17. Current position
+## 17. Directed structural prior-work audit
+
+The programme moved from searching for analogies to testing structural equivalence. The first directed audit found stronger precedents than expected in dynamic workforce competence allocation, transactive memory and dynamic capabilities, and heterogeneous classroom Machine Teaching.
+
+The novelty space narrowed, but RQ0 was not reduced by nominal or partial overlap. The next literature and theory work must attempt formal reductions and identify the exact residual assumptions, endogenous quantities, or comparison classes that prevent equivalence.
+
+## 18. Current position
 
 RQ0 remains the sole official hypothesis. The current object is HLS as an evolving distribution of competences: competence allocation can be a candidate system-level decision variable; operation determines current division of labour and may allocate formative experience; learning and transfer can change future competence allocation; and system value is conditioned on environment and horizon.
 

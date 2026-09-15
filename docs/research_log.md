@@ -360,3 +360,13 @@ RQ0
 ```
 
 RQ0 remains a hypothesis. The programme has a coherent scientific object and explicit falsification discipline, but no general HLS algorithm, realistic empirical validation, established novelty claim, established P4, or established general superiority of deliberate competence evolution.
+
+## Decision 015 — Structural prior-work equivalence, not nominal coincidence
+
+Date: 2026-09-15.
+
+The first directed theoretical audit examined dynamic workforce learning/training, transactive memory/dynamic capabilities, and heterogeneous Machine Teaching. Novelty barriers must be based on structural equivalence, not terminology: reconstruct state, actions, transition, objective, information, horizon, and endogenous and exogenous quantities from the actual model.
+
+Borgonjon & Maenhout substantially raises the novelty bar because operation, learning, training, forgetting, shadow training, and future efficiency are already integrated. Argote & Ren removes isolated novelty claims around who-knows-what, complementary expertise, and reconfiguration. Yeo et al. removes isolated novelty claims around heterogeneous learner-aware sequential teaching toward a fixed target.
+
+None of these three papers alone establishes RQ0 or P4. The residual HLS question remains provisional and must now be tested by structural reduction against strong prior models; it is not promoted to a new official RQ. See `literature/targeted_theoretical_audit_001.md`.

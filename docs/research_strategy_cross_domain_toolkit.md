@@ -116,6 +116,12 @@ The Gutjahr line is a methodological source, not a prohibition against studying 
 
 The purpose of studying these lines is valid HLS machinery, transferable theorem patterns, and HLS hypotheses to test. It is not to redefine HLS as project management, human-resource management, finance, or Operations Research.
 
+### Additional structural precedents from the targeted audit
+
+**Borgonjon & Maenhout (2024)** is a strong Operations Research precedent for dynamic assignment together with learning, training, forgetting, and skill-dependent future operation. **Argote & Ren (2012)** is a strong conceptual precedent for who-knows-what, complementary specialization, path dependence, and knowledge reconfiguration. **Yeo et al. (2019)** is a strong Machine Teaching precedent for heterogeneous learners, heterogeneous learnability, and sequential learner-aware teaching toward an exogenous target.
+
+Before claiming an HLS residual, attempt a structural reduction to the strongest prior model. A failed reduction is informative only when the exact assumption or endogenous quantity preventing equivalence is identified. See [targeted theoretical audit 001](literature/targeted_theoretical_audit_001.md).
+
 ## 6. Candidate mathematical apparatus
 
 The following are candidate analytical tools, not validated HLS metrics or novelty claims.

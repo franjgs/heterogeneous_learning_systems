@@ -108,6 +108,37 @@ For each important source, record the problem, decision variable, objective, sta
 - **Limits and HLS relevance:** Close evidence that transition prediction and final allocation quality differ, but its RMAB and index assumptions are not established for HLS.
 - **Import / does not establish:** Import intervention-selection regret as a distinct quantity; it does not define competence transitions or utility.
 
+## Dynamic competence allocation and collective capability
+
+The detailed structural comparison is in [targeted theoretical audit 001](targeted_theoretical_audit_001.md). These entries are critically mapped for the bounded HLS purpose stated below; they are not novelty conclusions.
+
+### `borgonjon2024dynamic` — Borgonjon & Maenhout (2024)
+
+- **Problem / decision variable:** Integrate personnel staffing, days-off scheduling, task assignment, and training-task scheduling under a prescribed work environment.
+- **Objective / state:** Determine required staffing budget/cost while satisfying task and scheduling constraints. Worker competence scores evolve and map nonlinearly, through discrete modes, to task-processing efficiency and duration.
+- **Heterogeneity and learning/transfer:** Workers differ in skills, availability, and task assignment. Regular tasks induce learning-by-doing; forgetting, on-the-job training, off-the-job training, and shadow training are represented.
+- **Evidence / assumptions:** Branch-and-price procedure and computational regime analysis under task, scheduling, learning-rate, training-duration, and cost assumptions.
+- **Limits and HLS relevance:** The strongest structural adversary here: it already integrates assignment, learning/training, forgetting, and future operational efficiency. Its objective remains workforce staffing cost under a prescribed task/scheduling environment; it does not by itself establish RQ0, P4, or a general artificial-learning portfolio objective.
+- **Import / does not establish:** Import competence-to-efficiency state structure, opportunity cost, scarcity, and regime analysis. It does not establish a general HLS state, desired competence allocation endogenous to future artificial portfolio utility, or coupled-controller superiority.
+
+### `argote2012transactive` — Argote & Ren (2012)
+
+- **Problem / decision variable:** Conceptual account of transactive memory as a microfoundation of organizational dynamic capabilities; no normative dynamic allocation programme is specified.
+- **Objective / state:** “Who knows what,” specialization, credibility, coordination, complementary expertise, and path/context-dependent collective capability.
+- **Heterogeneity and learning/transfer:** Differentiated team expertise; experience can reinforce specialization and knowledge can be directed to recognized experts.
+- **Evidence / assumptions:** Commentary synthesizing prior organizational and group evidence; no HLS transition equation, decision policy, or optimization guarantee.
+- **Limits and HLS relevance:** Strong conceptual precedent for distributed competence and portfolio-conditional expertise value, but not for selecting which artificial learner should acquire a competence from downstream operational utility.
+- **Import / does not establish:** Import who-knows-what, complementarity, coordination, path dependence, and reconfiguration. It does not establish RQ0, P4, or that `C_t=[c_iz]` is sufficient when coordination or accessibility matters.
+
+### `yeo2019iterativeclassroom` — Yeo et al. (2019)
+
+- **Problem / decision variable:** Sequentially choose common teaching examples and optionally partition a classroom of iterative learners.
+- **Objective / state:** Drive heterogeneous learner states toward a fixed exogenous target hypothesis `w*`, while considering convergence/sample complexity, learner workload, and teacher orchestration cost.
+- **Heterogeneity and learning/transfer:** Learners differ in initial states and learning rates; teacher information may be full, noisy, or incomplete; shared examples are delivered to groups.
+- **Evidence / assumptions:** Theoretical results for stated projected-gradient learners plus simulated and application demonstrations.
+- **Limits and HLS relevance:** Heterogeneous learner-aware sequential teaching is already substantial precedent, but desired future competence allocation is not endogenized from downstream portfolio operation because `w*` is fixed.
+- **Import / does not establish:** Import state-dependent teaching, grouping, information regimes, and cost trade-offs. It does not establish HLS portfolio value, RQ0, P4, or a competence-allocation target selected by future operation.
+
 ## Pending targeted audit
 
 The prompt-priority works not entered in `references.bib` remain pending exact metadata verification and focused reading: CONCUR, MixLLM, RouteLMT, Learning to Defer with Advice, the remaining named Machine Teaching/curriculum works, capacity-expansion/real-options sources, Hiratani (2024), Holton et al. (2025), SPOT (2025), and the requested Xiong and Li RMAB work. This is a deliberate bibliographic boundary, not a statement about their relevance.
