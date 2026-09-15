@@ -16,9 +16,10 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 7. `landscape/landscape_001_consolidated.md` and `literature/references.bib`.
 8. `research_strategy_cross_domain_toolkit.md` — use external mathematics without replacing the HLS problem.
 9. [theory_integrated_competence_investment_model.md](theory_integrated_competence_investment_model.md) — candidate CIV integration scaffold; use its derived identities only within stated assumptions.
-10. `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md` only as diagnostic history, not as the current centre.
-11. [theory_competence_evolution_minimal_model.md](theory_competence_evolution_minimal_model.md) and [experiments/microverification/](../experiments/microverification/) — CR0--CR4 minimal-model audit; not a general HLS result.
-12. [paper/](../paper/) — working architecture-to-theory-to-validation LaTeX draft; its integration theory and general validation remain open, while CR0--CR4 stay model-scoped.
+10. [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md) — branch statuses, null cases, and the current focus on portfolio exposure and feasible transformations.
+11. `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md` only as diagnostic history, not as the current centre.
+12. [theory_competence_evolution_minimal_model.md](theory_competence_evolution_minimal_model.md) and [experiments/microverification/](../experiments/microverification/) — CR0--CR4 minimal-model audit; not a general HLS result.
+13. [paper/](../paper/) — working architecture-to-theory-to-validation LaTeX draft; its integration theory and general validation remain open, while CR0--CR4 stay model-scoped.
 
 ## Central programme
 
@@ -104,7 +105,7 @@ The decoupled baseline must itself be strong and use comparable routing, learnin
 Current order:
 
 1. preserve the whole-system view of HLS as an evolving distribution of usable competences;
-2. define small, physically meaningful competence transformations and the operational environments and horizons that give them collective value;
+2. define small, physically meaningful competence transformations and the operational environments, portfolio exposures, and horizons that give them collective value;
 3. identify non-trivial conditions, null cases, and strong comparisons under which deliberate evolution can matter beyond use or local improvement of today's portfolio;
 4. only then select the coupling, information, mathematical, or experimental machinery required for a well-specified test.
 
@@ -182,7 +183,7 @@ A recent related paper is evidence of an active area, not automatically evidence
 
 ## Immediate next action
 
-Use [general_research_model.md](general_research_model.md) as the programme anchor when deciding the next small formal or experimental step. The next step should clarify a system-level competence transformation, its operational value, its null cases, and fair adversaries; it should not expand a particular mechanism merely because it is mathematically tractable.
+Use [general_research_model.md](general_research_model.md) as the programme anchor and [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md) as the current branch register. The next step should clarify a system-level competence transformation, the discounted future portfolio exposure it removes, its null cases, and fair adversaries; it should not revive a nominal strategy taxonomy or expand a tractable mechanism by inertia.
 
 Do not start a large experiment until the proposition, competence transformation, adversaries, matched information and resources, and validity conditions are explicit.
 

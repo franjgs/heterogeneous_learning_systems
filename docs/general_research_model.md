@@ -89,6 +89,8 @@ The following initial families are neither exhaustive nor claims that each is in
 
 These families are a vocabulary for possible trajectories, not a benchmark suite or a prescribed policy taxonomy.
 
+The later CIV stress test retains this vocabulary but narrows its immediate analytical role. REPLICATE and REBALANCE survive conditionally in the current specialization because they can remove stated capacity/cost exposure or persistent operational mismatch. SPECIALIZE remains a possible transformation but is parked as a fundamental regime until a justified competence--performance mechanism gives it independent portfolio value. The active organizing question is the value of feasible transformations relative to future portfolio exposure, not a fixed nominal taxonomy. See [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md).
+
 ## 7. P1--P4 as subordinate scaffolding
 
 P1--P4 are provisional scaffolding for making RQ0 testable. They are not a replacement programme and none is promoted here.
@@ -143,6 +145,8 @@ The programme should be substantially redirected if fair comparisons show no mea
 The immediate direction is to preserve a system-level account of how the distribution of usable knowledge can evolve and to identify small, physically meaningful competence transformations and environments in which that evolution has testable consequences. The focus is on conditions, null cases, and strong comparisons for deliberate evolution as a whole, not on expanding one mechanism by inertia.
 
 The current integration scaffold is the [integrated competence-investment model](theory_integrated_competence_investment_model.md). It uses CIV as a candidate common value language for whether to invest, where to intervene, and what competing portfolio transformation to select. Its thresholds, ranking-reversal construction, and pairwise boundaries are derived only under its stated specialization; they do not promote CIV to a programme-level result or a final controller.
+
+Its adversarial audit is recorded in [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md). The current working direction is to characterize discounted future portfolio exposure and the value of feasible transformations that remove it; it does not infer a preferred strategy from environmental persistence or volatility alone.
 
 The intended scientific outcome is not a generic resource-allocation model with machine-learning labels. It is a theory and experimental programme that can explain how the distribution of usable knowledge in a heterogeneous learning system should evolve, why, and with what consequences for future system performance.
 

@@ -386,3 +386,13 @@ Date: 2026-09-15.
 Document one candidate competence-investment value (CIV) model spanning the A1--A5 architecture. R1 (whether), R2 (where), and R3 (organization) are resolutions of one investment decision, not separate models. Under an explicit two-student/one-teacher/two-region Markov specialization, the invest/do-nothing threshold, local-gain/system-value reversal construction, pairwise action boundaries, and volatility-alone replication null result are derived in-model.
 
 Teacher buffering remains conditional behaviour, not an axiom. CIV does not establish novelty, broad practical relevance, superiority over modular control, RQ0, or P4. See `theory_integrated_competence_investment_model.md`.
+
+## Decision 018 — Adversarial CIV stress test and branch register
+
+Date: 2026-09-15.
+
+Stress-test the two-regime CIV specialization rather than treating nominal strategy labels as results. The active derived implications are that persistence values current-regime alignment rather than a named transformation, dominance can remove an action, REPLICATE can relieve capacity/cost exposure, REBALANCE can be valuable under a persistent operational mismatch, and non-negative benefits are penalized by learning delay and short horizon.
+
+The audit rejects “volatility implies replication,” “persistence implies specialization,” and a fundamental SPECIALIZE/REPLICATE/REBALANCE regime map as the current organizing framework. Replication without operational exposure and rebalancing without mismatch are retained as null results. SPECIALIZE remains a possible vocabulary item but is parked as a fundamental regime until it has a justified independent system-level mechanism. Teacher buffering remains candidate conditional behaviour.
+
+The current working direction is discounted future portfolio exposure and the value of feasible transformations that remove it. All implications remain model-scoped: this decision does not establish novelty, a practical policy, superiority over modular control, P4, or RQ0. See `theory_civ_adversarial_stress_test.md`.

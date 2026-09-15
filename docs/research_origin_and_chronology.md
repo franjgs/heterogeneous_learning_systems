@@ -251,7 +251,22 @@ The architecture-level theory then acquired a single candidate competence-invest
 
 This advances the integration scaffold without resolving the programme. Teacher buffering remains conditional, and the model does not establish practical value, novelty, RQ0, or P4.
 
-## 20. Current position
+## 20. Adversarial CIV stress test
+
+The initial candidate strategy families were then subjected to an adversarial opening of the CIV exposure term. The resulting sequence was:
+
+```text
+initial candidate strategy families
+    -> integrated CIV formulation
+    -> analytical opening of L_a
+    -> adversarial stress test
+    -> rejection of nominal three-regime framing
+    -> shift toward portfolio exposure and transformation value.
+```
+
+This did not show that named transformations are impossible. It showed that persistence values regime alignment rather than an action name, that dominance and null cases can remove actions, and that the minimal system gives REPLICATE and REBALANCE conditional mechanisms while leaving SPECIALIZE without a distinct system-level basis. SPECIALIZE was therefore parked as a fundamental regime rather than rejected as vocabulary. The return to portfolio exposure preserves the broader HLS object and records why the active theory no longer begins from a fixed strategy taxonomy.
+
+## 21. Current position
 
 RQ0 remains the sole official hypothesis. The current object is HLS as an evolving distribution of competences: competence allocation can be a candidate system-level decision variable; operation determines current division of labour and may allocate formative experience; learning and transfer can change future competence allocation; and system value is conditioned on environment and horizon.
 

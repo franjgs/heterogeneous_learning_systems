@@ -214,3 +214,9 @@ The model does not re-demonstrate these precedents or CR0--CR4. It provides a co
 **CANDIDATE / NOT ESTABLISHED:** broad practical relevance of these regimes; general benefit of teacher buffering; superiority over strong modular control; novelty; a general RQ0 or P4 result; a final observable competence state; and a practical method for estimating CIV.
 
 The next theoretical task is not to elaborate a second model by default. It is to test whether the assumptions that make CIV decision-relevant survive structural reductions to the strongest prior models and to physically meaningful HLS transitions.
+
+## 12. Adversarial stress-test outcome
+
+The [adversarial CIV stress test](theory_civ_adversarial_stress_test.md) retains CIV as the candidate common framework. It retains REPLICATE when an additional holder relieves a real capacity/cost exposure and REBALANCE when a persistent operational mismatch can be relieved. It parks SPECIALIZE as a fundamental regime: it remains possible vocabulary, but the current specialization gives it no independent system value once existing capacity already suffices.
+
+The nominal SPECIALIZE/REPLICATE/REBALANCE taxonomy is therefore no longer the organizing theory. The active direction is the value of feasible portfolio transformations in relation to discounted future portfolio exposure. Persistence does not select a transformation by name, and teacher buffering remains conditional behaviour rather than an axiom.

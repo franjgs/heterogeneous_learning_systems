@@ -1,76 +1,96 @@
-\section{Theory of competence orchestration: integrated investment scaffold}
+\section{Theory of competence orchestration: constrained CIV scaffold}
 
-This section gives one \textbf{CANDIDATE / WORKING-HYPOTHESIS} value model for the A1--A5 architecture. It is not a final integration theory, an algorithm, or a general HLS result. R1--R3 are three resolutions of one competence-investment decision: whether to invest, where to place an intervention, and what portfolio organization to construct.
+This section gives one \textbf{CANDIDATE / WORKING-HYPOTHESIS} value model for the A1--A5 architecture. It is neither a final integration theory nor an algorithm or a general HLS result. The presentation retains only the implications that survive a model-scoped adversarial stress test. In particular, it compares feasible competence transformations rather than assuming a fundamental taxonomy of named strategies.
 
 Let $C_\tau^a$ denote the counterfactual competence trajectory after intervention $a$, and $C_\tau^0$ the no-investment trajectory. Let $U^*(C,E)$ be the best feasible operational utility available to the portfolio in environment $E$. Define competence-investment value (CIV) by
 \begin{equation}
 \mathrm{CIV}_t(a)=-K_t(a)+\E\!\left[\sum_{\tau=t+1}^{H}\gamma^{\tau-t}\left(U^*(C_\tau^a,E_\tau)-U^*(C_\tau^0,E_\tau)\right)\right].
 \label{eq:civ-general}
 \end{equation}
-The expectation is conditional on information at $t$. Cost $K_t(a)$ includes the intervention resources and opportunity costs assigned to $a$. The no-investment action has $\mathrm{CIV}_t(0)=0$ by definition. CIV thus relates A3 learning allocation and A4 portfolio evolution to A2's feasible future division of labour; A5 may conceptually compare actions without assuming a particular centralized implementation.
+The expectation is conditional on information at $t$, and $K_t(a)$ includes intervention resources and opportunity costs. The no-investment action has $\mathrm{CIV}_t(0)=0$ by definition. CIV therefore links A3 learning allocation and A4 portfolio evolution to A2's feasible future division of labour; A5 can conceptually compare actions without assuming a particular centralized implementation.
 
-\subsection{R1: whether to invest}
-
-For a set $\mathcal A_I$ of candidate investments, invest rather than do nothing iff
-\begin{equation}
-\max_{a\in\mathcal A_I}\mathrm{CIV}_t(a)>0,
-\label{eq:civ-invest}
-\end{equation}
-with boundary $\max_{a\in\mathcal A_I}\mathrm{CIV}_t(a)=0$. This is \textbf{DERIVED-IN-MODEL}: it follows from the stated counterfactual comparison, not from a claim that CIV is observable or optimal in real systems.
-
-\subsection{A minimal CIV specialization}
+\subsection{A two-regime CIV specialization}
 
 For analysis, consider two students, one teacher, two task regions, and finite environment-dependent capacities. Let $R(C,E)$ be the feasible operational allocations and
 \begin{equation}
 U^*(C,E)=\max_{r\in R(C,E)}U(C,E,r).
 \label{eq:civ-operational-value}
 \end{equation}
-Let $E_t$ be Markov with persistence $\rho$, for example $P_\rho=\rho I+(1-\rho)Q$. An action $a$ has cost $K_a$, success probability $\eta_a$, and learning delay $\delta_a$. Conditional on success, it applies a specified transformation $T_a$ after the delay; conditional on failure it leaves the comparison portfolio unchanged. With success conditionally independent of the environment path, define
+Let the current environment be $E_1$, and let the symmetric two-state Markov environment have persistence $\rho$, with $\lambda=2\rho-1$. Then
 \begin{equation}
-m_a(E,C)=U^*(T_a(C),E)-U^*(C,E),
-\label{eq:marginal-operational-value}
+\Pr(E_{t+k}=E_1\mid E_t=E_1)=\frac{1+\lambda^k}{2},\qquad
+\Pr(E_{t+k}=E_2\mid E_t=E_1)=\frac{1-\lambda^k}{2}.
+\label{eq:civ-markov}
 \end{equation}
-and obtain
+An action $a$ has cost $K_a$, success probability $\eta_a$, and delay $\delta_a$. Conditional on success, it applies a persistent transformation $T_a$ after that delay; conditional on failure it leaves the comparison portfolio unchanged. Under this binary-success, conditional-independence specialization, define
 \begin{equation}
-\mathrm{CIV}_t(a)=-K_a+\eta_a\E\!\left[\sum_{\tau=t+\delta_a}^{H}\gamma^{\tau-t}m_a(E_\tau,C_\tau^0)\right].
-\label{eq:civ-specialized}
+m_a^e=U^*(T_a(C),E_e)-U^*(C,E_e),\qquad
+\bar m_a=\frac{m_a^1+m_a^2}{2},\qquad
+\Delta m_a=\frac{m_a^1-m_a^2}{2}.
+\label{eq:civ-marginal-values}
 \end{equation}
-The factorization by $\eta_a$ is specific to this binary-success specialization. Marginal value can depend on future demand, exposure, capacity and availability scarcity, teacher substitution cost, learning speed, and delay.
-
-\subsection{R2: where to invest}
-
-Let $g_a$ be an action's local recipient competence gain and define $L_t(a)=\E[\sum_{\tau=t+\delta_a}^{H}\gamma^{\tau-t}m_a(E_\tau,C_\tau^0)]$. A larger local gain need not yield larger CIV. For two actions, a reversal occurs when
+Writing $n=H-t$, the expected value becomes
 \begin{equation}
-g_a>g_b\quad\text{and}\quad \eta_aL_t(a)-\eta_bL_t(b)<K_a-K_b.
+\mathrm{CIV}_a(\rho)=-K_a+\eta_a\left[\bar m_aG_a+\Delta m_aQ_a(\rho)\right],
+\label{eq:civ-two-regime}
+\end{equation}
+where
+\begin{equation}
+G_a=\sum_{k=\delta_a}^{n}\gamma^k
+=\frac{\gamma^{\delta_a}\left(1-\gamma^{n-\delta_a+1}\right)}{1-\gamma}\quad(\gamma\ne1),
+\qquad
+Q_a(\rho)=\sum_{k=\delta_a}^{n}\left[\gamma(2\rho-1)\right]^k.
+\label{eq:civ-exposure-terms}
+\end{equation}
+For $\gamma=1$, $G_a=n-\delta_a+1$ when $n\geq\delta_a$; if $n<\delta_a$, the benefit sums are empty. Within this specialization, $\bar m_aG_a$ is discounted cross-regime operational value and $\Delta m_aQ_a(\rho)$ is current-regime alignment weighted by persistence. This interpretation is not a theorem about general HLS environments.
+
+\subsection{Whether and where to invest}
+
+For a candidate action set $\mathcal A_I$, invest rather than do nothing iff
+\begin{equation}
+\max_{a\in\mathcal A_I}\mathrm{CIV}_t(a)>0,
+\label{eq:civ-invest}
+\end{equation}
+with equality as the investment/DO-NOTHING boundary. This is \textbf{DERIVED-IN-MODEL}: it is a counterfactual decision identity, not a claim that CIV is observable or optimal in real systems.
+
+Let $g_a$ be an action's local recipient competence gain. A larger local gain need not produce greater CIV. A reversal occurs when
+\begin{equation}
+g_a>g_b\quad\text{and}\quad
+\eta_aL_t(a)-\eta_bL_t(b)<K_a-K_b,
 \label{eq:civ-reversal}
 \end{equation}
-For example, a large gain in a region already covered by an available specialist with slack capacity can have $L_t(a)=0$, while a smaller gain can relieve a binding capacity constraint or expensive teacher allocation. Hence such reversals exist under the specialization. This is \textbf{DERIVED-IN-MODEL}; it does not show their prevalence or supply an estimator of CIV.
+where $L_t(a)=\bar m_aG_a+\Delta m_aQ_a(\rho)$. For example, a large gain in a region already covered by available slack capacity can have zero operational value, whereas a smaller gain can relieve a binding capacity constraint or costly teacher allocation. Existence of this reversal is \textbf{DERIVED-IN-MODEL}; its prevalence and estimation remain open.
 
-\subsection{R3: organization through competing transformations}
-
-Let $\mathcal A=\{S,R,B,0\}$ denote SPECIALIZE, REPLICATE, REBALANCE, and DO-NOTHING. These are competing transformations of one portfolio, not distinct models. For any two investments $a,b$, the pairwise boundary is
+For any two feasible transformations $a,b$, their model-scoped indifference boundary is
 \begin{equation}
 \mathrm{CIV}_t(a)=\mathrm{CIV}_t(b)
 \quad\Longleftrightarrow\quad
 \eta_aL_t(a)-\eta_bL_t(b)=K_a-K_b.
 \label{eq:civ-boundary}
 \end{equation}
-Thus the $S/R$, $R/B$, and $S/B$ boundaries are obtained by substituting the corresponding actions into Equation~\eqref{eq:civ-boundary}; the investment/DO-NOTHING boundary is Equation~\eqref{eq:civ-invest}. These are \textbf{DERIVED-IN-MODEL} indifference identities, not empirical regime maps or general preferences for any transformation family.
-Explicitly,
-\begin{align}
-\mathrm{CIV}_t(S)=\mathrm{CIV}_t(R)
-&\Longleftrightarrow \eta_S L_t(S)-\eta_R L_t(R)=K_S-K_R, \\
-\mathrm{CIV}_t(R)=\mathrm{CIV}_t(B)
-&\Longleftrightarrow \eta_R L_t(R)-\eta_B L_t(B)=K_R-K_B, \\
-\mathrm{CIV}_t(S)=\mathrm{CIV}_t(B)
-&\Longleftrightarrow \eta_S L_t(S)-\eta_B L_t(B)=K_S-K_B.
-\label{eq:civ-pairwise-boundaries}
-\end{align}
+These identities compare transformations without forcing each label to occupy a separate regime. Under non-negative, pointwise comparable marginal values, an action with no lower cost, no higher success probability, no shorter delay, and no greater marginal value is dominated; an action can therefore disappear from the map altogether.
 
-\subsection{Null result and candidate buffering behaviour}
+\subsection{Persistence, exposure, and surviving transformations}
 
-Environmental volatility alone does not imply replication. If existing specialists have adequate capacity and availability in every reachable environment, replication changes neither feasibility nor $U^*$; then $m_R(E,C)=0$, $L_t(R)=0$, and $\mathrm{CIV}_t(R)=-K_R\leq0$, even when $\rho$ is low. The operative determinants are their interaction: future demand, portfolio exposure, capacity and availability scarcity, teacher cost, learning cost and speed, adaptation delay, and environment persistence.
+For $\rho\geq1/2$, $Q_a(\rho)$ is non-decreasing. Thus, except at degenerate derivative boundaries, the effect of greater persistence has the sign of $\Delta m_a$: persistence values operational benefit aligned with the currently observed regime, not a transformation by name. In particular, persistence alone implies neither specialization nor replication.
 
-Teacher buffering is not an axiom. It is a \textbf{CANDIDATE / NOT ESTABLISHED} conditional behaviour: an environmental change can raise teacher load; teacher service can generate usable knowledge or experience; a positive-CIV intervention can reorganize the portfolio; and a later student allocation can reduce teacher load. Any link can fail, and neither this pattern nor CIV establishes novelty, general buffering value, superiority over strong modular control, RQ0, or P4.
+REPLICATE and REBALANCE are useful examples of transformations that can have positive CIV under stated conditions. Replication has no value in this specialization if an existing learner has enough capacity for all relevant demand and an additional holder creates no operational benefit: then $m_R^1=m_R^2=0$ and $\mathrm{CIV}_R=-K_R$. Conversely, if demand in a regime exceeds existing cheap capacity and a teacher serves the excess, adding a competent learner can replace costly teacher service. For example, with $c_T>c_2$,
+\begin{equation}
+m_R^1=(c_T-c_2)\min\!\left\{b_2,\left[d_1(E_1)-b_1\right]_+\right\}.
+\label{eq:civ-replication-capacity}
+\end{equation}
+This establishes only a capacity-and-cost exposure mechanism, not a general value of redundancy.
 
-The model imports apparatus from workforce learning/training, Machine Teaching, transactive memory, comparative advantage, portfolio, and control traditions. Borgonjon and Maenhout already integrate assignment, learning, training, forgetting, and future efficiency; Yeo et al. address heterogeneous learner-aware teaching toward an exogenous target; and Argote and Ren motivate configuration-dependent distributed expertise. CIV does not re-demonstrate these precedents or CR0--CR4; it provides a common candidate language for future structural reductions.
+After a change, a rebalancing transformation can have $m_B^1>0$ and $m_B^2<0$. If its CIV is continuous, $\Delta m_B>0$ on the relevant interval, and endpoint values straddle zero, a persistence threshold $\rho_B^*$ exists such that rebalancing is preferred above the threshold and DO-NOTHING below it. If a change creates no operational competence mismatch, then $m_B^1=m_B^2=0$ and $\mathrm{CIV}_B=-K_B$: environmental change alone does not justify rebalancing.
+
+Learning delay and horizon are also model-scoped constraints. With non-negative marginal values, longer delay cannot increase CIV because it removes or discounts future benefit. If the horizon ends before the transformation becomes available, CIV equals $-K_a$. For $|\lambda|<1$, current-regime memory decays term-by-term; with a fixed discount factor, however, this does not imply a universal long-horizon dominance result.
+
+The present development does not require SPECIALIZE as a third fundamental regime. Specialization remains possible transformation vocabulary, but it is not the analytical focus until a justified competence--performance relation gives further improvement of an already functional specialist an independent portfolio-level effect.
+
+\subsection{Portfolio exposure and conditional buffering}
+
+The working organizing concept is \emph{portfolio exposure}: future demand that the current portfolio cannot serve efficiently under the relevant capacities, costs, and environment path. It is not yet a closed general definition. CIV values a feasible transformation when it removes enough discounted future exposure to amortize its acquisition cost.
+
+Teacher buffering is \textbf{CANDIDATE / NOT ESTABLISHED}, not an axiom. It can emerge when an environmental change creates exposure, the teacher absorbs expensive or scarce work, teacher output yields usable knowledge or experience, a transformation has positive CIV, and a later allocation reduces teacher dependence. It can also occur without investment when $\max_a\mathrm{CIV}_t(a)\leq0$. Neither pattern establishes novelty, general buffering value, superiority over strong modular control, RQ0, or P4.
+
+The scaffold imports apparatus from workforce learning/training, Machine Teaching, transactive memory, comparative advantage, portfolio, and control traditions. Borgonjon and Maenhout already integrate assignment, learning, training, forgetting, and future efficiency; Yeo et al. address heterogeneous learner-aware teaching toward an exogenous target; and Argote and Ren motivate configuration-dependent distributed expertise. CIV does not re-demonstrate these precedents or CR0--CR4. It is a candidate language for future structural reductions.
