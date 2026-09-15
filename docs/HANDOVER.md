@@ -12,7 +12,8 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 3. `research_program_checkpoint_003.md` — current scientific state.
 4. `research_questions.md` — official RQ0 and subordinate H1.
 5. `landscape/landscape_001_consolidated.md` and `literature/references.bib`.
-6. `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md` only as diagnostic history, not as the current centre.
+6. `research_strategy_cross_domain_toolkit.md` — use external mathematics without replacing the HLS problem.
+7. `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md` only as diagnostic history, not as the current centre.
 
 ## Central programme
 
