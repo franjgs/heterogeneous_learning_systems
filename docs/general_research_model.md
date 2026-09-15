@@ -142,6 +142,8 @@ The programme should be substantially redirected if fair comparisons show no mea
 
 The immediate direction is to preserve a system-level account of how the distribution of usable knowledge can evolve and to identify small, physically meaningful competence transformations and environments in which that evolution has testable consequences. The focus is on conditions, null cases, and strong comparisons for deliberate evolution as a whole, not on expanding one mechanism by inertia.
 
+The current integration scaffold is the [integrated competence-investment model](theory_integrated_competence_investment_model.md). It uses CIV as a candidate common value language for whether to invest, where to intervene, and what competing portfolio transformation to select. Its thresholds, ranking-reversal construction, and pairwise boundaries are derived only under its stated specialization; they do not promote CIV to a programme-level result or a final controller.
+
 The intended scientific outcome is not a generic resource-allocation model with machine-learning labels. It is a theory and experimental programme that can explain how the distribution of usable knowledge in a heterogeneous learning system should evolve, why, and with what consequences for future system performance.
 
 ## 12. Final principle

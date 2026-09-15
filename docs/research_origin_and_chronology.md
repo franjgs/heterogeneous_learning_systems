@@ -245,7 +245,13 @@ The paper skeleton was then reframed so that the minimal 2x2 theory no longer de
 
 This is a documentation and communication correction, not a new theory result. The integration theory remains a scaffold and the general validation programme remains prospective. CR0--CR4 are retained as preliminary model-scoped evidence.
 
-## 19. Current position
+## 19. Integrated competence-investment scaffold
+
+The architecture-level theory then acquired a single candidate competence-investment value language. Rather than creating separate theories for whether, where, and organization, R1--R3 were recorded as three resolutions of one CIV comparison against a no-investment counterfactual. A minimal two-student/one-teacher/two-region specialization derives only its stated thresholds, reversals, boundaries, and null result.
+
+This advances the integration scaffold without resolving the programme. Teacher buffering remains conditional, and the model does not establish practical value, novelty, RQ0, or P4.
+
+## 20. Current position
 
 RQ0 remains the sole official hypothesis. The current object is HLS as an evolving distribution of competences: competence allocation can be a candidate system-level decision variable; operation determines current division of labour and may allocate formative experience; learning and transfer can change future competence allocation; and system value is conditioned on environment and horizon.
 

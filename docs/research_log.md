@@ -378,3 +378,11 @@ Date: 2026-09-15.
 Reframe `paper/` from a minimal-dynamic-theory draft into a working architecture-to-theory-to-validation paper. The paper now presents the provisional A1--A5 functional architecture, distinguishes work allocation from knowledge/learning allocation, and records a candidate competence-orchestration scaffold. Environmental dynamics are a condition for analysis, not a sixth architectural pillar.
 
 CR0--CR4 and their microverification are retained as preliminary model-scoped results. General integration theory remains under development and general experiments do not yet exist. This decision makes no novelty claim, does not change RQ0, and does not establish P4 or HLS superiority.
+
+## Decision 017 — Integrated competence-investment scaffold
+
+Date: 2026-09-15.
+
+Document one candidate competence-investment value (CIV) model spanning the A1--A5 architecture. R1 (whether), R2 (where), and R3 (organization) are resolutions of one investment decision, not separate models. Under an explicit two-student/one-teacher/two-region Markov specialization, the invest/do-nothing threshold, local-gain/system-value reversal construction, pairwise action boundaries, and volatility-alone replication null result are derived in-model.
+
+Teacher buffering remains conditional behaviour, not an axiom. CIV does not establish novelty, broad practical relevance, superiority over modular control, RQ0, or P4. See `theory_integrated_competence_investment_model.md`.
