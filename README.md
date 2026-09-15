@@ -54,7 +54,7 @@ The current repository-level research question is RQ0:
 
 RQ0 is a **HYPOTHESIS**. The terms “competence allocation,” “deliberate evolution,” “long-term performance,” and the comparison class require problem-specific operational definitions only after the literature landscape is audited. RQ0 remains the sole promoted repository research question; narrower hypotheses support incremental theoretical and empirical progress.
 
-## 4. First concrete working hypothesis: H1
+## 4. First diagnostic branch: H1 and RouteNLP
 
 > **WORKING HYPOTHESIS — falsifiable, not yet an official RQ, not established.**
 >
@@ -62,7 +62,7 @@ RQ0 is a **HYPOTHESIS**. The terms “competence allocation,” “deliberate ev
 
 ### RouteNLP
 
-RouteNLP is currently the strongest direct operational precedent and the primary direct adversary. Its targeted-distillation heuristic ranks failure clusters approximately as:
+RouteNLP is the strongest direct operational precedent for this historical diagnostic branch and a useful direct adversary for H1. Its targeted-distillation heuristic ranks failure clusters approximately as:
 
 ```text
 S_RouteNLP(z) = N_z * mean(Delta q_z)
@@ -88,106 +88,29 @@ Here, `P_learn(i,z)` is the expected learnability of competence `z` by recipient
 
 > **Conceptual only.** This decomposition exposes potentially missing variables. It is not a proposed final algorithm, theorem, or established optimal value function.
 
-## 5. Why downstream value may be system-level
+For the historical development and the M0/M0.1 diagnostic analysis, see the [chronology](docs/research_origin_and_chronology.md), [landscape](docs/landscape/), and [model notes](docs/models/). These materials constrain the programme but do not define its centre.
 
-The value of improving one model need not equal its local accuracy gain. A competence change may affect future routing, inference cost, response quality, latency, specialization, coverage, complementarity, redundancy, adaptability to future task distributions, and forgetting or interference in other competences.
-
-Consequently, two learning actions with similar local gains may produce different portfolio-level futures. The programme does not yet define a final metric for this value.
-
-## 6. What adjacent fields currently contribute
-
-### Machine Teaching
-
-Machine Teaching already provides precedent for learner-state-dependent teaching, sequential or iterative teaching, partially unknown learners, heterogeneous learners, teaching cost/budget, and optimization toward a desired target. None of those individual ingredients should be claimed as novel.
-
-The structural distinction under investigation is:
-
-```text
-typical Machine Teaching:
-    desired target competence is given
-        -> optimize how to induce it
-
-candidate system-level problem here:
-    decide which competence is worth creating
-        -> in which learner
-        -> because of its downstream value to the whole operational system
-```
-
-This does not claim that Machine Teaching cannot already solve the latter problem. A targeted audit of target, task, and competence selection remains open.
-
-### Quality-Diversity
-
-Quality-Diversity establishes that diversity of solutions or capabilities can provide adaptability, that maintaining diversity has costs, and that more diversity is not automatically better. Therefore, “diversity is useful” is not novel.
-
-In this programme, diversity is only a possible component or consequence of `V_downstream`. The programme does not create a separate Quality-Diversity objective or assume `J + lambda * Diversity` as a final formulation. If justified, the value of diversity should emerge from expected future operational utility under uncertain task demand.
-
-## 7. Literature audit programme
-
-1. **Active Learning / Value of Information / Experimental Design** — understand how existing theory values paying now for information because it improves future decisions.
-2. **Machine Teaching / Curriculum Learning** — understand learnability, teaching cost, expected competence change, and target/task selection.
-3. **Bandits / Resource Allocation** — understand how limited learning budget should be allocated among uncertain competence-improvement opportunities.
-4. **Optimal Control / Maintenance / Capacity Expansion** — study the generic structure:
-
-   ```text
-   pay now
-       -> change system capability
-       -> alter future operating costs/opportunities
-   ```
-
-Quality-Diversity is a transversal source for understanding possible portfolio-level effects.
-
-## 8. Methodological discipline
-
-Similar terminology is not evidence that a problem is solved. For every important neighboring paper or field, the audit asks:
-
-- What exact problem is optimized?
-- What is the decision variable?
-- What is the objective/value function?
-- What information is assumed known?
-- What is learned or estimated?
-- What assumptions are required?
-- What theoretical guarantees exist?
-- What is actually demonstrated experimentally?
-- What limitations remain?
-- Which part of H1 does it solve?
-- What does it not establish?
-
-Similar vocabulary, diagrams, or a superficially similar abstract are evidence of precedent, not automatically evidence of reduction or closure.
-
-## 9. What is not established
-
-The project currently does not establish:
-
-- novelty of H1;
-- optimality of `V(i,z)` or multiplicative interaction among its factors;
-- a final competence representation;
-- a practical estimator of learnability or downstream value;
-- that diversity must explicitly enter the objective;
-- that uncertainty necessarily implies greater diversity;
-- that competence-aware policies outperform RouteNLP;
-- that the added complexity is operationally worthwhile.
-
-## 10. Falsification criteria
-
-This line should be killed or substantially redirected if H1 reduces to a mature existing solution with no meaningful scientific dimension left; `frequency * quality_gap` is effectively sufficient in realistic settings; learnability-aware selection gives no robust improvement; downstream-value-aware selection gives no robust improvement; or any gains disappear after accounting for training, estimation, and operational cost.
-
-Early falsification is considered a successful research outcome.
-
-## 11. Current status
+## 5. Current status
 
 The broad programme remains open. Its general framing is an HLS as an evolving distribution of competences: operation gives the current distribution value, while experience, learning, and transfer may change a future division of labour. H1 and RouteNLP remain useful subordinate diagnostic material, not the programme's centre.
 
-The next work should identify small, physically meaningful competence transformations, their collective operational consequences, their null cases, and fair strong adversaries before expanding a specific mechanism or experimental setting. See the [general research model](docs/general_research_model.md) for the programme-level orientation.
+Checkpoint 004 is the current programme-level position. Future work must test the general hypothesis through physically meaningful competence transformations, collective operational value, null cases, and fair frozen, reactive, local, and fully informed modular adversaries. It must not simply expand a convenient lateral mechanism. See the [general research model](docs/general_research_model.md) and [Checkpoint 004](docs/research_program_checkpoint_004.md).
 
-## 12. Repository map
+## 6. Repository map
 
 - [Research Programme Checkpoint 001](docs/research_program_checkpoint_001.md)
 - [Research Programme Checkpoint 002](docs/research_program_checkpoint_002.md)
+- [Research Programme Checkpoint 003 — historical post-K0](docs/research_program_checkpoint_003.md)
+- [Research Programme Checkpoint 004 — current position](docs/research_program_checkpoint_004.md)
+- [Research origin and chronology](docs/research_origin_and_chronology.md)
 - [General research model](docs/general_research_model.md)
+- [Cross-domain mathematical strategy](docs/research_strategy_cross_domain_toolkit.md)
 - [Research questions](docs/research_questions.md)
 - [Research log](docs/research_log.md)
 - [Handover](docs/HANDOVER.md)
 - [M0 minimal competence-intervention model](docs/models/model_M0.md)
+- [Minimal competence-evolution theory](docs/theory_competence_evolution_minimal_model.md)
+- [Theory paper skeleton](paper/)
 - [Initial and consolidated landscape](docs/landscape/)
 - [Literature map](docs/literature/)
 

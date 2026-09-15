@@ -311,3 +311,52 @@ Construct the smallest coherent portfolio model in which P1, P2, and P3 are
 simultaneously relevant, then test whether P4 can arise against a genuinely
 strong decoupled baseline. Formalization is a falsification tool, not the
 research objective itself.
+
+## Decision 011 — Cross-domain mathematics as apparatus, not programme replacement
+
+Date: 2026-09-15.
+
+Use Operations Research, portfolio management, economics, optimal/stochastic control, organizational science, human competence management, Machine Teaching, and adjacent fields as sources of mathematics, mechanisms, and theoretical structures. The methodological rule is: “Import mechanisms and mathematical tools; do not import or replace the HLS research problem.”
+
+Usable knowledge or competence is the distributed material managed by an HLS; learning transforms that distribution; operation gives competence value; and time makes competence acquisition an investment. Competence trajectories, marginal value, opportunity cost, specialization, redundancy, rebalancing, depreciation, and option value are legitimate apparatus when they help study RQ0. Mathematical resemblance to another domain neither demonstrates HLS novelty nor automatically removes it. **SPECIALIZE**, **BROADEN**, **REPLICATE**, and **REBALANCE** are provisional strategy families, not results. See `research_strategy_cross_domain_toolkit.md`.
+
+## Decision 012 — Minimal competence-evolution theory and microverification
+
+Date: 2026-09-15.
+
+Construct a minimal analytical laboratory to check internal coherence, expose null cases, and subject restricted parts of the programme to falsification before larger experiments. Its model-scoped results are **CR0** strict separability, **CR1** a finite complementary competence threshold, **CR2** a local stability threshold for endogenous division-of-labour specialization, **CR3** scalar deliberate-rebalancing identities, and **CR4** a dual-actuator competence-evolution optimum.
+
+Microverification checks the covered identities and behaviours. These results show only that some competence/operation/learning interactions are coherent and non-trivial inside the stated minimal model. They do not establish general real-HLS behaviour, general value of specialization/broadening/replication, RQ0, P4, novelty, or superiority of a coupled controller. CR0--CR4 therefore remain consistency/falsification evidence and a theoretical laboratory, not the programme centre. See `theory_competence_evolution_minimal_model.md` and `../experiments/microverification/`.
+
+## Decision 013 — Paper skeleton as a theory nucleus, not the programme itself
+
+Date: 2026-09-15.
+
+Create `../paper/` as a compilable scientific skeleton around the minimal theory. The draft shows that the minimal theory can be organized and communicated coherently; it does not imply that CR0--CR4 are a sufficient publishable HLS contribution. Adversarial review reinforced the risk that mathematically tractable results can narrow the programme too far.
+
+Do not expand the paper by inertia. Before deciding what paper should emerge, its introduction, HLS framework, implications and limits, research programme, and conclusion must be aligned with the general programme model. This decision does not modify `paper/`.
+
+## Decision 014 — Consolidation of the general HLS research model
+
+Date: 2026-09-15.
+
+Adopt `general_research_model.md` as the programme-level conceptual anchor while preserving RQ0 exactly.
+
+> “An HLS should be viewed not only as a heterogeneous portfolio to be exploited, but as an evolving distribution of competences.”
+
+> “Operational decisions determine not only who performs current tasks, but potentially who gains the experience that shapes future competence; learning and knowledge-transfer decisions provide additional mechanisms for changing that distribution.”
+
+> “The central question is therefore whether deliberately shaping who will be competent at what can create greater long-term system value than simply optimizing the use and local improvement of the competences available today.”
+
+Future competence allocation is a **candidate** system-level decision variable, not a universal conclusion. The hierarchy is:
+
+```text
+RQ0
+    -> general HLS competence-evolution model
+        -> P1–P4 analytical scaffolding
+        -> strategy families / cross-domain apparatus
+        -> minimal models and CR0–CR4
+        -> controlled experiments and realistic validation.
+```
+
+RQ0 remains a hypothesis. The programme has a coherent scientific object and explicit falsification discipline, but no general HLS algorithm, realistic empirical validation, established novelty claim, established P4, or established general superiority of deliberate competence evolution.

@@ -198,3 +198,43 @@ The project should record **experiment validity separately from experimental out
 The programme is after K0 and after the population-level correction. No new official RQ has replaced RQ0. H1 is subordinate. P1-P4 are current analytical scaffolding, not established theorems or novelty claims.
 
 The next scientific task is to construct the smallest coherent system in which P1, P2 and P3 are simultaneously relevant, then ask whether P4 can arise against a genuinely strong decoupled baseline. Formalisation should be used to expose assumptions and counterexamples, not to force a result. Experimental design should begin only after the mechanism and falsification logic are explicit.
+
+## 13. Cross-domain mathematical consolidation
+
+The programme next adopted a corrective methodological position: other fields are sources of apparatus, not replacements for the HLS problem. Portfolio management, Operations Research, economics, control, organizational science, human competence management, Machine Teaching, and machine learning provide useful state concepts, transitions, constraints, theorem patterns, and experimental designs.
+
+The managed material was made explicit: usable knowledge or competence is distributed across heterogeneous learners; learning transforms that distribution; operation gives it value; and time makes acquisition an investment. This enabled competence trajectories, marginal value, opportunity cost, specialization, redundancy, rebalancing, depreciation, and option value to be considered as candidate apparatus without redefining HLS as another domain. The strategy labels SPECIALIZE, BROADEN, REPLICATE, and REBALANCE remained provisional analytical families rather than results.
+
+## 14. Minimal competence-evolution theory and microverification
+
+The population-level programme then received a deliberately small theoretical laboratory. It was built to test coherence, identify null cases, and permit early falsification before larger experiments. The resulting CR0--CR4 record strict separability, a finite complementary threshold, a local specialization stability threshold, scalar rebalancing identities, and a dual-actuator optimum under explicit minimal assumptions.
+
+Microverification checked the stated identities and limited behaviours. This was not a transition from programme hypothesis to general result: CR0--CR4 remain model-scoped consistency/falsification evidence. They do not establish general HLS behaviour, broad strategy value, RQ0, P4, novelty, or superiority of a coupled controller.
+
+## 15. Adversarial reassessment and paper skeleton
+
+The minimal-theory direction was reassessed adversarially. The issue was not that its results were incorrect, but that mathematically tractable results can become too small to stand in for the original scientific object. A compilable paper skeleton was created as a theory nucleus and communication test. It showed that the minimal theory could be organized coherently, not that it was a sufficient HLS paper or that it should be expanded by inertia.
+
+This reassessment required another return to the whole-system perspective: the paper and minimal theory are instruments for a broader question, not the programme itself.
+
+## 16. General HLS research model
+
+The programme now records a stronger synthesis in `general_research_model.md`. The chronology is therefore:
+
+```text
+initial intuition
+    -> decomposition and literature confrontation
+    -> diagnostic branches
+    -> corrections
+    -> minimal formalization
+    -> adversarial limits
+    -> stronger programme-level synthesis.
+```
+
+This was not a linear sequence of successes. Corrections of focus are part of the scientific knowledge acquired. The final return to the general view did not reject CR0--CR4; it recognized that they are too small to replace the original HLS problem.
+
+## 17. Current position
+
+RQ0 remains the sole official hypothesis. The current object is HLS as an evolving distribution of competences: competence allocation can be a candidate system-level decision variable; operation determines current division of labour and may allocate formative experience; learning and transfer can change future competence allocation; and system value is conditioned on environment and horizon.
+
+P1--P4, strategy families, cross-domain apparatus, minimal models, CR0--CR4, controlled experiments, and realistic validation are subordinate layers for understanding, testing, or refuting RQ0. There is no general HLS algorithm, realistic empirical validation, novelty claim, established P4, or general superiority result. The open path is to strengthen, specify, or refute the general hypothesis without allowing another partial mechanism to replace it.
