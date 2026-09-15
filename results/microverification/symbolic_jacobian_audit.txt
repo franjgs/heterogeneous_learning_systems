@@ -1,0 +1,8 @@
+SymPy audit of the symmetric 2x2 equilibrium
+c* = eta/(2*delta + eta)
+Jacobian:
+Matrix([[(beta*delta*eta - (2*delta + eta)**2)/(2*(2*delta + eta)), beta*delta*eta/(2*(2*delta + eta)), -beta*delta*eta/(4*delta + 2*eta), -beta*delta*eta/(4*delta + 2*eta)], [beta*delta*eta/(2*(2*delta + eta)), (beta*delta*eta - (2*delta + eta)**2)/(2*(2*delta + eta)), -beta*delta*eta/(4*delta + 2*eta), -beta*delta*eta/(4*delta + 2*eta)], [-beta*delta*eta/(4*delta + 2*eta), -beta*delta*eta/(4*delta + 2*eta), (beta*delta*eta - (2*delta + eta)**2)/(2*(2*delta + eta)), beta*delta*eta/(2*(2*delta + eta))], [-beta*delta*eta/(4*delta + 2*eta), -beta*delta*eta/(4*delta + 2*eta), beta*delta*eta/(2*(2*delta + eta)), (beta*delta*eta - (2*delta + eta)**2)/(2*(2*delta + eta))]])
+characteristic polynomial = -(2*delta + eta + 2*lambda)**3*(4*beta*delta*eta - 4*delta**2 - 4*delta*eta - 4*delta*lambda - eta**2 - 2*eta*lambda)/(16*(2*delta + eta))
+critical beta = (2*delta + eta)**2/(4*delta*eta)
+Eigenvalues: -(eta+2 delta)/2 (multiplicity 3) and
+-(eta+2 delta)/2 + 2 eta delta beta/(eta+2 delta).

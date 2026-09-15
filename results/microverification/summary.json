@@ -1,0 +1,9 @@
+{
+  "epistemic_scope": "numerical checks of explicitly stated minimal-model identities only",
+  "complementarity_joint_gain": 0.19999999999999996,
+  "beta_critical_eta_0.4_delta_0.2": 2.0,
+  "specialization_max_abs_gap_below": 7.556566483657434e-12,
+  "specialization_min_abs_gap_above": 1.2291519385911434,
+  "rebalancing_max_argmin_abs_error": 0.0,
+  "rebalancing_max_Q_abs_error": 0.0
+}
