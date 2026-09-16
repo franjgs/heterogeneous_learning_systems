@@ -1,0 +1,11 @@
+{
+  "experiment_id": "B12.1",
+  "kind": "hls_translation",
+  "source_citekeys": ["garicano2000", "gutjahr2011"],
+  "periods": 6,
+  "problem_probabilities": [0.6, 0.4],
+  "z_initial": [-0.5, -0.2],
+  "beta": [0.02, 0.02],
+  "eta": [0.30, 0.30],
+  "tolerance": 1e-12
+}

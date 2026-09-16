@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "experiment_ids": [
+    "B12.4"
+  ],
+  "kind": "hls_translation",
+  "status": "SUPPORTED",
+  "source_citekeys": [
+    "garicano2000",
+    "gutjahr2011"
+  ],
+  "command": "python experiments/foundations/b12_4_effective_coupling/run.py",
+  "repository_commit": "b041ba02d4728eccb5e52739590461754217bea0",
+  "working_tree_dirty_at_run": true,
+  "config": {
+    "path": "experiments/foundations/b12_4_effective_coupling/config.json",
+    "sha256": "ca4b1e8bcc994630d9ed46a0c78b9d70fabc6ce2d82ab7bf44aadae186232397"
+  },
+  "code": [
+    {
+      "path": "experiments/foundations/b12_4_effective_coupling/run.py",
+      "sha256": "ce0a2e6a0ba81059e8d4be96c654f5cf16e40f544f2979c197a133bafb3abfb6"
+    },
+    {
+      "path": "experiments/foundations/_provenance.py",
+      "sha256": "3e2519ed82d611bab1ca16a0085ec6bcc69145f7bbb5244b6b035a8e1da65cc5"
+    }
+  ],
+  "results": [
+    {
+      "path": "results/foundations/b12_4_effective_coupling/metrics.json",
+      "sha256": "9ac6f40152303e9ad84ad322d6629d1a6f2883cc9984aceddb08f7caecfa599d"
+    }
+  ]
+}

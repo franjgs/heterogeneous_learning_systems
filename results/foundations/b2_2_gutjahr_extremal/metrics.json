@@ -1,0 +1,100 @@
+{
+  "experiment_id": "B2.2",
+  "kind": "source_reproduction",
+  "status": "REPRODUCED",
+  "source_citekeys": [
+    "gutjahr2011"
+  ],
+  "source": "Gutjahr (2011)",
+  "theoretical_property": "Existence of an optimal extremal policy when phi is convex on the relevant region.",
+  "periods": 4,
+  "grid_step": 0.05,
+  "number_extremal_policies": 16,
+  "number_grid_policies": 194481,
+  "max_reachable_z": [
+    -2.1,
+    -2.05
+  ],
+  "phi_second_derivative_at_max_z": [
+    0.07598743813903697,
+    0.07799571861273707
+  ],
+  "convex_region_verified": true,
+  "best_extremal_value": 0.33492600355503355,
+  "best_grid_value": 0.33492600355503355,
+  "objective_gap_grid_minus_extremal": 0.0,
+  "best_extremal_policy": [
+    [
+      0.0,
+      1.0
+    ],
+    [
+      0.0,
+      1.0
+    ],
+    [
+      0.0,
+      1.0
+    ],
+    [
+      0.0,
+      1.0
+    ]
+  ],
+  "best_grid_policy": [
+    [
+      0.0,
+      1.0
+    ],
+    [
+      0.0,
+      1.0
+    ],
+    [
+      0.0,
+      1.0
+    ],
+    [
+      0.0,
+      1.0
+    ]
+  ],
+  "best_extremal_z": [
+    [
+      -3.0,
+      -2.8
+    ],
+    [
+      -3.0,
+      -2.55
+    ],
+    [
+      -3.0,
+      -2.3
+    ],
+    [
+      -3.0,
+      -2.05
+    ]
+  ],
+  "best_extremal_gamma": [
+    [
+      0.04742587317756678,
+      0.057324175898868755
+    ],
+    [
+      0.04742587317756678,
+      0.07242648536151773
+    ],
+    [
+      0.04742587317756678,
+      0.09112296101485616
+    ],
+    [
+      0.04742587317756678,
+      0.11405238127979088
+    ]
+  ],
+  "extremal_matches_full_grid_optimum": true,
+  "passed": true
+}

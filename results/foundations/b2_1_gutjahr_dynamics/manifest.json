@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "experiment_ids": [
+    "B2.1"
+  ],
+  "kind": "source_reproduction",
+  "status": "REPRODUCED",
+  "source_citekeys": [
+    "gutjahr2011"
+  ],
+  "command": "python experiments/foundations/b2_1_gutjahr_dynamics/run.py",
+  "repository_commit": "b041ba02d4728eccb5e52739590461754217bea0",
+  "working_tree_dirty_at_run": true,
+  "config": {
+    "path": "experiments/foundations/b2_1_gutjahr_dynamics/config.json",
+    "sha256": "86307784a1a5c27bfc973bc441862efafcf1023e852d9a3ea8c1586da01ce16b"
+  },
+  "code": [
+    {
+      "path": "experiments/foundations/b2_1_gutjahr_dynamics/run.py",
+      "sha256": "101c21252cad8907cc2a62439c1eaddc7bd72f16e1267d1e31619a7fad879b1e"
+    },
+    {
+      "path": "experiments/foundations/_provenance.py",
+      "sha256": "3e2519ed82d611bab1ca16a0085ec6bcc69145f7bbb5244b6b035a8e1da65cc5"
+    }
+  ],
+  "results": [
+    {
+      "path": "results/foundations/b2_1_gutjahr_dynamics/metrics.json",
+      "sha256": "cb51dd0f4e7546b4a0e03e5f2ad6e07fb5edb0178e34d04d89df0908ed0c0558"
+    }
+  ]
+}

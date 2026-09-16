@@ -1,6 +1,10 @@
 {
   "experiment_id": "B1.1",
   "kind": "source_reproduction",
+  "status": "REPRODUCED",
+  "source_citekeys": [
+    "garicano2000"
+  ],
   "source": "Garicano (2000)",
   "objective": "F(z) - c*z",
   "first_order_condition": "f(z*) = c",

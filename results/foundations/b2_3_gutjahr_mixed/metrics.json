@@ -1,0 +1,59 @@
+{
+  "experiment_id": "B2.3",
+  "kind": "source_reproduction",
+  "status": "REPRODUCED",
+  "source_citekeys": [
+    "gutjahr2011"
+  ],
+  "source": "Gutjahr (2011), Example 2",
+  "expected_policy": [
+    0.5,
+    1.0
+  ],
+  "numerical_policy": [
+    0.5,
+    1.0
+  ],
+  "expected_objective": 1.625,
+  "numerical_objective": 1.625,
+  "best_extremal_policy": [
+    0.0,
+    0.0
+  ],
+  "best_extremal_objective": 1.5,
+  "mixed_advantage": 0.125,
+  "extremal_candidates": [
+    {
+      "policy": [
+        0.0,
+        0.0
+      ],
+      "objective": 1.5
+    },
+    {
+      "policy": [
+        0.0,
+        1.0
+      ],
+      "objective": 1.25
+    },
+    {
+      "policy": [
+        1.0,
+        0.0
+      ],
+      "objective": 1.25
+    },
+    {
+      "policy": [
+        1.0,
+        1.0
+      ],
+      "objective": 1.5
+    }
+  ],
+  "policy_error": 0.0,
+  "objective_error": 0.0,
+  "mixed_strictly_better": true,
+  "passed": true
+}

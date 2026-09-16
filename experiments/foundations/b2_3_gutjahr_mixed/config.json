@@ -1,0 +1,16 @@
+{
+  "experiment_id": "B2.3",
+  "kind": "source_reproduction",
+  "source_citekeys": ["gutjahr2011"],
+  "source_detail": "Example 2",
+  "periods": 2,
+  "z_initial": [0.0, 0.0],
+  "beta": [0.0, 0.0],
+  "eta": [2.0, 0.0],
+  "weights": [1.0, 1.5],
+  "grid_step": 0.001,
+  "expected_x11": 0.5,
+  "expected_x12": 1.0,
+  "expected_objective": 1.625,
+  "tolerance": 1e-12
+}

@@ -1,0 +1,25 @@
+{
+  "experiment_id": "B12.4",
+  "kind": "hls_translation",
+  "source_citekeys": ["garicano2000", "gutjahr2011"],
+  "periods": 5,
+  "problem_probability_grid": [
+    [0.45, 0.55],
+    [0.50, 0.50],
+    [0.55, 0.45],
+    [0.60, 0.40]
+  ],
+  "z_initial_grid": [
+    [-0.4, -0.4],
+    [-0.4, -0.2],
+    [-0.2, -0.4],
+    [-0.2, -0.2]
+  ],
+  "beta_grid": [0.0, 0.05],
+  "eta_grid": [0.1, 0.3, 0.5],
+  "tolerance": 1e-12,
+  "expected_total_parameter_cases": 96,
+  "expected_effective_coupling_cases": 36,
+  "expected_decoupled_control_effect_cases": 0,
+  "expected_coupled_cases_with_future_routing_ties": 0
+}

@@ -26,7 +26,7 @@ gamma_it = phi(z_it)
 | B2.2 | Extremal policy under convex learning | Assumptions of Gutjahr Theorem 2 | Recover an optimal policy assigning all capacity in each period to one class. |
 | B2.3 | Mixed portfolio | Non-convex regime / Gutjahr counterexample | Recover a case in which a mixed/interior allocation strictly improves on the relevant extremal alternatives. |
 | B2.4 | Persistence without forgetting | beta_i=0, eta_i>0, w_i>0, phi strictly increasing; extremal decisions | Recover an optimum (e_i*,...,e_i*) as in Theorem 3. |
-| B2.5 | Switching with forgetting | beta_i>0; Gutjahr Example 3 or equivalent exact reproduction | Recover a case in which the optimal class differs between periods. |
+| B2.5 | Audit switching with forgetting | Published parameters and equations from Gutjahr Example 3 | Preserve `FAILED_SOURCE_REPRODUCTION`: literal evaluation gives objectives 2.0, 1.5, 0.5, 1.5 and does not recover the paper's claimed switching optimum. |
 
 ## Beam 1 + Beam 2 — Integration tests
 

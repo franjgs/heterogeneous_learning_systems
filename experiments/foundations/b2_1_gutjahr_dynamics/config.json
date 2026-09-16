@@ -1,7 +1,7 @@
 {
   "experiment_id": "B2.1",
   "kind": "source_reproduction",
-  "source": "Gutjahr2011",
+  "source_citekeys": ["gutjahr2011"],
   "description": "Direct numerical verification of Gutjahr competence dynamics.",
   "periods": 5,
   "classes": [

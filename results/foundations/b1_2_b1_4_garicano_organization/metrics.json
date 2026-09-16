@@ -1,0 +1,70 @@
+{
+  "experiment_ids": [
+    "B1.2",
+    "B1.3",
+    "B1.4"
+  ],
+  "kind": "source_reproduction",
+  "source_citekeys": [
+    "garicano2000"
+  ],
+  "source": "Garicano (2000)",
+  "B1.2": {
+    "productivities": [
+      0.62,
+      0.71,
+      0.83,
+      0.68
+    ],
+    "optimal_production_allocation": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    "optimal_value": 0.83,
+    "number_producing_classes": 1,
+    "passed": true
+  },
+  "B1.3": {
+    "knowledge_blocks": [
+      0.3,
+      0.25,
+      0.2,
+      0.15
+    ],
+    "number_of_permutations": 24,
+    "expected_frequency_order": [
+      0.3,
+      0.25,
+      0.2,
+      0.15
+    ],
+    "optimal_orderings": [
+      [
+        0.3,
+        0.25,
+        0.2,
+        0.15
+      ]
+    ],
+    "minimum_communication_load": 1.1,
+    "unique_optimum": true,
+    "passed": true
+  },
+  "B1.4": {
+    "help_cost": 0.2,
+    "producer_mass": 1.0,
+    "hierarchy_sizes": [
+      1.0,
+      0.13999999999999999,
+      0.09,
+      0.05
+    ],
+    "strictly_decreasing": true,
+    "relation_error": 0.0,
+    "passed": true
+  },
+  "passed": true,
+  "status": "REPRODUCED"
+}

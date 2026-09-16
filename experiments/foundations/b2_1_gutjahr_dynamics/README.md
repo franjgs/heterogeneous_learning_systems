@@ -39,3 +39,13 @@ HLS-specific assumption is introduced.
 
 The experiment only validates the executable implementation of the
 Beam 2 state dynamics.
+
+## Audit contract and reproduction
+
+- Citekey: `gutjahr2011`.
+- Assumptions: fixed feasible allocation path and the documented depreciation and learning transition; logistic `phi` is only diagnostic here.
+- Parameters: five periods and the two class-specific `(z_initial,beta,eta)` tuples in `config.json`.
+- Pass criterion: recursive and closed-form states agree within `1e-12`, and every allocation sums to one.
+- Expected status: `REPRODUCED`.
+
+Run `python experiments/foundations/b2_1_gutjahr_dynamics/run.py`. Passing does not validate an optimization policy.

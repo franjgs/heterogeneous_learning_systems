@@ -427,3 +427,19 @@ Adopt `RESEARCH_DOCTRINE.md` as the general anti-drift document above the HLS li
 The active programme has two parallel lines: theoretical foundations and experimental foundations. CIV, portfolio exposure, P1--P4, named transformation families, and minimal models remain subordinate tools, historical results, or diagnostic scaffolding. Portfolio exposure is retained only as model-scoped CIV vocabulary, not as the next central research problem. The immediate task is to select and rigorously translate an established cross-domain foundation, then decide whether a minimal reproduction tests that transfer.
 
 This is a documentation and methodology consolidation. It changes neither RQ0 nor the epistemic status of existing theory, experiments, or novelty claims.
+
+## Decision 020 — Audit of the B1+B2+B12 experimental foundations
+
+Date: 2026-09-16.
+
+Audit the implemented foundation experiments against their documented equations, source papers, limiting cases, and epistemic labels before extending the experimental programme. The audited block comprises Garicano organization reproductions B1.1--B1.4, Gutjahr competence-evolution reproductions B2.1--B2.5, and interface checks B12.1--B12.4.
+
+B2.5 remains **FAILED_SOURCE_REPRODUCTION**. Direct evaluation of Gutjahr's published Example 3 equations gives objective values `2.0`, `1.5`, `0.5`, and `1.5` for `(e1,e1)`, `(e1,e2)`, `(e2,e1)`, and `(e2,e2)`, respectively, rather than the claimed optimum at `(e1,e2)`. The implementation reproduces the published equations and detects the invalid cancellation of the term `x12 phi(-2+4x11)`; parameters and equations are not altered to recover the paper's conclusion.
+
+An independent enumeration of B12.4 recovers 36 effective-coupling cases among 96 declared configurations and zero effects among the 96 matched controls with `eta=0`. In every comparison, the initial intervention is the only trajectory difference and both trajectories subsequently use the same allocation rule. This result is **SUPPORTED** only as evidence that the channel
+
+```text
+allocation -> experience -> competence -> future allocation
+```
+
+can change future allocation in a non-degenerate part of the declared grid. The fraction 0.375 is grid geometry, not performance, prevalence, or evidence that coupling is beneficial. The audit adds uniform result manifests, exact bibliography keys, explicit pass/fail contracts, and independent tests. It does not establish RQ0, P4, novelty, or superiority of an HLS policy.

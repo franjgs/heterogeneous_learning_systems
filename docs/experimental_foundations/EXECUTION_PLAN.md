@@ -1,5 +1,8 @@
 # Execution plan
 
+Status: executed and audited on 2026-09-16. This file preserves the planned
+order; current results and epistemic statuses are summarized in `README.md`.
+
 ## Stage 0 — Mathematical fixtures
 Before implementing optimization, encode exact source-model functions and fixed parameter fixtures.
 

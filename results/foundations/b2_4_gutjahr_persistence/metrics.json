@@ -1,0 +1,69 @@
+{
+  "experiment_id": "B2.4",
+  "kind": "source_reproduction",
+  "status": "REPRODUCED",
+  "source_citekeys": [
+    "gutjahr2011"
+  ],
+  "source": "Gutjahr (2011), Theorem 3",
+  "periods": 6,
+  "classes": 3,
+  "number_extremal_policies": 729,
+  "no_forgetting_verified": true,
+  "positive_learning_verified": true,
+  "positive_weights_verified": true,
+  "best_extremal_objective": 2.90171505126563,
+  "number_optimal_policies": 1,
+  "number_persistent_optimal_policies": 1,
+  "persistent_optimal_policies": [
+    [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  ],
+  "persistent_candidates": [
+    {
+      "class": 1,
+      "choices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "objective": 2.8278521976568927
+    },
+    {
+      "class": 2,
+      "choices": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "objective": 2.7494232458274177
+    },
+    {
+      "class": 3,
+      "choices": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "objective": 2.90171505126563
+    }
+  ],
+  "best_persistent_objective": 2.90171505126563,
+  "persistence_gap": 0.0,
+  "passed": true
+}

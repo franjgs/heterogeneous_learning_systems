@@ -1,7 +1,7 @@
 {
   "experiment_id": "B1.1",
   "kind": "source_reproduction",
-  "source": "Garicano2000",
+  "source_citekeys": ["garicano2000"],
   "description": "Numerical reproduction of the autarky knowledge-choice result.",
   "distribution": {
     "name": "triangular_decreasing",

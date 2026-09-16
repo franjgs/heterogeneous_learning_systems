@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "experiment_ids": [
+    "B12.2"
+  ],
+  "kind": "limiting_case",
+  "status": "REPRODUCED",
+  "source_citekeys": [
+    "garicano2000",
+    "gutjahr2011"
+  ],
+  "command": "python experiments/foundations/b12_2_recover_beam1/run.py",
+  "repository_commit": "b041ba02d4728eccb5e52739590461754217bea0",
+  "working_tree_dirty_at_run": true,
+  "config": {
+    "path": "experiments/foundations/b12_2_recover_beam1/config.json",
+    "sha256": "c2e3cd3c53e034fccf72965ec4a481fa90fece77f5db3d1878f228de6ef42a6c"
+  },
+  "code": [
+    {
+      "path": "experiments/foundations/b12_2_recover_beam1/run.py",
+      "sha256": "caa3c9e18028d7f11edf075fd249c0d15095988b4d2e99d6b347d4d5a2f7d714"
+    },
+    {
+      "path": "experiments/foundations/_provenance.py",
+      "sha256": "3e2519ed82d611bab1ca16a0085ec6bcc69145f7bbb5244b6b035a8e1da65cc5"
+    }
+  ],
+  "results": [
+    {
+      "path": "results/foundations/b12_2_recover_beam1/metrics.json",
+      "sha256": "7d8e5cf327f26cd22a7f643cea1adaaee7f768c8122596323cb1286e6d749654"
+    }
+  ]
+}

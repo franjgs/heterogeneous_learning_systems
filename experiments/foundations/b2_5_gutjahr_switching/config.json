@@ -1,0 +1,19 @@
+{
+  "experiment_id": "B2.5",
+  "kind": "source_reproduction",
+  "source_citekeys": ["gutjahr2011"],
+  "source_detail": "Example 3",
+  "periods": 2,
+  "z_initial": [1.0, 0.0],
+  "beta": [3.0, 0.0],
+  "eta": [4.0, 1.0],
+  "weights": [1.0, 1.0],
+  "published_claimed_optimal_policy": [0, 1],
+  "expected_objectives_from_published_equations": {
+    "0,0": 2.0,
+    "0,1": 1.5,
+    "1,0": 0.5,
+    "1,1": 1.5
+  },
+  "tolerance": 1e-12
+}

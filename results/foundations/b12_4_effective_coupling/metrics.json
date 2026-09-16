@@ -1,0 +1,3733 @@
+{
+  "experiment_id": "B12.4",
+  "kind": "hls_translation",
+  "source_citekeys": [
+    "garicano2000",
+    "gutjahr2011"
+  ],
+  "total_parameter_cases": 96,
+  "effective_coupling_cases": 36,
+  "effective_coupling_fraction": 0.375,
+  "decoupled_control_effect_cases": 0,
+  "coupled_cases_with_future_routing_ties": 0,
+  "minimum_coupled_future_score_margin": 0.010907831087109382,
+  "nondegenerate_region_found": true,
+  "control_verified": true,
+  "intervention_design_verified": true,
+  "expected_counts_verified": true,
+  "status": "SUPPORTED",
+  "coupled_examples": [
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.01551884742737153,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.016475407089966726,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.01551884742737153,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.03777734562709517,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.016475407089966726,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.038831004070681185,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.010907831087109382,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.012176500885798053,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.012122571650396513,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.036854236316755995,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    }
+  ],
+  "cases": [
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.029220919503397946,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.006962421303674415,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.01551884742737153,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.028126331840726437,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.005991851732615239,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.016475407089966726,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.056090434043383736,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.033831935843660205,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.01135066711261426,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.05478083502560957,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.03264635491749837,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.010179096094916407,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.006962421303674415,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.01551884742737153,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.03777734562709517,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.005991851732615239,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.016475407089966726,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.038831004070681185,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.033831935843660205,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.01135066711261426,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.010907831087109382,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.03264635491749837,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.010179096094916407,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.45,
+        0.55
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.012176500885798053,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.012122571650396513,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.036854236316755995,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.06183342379569595,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.012010827515945982,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.03660469430273622,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.06156831521671616,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.012304259749590568,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.012427404916768914,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.03740659239570887,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.012220539015765974,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.012373327771024262,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.0373369486850042,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.012304259749590568,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.012427404916768914,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.03740659239570887,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.012220539015765974,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.012373327771024262,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.0373369486850042,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.012427404916768914,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.03740659239570887,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.062138257062068436,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.012373327771024262,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.0373369486850042,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.5,
+        0.5
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.06217650088579807,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.029220919503397946,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.006962421303674415,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.01551884742737153,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.028126331840726437,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.005991851732615239,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.016475407089966726,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.006962421303674415,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.01551884742737153,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.03777734562709517,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.005991851732615239,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.016475407089966726,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.038831004070681185,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.056090434043383736,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.033831935843660205,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.01135066711261426,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.05478083502560957,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.03264635491749837,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.010179096094916407,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.033831935843660205,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.01135066711261426,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.010907831087109382,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.03264635491749837,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.010179096094916407,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.55,
+        0.45
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": true,
+      "minimum_future_score_margin": 0.012176500885798053,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": true,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.07056441065719238,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.05077907892410477,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.03079572894095281,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.06826349119739877,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.048588397767966585,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.4,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.02861750103678265,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.05077907892410477,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.03079572894095281,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.011010397207865175,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.048588397767966585,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.02861750103678265,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.4,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.008745859276147544,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.09987660833717688,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.08009127660408927,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.06010792662093731,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.09734113103545311,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.07766603760602092,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.2,
+        -0.4
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.057695140874836986,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.08009127660408927,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.06010792662093731,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.0,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.04032259488784967,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.1,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.07766603760602092,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.3,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.057695140874836986,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    },
+    {
+      "p": [
+        0.6,
+        0.4
+      ],
+      "z_initial": [
+        -0.2,
+        -0.2
+      ],
+      "beta": 0.05,
+      "eta": 0.5,
+      "state_changed": true,
+      "future_decisions_changed": false,
+      "minimum_future_score_margin": 0.03782349911420188,
+      "future_routing_tie": false,
+      "initial_intervention_only_difference": true,
+      "shared_rule_after_intervention": true,
+      "effective_coupling": false,
+      "choices_if_initial_0": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "choices_if_initial_1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_state_changed": false,
+      "control_future_decisions_changed": false
+    }
+  ]
+}

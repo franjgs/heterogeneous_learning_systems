@@ -12,7 +12,7 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 3. [general_research_model.md](general_research_model.md) — canonical HLS scientific object and architecture.
 4. [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md) — canonical map of established principles to understand, translate, and test.
 5. [theory/two_beam/README.md](theory/two_beam/README.md) — current technical skeleton connecting organization of knowledge with competence evolution; not a complete HLS model.
-6. [experimental_foundations/EXPERIMENTAL_SPEC_V0.md](experimental_foundations/EXPERIMENTAL_SPEC_V0.md) — frozen Beam 1, Beam 2, and interface-reproduction specification; no implementation exists yet.
+6. [experimental_foundations/README.md](experimental_foundations/README.md) and [experimental_foundations/EXPERIMENTAL_SPEC_V0.md](experimental_foundations/EXPERIMENTAL_SPEC_V0.md) — audited Beam 1, Beam 2, and interface-reproduction block; B2.5 remains `FAILED_SOURCE_REPRODUCTION`.
 7. `research_origin_and_chronology.md` — historical provenance and superseded directions.
 8. [research_program_checkpoint_004.md](research_program_checkpoint_004.md) — programme-level scientific position; later log entries record subsequent documentation corrections.
 9. `research_questions.md` — official RQ0 and subordinate H1.
@@ -185,7 +185,7 @@ A recent related paper is evidence of an active area, not automatically evidence
 
 ## Immediate next action
 
-Use [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md), [general_research_model.md](general_research_model.md), and [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md) as the active anchors. The Garicano--Gutjahr two-beam skeleton and its frozen reproduction specification are now the immediate foundation work: first reproduce Beam 1 and Beam 2 independently, then validate their stated interface and limiting cases. Do not develop a new model, pursue CIV, portfolio exposure, P4, or a named transformation unless that foundation work identifies a system-level need.
+Use [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md), [general_research_model.md](general_research_model.md), and [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md) as the active anchors. The Garicano--Gutjahr two-beam foundation block has been implemented and audited: source reproductions, limiting cases, and the B12 interface are recorded under `experiments/foundations/` and `results/foundations/`. B2.5 is an explicit failed source reproduction, while B12.4 supports only the existence of the configured dynamic channel, not its benefit. Any subsequent scientific action requires a separate decision; do not infer one from this completed audit.
 
 Do not start a large experiment until the proposition, competence transformation, adversaries, matched information and resources, and validity conditions are explicit.
 

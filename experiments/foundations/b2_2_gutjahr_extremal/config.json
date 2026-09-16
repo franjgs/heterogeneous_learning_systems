@@ -1,0 +1,13 @@
+{
+  "experiment_id": "B2.2",
+  "kind": "source_reproduction",
+  "source_citekeys": ["gutjahr2011"],
+  "description": "Numerical reproduction of the extremal-policy result under convex efficiency.",
+  "periods": 4,
+  "z_initial": [-3.0, -2.8],
+  "beta": [0.0, 0.0],
+  "eta": [0.30, 0.25],
+  "weights": [1.0, 1.0],
+  "grid_step": 0.05,
+  "tolerance": 1e-12
+}

@@ -1,0 +1,31 @@
+{
+  "experiment_id": "B12.2",
+  "kind": "limiting_case",
+  "source_citekeys": [
+    "garicano2000",
+    "gutjahr2011"
+  ],
+  "status": "REPRODUCED",
+  "beam1_recovered": true,
+  "beta": [
+    0.0,
+    0.0
+  ],
+  "eta": [
+    0.0,
+    0.0
+  ],
+  "static_choice": 0,
+  "static_routing_scores": [
+    0.22652440127888723,
+    0.18006640107500888
+  ],
+  "initial_state": [
+    -0.5,
+    -0.2
+  ],
+  "final_state": [
+    -0.5,
+    -0.2
+  ]
+}

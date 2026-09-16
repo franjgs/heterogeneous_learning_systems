@@ -1,6 +1,10 @@
 {
   "experiment_id": "B2.1",
   "kind": "source_reproduction",
+  "status": "REPRODUCED",
+  "source_citekeys": [
+    "gutjahr2011"
+  ],
   "source": "Gutjahr (2011)",
   "periods": 5,
   "simplex_error": 0.0,

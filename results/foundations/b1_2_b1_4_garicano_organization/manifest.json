@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "experiment_ids": [
+    "B1.2",
+    "B1.3",
+    "B1.4"
+  ],
+  "kind": "source_reproduction",
+  "status": "REPRODUCED",
+  "source_citekeys": [
+    "garicano2000"
+  ],
+  "command": "python experiments/foundations/b1_2_b1_4_garicano_organization/run.py",
+  "repository_commit": "b041ba02d4728eccb5e52739590461754217bea0",
+  "working_tree_dirty_at_run": true,
+  "config": {
+    "path": "experiments/foundations/b1_2_b1_4_garicano_organization/config.json",
+    "sha256": "7ee52951146e789a0fa8dd90b992287700390140440191538265b6bbe442bab0"
+  },
+  "code": [
+    {
+      "path": "experiments/foundations/b1_2_b1_4_garicano_organization/run.py",
+      "sha256": "90d16a97501bf712ab2b709629f52453cb8d46eb3fa5003ec722b622ce141007"
+    },
+    {
+      "path": "experiments/foundations/_provenance.py",
+      "sha256": "3e2519ed82d611bab1ca16a0085ec6bcc69145f7bbb5244b6b035a8e1da65cc5"
+    }
+  ],
+  "results": [
+    {
+      "path": "results/foundations/b1_2_b1_4_garicano_organization/metrics.json",
+      "sha256": "953486dc17c7ab7ef503faf8feead9068b26d6be67243563bb3eda5d1200c3fc"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "experiment_ids": [
+    "B12.1"
+  ],
+  "kind": "hls_translation",
+  "status": "SUPPORTED",
+  "source_citekeys": [
+    "garicano2000",
+    "gutjahr2011"
+  ],
+  "command": "python experiments/foundations/b12_1_closed_feedback/run.py",
+  "repository_commit": "b041ba02d4728eccb5e52739590461754217bea0",
+  "working_tree_dirty_at_run": true,
+  "config": {
+    "path": "experiments/foundations/b12_1_closed_feedback/config.json",
+    "sha256": "6cb937361f8807398cdc33692ff6cc1afa065914413b1949c018ac4c4baf3fac"
+  },
+  "code": [
+    {
+      "path": "experiments/foundations/b12_1_closed_feedback/run.py",
+      "sha256": "91d5189966b6e772a5b311274ca17eeb63de3def1bd0df162e08bde47a9a6b23"
+    },
+    {
+      "path": "experiments/foundations/_provenance.py",
+      "sha256": "3e2519ed82d611bab1ca16a0085ec6bcc69145f7bbb5244b6b035a8e1da65cc5"
+    }
+  ],
+  "results": [
+    {
+      "path": "results/foundations/b12_1_closed_feedback/metrics.json",
+      "sha256": "e20b7970176d90ba24fc7e8ef6adb40dcc77ddb9dc96150a4aed9d611e26e489"
+    }
+  ]
+}

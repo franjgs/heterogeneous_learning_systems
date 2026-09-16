@@ -1,0 +1,10 @@
+{
+  "experiment_ids": ["B1.2", "B1.3", "B1.4"],
+  "kind": "source_reproduction",
+  "source_citekeys": ["garicano2000"],
+  "productivities": [0.62, 0.71, 0.83, 0.68],
+  "knowledge_blocks": [0.30, 0.25, 0.20, 0.15],
+  "help_cost": 0.20,
+  "producer_mass": 1.0,
+  "tolerance": 1e-12
+}

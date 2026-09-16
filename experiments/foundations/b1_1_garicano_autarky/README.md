@@ -35,3 +35,13 @@ tolerance specified in config.json.
 
 This experiment tests only the autarky result. It introduces no
 HLS-specific mechanism and no competence evolution.
+
+## Audit contract and reproduction
+
+- Citekey: `garicano2000`.
+- Assumptions: the stated triangular distribution, an interior solution, and linear knowledge cost.
+- Parameters: `c=1`, 10,001 grid points, tolerance `2e-4`.
+- Pass criterion: the numerical maximizer is within tolerance of `z*=0.5`.
+- Expected status: `REPRODUCED`.
+
+Run `python experiments/foundations/b1_1_garicano_autarky/run.py`. Passing verifies this fixture only; it does not establish the full Garicano organization model or an HLS result.

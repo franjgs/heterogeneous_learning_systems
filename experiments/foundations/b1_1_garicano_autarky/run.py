@@ -1,4 +1,5 @@
 import json
+import runpy
 from pathlib import Path
 
 import numpy as np
@@ -7,6 +8,9 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[3]
 EXP_DIR = Path(__file__).resolve().parent
 RESULT_DIR = ROOT / "results" / "foundations" / "b1_1_garicano_autarky"
+write_result_bundle = runpy.run_path(
+    str(ROOT / "experiments" / "foundations" / "_provenance.py")
+)["write_result_bundle"]
 
 
 def density(z):
@@ -71,6 +75,8 @@ def main():
     result = {
         "experiment_id": "B1.1",
         "kind": "source_reproduction",
+        "status": "REPRODUCED" if passed else "FAILED",
+        "source_citekeys": config["source_citekeys"],
         "source": "Garicano (2000)",
         "objective": "F(z) - c*z",
         "first_order_condition": "f(z*) = c",
@@ -83,9 +89,12 @@ def main():
         "passed": passed
     }
 
-    RESULT_DIR.mkdir(parents=True, exist_ok=True)
-    (RESULT_DIR / "metrics.json").write_text(
-        json.dumps(result, indent=2) + "\n"
+    write_result_bundle(
+        root=ROOT,
+        experiment_dir=EXP_DIR,
+        result_dir=RESULT_DIR,
+        run_file=Path(__file__).resolve(),
+        output=result,
     )
 
     print(json.dumps(result, indent=2))

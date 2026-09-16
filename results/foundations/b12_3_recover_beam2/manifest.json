@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "experiment_ids": [
+    "B12.3"
+  ],
+  "kind": "limiting_case",
+  "status": "REPRODUCED",
+  "source_citekeys": [
+    "gutjahr2011"
+  ],
+  "command": "python experiments/foundations/b12_3_recover_beam2/run.py",
+  "repository_commit": "b041ba02d4728eccb5e52739590461754217bea0",
+  "working_tree_dirty_at_run": true,
+  "config": {
+    "path": "experiments/foundations/b12_3_recover_beam2/config.json",
+    "sha256": "6a2a09e91808058319298839b6a9a190d8208b993658933a0d1df28c5dfa895c"
+  },
+  "code": [
+    {
+      "path": "experiments/foundations/b12_3_recover_beam2/run.py",
+      "sha256": "7fdc137637c14ff437f29844d363b77437f96421bce8f76eb9a868ac1fc72fd5"
+    },
+    {
+      "path": "experiments/foundations/_provenance.py",
+      "sha256": "3e2519ed82d611bab1ca16a0085ec6bcc69145f7bbb5244b6b035a8e1da65cc5"
+    }
+  ],
+  "results": [
+    {
+      "path": "results/foundations/b12_3_recover_beam2/metrics.json",
+      "sha256": "c5dfd6347298081b6c28703cfb969661d8563cf94802e0a7573e4006fcd0a789"
+    }
+  ]
+}

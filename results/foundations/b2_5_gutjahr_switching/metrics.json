@@ -1,0 +1,72 @@
+{
+  "experiment_id": "B2.5",
+  "kind": "source_reproduction",
+  "source_citekeys": [
+    "gutjahr2011"
+  ],
+  "source": "Gutjahr (2011), Example 3",
+  "status": "FAILED_SOURCE_REPRODUCTION",
+  "parameters_as_published": {
+    "z_initial": [
+      1.0,
+      0.0
+    ],
+    "beta": [
+      3.0,
+      0.0
+    ],
+    "eta": [
+      4.0,
+      1.0
+    ],
+    "weights": [
+      1.0,
+      1.0
+    ]
+  },
+  "published_claimed_optimal_policy": [
+    0,
+    1
+  ],
+  "published_policy_objective_from_equations": 1.5,
+  "computed_optimal_policies": [
+    [
+      0,
+      0
+    ]
+  ],
+  "computed_best_objective": 2.0,
+  "all_extremal_policies": [
+    {
+      "policy": [
+        0,
+        0
+      ],
+      "objective": 2.0
+    },
+    {
+      "policy": [
+        0,
+        1
+      ],
+      "objective": 1.5
+    },
+    {
+      "policy": [
+        1,
+        0
+      ],
+      "objective": 0.5
+    },
+    {
+      "policy": [
+        1,
+        1
+      ],
+      "objective": 1.5
+    }
+  ],
+  "source_reproduced": false,
+  "implementation_check_passed": true,
+  "note": "Using the published parameters, competence dynamics, and piecewise efficiency function literally, the claimed switching optimum is not recovered. The omitted first-class term in the source simplification is nonzero when x11 > 0."
+}

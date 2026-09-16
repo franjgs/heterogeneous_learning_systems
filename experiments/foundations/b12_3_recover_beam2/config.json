@@ -1,0 +1,17 @@
+{
+  "experiment_id": "B12.3",
+  "kind": "limiting_case",
+  "source_citekeys": ["gutjahr2011"],
+  "z_initial": [-0.5, -0.2],
+  "beta": [0.05, 0.02],
+  "eta": [0.30, 0.20],
+  "allocation_path": [
+    [1.0, 0.0],
+    [0.0, 1.0],
+    [1.0, 0.0],
+    [1.0, 0.0],
+    [0.0, 1.0],
+    [0.0, 1.0]
+  ],
+  "tolerance": 1e-12
+}

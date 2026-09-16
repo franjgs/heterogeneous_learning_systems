@@ -1,0 +1,45 @@
+{
+  "experiment_id": "B12.3",
+  "kind": "limiting_case",
+  "source_citekeys": [
+    "gutjahr2011"
+  ],
+  "status": "REPRODUCED",
+  "beam2_recovered": true,
+  "routing_enabled": false,
+  "allocation_path": [
+    [
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0
+    ],
+    [
+      1.0,
+      0.0
+    ],
+    [
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0
+    ],
+    [
+      0.0,
+      1.0
+    ]
+  ],
+  "initial_state": [
+    -0.5,
+    -0.2
+  ],
+  "final_state": [
+    0.09999999999999996,
+    0.28
+  ],
+  "max_closed_form_error": 9.71445146547012e-17
+}

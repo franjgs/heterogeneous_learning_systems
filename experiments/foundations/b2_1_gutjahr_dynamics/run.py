@@ -1,4 +1,5 @@
 import json
+import runpy
 from pathlib import Path
 
 import numpy as np
@@ -7,6 +8,9 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[3]
 EXP_DIR = Path(__file__).resolve().parent
 RESULT_DIR = ROOT / "results" / "foundations" / "b2_1_gutjahr_dynamics"
+write_result_bundle = runpy.run_path(
+    str(ROOT / "experiments" / "foundations" / "_provenance.py")
+)["write_result_bundle"]
 
 
 def logistic_phi(z):
@@ -135,6 +139,8 @@ def main():
     output = {
         "experiment_id": "B2.1",
         "kind": "source_reproduction",
+        "status": "REPRODUCED" if passed else "FAILED",
+        "source_citekeys": config["source_citekeys"],
         "source": "Gutjahr (2011)",
         "periods": periods,
         "simplex_error": simplex_error,
@@ -144,9 +150,12 @@ def main():
         "passed": passed,
     }
 
-    RESULT_DIR.mkdir(parents=True, exist_ok=True)
-    (RESULT_DIR / "metrics.json").write_text(
-        json.dumps(output, indent=2) + "\n"
+    write_result_bundle(
+        root=ROOT,
+        experiment_dir=EXP_DIR,
+        result_dir=RESULT_DIR,
+        run_file=Path(__file__).resolve(),
+        output=output,
     )
 
     print(json.dumps(output, indent=2))
