@@ -12,6 +12,21 @@ The research object is a system of models or agents with different competences, 
 
 The purpose is not to claim the principles below as novel, but to use them as established foundations.
 
+## How to use this map
+
+This is a canonical foundation map, not a claim that every listed principle transfers directly to HLS. The project doctrine is in [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md); the HLS scientific object is in [general_research_model.md](general_research_model.md). For each foundation selected for active work, record:
+
+1. a canonical or strong reference;
+2. the original established result and assumptions;
+3. mathematical formulation when available;
+4. what has actually been demonstrated;
+5. a precise HLS translation;
+6. what cannot be inferred for HLS;
+7. whether independent reproduction is useful; and
+8. whether translation requires adaptation or extension.
+
+The list is deliberately open. Search by structural problems---heterogeneous resources, complementary capabilities, specialization, redundancy, coordination, distributed knowledge, cost, latency, capacity, learning, adaptation, and non-stationary environments---rather than only by HLS terminology or by the word “diversity.”
+
 ## 1. Requisite variety — cybernetics and control
 
 **Canonical source:** W. Ross Ashby, *An Introduction to Cybernetics*, 1956.

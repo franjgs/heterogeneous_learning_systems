@@ -1,25 +1,25 @@
 # Heterogeneous Learning Systems — Handover
 
-Last updated: 2026-09-15
-Repository state: programme-level HLS model consolidated; RQ0 unchanged; P1-P4 and CR0--CR4 remain subordinate analytical scaffolding.
+Last updated: 2026-09-16
+Repository state: documentary backbone consolidated around the HLS scientific object, cross-domain foundations, and research doctrine; RQ0 unchanged; P1--P4, CIV, and CR0--CR4 remain subordinate scaffolding.
 
 ## Mandatory first reads
 
 Before proposing new theory, algorithms, or experiments, read in this order:
 
-1. `README.md` — stable programme-level framing. **Do not rewrite it to follow every intermediate hypothesis.**
-2. `research_origin_and_chronology.md` — chronological origin and corrections; prevents subproblems from replacing the main idea.
-3. [general_research_model.md](general_research_model.md) — programme-level anchor: HLS as an evolving competence distribution.
-4. [research_program_checkpoint_004.md](research_program_checkpoint_004.md) — current programme-level scientific position.
-5. `research_program_checkpoint_003.md` — historical post-K0 checkpoint.
-6. `research_questions.md` — official RQ0 and subordinate H1.
-7. `landscape/landscape_001_consolidated.md` and `literature/references.bib`.
-8. `research_strategy_cross_domain_toolkit.md` — use external mathematics without replacing the HLS problem.
-9. [theory_integrated_competence_investment_model.md](theory_integrated_competence_investment_model.md) — candidate CIV integration scaffold; use its derived identities only within stated assumptions.
-10. [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md) — branch statuses, null cases, and the current focus on portfolio exposure and feasible transformations.
+1. [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md) — general methodology and anti-drift rules above any individual HLS mechanism.
+2. `README.md` — short project entry point. **Do not rewrite it to follow every intermediate hypothesis.**
+3. [general_research_model.md](general_research_model.md) — canonical HLS scientific object and architecture.
+4. [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md) — canonical map of established principles to understand, translate, and test.
+5. `research_origin_and_chronology.md` — historical provenance and superseded directions.
+6. [research_program_checkpoint_004.md](research_program_checkpoint_004.md) — programme-level scientific position; later log entries record subsequent documentation corrections.
+7. `research_questions.md` — official RQ0 and subordinate H1.
+8. `research_strategy_cross_domain_toolkit.md` — supporting protocol for importing mathematics without replacing the HLS problem.
+9. `landscape/landscape_001_consolidated.md` and `literature/references.bib`.
+10. [theory_integrated_competence_investment_model.md](theory_integrated_competence_investment_model.md) and [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md) — subordinate CIV model and its branch register; portfolio exposure is not a current programme priority.
 11. `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md` only as diagnostic history, not as the current centre.
 12. [theory_competence_evolution_minimal_model.md](theory_competence_evolution_minimal_model.md) and [experiments/microverification/](../experiments/microverification/) — CR0--CR4 minimal-model audit; not a general HLS result.
-13. [paper/](../paper/) — working architecture-to-theory-to-validation LaTeX draft; its integration theory and general validation remain open, while CR0--CR4 stay model-scoped.
+13. [paper/](../paper/) — working architecture-to-theory-to-validation LaTeX draft; inspect for consistency but do not let it set programme direction.
 
 ## Central programme
 
@@ -105,9 +105,9 @@ The decoupled baseline must itself be strong and use comparable routing, learnin
 Current order:
 
 1. preserve the whole-system view of HLS as an evolving distribution of usable competences;
-2. define small, physically meaningful competence transformations and the operational environments, portfolio exposures, and horizons that give them collective value;
-3. identify non-trivial conditions, null cases, and strong comparisons under which deliberate evolution can matter beyond use or local improvement of today's portfolio;
-4. only then select the coupling, information, mathematical, or experimental machinery required for a well-specified test.
+2. build theoretical foundations by extracting assumptions, mathematical content, limits, and HLS translations from strong cross-domain results;
+3. reproduce important transferable mechanisms minimally when this tests whether they survive translation to learning models;
+4. integrate supported components only when their role in the whole HLS, null cases, and fair comparisons are explicit.
 
 Do not let CR0--CR4, reachability, P4, or another tractable mechanism replace this programme-level priority.
 
@@ -183,31 +183,10 @@ A recent related paper is evidence of an active area, not automatically evidence
 
 ## Immediate next action
 
-Use [general_research_model.md](general_research_model.md) as the programme anchor and [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md) as the current branch register. The next step should clarify a system-level competence transformation, the discounted future portfolio exposure it removes, its null cases, and fair adversaries; it should not revive a nominal strategy taxonomy or expand a tractable mechanism by inertia.
+Use [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md), [general_research_model.md](general_research_model.md), and [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md) as the active anchors. The next step is to select one established cross-domain foundation, document its assumptions and mathematical content, state its precise HLS translation and limits, and decide whether a minimal reproduction would test that translation. Do not develop a new model, pursue CIV, portfolio exposure, P4, or a named transformation unless that foundation work identifies a system-level need.
 
 Do not start a large experiment until the proposition, competence transformation, adversaries, matched information and resources, and validity conditions are explicit.
 
 ## Independent prior project
 
 `adaptive_routing` remains an independent prior project and must not be silently imported as HLS evidence.
-## 2026-09-16 — Cross-domain foundations become the primary theoretical base
-
-New foundation document: `docs/theoretical_foundations_cross_domain.md`.
-
-Methodological rule:
-
-> reuse what is established -> integrate what is compatible -> derive what is specific to HLS -> develop new theory only where necessary.
-
-The project will use mature principles from cybernetics, finance, economics, organizational knowledge and learning, strategy, operations research, ecology, evolutionary biology, dependable systems, ensemble learning and optimization.
-
-The central question is not whether diversity, specialization, portfolios, hierarchy, learning or resilience are individually novel. The research asks how established principles for organizing capabilities apply and interact when the resources are learning models with different competences, costs and response times, and their competences can change.
-
-Current priority:
-1. audit the strongest cross-domain principles and assumptions;
-2. identify their mathematical content;
-3. translate them rigorously to HLS;
-4. determine which combinations yield HLS-specific properties, methods or predictions.
-
-Competence Investment Value (CIV), replication, rebalancing and specialization remain subordinate tools/mechanisms. Portfolio exposure is not a current priority.
-
-Terminology discipline: define every acronym before first use; avoid unnecessary qualifiers; use `non-stationary environment` for statistical environmental change and `competence evolution` for changes in the competence distribution.

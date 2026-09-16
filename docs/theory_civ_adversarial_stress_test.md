@@ -18,6 +18,8 @@ The statuses used below are:
 
 This document supplements, rather than overwrites, the historical vocabulary in [general_research_model.md](general_research_model.md), the CIV scaffold in [theory_integrated_competence_investment_model.md](theory_integrated_competence_investment_model.md), and the earlier minimal laboratory.
 
+**Post-audit programme status.** The statuses below preserve the outcome of this CIV stress test. “Portfolio exposure” remains useful vocabulary within this specialization, but it is not a current programme-level research priority; the active programme priority is cross-domain theoretical and experimental foundations. See [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md) and [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md).
+
 ## 2. Starting specialization
 
 Condition on currently observing the first state of a symmetric two-state Markov environment. Let the persistence probability be `rho`, let
@@ -217,7 +219,7 @@ The same teacher load can occur without competence investment when `max_a CIV_a 
 
 ## 6. Current organizing principle
 
-**Status: ACTIVE WORKING DIRECTION; CANDIDATE / NOT ESTABLISHED outside the specialization.** The relevant object is not a fixed taxonomy of SPECIALIZE / REPLICATE / REBALANCE strategies. It is the value of feasible transformations of the competence portfolio.
+**Status: model-scoped organizing concept; CANDIDATE / NOT ESTABLISHED outside the specialization.** The relevant object in this stress test is not a fixed taxonomy of SPECIALIZE / REPLICATE / REBALANCE strategies. It is the value of feasible transformations of the competence portfolio.
 
 > Competence evolution is valuable when a feasible competence transformation removes enough discounted future portfolio exposure to amortize its competence-acquisition cost.
 
@@ -250,7 +252,7 @@ This focus replaces the premature effort to build a nominal SPECIALIZE/REPLICATE
 | Rebalancing without mismatch | **NULL-RESULT; DERIVED-IN-MODEL** | Environmental change that changes no operational value gives `m_B=0`. | A transformation relieves a stated mismatch. |
 | Non-monotone delay effects | **PARKED** | Signed regime effects can make delay behavior complex but are lateral now. | The active exposure model requires signed effects. |
 | Fundamental S/R/B regime map | **REJECTED AS CURRENT ORGANIZING FRAMEWORK** | Labels neither force distinct regions nor capture dominance/null cases. | Only as a descriptive output of a later justified action space. |
-| Portfolio exposure as organizing quantity | **ACTIVE WORKING DIRECTION** | It connects demand, feasible operation, transformation, persistence, delay, and cost. | A general formal definition is developed and stress-tested. |
+| Portfolio exposure as organizing quantity | **PARKED AS PROGRAMME PRIORITY; retained model-scoped vocabulary** | It connects demand, feasible operation, transformation, persistence, delay, and cost within CIV. | Cross-domain foundation work identifies a system-level need for a general definition. |
 
 ## 8. What this audit does not establish
 

@@ -417,3 +417,13 @@ Research strategy:
 `reuse what is established -> integrate what is compatible -> derive what is HLS-specific -> develop new theory only where necessary`.
 
 No paper claims are changed at this stage. This material is research infrastructure and theoretical grounding.
+
+## Decision 019 — Research doctrine and canonical documentary backbone
+
+Date: 2026-09-16.
+
+Adopt `RESEARCH_DOCTRINE.md` as the general anti-drift document above the HLS line, and make `general_research_model.md` and `theoretical_foundations_cross_domain.md` the canonical scientific-object and foundation-map documents. The programme does not require novelty in every component: established theory, mechanisms, algorithms, and results should be reused, reproduced when useful, translated to HLS, adapted where necessary, and extended only where the learning-model system requires it.
+
+The active programme has two parallel lines: theoretical foundations and experimental foundations. CIV, portfolio exposure, P1--P4, named transformation families, and minimal models remain subordinate tools, historical results, or diagnostic scaffolding. Portfolio exposure is retained only as model-scoped CIV vocabulary, not as the next central research problem. The immediate task is to select and rigorously translate an established cross-domain foundation, then decide whether a minimal reproduction tests that transfer.
+
+This is a documentation and methodology consolidation. It changes neither RQ0 nor the epistemic status of existing theory, experiments, or novelty claims.

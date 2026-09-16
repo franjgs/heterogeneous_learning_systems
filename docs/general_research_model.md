@@ -70,9 +70,9 @@ A learner can gain a competence that the portfolio already has at lower cost els
 
 Learning is the transformation mechanism for distributed competence. Operational experience can shape learning opportunities; explicit transfer, training, or teaching can provide additional means to change who becomes competent at what. This does not assume that every operational decision changes competence, that every learning action succeeds, or that any particular transfer mechanism is universally relevant.
 
-## 5. From exploitation to deliberate evolution
+## 5. From exploitation to competence evolution
 
-An HLS may simply exploit the competences available today: route each task to a currently preferred learner and improve learners by local criteria when an opportunity arises. Deliberate competence evolution asks a different, longer-horizon question: should current operation and learning choices be selected partly because they alter a future division of labour with greater system value?
+An HLS may simply exploit the competences available today: route each task to a currently preferred learner and improve learners by local criteria when an opportunity arises. Competence evolution raises a different, longer-horizon question: should current operation and learning choices be selected partly because they alter a future division of labour with greater system value?
 
 This is not a presumption that evolution is beneficial. A sufficiently rich frozen portfolio, a strong adaptive router, free competence acquisition, complete information, or a controller that captures all relevant cross-information can remove its advantage. Such null cases and strong adversaries are part of the programme, not exceptions to be hidden.
 
@@ -89,7 +89,7 @@ The following initial families are neither exhaustive nor claims that each is in
 
 These families are a vocabulary for possible trajectories, not a benchmark suite or a prescribed policy taxonomy.
 
-The later CIV stress test retains this vocabulary but narrows its immediate analytical role. REPLICATE and REBALANCE survive conditionally in the current specialization because they can remove stated capacity/cost exposure or persistent operational mismatch. SPECIALIZE remains a possible transformation but is parked as a fundamental regime until a justified competence--performance mechanism gives it independent portfolio value. The active organizing question is the value of feasible transformations relative to future portfolio exposure, not a fixed nominal taxonomy. See [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md).
+The later CIV stress test retains this vocabulary but narrows its analytical role. REPLICATE and REBALANCE survive conditionally in the current specialization because they can remove stated capacity/cost exposure or persistent operational mismatch. SPECIALIZE remains a possible transformation but is parked as a fundamental regime until a justified competence--performance mechanism gives it independent portfolio value. Within that model, feasible transformations are compared by their operational consequences rather than by a fixed nominal taxonomy. This is not the current programme-level priority. See [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md).
 
 ## 7. P1--P4 as subordinate scaffolding
 
@@ -142,11 +142,11 @@ The programme should be substantially redirected if fair comparisons show no mea
 
 ## 11. Current direction
 
-The immediate direction is to preserve a system-level account of how the distribution of usable knowledge can evolve and to identify small, physically meaningful competence transformations and environments in which that evolution has testable consequences. The focus is on conditions, null cases, and strong comparisons for deliberate evolution as a whole, not on expanding one mechanism by inertia.
+The immediate direction is to build HLS from established foundations without losing the whole-system objective. The programme has two parallel lines: identify and translate established cross-domain theory, and reproduce important mechanisms minimally when this tests their transfer to learning models. The aim is to establish which components and interactions genuinely support the HLS architecture before extending a local model or proposing a large benchmark.
 
-The current integration scaffold is the [integrated competence-investment model](theory_integrated_competence_investment_model.md). It uses CIV as a candidate common value language for whether to invest, where to intervene, and what competing portfolio transformation to select. Its thresholds, ranking-reversal construction, and pairwise boundaries are derived only under its stated specialization; they do not promote CIV to a programme-level result or a final controller.
+The [cross-domain foundations map](theoretical_foundations_cross_domain.md) records the current established base. The [integrated competence-investment model](theory_integrated_competence_investment_model.md) is an active but subordinate mathematical tool. Its thresholds, ranking-reversal construction, and pairwise boundaries are derived only under its stated specialization; they do not promote CIV to a programme-level result or a final controller.
 
-Its adversarial audit is recorded in [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md). The current working direction is to characterize discounted future portfolio exposure and the value of feasible transformations that remove it; it does not infer a preferred strategy from environmental persistence or volatility alone.
+Its adversarial audit is recorded in [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md). Portfolio exposure remains a model-scoped concept from that audit, not the next central research problem. The programme does not infer a preferred strategy from environmental persistence or volatility alone.
 
 The intended scientific outcome is not a generic resource-allocation model with machine-learning labels. It is a theory and experimental programme that can explain how the distribution of usable knowledge in a heterogeneous learning system should evolve, why, and with what consequences for future system performance.
 

@@ -1,12 +1,14 @@
 # Heterogeneous Learning Systems
 
-Dynamic task allocation, selective learning, and deliberate evolution of competence in heterogeneous model portfolios.
+Dynamic task allocation, selective learning, and competence evolution in heterogeneous model portfolios.
 
 ![Primary research overview](docs/graphics/primary_research_HLS.png)
 
 *This figure is a conceptual snapshot of the current research programme, not a claim of novelty or a finalized architecture.*
 
 This repository is a research programme about HLS as an evolving distribution of competences, not only a heterogeneous portfolio to be exploited. It contains no validated deployed algorithm, empirical evidence, or established novelty claim. Its minimal-model identities and microverifications are explicitly model-scoped consistency and falsification evidence, not general HLS results.
+
+The programme reuses established theory and mechanisms where they support the system. A component's prior art does not by itself close the HLS question; any future contribution must be assessed at the level of the architecture, integration, HLS-specific consequences, methods, or demonstrated system value. Read the [research doctrine](RESEARCH_DOCTRINE.md) before narrowing the programme to a mechanism.
 
 ## 1. Research motivation
 
@@ -92,9 +94,9 @@ For the historical development and the M0/M0.1 diagnostic analysis, see the [chr
 
 ## 5. Current status
 
-The broad programme remains open. Its general framing is an HLS as an evolving distribution of competences: operation gives the current distribution value, while experience, learning, and transfer may change a future division of labour. H1 and RouteNLP remain useful subordinate diagnostic material, not the programme's centre.
+The broad programme remains open. Its general framing is an HLS as an evolving distribution of competences: operation gives the current distribution value, while experience, learning, and transfer may change a future division of labour. H1, RouteNLP, Competence Investment Value (CIV), and minimal models remain subordinate diagnostic material, not the programme's centre.
 
-Checkpoint 004 is the current programme-level position. Future work must test the general hypothesis through physically meaningful competence transformations, collective operational value, null cases, and fair frozen, reactive, local, and fully informed modular adversaries. It must not simply expand a convenient lateral mechanism. See the [general research model](docs/general_research_model.md) and [Checkpoint 004](docs/research_program_checkpoint_004.md).
+The current priority is to build theoretical and experimental foundations: identify established cross-domain results, understand their assumptions, translate them to HLS, and reproduce them minimally when this tests whether a mechanism transfers. Future system-level work must retain null cases and fair frozen, reactive, local, and fully informed modular adversaries. See the [general research model](docs/general_research_model.md), [cross-domain foundations](docs/theoretical_foundations_cross_domain.md), and [Checkpoint 004](docs/research_program_checkpoint_004.md).
 
 ## 6. Repository map
 
@@ -103,7 +105,9 @@ Checkpoint 004 is the current programme-level position. Future work must test th
 - [Research Programme Checkpoint 003 — historical post-K0](docs/research_program_checkpoint_003.md)
 - [Research Programme Checkpoint 004 — current position](docs/research_program_checkpoint_004.md)
 - [Research origin and chronology](docs/research_origin_and_chronology.md)
+- [Research doctrine](RESEARCH_DOCTRINE.md)
 - [General research model](docs/general_research_model.md)
+- [Cross-domain theoretical foundations](docs/theoretical_foundations_cross_domain.md)
 - [Cross-domain mathematical strategy](docs/research_strategy_cross_domain_toolkit.md)
 - [Research questions](docs/research_questions.md)
 - [Research log](docs/research_log.md)

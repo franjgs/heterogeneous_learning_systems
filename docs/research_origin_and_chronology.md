@@ -266,8 +266,14 @@ initial candidate strategy families
 
 This did not show that named transformations are impossible. It showed that persistence values regime alignment rather than an action name, that dominance and null cases can remove actions, and that the minimal system gives REPLICATE and REBALANCE conditional mechanisms while leaving SPECIALIZE without a distinct system-level basis. SPECIALIZE was therefore parked as a fundamental regime rather than rejected as vocabulary. The return to portfolio exposure preserves the broader HLS object and records why the active theory no longer begins from a fixed strategy taxonomy.
 
-## 21. Current position
+## 21. Cross-domain foundation doctrine
+
+The subsequent documentary consolidation made the research method explicit. The programme does not require novelty in every component, and adjacent work is not “occupied territory” merely because it contains a mechanism, equation, or terminology relevant to HLS. Established theory is an asset: understand it, reproduce it when useful, translate it to learning models, adapt it only where necessary, and seek system-level HLS consequences only where the translation requires them.
+
+This corrected the immediate priority again. CIV and portfolio exposure remain model-scoped tools and historical audit outcomes, not the next central problem. The active work now proceeds through two parallel foundation lines: cross-domain theoretical extraction and minimal experimental reproduction of important transferable mechanisms. The programme-level object remains unchanged.
+
+## 22. Current position
 
 RQ0 remains the sole official hypothesis. The current object is HLS as an evolving distribution of competences: competence allocation can be a candidate system-level decision variable; operation determines current division of labour and may allocate formative experience; learning and transfer can change future competence allocation; and system value is conditioned on environment and horizon.
 
-P1--P4, strategy families, cross-domain apparatus, minimal models, CR0--CR4, controlled experiments, and realistic validation are subordinate layers for understanding, testing, or refuting RQ0. There is no general HLS algorithm, realistic empirical validation, novelty claim, established P4, or general superiority result. The open path is to strengthen, specify, or refute the general hypothesis without allowing another partial mechanism to replace it.
+P1--P4, strategy families, cross-domain apparatus, minimal models, CR0--CR4, controlled experiments, and realistic validation are subordinate layers for understanding, testing, or refuting RQ0. There is no general HLS algorithm, realistic empirical validation, novelty claim, established P4, or general superiority result. The open path is to build and test foundations without allowing another partial mechanism to replace the whole system.

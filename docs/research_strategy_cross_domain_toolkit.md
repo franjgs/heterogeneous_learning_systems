@@ -3,6 +3,8 @@
 Date: 2026-09-15
 Status: methodological orientation. This document imports possible apparatus and preserves the programme focus; it does not state a theorem, result, novelty claim, or new official research question.
 
+> **Status note (2026-09-16):** This is supporting apparatus and historical methodological work. The active doctrine is [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md); the canonical foundation map is [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md). Its strategy-family analysis and immediate-direction section are not the current programme priority.
+
 ## 1. Programme anchor
 
 RQ0 remains the sole official research question:
@@ -265,7 +267,9 @@ This sequence is not mechanical: theory or counterexamples can kill a hypothesis
 - Adversarial reviewers attack claims; they do not choose the programme.
 - Preserve whole-system HLS focus.
 
-## 15. Immediate research direction
+## 15. Historical immediate research direction
+
+This sequence records the cross-domain mathematical direction that led to the later CIV and stress-test work. It is retained for provenance, not as current instruction. The current next step is to extract and translate an established foundation, then decide whether minimal reproduction is useful; see the doctrine and foundation map above.
 
 The methodological sequence is:
 
