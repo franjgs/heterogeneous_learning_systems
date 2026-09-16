@@ -1,0 +1,27 @@
+{
+  "experiment_id": "B2.1",
+  "kind": "source_reproduction",
+  "source": "Gutjahr2011",
+  "description": "Direct numerical verification of Gutjahr competence dynamics.",
+  "periods": 5,
+  "classes": [
+    {
+      "z_initial": -1.0,
+      "beta": 0.10,
+      "eta": 0.80
+    },
+    {
+      "z_initial": 0.5,
+      "beta": 0.20,
+      "eta": 0.50
+    }
+  ],
+  "allocations": [
+    [0.75, 0.25],
+    [0.50, 0.50],
+    [0.25, 0.75],
+    [1.00, 0.00],
+    [0.00, 1.00]
+  ],
+  "tolerance": 1e-12
+}

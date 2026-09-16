@@ -1,0 +1,14 @@
+{
+  "experiment_id": "B1.1",
+  "kind": "source_reproduction",
+  "source": "Garicano (2000)",
+  "objective": "F(z) - c*z",
+  "first_order_condition": "f(z*) = c",
+  "knowledge_cost": 1.0,
+  "analytical_optimum": 0.5,
+  "numerical_optimum": 0.5,
+  "absolute_error": 0.0,
+  "foc_residual": 0.0,
+  "tolerance": 0.0002,
+  "passed": true
+}

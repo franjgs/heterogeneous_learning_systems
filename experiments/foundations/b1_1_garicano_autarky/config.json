@@ -1,0 +1,13 @@
+{
+  "experiment_id": "B1.1",
+  "kind": "source_reproduction",
+  "source": "Garicano2000",
+  "description": "Numerical reproduction of the autarky knowledge-choice result.",
+  "distribution": {
+    "name": "triangular_decreasing",
+    "domain": [0.0, 1.0]
+  },
+  "knowledge_cost": 1.0,
+  "grid_points": 10001,
+  "tolerance": 0.0002
+}
