@@ -396,3 +396,24 @@ Stress-test the two-regime CIV specialization rather than treating nominal strat
 The audit rejects “volatility implies replication,” “persistence implies specialization,” and a fundamental SPECIALIZE/REPLICATE/REBALANCE regime map as the current organizing framework. Replication without operational exposure and rebalancing without mismatch are retained as null results. SPECIALIZE remains a possible vocabulary item but is parked as a fundamental regime until it has a justified independent system-level mechanism. Teacher buffering remains candidate conditional behaviour.
 
 The current working direction is discounted future portfolio exposure and the value of feasible transformations that remove it. All implications remain model-scoped: this decision does not establish novelty, a practical policy, superiority over modular control, P4, or RQ0. See `theory_civ_adversarial_stress_test.md`.
+## 2026-09-16 — Research refocused on established cross-domain foundations
+
+Created `docs/theoretical_foundations_cross_domain.md`.
+
+The project moves away from further refinement of local constructs such as portfolio exposure and nominal specialization/replication/rebalancing regime maps.
+
+Foundations selected for systematic study include Ashby's requisite variety, Markowitz portfolio theory, collective problem solving, transactive memory systems, exploration/exploitation, dynamic capabilities, comparative advantage and knowledge hierarchies, workforce flexibility and cross-training, ecological response diversity, evolutionary bet hedging, dependable-system redundancy, ensemble learning and No Free Lunch results.
+
+Common working structure:
+
+`repertoire -> individual quality -> complementarity -> division of labour -> redundancy -> coordination -> future value -> competence acquisition -> reconfiguration -> uncertainty`.
+
+Key distinction:
+
+`competence != value of competence`.
+
+Research strategy:
+
+`reuse what is established -> integrate what is compatible -> derive what is HLS-specific -> develop new theory only where necessary`.
+
+No paper claims are changed at this stage. This material is research infrastructure and theoretical grounding.

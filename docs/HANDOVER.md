@@ -190,3 +190,24 @@ Do not start a large experiment until the proposition, competence transformation
 ## Independent prior project
 
 `adaptive_routing` remains an independent prior project and must not be silently imported as HLS evidence.
+## 2026-09-16 — Cross-domain foundations become the primary theoretical base
+
+New foundation document: `docs/theoretical_foundations_cross_domain.md`.
+
+Methodological rule:
+
+> reuse what is established -> integrate what is compatible -> derive what is specific to HLS -> develop new theory only where necessary.
+
+The project will use mature principles from cybernetics, finance, economics, organizational knowledge and learning, strategy, operations research, ecology, evolutionary biology, dependable systems, ensemble learning and optimization.
+
+The central question is not whether diversity, specialization, portfolios, hierarchy, learning or resilience are individually novel. The research asks how established principles for organizing capabilities apply and interact when the resources are learning models with different competences, costs and response times, and their competences can change.
+
+Current priority:
+1. audit the strongest cross-domain principles and assumptions;
+2. identify their mathematical content;
+3. translate them rigorously to HLS;
+4. determine which combinations yield HLS-specific properties, methods or predictions.
+
+Competence Investment Value (CIV), replication, rebalancing and specialization remain subordinate tools/mechanisms. Portfolio exposure is not a current priority.
+
+Terminology discipline: define every acronym before first use; avoid unnecessary qualifiers; use `non-stationary environment` for statistical environmental change and `competence evolution` for changes in the competence distribution.
