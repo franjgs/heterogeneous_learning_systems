@@ -1,0 +1,118 @@
+\section{Beam 2: competence evolution through experience}
+
+Beam~2 is not taken from a single reference. Its components are supported by complementary
+literatures.
+
+\subsection{Learning by doing}
+
+The broad principle that productive activity can itself generate learning is classical.
+\citet{arrow1962} formalized learning by doing as an economic mechanism through which
+experience accumulated in production affects future productivity. For the present purpose,
+the important proposition is modest: operation need not only consume current competence;
+it can also contribute to future capability.
+
+\subsection{Task specificity}
+
+A generic stock of experience is too coarse for the intended interface with heterogeneous
+problems. The task-specific human-capital literature, including \citet{gibbonswaldman2004},
+supports the idea that experience accumulated in particular tasks can produce capability
+that is especially relevant to those tasks.
+
+This motivates indexing experience and competence by a task or problem region \(q\in\Q\),
+without yet prescribing a particular representation of \(\Q\).
+
+\subsection{Organizational learning: experience to knowledge}
+
+\citet{argotemiron2011} provide the most direct conceptual bridge. They define organizational
+learning around a change in organizational knowledge that occurs as a function of experience.
+Their framework represents an ongoing cycle in which task-performance experience is converted
+into knowledge; knowledge becomes embedded in organizational context; and the changed context
+affects future experience.
+
+The framework distinguishes three learning subprocesses:
+\begin{enumerate}
+\item knowledge creation from experience;
+\item knowledge retention; and
+\item knowledge transfer.
+\end{enumerate}
+
+For the present two-beam skeleton, creation and retention are already sufficient. Explicit
+transfer can be added later and is not required to make the current feedback loop coherent.
+
+Argote and Miron-Spektor also emphasize that experience should be characterized at a
+fine-grained level. This is compatible with treating the experience produced by an allocation
+as task-dependent rather than as a single undifferentiated count.
+
+Their framework is conceptual rather than an optimization model. It does not provide a unique
+state-transition equation for HLS.
+
+\subsection{An explicit dynamic competence model}
+
+\citet{gutjahr2011} provides a quantitative model in which current work allocation changes
+future competence.
+
+For project/task class \(i\) and period \(t\), let \(z_{it}\) be a competence score and
+\(x_{it}\) the share of available work capacity invested in class \(i\). Gutjahr models
+competence as
+\begin{equation}
+z_{it}
+=
+z_{i1}
+-
+\beta_i(t-1)
++
+\eta_i\sum_{s=1}^{t-1}x_{is},
+\label{eq:gutjahr}
+\end{equation}
+where \(\eta_i\) represents learning and \(\beta_i\) knowledge depreciation.
+
+Competence is mapped to productive efficiency through a nondecreasing learning function
+\begin{equation}
+\gamma_{it}=\phi(z_{it}),\qquad 0\leq\gamma_{it}\leq 1.
+\end{equation}
+Gutjahr gives a concrete operational meaning to \(\gamma_{it}\): if a perfectly competent
+team requires \(d\) units of real work time, a team with efficiency \(\gamma_{it}\) requires
+\(d/\gamma_{it}\).
+
+The essential dynamic mechanism is therefore
+\begin{equation}
+\text{work allocation}
+\longrightarrow
+\text{experience}
+\longrightarrow
+\text{competence}
+\longrightarrow
+\text{future productive efficiency}.
+\end{equation}
+
+The paper also demonstrates that the optimal pattern of concentration or mixing depends on
+the learning function, depreciation and horizon. Thus learning does not mechanically imply
+either specialization or diversification.
+
+\subsection{What Beam 2 establishes for the present skeleton}
+
+The combined literature supports the following ingredients:
+\begin{enumerate}
+\item task performance can generate learning;
+\item learning can be task-specific;
+\item knowledge/competence can be retained and can depreciate;
+\item current work allocation can therefore alter future productive capability.
+\end{enumerate}
+
+A generic HLS-oriented transition can consequently be written as
+\begin{equation}
+C_{t+1}=\mathcal{L}(C_t,x_t;\theta_t),
+\label{eq:learning}
+\end{equation}
+where \(x_t\) is operational experience and \(\theta_t\) contains learning and retention
+parameters. Equation~\eqref{eq:learning} is a synthesis, not a formula asserted by the cited
+literature.
+
+\subsection{What Beam 2 does not establish}
+
+Gutjahr's competence is aggregated at team level in the basic model. It is not a theory of
+routing among heterogeneous machine-learning models. Nor does the cited foundation determine
+how knowledge should be transferred from a teacher model to a learner, how machine-learning
+competence should be measured, or how experience generalizes across neighboring task regions.
+
+Those questions lie outside the present note.

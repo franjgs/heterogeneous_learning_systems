@@ -1,0 +1,57 @@
+\section{Minimal combined skeleton}
+
+We can now write the partial combination without claiming a complete HLS theory.
+
+Let \(F_t\) denote the distribution of incoming problems and \(S_t\) the current
+knowledge/competence state. The operational organization is
+\begin{equation}
+a_t=\mathcal R(F_t,S_t,\kappa_t).
+\end{equation}
+Executing this organization generates experience
+\begin{equation}
+x_t=\mathcal X(a_t,F_t,\omega_t),
+\end{equation}
+where \(\omega_t\) denotes execution outcomes or other factors determining realized
+experience. Competence/knowledge then evolves according to
+\begin{equation}
+S_{t+1}=\mathcal L(S_t,x_t,\theta_t).
+\end{equation}
+The next period therefore uses
+\begin{equation}
+a_{t+1}=\mathcal R(F_{t+1},S_{t+1},\kappa_{t+1}).
+\end{equation}
+
+Combining the equations gives the feedback system
+\begin{equation}
+S_{t+1}
+=
+\mathcal L\!\left(
+S_t,
+\mathcal X\!\left(
+\mathcal R(F_t,S_t,\kappa_t),
+F_t,\omega_t
+\right),
+\theta_t
+\right).
+\label{eq:combined}
+\end{equation}
+
+Equation~\eqref{eq:combined} is the central mathematical statement of this note. It should be
+read as a structural composition, not as a solved model. Each operator still requires a
+specific instantiation before optimization or theorem development is possible.
+
+\subsection{What the combination adds}
+
+Neither beam alone contains the full feedback.
+
+Beam~1 can organize current knowledge efficiently but, in its base form, does not let the
+organization's own operation change future competence.
+
+Beam~2 allows current allocation to change future competence but does not supply Garicano's
+problem-matching and escalation structure.
+
+Their combination introduces the possibility that an operationally sensible allocation at
+time \(t\) changes the competence state used to organize work at \(t+1\). This is the precise
+sense in which present organization and future capability become linked.
+
+No stronger claim is needed at this stage.

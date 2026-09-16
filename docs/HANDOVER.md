@@ -11,15 +11,17 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 2. `README.md` — short project entry point. **Do not rewrite it to follow every intermediate hypothesis.**
 3. [general_research_model.md](general_research_model.md) — canonical HLS scientific object and architecture.
 4. [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md) — canonical map of established principles to understand, translate, and test.
-5. `research_origin_and_chronology.md` — historical provenance and superseded directions.
-6. [research_program_checkpoint_004.md](research_program_checkpoint_004.md) — programme-level scientific position; later log entries record subsequent documentation corrections.
-7. `research_questions.md` — official RQ0 and subordinate H1.
-8. `research_strategy_cross_domain_toolkit.md` — supporting protocol for importing mathematics without replacing the HLS problem.
-9. `landscape/landscape_001_consolidated.md` and `literature/references.bib`.
-10. [theory_integrated_competence_investment_model.md](theory_integrated_competence_investment_model.md) and [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md) — subordinate CIV model and its branch register; portfolio exposure is not a current programme priority.
-11. `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md` only as diagnostic history, not as the current centre.
-12. [theory_competence_evolution_minimal_model.md](theory_competence_evolution_minimal_model.md) and [experiments/microverification/](../experiments/microverification/) — CR0--CR4 minimal-model audit; not a general HLS result.
-13. [paper/](../paper/) — working architecture-to-theory-to-validation LaTeX draft; inspect for consistency but do not let it set programme direction.
+5. [theory/two_beam/README.md](theory/two_beam/README.md) — current technical skeleton connecting organization of knowledge with competence evolution; not a complete HLS model.
+6. [experimental_foundations/EXPERIMENTAL_SPEC_V0.md](experimental_foundations/EXPERIMENTAL_SPEC_V0.md) — frozen Beam 1, Beam 2, and interface-reproduction specification; no implementation exists yet.
+7. `research_origin_and_chronology.md` — historical provenance and superseded directions.
+8. [research_program_checkpoint_004.md](research_program_checkpoint_004.md) — programme-level scientific position; later log entries record subsequent documentation corrections.
+9. `research_questions.md` — official RQ0 and subordinate H1.
+10. `research_strategy_cross_domain_toolkit.md` — supporting protocol for importing mathematics without replacing the HLS problem.
+11. `landscape/landscape_001_consolidated.md` and `literature/references.bib`.
+12. [theory_integrated_competence_investment_model.md](theory_integrated_competence_investment_model.md) and [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md) — subordinate CIV model and its branch register; portfolio exposure is not a current programme priority.
+13. `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md` only as diagnostic history, not as the current centre.
+14. [theory_competence_evolution_minimal_model.md](theory_competence_evolution_minimal_model.md) and [experiments/microverification/](../experiments/microverification/) — CR0--CR4 minimal-model audit; not a general HLS result.
+15. [paper/](../paper/) — working architecture-to-theory-to-validation LaTeX draft; inspect for consistency but do not let it set programme direction.
 
 ## Central programme
 
@@ -183,7 +185,7 @@ A recent related paper is evidence of an active area, not automatically evidence
 
 ## Immediate next action
 
-Use [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md), [general_research_model.md](general_research_model.md), and [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md) as the active anchors. The next step is to select one established cross-domain foundation, document its assumptions and mathematical content, state its precise HLS translation and limits, and decide whether a minimal reproduction would test that translation. Do not develop a new model, pursue CIV, portfolio exposure, P4, or a named transformation unless that foundation work identifies a system-level need.
+Use [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md), [general_research_model.md](general_research_model.md), and [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md) as the active anchors. The Garicano--Gutjahr two-beam skeleton and its frozen reproduction specification are now the immediate foundation work: first reproduce Beam 1 and Beam 2 independently, then validate their stated interface and limiting cases. Do not develop a new model, pursue CIV, portfolio exposure, P4, or a named transformation unless that foundation work identifies a system-level need.
 
 Do not start a large experiment until the proposition, competence transformation, adversaries, matched information and resources, and validity conditions are explicit.
 

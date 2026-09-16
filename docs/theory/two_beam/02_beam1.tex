@@ -1,0 +1,87 @@
+\section{Beam 1: organization of knowledge}
+
+\subsection{Primary foundation}
+
+The primary formal foundation is \citet{garicano2000}. Garicano studies production in which
+workers encounter heterogeneous problems, knowledge acquisition is costly, and communication
+allows a worker who does not know a solution to ask another worker.
+
+Let
+\[
+Z\in\Q
+\]
+denote the problem encountered, with distribution \(F\) and density \(f\). A worker possesses
+a knowledge set
+\[
+A\subseteq\Q,
+\]
+and solves the problem if \(Z\in A\).
+
+In the autarkic case, Garicano orders problems from more to less frequent and considers a
+knowledge interval \([0,Z_a]\). If the marginal cost of acquiring knowledge is \(c\), expected
+net output is
+\begin{equation}
+E[y^a] = F(Z_a)-cZ_a,
+\end{equation}
+with interior first-order condition
+\begin{equation}
+f(Z_a)-c=0.
+\end{equation}
+Thus knowledge is acquired up to the point at which the marginal probability of solving an
+additional problem equals its marginal acquisition cost.
+
+\subsection{Communication and hierarchy}
+
+Communication permits different workers to possess different knowledge sets. In Garicano's
+model an organization assigns workers to classes, associates a knowledge set with each class,
+and specifies whom a worker can ask when a solution is unknown. Asking for help consumes the
+time of the worker being consulted. Denote this helping cost by \(h\).
+
+The central trade-off is therefore between:
+\begin{itemize}
+\item acquiring knowledge locally, which is costly but avoids consultation; and
+\item specializing knowledge and consulting other workers, which economizes on duplicated
+knowledge acquisition but consumes communication and expert capacity.
+\end{itemize}
+
+Under the model assumptions, the resulting organization has a knowledge hierarchy:
+production workers handle common problems and specialized problem solvers handle increasingly
+exceptional problems. Information flows vertically and the organization exhibits management
+by exception and a pyramidal structure.
+
+This result is particularly relevant because the hierarchy is not imposed merely as an
+organizational metaphor. It follows from the model's costs, problem frequencies and time
+constraints.
+
+\subsection{What Beam 1 establishes for the present skeleton}
+
+Beam~1 supports the proposition that, for a given problem distribution and a given organization
+of available knowledge, it can be inefficient for every operational unit to possess or use
+all available expertise. Work can instead be organized so that common problems are handled
+locally and exceptional problems are escalated.
+
+In abstract notation, Beam~1 supplies a mapping of the form
+\begin{equation}
+a_t = \mathcal{R}(F_t,K_t,\kappa_t),
+\label{eq:routing}
+\end{equation}
+where \(F_t\) describes problem demand, \(K_t\) represents the currently available organization
+of knowledge, \(\kappa_t\) collects relevant costs and capacity constraints, and \(a_t\) is an
+allocation/escalation organization.
+
+Equation~\eqref{eq:routing} is an HLS-oriented abstraction, not an equation stated by
+Garicano.
+
+\subsection{What Beam 1 does not establish}
+
+The base model explicitly assumes that the same problem recurs with probability zero and,
+consequently, that communication does not itself generate learning. Garicano therefore does
+not provide the temporal transition required for competence evolution.
+
+Garicano also studies a knowledge set \(A\): whether solutions to classes of problems are
+known. This should not be silently reinterpreted as a continuous measure of proficiency,
+accuracy, speed or model quality.
+
+Section IV of \citet{garicano2000} considers overlapping knowledge motivated by on-the-job
+learning, but this does not constitute a dynamic law in which today's allocation endogenously
+updates tomorrow's competence state. Beam~2 is required for that role.

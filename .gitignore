@@ -3,6 +3,9 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# macOS Finder metadata
+.DS_Store
+
 # Local LaTeX build artifacts for the working paper draft
 /paper/*.aux
 /paper/*.bbl
@@ -10,6 +13,19 @@ __pycache__/
 /paper/*.log
 /paper/*.out
 /paper/*.pdf
+
+# Local LaTeX builds for theory notes outside the paper draft
+/docs/theory/**/*.aux
+/docs/theory/**/*.bbl
+/docs/theory/**/*.blg
+/docs/theory/**/*.log
+/docs/theory/**/*.out
+/docs/theory/**/*.pdf
+
+# Generated experiment diagnostics; reviewed outputs under results/ remain tracked.
+**/logs/
+**/.cache/
+**/cache/
 
 # C extensions
 *.so

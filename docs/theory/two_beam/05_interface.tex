@@ -1,0 +1,55 @@
+\section{The Beam 1--Beam 2 interface}
+
+The smallest defensible interface is
+\begin{equation}
+(F_t,S_t)
+\xrightarrow{\;\mathcal R\;}
+a_t
+\xrightarrow{\;\mathcal X\;}
+x_t
+\xrightarrow{\;\mathcal L\;}
+S_{t+1},
+\label{eq:interface}
+\end{equation}
+where \(S_t\) is a deliberately generic state containing whatever current knowledge and
+competence variables are required.
+
+The use of \(S_t\), rather than prematurely collapsing everything into one scalar competence,
+is important. A future model may require at least two components:
+\begin{equation}
+S_t=(K_t,C_t),
+\end{equation}
+where \(K_t\) represents the availability of problem-solution knowledge and \(C_t\) represents
+proficiency or efficiency. The current theoretical foundations do not yet justify eliminating
+either component.
+
+\subsection{A task-indexed learning abstraction}
+
+If attention is restricted to the intensive competence margin, a simple representation
+consistent with the mechanisms of Beam~2 is
+\begin{align}
+e_{t+1}(q) &= \rho_q e_t(q) + x_t(q),\\
+C_t(q) &= L_q(e_t(q)),
+\label{eq:experience}
+\end{align}
+where \(e_t(q)\) is retained experience, \(\rho_q\) is a retention factor and \(L_q\) is a
+learning function.
+
+This is \textbf{not} presented as an established equation from Arrow, Argote, Gibbons--Waldman
+or Gutjahr. It is a minimal synthesis that preserves their relevant mechanisms: experience,
+task specificity, learning and depreciation.
+
+\subsection{Why the interface is theoretically supported}
+
+The interface in \eqref{eq:interface} requires only two substantive claims.
+
+First, operational organization determines which tasks are performed or escalated. This is
+the subject of Beam~1.
+
+Second, task-performance experience can alter future knowledge or competence. This is
+supported independently by Beam~2 and is made particularly explicit by the experience-to-
+knowledge cycle of \citet{argotemiron2011} and the dynamic competence equation of
+\citet{gutjahr2011}.
+
+Thus the bridge does not require a new causal mechanism merely to connect the two beams.
+The new element is their placement in the same feedback loop.

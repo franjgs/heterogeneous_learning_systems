@@ -1,0 +1,58 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.6cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[round,authoryear]{natbib}
+
+\title{A Two-Beam Theoretical Skeleton for Heterogeneous Learning Systems\\
+\large Knowledge Organization and Competence Evolution}
+\author{Technical research note}
+\date{\today}
+
+\newcommand{\Q}{\mathcal{Q}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\E}{\mathcal{E}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This technical note develops a minimal theoretical skeleton for studying systems in which
+work allocation and competence evolution interact over time. It is not a paper and it does
+not claim a new theory. Its purpose is to determine whether two independently established
+theoretical beams can be combined without semantic or mathematical contradiction.
+
+Beam~1 concerns the organization of distributed knowledge and the allocation or escalation
+of problems, using Garicano's theory of knowledge hierarchies as the primary formal
+foundation. Beam~2 concerns the evolution of competence through experience, learning,
+retention and depreciation, drawing principally on learning-by-doing, task-specific human
+capital, organizational learning, and Gutjahr's explicit competence-development model.
+
+The central interface is operational experience: allocation determines which work is
+performed; performed work generates experience; experience can change future competence;
+and future competence changes the state on which subsequent allocation is based. The note
+separates results established in the source literature from the synthesis introduced here,
+and deliberately stops before developing a complete Heterogeneous Learning Systems model.
+\end{abstract}
+
+\input{01_scope}
+\input{02_beam1}
+\input{03_beam2}
+\input{04_compatibility}
+\input{05_interface}
+\input{06_minimal_synthesis}
+\input{07_epistemic_status}
+\input{08_consistency}
+\input{09_limits}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
