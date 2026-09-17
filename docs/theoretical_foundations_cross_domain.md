@@ -31,24 +31,33 @@ beams**:
 The remaining foundations in this document support, constrain or extend
 these two beams; they are not additional master beams.
 
+The beams are scientific questions, not paper-specific models. Each must
+eventually be supported by multiple independent theoretical lines that may
+corroborate, generalize, restrict, complement, or contradict one another.
+Garicano (2000) and Gutjahr (2011) are primary current references, not the
+complete theories of Beam 1 and Beam 2.
+
 ## How to use this map
 
 This is a canonical foundation map, not a claim that every listed
 principle transfers directly to HLS. The project doctrine is in
 [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md); the HLS scientific
-object is in [general_research_model.md](general_research_model.md). For
+object is in [general_research_model.md](general_research_model.md); and
+the mandatory semantic and dimensional mapping layer is in
+[hls_ontology.md](hls_ontology.md). For
 each foundation selected for active work, record:
 
 1.  a canonical or strong reference;
 2.  the original established result and assumptions;
 3.  mathematical formulation when available;
 4.  what has actually been demonstrated;
-5.  a precise HLS translation;
-6.  what cannot be inferred for HLS;
-7.  whether independent reproduction is useful; and
-8.  whether translation requires adaptation or extension.
+5.  its source-to-HLS ontology mapping, including mapping class and units;
+6.  a precise HLS translation;
+7.  what cannot be inferred for HLS;
+8.  whether independent reproduction is useful; and
+9.  whether translation requires adaptation or extension.
 
-The list is deliberately open. Search by structural
+The list remains open. Search by structural
 problems---heterogeneous resources, complementary capabilities,
 specialization, redundancy, coordination, distributed knowledge, cost,
 latency, capacity, learning, adaptation, and non-stationary
@@ -166,7 +175,7 @@ be treated as fixed:
 
 ## 7. Beam 1 --- comparative advantage, division of labour and knowledge hierarchies
 
-**Primary foundation:** Luis Garicano, "Hierarchies and the Organization
+**Primary current reference:** Luis Garicano, "Hierarchies and the Organization
 of Knowledge in Production", *Journal of Political Economy*, 108(5),
 874--904, 2000.
 
@@ -183,9 +192,11 @@ can have different operational roles. Current problem demand, available
 competence and the costs of using or accessing expertise determine how
 work should be organized and when escalation is valuable.
 
-**Role in the programme.** Garicano is the primary foundation for **Beam
-1: organization of competences** --- essentially, *who does what* given
-the current competence distribution.
+**Role in the programme.** Garicano is a primary current reference for
+**Beam 1: organization and use of competences** --- essentially, *who does
+what* given the current competence distribution. Beam 1 is not identical to
+Garicano's model and requires independent supporting lines. The source-specific
+mapping is recorded in [hls_ontology.md](hls_ontology.md).
 
 **Does not establish:** how current task allocation changes future
 competence, or that a fixed student/teacher hierarchy is optimal when
@@ -226,7 +237,7 @@ of practice.
 
 ### 8.3 Explicit competence dynamics
 
-**Primary operations-research foundation:** Walter J. Gutjahr, "Optimal
+**Primary current formal operations-research reference:** Walter J. Gutjahr, "Optimal
 dynamic portfolio selection for projects under a competence development
 model", *OR Spectrum*, 33, 173--206, 2011. DOI
 10.1007/s00291-009-0180-9.
@@ -249,6 +260,8 @@ optimal.
 **Does not establish:** a heterogeneous multi-model controller, explicit
 teacher-to-learner transfer, or joint decisions about who performs and
 who learns. Competence is modeled at aggregate team/project-class level.
+Gutjahr is therefore not the theory of Beam 2; it is one formal foundation
+within a beam that requires multiple independent lines.
 
 ### 8.4 Experience-to-knowledge cycle
 
@@ -366,24 +379,25 @@ dominate every relevant task distribution.
 
 # Two-beam theoretical synthesis
 
-The minimal theoretical skeleton now has a defensible cross-domain
-foundation:
+The minimal theoretical skeleton now has source-grounded ingredients and a
+candidate cross-domain interface:
 
 `problem demand + current competence`
-`-> operational organization / routing        [Beam 1: Garicano]`
-`-> task-performance experience` `-> learning / retention`
-`-> future competence                         [Beam 2: Arrow; Gibbons-Waldman; Gutjahr; Argote]`
+`-> operational organization / routing        [Beam 1: multiple foundations; Garicano is a primary current reference]`
+`-> real operational work -> learning exposure -> learning / retention`
+`-> future competence                         [Beam 2: multiple foundations; Gutjahr is a primary current formal reference]`
 `-> future operational organization / routing`.
 
-A useful task-indexed HLS representation is:
+A candidate task-indexed HLS representation is:
 
-`e_(t+1)(q) = rho_q e_t(q) + x_t(q)`
+`E_(t+1)(q) = rho_q E_t(q) + e_t(q)`
 
-`C_t(q) = L_q(e_t(q))`
+`C_t(q) = L_q(E_t(q))`
 
-where `q` denotes a task/problem region, `x_t(q)` is relevant experience
-generated by operation, `rho_q` represents retention, and `L_q` maps
-effective accumulated experience into competence.
+where `q` denotes a task/problem region, `E_t(q)` is retained accumulated
+exposure, `e_t(q)` is current learning-relevant exposure after an explicit
+work-to-exposure mapping, `rho_q` represents
+retention, and `L_q` maps accumulated exposure into competence.
 
 **Epistemic status.** This exact representation is an HLS synthesis, not
 a theorem copied from any one source. Its components are grounded
@@ -391,15 +405,16 @@ separately: learning from experience, task-specificity, explicit
 learning/depreciation dynamics, and the experience -\> knowledge -\>
 future experience cycle.
 
-The natural interface between the two beams is therefore **operational
-experience**:
+The candidate interface between the two beams must distinguish allocation,
+real work, and learning exposure:
 
-`routing -> work performed on q -> experience x_t(q) -> future competence C_(t+1)(q)`.
+`a_t --W--> w_t --E--> e_t --L--> C_(t+1)`.
 
-This avoids introducing an artificial mapping between Garicano's
-knowledge-acquisition cost and HLS competence. The same operational
-allocation that creates current value can alter the competence state on
-which future operational organization depends.
+The mappings `W`, `E`, and `L` belong to an HLS instantiation and must be
+explicit. This avoids identifying Garicano's knowledge-acquisition cost with
+competence, or Gutjahr's normalized real work with learning exposure without
+justification. The full semantic specification is in
+[hls_ontology.md](hls_ontology.md).
 
 ## What is already supported
 
@@ -413,13 +428,13 @@ support that:
 -   accumulated experience can alter future competence/productivity;
 -   acquired knowledge can depreciate or be forgotten;
 -   experience and knowledge form a feedback cycle;
--   consequently, when task allocation determines experience, current
-    operational allocation can affect future competence and future
-    operational possibilities.
+-   under explicit mappings from allocation to work and from work to relevant
+    exposure, current operational allocation can affect future competence and
+    future operational possibilities.
 
-The last statement is the structural integration of the two beams. It is
-a synthesis of established mechanisms, not yet a claimed novel HLS
-theorem.
+The last statement is a candidate HLS composition of established mechanisms,
+not a transferred theorem or a claim that the source models have already been
+mathematically unified.
 
 ## What remains open
 
@@ -438,23 +453,12 @@ The foundations do **not** yet provide:
     allocation, teacher selection, explicit knowledge transfer, and
     jointly deciding who performs versus who learns.
 
-The immediate theoretical task is therefore no longer to search for a
-conceptual bridge between Beam 1 and Beam 2. It is to derive the
-consequences of their combination.
-
-A minimal dynamic comparison is between
-
-`a_t^myopic = argmax_a R_t`
-
-and
-
-`a_t^dynamic = argmax_a { R_t + delta V_(t+1)(C_(t+1)) }`,
-
-with `C_(t+1)` generated by task-specific experience resulting from
-`a_t`.
-
-The useful theoretical target is to characterize explicit conditions
-under which these decisions coincide or differ, including null cases.
+The immediate theoretical task is to complete defensible ontology mappings and
+then define a common operational value and strong policy classes for the
+programme comparison `J(pi_joint)` versus `J(pi_separate)`. The target includes
+strict-advantage, equality, and no-advantage conditions. A myopic policy can be
+a diagnostic case, but it is not by itself a scientifically strong definition
+of separate management.
 
 # Common structure
 
@@ -535,9 +539,10 @@ For every imported principle, record:
 1.  original established result;
 2.  assumptions;
 3.  mathematical formulation where available;
-4.  precise HLS translation;
-5.  what the result does not imply for HLS;
-6.  whether combining it with other principles produces an HLS-specific
+4.  source-to-HLS ontology mapping, including units/ranges and mapping class;
+5.  precise HLS translation;
+6.  what the result does not imply for HLS;
+7.  whether combining it with other principles produces an HLS-specific
     property, question or method.
 
 Do not reject an idea merely because one component is already known.

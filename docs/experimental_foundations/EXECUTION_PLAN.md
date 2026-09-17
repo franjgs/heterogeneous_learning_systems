@@ -2,6 +2,8 @@
 
 Status: executed and audited on 2026-09-16. This file preserves the planned
 order; current results and epistemic statuses are summarized in `README.md`.
+Its Stage 2 notation predates the canonical ontology: `x_t` was a declared
+special case in which normalized real work also supplied learning exposure.
 
 ## Stage 0 — Mathematical fixtures
 Before implementing optimization, encode exact source-model functions and fixed parameter fixtures.
@@ -37,6 +39,8 @@ Only after both beams pass:
 - S_t: state required by the two beams.
 
 Do not identify Garicano knowledge set A_t with Gutjahr competence z_it unless an explicit modeling assumption is introduced and tested.
+Do not generalize the work/exposure identification: current documentation uses
+explicit allocation-to-work, work-to-exposure, and exposure-to-competence maps.
 
 ## Stage 3 — Limiting-case tests
 Run B12.2 and B12.3 before B12.4.

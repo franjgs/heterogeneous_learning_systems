@@ -7,14 +7,18 @@ knowledge/competence state. The operational organization is
 \begin{equation}
 a_t=\mathcal R(F_t,S_t,\kappa_t).
 \end{equation}
-Executing this organization generates experience
+Executing this organization generates real work
 \begin{equation}
-x_t=\mathcal X(a_t,F_t,\omega_t),
+w_t=\mathcal W(a_t,F_t,\omega_t),
 \end{equation}
-where \(\omega_t\) denotes execution outcomes or other factors determining realized
-experience. Competence/knowledge then evolves according to
+where \(\omega_t\) denotes execution conditions or outcomes. Real work and outcomes generate
+learning-relevant exposure
 \begin{equation}
-S_{t+1}=\mathcal L(S_t,x_t,\theta_t).
+e_t=\mathcal E(w_t,\omega_t).
+\end{equation}
+Competence/knowledge then evolves according to
+\begin{equation}
+S_{t+1}=\mathcal L(S_t,e_t,\theta_t).
 \end{equation}
 The next period therefore uses
 \begin{equation}
@@ -27,18 +31,22 @@ S_{t+1}
 =
 \mathcal L\!\left(
 S_t,
-\mathcal X\!\left(
+\mathcal E\!\left(
+\mathcal W\!\left(
 \mathcal R(F_t,S_t,\kappa_t),
 F_t,\omega_t
+\right),
+\omega_t
 \right),
 \theta_t
 \right).
 \label{eq:combined}
 \end{equation}
 
-Equation~\eqref{eq:combined} is the central mathematical statement of this note. It should be
-read as a structural composition, not as a solved model. Each operator still requires a
-specific instantiation before optimization or theorem development is possible.
+Equation~\eqref{eq:combined} is the candidate structural composition audited in this note,
+not a solved model or established HLS theorem. Each operator still requires a semantically
+and dimensionally specified instantiation before optimization or theorem development is
+possible.
 
 \subsection{What the combination adds}
 
@@ -50,7 +58,7 @@ organization's own operation change future competence.
 Beam~2 allows current allocation to change future competence but does not supply Garicano's
 problem-matching and escalation structure.
 
-Their combination introduces the possibility that an operationally sensible allocation at
+The candidate composition introduces the possibility that an operationally sensible allocation at
 time \(t\) changes the competence state used to organize work at \(t+1\). This is the precise
 sense in which present organization and future capability become linked.
 

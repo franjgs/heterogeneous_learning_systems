@@ -5,13 +5,15 @@ The smallest defensible interface is
 (F_t,S_t)
 \xrightarrow{\;\mathcal R\;}
 a_t
-\xrightarrow{\;\mathcal X\;}
-x_t
+\xrightarrow{\;\mathcal W\;}
+w_t
+\xrightarrow{\;\mathcal E\;}
+e_t
 \xrightarrow{\;\mathcal L\;}
 S_{t+1},
 \label{eq:interface}
 \end{equation}
-where \(S_t\) is a deliberately generic state containing whatever current knowledge and
+where \(S_t\) is an intentionally generic state containing whatever current knowledge and
 competence variables are required.
 
 The use of \(S_t\), rather than prematurely collapsing everything into one scalar competence,
@@ -23,23 +25,29 @@ where \(K_t\) represents the availability of problem-solution knowledge and \(C_
 proficiency or efficiency. The current theoretical foundations do not yet justify eliminating
 either component.
 
+Here \(w_t\) is real operational work and \(e_t\) is learning-relevant exposure. They may
+coincide in a source model or special HLS instantiation, but they are not identified by
+default. The maps \(\mathcal W\), \(\mathcal E\), and \(\mathcal L\) must state their
+types, units, domains, and assumptions.
+
 \subsection{A task-indexed learning abstraction}
 
 If attention is restricted to the intensive competence margin, a simple representation
 consistent with the mechanisms of Beam~2 is
 \begin{align}
-e_{t+1}(q) &= \rho_q e_t(q) + x_t(q),\\
-C_t(q) &= L_q(e_t(q)),
+E_{t+1}(q) &= \rho_q E_t(q) + e_t(q),\\
+C_t(q) &= L_q(E_t(q)),
 \label{eq:experience}
 \end{align}
-where \(e_t(q)\) is retained experience, \(\rho_q\) is a retention factor and \(L_q\) is a
-learning function.
+where \(E_t(q)\) is retained accumulated exposure, \(e_t(q)\) is current
+learning-relevant exposure, \(\rho_q\) is a retention factor and \(L_q\) is a learning
+function.
 
 This is \textbf{not} presented as an established equation from Arrow, Argote, Gibbons--Waldman
 or Gutjahr. It is a minimal synthesis that preserves their relevant mechanisms: experience,
 task specificity, learning and depreciation.
 
-\subsection{Why the interface is theoretically supported}
+\subsection{Source support and remaining mapping burden}
 
 The interface in \eqref{eq:interface} requires only two substantive claims.
 
@@ -51,5 +59,7 @@ supported independently by Beam~2 and is made particularly explicit by the exper
 knowledge cycle of \citet{argotemiron2011} and the dynamic competence equation of
 \citet{gutjahr2011}.
 
-Thus the bridge does not require a new causal mechanism merely to connect the two beams.
-The new element is their placement in the same feedback loop.
+These source results make the scaffold plausible, but they do not establish the particular
+maps or their semantic equivalence in HLS. The bridge remains \textbf{CANDIDATE /
+HYPOTHESIS}; integration must proceed through the canonical ontology rather than direct
+paper-to-paper variable identification.

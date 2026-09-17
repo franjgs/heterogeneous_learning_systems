@@ -37,7 +37,7 @@ Argote and Ren develop transactive memory as a microfoundation for dynamic capab
 
 HLS cannot claim isolated novelty for who-knows-what, distributed expertise, complementary specialization, portfolio-conditional expertise value, knowledge reconfiguration, or collective capability not reducible to isolated expertise. The work is a strong conceptual precedent for treating a competence distribution as more than a list of independent qualities.
 
-It is not a normative dynamic optimization model that chooses which learner should acquire which competence because of downstream system-level operational utility. It does not specify an HLS comparison between deliberate evolution and frozen, reactive, local, or decoupled policies. It therefore does not establish RQ0 or P4.
+It is not a normative dynamic optimization model that chooses which learner should acquire which competence because of downstream system-level operational utility. It does not specify the current HLS comparison between joint competence management and strong separate-management, frozen, reactive, or local policies. It therefore does not establish RQ0 or P4.
 
 ### Importable apparatus and warning
 
@@ -74,7 +74,7 @@ This table is an audit tool, not evidence of novelty.
 | Forgetting/interference | Forgetting explicit; interference not the stated model. | Obsolescence/context discussed; no formal interference dynamics. | Not a continual-learning/forgetting model. | May be relevant only in later physically specified transformations. |
 | Future target competence allocation endogenous from operation | Skill mix follows staffing and training decisions under prescribed demand. | No normative target-selection optimisation. | No: `w*` is fixed and exogenous. | Candidate question: desired configuration may be endogenous to future collective operation. |
 | Portfolio-conditional operational value | Staffing cost and task efficiency under constraints. | Conceptual collective capability and coordination value. | Teaching convergence/workload/orchestration value. | Future system utility conditioned on portfolio, environment, and horizon. |
-| Normative long-horizon competence evolution | Yes, within workforce staffing cost formulation. | No formal normative optimisation. | Sequential teaching toward fixed target. | Open: characterize and compare deliberate evolution policies. |
+| Normative long-horizon competence evolution | Yes, within workforce staffing cost formulation. | No formal normative optimisation. | Sequential teaching toward fixed target. | Open: characterize joint and strong separate-management policies. |
 | Establishes P4 | No. | No. | No. | Not established. |
 
 ## 6. What this audit removes from the novelty space

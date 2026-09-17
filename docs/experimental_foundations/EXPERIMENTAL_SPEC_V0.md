@@ -1,9 +1,9 @@
 # HLS Experimental Foundation — Frozen Specification v0
 
 Status: FROZEN BASELINE
-Purpose: reproduce the essential results of Beam 1, Beam 2, and verify the minimal Beam 1 + Beam 2 integration before any HLS-specific extension.
+Purpose: reproduce selected results from current primary references for Beam 1 and Beam 2, and verify a minimal executable interface before any HLS-specific extension. This frozen specification predates the canonical ontology; its `x_t` identifies normalized real work with learning exposure as a declared special case, not a general equivalence.
 
-## Beam 1 — Garicano
+## Beam 1 — Garicano reproduction block
 
 | ID | Target | Conditions | Reproduction criterion |
 |---|---|---|---|
@@ -13,7 +13,7 @@ Purpose: reproduce the essential results of Beam 1, Beam 2, and verify the minim
 | B1.3 | Organization by frequency | Distributed knowledge + helping cost h | Production workers cover the most frequent problems; successive problem solvers cover increasingly exceptional problems. |
 | B1.4 | Pyramidal organization | Multiple layers | Layer sizes satisfy b_(i+1) < b_i. |
 
-## Beam 2 — Gutjahr
+## Beam 2 — Gutjahr reproduction block
 
 Core dynamics:
 
@@ -30,9 +30,11 @@ gamma_it = phi(z_it)
 
 ## Beam 1 + Beam 2 — Integration tests
 
-Common interface:
+Historical executable interface used by B12:
 
 (F_t,S_t) --R--> a_t --X--> x_t --L--> S_(t+1)
+
+Current general documentation instead requires `a_t --W--> w_t --E--> e_t --L--> C_(t+1)` with explicit mappings. The B12 implementation is the special case in which assigned normalized work supplies the exposure variable.
 
 | ID | Target | Conditions | Reproduction criterion |
 |---|---|---|---|

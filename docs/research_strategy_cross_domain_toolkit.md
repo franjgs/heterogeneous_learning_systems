@@ -9,7 +9,7 @@ Status: methodological orientation. This document imports possible apparatus and
 
 RQ0 remains the sole official research question:
 
-> Can the deliberate evolution of competence allocation in a heterogeneous learning system improve its long-term performance compared with independently optimizing task allocation and knowledge transfer?
+> Can the dynamic allocation and development of competences in a heterogeneous learning system improve long-term system performance compared with architectures that manage task allocation and knowledge transfer separately?
 
 The scientific object is the complete Heterogeneous Learning System (HLS), not H1, P4, dual control, homogenization, routing-generated data, Label Switching, distillation, a teacher-student pair, or any other partial mechanism. Those may be diagnostic devices, adversaries, candidate mechanisms, or components of a later formulation.
 
@@ -33,6 +33,8 @@ The managed material is usable knowledge or competence distributed among heterog
 Operations Research, portfolio management, economics, optimal and stochastic control, organizational science, sociology, human competence management, Machine Teaching, and continual learning are sources of mathematical machinery, mechanisms, hypotheses, theorem structures, and experimental designs. They are not alternative names for HLS.
 
 Mathematical similarity does not imply scientific equivalence. The fact that another domain uses dynamic programming, marginal returns, competence states, resource constraints, specialization, learning-by-doing, depreciation, portfolio optimization, option value, or capacity planning does not establish that the corresponding HLS problem is solved.
+
+Every source must first be mapped independently through the canonical [HLS ontology](hls_ontology.md). Matching vocabulary, equation shape, normalization, or numerical range is insufficient; semantic and dimensional compatibility must precede integration.
 
 Later novelty assessment must concern a concrete HLS proposition:
 
@@ -193,7 +195,7 @@ These are future comparison categories, not benchmarks or algorithms.
 | S1 | Reactive learning: repair or adapt after observed operational need or failure. |
 | S2 | Local learner improvement: select learning actions by individual or local benefit. |
 | S3 | Greedy portfolio-value evolution: select changes by current system-level value. |
-| S4 | Long-horizon deliberate competence evolution: reshape the landscape by expected future system utility. |
+| S4 | Long-horizon competence development: reshape the landscape by expected future system utility. |
 
 ## 10. Families of theoretical results to seek
 
@@ -203,7 +205,7 @@ Separation and coupling remain subordinate to RQ0. P4 is not the programme. Resu
 
 ## 11. Null cases and adversaries
 
-Deliberate competence evolution may add no value when competence acquisition is free or has no trade-offs; future information is complete and the portfolio can be chosen optimally ex ante; competence transitions are independent of operation; learning cannot change future operational decisions; a frozen portfolio is sufficiently rich; or a fully informed modular controller equals a joint controller.
+Competence evolution may add no value when competence acquisition is free or has no trade-offs; future information is complete and the portfolio can be chosen optimally ex ante; competence transitions are independent of operation; learning cannot change future operational decisions; a frozen portfolio is sufficiently rich; or a fully informed modular controller equals a joint controller.
 
 These null cases delimit when the HLS problem genuinely appears. In particular:
 
@@ -262,6 +264,10 @@ This sequence is not mechanical: theory or counterexamples can kill a hypothesis
 - Do not demand novelty of every component.
 - Do not claim novelty from mere combination.
 - Do not equate mathematical similarity with scientific equivalence.
+- Do not identify variables across theories without an ontology mapping.
+- Do not let one source paper define an entire beam.
+- Do not use a weak separate-management baseline to manufacture joint superiority.
+- Do not turn the ontology into the research objective.
 - Do not invent mathematics by inertia.
 - Do not program prematurely.
 - Adversarial reviewers attack claims; they do not choose the programme.
@@ -278,7 +284,7 @@ The methodological sequence is:
 3. Import appropriate marginal-value and dynamic-investment mathematics.
 4. Analyse specialize, broaden, replicate, and rebalance regimes.
 5. Search for non-trivial conditions, null cases, and counterexamples.
-6. Compare deliberate long-horizon evolution with strong frozen, reactive, and local alternatives.
+6. Compare long-horizon competence development with strong frozen, reactive, local, and separate-management alternatives.
 7. Only then ask which coupling, information, or algorithmic machinery is required.
 
 The desired outcome is not a generic resource-allocation model with ML labels. It is theory and an experimental programme explaining how the distribution of usable knowledge in a heterogeneous learning system should evolve, why, and with what consequences for future system performance.

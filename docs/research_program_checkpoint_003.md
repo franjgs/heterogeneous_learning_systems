@@ -1,5 +1,7 @@
 # Research Programme Checkpoint 003
 
+> **Historical checkpoint.** It preserves the programme state at the time. Its quoted RQ0 has been superseded; the current canonical wording is in [research_questions.md](research_questions.md).
+
 Date: 2026-09-14  
 Status: post-K0 conceptual consolidation; no claim of novelty, theorem, or validated experiment.
 

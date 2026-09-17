@@ -1,5 +1,7 @@
 # Research Programme Checkpoint 001
 
+> **Historical checkpoint.** It preserves the programme state at the time. Any RQ wording in this document is historical; the current canonical RQ0 is in [research_questions.md](research_questions.md).
+
 ## From heterogeneous routing and knowledge transfer to competence-improvement decisions
 
 ### 1. Original research question

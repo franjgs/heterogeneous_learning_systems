@@ -1,5 +1,7 @@
 # Research Programme Checkpoint 004
 
+> **Historical checkpoint.** It preserves the programme state before the 2026-09-17 RQ0 and ontology consolidation. Its quoted RQ0 is not current; use [research_questions.md](research_questions.md) and [hls_ontology.md](hls_ontology.md).
+
 Date: 2026-09-15
 Status: programme-level competence-evolution model consolidated after cross-domain and minimal-theory audit; no general HLS claim, novelty claim, or validated realistic experiment.
 

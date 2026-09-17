@@ -25,4 +25,7 @@ fail status.  Figures, tables, and metrics that are reviewed scientific evidence
 may be versioned; logs, caches, and temporary arrays are generated artefacts and
 must not be edited manually.
 
-No Beam 1, Beam 2, or integration experiment is implemented by this migration.
+The implemented and audited B1/B2/B12 block is summarized in
+[`docs/experimental_foundations/README.md`](../docs/experimental_foundations/README.md).
+B13 is retained as a later diagnostic model and is not the proof targeted by
+RQ0.

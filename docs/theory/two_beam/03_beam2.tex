@@ -48,8 +48,8 @@ state-transition equation for HLS.
 
 \subsection{An explicit dynamic competence model}
 
-\citet{gutjahr2011} provides a quantitative model in which current work allocation changes
-future competence.
+As a primary current formal reference for this beam, \citet{gutjahr2011} provides a
+quantitative model in which current work allocation changes future competence.
 
 For project/task class \(i\) and period \(t\), let \(z_{it}\) be a competence score and
 \(x_{it}\) the share of available work capacity invested in class \(i\). Gutjahr models
@@ -101,11 +101,13 @@ The combined literature supports the following ingredients:
 
 A generic HLS-oriented transition can consequently be written as
 \begin{equation}
-C_{t+1}=\mathcal{L}(C_t,x_t;\theta_t),
+C_{t+1}=\mathcal{L}(C_t,e_t;\theta_t),
 \label{eq:learning}
 \end{equation}
-where \(x_t\) is operational experience and \(\theta_t\) contains learning and retention
-parameters. Equation~\eqref{eq:learning} is a synthesis, not a formula asserted by the cited
+where \(e_t\) is learning-relevant exposure and \(\theta_t\) contains learning and retention
+parameters. Real work and exposure coincide in Gutjahr's source model through its stated
+work-dependent transition; an HLS translation must preserve or explicitly replace that
+mapping. Equation~\eqref{eq:learning} is a synthesis, not a formula asserted by the cited
 literature.
 
 \subsection{What Beam 2 does not establish}
@@ -116,3 +118,7 @@ how knowledge should be transferred from a teacher model to a learner, how machi
 competence should be measured, or how experience generalizes across neighboring task regions.
 
 Those questions lie outside the present note.
+
+Gutjahr is not the theory of Beam~2. Its formalization is one source among multiple
+independent lines, and its team-level state, work variable, and efficiency mapping must not
+be imposed on HLS without an explicit ontology mapping.

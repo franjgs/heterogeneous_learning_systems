@@ -8,7 +8,7 @@ This note consolidates a deliberately small collection of analytical cases for t
 
 RQ0 remains the sole official research question:
 
-> Can the deliberate evolution of competence allocation in a heterogeneous learning system improve its long-term performance compared with independently optimizing task allocation and knowledge transfer?
+> Can the dynamic allocation and development of competences in a heterogeneous learning system improve long-term system performance compared with architectures that manage task allocation and knowledge transfer separately?
 
 The results labelled CR0--CR4 are statements only about the explicit models below. They are not claims about HLS in general, real model portfolios, novelty, or P4.
 
@@ -189,7 +189,7 @@ The model contains a feedback loop in which routing changes experience and exper
 
 It does not prove a global bifurcation classification for every `eta/delta`, stable specialised branches for every parameterisation, real specialization in model portfolios, desirability of specialization, or any P3/P4 advantage.
 
-## 6. CR3 — Deliberate competence rebalancing
+## 6. CR3 — Competence rebalancing
 
 ### Statement
 
@@ -232,7 +232,7 @@ The later advantage is delayed by `tau_R`, whose opportunity cost is `g tau_R`; 
 
 ### Interpretation
 
-Two routes can change competence allocation: direct learning and deliberately routed experience. Their trade-off depends on learning cost, experience speed, the gap, and the value of earlier completion.
+Two routes can change competence allocation: direct learning and routing-selected experience. Their trade-off depends on learning cost, experience speed, the gap, and the value of earlier completion.
 
 ### What it does not establish
 

@@ -36,11 +36,11 @@ C_t = [c_iz(t)]
 
 where `c_iz(t)` denotes the effective competence of learner/model `i` on task region or family `z` at time `t`.
 
-RQ0 was promoted as the sole repository-level research question:
+At that stage, the following formulation was promoted as the sole repository-level research question:
 
 > Can the deliberate evolution of competence allocation in a heterogeneous learning system improve its long-term performance compared with independently optimizing task allocation and knowledge transfer?
 
-The phrase **deliberate evolution of competence allocation** is central. It is not decorative wording.
+At that historical stage, the phrase **deliberate evolution of competence allocation** was treated as central. The wording was superseded on 2026-09-17; it is preserved here only to reconstruct the programme's development.
 
 ## 3. Horizontal audit and RouteNLP
 
@@ -272,8 +272,35 @@ The subsequent documentary consolidation made the research method explicit. The 
 
 This corrected the immediate priority again. CIV and portfolio exposure remain model-scoped tools and historical audit outcomes, not the next central problem. The active work now proceeds through two parallel foundation lines: cross-domain theoretical extraction and minimal experimental reproduction of important transferable mechanisms. The programme-level object remains unchanged.
 
-## 22. Current position
+## 22. Pre-ontology position
 
-RQ0 remains the sole official hypothesis. The current object is HLS as an evolving distribution of competences: competence allocation can be a candidate system-level decision variable; operation determines current division of labour and may allocate formative experience; learning and transfer can change future competence allocation; and system value is conditioned on environment and horizon.
+The programme-level object remained HLS as an evolving distribution of competences: competence allocation could be a candidate system-level decision variable; operation determined current division of labour and could allocate formative experience; learning and transfer could change future competence allocation; and system value was conditioned on environment and horizon.
 
-P1--P4, strategy families, cross-domain apparatus, minimal models, CR0--CR4, controlled experiments, and realistic validation are subordinate layers for understanding, testing, or refuting RQ0. There is no general HLS algorithm, realistic empirical validation, novelty claim, established P4, or general superiority result. The open path is to build and test foundations without allowing another partial mechanism to replace the whole system.
+P1--P4, strategy families, cross-domain apparatus, minimal models, and CR0--CR4 were retained as subordinate layers. There was still no general HLS algorithm, realistic empirical validation, novelty claim, established P4, or general superiority result.
+
+## 23. Two-beam reproduction, B13, and semantic correction
+
+The foundation programme then organized current work around two questions: organization and use of available competences, and development/evolution of competence through experience. Garicano (2000) and Gutjahr (2011) supplied primary current references, while Arrow, Gibbons--Waldman, Argote--Miron-Spektor, and other verified lines supplied complementary foundations.
+
+The B1/B2/B12 block reproduced selected source mechanisms and checked a minimal executable feedback. It did not establish benefit. B2.5 remained a failed source reproduction because Gutjahr's published Example 3 conclusion does not follow from its published parameters and equations. B12.4 supported only that allocation-induced experience can alter future allocation in the configured grid.
+
+B13 subsequently combined source-shaped present and future terms and exposed a useful diagnostic distinction between present operational consequence and future experience-mediated value. It did not define scientifically strong joint and separate policy classes and did not prove RQ0. More importantly, it exposed that source variables with similar scalar forms could not be combined safely without semantic and dimensional mappings.
+
+This led to the common HLS ontology and the methodological sequence:
+
+```text
+FOUNDATIONS -> REPRODUCTION -> ONTOLOGY -> TRANSFER -> ADAPTATION
+    -> INTEGRATION -> SYSTEM -> DEMONSTRATED IMPROVEMENT.
+```
+
+Garicano and Gutjahr are therefore primary current references, not the theories of their beams. Allocation, real work, learning exposure, competence coverage, competence proficiency, and operational performance are kept distinct unless an explicit mapping relates them.
+
+## 24. Current position
+
+RQ0 remains the sole official research question in its current formulation:
+
+> Can the dynamic allocation and development of competences in a heterogeneous learning system improve long-term system performance compared with architectures that manage task allocation and knowledge transfer separately?
+
+The central test is whether a meaningfully defined joint policy can strictly improve `J` relative to a scientifically strong separate-management policy, together with equality and no-advantage conditions. Weak dominance caused only by nesting the policy classes is not a scientific result.
+
+The common ontology is modeling infrastructure, not the research objective. P1--P4, strategy families, cross-domain apparatus, CIV, B13, minimal models, CR0--CR4, controlled experiments, and realistic validation remain subordinate layers for understanding, testing, or refuting RQ0. There is no general HLS algorithm, realistic empirical validation, established novelty claim, established P4, or demonstrated superiority of joint management.

@@ -1,6 +1,6 @@
 # Experimental foundations: audited status
 
-Status: B1, B2, and B12 foundation block implemented and audited on 2026-09-16.
+Status: B1, B2, and B12 foundation block implemented and audited on 2026-09-16; B13 retained as a subsequent diagnostic, not a proof of joint-management advantage.
 
 This block reproduces selected mechanisms from Garicano (2000) and Gutjahr
 (2011), then checks their minimal executable interface. It is not the HLS method,
@@ -16,14 +16,22 @@ or P4.
 | B2.3 | `source_reproduction` | `REPRODUCED` | Gutjahr Example 2 and its mixed optimum are recovered exactly. |
 | B2.4 | `source_reproduction` | `REPRODUCED` | A finite instance of Theorem 3's persistence result is recovered. |
 | B2.5 | `source_reproduction` | `FAILED_SOURCE_REPRODUCTION` | Literal published equations give objectives `2.0, 1.5, 0.5, 1.5`; the claimed switching optimum is not recovered. |
-| B12.1 | `hls_translation` | `SUPPORTED` | The allocation--experience--competence--next-allocation interface executes consistently. |
+| B12.1 | `hls_translation` | `SUPPORTED` | The configured special case in which allocation determines real work/exposure and then competence executes consistently. It is not the general ontology interface. |
 | B12.2 | `limiting_case` | `REPRODUCED` | Setting `beta=eta=0` recovers the static allocation component. |
 | B12.3 | `limiting_case` | `REPRODUCED` | Removing routing and supplying allocations recovers Beam 2 dynamics. |
 | B12.4 | `hls_translation` | `SUPPORTED` | 36 of 96 configured cases show the defined dynamic effect; `eta=0` gives 0 of 96. |
+| B13 | `diagnostic_model` | `SUPPORTED` internally; not a programme result | The configured diagnostic separates present operational consequence `D_G` from future experience-mediated value `G_G`; it does not establish `J(pi_joint) > J(pi_separate)`. |
 
 The B12.4 fraction is grid geometry, not performance or prevalence. The two
 counterfactual trajectories differ only in their first allocation and use the
 same routing rule thereafter.
+
+The canonical ontology now distinguishes allocation, real work, learning
+exposure, competence, and performance. B12 uses Gutjahr's special-case
+identification of normalized assigned work with the exposure entering its
+competence equation; it must not be generalized silently. B13 exposed why a
+common operational value and explicit source mappings are required before a
+joint/separate comparison.
 
 ## Reproduction
 

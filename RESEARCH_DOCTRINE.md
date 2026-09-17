@@ -4,7 +4,7 @@ Status: canonical programme-level methodology and anti-drift document. It does n
 
 ## Purpose
 
-This document defines the **general research doctrine** of the project. It is not a description of a particular Heterogeneous Learning System (HLS), model, paper, experiment, or research question. For the HLS scientific object, use [docs/general_research_model.md](docs/general_research_model.md); for the current foundation map, use [docs/theoretical_foundations_cross_domain.md](docs/theoretical_foundations_cross_domain.md).
+This document defines the **general research doctrine** of the project. It is not a description of a particular Heterogeneous Learning System (HLS), model, paper, experiment, or research question. For the HLS scientific object, use [docs/general_research_model.md](docs/general_research_model.md); for canonical concepts and source mappings, use [docs/hls_ontology.md](docs/hls_ontology.md); for the current foundation map, use [docs/theoretical_foundations_cross_domain.md](docs/theoretical_foundations_cross_domain.md).
 
 Its purpose is to prevent the research from losing focus.
 
@@ -86,13 +86,78 @@ For each important component, identify whenever possible:
 
 The preferred sequence is:
 
-`established result -> understand -> reproduce when useful -> translate -> adapt -> extend only if necessary`.
+`established result -> understand -> reproduce when useful -> map to common ontology -> translate -> adapt -> extend only if necessary`.
 
 New theory should be developed where the existing foundations are insufficient for the system, not merely because novelty is desirable.
 
 ---
 
-## 4. Two parallel research lines
+## 4. Establish a common ontology before transferring theory
+
+Before translating or integrating results from another domain, define the common conceptual layer that connects the source theory to our system.
+
+For every relevant object or quantity, specify:
+
+- its definition;
+- its mathematical nature;
+- its units or normalization;
+- its admissible domain or range;
+- its operational meaning;
+- its role in the source theory;
+- its corresponding concept in our system, if one exists.
+
+Classify every proposed mapping as:
+
+- **EQUIVALENT** — the quantities represent the same concept and can be identified;
+- **RELATED** — they are different quantities connected by an explicit mapping or model;
+- **INCOMPATIBLE** — they must not be identified;
+- **UNRESOLVED** — the relationship has not yet been established.
+
+The translation must therefore proceed through a common ontology:
+
+\[
+\text{source theory}
+\longleftrightarrow
+\text{common system ontology}
+\longleftrightarrow
+\text{our model}.
+\]
+
+Do not combine equations merely because variables have similar interpretations, mathematical forms, numerical ranges, or normalizations.
+
+In particular, **semantic and dimensional compatibility must be established before quantities imported from different theories are equated, compared, added, or used as inputs to one another**.
+
+A common numerical range does not imply a common physical or operational meaning. Normalization does not establish dimensional equivalence.
+
+When several external theories are integrated, each must first be mapped independently to the common ontology:
+
+\[
+\text{Theory A}
+\longleftrightarrow
+\text{common ontology}
+\longleftrightarrow
+\text{Theory B}.
+\]
+
+Integration must then be performed through that common layer rather than by directly identifying variables across papers.
+
+If a valid mapping requires an additional transformation,
+
+\[
+y=g(x),
+\]
+
+that transformation is part of our model and must be stated explicitly. It must not be silently treated as if \(x\) and \(y\) were the same quantity.
+
+If no defensible mapping can be established, the theories must remain separate until the incompatibility is resolved.
+
+The ontology is therefore not merely terminology. It is a **consistency layer for theoretical integration**.
+
+It is not the scientific objective or a contribution by itself. Its role is to prevent incoherent transfer while supporting the construction and evaluation of the HLS system.
+
+---
+
+## 5. Two parallel research lines
 
 The project follows two complementary research lines.
 
@@ -102,7 +167,7 @@ Capture the strongest theoretical foundations that can support the system.
 
 For each foundation:
 
-`original problem -> established result -> assumptions -> mathematical structure -> relevance to our system -> limitations -> possible adaptation`.
+`original problem -> established result -> assumptions -> mathematical structure -> ontology mapping -> relevance to our system -> limitations -> possible adaptation`.
 
 The objective is to build a theoretical base from proven knowledge.
 
@@ -110,6 +175,9 @@ Theoretical work should answer questions such as:
 - Which established results justify a component?
 - Under what conditions are they valid?
 - Can they be transferred directly?
+- Which source concepts are genuinely equivalent to concepts in our system?
+- Which require an explicit mapping?
+- Are their units, domains, and operational meanings compatible?
 - What changes when the resources are learning models?
 - What part, if any, requires new theory?
 
@@ -119,15 +187,15 @@ Build minimal experiments that reproduce important established results and test 
 
 The preferred sequence is:
 
-`reproduce known result -> verify mechanism -> translate to learning models -> test limits -> adapt to our problem`.
+`reproduce known result -> verify mechanism -> map to common ontology -> translate to learning models -> test limits -> adapt to our problem`.
 
 The objective is not merely to obtain positive results. Experiments must reveal whether the imported principle actually survives the translation.
 
-Negative results are useful when they identify where an analogy breaks.
+Negative results are useful when they identify where an analogy or ontology mapping breaks.
 
 ---
 
-## 5. Theory and experiments must interact
+## 6. Theory and experiments must interact
 
 The two lines are not sequential.
 
@@ -139,11 +207,20 @@ Results from one domain may suggest a mechanism; a minimal experiment can determ
 
 The cycle is:
 
-`established theory -> minimal reproduction -> translation -> experimental stress test -> theoretical refinement`.
+`established theory -> minimal reproduction -> ontology mapping -> translation -> experimental stress test -> theoretical refinement`.
+
+A failed translation may indicate that:
+- an assumption does not survive;
+- two quantities thought to be equivalent are only related;
+- a mapping function is missing;
+- units or scales are incompatible;
+- or the imported theory does not apply.
+
+Such failures are scientific results, not reasons to force the analogy.
 
 ---
 
-## 6. Build from foundations toward the complete system
+## 7. Build from foundations toward the complete system
 
 Do not let a local mechanism become the research objective merely because it is mathematically interesting or easy to experiment with.
 
@@ -161,7 +238,7 @@ The research should progress approximately as:
 
 ---
 
-## 7. Distinguish imported knowledge from our contribution
+## 8. Distinguish imported knowledge from our contribution
 
 Maintain explicit epistemic status.
 
@@ -182,9 +259,11 @@ Never present imported theory as our novelty.
 
 Never discard imported theory merely because it is not novel.
 
+A proposed correspondence between concepts from different theories is not **TRANSFERRED** merely because it is plausible. The ontology mapping itself must be justified.
+
 ---
 
-## 8. Novelty should emerge at the correct level
+## 9. Novelty should emerge at the correct level
 
 Possible sources of genuine contribution include:
 - a new system architecture;
@@ -204,7 +283,7 @@ The contribution should be judged at the level where the scientific novelty actu
 
 ---
 
-## 9. Improvement must be demonstrated
+## 10. Improvement must be demonstrated
 
 Novel organization alone is insufficient.
 
@@ -225,9 +304,13 @@ Comparisons must use strong alternatives and fair budgets.
 
 Do not weaken baselines to create an apparent contribution.
 
+In comparisons between joint and separate management, the separate policy must be scientifically strong and must not be defined as weak myopia merely to obtain a strict advantage. If the joint policy is defined as the global optimum over a policy class containing the separate policy, weak dominance is tautological; the research content lies in meaningful policy definitions and strict, equality, and no-advantage conditions.
+
+If several components contribute to a common objective, their contributions must be expressed in compatible quantities or connected through explicitly defined mappings before system-level improvement is computed.
+
 ---
 
-## 10. Experimental discipline
+## 11. Experimental discipline
 
 Before large experiments:
 
@@ -235,7 +318,8 @@ Before large experiments:
 2. define what outcome supports it;
 3. define what outcome contradicts it;
 4. identify confounders;
-5. use the smallest experiment capable of distinguishing the alternatives.
+5. verify that the quantities being compared have compatible meanings and scales;
+6. use the smallest experiment capable of distinguishing the alternatives.
 
 Prefer:
 
@@ -245,24 +329,29 @@ Do not begin with a large benchmark when a small experiment can answer the scien
 
 ---
 
-## 11. Do not overinterpret analogies
+## 12. Do not overinterpret analogies
 
 Cross-domain similarity is a source of theory, not proof.
 
 For every imported idea, ask:
 - What is structurally equivalent?
-- What is not equivalent?
+- What is merely related?
+- What is incompatible?
+- What remains unresolved?
 - Which assumptions survive?
 - Which quantities need new definitions?
+- Are their units and domains compatible?
 - Which conclusions cannot be transferred?
 
 For example, a competence may be treated *like* an asset for some purposes, but that does not make every result of financial portfolio theory automatically valid for competences.
+
+Likewise, two quantities normalized to \([0,1]\) are not interchangeable merely because they share the same numerical range.
 
 Translation must be demonstrated, not asserted.
 
 ---
 
-## 12. Terminology discipline
+## 13. Terminology discipline
 
 Use the simplest term that accurately describes the phenomenon.
 
@@ -280,9 +369,11 @@ Prefer clear statements such as:
 
 over abstract terminology when the abstraction adds no precision.
 
+The common ontology should stabilize terminology across imported theories. Source-specific terminology may be retained when discussing a source, but its relationship to the common system terminology must remain explicit.
+
 ---
 
-## 13. Anti-drift rules
+## 14. Anti-drift rules
 
 Stop and return to this document when any of the following occurs:
 
@@ -294,24 +385,33 @@ Stop and return to this document when any of the following occurs:
 - theory is developed without an identifiable role in the system;
 - literature search becomes keyword matching instead of structural reasoning;
 - a toy model starts dictating the architecture;
-- an attractive side result pulls the project away from the main objective.
+- one current source paper starts defining an entire theoretical beam;
+- a diagnostic experiment starts dictating the research question;
+- an attractive side result pulls the project away from the main objective;
+- quantities from different theories are identified because their notation or mathematical form looks similar;
+- normalized quantities are combined without establishing semantic or dimensional compatibility;
+- a cross-domain analogy is used as if it were already a validated mapping.
 
-The corrective question is:
+The corrective questions are:
 
 > Does this strengthen the theoretical foundation, the construction, or the demonstrated value of the system?
+
+and, when importing or combining theories:
+
+> Are we combining genuinely compatible concepts, or merely mathematically similar quantities?
 
 If not, park it.
 
 ---
 
-## 14. Core operating rule
+## 15. Core operating rule
 
 The general research strategy is:
 
-> **Use the strongest knowledge already available. Verify that it transfers. Adapt it where necessary. Develop new theory only where the system genuinely requires it. Integrate the pieces into a system whose novelty and improvement are demonstrated at system level.**
+> **Use the strongest knowledge already available. Map it rigorously to a common ontology. Verify that it transfers. Adapt it where necessary. Develop new theory only where the system genuinely requires it. Integrate the pieces into a system whose novelty and improvement are demonstrated at system level.**
 
 Or, compactly:
 
-`FOUNDATIONS -> REPRODUCTION -> TRANSFER -> ADAPTATION -> INTEGRATION -> SYSTEM -> DEMONSTRATED IMPROVEMENT`
+`FOUNDATIONS -> REPRODUCTION -> ONTOLOGY -> TRANSFER -> ADAPTATION -> INTEGRATION -> SYSTEM -> DEMONSTRATED IMPROVEMENT`
 
 This is the project's research doctrine.

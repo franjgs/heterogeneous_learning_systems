@@ -1,5 +1,7 @@
 # Research Programme Checkpoint 002
 
+> **Historical checkpoint.** It preserves the programme state at the time. Any RQ wording in this document is historical; the current canonical RQ0 is in [research_questions.md](research_questions.md).
+
 Date: 2026-09-14
 Status: broad landscape phase provisionally closed; no model or experiment has been started.
 

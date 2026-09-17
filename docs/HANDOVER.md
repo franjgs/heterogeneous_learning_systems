@@ -1,7 +1,7 @@
 # Heterogeneous Learning Systems — Handover
 
-Last updated: 2026-09-16
-Repository state: documentary backbone consolidated around the HLS scientific object, cross-domain foundations, and research doctrine; RQ0 unchanged; P1--P4, CIV, and CR0--CR4 remain subordinate scaffolding.
+Last updated: 2026-09-17
+Repository state: RQ0 updated to dynamic allocation and development of competences; common HLS ontology established as the mandatory consistency layer; P1--P4, CIV, B13, and CR0--CR4 remain subordinate scaffolding or diagnostic evidence.
 
 ## Mandatory first reads
 
@@ -10,18 +10,19 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 1. [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md) — general methodology and anti-drift rules above any individual HLS mechanism.
 2. `README.md` — short project entry point. **Do not rewrite it to follow every intermediate hypothesis.**
 3. [general_research_model.md](general_research_model.md) — canonical HLS scientific object and architecture.
-4. [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md) — canonical map of established principles to understand, translate, and test.
-5. [theory/two_beam/README.md](theory/two_beam/README.md) — current technical skeleton connecting organization of knowledge with competence evolution; not a complete HLS model.
-6. [experimental_foundations/README.md](experimental_foundations/README.md) and [experimental_foundations/EXPERIMENTAL_SPEC_V0.md](experimental_foundations/EXPERIMENTAL_SPEC_V0.md) — audited Beam 1, Beam 2, and interface-reproduction block; B2.5 remains `FAILED_SOURCE_REPRODUCTION`.
-7. `research_origin_and_chronology.md` — historical provenance and superseded directions.
-8. [research_program_checkpoint_004.md](research_program_checkpoint_004.md) — programme-level scientific position; later log entries record subsequent documentation corrections.
-9. `research_questions.md` — official RQ0 and subordinate H1.
-10. `research_strategy_cross_domain_toolkit.md` — supporting protocol for importing mathematics without replacing the HLS problem.
-11. `landscape/landscape_001_consolidated.md` and `literature/references.bib`.
-12. [theory_integrated_competence_investment_model.md](theory_integrated_competence_investment_model.md) and [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md) — subordinate CIV model and its branch register; portfolio exposure is not a current programme priority.
-13. `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md` only as diagnostic history, not as the current centre.
-14. [theory_competence_evolution_minimal_model.md](theory_competence_evolution_minimal_model.md) and [experiments/microverification/](../experiments/microverification/) — CR0--CR4 minimal-model audit; not a general HLS result.
-15. [paper/](../paper/) — working architecture-to-theory-to-validation LaTeX draft; inspect for consistency but do not let it set programme direction.
+4. [research_questions.md](research_questions.md) — canonical wording of official RQ0 and subordinate H1.
+5. [hls_ontology.md](hls_ontology.md) — canonical HLS concepts, units/ranges, mapping classes, and source-to-HLS mapping discipline.
+6. [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md) — canonical map of established principles to understand, map, translate, and test.
+7. [theory/two_beam/README.md](theory/two_beam/README.md) — current technical skeleton connecting organization/use with competence development/evolution; not a complete HLS model.
+8. [experimental_foundations/README.md](experimental_foundations/README.md) and [experimental_foundations/EXPERIMENTAL_SPEC_V0.md](experimental_foundations/EXPERIMENTAL_SPEC_V0.md) — audited Beam 1, Beam 2, and interface-reproduction block; B2.5 remains `FAILED_SOURCE_REPRODUCTION`, and B13 is diagnostic only.
+9. `research_origin_and_chronology.md` — historical provenance and superseded directions.
+10. [research_program_checkpoint_004.md](research_program_checkpoint_004.md) — historical pre-ontology checkpoint, not the current RQ0 source.
+11. `research_strategy_cross_domain_toolkit.md` — supporting protocol for importing mathematics without replacing the HLS problem.
+12. `landscape/landscape_001_consolidated.md` and `literature/references.bib`.
+13. [theory_integrated_competence_investment_model.md](theory_integrated_competence_investment_model.md) and [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md) — subordinate CIV model and its branch register; portfolio exposure is not a current programme priority.
+14. `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md` only as diagnostic history, not as the current centre.
+15. [theory_competence_evolution_minimal_model.md](theory_competence_evolution_minimal_model.md) and [experiments/microverification/](../experiments/microverification/) — CR0--CR4 minimal-model audit; not a general HLS result.
+16. [paper/](../paper/) — working draft with a stale RQ0 formulation; do not let it set programme direction and do not update it without a dedicated paper task.
 
 ## Central programme
 
@@ -36,7 +37,7 @@ heterogeneous learners
     -> future task allocation
 ```
 
-The central idea is population-level **deliberate evolution of competence allocation**.
+The central problem is the dynamic allocation and development of competences at system level. Operational allocation determines who performs work; learning and transfer decisions determine who learns what and from whom; present use may change future competence and performance.
 
 Do not reduce the programme to:
 
@@ -55,7 +56,7 @@ Those are possible components, adversaries, mechanisms, or historical steps.
 
 RQ0 remains the sole promoted repository research question:
 
-> Can the deliberate evolution of competence allocation in a heterogeneous learning system improve its long-term performance compared with independently optimizing task allocation and knowledge transfer?
+> Can the dynamic allocation and development of competences in a heterogeneous learning system improve long-term system performance compared with architectures that manage task allocation and knowledge transfer separately?
 
 H1 about failure frequency/quality gap is subordinate. It is a useful diagnostic problem, not the central hypothesis.
 
@@ -66,6 +67,8 @@ The relevant object is the competence distribution across a portfolio, conceptua
 ```text
 C_t = [c_iz(t)]
 ```
+
+This matrix is provisional. The canonical ontology distinguishes competence coverage from competence proficiency and does not assume both fit one scalar entry.
 
 The system may contain multiple learners and multiple teachers.
 
@@ -90,17 +93,17 @@ A locally preferred learning action can be inferior in downstream portfolio valu
 
 ### P3 — Evolution can beat frozen routing
 
-Direct adversary: a frozen heterogeneous portfolio with a strong adaptive router. P3 asks whether deliberate competence evolution can still improve long-term operational value under non-trivial conditions.
+Direct adversary: a frozen heterogeneous portfolio with a strong adaptive router. P3 asks whether competence evolution can still improve long-term operational value under non-trivial conditions.
 
 ### P4 — Coupling advantage
 
-Candidate strongest system-level claim:
+Candidate subordinate comparison:
 
 ```text
-V_coupled > V_strong-decoupled
+J(pi_joint) > J(pi_separate)
 ```
 
-The decoupled baseline must itself be strong and use comparable routing, learning/transfer machinery, compute, data, and budget. P4 is not yet an official RQ or established hypothesis.
+The separate-management baseline must itself be strong and use comparable routing, learning/transfer machinery, compute, data, and budget. It must not be reduced to weak myopia. P4 is not an official RQ or established result, and weak dominance is tautological if the joint policy class simply contains the separate class.
 
 ## Scientific priority
 
@@ -108,8 +111,9 @@ Current order:
 
 1. preserve the whole-system view of HLS as an evolving distribution of usable competences;
 2. build theoretical foundations by extracting assumptions, mathematical content, limits, and HLS translations from strong cross-domain results;
-3. reproduce important transferable mechanisms minimally when this tests whether they survive translation to learning models;
-4. integrate supported components only when their role in the whole HLS, null cases, and fair comparisons are explicit.
+3. reproduce important mechanisms minimally when useful;
+4. map every source independently into the common ontology before translation or integration;
+5. integrate supported components only when their role in the whole HLS, null cases, compatible units, and fair comparisons are explicit.
 
 Do not let CR0--CR4, reachability, P4, or another tractable mechanism replace this programme-level priority.
 
@@ -185,7 +189,7 @@ A recent related paper is evidence of an active area, not automatically evidence
 
 ## Immediate next action
 
-Use [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md), [general_research_model.md](general_research_model.md), and [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md) as the active anchors. The Garicano--Gutjahr two-beam foundation block has been implemented and audited: source reproductions, limiting cases, and the B12 interface are recorded under `experiments/foundations/` and `results/foundations/`. B2.5 is an explicit failed source reproduction, while B12.4 supports only the existence of the configured dynamic channel, not its benefit. Any subsequent scientific action requires a separate decision; do not infer one from this completed audit.
+Use [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md), [research_questions.md](research_questions.md), [general_research_model.md](general_research_model.md), and [hls_ontology.md](hls_ontology.md) as active anchors. Garicano and Gutjahr are primary current references, not the theories of their beams. The B1/B2/B12 block reproduces source mechanisms and limiting cases; B2.5 remains an explicit failed source reproduction, and B12.4 supports only the configured causal channel, not benefit. B13 is a diagnostic model that exposed a present-versus-future value structure and semantic incompatibilities; it is not a proof of `J(pi_joint) > J(pi_separate)`. The next documentation/theory work must map additional verified foundations through the ontology and define fair joint/separate policy classes and compatible operational value before another integration claim.
 
 Do not start a large experiment until the proposition, competence transformation, adversaries, matched information and resources, and validity conditions are explicit.
 

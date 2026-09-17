@@ -6,23 +6,24 @@ A useful skeleton should degrade sensibly when one of its mechanisms is removed.
 
 If
 \[
-\mathcal L(S_t,x_t,\theta_t)=S_t,
+\mathcal L(S_t,e_t,\theta_t)=S_t,
 \]
 operation does not change competence. The feedback through learning disappears and the
 problem reduces to repeated organization of a fixed knowledge/competence state. This is the
 natural static limit of Beam~1.
 
-\subsection{No effect of allocation on experience}
+\subsection{No effect of allocation on exposure}
 
-If realized experience \(x_t\) is independent of \(a_t\), then current work organization does
-not influence future competence through the proposed interface. The two beams coexist but are
-not dynamically coupled. This is an important null case.
+If real work \(w_t\) is independent of \(a_t\), or learning exposure \(e_t\) is independent
+of the allocation-induced work, then current organization does not influence future competence
+through the proposed interface. The two beams coexist but are not dynamically coupled. This
+is an important null case.
 
 \subsection{No depreciation}
 
 Setting retention to one in a representation such as
 \[
-e_{t+1}(q)=\rho_q e_t(q)+x_t(q)
+E_{t+1}(q)=\rho_q E_t(q)+e_t(q)
 \]
 removes forgetting while retaining learning by experience. This corresponds to a standard
 limiting case of competence-development models.

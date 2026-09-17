@@ -443,3 +443,17 @@ allocation -> experience -> competence -> future allocation
 ```
 
 can change future allocation in a non-degenerate part of the declared grid. The fraction 0.375 is grid geometry, not performance, prevalence, or evidence that coupling is beneficial. The audit adds uniform result manifests, exact bibliography keys, explicit pass/fail contracts, and independent tests. It does not establish RQ0, P4, novelty, or superiority of an HLS policy.
+
+## Decision 021 — Current RQ0 and common HLS ontology
+
+Date: 2026-09-17.
+
+Replace the official RQ0 wording based on “deliberate evolution of competence allocation” with:
+
+> Can the dynamic allocation and development of competences in a heterogeneous learning system improve long-term system performance compared with architectures that manage task allocation and knowledge transfer separately?
+
+The earlier wording remains part of the historical record but is no longer the current research question. The scientific comparison is `J(pi_joint) > J(pi_separate)`, together with equality and no-advantage conditions. `pi_separate` must be scientifically strong rather than weak myopia, and weak dominance is tautological if the joint policy is defined only as an optimum over a class containing the separate policy.
+
+Adopt `hls_ontology.md` as the canonical semantic and dimensional consistency layer. It distinguishes competence coverage, competence proficiency, operational performance, real work, learning exposure, allocation, interaction, learning/transfer, useful work, operational value, and cumulative objective. Every source theory must be mapped independently as `EQUIVALENT`, `RELATED`, `INCOMPATIBLE`, or `UNRESOLVED` before integration.
+
+Garicano (2000) and Gutjahr (2011) remain primary current references for the organization/use and development/evolution beams, respectively; neither defines an entire beam. The general candidate interface is now written with explicit allocation-to-work, work-to-exposure, and exposure-to-competence mappings. B13 is retained as diagnostic evidence that exposed present-versus-future value structure and semantic problems; `G_G > D_G` is not the programme proof. This consolidation introduces no new scientific result.
