@@ -749,7 +749,219 @@ derived regions. This does not imply that routing and learning must always be
 solved jointly, or that joint management generally dominates a sufficiently
 coordinated modular architecture.
 
-## 10. Structural interpretation
+## 10. Joint effect of endogenous opportunity generation and portfolio interaction
+
+This **DERIVED-IN-MODEL** result uses the existing Fast/Deep construction and
+the existing complementary continuation value; it adds no new physical
+mechanism. Let the competence state be \(S=(s_1,s_2)\), let \(F\) be the Fast
+model, and let the Deep model \(D\) have operational utility
+
+\[
+h=1-c_D.
+\]
+
+For a present task of type \(i\), routing to \(F\) gives \(R_F=s_i\), while
+routing to \(D\) gives \(R_D=h\). The operational action determines whether a
+development opportunity exists:
+
+\[
+a_i=F\Rightarrow d_i=0,
+\qquad
+a_i=D\Rightarrow d_i\in\{0,1\}.
+\]
+
+Using the available opportunity changes \(s_i\) to \(s_i+\Delta_i\) and
+costs \(\kappa_i\geq0\). When \(s_i>h\), routing that present task to \(D\)
+sacrifices immediate operational utility
+
+\[
+\rho_i=s_i-h>0.
+\]
+
+Here \(\rho_i\) is only a derived Fast/Deep difference, not a new primitive.
+For the future value, retain
+
+\[
+V_{\mathrm{COMP}}(s_1,s_2)=\max\{h,\min(s_1,s_2)\}.
+\]
+
+The full values of changing present routing to create and use one opportunity
+are
+
+\[
+\begin{aligned}
+H_1={}&-(s_1-h)+\beta[V(s_1+\Delta_1,s_2)-V(s_1,s_2)]-\kappa_1,\\
+H_2={}&-(s_2-h)+\beta[V(s_1,s_2+\Delta_2)-V(s_1,s_2)]-\kappa_2.
+\end{aligned}
+\]
+
+If both current tasks are routed to \(D\), both opportunities are used, and
+the current operational rewards add, the corresponding full value is
+
+\[
+\begin{aligned}
+H_{12}={}&-(s_1-h)-(s_2-h)\\
+&+\beta[V(s_1+\Delta_1,s_2+\Delta_2)-V(s_1,s_2)]
+-\kappa_1-\kappa_2.
+\end{aligned}
+\]
+
+Each \(H_i\) includes the current routing sacrifice, use of the generated
+development opportunity, its cost, and the resulting continuation change. It
+is therefore neither \(\Gamma\) nor \(\Omega\) alone.
+
+### Proposition 7 — Joint Fast/Deep opportunity value under complementary continuation value
+
+Suppose
+
+\[
+s_1=s_2=s>h,
+\qquad \Delta_1=\Delta_2=\Delta\geq0.
+\]
+
+Then
+
+\[
+V(s,s)=s,
+\qquad V(s+\Delta,s)=V(s,s+\Delta)=s,
+\qquad V(s+\Delta,s+\Delta)=s+\Delta,
+\]
+
+and hence
+
+\[
+H_1=-(s-h)-\kappa_1<0,
+\qquad H_2=-(s-h)-\kappa_2<0,
+\]
+
+while
+
+\[
+H_{12}=-2(s-h)-\kappa_1-\kappa_2+\beta\Delta.
+\]
+
+Consequently, the joint routing-and-development choice is strictly beneficial
+if and only if
+
+\[
+\boxed{\beta\Delta>2(s-h)+\kappa_1+\kappa_2.}
+\]
+
+Thus there is a nonempty region in which \(H_1<0\), \(H_2<0\), and
+\(H_{12}>0\).
+
+**Proof.** Since \(s>h\) and \(\Delta\geq0\), the smaller competence after
+either one improvement remains \(s\), so the first three value identities
+follow directly from \(V_{\mathrm{COMP}}=\max\{h,\min\}\). Improving both
+competences raises their minimum to \(s+\Delta\), giving the fourth. Substitute
+these four values in the definitions of \(H_1,H_2,H_{12}\). The individual
+values are strictly negative because \(s-h>0\) and \(\kappa_i\geq0\). The
+displayed strict inequality is exactly the condition \(H_{12}>0\).
+\(\square\)
+
+The condition describes a nonempty region, for example the numerical instance
+below satisfies it. Equality is a boundary with \(H_{12}=0\), not a strict
+benefit. The cases \(s=h\), \(\Delta=0\), \(\beta=0\), and zero development
+costs are retained separately in the computational audit. The proposition's
+strict conclusion requires \(s>h\), and equality in the boxed condition always
+gives \(H_{12}=0\).
+
+### Exact relation to portfolio interaction
+
+For the symmetric case,
+
+\[
+\begin{aligned}
+\Gamma_{12}
+={}&V(s+\Delta,s+\Delta)-V(s+\Delta,s)\\
+&-V(s,s+\Delta)+V(s,s)\\
+={}&\Delta.
+\end{aligned}
+\]
+
+Therefore, with additive costs,
+
+\[
+\boxed{H_{12}=H_1+H_2+\beta\Gamma_{12}.}
+\]
+
+The identity shows precisely how endogenous opportunity generation and joint
+portfolio valuation enter the same Fast/Deep comparison. The current routing
+actions make the two development actions available; the \(\Gamma_{12}\) term
+is the continuation value that can reverse their joint ranking.
+
+This complementarity does not require crossing a Fast/Deep policy boundary.
+Throughout the stated symmetric regime \(s>h\), Fast already dominates Deep
+for the relevant continuation operation. The source of \(\Gamma_{12}=\Delta\)
+is the bottleneck \(\min(s_1,s_2)\): it is an intrinsic operational
+complementarity of this fixed future value. This is distinct from the earlier
+routing-induced interaction mechanism, where a maximum over individually
+additive future policies creates \(\Gamma\) at a policy boundary. The two
+mechanisms are compatible but neither is reduced to the other.
+
+### Numerical instance
+
+For
+
+\[
+h=0.8,\quad s_1=s_2=0.85,\quad \Delta_1=\Delta_2=0.15,
+\quad \kappa_1=\kappa_2=0,\quad \beta=1,
+\]
+
+the derived current routing sacrifices are
+\(\rho_1=\rho_2=0.05\). The individual continuation increments vanish:
+
+\[
+V(1.00,0.85)-V(0.85,0.85)=0,
+\qquad
+V(0.85,1.00)-V(0.85,0.85)=0.
+\]
+
+Thus
+
+\[
+H_1=H_2=-0.05.
+\]
+
+Jointly,
+
+\[
+V(1.00,1.00)-V(0.85,0.85)=0.15,
+\qquad \Gamma_{12}=0.15,
+\]
+
+so
+
+\[
+H_{12}=0.15-0.05-0.05=0.05>0.
+\]
+
+The exact, narrow conclusion is that the Fast/Deep model contains a region in
+which \(F\) is better than \(D\) for each present operation considered alone,
+and using \(D\) for either one opportunity remains unfavorable even after
+including that opportunity's learning. Routing both operations to \(D\) and
+using both opportunities is nevertheless beneficial because the future
+competence improvements are complementary.
+
+It does not establish that every separated architecture is suboptimal, that
+routing and learning must always be solved jointly, that the result is novel,
+or that policy-boundary crossing is always involved. A sufficiently coordinated
+modular architecture can represent the same values and select the same pair.
+
+### Brief checkpoint recap
+
+1. **Opportunity value \(\Omega\):** operation can determine which development
+   opportunities exist.
+2. **Portfolio interaction \(\Gamma\):** future operational value can make
+   independent competence developments substitutes or complements.
+3. **Policy selection:** a maximum over individually additive operational
+   policies can itself induce \(\Gamma\neq0\) and change the optimal
+   development portfolio.
+4. **Integrated \(\Omega+\Gamma\):** endogenous opportunity generation plus
+   future complementarity can make jointly beneficial a set of present
+   operational actions that are individually unattractive.
+
+## 11. Structural interpretation
 
 Two independent axes organize these results.
 
@@ -765,7 +977,7 @@ a joint future competence requirement induces complementarity. In both cases
 the interaction enters through \(V(S)\), the structure of future operation and
 routing.
 
-## 11. Limits and recorded questions
+## 12. Limits and recorded questions
 
 These exact results do not demonstrate novelty of \(\Omega\), Bellman
 decomposition, or finite differences; general superiority of joint or central
@@ -782,6 +994,10 @@ Propositions 5 and 6 are additionally limited to two additive future policies
 and two independent interventions. They do not establish that every policy
 boundary creates interaction, that every interaction changes a development
 decision, or that fixed-policy continuation values are additive in real HLS.
+
+Proposition 7 is limited to the stated two-competence symmetric Fast/Deep
+case, additive current routing sacrifices and development costs, and
+\(V_{\mathrm{COMP}}\). It does not generalize beyond those assumptions.
 
 Recorded but unresolved questions are:
 

@@ -2,12 +2,16 @@ from __future__ import annotations
 
 from hls.development_opportunity_value import (
     cross_difference,
+    fast_deep_h1,
+    fast_deep_h12,
+    fast_deep_h2,
     gamma_comp_closed,
     gamma_policy_selection,
     gamma_sub_closed,
     individual_selection,
     mixed_gamma,
     portfolio_selection,
+    symmetric_fast_deep_joint_benefit,
     value_comp,
     value_sub,
 )
@@ -79,3 +83,24 @@ def test_individual_and_portfolio_decision_regions_and_ties() -> None:
     assert portfolio_selection(1, 2, -1) == frozenset(
         {frozenset({2}), frozenset({1, 2})}
     )
+
+
+def test_integrated_fast_deep_opportunity_and_complementarity_identity() -> None:
+    h, s, delta, beta = 0.8, 0.85, 0.15, 1.0
+    h1 = fast_deep_h1(s, s, delta, h, beta, 0.0)
+    h2 = fast_deep_h2(s, s, delta, h, beta, 0.0)
+    h12 = fast_deep_h12(s, s, delta, delta, h, beta, 0.0, 0.0)
+    gamma = cross_difference(value_comp, s, s, delta, delta, h)
+
+    assert abs(h1 + 0.05) <= 1e-12
+    assert abs(h2 + 0.05) <= 1e-12
+    assert abs(gamma - 0.15) <= 1e-12
+    assert abs(h12 - 0.05) <= 1e-12
+    assert abs(h12 - (h1 + h2 + beta * gamma)) <= 1e-12
+    assert symmetric_fast_deep_joint_benefit(s, h, delta, beta, 0.0, 0.0)
+
+
+def test_integrated_fast_deep_symmetric_boundaries() -> None:
+    assert not symmetric_fast_deep_joint_benefit(0.75, 0.5, 0.5, 1.0, 0.0, 0.0)
+    assert fast_deep_h12(0.75, 0.75, 0.25, 0.25, 0.5, 0.0, 0.0, 0.0) < 0
+    assert cross_difference(value_comp, 0.75, 0.75, 0.0, 0.0, 0.5) == 0

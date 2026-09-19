@@ -15,12 +15,16 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from hls.development_opportunity_value import (
     cross_difference,
+    fast_deep_h1,
+    fast_deep_h12,
+    fast_deep_h2,
     gamma_comp_closed,
     gamma_policy_selection,
     gamma_sub_closed,
     individual_selection,
     mixed_gamma,
     portfolio_selection,
+    symmetric_fast_deep_joint_benefit,
     value_comp,
     value_sub,
 )
@@ -30,6 +34,8 @@ GRID = (0.0, 0.2, 0.4, 0.6, 0.8, 1.0)
 TOLERANCE = 1e-12
 POLICY_GRID = tuple(value / 2 for value in range(-12, 13))
 DECISION_GRID = tuple(value / 2 for value in range(-12, 13))
+FAST_DEEP_STATE_GRID = (0.0, 0.25, 0.5, 0.75, 1.0)
+FAST_DEEP_KAPPA_GRID = (0.0, 0.0625, 0.125, 0.1875, 0.25)
 
 
 def _strict_decision_region(g1: float, g2: float, c: float) -> str | None:
@@ -66,6 +72,69 @@ def _region_loss(region: str, g1: float, g2: float, c: float) -> float:
     if region == "D":
         return -min(g1, g2) - c
     raise ValueError(f"unknown region: {region}")
+
+
+def _audit_integrated_fast_deep() -> dict[str, int]:
+    """Verify the symmetric Omega + Gamma identity within the Fast/Deep model."""
+    cases = 0
+    strictly_joint_beneficial = 0
+    for h in FAST_DEEP_STATE_GRID:
+        for s in FAST_DEEP_STATE_GRID:
+            if s <= h:
+                continue
+            for delta in FAST_DEEP_STATE_GRID:
+                if s + delta > 1.0:
+                    continue
+                for beta in FAST_DEEP_STATE_GRID:
+                    for kappa1 in FAST_DEEP_KAPPA_GRID:
+                        for kappa2 in FAST_DEEP_KAPPA_GRID:
+                            h1 = fast_deep_h1(s, s, delta, h, beta, kappa1)
+                            h2 = fast_deep_h2(s, s, delta, h, beta, kappa2)
+                            h12 = fast_deep_h12(
+                                s, s, delta, delta, h, beta, kappa1, kappa2
+                            )
+                            gamma = cross_difference(
+                                value_comp, s, s, delta, delta, h
+                            )
+                            assert abs(h1 - (-(s - h) - kappa1)) <= TOLERANCE
+                            assert abs(h2 - (-(s - h) - kappa2)) <= TOLERANCE
+                            assert abs(gamma - delta) <= TOLERANCE
+                            assert abs(h12 - (h1 + h2 + beta * gamma)) <= TOLERANCE
+                            condition = symmetric_fast_deep_joint_benefit(
+                                s, h, delta, beta, kappa1, kappa2
+                            )
+                            assert (h12 > TOLERANCE) == condition
+                            if (
+                                h1 < -TOLERANCE
+                                and h2 < -TOLERANCE
+                                and h12 > TOLERANCE
+                            ):
+                                strictly_joint_beneficial += 1
+                            cases += 1
+
+    # Explicit non-strict boundaries and the supplied numerical instance.
+    assert abs(fast_deep_h1(0.8, 0.8, 0.2, 0.8, 1.0, 0.0)) <= TOLERANCE
+    assert (
+        abs(fast_deep_h12(0.8, 0.8, 0.2, 0.2, 0.8, 1.0, 0.0, 0.0) - 0.2)
+        <= TOLERANCE
+    )
+    assert cross_difference(value_comp, 0.75, 0.75, 0.0, 0.0, 0.5) == 0.0
+    assert fast_deep_h12(0.75, 0.75, 0.25, 0.25, 0.5, 0.0, 0.0, 0.0) < 0.0
+    assert not symmetric_fast_deep_joint_benefit(0.75, 0.5, 0.5, 1.0, 0.0, 0.0)
+
+    example_h1 = fast_deep_h1(0.85, 0.85, 0.15, 0.8, 1.0, 0.0)
+    example_h2 = fast_deep_h2(0.85, 0.85, 0.15, 0.8, 1.0, 0.0)
+    example_h12 = fast_deep_h12(0.85, 0.85, 0.15, 0.15, 0.8, 1.0, 0.0, 0.0)
+    example_gamma = cross_difference(value_comp, 0.85, 0.85, 0.15, 0.15, 0.8)
+    assert abs(example_h1 + 0.05) <= TOLERANCE
+    assert abs(example_h2 + 0.05) <= TOLERANCE
+    assert abs(example_h12 - 0.05) <= TOLERANCE
+    assert abs(example_gamma - 0.15) <= TOLERANCE
+
+    return {
+        "integrated_fast_deep_cases": cases,
+        "integrated_fast_deep_strictly_joint_beneficial_cases": strictly_joint_beneficial,
+    }
 
 
 def audit() -> dict[str, float | int]:
@@ -158,6 +227,8 @@ def audit() -> dict[str, float | int]:
     )
     assert individual_selection(1, -1) == portfolio_selection(1, -1, 0)
 
+    integrated_fast_deep = _audit_integrated_fast_deep()
+
     return {
         "grid_cases": checked,
         "mixed_sign_reversal_cases": strict_both,
@@ -168,6 +239,7 @@ def audit() -> dict[str, float | int]:
         "strict_decision_changes": strict_decision_cases,
         "decision_tie_cases": tie_cases,
         **{f"region_{region}_cases": count for region, count in region_counts.items()},
+        **integrated_fast_deep,
         "tolerance": TOLERANCE,
     }
 

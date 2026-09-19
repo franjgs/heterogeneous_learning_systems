@@ -647,3 +647,37 @@ makes no novelty claim and establishes neither general joint-management
 superiority nor a requirement to solve routing and learning jointly. It shows
 only that, in the stated two-policy model, ignoring how development changes
 future operational policy selection can yield a suboptimal development choice.
+
+## Decision 028 — Integrated Fast/Deep opportunity and portfolio effect
+
+Date: 2026-09-19.
+
+Record the first **DERIVED-IN-MODEL** checkpoint in which operation-dependent
+development opportunity generation and portfolio interaction appear together
+within the existing Fast/Deep model. The operational action remains distinct
+from the development action: routing a present task to Deep makes its
+development opportunity available, but competence changes only if that
+opportunity is used.
+
+Under the existing complementary continuation value
+`V_COMP(s1,s2)=max{h,min(s1,s2)}`, take the symmetric regime
+`s1=s2=s>h` and `Delta1=Delta2=Delta`. A one-task Deep routing/development
+choice has full value `H_i=-(s-h)-kappa_i<0`. The paired choice has
+`H12=-2(s-h)-kappa1-kappa2+beta Delta`, so it is strictly beneficial exactly
+when `beta Delta > 2(s-h)+kappa1+kappa2`. The exact relation is
+`H12=H1+H2+beta Gamma12`, with `Gamma12=Delta`.
+
+Thus the model contains a nonempty region in which Fast is operationally
+better on each present task, and each individually generated learning
+opportunity remains unfavorable in total, while routing both tasks to Deep and
+using both opportunities is favorable because the future competence portfolio
+is complementary. The complementarity comes here from the fixed
+`min{s1,s2}` bottleneck, not from crossing a Fast/Deep policy boundary; this
+is distinct from, and compatible with, the earlier routing-induced
+policy-selection mechanism.
+
+The computational audit verifies the identity, symmetric formulas, strict
+condition, equality boundaries, and the supplied numerical instance. This is
+not a novelty claim, does not establish a universal need for joint routing and
+learning, and does not show general superiority over a sufficiently
+coordinated modular architecture.

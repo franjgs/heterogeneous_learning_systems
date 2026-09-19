@@ -111,3 +111,67 @@ def portfolio_selection(g1: float, g2: float, c: float) -> Selection:
             DEVELOPMENT_SETS[3]: g1 + g2 + c,
         }
     )
+
+
+def fast_deep_h1(
+    s1: float,
+    s2: float,
+    delta1: float,
+    h: float,
+    beta: float,
+    kappa1: float,
+) -> float:
+    """Full value of routing task 1 to Deep and using its opportunity."""
+    return (
+        -(s1 - h)
+        + beta * (value_comp(s1 + delta1, s2, h) - value_comp(s1, s2, h))
+        - kappa1
+    )
+
+
+def fast_deep_h2(
+    s1: float,
+    s2: float,
+    delta2: float,
+    h: float,
+    beta: float,
+    kappa2: float,
+) -> float:
+    """Full value of routing task 2 to Deep and using its opportunity."""
+    return (
+        -(s2 - h)
+        + beta * (value_comp(s1, s2 + delta2, h) - value_comp(s1, s2, h))
+        - kappa2
+    )
+
+
+def fast_deep_h12(
+    s1: float,
+    s2: float,
+    delta1: float,
+    delta2: float,
+    h: float,
+    beta: float,
+    kappa1: float,
+    kappa2: float,
+) -> float:
+    """Full value of routing both tasks to Deep and using both opportunities."""
+    return (
+        -(s1 - h)
+        - (s2 - h)
+        + beta * (value_comp(s1 + delta1, s2 + delta2, h) - value_comp(s1, s2, h))
+        - kappa1
+        - kappa2
+    )
+
+
+def symmetric_fast_deep_joint_benefit(
+    s: float,
+    h: float,
+    delta: float,
+    beta: float,
+    kappa1: float,
+    kappa2: float,
+) -> bool:
+    """Strict analytic condition for the documented symmetric Fast/Deep case."""
+    return beta * delta > 2.0 * (s - h) + kappa1 + kappa2
