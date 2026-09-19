@@ -291,9 +291,21 @@ With terminal value `R S1,3 S2,3` and period-2 development of `S2`, the continua
 
 The price therefore depends on the optimal continuation policy, but that policy is a single explicit threshold. T>2 does not establish a need for joint management, irreducible complexity, or a requirement to communicate a full Bellman value function. A sufficient representation of the relevant gradient can be enough.
 
+### Operational-development opportunity-value checkpoint
+
+The companion note [operational_development_opportunity_value.md](theory/operational_development_opportunity_value.md) records further **DERIVED-IN-MODEL** identities without changing the ontology, RQ0, or the minimal-model boundaries. It keeps the decisions distinct: an operational action `a` selects current execution and may make a development action `d` feasible, but it does not itself use the opportunity or change competence. Its exact decomposition is
+
+```text
+Q(S,q,a) = R(S,q,a) + beta V(S) + Omega(S,q,a),
+```
+
+where `Omega` is the nonnegative incremental value of the development opportunities remaining after `a`, under the explicit no-use action. The note separates two structural axes: whether `Omega(S,q,a)` changes the present routing ranking, and whether development-set values are additive or coupled by the future competence portfolio.
+
+For two independent competence improvements, future routing can itself create portfolio geometry. A single future backup capacity shared by two classes gives the exact finite-difference result `Gamma_SUB <= 0` (substitution); a future task whose fast model is limited by `min{s1,s2}` gives `Gamma_COMP >= 0` (complementarity). Their workload mixture has `Gamma(p)=p Gamma_SUB+(1-p) Gamma_COMP`, so its sign can reverse. These are exact reduced-model results: neither requires non-additive learning dynamics, establishes novelty, proves HLS/joint-management superiority, nor excludes sufficiently coordinated modular architectures.
+
 ## Open issue for a later task
 
-Use the [minimal model](theory/minimal_hls_model.md), closed [ontology](hls_ontology.md), [research questions](research_questions.md), and [research doctrine](../RESEARCH_DOCTRINE.md) as anchors. The next adversarial audit, not started here, will test whether any previously excluded mechanism creates a dependency that does not reduce immediately to a simple price or threshold: (A) changing or uncertain future demand; (B) several agents with alternative competences, where development changes subsequent use, development, or knowledge-source choices; and (C) learning by doing, where operational allocation generates direct experience and changes future competences. This record neither specifies nor analyses A/B/C. HLS is not claimed to be the only way to select the optimum.
+Use the [minimal model](theory/minimal_hls_model.md), [operational-development opportunity-value note](theory/operational_development_opportunity_value.md), closed [ontology](hls_ontology.md), [research questions](research_questions.md), and [research doctrine](../RESEARCH_DOCTRINE.md) as anchors. The next adversarial audit, not started here, will test whether any previously excluded mechanism creates a dependency that does not reduce immediately to a simple price or threshold: (A) changing or uncertain future demand; (B) several agents with alternative competences, where development changes subsequent use, development, or knowledge-source choices; and (C) learning by doing, where operational allocation generates direct experience and changes future competences. This record neither specifies nor analyses A/B/C. HLS is not claimed to be the only way to select the optimum.
 
 Do not start a large experiment until the proposition, competence transformation, adversaries, matched information and resources, and validity conditions are explicit.
 

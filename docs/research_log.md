@@ -569,3 +569,44 @@ it may identify a tractable HLS subclass, derive a scalable interpretable index,
 obtain a guarantee relative to global control, characterize a sufficient signal,
 formulate portfolio-development rules, integrate known results, or map the
 conditions under which standard tools suffice.
+
+## Decision 026 — Operationally generated development opportunities and routing-induced portfolio geometry
+
+Date: 2026-09-19.
+
+Record the companion DERIVED-IN-MODEL checkpoint in
+[theory/operational_development_opportunity_value.md](theory/operational_development_opportunity_value.md).
+It maintains the ontological separation between operational allocation `a`
+(who executes current work) and development action `d` (whether and how an
+available experience is used to modify competence). Routing may generate an
+opportunity; it does not automatically train or learn.
+
+For a general state/action block, the exact identity
+`Q(S,q,a)=R(S,q,a)+beta V(S)+Omega(S,q,a)` defines `Omega` as the incremental
+continuation value of the development opportunities available after the
+operational action. The explicit no-use action makes `Omega>=0`. Four regimes
+are distinguished: opportunity value irrelevant for routing; scalar local
+opportunity value; local values with shared-resource selection; and joint
+portfolio valuation. Thus dependence of `Omega` on `a` and additivity of the
+development-set value are separate structural questions.
+
+Two exact routing-induced portfolio results are added. With independent
+competence improvements and one future deep-model backup shared between two
+independent classes, the finite-difference interaction is nonpositive
+(`Gamma_SUB<=0`): future capacity scarcity induces substitution even when
+learning dynamics are independent. With a future fast-model task limited by
+`min{s1,s2}`, the interaction is nonnegative (`Gamma_COMP>=0`): the future
+operational requirement induces complementarity without transfer or
+non-additive learning dynamics. A mixed workload has
+`Gamma(p)=p Gamma_SUB+(1-p) Gamma_COMP`, so the sign can reverse as workload
+composition changes.
+
+The results are analytical identities in stated finite models, supported by a
+small exhaustive grid verification. They make no novelty claim, do not prove
+RQ0 or P4, and do not establish general superiority of joint management over a
+sufficiently coordinated modular architecture. The next questions are only
+recorded: characterize value-function classes producing each interaction sign,
+identify low-dimensional sufficient statistics for opportunity values, extend
+to stochastic future demand while retaining the `a`/`d` distinction, and map
+each tractable subclass to established control or optimization results before
+introducing new machinery.
