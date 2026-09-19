@@ -1,6 +1,6 @@
-# Minimal HLS Mathematical Model v1
+# Minimal HLS model: v1, equivalence boundary, and coordination result
 
-**Status:** CONSOLIDATED (2026-09-19). This is a model-scoped analytical result, not a novelty or general-superiority claim.
+**Status:** CONSOLIDATED (2026-09-19). Sections 1–5 retain minimal model v1 and its fixed-priority result. Sections 6–9 consolidate the subsequent additive-equivalence and operation-dependent development results. Both propositions are DERIVED-IN-MODEL; neither establishes novelty or general superiority.
 
 ## 1. Purpose
 
@@ -139,8 +139,183 @@ For \(D\to A\), equality holds exactly when \(V_m^A\leq V_m^D\) for every \(m\),
 \exists m:\ V_m^A>V_m^D.
 \]
 
-## 5. Interpretation, scope, and next problem
+## 5. Interpretation and scope of v1
 
 The fixed orders fail on complementary parameter regions. Operation first is strictly inferior where development has the greater marginal value; development first is strictly inferior where operation has the greater marginal value. Consequently, no fixed priority between these actions is universally optimal in this minimal T=2 model. This is a first existence result in favour of joint management under the stated fixed-priority baselines.
 
-The result does **not** show that joint management dominates every conceivable separated architecture, establish novelty, establish RQ0 in general, or extend beyond T=2. A separated architecture with sufficient coordination or information exchange could reproduce the joint choice. The next theoretical problem is therefore precisely to characterize stronger, genuinely separated policy classes and determine which equality or strict-advantage conditions remain—without adding mechanisms or extending this model in the present work.
+The result does **not** show that joint management dominates every conceivable separated architecture, establish novelty, establish RQ0 in general, or extend beyond T=2. The stronger comparison below makes the possibility of reproducing the joint choice precise.
+
+## 6. Proposition 1 — Equivalence boundary under additive separability
+
+### Hypotheses and architecture
+
+Consider one normalized agent/capacity block in the reduced T=2 problem of section 4, suppressing its agent and time indices:
+
+\[
+J(a,d)=C+V^A a+V^D d,\qquad
+a\geq0,\quad d\geq0,\quad a+d\leq1.
+\]
+
+Here \(C\) is independent of the decisions and \(V^A,V^D\geq0\), as inherited from v1. For that block, \(C=pS_{m,1}\), \(V^A=S_{m,1}+p\eta_m\), and \(V^D=p\lambda_m\). With the sufficient-demand assumptions in section 4, these blocks add across the two agents.
+
+A stronger separated architecture can choose an optimal prior resource share \(\rho\in[0,1]\) using both marginal values, then execute
+
+\[
+a=\rho,\qquad d=1-\rho,\qquad
+J_S(\rho)=C+\rho V^A+(1-\rho)V^D.
+\]
+
+This grants the resource allocator optimal coordination; separate execution of the two activities does not imply separate decision criteria for choosing their resource shares. It is stronger than either fixed priority in section 3.
+
+### Conclusion
+
+\[
+\boxed{J_S^*:=\max_{\rho\in[0,1]}J_S(\rho)
+      =J_J^*:=\max_{a,d\geq0,\ a+d\leq1}J(a,d)
+      =C+\max\{V^A,V^D\}.}
+\]
+
+### Proof
+
+Set \(M=\max\{V^A,V^D\}\geq0\). Every feasible pair satisfies
+
+\[
+V^A a+V^D d\leq M(a+d)\leq M.
+\]
+
+The bound is attained by \((1,0)\) when \(V^A\geq V^D\), and by \((0,1)\) when \(V^D\geq V^A\). The separated architecture attains those same endpoints with \(\rho=1\) or \(\rho=0\). If \(V^A=V^D\), every share attains the optimum. If both vanish, slack capacity is also optimal in the joint feasible set. This proves equality. \(\square\)
+
+**Assumption audit.** Nonnegativity is inherited from v1, rather than an additional physical mechanism. Omitting a sign condition would make the displayed optimum false for two negative marginal values: on the triangle it would be \(C+\max\{0,V^A,V^D\}\), whereas the full-capacity share forces one of those negative contributions. The proposition therefore states the inherited signs explicitly.
+
+**Interpretation.** Operation, development, and competition for capacity alone do not require joint decision making to attain the optimum. Under this additive structure, optimal resource allocation followed by separate execution suffices. This is an equivalence boundary for the HLS comparison, not a negative result for HLS.
+
+## 7. Minimal extension and corrected separate decision criteria
+
+### Only physical change: operation-dependent indirect experience
+
+In v1, \(E^{ind}=d\) does not depend on operational activity. The extension replaces only this exposure map with
+
+\[
+E^{ind}=ad.
+\]
+
+Here \(a\) and \(d\) are normalized capacity allocations in the same reduced block. The product represents indirect exposure that requires both operational activity and a development action during the period; it does not assert a detailed within-period schedule. Exposure is expressed in normalized exposure units. Neither the development decision nor the work performed is identified with experience or competence.
+
+Keeping direct exposure and the linear experience-to-competence law gives the same T=2 reduction with the substitution
+
+\[
+S_{m,2}=S_{m,1}+\eta_m a+\lambda_m ad,
+\qquad
+J(a,d)=C+Va+Lad,
+\]
+
+where \(C=pS_{m,1}\), \(V=S_{m,1}+p\eta_m\), and \(L=p\lambda_m\). The regime studied here has \(V>0,L>0\). These are reduced coefficients, not new fundamental HLS variables: \(C\) is a constant value contribution, not resource cost; \(V\) is a coefficient, not the ontology's value mapping; \(L\) is a coefficient, not latency or the competence-transition function. All objective terms have the same operational-value units. The shared constraint remains \(a,d\geq0,\ a+d\leq1\); demand, capacity, horizon, operational-value mapping, and absence of terminal competence reward are unchanged.
+
+### Discarded formulation and its correction
+
+An intermediate formulation gave both managers the global objective \(J(a,d)\), each maximizing it with respect to its own variable while holding the other fixed. That formulation is **discarded as a definition of strict separate management**: it separates execution of optimization steps while supplying both decision makers with the global criterion.
+
+The corrected local objectives are
+
+\[
+J_A(a)=Va,\qquad J_D(d;a)=Lad.
+\]
+
+They are distinct objective functions, \(J_A\neq J_D\neq J\), although their numerical values may coincide at particular points. The operational manager does not optimize the indirect-learning term. The development manager knows the physical exposure technology \(ad\) and the current \(a\), but optimizes only its development contribution. Global performance of every resulting allocation is still evaluated with the same physical \(J\); local optimization objectives are not extra system rewards.
+
+The two managers control \(a\) and \(d\), not the two physical agents of v1. Each unilateral deviation must respect the other's fixed allocation and the shared capacity constraint. Thus a separated equilibrium means a feasible pair of mutual best responses:
+
+\[
+a\in\arg\max_{0\leq x\leq1-d}Vx,\qquad
+d\in\arg\max_{0\leq y\leq1-a}Lay.
+\]
+
+This is an equilibrium definition with shared constraints, not an assumed iterative algorithm or a convergence claim. In this particular model, the discarded common-objective formulation happens to yield the same best responses: its operational slope is \(V+Ld>0\), while its development slope is \(La\). That coincidence does not make its decision criteria a valid definition of strict separation.
+
+## 8. Proposition 2 — Coordination/selection under operation-dependent competence development
+
+### Hypotheses
+
+Use precisely the physical objective, shared feasible set, and corrected local objectives in section 7. Assume \(0<V<L\). Write \(J_S(a):=J(a,1-a)\) for the **global performance** of a separated equilibrium, distinct from either local objective.
+
+### Conclusion
+
+1. The separated equilibria with positive operational activity form the continuum
+   \[
+   \mathcal E_S=\{(a,1-a):0<a\leq1\}.
+   \]
+2. The joint optimum over the full feasible triangle is unique and lies in the interior of the full-capacity segment:
+   \[
+   a_J^*=\frac{V+L}{2L},\qquad
+   d_J^*=\frac{L-V}{2L},\qquad
+   J_J^*=C+\frac{(V+L)^2}{4L}.
+   \]
+   Both activities are positive; the point is on the triangle's capacity boundary, not in its two-dimensional interior.
+3. At every equilibrium in \(\mathcal E_S\),
+   \[
+   \boxed{J_J^*-J_S(a)=L(a-a_J^*)^2\geq0.}
+   \]
+4. Equality holds exactly at \(a=a_J^*\). In particular,
+   \[
+   (a_J^*,d_J^*)\in\mathcal E_S,\qquad
+   \max_{(a,d)\in\mathcal E_S}J(a,d)=J_J^*.
+   \]
+
+### Proof
+
+For fixed \(d\in[0,1]\), \(V>0\) gives the unique operational best response
+
+\[
+BR_A(d)=1-d.
+\]
+
+For fixed \(a>0\), \(La>0\) gives the unique development best response
+
+\[
+BR_D(a)=1-a.
+\]
+
+Every pair \((a,1-a)\) with \(0<a\leq1\) satisfies both responses, and the first response forces every positive-activity equilibrium to have this form.
+
+For joint optimization at any \(a>0\), increasing \(d\) raises \(J\), so the joint optimizer uses \(d=1-a\). Points with \(a=0\) have value \(C\), strictly below the feasible value \(C+V\) at \((1,0)\); they cannot be joint optima. It suffices to maximize
+
+\[
+f(a):=J(a,1-a)=C+(V+L)a-La^2,\qquad 0\leq a\leq1.
+\]
+
+Its derivatives are
+
+\[
+f'(a)=V+L-2La,\qquad f''(a)=-2L<0.
+\]
+
+The unique stationary point is \(a_J^*=(V+L)/(2L)\). Under \(0<V<L\), it satisfies \(1/2<a_J^*<1\), so it is the unique maximizer on the segment; \(d_J^*=1-a_J^*>0\). The preceding reduction establishes uniqueness on the full feasible triangle.
+
+Completing the square yields the exact identity
+
+\[
+f(a)=C+\frac{(V+L)^2}{4L}
+       -L\left(a-\frac{V+L}{2L}\right)^2.
+\]
+
+This proves the optimal value and gap formula. Since \(L>0\), the gap vanishes only at \(a_J^*\), which itself belongs to the separated equilibrium continuum. \(\square\)
+
+### Boundary and degeneracy audit
+
+At **\(V=L>0\)**, the stationary point reaches \(a_J^*=1,d_J^*=0\). The joint optimum remains unique, but is no longer an interior split. The exact formula becomes
+
+\[
+J_J^*=C+L,\qquad J_J^*-J_S(a)=L(1-a)^2.
+\]
+
+At **\(a=0\)**, \(J_D(d;0)=0\) for every feasible \(d\), hence \(BR_D(0)=[0,1]\) is set-valued. The operational best response is zero only if \(d=1\), so \((0,1)\) is the sole additional, degenerate mutual-best-response equilibrium. Other feasible pairs \((0,d)\) are not equilibria. The full equilibrium set is therefore \(\mathcal E_S\cup\{(0,1)\}\). The degenerate point has global value \(C\), and the completed-square identity remains exact there. This endpoint is not needed to establish multiplicity or the positive-activity selection problem.
+
+## 9. Current interpretation and exact limits
+
+Proposition 1 establishes equality with a separated architecture that can optimize the prior resource share. Proposition 2 uses a different, explicit decision structure: two local objectives with no rule selecting among their mutual best responses. These two comparators must not be conflated.
+
+With operation-dependent development, the local best-response conditions permit many allocations and do not specify which equilibrium is selected. Joint optimization identifies one optimal split under \(0<V<L\). Selecting another separated equilibrium incurs exactly \(L(a-a_J^*)^2\), but the joint optimum remains an available separated equilibrium. Thus the result concerns selection, **not** a strict gap between the joint optimum and the best separated equilibrium. No average loss, probability of selecting a suboptimal equilibrium, convergence property, or necessary failure of decentralized control is established.
+
+The interaction \(E^{ind}=ad\) invalidates the additive decomposition used in Proposition 1; it does not preclude a sufficiently coordinated resource allocator from choosing the same optimal split. Separation of physical execution, separation of optimization steps, and separation of decision objectives are different properties. HLS is not established as the only mechanism capable of selecting the optimum.
+
+Additional decentralized coordination through incentives or internal prices could potentially select that point. Such mechanisms have not been studied here, and none is specified or validated by these propositions. Their ability to select the optimum remains an open issue for a later task. The present consolidation ends with these T=2 results; it makes no novelty, empirical, or universal decentralized-architecture claim and does not change RQ0.

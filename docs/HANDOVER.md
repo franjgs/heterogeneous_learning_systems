@@ -1,7 +1,7 @@
 # Heterogeneous Learning Systems — Handover
 
 Last updated: 2026-09-19
-Repository state: HLS ontology v1 is closed as the mandatory semantic consistency layer. Minimal HLS model v1 is consolidated with its T=2 fixed-priority analytical result; it is model-scoped and does not establish general superiority over separated architectures. P1--P4, CIV, B13, and CR0--CR4 remain subordinate scaffolding or diagnostic evidence.
+Repository state: HLS ontology v1 is closed. Minimal model v1 and the subsequent T=2 results are consolidated: additive equivalence under optimal resource sharing, and a coordination/selection problem under operation-dependent indirect experience. The joint optimum belongs to the corrected separated equilibrium set; no strict advantage over its best equilibrium is established. P1--P4, CIV, B13, and CR0--CR4 retain their subordinate status.
 
 ## Mandatory first reads
 
@@ -12,7 +12,7 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 3. [general_research_model.md](general_research_model.md) — canonical HLS scientific object and architecture.
 4. [research_questions.md](research_questions.md) — canonical wording of official RQ0 and subordinate H1.
 5. [hls_ontology.md](hls_ontology.md) — canonical HLS concepts, units/ranges, mapping classes, and source-to-HLS mapping discipline.
-6. [theory/minimal_hls_model.md](theory/minimal_hls_model.md) — consolidated minimal model v1 and exact T=2 comparison against the two stated fixed-priority baselines.
+6. [theory/minimal_hls_model.md](theory/minimal_hls_model.md) — v1 fixed-priority results, Proposition 1 on additive equivalence, and Proposition 2 on coordination/selection with corrected local objectives and exact quadratic loss.
 7. [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md) — canonical map of established principles to understand, map, translate, and test.
 8. [theory/two_beam/README.md](theory/two_beam/README.md) — current technical skeleton connecting organization/use with competence development/evolution; not a complete HLS model.
 9. [experimental_foundations/README.md](experimental_foundations/README.md) and [experimental_foundations/EXPERIMENTAL_SPEC_V0.md](experimental_foundations/EXPERIMENTAL_SPEC_V0.md) — audited Beam 1, Beam 2, and interface-reproduction block; B2.5 remains `FAILED_SOURCE_REPRODUCTION`, and B13 is diagnostic only.
@@ -188,7 +188,9 @@ For every important paper ask:
 
 A recent related paper is evidence of an active area, not automatically evidence that the programme is closed.
 
-## Consolidated minimal-model result
+## Consolidated theoretical state
+
+### Retained v1 result
 
 The minimal model uses two agents, one competence, `T=2`, a shared capacity constraint for operational allocation and competence development, and no terminal reward for competence. Under normalized capacities, demand sufficient to operate both agents, and a period-2 opportunity with probability `p`, it defines
 
@@ -208,9 +210,34 @@ Thus operation-first is strictly suboptimal when `V_m^D > V_m^A` for at least on
 
 This is an existence result only for the two explicitly defined fixed-priority separated architectures. A separated architecture with sufficient coordination can reproduce the joint solution; it is not a proof against every separated architecture, a general answer to RQ0, or a novelty claim. See [minimal_hls_model.md](theory/minimal_hls_model.md).
 
-## Immediate next action
+### Proposition 1 — Additive equivalence boundary
 
-Use [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md), [research_questions.md](research_questions.md), [general_research_model.md](general_research_model.md), [hls_ontology.md](hls_ontology.md), and the consolidated [minimal model](theory/minimal_hls_model.md) as active anchors. The next theoretical problem is to define stronger, genuinely separated policy classes and determine which equality or strict-advantage conditions remain, with matched information and resources. Do not extend `T=2`, add mechanisms, or claim a result against those stronger architectures until that problem is explicitly posed. Garicano and Gutjahr remain primary references for their respective beams; B13 remains diagnostic, not a proof of `J(pi_joint) > J(pi_separate)`.
+For the reduced block `J=C+V^A a+V^D d`, with the v1 nonnegative marginal values and `a,d>=0, a+d<=1`, a stronger separated architecture chooses an optimal prior share `rho in [0,1]` and executes `(a,d)=(rho,1-rho)`. It obtains `J_S^*=J_J^*=C+max{V^A,V^D}`. Additive contributions and competition for capacity therefore permit equivalence through appropriate resource allocation. This boundary does not constitute a negative result for HLS. Separate execution here includes coordination of the resource decision.
+
+### Proposition 2 — Coordination/selection with operation-dependent development
+
+The only physical extension is `E_ind=ad` in place of v1's `E_ind=d`. With all other physical assumptions retained, the reduced block is `J=C+Va+Lad`, with `V,L>0` and the same capacity constraint.
+
+An intermediate definition in which both managers optimized global `J` with respect to their own variable is discarded as a definition of strict separate management. The corrected decision criteria are `J_A=Va` and `J_D=Lad`: the development manager knows the physical technology, but neither manager optimizes global `J`. They are managers of the two decisions, not the two physical agents. Performance is still evaluated using the common physical objective `J`.
+
+Their best responses are `BR_A(d)=1-d` and, for `a>0`, `BR_D(a)=1-a`. The positive-activity separated equilibria are all `(a,1-a)` with `0<a<=1`. For `0<V<L`, the unique joint optimum is
+
+```text
+a_J^* = (V+L)/(2L)
+d_J^* = (L-V)/(2L)
+J_J^* = C+(V+L)^2/(4L)
+J_J^* - J_S(a) = L(a-a_J^*)^2.
+```
+
+Only `a=a_J^*` achieves the joint optimum, and that allocation itself is a separated equilibrium. Consequently, `max_{(a,d) in E_S} J(a,d)=J_J^*`; there is no strict advantage over the best separated equilibrium. The local decision criteria do not select an equilibrium by themselves. No selection dynamics or probability of a loss has been established.
+
+At `V=L>0`, the joint optimum remains unique at `(1,0)` and the gap is `L(1-a)^2`. At `a=0`, development is indifferent over `[0,1]`; only `(0,1)` also satisfies the operational best response, adding a degenerate equilibrium with value `C`.
+
+Both propositions are DERIVED-IN-MODEL. The numerical coincidence of best responses under the discarded and corrected formulations does not identify their decision criteria. Nor does the interaction rule out an optimally coordinated prior split. Separation of execution must not be confused with separation of decision objectives.
+
+## Open issue for a later task
+
+Use the [minimal model](theory/minimal_hls_model.md), closed [ontology](hls_ontology.md), [research questions](research_questions.md), and [research doctrine](../RESEARCH_DOCTRINE.md) as anchors. Whether an additional decentralized coordination mechanism, for example incentives or internal prices, could select the same optimum is unstudied. No such mechanism has been specified or validated, and HLS is not claimed to be the only way to select the optimum. The present task stops at consolidation; it does not extend T=2, design coordination mechanisms, or change the paper or RQ0.
 
 Do not start a large experiment until the proposition, competence transformation, adversaries, matched information and resources, and validity conditions are explicit.
 
