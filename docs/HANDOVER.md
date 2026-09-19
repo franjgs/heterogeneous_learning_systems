@@ -118,6 +118,50 @@ Current order:
 
 Do not let CR0--CR4, reachability, P4, or another tractable mechanism replace this programme-level priority.
 
+## Constructive methodology and retained boundaries
+
+The programme no longer treats a reduction to established theory as an automatic
+reason to discard an HLS phenomenon. The working sequence is: identify an HLS
+phenomenon; use the strongest applicable established theory constructively;
+integrate compatible results through the ontology; derive HLS-specific
+consequences; and then audit the resulting claims adversarially.
+
+The central principle is: **do not ask whether HLS escapes existing theory; ask
+what structure HLS induces, which established theories exploit that structure,
+how those results can be integrated, and what useful HLS-specific consequences
+follow.**
+
+The minimal-model record retains the following boundaries: simple
+operation-development competition can be separable; simple
+operation-transfer coupling can be decentralized by prices; complementary
+competences make development value portfolio-dependent but sufficiently
+informed coordination can recover the optimum; routing boundaries can defeat a
+specific marginal price while a continuation value or rich nonlinear contract
+can coordinate the system; and central/joint management has no intrinsic
+advantage over a perfectly coordinated modular architecture. The results also
+show that development value is a continuation value, potentially dependent on
+the portfolio and future choices, and that information, computation, and
+communication are distinct coordination requirements.
+
+M0 supplies the model-scoped reduced margin
+\(g(q)=N_q[\lambda_q-m(q)]_+-\kappa_q\), making explicit the roles of operational
+margin, future use, learnability, and learning cost. With competence
+generalization, development value can become portfolio-dependent and
+interventions can be complementary. Static formulations can sometimes reduce to
+known combinatorial optimization. These are useful boundaries and potential
+method sources, not automatic reasons to abandon the phenomena.
+
+Constructive candidate paths, none yet an established HLS result or novelty
+claim, include routing-as-teaching with limited expensive-model capacity,
+index/RMAB/Whittle policies where their assumptions fit, competence-portfolio
+valuation, competence complementarity, routing-generated learning
+opportunities, transfer and generalization, and principled integration of
+several established theories. A contribution may identify a tractable HLS
+subclass, derive an interpretable scalable index, obtain a guarantee against
+global control, characterize a sufficient operational signal, formulate
+portfolio-development rules, integrate compatible theory, or map when standard
+tools already suffice.
+
 ## Policy on existing pieces
 
 Do not discard components because they have prior art. A strong paper can use known routing, KD, Machine Teaching, active learning, submodular allocation, continual learning, drift detection, or diversity mechanisms with proper citation.

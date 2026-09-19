@@ -454,11 +454,21 @@ The foundations do **not** yet provide:
     jointly deciding who performs versus who learns.
 
 The immediate theoretical task is to complete defensible ontology mappings and
-then define a common operational value and strong policy classes for the
-programme comparison `J(pi_joint)` versus `J(pi_separate)`. The target includes
-strict-advantage, equality, and no-advantage conditions. A myopic policy can be
-a diagnostic case, but it is not by itself a scientifically strong definition
-of separate management.
+then use the mapped foundations constructively: identify tractable HLS
+structure, translate or integrate compatible results, and derive the
+HLS-specific consequences. The programme comparison `J(pi_joint)` versus
+`J(pi_separate)` retains strict-advantage, equality, reducibility, and
+no-advantage conditions. A myopic policy can be a diagnostic case, but it is
+not by itself a scientifically strong definition of separate management.
+
+Known mathematical structure is a positive resource for this programme.
+Control/MDP formulations, resource allocation, portfolio methods, Machine
+Teaching, state abstraction, index or RMAB/Whittle methods, and static
+combinatorial formulations may each be appropriate for a specified HLS
+subclass. Their availability can yield a policy, approximation, guarantee,
+or boundary of sufficiency. It does not close the HLS question; the ontology
+mapping, assumptions, integration with other mechanisms, and HLS-specific
+operational consequences still have to be established.
 
 # Common structure
 

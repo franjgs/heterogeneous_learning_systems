@@ -21,6 +21,12 @@ RQ0 remains the sole official research question:
 
 This formulation supersedes the earlier RQ0 wording based on “deliberate evolution of competence allocation.” This document does not promote H1, P1--P4, or any other proposition to official-question status.
 
+The constructive orientation around RQ0 is:
+
+> What exploitable structure arises when heterogeneous learning models are routed, learn from operation or transfer, and thereby change the future competence portfolio; and which established theories can be integrated to exploit that structure efficiently?
+
+This is programme orientation, not a replacement RQ. The equivalence and reducibility boundaries in the minimal models show why RQ0 must not be read as an obligation to prove that joint control intrinsically beats every perfectly coordinated modular architecture.
+
 An HLS contains heterogeneous learners, models, agents, or other operational units. Their heterogeneity can concern capability, cost, latency, specialization, learnability, availability, or roles in learning and knowledge transfer. A currently motivating architecture combines diverse relatively fast and inexpensive learners with more capable, slower or more expensive teachers. These are functional roles rather than permanent model types, and the architecture does not narrow RQ0 to two fixed layers.
 
 ## 3. General system model and semantic discipline
@@ -94,6 +100,8 @@ J(pi_joint) > J(pi_separate),
 
 together with conditions for equality and no advantage. `pi_joint` internalizes how present organization and use affect experience, competence evolution, and future performance. `pi_separate` is a strong architecture that manages task allocation and competence development or knowledge transfer separately without correctly internalizing their cross-effect. It must not be defined as an artificially weak or merely myopic baseline. If `pi_joint` is only the global optimum over a class containing `pi_separate`, weak dominance is tautological; the scientific problem is to define meaningful policy classes and derive strict/equality/no-advantage conditions.
 
+The minimum-model boundaries retain a complementary positive role: they identify when modular coordination is sufficient, which state information or continuation value a coordinating signal requires, and when a richer continuation contract can recover the system optimum. They do not eliminate the HLS object; they constrain which claim can be made about it.
+
 ## 6. Candidate strategy families
 
 The following initial families are neither exhaustive nor claims that each is independently useful in HLS.
@@ -164,13 +172,15 @@ The programme should be substantially redirected if fair comparisons show no mea
 
 ## 11. Current direction
 
-The immediate direction is to build HLS from established foundations without losing the whole-system objective. The programme has two parallel lines: identify established cross-domain theory, and reproduce important mechanisms minimally when useful. Each source is then mapped independently through the common HLS ontology before transfer, adaptation, or integration. The aim is to establish which components and interactions genuinely support the HLS architecture before extending a local model or proposing a large benchmark.
+The immediate direction is to build HLS from established foundations without losing the whole-system objective. The programme has two parallel lines: identify established cross-domain theory, and reproduce important mechanisms minimally when useful. Each source is then mapped independently through the common HLS ontology before constructive transfer, adaptation, or integration; adversarial analysis then tests the scope of the resulting claims. The aim is to establish which components and interactions genuinely support the HLS architecture before extending a local model or proposing a large benchmark.
 
 The current two-beam organization asks how available competences should be organized and used, and how competence development should be managed for future system performance. Garicano (2000) is a primary current reference for the first beam and Gutjahr (2011) a primary current formal reference for the second; neither defines its beam, and both require independent complementary theoretical support.
 
 The [cross-domain foundations map](theoretical_foundations_cross_domain.md) records the current established base. The [integrated competence-investment model](theory_integrated_competence_investment_model.md) is an active but subordinate mathematical tool. Its thresholds, ranking-reversal construction, and pairwise boundaries are derived only under its stated specialization; they do not promote CIV to a programme-level result or a final controller.
 
 Its adversarial audit is recorded in [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md). Portfolio exposure remains a model-scoped concept from that audit, not the next central research problem. The programme does not infer a preferred strategy from environmental persistence or volatility alone.
+
+Constructive candidate paths include routing-as-teaching under limited expensive-model capacity, index/RMAB/Whittle policies where their assumptions are appropriate, competence-portfolio valuation, complementarity and generalization across competences, routing-generated learning opportunities, and principled integration of several established theories. None is currently a novelty claim or established HLS result. A contribution need not create a new mathematical class: it may identify a tractable HLS subclass, derive an interpretable scalable index policy, obtain a guarantee against global control, characterize a sufficient operational signal, formulate portfolio-development rules, integrate compatible theories, or map conditions under which standard tools suffice.
 
 The intended scientific outcome is not a generic resource-allocation model with machine-learning labels. It is a theory and experimental programme that can explain how the distribution of usable knowledge in a heterogeneous learning system should evolve, why, and with what consequences for future system performance.
 

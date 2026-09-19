@@ -598,3 +598,46 @@ immediately to another simple price or threshold:
 
 This is only a recorded question. No mechanism A/B/C is added, analysed, or
 claimed in the present model.
+
+## 12. Methodological role of the derived boundaries
+
+The results in this document are useful constraints on the programme, not
+grounds to discard the HLS phenomena they simplify. They show, within their
+stated reduced models, that simple operation-development competition can be
+additively separable; an operation-transfer interaction can be decentralized by
+a state-dependent price; complementary competences create portfolio-dependent
+value even though sufficiently informed coordination can recover the optimum;
+and a continuation-aware price or sufficiently rich contract can overcome the
+specific marginal-price limitation exposed by routing boundaries. Thus joint or
+central management has no intrinsic superiority over a perfectly coordinated
+modular architecture in these cases.
+
+The common lesson is constructive: competence development has a continuation
+value that can depend on the rest of the portfolio and on future decisions.
+Information needed for that value, computational effort to obtain it, and
+communication needed to coordinate action are distinct quantities; a count of
+communicated bits alone is not a measure of coordination difficulty.
+
+The earlier M0 minimal intervention model supplies a complementary
+DERIVED-IN-MODEL margin identity:
+
+\[
+g(q)=N_q[\lambda_q-m(q)]_+-\kappa_q.
+\]
+
+Under its stated assumptions, it makes the value of learning depend jointly on
+the operational margin, future use, learnability, and learning cost. In the
+M0 notation this is the same reduced form as
+\(-K_z+A_Hp_z\ell_z[g_z-m_z]_+\): \(N_q\) compresses future use,
+horizon, and learnability; \(\lambda_q\) is the conditional competence gain;
+\(m(q)\) is the operational margin; and \(\kappa_q\) is learning cost. With
+generalization across competences, that value becomes a portfolio property and
+interventions can be complementary. Static specializations of such allocation
+problems can sometimes reduce to established combinatorial optimization. Each
+such reduction is a boundary of sufficiency and a potential source of rigorous
+methods, not an automatic reason to abandon the HLS phenomenon.
+
+No generalization mechanism, combinatorial reduction, routing contract, or
+additional coordination architecture is derived in this document. These are
+methodological consequences and constructive routes for later work, with their
+own ontology mappings, assumptions, and audits required.

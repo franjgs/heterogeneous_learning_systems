@@ -90,6 +90,14 @@ The preferred sequence is:
 
 New theory should be developed where the existing foundations are insufficient for the system, not merely because novelty is desirable.
 
+### Constructive use of reductions and adversarial analysis
+
+Do not ask whether HLS escapes existing theory. Ask what structure HLS induces, which established theories exploit that structure, how compatible results can be integrated, and what useful HLS-specific consequences follow.
+
+A reduction to optimal control, an MDP, restless multi-armed bandits (RMAB), Whittle indices, resource allocation, portfolio theory, Machine Teaching, state abstraction, or combinatorial optimization is not a reason to discard an HLS phenomenon. Depending on the assumptions, it can supply a rigorous solution, a scalable and interpretable policy, a guarantee, an equivalence boundary, or one component of a wider HLS architecture.
+
+Use adversarial analysis after constructive translation and integration. Its role is to delimit claims: identify equality, reducibility, no-advantage, sufficiency, and failure conditions. It is not a default filter that turns “can be represented by established theory” into “is not worth studying.” A negative or boundary result is scientifically useful because it states when no new HLS-specific machinery is needed.
+
 ---
 
 ## 4. Establish a common ontology before transferring theory
@@ -323,7 +331,7 @@ Before large experiments:
 
 Prefer:
 
-`minimal controlled experiment -> adversarial test -> realistic scenario -> broader validation`.
+`minimal controlled experiment -> constructive transfer/integration test -> adversarial audit of claims -> realistic scenario -> broader validation`.
 
 Do not begin with a large benchmark when a small experiment can answer the scientific question.
 

@@ -22,6 +22,15 @@ conditions. It must not define `pi_separate` as a weak myopic baseline, and it
 must not treat `J(pi_joint) >= J(pi_separate)` as substantive when that inequality
 follows only because the joint policy class contains the separate class.
 
+The derived equivalence boundaries mean that this comparison is not an obligation
+to show intrinsic joint-control superiority over a perfectly coordinated modular
+architecture. Alongside strict-advantage conditions, it must retain equality,
+reducibility, and modular-sufficiency conditions. The current constructive
+orientation is to identify exploitable structure induced by routing, learning,
+transfer, and a changing competence portfolio, then determine which established
+theories can be integrated to use that structure efficiently. This orientation
+is not promoted to a new RQ.
+
 ## Current working hypothesis
 
 **H1 — WORKING HYPOTHESIS.** It is falsifiable, not an official research

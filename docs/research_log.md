@@ -510,3 +510,62 @@ The audit states the bounded-state feasibility condition `S1,1+lambda<=1`. It tr
 The T=3 result shows that a decentralizing incentive can depend on the optimal continuation policy. In this model that policy remains an explicit one-threshold rule, so the result does not establish irreducible complexity, a need to solve or communicate a full Bellman value function, necessary joint management, or strict superiority over coordinated separation. A representation sufficient for the relevant gradient may suffice.
 
 Record, without undertaking it, the next adversarial audit: (A) changing or uncertain future demand; (B) several agents with alternative competences, where development changes later use, development, or knowledge-source choices; and (C) learning by doing, where operational allocation generates direct experience and changes future competences. The purpose will be to determine whether a structural dependency remains after trying a simple price or threshold representation. No A/B/C mechanism is introduced or analysed by this decision.
+
+## Decision 025 — Constructive use of established theory and retained HLS boundaries
+
+Date: 2026-09-19.
+
+Correct the programme methodology. Recent adversarial analysis was sometimes
+read as the invalid rule “HLS mechanism -> reduction to known theory ->
+discard.” A reduction to control/MDP methods, resource allocation, portfolio
+theory, Machine Teaching, state abstraction, RMAB/Whittle indices, or
+combinatorial optimization can instead be a positive result: it can give a
+rigorous solution, an interpretable scalable policy, a guarantee, an
+equivalence boundary, or a component of a broader HLS architecture.
+
+The active sequence is now: identify the HLS phenomenon; use the strongest
+applicable established theory constructively; combine compatible results
+through the ontology; derive HLS-specific consequences; then audit the
+resulting claims adversarially. The corrective principle is: do not ask whether
+HLS escapes existing theory; ask what structure HLS induces, which established
+theories exploit it, how their results can be integrated, and what useful
+HLS-specific consequences follow.
+
+The negative and boundary record is retained. The minimal models show
+additive separability of simple operation-development competition; price
+decentralization of simple operation-transfer coupling; portfolio-dependent
+value under complementarity with recovery by sufficiently informed
+coordination; limits of a specific marginal price at routing boundaries with
+recovery by a continuation value or sufficiently rich nonlinear contract; and
+no intrinsic superiority of joint/central management over perfectly coordinated
+modular architecture. They also show that competence development has
+continuation value, may depend on the portfolio and future choices, and cannot
+be characterized by a raw count of communicated bits without separately
+considering information, computation, and communication.
+
+The M0 reduced margin form
+\(g(q)=N_q[\lambda_q-m(q)]_+-\kappa_q\) records the joint roles of operational
+margin, future use, learnability, and learning cost. It corresponds to M0's
+explicit \(-K_z+A_Hp_z\ell_z[g_z-m_z]_+\) after a notational compression, and
+retains M0's model scope. With generalization across competences, development
+value may become a portfolio property and interventions may be complementary.
+Static versions may reduce to established combinatorial optimization. These are
+boundaries of sufficiency and sources of methods, not reasons to abandon HLS.
+
+RQ0 remains unchanged. It must no longer be interpreted as requiring proof
+that a joint controller intrinsically dominates every perfectly coordinated
+separate architecture. Record, without promoting it to a new RQ, the
+constructive orientation: identify exploitable structure created when
+heterogeneous learning models are routed, learn from operation or transfer, and
+change the future competence portfolio; then integrate established theories to
+exploit that structure efficiently.
+
+Candidate paths remain open without novelty or result claims: routing-as-teaching
+under limited costly-model capacity; index/RMAB/Whittle policies when
+appropriate; competence portfolio valuation; complementarity; routing-generated
+learning; transfer and generalization; and principled cross-theory
+integration. A future contribution need not create a new mathematical class:
+it may identify a tractable HLS subclass, derive a scalable interpretable index,
+obtain a guarantee relative to global control, characterize a sufficient signal,
+formulate portfolio-development rules, integrate known results, or map the
+conditions under which standard tools suffice.

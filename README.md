@@ -56,7 +56,7 @@ The current repository-level research question is RQ0:
 
 > Can the dynamic allocation and development of competences in a heterogeneous learning system improve long-term system performance compared with architectures that manage task allocation and knowledge transfer separately?
 
-RQ0 is a **HYPOTHESIS** and remains the sole promoted repository research question. The scientific target is to characterize strict-advantage, equality, and no-advantage conditions for joint versus scientifically strong separate management. A weak myopic baseline or a tautological comparison between nested policy classes is insufficient.
+RQ0 is a **HYPOTHESIS** and remains the sole promoted repository research question. The scientific target is to characterize strict-advantage, equality, and no-advantage conditions for joint versus scientifically strong separate management. A weak myopic baseline or a tautological comparison between nested policy classes is insufficient. The equivalence boundaries already derived mean that RQ0 does not require proving that a joint controller intrinsically outperforms every perfectly coordinated modular architecture.
 
 ## 4. First diagnostic branch: H1 and RouteNLP
 
@@ -98,7 +98,7 @@ For the historical development and the M0/M0.1 diagnostic analysis, see the [chr
 
 The broad programme remains open. Its general framing is an HLS as an evolving distribution of competences: operation gives the current distribution value, while experience, learning, and transfer may change a future division of labour. H1, RouteNLP, Competence Investment Value (CIV), and minimal models remain subordinate diagnostic material, not the programme's centre.
 
-The current priority is to build theoretical and experimental foundations without identifying source concepts prematurely. Established results are first understood and, where useful, reproduced; they are then mapped into the [common HLS ontology](docs/hls_ontology.md) before translation or integration. Future system-level work must retain null cases and fair frozen, reactive, local, separate-management, and fully informed modular adversaries. See the [general research model](docs/general_research_model.md) and [cross-domain foundations](docs/theoretical_foundations_cross_domain.md).
+The current priority is to identify HLS structure and use established theory constructively: understand and, where useful, reproduce it; map it through the [common HLS ontology](docs/hls_ontology.md); translate and integrate compatible results; then audit the resulting HLS claims against null cases and fair frozen, reactive, local, separate-management, and fully informed modular adversaries. A reduction to known theory can be a useful solution or boundary rather than a reason to abandon the phenomenon. See the [general research model](docs/general_research_model.md) and [cross-domain foundations](docs/theoretical_foundations_cross_domain.md).
 
 Garicano (2000) and Gutjahr (2011) are primary current references for the organization/use and development/evolution beams, respectively; neither paper is the theory of its beam. The B13 model is diagnostic evidence about present operational consequence versus future experience-mediated value. It is not the desired proof of joint-management advantage.
 
