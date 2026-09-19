@@ -1,7 +1,7 @@
 # Heterogeneous Learning Systems — Handover
 
 Last updated: 2026-09-19
-Repository state: HLS ontology v1 is closed. Minimal model v1 and the subsequent T=2 results are consolidated: additive equivalence under optimal resource sharing, and a coordination/selection problem under operation-dependent indirect experience. The joint optimum belongs to the corrected separated equilibrium set; no strict advantage over its best equilibrium is established. P1--P4, CIV, B13, and CR0--CR4 retain their subordinate status.
+Repository state: HLS ontology v1 is closed. The minimal-model record now includes T=2 fixed-priority, additive-equivalence, selection, nonlocal-information, and T=3 continuation-policy boundaries. Each result is model-scoped; none establishes necessary or strictly superior joint management. P1--P4, CIV, B13, and CR0--CR4 retain their subordinate status.
 
 ## Mandatory first reads
 
@@ -12,7 +12,7 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 3. [general_research_model.md](general_research_model.md) — canonical HLS scientific object and architecture.
 4. [research_questions.md](research_questions.md) — canonical wording of official RQ0 and subordinate H1.
 5. [hls_ontology.md](hls_ontology.md) — canonical HLS concepts, units/ranges, mapping classes, and source-to-HLS mapping discipline.
-6. [theory/minimal_hls_model.md](theory/minimal_hls_model.md) — v1 fixed-priority results, Proposition 1 on additive equivalence, and Proposition 2 on coordination/selection with corrected local objectives and exact quadratic loss.
+6. [theory/minimal_hls_model.md](theory/minimal_hls_model.md) — v1; Propositions 1–3 on additive equivalence, selection, and nonlocal information; and the T=3 continuation-policy boundary.
 7. [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md) — canonical map of established principles to understand, map, translate, and test.
 8. [theory/two_beam/README.md](theory/two_beam/README.md) — current technical skeleton connecting organization/use with competence development/evolution; not a complete HLS model.
 9. [experimental_foundations/README.md](experimental_foundations/README.md) and [experimental_foundations/EXPERIMENTAL_SPEC_V0.md](experimental_foundations/EXPERIMENTAL_SPEC_V0.md) — audited Beam 1, Beam 2, and interface-reproduction block; B2.5 remains `FAILED_SOURCE_REPRODUCTION`, and B13 is diagnostic only.
@@ -235,9 +235,21 @@ At `V=L>0`, the joint optimum remains unique at `(1,0)` and the gap is `L(1-a)^2
 
 Both propositions are DERIVED-IN-MODEL. The numerical coincidence of best responses under the discarded and corrected formulations does not identify their decision criteria. Nor does the interaction rule out an optimally coordinated prior split. Separation of execution must not be confused with separation of decision objectives.
 
+### Proposition 3 — Nonlocal information boundary
+
+For complementary competences, the reduced period-2 value is `V_2(S1,S2)=p R S1 S2`. Developing `S1` at period 1 has the joint threshold `S2^*=V/(p R lambda)`. If admissible values lie on opposite sides of that threshold, the two joint choices differ. A development incentive that is constant across `S2` cannot implement both choices, while the state-dependent price `tau^*(S2)=p R lambda S2` does so exactly. This is the development increment times the marginal value `dV_2/dS1=p R S2`; complementarity has cross derivative `pR>0`.
+
+The result requires information about a different competence for this pricing rule. It does not show that decentralized coordination is impossible, that joint management is strictly superior, or that `S2` must be transmitted directly in every architecture.
+
+### T=3 continuation-policy boundary
+
+With terminal value `R S1,3 S2,3` and period-2 development of `S2`, the continuation value is `V_2(S1,S2)=p R S1 S2+max{K,p R mu S1}`. The continuation action changes at `S1^dagger=K/(p R mu)`. Away from that indifference point, the period-1 price is `tau_1^*=lambda p R [S2+mu x^*(S1,2)]`; at the threshold it is set-valued because the value function has a kink.
+
+The price therefore depends on the optimal continuation policy, but that policy is a single explicit threshold. T>2 does not establish a need for joint management, irreducible complexity, or a requirement to communicate a full Bellman value function. A sufficient representation of the relevant gradient can be enough.
+
 ## Open issue for a later task
 
-Use the [minimal model](theory/minimal_hls_model.md), closed [ontology](hls_ontology.md), [research questions](research_questions.md), and [research doctrine](../RESEARCH_DOCTRINE.md) as anchors. Whether an additional decentralized coordination mechanism, for example incentives or internal prices, could select the same optimum is unstudied. No such mechanism has been specified or validated, and HLS is not claimed to be the only way to select the optimum. The present task stops at consolidation; it does not extend T=2, design coordination mechanisms, or change the paper or RQ0.
+Use the [minimal model](theory/minimal_hls_model.md), closed [ontology](hls_ontology.md), [research questions](research_questions.md), and [research doctrine](../RESEARCH_DOCTRINE.md) as anchors. The next adversarial audit, not started here, will test whether any previously excluded mechanism creates a dependency that does not reduce immediately to a simple price or threshold: (A) changing or uncertain future demand; (B) several agents with alternative competences, where development changes subsequent use, development, or knowledge-source choices; and (C) learning by doing, where operational allocation generates direct experience and changes future competences. This record neither specifies nor analyses A/B/C. HLS is not claimed to be the only way to select the optimum.
 
 Do not start a large experiment until the proposition, competence transformation, adversaries, matched information and resources, and validity conditions are explicit.
 

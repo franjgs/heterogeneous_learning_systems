@@ -319,3 +319,282 @@ With operation-dependent development, the local best-response conditions permit 
 The interaction \(E^{ind}=ad\) invalidates the additive decomposition used in Proposition 1; it does not preclude a sufficiently coordinated resource allocator from choosing the same optimal split. Separation of physical execution, separation of optimization steps, and separation of decision objectives are different properties. HLS is not established as the only mechanism capable of selecting the optimum.
 
 Additional decentralized coordination through incentives or internal prices could potentially select that point. Such mechanisms have not been studied here, and none is specified or validated by these propositions. Their ability to select the optimum remains an open issue for a later task. The present consolidation ends with these T=2 results; it makes no novelty, empirical, or universal decentralized-architecture claim and does not change RQ0.
+
+## 10. Proposition 3 — Nonlocal information under complementary competences
+
+### Hypotheses
+
+Consider a separate reduced T=2 block with two complementary competence states
+
+\[
+S_1,S_2\in[0,1].
+\]
+
+At period 2, an operational task arrives with probability \(p\in(0,1]\), has value
+\(R>0\), and requires both competences. Its expected operational value is
+
+\[
+V_2(S_1,S_2)=pRS_1S_2.
+\]
+
+At period 1, one normalized capacity unit is divided between operation and
+development:
+
+\[
+a+d=1,\qquad a,d\geq0,
+\]
+
+with immediate operational value \(Va\), \(V>0\), and state transition
+
+\[
+S_{1,2}=S_{1,1}+\lambda d,\qquad S_{2,2}=S_{2,1},\qquad \lambda>0.
+\]
+
+To retain the declared state space for every feasible \(d\), assume
+
+\[
+S_{1,1}+\lambda\leq1.
+\]
+
+The development decision changes \(S_1\), while \(S_2\) is the distinct,
+complementary competence whose value must be known. This is a scalar
+realization of the ontology's competence vector, not a replacement of the v1
+one-competence model.
+
+### Conclusion
+
+The joint objective is
+
+\[
+\max_{0\leq d\leq1}
+\left\{V(1-d)+pR(S_{1,1}+\lambda d)S_{2,1}\right\}.
+\]
+
+Let
+
+\[
+S_2^*=\frac{V}{pR\lambda}.
+\]
+
+Then
+
+\[
+d_J^*(S_2)=
+\begin{cases}
+1, & pR\lambda S_2>V,\\
+0, & pR\lambda S_2<V,
+\end{cases}
+\]
+
+and every \(d\in[0,1]\) is optimal at equality. If admissible states satisfy
+
+\[
+S_2^-<S_2^*<S_2^+,
+\]
+
+then the joint action is \(0\) at \(S_2^-\) and \(1\) at \(S_2^+\).
+
+For a development manager facing the local net criterion
+
+\[
+\max_{0\leq d\leq1}(\tau-V)d,
+\]
+
+no incentive \(\tau\) that is independent of \(S_2\) implements both strict
+joint actions. The state-dependent incentive
+
+\[
+\boxed{\tau^*(S_2)=pR\lambda S_2}
+\]
+
+does implement them, including the same indifference at the threshold. It is
+the competence-development increment times the marginal future operational
+value:
+
+\[
+\frac{\partial V_2}{\partial S_1}=pRS_2,
+\qquad
+\tau^*(S_2)=\lambda\frac{\partial V_2}{\partial S_1}.
+\]
+
+The complementarity is strict:
+
+\[
+\frac{\partial^2V_2}{\partial S_1\partial S_2}=pR>0.
+\]
+
+### Proof
+
+Substitution of \(a=1-d\) makes the joint objective affine in \(d\), with
+slope
+
+\[
+-V+pR\lambda S_2.
+\]
+
+Its sign gives the displayed endpoint solution and equality case. A local
+criterion with an \(S_2\)-independent \(\tau\) has the same slope
+\(\tau-V\) in the two admissible states, so it cannot choose \(d=0\) in one
+and \(d=1\) in the other. Setting \(\tau= pR\lambda S_2\) makes the local
+slope equal to the joint slope pointwise. The derivatives of \(pRS_1S_2\)
+give the two displayed marginal-value identities. \(\square\)
+
+### Interpretation and limitation
+
+This proposition establishes an information requirement for this local pricing
+rule: the correct development incentive depends on a competence other than the
+one being developed. It does not establish that decentralized coordination is
+impossible or that joint management is strictly superior. A price carrying that
+state information reproduces the joint choice exactly. The result also does not
+claim that every decentralized design must expose \(S_2\) directly; it only
+rules out the stated constant marginal incentive across the two states.
+
+## 11. T=3 continuation-policy boundary
+
+This separate reduced block extends only the horizon to test whether a
+decentralizing price can depend on an endogenous continuation decision. It is a
+frontier result, not a superiority theorem.
+
+### Assumptions and domain
+
+Retain the complementary terminal operational value, now realized at period 3
+when its task arrives with probability \(p\in(0,1]\),
+
+\[
+Y_3=RS_{1,3}S_{2,3}.
+\]
+
+At period 2, the continuation controller selects \(x\in[0,1]\). Its
+operational use is \(1-x\), with value \(K(1-x)\), \(K>0\), and its
+development changes the second competence:
+
+\[
+S_{2,3}=S_{2,2}+\mu x,\qquad
+S_{1,3}=S_{1,2},\qquad \mu>0.
+\]
+
+The expected continuation value is therefore
+
+\[
+\begin{aligned}
+V_2(S_1,S_2)
+&=\max_{0\leq x\leq1}\{K(1-x)+pRS_1(S_2+\mu x)\}\\
+&=pRS_1S_2+\max\{K,pR\mu S_1\}.
+\end{aligned}
+\]
+
+For all feasible actions to preserve \(S_1,S_2\in[0,1]\), assume
+
+\[
+S_{1,1}+\lambda\leq1,\qquad S_{2,2}+\mu\leq1.
+\]
+
+These are feasibility assumptions for the bounded-state realization, not
+additional learning mechanisms. They also require initial states in \([0,1]\).
+
+### Derivation of the continuation policy
+
+The term optimized over \(x\) is affine, with slope
+
+\[
+pR\mu S_1-K.
+\]
+
+Define
+
+\[
+S_1^\dagger=\frac{K}{pR\mu}.
+\]
+
+Then
+
+\[
+x^*(S_1)=
+\begin{cases}
+0, & pR\mu S_1<K,\\
+1, & pR\mu S_1>K,
+\end{cases}
+\]
+
+and every \(x\in[0,1]\) is optimal when \(S_1=S_1^\dagger\). The threshold
+is decision-relevant only if it lies in the admissible \([0,1]\) state range;
+otherwise the same formula gives a constant endpoint continuation policy over
+that range.
+
+Away from the indifference point, differentiating the two smooth branches gives
+
+\[
+\frac{\partial V_2}{\partial S_1}=
+\begin{cases}
+pRS_2, & S_1<S_1^\dagger,\\
+pR(S_2+\mu), & S_1>S_1^\dagger.
+\end{cases}
+\]
+
+At \(S_1=S_1^\dagger\), \(V_2\) has a kink and is not differentiable. Its
+subgradient interval is
+
+\[
+\partial_{S_1}V_2=
+\bigl[pRS_2,\;pR(S_2+\mu)\bigr].
+\]
+
+### Period-1 incentive and interpretation
+
+At period 1, retain
+
+\[
+S_{1,2}=S_{1,1}+\lambda d,
+\]
+
+and the joint problem
+
+\[
+\max_{0\leq d\leq1}\{V(1-d)+V_2(S_{1,1}+\lambda d,S_2)\}.
+\]
+
+Away from the continuation threshold, the decentralizing marginal incentive is
+
+\[
+\boxed{
+\tau_1^*
+=\lambda\frac{\partial V_2}{\partial S_1}
+=\lambda pR\,[S_2+\mu x^*(S_{1,2})].
+}
+\]
+
+At the threshold, the corresponding price is set-valued:
+
+\[
+\tau_1^*\in
+\lambda\bigl[pRS_2,\;pR(S_2+\mu)\bigr],
+\]
+
+consistent with the continuation controller's indifference over \(x\). The
+formula shows that the period-1 marginal incentive incorporates which
+continuation action is optimal. It does not require a claim that an entire
+Bellman value function must be communicated: here the required continuation
+information reduces to one explicit threshold, or equivalently the relevant
+branch gradient.
+
+### Provisional boundary and next recorded audit
+
+Increasing the horizon alone does not make joint management necessary. In this
+model, once \(S_1^\dagger\) is known, a separated coordinator can implement the
+same continuation-aware price with an extremely simple threshold rule. The
+result demonstrates dependence on a continuation policy, not irreducible
+complexity, a strict joint-management advantage, or a need to solve a general
+Bellman problem at execution time.
+
+The next task, not undertaken here, is an adversarial audit of whether any of
+these previously excluded mechanisms creates a dependency that does not reduce
+immediately to another simple price or threshold:
+
+- **A.** changing or uncertain future demand;
+- **B.** several agents with alternative competences, where development changes
+  subsequent use, development, or knowledge-source choices;
+- **C.** learning by doing, where operational allocation \(a_t\) generates
+  direct experience and changes future competences.
+
+This is only a recorded question. No mechanism A/B/C is added, analysed, or
+claimed in the present model.
