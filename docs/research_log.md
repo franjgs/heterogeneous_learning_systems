@@ -457,3 +457,22 @@ The earlier wording remains part of the historical record but is no longer the c
 Adopt `hls_ontology.md` as the canonical semantic and dimensional consistency layer. It distinguishes competence coverage, competence proficiency, operational performance, real work, learning exposure, allocation, interaction, learning/transfer, useful work, operational value, and cumulative objective. Every source theory must be mapped independently as `EQUIVALENT`, `RELATED`, `INCOMPATIBLE`, or `UNRESOLVED` before integration.
 
 Garicano (2000) and Gutjahr (2011) remain primary current references for the organization/use and development/evolution beams, respectively; neither defines an entire beam. The general candidate interface is now written with explicit allocation-to-work, work-to-exposure, and exposure-to-competence mappings. B13 is retained as diagnostic evidence that exposed present-versus-future value structure and semantic problems; `G_G > D_G` is not the programme proof. This consolidation introduces no new scientific result.
+
+## Decision 022 — Consolidate minimal HLS model v1 and T=2 fixed-priority result
+
+Date: 2026-09-19.
+
+Consolidate `theory/minimal_hls_model.md` as the self-contained minimal HLS model v1. It uses two agents, one competence, `T=2`, operational allocation `a`, competence-development action `d`, shared capacity, direct and indirect experience maps, additive competence dynamics, and expected operational value only. The document explicitly preserves the ontology distinctions among competence, expected/observed quality, work, experience, development action, and operational value.
+
+The algebraic audit retains the two stated identities under normalized capacity, demand sufficient to use both agents operationally, a period-2 opportunity probability `p`, and explicit fixed-priority/tie conventions:
+
+```text
+J_J - J_A->D = sum_m [V_m^D - V_m^A]_+
+J_J - J_D->A = sum_m [V_m^A - V_m^D]_+
+V_m^A = S_m,1 + p eta_m
+V_m^D = p lambda_m.
+```
+
+The audit found a documentation precision issue, not a changed mathematical result: a sequential argmax does not uniquely force full use of a zero-valued priority action. The consolidated document therefore defines the two baselines as fixed-priority reservation rules and states their tie convention. It also makes the full-demand and period-2-opportunity assumptions explicit. The result is that the two fixed orders fail in complementary parameter regions; neither is universally optimal in this minimal model.
+
+This remains a first existence result only against those two fixed-priority separated architectures. It does not establish novelty, general superiority of joint management, RQ0 in general, or a result against coordinated separated architectures, which may reproduce the joint solution. The next theoretical problem is to specify stronger genuinely separated policy classes and characterize equality and strict-advantage conditions, without expanding this `T=2` model in the current task.

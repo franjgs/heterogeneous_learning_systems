@@ -102,6 +102,8 @@ The current priority is to build theoretical and experimental foundations withou
 
 Garicano (2000) and Gutjahr (2011) are primary current references for the organization/use and development/evolution beams, respectively; neither paper is the theory of its beam. The B13 model is diagnostic evidence about present operational consequence versus future experience-mediated value. It is not the desired proof of joint-management advantage.
 
+The consolidated [minimal HLS model v1](docs/theory/minimal_hls_model.md) records the exact `T=2` result against two fixed-priority separated baselines. It is a model-scoped existence result, not a claim against all separated architectures.
+
 ## 6. Repository map
 
 - [Research Programme Checkpoint 001](docs/research_program_checkpoint_001.md)
@@ -112,6 +114,7 @@ Garicano (2000) and Gutjahr (2011) are primary current references for the organi
 - [Research doctrine](RESEARCH_DOCTRINE.md)
 - [General research model](docs/general_research_model.md)
 - [HLS ontology and mapping discipline](docs/hls_ontology.md)
+- [Minimal HLS model v1 and T=2 fixed-priority result](docs/theory/minimal_hls_model.md)
 - [Cross-domain theoretical foundations](docs/theoretical_foundations_cross_domain.md)
 - [Two-beam theoretical foundation](docs/theory/two_beam/README.md)
 - [Experimental-foundation status](docs/experimental_foundations/README.md)

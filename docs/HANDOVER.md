@@ -1,7 +1,7 @@
 # Heterogeneous Learning Systems — Handover
 
-Last updated: 2026-09-17
-Repository state: RQ0 updated to dynamic allocation and development of competences; common HLS ontology established as the mandatory consistency layer; P1--P4, CIV, B13, and CR0--CR4 remain subordinate scaffolding or diagnostic evidence.
+Last updated: 2026-09-19
+Repository state: HLS ontology v1 is closed as the mandatory semantic consistency layer. Minimal HLS model v1 is consolidated with its T=2 fixed-priority analytical result; it is model-scoped and does not establish general superiority over separated architectures. P1--P4, CIV, B13, and CR0--CR4 remain subordinate scaffolding or diagnostic evidence.
 
 ## Mandatory first reads
 
@@ -12,17 +12,18 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 3. [general_research_model.md](general_research_model.md) — canonical HLS scientific object and architecture.
 4. [research_questions.md](research_questions.md) — canonical wording of official RQ0 and subordinate H1.
 5. [hls_ontology.md](hls_ontology.md) — canonical HLS concepts, units/ranges, mapping classes, and source-to-HLS mapping discipline.
-6. [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md) — canonical map of established principles to understand, map, translate, and test.
-7. [theory/two_beam/README.md](theory/two_beam/README.md) — current technical skeleton connecting organization/use with competence development/evolution; not a complete HLS model.
-8. [experimental_foundations/README.md](experimental_foundations/README.md) and [experimental_foundations/EXPERIMENTAL_SPEC_V0.md](experimental_foundations/EXPERIMENTAL_SPEC_V0.md) — audited Beam 1, Beam 2, and interface-reproduction block; B2.5 remains `FAILED_SOURCE_REPRODUCTION`, and B13 is diagnostic only.
-9. `research_origin_and_chronology.md` — historical provenance and superseded directions.
-10. [research_program_checkpoint_004.md](research_program_checkpoint_004.md) — historical pre-ontology checkpoint, not the current RQ0 source.
-11. `research_strategy_cross_domain_toolkit.md` — supporting protocol for importing mathematics without replacing the HLS problem.
-12. `landscape/landscape_001_consolidated.md` and `literature/references.bib`.
-13. [theory_integrated_competence_investment_model.md](theory_integrated_competence_investment_model.md) and [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md) — subordinate CIV model and its branch register; portfolio exposure is not a current programme priority.
-14. `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md` only as diagnostic history, not as the current centre.
-15. [theory_competence_evolution_minimal_model.md](theory_competence_evolution_minimal_model.md) and [experiments/microverification/](../experiments/microverification/) — CR0--CR4 minimal-model audit; not a general HLS result.
-16. [paper/](../paper/) — working draft with a stale RQ0 formulation; do not let it set programme direction and do not update it without a dedicated paper task.
+6. [theory/minimal_hls_model.md](theory/minimal_hls_model.md) — consolidated minimal model v1 and exact T=2 comparison against the two stated fixed-priority baselines.
+7. [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md) — canonical map of established principles to understand, map, translate, and test.
+8. [theory/two_beam/README.md](theory/two_beam/README.md) — current technical skeleton connecting organization/use with competence development/evolution; not a complete HLS model.
+9. [experimental_foundations/README.md](experimental_foundations/README.md) and [experimental_foundations/EXPERIMENTAL_SPEC_V0.md](experimental_foundations/EXPERIMENTAL_SPEC_V0.md) — audited Beam 1, Beam 2, and interface-reproduction block; B2.5 remains `FAILED_SOURCE_REPRODUCTION`, and B13 is diagnostic only.
+10. `research_origin_and_chronology.md` — historical provenance and superseded directions.
+11. [research_program_checkpoint_004.md](research_program_checkpoint_004.md) — historical pre-ontology checkpoint, not the current RQ0 source.
+12. `research_strategy_cross_domain_toolkit.md` — supporting protocol for importing mathematics without replacing the HLS problem.
+13. `landscape/landscape_001_consolidated.md` and `literature/references.bib`.
+14. [theory_integrated_competence_investment_model.md](theory_integrated_competence_investment_model.md) and [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md) — subordinate CIV model and its branch register; portfolio exposure is not a current programme priority.
+15. `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md` only as diagnostic history, not as the current centre.
+16. [theory_competence_evolution_minimal_model.md](theory_competence_evolution_minimal_model.md) and [experiments/microverification/](../experiments/microverification/) — CR0--CR4 minimal-model audit; not a general HLS result.
+17. [paper/](../paper/) — working draft with a stale RQ0 formulation; do not let it set programme direction and do not update it without a dedicated paper task.
 
 ## Central programme
 
@@ -187,9 +188,29 @@ For every important paper ask:
 
 A recent related paper is evidence of an active area, not automatically evidence that the programme is closed.
 
+## Consolidated minimal-model result
+
+The minimal model uses two agents, one competence, `T=2`, a shared capacity constraint for operational allocation and competence development, and no terminal reward for competence. Under normalized capacities, demand sufficient to operate both agents, and a period-2 opportunity with probability `p`, it defines
+
+```text
+V_m^A = S_m,1 + p eta_m
+V_m^D = p lambda_m.
+```
+
+For the fixed-priority sequential baselines, the exact gaps are
+
+```text
+J_J - J_A->D = sum_m [V_m^D - V_m^A]_+
+J_J - J_D->A = sum_m [V_m^A - V_m^D]_+.
+```
+
+Thus operation-first is strictly suboptimal when `V_m^D > V_m^A` for at least one agent; development-first is strictly suboptimal when the reverse inequality holds for at least one agent. The orders fail in complementary regions, so neither fixed priority is universally optimal in this model. Equality holds when the corresponding positive-part summands all vanish.
+
+This is an existence result only for the two explicitly defined fixed-priority separated architectures. A separated architecture with sufficient coordination can reproduce the joint solution; it is not a proof against every separated architecture, a general answer to RQ0, or a novelty claim. See [minimal_hls_model.md](theory/minimal_hls_model.md).
+
 ## Immediate next action
 
-Use [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md), [research_questions.md](research_questions.md), [general_research_model.md](general_research_model.md), and [hls_ontology.md](hls_ontology.md) as active anchors. Garicano and Gutjahr are primary current references, not the theories of their beams. The B1/B2/B12 block reproduces source mechanisms and limiting cases; B2.5 remains an explicit failed source reproduction, and B12.4 supports only the configured causal channel, not benefit. B13 is a diagnostic model that exposed a present-versus-future value structure and semantic incompatibilities; it is not a proof of `J(pi_joint) > J(pi_separate)`. The next documentation/theory work must map additional verified foundations through the ontology and define fair joint/separate policy classes and compatible operational value before another integration claim.
+Use [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md), [research_questions.md](research_questions.md), [general_research_model.md](general_research_model.md), [hls_ontology.md](hls_ontology.md), and the consolidated [minimal model](theory/minimal_hls_model.md) as active anchors. The next theoretical problem is to define stronger, genuinely separated policy classes and determine which equality or strict-advantage conditions remain, with matched information and resources. Do not extend `T=2`, add mechanisms, or claim a result against those stronger architectures until that problem is explicitly posed. Garicano and Gutjahr remain primary references for their respective beams; B13 remains diagnostic, not a proof of `J(pi_joint) > J(pi_separate)`.
 
 Do not start a large experiment until the proposition, competence transformation, adversaries, matched information and resources, and validity conditions are explicit.
 
