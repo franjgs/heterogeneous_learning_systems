@@ -22,11 +22,16 @@ from hls.development_opportunity_value import (
     gamma_policy_selection,
     gamma_sub_closed,
     individual_selection,
+    individual_opportunity_values,
+    joint_opportunity_value,
     mixed_gamma,
     portfolio_selection,
+    smooth_pairwise_lower_bound,
     symmetric_fast_deep_joint_benefit,
     value_comp,
     value_sub,
+    xi_cost,
+    xi_value,
 )
 
 
@@ -137,6 +142,170 @@ def _audit_integrated_fast_deep() -> dict[str, int]:
     }
 
 
+def _quadratic_value(mu: float):
+    """Return a smooth value with every off-diagonal cross partial equal to mu."""
+    def value(state: tuple[float, ...]) -> float:
+        return sum(state) + mu * sum(
+            state[i] * state[j]
+            for i in range(len(state))
+            for j in range(i + 1, len(state))
+        )
+
+    return value
+
+
+def _third_difference(
+    value, state: tuple[float, float, float], increments: tuple[float, float, float]
+) -> float:
+    """Return the third finite difference for three independent increments."""
+    def at(indices: tuple[int, ...]) -> float:
+        return value(
+            tuple(
+                component + (increments[i] if i in indices else 0.0)
+                for i, component in enumerate(state)
+            )
+        )
+
+    return (
+        at((0, 1, 2))
+        - at((0, 1))
+        - at((0, 2))
+        - at((1, 2))
+        + at((0,))
+        + at((1,))
+        + at((2,))
+        - at(())
+    )
+
+
+def _audit_general_joint_opportunity_structure() -> dict[str, int]:
+    """Verify general Xi identities, smooth bounds, and higher-order caution."""
+    smooth_cases = 0
+    modular_cases = 0
+    smooth_by_n = {n: 0 for n in (3, 4, 5)}
+    for n in (3, 4, 5):
+        state = tuple(0.125 for _ in range(n))
+        individual_costs = tuple(0.125 + 0.0625 * i for i in range(n))
+        for mu in (0.0, 0.5, 1.0):
+            value = _quadratic_value(mu)
+            lower_cross_partials = tuple(
+                tuple(0.0 if i == j else mu for j in range(n)) for i in range(n)
+            )
+            for delta in (0.0, 0.25, 0.5):
+                increments = tuple(delta for _ in range(n))
+                for beta in (0.0, 0.5, 1.0):
+                    total_cost = sum(individual_costs) + 0.0625
+                    h_total = joint_opportunity_value(
+                        value, state, increments, total_cost, beta
+                    )
+                    h_individual = individual_opportunity_values(
+                        value, state, increments, individual_costs, beta
+                    )
+                    interaction_value = xi_value(value, state, increments)
+                    interaction_cost = xi_cost(total_cost, individual_costs)
+                    assert abs(
+                        h_total
+                        - (sum(h_individual) + beta * interaction_value - interaction_cost)
+                    ) <= TOLERANCE
+                    lower_bound = smooth_pairwise_lower_bound(
+                        lower_cross_partials, increments
+                    )
+                    assert interaction_value + TOLERANCE >= lower_bound
+                    smooth_cases += 1
+                    smooth_by_n[n] += 1
+
+                    modular_value = lambda point: sum(point)
+                    additive_total_cost = sum(individual_costs)
+                    modular_total = joint_opportunity_value(
+                        modular_value, state, increments, additive_total_cost, beta
+                    )
+                    modular_individual = individual_opportunity_values(
+                        modular_value, state, increments, individual_costs, beta
+                    )
+                    assert abs(xi_value(modular_value, state, increments)) <= TOLERANCE
+                    assert abs(modular_total - sum(modular_individual)) <= TOLERANCE
+                    modular_cases += 1
+
+    # A cubic term makes base-state pair interactions insufficient for n=3.
+    def cubic_value(state: tuple[float, ...]) -> float:
+        return _quadratic_value(1.0)(state) + 2.0 * state[0] * state[1] * state[2]
+
+    base = (0.0, 0.0, 0.0)
+    cubic_increments = (0.5, 0.5, 0.5)
+    xi_cubic = xi_value(cubic_value, base, cubic_increments)
+    pair_sum = sum(
+        xi_value(
+            cubic_value,
+            base,
+            tuple(cubic_increments[k] if k in pair else 0.0 for k in range(3)),
+        )
+        for pair in ((0, 1), (0, 2), (1, 2))
+    )
+    third = _third_difference(cubic_value, base, cubic_increments)
+    cubic_bound = smooth_pairwise_lower_bound(
+        ((0.0, 1.0, 1.0), (1.0, 0.0, 1.0), (1.0, 1.0, 0.0)),
+        cubic_increments,
+    )
+    assert abs(xi_cubic - (pair_sum + third)) <= TOLERANCE
+    assert abs(third - 0.25) <= TOLERANCE
+    assert abs(pair_sum - 0.75) <= TOLERANCE
+    assert abs(xi_cubic - 1.0) <= TOLERANCE
+    assert xi_cubic + TOLERANCE >= cubic_bound
+
+    # Equality in the sufficient condition remains non-strict.
+    equality_value = _quadratic_value(1.0)
+    equality_state = (0.0, 0.0, 0.0)
+    equality_increments = (0.5, 0.5, 0.5)
+    equality_costs = (0.75, 0.75, 0.75)
+    equality_h = joint_opportunity_value(
+        equality_value, equality_state, equality_increments, sum(equality_costs), 1.0
+    )
+    equality_h_individual = individual_opportunity_values(
+        equality_value, equality_state, equality_increments, equality_costs, 1.0
+    )
+    equality_bound = smooth_pairwise_lower_bound(
+        ((0.0, 1.0, 1.0), (1.0, 0.0, 1.0), (1.0, 1.0, 0.0)),
+        equality_increments,
+    )
+    assert abs(equality_h) <= TOLERANCE
+    assert abs(equality_bound + sum(equality_h_individual)) <= TOLERANCE
+
+    # A strict uniform bound can exceed the accumulated individual deficits.
+    rescue_costs = (0.7, 0.7, 0.7)
+    rescue_h = joint_opportunity_value(
+        equality_value, equality_state, equality_increments, sum(rescue_costs), 1.0
+    )
+    rescue_h_individual = individual_opportunity_values(
+        equality_value, equality_state, equality_increments, rescue_costs, 1.0
+    )
+    assert all(value < 0.0 for value in rescue_h_individual)
+    assert equality_bound > -sum(rescue_h_individual)
+    assert (3 - 1) * 1.0 * 1.0 * 0.5**2 > 2.0 * 0.2
+    assert rescue_h > 0.0
+
+    # The n=2 general identity reduces exactly to Proposition 7.
+    fast_deep_state = (0.85, 0.85)
+    fast_deep_increments = (0.15, 0.15)
+    fast_deep_costs = (0.05, 0.05)
+    fast_deep_value = lambda point: value_comp(point[0], point[1], 0.8)
+    assert abs(
+        joint_opportunity_value(
+            fast_deep_value, fast_deep_state, fast_deep_increments, sum(fast_deep_costs), 1.0
+        )
+        - fast_deep_h12(0.85, 0.85, 0.15, 0.15, 0.8, 1.0, 0.0, 0.0)
+    ) <= TOLERANCE
+    assert abs(xi_value(fast_deep_value, fast_deep_state, fast_deep_increments) - 0.15) <= TOLERANCE
+
+    return {
+        "general_smooth_bound_cases": smooth_cases,
+        **{f"general_smooth_n{n}_cases": count for n, count in smooth_by_n.items()},
+        "general_modular_cases": modular_cases,
+        "general_third_order_cases": 1,
+        "general_uniform_rescue_cases": 1,
+        "general_fast_deep_reductions": 1,
+    }
+
+
 def audit() -> dict[str, float | int]:
     """Exhaustively check signs and closed forms over the declared small grid."""
     checked = 0
@@ -228,6 +397,7 @@ def audit() -> dict[str, float | int]:
     assert individual_selection(1, -1) == portfolio_selection(1, -1, 0)
 
     integrated_fast_deep = _audit_integrated_fast_deep()
+    general_joint_structure = _audit_general_joint_opportunity_structure()
 
     return {
         "grid_cases": checked,
@@ -240,6 +410,7 @@ def audit() -> dict[str, float | int]:
         "decision_tie_cases": tie_cases,
         **{f"region_{region}_cases": count for region, count in region_counts.items()},
         **integrated_fast_deep,
+        **general_joint_structure,
         "tolerance": TOLERANCE,
     }
 

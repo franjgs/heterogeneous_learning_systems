@@ -6,11 +6,13 @@ operational-development opportunity-value note.
 
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 
 
 DevelopmentSet = frozenset[int]
 Selection = frozenset[DevelopmentSet]
+CompetenceVector = tuple[float, ...]
+ContinuationValue = Callable[[CompetenceVector], float]
 DEVELOPMENT_SETS: tuple[DevelopmentSet, ...] = (
     frozenset(),
     frozenset({1}),
@@ -175,3 +177,101 @@ def symmetric_fast_deep_joint_benefit(
 ) -> bool:
     """Strict analytic condition for the documented symmetric Fast/Deep case."""
     return beta * delta > 2.0 * (s - h) + kappa1 + kappa2
+
+
+def _developed_state(
+    state: Sequence[float], increments: Sequence[float]
+) -> CompetenceVector:
+    """Return the state after the listed independent competence increments."""
+    if len(state) != len(increments):
+        raise ValueError("state and increments must have the same dimension")
+    return tuple(
+        component + increment for component, increment in zip(state, increments)
+    )
+
+
+def joint_opportunity_value(
+    value: ContinuationValue,
+    state: Sequence[float],
+    increments: Sequence[float],
+    total_cost: float,
+    beta: float,
+) -> float:
+    """Return H(D) for a specified set of independent development increments."""
+    initial_state = tuple(state)
+    return -total_cost + beta * (
+        value(_developed_state(initial_state, increments)) - value(initial_state)
+    )
+
+
+def individual_opportunity_values(
+    value: ContinuationValue,
+    state: Sequence[float],
+    increments: Sequence[float],
+    individual_costs: Sequence[float],
+    beta: float,
+) -> tuple[float, ...]:
+    """Return H_i for each listed independent development opportunity."""
+    if len(increments) != len(individual_costs):
+        raise ValueError("increments and individual_costs must have the same dimension")
+    return tuple(
+        joint_opportunity_value(
+            value,
+            state,
+            tuple(
+                increment if i == j else 0.0
+                for j, increment in enumerate(increments)
+            ),
+            cost,
+            beta,
+        )
+        for i, cost in enumerate(individual_costs)
+    )
+
+
+def xi_value(
+    value: ContinuationValue,
+    state: Sequence[float],
+    increments: Sequence[float],
+) -> float:
+    """Return Xi_V(D), the non-additivity of the continuation increment."""
+    initial_state = tuple(state)
+    total_increment = (
+        value(_developed_state(initial_state, increments)) - value(initial_state)
+    )
+    individual_increments = sum(
+        value(
+            _developed_state(
+                initial_state,
+                tuple(
+                    increment if i == j else 0.0
+                    for j, increment in enumerate(increments)
+                ),
+            )
+        )
+        - value(initial_state)
+        for i in range(len(increments))
+    )
+    return total_increment - individual_increments
+
+
+def xi_cost(total_cost: float, individual_costs: Sequence[float]) -> float:
+    """Return Xi_K(D), the non-additivity of present opportunity costs."""
+    return total_cost - sum(individual_costs)
+
+
+def smooth_pairwise_lower_bound(
+    lower_cross_partials: Sequence[Sequence[float]], increments: Sequence[float]
+) -> float:
+    """Return sum_{i<j} mu_ij Delta_i Delta_j for supplied uniform bounds."""
+    if len(lower_cross_partials) != len(increments):
+        raise ValueError(
+            "lower_cross_partials and increments must have the same dimension"
+        )
+    if any(len(row) != len(increments) for row in lower_cross_partials):
+        raise ValueError("lower_cross_partials must be a square matrix")
+    return sum(
+        lower_cross_partials[i][j] * increments[i] * increments[j]
+        for i in range(len(increments))
+        for j in range(i + 1, len(increments))
+    )

@@ -681,3 +681,41 @@ condition, equality boundaries, and the supplied numerical instance. This is
 not a novelty claim, does not establish a universal need for joint routing and
 learning, and does not show general superiority over a sufficiently
 coordinated modular architecture.
+
+## Decision 029 — Structural generalization of joint opportunity value
+
+Date: 2026-09-19.
+
+Extend Proposition 7 in
+[theory/operational_development_opportunity_value.md](theory/operational_development_opportunity_value.md)
+as a **DERIVED-IN-MODEL / DERIVED** finite-set result. For a development set
+`D`, state `S_D=F(S,D)`, and total present cost `K(D)`, define
+`H(D)=-K(D)+beta[V(S_D)-V(S)]`. The exact decomposition is
+`H(D)=sum_i H_i+beta Xi_V(D)-Xi_K(D)`, where `Xi_V` and `Xi_K` are respectively
+continuation-value and cost non-additivity. When all individual values are
+nonpositive, joint benefit is exactly equivalent to the interaction term
+exceeding their accumulated deficit.
+
+Under independent developments and additive costs, modular continuation value
+gives `Xi_V=0`, so individual valuation is sufficient for this phenomenon:
+aggregation cannot rescue a set of individually non-beneficial opportunities.
+Supermodularity/increasing differences gives only `Xi_V>=0`; it does not by
+itself imply a beneficial joint set.
+
+For `n` independent developments, a uniform lower bound
+`V_ij(X)>=mu_ij>=0` over the full reachable hyperrectangle gives
+`Xi_V(D)>=sum_{i<j} mu_ij Delta_i Delta_j` by a telescoping proof over
+intermediate states. With additive costs, this yields a sufficient quantitative
+condition for joint benefit. The uniform corollary records the quadratic pair
+lower bound versus linear individual-deficit bound. A finite-difference
+increasing-differences version preserves the structural argument for non-smooth
+values such as Fast/Deep min/max.
+
+The record also corrects a potential shortcut: for three opportunities,
+`Xi_V({1,2,3})` includes a third finite difference and is not generally the
+sum of pair interactions evaluated only at the base state. Proposition 7 is
+recovered exactly when `D={1,2}`, costs are additive, and
+`Xi_V=Gamma12`. Microverification covers general identities, the modular
+frontier, smooth `n=3,4,5` bounds, a nonzero third-order example, equality
+boundaries, and the Fast/Deep reduction. No novelty, centralization, or general
+joint-management superiority claim follows.

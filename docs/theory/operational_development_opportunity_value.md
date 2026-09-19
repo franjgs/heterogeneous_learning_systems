@@ -961,7 +961,300 @@ modular architecture can represent the same values and select the same pair.
    future complementarity can make jointly beneficial a set of present
    operational actions that are individually unattractive.
 
-## 11. Structural interpretation
+## 11. Structural conditions for joint opportunity value
+
+This section generalizes Proposition 7 from two Fast/Deep opportunities to a
+finite development set \(D\). Within this section, \(D\) denotes that set of
+opportunities; the earlier use of \(D\) for the Deep model remains local to the
+Fast/Deep construction. The statements are **DERIVED-IN-MODEL** / **DERIVED**
+identities and bounds, not claims about all HLS.
+
+Let
+
+\[
+S_D=F(S,D)
+\]
+
+be the competence state after generating and executing the opportunities in
+\(D\). Let \(K(D)\) be their total present cost, including any operational
+sacrifice required to generate them and their development costs. Define the
+full joint value
+
+\[
+H(D)=-K(D)+\beta[V(S_D)-V(S)].
+\]
+
+For an individual opportunity, write
+
+\[
+S_i=F(S,\{i\}),\qquad K_i=K(\{i\}),\qquad H_i=H(\{i\}).
+\]
+
+Define the continuation and cost non-additivities
+
+\[
+\begin{aligned}
+\Xi_V(D)
+={}&V(S_D)-V(S)-\sum_{i\in D}[V(S_i)-V(S)],\\
+\Xi_K(D)
+={}&K(D)-\sum_{i\in D}K_i.
+\end{aligned}
+\]
+
+### Proposition 8 — Exact joint opportunity decomposition
+
+For every finite development set \(D\),
+
+\[
+\boxed{
+H(D)=\sum_{i\in D}H_i+\beta\Xi_V(D)-\Xi_K(D).
+}
+\]
+
+Equivalently, if \(\Xi_H(D)=\beta\Xi_V(D)-\Xi_K(D)\), then
+
+\[
+H(D)=\sum_{i\in D}H_i+\Xi_H(D).
+\]
+
+Hence, when \(H_i\leq0\) for every \(i\in D\),
+
+\[
+H(D)>0
+\quad\Longleftrightarrow\quad
+\beta\Xi_V(D)-\Xi_K(D)>-\sum_{i\in D}H_i.
+\]
+
+**Proof.** Substitute the definitions of \(H_i\), \(\Xi_V\), and
+\(\Xi_K\). The individual continuation increments and individual costs cancel,
+leaving \(-K(D)+\beta[V(S_D)-V(S)]\), which is \(H(D)\). The final equivalence
+is a rearrangement of the identity. \(\square\)
+
+This is an exact accounting identity, not by itself a claim of a new or deep
+phenomenon: it states the quantitative interaction required to overcome the
+sum of individual deficits.
+
+### Modular frontier
+
+The structurally important special case has independent development and
+additive costs:
+
+\[
+S_D=S+\sum_{i\in D}\Delta_i e_i,
+\qquad K(D)=\sum_{i\in D}K_i.
+\]
+
+Then \(\Xi_K(D)=0\), so
+
+\[
+H(D)=\sum_{i\in D}H_i+\beta\Xi_V(D).
+\]
+
+If the continuation value is modular with respect to these improvements,
+\(\Xi_V(D)=0\), and therefore
+
+\[
+H_i\leq0\ \text{for every }i\in D
+\quad\Longrightarrow\quad H(D)\leq0.
+\]
+
+Under independent development, additive costs, and modular continuation value,
+individual valuation is thus sufficient for this phenomenon: aggregating
+individually non-beneficial opportunities cannot make them beneficial.
+
+Supermodularity or increasing differences only gives the sign condition
+\(\Xi_V(D)\geq0\), under its corresponding hypotheses. It does **not** imply
+\(H(D)>0\). Positive complementarity can be too small to compensate the
+accumulated individual deficits; a quantitative lower bound is needed.
+
+### Proposition 9 — Smooth quantitative complementarity bound
+
+Let \(D=\{1,\ldots,n\}\), assume independent developments
+
+\[
+S_D=S+\sum_{i=1}^n\Delta_i e_i,
+\]
+
+and define the reachable hyperrectangle
+
+\[
+R_D=\left\{S+\sum_{i=1}^n x_i e_i:0\leq x_i\leq\Delta_i\right\}.
+\]
+
+Suppose \(V\in C^2(R_D)\) and, for every distinct \(i,j\),
+
+\[
+\frac{\partial^2V}{\partial s_i\partial s_j}(X)\geq\mu_{ij}\geq0
+\qquad\text{for every }X\in R_D.
+\]
+
+Then
+
+\[
+\boxed{
+\Xi_V(D)\geq\sum_{i<j}\mu_{ij}\Delta_i\Delta_j.
+}
+\]
+
+If costs are additive, all \(H_i<0\), and
+
+\[
+\beta\sum_{i<j}\mu_{ij}\Delta_i\Delta_j
+> -\sum_{i=1}^nH_i,
+\]
+
+then \(H(D)>0\). This last inequality is sufficient, not necessary.
+
+**Proof.** Define the incremental value
+
+\[
+M_i(X;\Delta_i)=V(X+\Delta_i e_i)-V(X).
+\]
+
+For the order \(1,\ldots,n\), telescoping gives
+
+\[
+V(S_D)-V(S)=
+\sum_{i=1}^nM_i\left(S+\sum_{j<i}\Delta_j e_j;\Delta_i\right).
+\]
+
+Subtracting the single-opportunity increments gives
+
+\[
+\Xi_V(D)=\sum_{i=2}^n\left[
+M_i\left(S+\sum_{j<i}\Delta_j e_j;\Delta_i\right)-M_i(S;\Delta_i)
+\right].
+\]
+
+For each fixed \(i\), move the preceding coordinates one at a time. If
+\(X_{ij}=S+\sum_{k<j}\Delta_k e_k\), each resulting increment is
+
+\[
+\begin{aligned}
+&M_i(X_{ij}+\Delta_j e_j;\Delta_i)-M_i(X_{ij};\Delta_i)\\
+&\quad=\int_0^{\Delta_i}\int_0^{\Delta_j}
+\frac{\partial^2V}{\partial s_i\partial s_j}
+\!\left(X_{ij}+x e_i+y e_j\right)\,dy\,dx\\
+&\quad\geq\mu_{ij}\Delta_i\Delta_j.
+\end{aligned}
+\]
+
+Every argument of the derivative lies in \(R_D\), so the uniform hypothesis
+applies. Summing these increments over all \(j<i\) and then all \(i\) proves
+the bound. With additive costs, apply Proposition 8 and the lower bound to
+obtain the sufficient condition. No sign assumption on third or higher
+derivatives is used. \(\square\)
+
+The proof deliberately does not sum pairwise interactions evaluated only at
+the base state. That shortcut is generally false for \(n>2\).
+
+### Corollary 9.1 — Uniform sufficient condition
+
+Under Proposition 9, suppose additionally that
+
+\[
+H_i<0,
+\qquad
+\mu_{ij}\geq\mu>0,
+\qquad \Delta_i\geq\Delta_{\min}>0,
+\qquad -H_i\leq\bar b
+\]
+
+for every pair and opportunity, and let \(n=|D|\). Then
+
+\[
+\Xi_V(D)\geq\mu\Delta_{\min}^2\frac{n(n-1)}2,
+\qquad -\sum_iH_i\leq n\bar b.
+\]
+
+It is therefore sufficient that
+
+\[
+\boxed{(n-1)\beta\mu\Delta_{\min}^2>2\bar b}
+\]
+
+to guarantee \(H(D)>0\).
+
+**Proof.** Lower-bound every term in Proposition 9 by
+\(\mu\Delta_{\min}^2\), count the \(n(n-1)/2\) pairs, and substitute the
+linear upper bound on the total individual deficit into its sufficient
+condition. \(\square\)
+
+Under these uniform hypotheses, the lower complementarity bound grows
+quadratically in \(n\), while the deficit bound grows linearly. This is only a
+statement under the displayed uniform assumptions; it is not an extrapolation
+to general HLS.
+
+### Higher-order and non-smooth precautions
+
+For three developments, define the third finite difference
+
+\[
+\begin{aligned}
+\Delta_{123}V={}&V(S_{123})-V(S_{12})-V(S_{13})-V(S_{23})\\
+&+V(S_1)+V(S_2)+V(S_3)-V(S).
+\end{aligned}
+\]
+
+Then, in general,
+
+\[
+\Xi_V(\{1,2,3\})=
+\Gamma_{12}(S)+\Gamma_{13}(S)+\Gamma_{23}(S)+\Delta_{123}V.
+\]
+
+Thus pairwise interactions evaluated only at \(S\) do not generally determine
+the three-opportunity interaction. The telescoping proof instead evaluates
+incremental differences at intermediate states, and the uniform cross-partial
+condition controls all of them.
+
+The smoothness assumption is not essential to the structural idea. For a
+piecewise-linear value such as the Fast/Deep \(\min/\max\) model, retain
+
+\[
+M_i(X;\Delta_i)=V(X+\Delta_i e_i)-V(X).
+\]
+
+A quantitative finite-difference increasing-differences condition is
+
+\[
+M_i(X+\Delta_j e_j;\Delta_i)-M_i(X;\Delta_i)
+\geq\gamma_{ij}(X),
+\]
+
+or, where a uniform bound is available, \(\gamma_{ij}(X)\geq\gamma_{ij}\geq0\)
+at the intermediate states used by the telescoping order. The same telescoping
+argument gives a lower bound by summing those state-dependent terms. No
+pairwise formula evaluated only at the base state is implied when the bounds
+vary by state.
+
+### Reduction to Proposition 7
+
+For \(D=\{1,2\}\) and additive costs,
+
+\[
+\Xi_V(\{1,2\})=\Gamma_{12},
+\qquad H_{12}=H_1+H_2+\beta\Gamma_{12}.
+\]
+
+In the symmetric Fast/Deep instance of Proposition 7,
+\(\Gamma_{12}=\Delta\), so the exact rescue condition becomes
+
+\[
+\beta\Delta>2(s-h)+\kappa_1+\kappa_2.
+\]
+
+Proposition 7 is therefore a concrete two-opportunity realization of the
+general decomposition and its quantitative complementarity condition.
+
+The consolidated frontier is narrow: with independent development and additive
+costs, modular continuation value rules out joint rescue; weak
+complementarity only fixes the interaction's sign; sufficiently large
+complementarity relative to accumulated individual deficits can make a joint
+set beneficial. This does not establish novelty, centralization, general joint
+management superiority, or empirical prevalence of the phenomenon.
+
+## 12. Structural interpretation
 
 Two independent axes organize these results.
 
@@ -977,7 +1270,7 @@ a joint future competence requirement induces complementarity. In both cases
 the interaction enters through \(V(S)\), the structure of future operation and
 routing.
 
-## 12. Limits and recorded questions
+## 13. Limits and recorded questions
 
 These exact results do not demonstrate novelty of \(\Omega\), Bellman
 decomposition, or finite differences; general superiority of joint or central
@@ -998,6 +1291,11 @@ decision, or that fixed-policy continuation values are additive in real HLS.
 Proposition 7 is limited to the stated two-competence symmetric Fast/Deep
 case, additive current routing sacrifices and development costs, and
 \(V_{\mathrm{COMP}}\). It does not generalize beyond those assumptions.
+
+Propositions 8 and 9 and Corollary 9.1 are limited to their displayed finite
+sets, cost assumptions, development map, and either uniform smooth or stated
+finite-difference increasing-differences conditions. They do not convert weak
+supermodularity into a decision result without the required quantitative bound.
 
 Recorded but unresolved questions are:
 

@@ -9,11 +9,16 @@ from hls.development_opportunity_value import (
     gamma_policy_selection,
     gamma_sub_closed,
     individual_selection,
+    individual_opportunity_values,
+    joint_opportunity_value,
     mixed_gamma,
     portfolio_selection,
+    smooth_pairwise_lower_bound,
     symmetric_fast_deep_joint_benefit,
     value_comp,
     value_sub,
+    xi_cost,
+    xi_value,
 )
 
 
@@ -104,3 +109,50 @@ def test_integrated_fast_deep_symmetric_boundaries() -> None:
     assert not symmetric_fast_deep_joint_benefit(0.75, 0.5, 0.5, 1.0, 0.0, 0.0)
     assert fast_deep_h12(0.75, 0.75, 0.25, 0.25, 0.5, 0.0, 0.0, 0.0) < 0
     assert cross_difference(value_comp, 0.75, 0.75, 0.0, 0.0, 0.5) == 0
+
+
+def test_general_joint_opportunity_decomposition_and_modular_frontier() -> None:
+    state = (0.0, 0.0, 0.0)
+    increments = (0.5, 0.5, 0.5)
+    individual_costs = (0.75, 0.75, 0.75)
+
+    def quadratic_value(point: tuple[float, ...]) -> float:
+        return sum(point) + sum(
+            point[i] * point[j]
+            for i in range(len(point))
+            for j in range(i + 1, len(point))
+        )
+
+    joint = joint_opportunity_value(
+        quadratic_value, state, increments, sum(individual_costs), 1.0
+    )
+    individual = individual_opportunity_values(
+        quadratic_value, state, increments, individual_costs, 1.0
+    )
+    interaction = xi_value(quadratic_value, state, increments)
+    lower_bound = smooth_pairwise_lower_bound(
+        ((0.0, 1.0, 1.0), (1.0, 0.0, 1.0), (1.0, 1.0, 0.0)), increments
+    )
+    assert (
+        abs(
+            joint
+            - (
+                sum(individual)
+                + interaction
+                - xi_cost(sum(individual_costs), individual_costs)
+            )
+        )
+        <= 1e-12
+    )
+    assert abs(interaction - lower_bound) <= 1e-12
+    assert abs(joint) <= 1e-12  # Equality in the sufficient condition is non-strict.
+
+    modular_value = lambda point: sum(point)
+    modular_joint = joint_opportunity_value(
+        modular_value, state, increments, sum(individual_costs), 1.0
+    )
+    modular_individual = individual_opportunity_values(
+        modular_value, state, increments, individual_costs, 1.0
+    )
+    assert xi_value(modular_value, state, increments) == 0.0
+    assert modular_joint == sum(modular_individual)
