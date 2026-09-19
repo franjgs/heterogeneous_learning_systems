@@ -3,8 +3,11 @@ from __future__ import annotations
 from hls.development_opportunity_value import (
     cross_difference,
     gamma_comp_closed,
+    gamma_policy_selection,
     gamma_sub_closed,
+    individual_selection,
     mixed_gamma,
+    portfolio_selection,
     value_comp,
     value_sub,
 )
@@ -34,3 +37,45 @@ def test_mixed_workload_sign_reversal_and_fast_deep_example() -> None:
     assert mixed_gamma(sub, comp, p_star - 0.05) > 0
     assert abs(mixed_gamma(sub, comp, p_star)) <= 1e-12
     assert mixed_gamma(sub, comp, p_star + 0.05) < 0
+
+
+def test_policy_selection_interaction_sign_and_same_policy() -> None:
+    grid = tuple(range(-4, 5))
+    for z in grid:
+        for x in grid:
+            for y in grid:
+                gamma = gamma_policy_selection(z, x, y)
+                if x * y > 0:
+                    assert gamma >= 0
+                elif x * y < 0:
+                    assert gamma <= 0
+                else:
+                    assert gamma == 0
+                deltas = (z, z + x, z + y, z + x + y)
+                if all(delta > 0 for delta in deltas) or all(delta < 0 for delta in deltas):
+                    assert gamma == 0
+
+
+def test_individual_and_portfolio_decision_regions_and_ties() -> None:
+    both = frozenset({frozenset({1, 2})})
+    only_1 = frozenset({frozenset({1})})
+    only_2 = frozenset({frozenset({2})})
+    empty = frozenset({frozenset()})
+
+    assert individual_selection(3, -1) == only_1
+    assert portfolio_selection(3, -1, 2) == both  # Region A.
+    assert individual_selection(-1, 3) == only_2
+    assert portfolio_selection(-1, 3, 2) == both  # Region B.
+    assert individual_selection(-1, -1) == empty
+    assert portfolio_selection(-1, -1, 3) == both  # Region C.
+    assert individual_selection(2, 3) == both
+    assert portfolio_selection(2, 3, -3) == only_2  # Region D.
+
+    assert len(individual_selection(0, 2)) == 2
+    assert len(individual_selection(2, 0)) == 2
+    assert portfolio_selection(2, 2, -3) == frozenset(
+        {frozenset({1}), frozenset({2})}
+    )
+    assert portfolio_selection(1, 2, -1) == frozenset(
+        {frozenset({2}), frozenset({1, 2})}
+    )

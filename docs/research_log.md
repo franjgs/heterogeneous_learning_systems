@@ -610,3 +610,40 @@ identify low-dimensional sufficient statistics for opportunity values, extend
 to stochastic future demand while retaining the `a`/`d` distinction, and map
 each tractable subclass to established control or optimization results before
 introducing new machinery.
+
+## Decision 027 — Routing-induced development interaction and exact decision regions
+
+Date: 2026-09-19.
+
+Extend the DERIVED-IN-MODEL checkpoint in
+[theory/operational_development_opportunity_value.md](theory/operational_development_opportunity_value.md)
+for exactly two future operational policies and two independent development
+interventions. Each policy is individually additive, so its own cross
+difference is zero. Selecting the better policy nevertheless yields
+
+```text
+V(S) = max{V^A(S), V^B(S)}
+Gamma(z,x,y) = [z+x+y]_+ - [z+x]_+ - [z+y]_+ + [z]_+.
+```
+
+The exact sign result is `xy>0 => Gamma>=0` and
+`xy<0 => Gamma<=0`; if either increment is zero, or one policy is optimal at
+all four intervention vertices, `Gamma=0`. Encountering a policy boundary is
+necessary but not sufficient for nonzero interaction.
+
+With additive development costs, `c=beta Gamma` and the joint net value is
+exactly `g12=g1+g2+c`. Exhaustive sign-case analysis identifies all strict
+decision changes relative to selecting each intervention by `gi>0`: three
+complementarity regions in which the joint pair is selected, and one
+substitution region in which the better singleton replaces the pair. The
+associated value losses are respectively `g2+c`, `g1+c`, `g1+g2+c`, and
+`-min(g1,g2)-c`. Equality boundaries are recorded as indifference sets,
+including the two-singleton tie when `g1=g2` in the substitution region.
+
+A finite exhaustive verification checks the sign law, same-policy null cases,
+the completeness of the four strict decision regions, exact loss formulas,
+and specified equality boundaries. This is not empirical evidence. The result
+makes no novelty claim and establishes neither general joint-management
+superiority nor a requirement to solve routing and learning jointly. It shows
+only that, in the stated two-policy model, ignoring how development changes
+future operational policy selection can yield a suboptimal development choice.

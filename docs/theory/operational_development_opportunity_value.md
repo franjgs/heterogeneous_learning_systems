@@ -535,7 +535,221 @@ The same competences, improvements, and learning transitions can thus be
 substitutes or complements solely because future work composition and
 operational constraints differ.
 
-## 8. Structural interpretation
+## 8. Interaction induced by selecting between two additive policies
+
+Consider exactly two future operational policies,
+
+\[
+V^A(s_1,s_2)=f_A(s_1)+g_A(s_2),\qquad
+V^B(s_1,s_2)=f_B(s_1)+g_B(s_2).
+\]
+
+Each fixed policy is additive, so its cross difference under the two
+independent interventions is zero:
+
+\[
+\Gamma_{12}^A=\Gamma_{12}^B=0.
+\]
+
+The future HLS selects the better operational policy:
+
+\[
+V(S)=\max\{V^A(S),V^B(S)\}.
+\]
+
+Define the policy advantage
+
+\[
+\delta(S)=V^A(S)-V^B(S),\qquad z=\delta(S),
+\]
+
+and the changes in that advantage produced separately by the two independent
+improvements:
+
+\[
+\begin{aligned}
+x&=\delta(S+\Delta_1e_1)-\delta(S),\\
+y&=\delta(S+\Delta_2e_2)-\delta(S).
+\end{aligned}
+\]
+
+Because both policy values, and hence \(\delta\), are additive across the two
+components, its four vertex values are
+
+\[
+\delta_{00}=z,\quad \delta_{10}=z+x,\quad
+\delta_{01}=z+y,\quad \delta_{11}=z+x+y.
+\]
+
+Using policy \(B\) as reference gives
+
+\[
+V(S)=V^B(S)+[\delta(S)]_+.
+\]
+
+The additive reference has zero cross difference. Therefore all interaction
+created by future policy selection is exactly
+
+\[
+\boxed{
+\Gamma(z,x,y)=[z+x+y]_+-[z+x]_+-[z+y]_++[z]_+.
+}
+\]
+
+### Proposition 5 — Interaction induced by future policy selection
+
+For two additive operational policies and two independent interventions as
+defined above,
+
+\[
+xy>0\Longrightarrow\Gamma(z,x,y)\geq0,
+\qquad
+xy<0\Longrightarrow\Gamma(z,x,y)\leq0.
+\]
+
+If \(x=0\) or \(y=0\), then \(\Gamma(z,x,y)=0\). Moreover, if one policy is
+optimal at all four vertices (weakly, including boundary ties), then
+\(\Gamma(z,x,y)=0\).
+
+**Proof.** Let \(\phi(t)=[t]_+\) and
+\(H_x(t)=\phi(t+x)-\phi(t)\). Then
+
+\[
+\Gamma(z,x,y)=H_x(z+y)-H_x(z).
+\]
+
+For \(x>0\), \(H_x\) is nondecreasing in \(t\); for \(x<0\), it is
+nonincreasing. Moving its argument by \(y\) therefore gives a nonnegative
+difference when \(x\) and \(y\) have the same sign, and a nonpositive
+difference when they have opposite signs. If either increment is zero, the
+four terms cancel pairwise.
+
+If policy \(A\) is optimal at all four vertices, the four values of
+\(\delta\) are nonnegative and \([\delta]_+=\delta\); its cross difference is
+zero by additivity. If policy \(B\) is optimal throughout, all four values are
+nonpositive and \([\delta]_+=0\), again giving zero. \(\square\)
+
+Thus a change across, or contact with, the policy boundary \(\delta=0\) is
+necessary for a nonzero interaction: if the same policy remains optimal
+throughout, the interaction vanishes. The converse is false. Merely reaching
+or crossing a boundary need not produce a nonzero cross difference, because
+the four terms can still cancel. Equality is also possible under either weak
+sign result above. In particular, boundary equalities such as
+\(z=0\), \(z+x=0\), \(z+y=0\), or \(z+x+y=0\) must be evaluated by the boxed
+formula rather than counted automatically as interaction.
+
+Although each operational policy has additive continuation value and the two
+learning transitions are independent, the operator
+\(V=\max_{\pi\in\{A,B\}}V^\pi\) can therefore generate either substitution or
+complementarity between the development actions.
+
+## 9. Exact development-decision regions and value loss
+
+Let the net individual development values be
+
+\[
+\begin{aligned}
+g_1&=\beta[V(S+\Delta_1e_1)-V(S)]-\kappa_1,\\
+g_2&=\beta[V(S+\Delta_2e_2)-V(S)]-\kappa_2,
+\end{aligned}
+\]
+
+and define the net interaction \(c=\beta\Gamma\). With additive development
+costs, the joint net value is exactly
+
+\[
+\boxed{g_{12}=g_1+g_2+c.}
+\]
+
+Indeed, substituting the cross difference into the right-hand side cancels
+the two intermediate continuation values and yields
+\(\beta[V(S+\Delta_1e_1+\Delta_2e_2)-V(S)]-(\kappa_1+\kappa_2)\).
+
+The individual baseline selects intervention \(i\) exactly when \(g_i>0\).
+When \(g_i=0\), including or excluding it is an explicit indifference. The
+portfolio valuation instead selects from
+
+\[
+\arg\max\{0,g_1,g_2,g_1+g_2+c\},
+\]
+
+corresponding respectively to \(\varnothing,\{1\},\{2\},\{1,2\}\).
+
+### Proposition 6 — Exact strict development-decision changes
+
+Away from ties, the individual and portfolio selections differ exactly in the
+following four regions.
+
+| Region | Conditions | Individual selection | Portfolio selection | Exact loss from individual selection |
+|---|---|---|---|---|
+| A | \(c>0,\ g_1>0,\ -c<g_2<0\) | \(\{1\}\) | \(\{1,2\}\) | \(L=g_2+c>0\) |
+| B | \(c>0,\ g_2>0,\ -c<g_1<0\) | \(\{2\}\) | \(\{1,2\}\) | \(L=g_1+c>0\) |
+| C | \(c>0,\ g_1<0,\ g_2<0,\ g_1+g_2+c>0\) | \(\varnothing\) | \(\{1,2\}\) | \(L=g_1+g_2+c>0\) |
+| D | \(c<0,\ g_1>0,\ g_2>0,\ c<-\min\{g_1,g_2\}\) | \(\{1,2\}\) | singleton with larger \(g_i\) | \(L=-\min\{g_1,g_2\}-c>0\) |
+
+If \(g_1=g_2\) in the strict substitution region D, both singleton sets are
+portfolio-optimal; the proposition does not select one of them uniquely.
+
+**Proof.** First take \(c>0\). If both individual values are positive, the
+joint set strictly dominates both singletons and agrees with the individual
+selection. If \(g_1>0>g_2\), the only possible improvement over \(\{1\}\) is
+the joint set, whose value difference is \(g_2+c\); this is positive exactly
+in region A. Exchanging indices gives B. If both individual values are
+negative, the individual choice is empty and neither singleton can improve
+on it. The joint set changes the decision exactly when its value
+\(g_1+g_2+c\) is positive, which is C.
+
+Now take \(c<0\). With one positive and one negative individual value, adding
+the negative intervention and the negative interaction cannot improve the
+positive singleton. With both values negative, the empty set dominates. If
+both values are positive, only the joint set and the better singleton can be
+optimal. Their value difference, joint minus the better singleton, is
+
+\[
+\min\{g_1,g_2\}+c.
+\]
+
+It is negative exactly in D. Finally, when \(c=0\), portfolio values are
+additive and the selections coincide except for equivalent descriptions of
+ties. These sign cases exhaust all possibilities. Subtracting the value of
+the individual choice from the portfolio optimum in A--D gives the four
+displayed loss formulas. \(\square\)
+
+The strict inequalities exclude the relevant boundaries. At \(g_i=0\), the
+individual baseline is indifferent. At \(g_2=-c\) in A (or \(g_1=-c\) in B),
+the positive singleton and joint set tie. At
+\(g_1+g_2+c=0\) in C, the empty and joint sets tie. At
+\(c=-\min\{g_1,g_2\}\) in D, the joint set ties the better singleton. These
+are indifference sets, not additional strict decision-change regions.
+
+The model-scoped HLS chain is
+
+```text
+heterogeneous competences
+    -> alternative future operational policies
+    -> V(S) = max_pi V^pi(S)
+    -> policy boundaries
+    -> Gamma_ij != 0
+    -> portfolio-dependent development value
+    -> different development decision
+    -> difference in future system value.
+```
+
+An **intrinsic interaction** is already present within a fixed policy's value.
+A **routing-induced interaction** arises here because each fixed
+\(V^\pi\) is additive but their pointwise maximum is not. This checkpoint
+establishes only the second mechanism, for two additive policies and two
+independent interventions.
+
+The exact conclusion is that interaction between development actions need not
+be present in the learning dynamics; it can be induced exclusively by future
+HLS organization and routing. Ignoring how development changes future
+operational options can then produce a suboptimal development decision in the
+derived regions. This does not imply that routing and learning must always be
+solved jointly, or that joint management generally dominates a sufficiently
+coordinated modular architecture.
+
+## 10. Structural interpretation
 
 Two independent axes organize these results.
 
@@ -551,7 +765,7 @@ a joint future competence requirement induces complementarity. In both cases
 the interaction enters through \(V(S)\), the structure of future operation and
 routing.
 
-## 9. Limits and recorded questions
+## 11. Limits and recorded questions
 
 These exact results do not demonstrate novelty of \(\Omega\), Bellman
 decomposition, or finite differences; general superiority of joint or central
@@ -563,6 +777,11 @@ or P4 in general.
 They are DERIVED-IN-MODEL analytical results. A sufficiently coordinated
 modular architecture can reproduce the relevant choices when it has the
 required values, state information, contract, and computation.
+
+Propositions 5 and 6 are additionally limited to two additive future policies
+and two independent interventions. They do not establish that every policy
+boundary creates interaction, that every interaction changes a development
+decision, or that fixed-policy continuation values are additive in real HLS.
 
 Recorded but unresolved questions are:
 

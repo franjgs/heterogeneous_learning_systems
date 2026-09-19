@@ -9,6 +9,16 @@ from __future__ import annotations
 from collections.abc import Callable
 
 
+DevelopmentSet = frozenset[int]
+Selection = frozenset[DevelopmentSet]
+DEVELOPMENT_SETS: tuple[DevelopmentSet, ...] = (
+    frozenset(),
+    frozenset({1}),
+    frozenset({2}),
+    frozenset({1, 2}),
+)
+
+
 def positive(value: float) -> float:
     """Return the positive part of a scalar."""
     return max(value, 0.0)
@@ -66,3 +76,38 @@ def gamma_comp_closed(s1: float, s2: float, delta1: float, delta2: float, h: flo
 def mixed_gamma(gamma_sub: float, gamma_comp: float, p: float) -> float:
     """Return the workload-mixture interaction value."""
     return p * gamma_sub + (1.0 - p) * gamma_comp
+
+
+def gamma_policy_selection(z: float, x: float, y: float) -> float:
+    """Interaction created by selecting the better of two additive policies."""
+    return positive(z + x + y) - positive(z + x) - positive(z + y) + positive(z)
+
+
+def _maximizers(values: dict[DevelopmentSet, float]) -> Selection:
+    """Return every maximizing development set, preserving exact ties."""
+    best = max(values.values())
+    return frozenset(option for option, value in values.items() if value == best)
+
+
+def individual_selection(g1: float, g2: float) -> Selection:
+    """Select interventions from their individual net values, including ties."""
+    return _maximizers(
+        {
+            DEVELOPMENT_SETS[0]: 0.0,
+            DEVELOPMENT_SETS[1]: g1,
+            DEVELOPMENT_SETS[2]: g2,
+            DEVELOPMENT_SETS[3]: g1 + g2,
+        }
+    )
+
+
+def portfolio_selection(g1: float, g2: float, c: float) -> Selection:
+    """Select interventions using their joint portfolio value, including ties."""
+    return _maximizers(
+        {
+            DEVELOPMENT_SETS[0]: 0.0,
+            DEVELOPMENT_SETS[1]: g1,
+            DEVELOPMENT_SETS[2]: g2,
+            DEVELOPMENT_SETS[3]: g1 + g2 + c,
+        }
+    )
