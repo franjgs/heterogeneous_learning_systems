@@ -85,6 +85,25 @@ def seed_everything(seed: int) -> None:
         torch.backends.cudnn.benchmark = False
 
 
+def format_duration(seconds: float) -> str:
+    seconds = max(0, int(seconds))
+    hours, remainder = divmod(seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return f"{hours:d}:{minutes:02d}:{seconds:02d}"
+
+
+def print_validation_metrics(kind: str, seed: int, fraction: float, by_domain: dict) -> None:
+    print(
+        f"Validation {kind} / seed {seed} / fraction {fraction:.2f}: "
+        + "; ".join(
+            f"{domain} BA={by_domain[domain]['balanced_accuracy']:.3f}, "
+            f"acc={by_domain[domain]['accuracy']:.3f}"
+            for domain in DOMAINS
+        ),
+        flush=True,
+    )
+
+
 def make_model(kind: str, seed: int, device: torch.device, pretrained: bool = True) -> nn.Module:
     seed_everything(seed)
     if kind == "fast":
@@ -105,6 +124,9 @@ def fit_model(
     image_root: Path,
     device: torch.device,
     config: dict,
+    fit_number: int,
+    fraction: float,
+    run_started: float,
 ) -> tuple[nn.Module, float]:
     seed_everything(seed)
     model = make_model(kind, seed, device)
@@ -126,7 +148,9 @@ def fit_model(
     )
     start = time.perf_counter()
     model.train()
-    for _ in range(int(config["training"]["epochs"])):
+    epochs = int(config["training"]["epochs"])
+    for epoch in range(1, epochs + 1):
+        epoch_started = time.perf_counter()
         for images, labels, _, _ in loader:
             images = images.to(device, non_blocking=True)
             labels = labels.to(device, non_blocking=True)
@@ -134,6 +158,15 @@ def fit_model(
             loss = nn.functional.cross_entropy(model(images), labels)
             loss.backward()
             optimizer.step()
+        epoch_seconds = time.perf_counter() - epoch_started
+        elapsed = time.perf_counter() - run_started
+        progress = (fit_number - 1) + epoch / epochs
+        eta = elapsed / progress * (25 - progress)
+        print(
+            f"[epoch {epoch}/{epochs}] {epoch_seconds:.1f}s | "
+            f"total {format_duration(elapsed)} | ETA B2.0 {format_duration(eta)}",
+            flush=True,
+        )
     return model, time.perf_counter() - start
 
 
@@ -223,6 +256,8 @@ def main() -> None:
     splits_by_seed = {seed: stratified_splits(frame, seed) for seed in config["split_seeds"]}
     lookup = frame.set_index("sample_id", drop=False)
 
+    fit_number = 0
+    total_fits = len(splits_by_seed) * (1 + len(config["base_fractions_for_fast"]))
     for seed, splits in splits_by_seed.items():
         for split, ids in splits.items():
             split_rows.extend({"seed": seed, "sample_id": int(i), "split": split} for i in ids)
@@ -230,12 +265,15 @@ def main() -> None:
         teacher_frame = lookup.loc[np.concatenate([splits["base"], splits["transfer"]])].reset_index(drop=True)
         validation_frame = lookup.loc[splits["validation"]].reset_index(drop=True)
 
-        teacher, elapsed = fit_model("deep", seed + 30000, teacher_frame, args.image_root, device, config)
+        fit_number += 1
+        print(f"[fit {fit_number}/{total_fits}] deep / seed {seed} / fraction 1.00", flush=True)
+        teacher, elapsed = fit_model("deep", seed + 30000, teacher_frame, args.image_root, device, config, fit_number, 1.0, run_started)
         torch.save({key: value.detach().cpu() for key, value in teacher.state_dict().items()}, checkpoint_dir / f"deep_seed{seed}.pt")
         fit_times.append({"seed": seed, "model": "deep", "fraction": 1.0, "seconds": elapsed, "n_train": len(teacher_frame)})
         for splitname, splitframe in (("validation", validation_frame),):
             y, pred, domains, ids = evaluate(teacher, splitframe, args.image_root, device, config["training"]["batch_size"])
             by_domain = domain_metrics(y, pred, domains)
+            print_validation_metrics("deep", seed, 1.0, by_domain)
             row = {"seed": seed, "model": "deep", "fraction": 1.0, "split": splitname, "n": len(y), "accuracy": float(accuracy_score(y, pred)), "balanced_accuracy": float(balanced_accuracy_score(y, pred))}
             row.update({f"ba_{d}": by_domain[d]["balanced_accuracy"] for d in DOMAINS})
             row.update({f"acc_{d}": by_domain[d]["accuracy"] for d in DOMAINS})
@@ -251,11 +289,14 @@ def main() -> None:
         for fraction in config["base_fractions_for_fast"]:
             subset_ids = select_base_fraction(frame, base.sample_id, fraction, seed + int(fraction * 1000))
             train_frame = lookup.loc[subset_ids].reset_index(drop=True)
-            model, elapsed = fit_model("fast", seed + int(fraction * 10000), train_frame, args.image_root, device, config)
+            fit_number += 1
+            print(f"[fit {fit_number}/{total_fits}] fast / seed {seed} / fraction {fraction:.2f}", flush=True)
+            model, elapsed = fit_model("fast", seed + int(fraction * 10000), train_frame, args.image_root, device, config, fit_number, fraction, run_started)
             torch.save({key: value.detach().cpu() for key, value in model.state_dict().items()}, checkpoint_dir / f"fast_seed{seed}_fraction{fraction:.2f}.pt")
             fit_times.append({"seed": seed, "model": "fast", "fraction": fraction, "seconds": elapsed, "n_train": len(train_frame)})
             y, pred, domains, ids = evaluate(model, validation_frame, args.image_root, device, config["training"]["batch_size"])
             by_domain = domain_metrics(y, pred, domains)
+            print_validation_metrics("fast", seed, fraction, by_domain)
             row = {"seed": seed, "model": "fast", "fraction": fraction, "split": "validation", "n": len(y), "accuracy": float(accuracy_score(y, pred)), "balanced_accuracy": float(balanced_accuracy_score(y, pred))}
             row.update({f"ba_{d}": by_domain[d]["balanced_accuracy"] for d in DOMAINS})
             row.update({f"acc_{d}": by_domain[d]["accuracy"] for d in DOMAINS})
