@@ -1,0 +1,87 @@
+{
+  "status": "DATASET_VALIDATED",
+  "source": {
+    "repo_id": "flwrlabs/pacs",
+    "revision": "394113073258ead631f617d2e13bb377c0715c4b",
+    "file": "data/train-00000-of-00001.parquet",
+    "url": "https://huggingface.co/datasets/flwrlabs/pacs/resolve/394113073258ead631f617d2e13bb377c0715c4b/data/train-00000-of-00001.parquet",
+    "bytes": 191395900,
+    "sha256": "4fc041ee92eec6043fe6e2859e8bdd138e5f958bc621afd153879812cbe65ff5"
+  },
+  "rows": 9991,
+  "domains": {
+    "photo": 1670,
+    "art_painting": 2048,
+    "cartoon": 2344,
+    "sketch": 3929
+  },
+  "classes": {
+    "0": "dog",
+    "1": "elephant",
+    "2": "giraffe",
+    "3": "guitar",
+    "4": "horse",
+    "5": "house",
+    "6": "person"
+  },
+  "domain_class_counts": {
+    "photo": {
+      "dog": 189,
+      "elephant": 202,
+      "giraffe": 182,
+      "guitar": 186,
+      "horse": 199,
+      "house": 280,
+      "person": 432
+    },
+    "art_painting": {
+      "dog": 379,
+      "elephant": 255,
+      "giraffe": 285,
+      "guitar": 184,
+      "horse": 201,
+      "house": 295,
+      "person": 449
+    },
+    "cartoon": {
+      "dog": 389,
+      "elephant": 457,
+      "giraffe": 346,
+      "guitar": 135,
+      "horse": 324,
+      "house": 288,
+      "person": 405
+    },
+    "sketch": {
+      "dog": 772,
+      "elephant": 740,
+      "giraffe": 753,
+      "guitar": 608,
+      "horse": 816,
+      "house": 80,
+      "person": 160
+    }
+  },
+  "splits": {
+    "base": 0.5,
+    "transfer": 0.2,
+    "validation": 0.15,
+    "test": 0.15
+  },
+  "split_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "image_audit": {
+    "missing_bytes": 0,
+    "corrupt_or_unreadable": 0,
+    "unique_raw_sha256": 9991,
+    "duplicate_rows_by_exact_sha256": 0,
+    "corrupt_examples": []
+  },
+  "image_cache_relative_path": "/private/tmp/hls_b2_pacs_cache/394113073258ead631f617d2e13bb377c0715c4b/images",
+  "note": "PACS dataset/image files remain outside the Git repository."
+}

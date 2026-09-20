@@ -1,0 +1,40 @@
+{
+  "status": "COMPUTE_BLOCKED_BEFORE_MODEL_CALIBRATION",
+  "current_setup_viability": "NOT VIABLE for the available CPU-only machine; PACS model-performance viability is unassessed",
+  "hardware": {
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "machine": "arm64",
+    "logical_cpu_count": 12,
+    "torch_threads": 6,
+    "cuda_available": false,
+    "mps_built": true,
+    "mps_available": false,
+    "selected_device": "cpu"
+  },
+  "benchmark": {
+    "kind": "four synthetic 224x224 forward/backward/SGD batches of size 8 per architecture; random initialization, no PACS data, no pretrained weights",
+    "profile_wall_seconds": 3.8996754999971017,
+    "fast_mobilenet_v2_images_per_second": 23.95247230689942,
+    "deep_resnet50_images_per_second": 15.346701771126508,
+    "fast_training_images_per_seed_per_epoch": 9237,
+    "deep_training_images_per_seed_per_epoch": 6993,
+    "fast_training_images_all_seeds_per_epoch": 46185,
+    "deep_training_images_all_seeds_per_epoch": 34965,
+    "estimated_lower_bound_seconds_per_epoch_all_25_fits": 4206.533147003192,
+    "estimated_lower_bound_minutes_per_epoch_all_25_fits": 70.10888578338654,
+    "epochs_configured": 3,
+    "estimated_lower_bound_hours_training_only": 3.505444289169327,
+    "excludes": [
+      "image decoding and augmentation",
+      "validation/test inference",
+      "ImageNet weight download",
+      "checkpoint save/load"
+    ]
+  },
+  "model_fit_count_if_run": 25,
+  "full_calibration_started": false,
+  "reason": "CPU-only training profile exceeded the practical calibration budget; no architecture or regime was silently changed.",
+  "warnings": [
+    "Arrow emitted sandbox-denied sysctl cache/NEON probe notices during dataset scanning; dataset integrity checks completed."
+  ]
+}

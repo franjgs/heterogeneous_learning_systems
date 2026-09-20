@@ -753,3 +753,43 @@ diagnostic figures under `results/pilots/b1_empirical_interaction/`. This is
 an exploratory empirical checkpoint only. It leaves the theory, ontology,
 RQ0, and the no-superiority/no-novelty boundaries unchanged; no inference is
 made that the observed signs generalize beyond this protocol.
+
+## Decision 031 — B2.0 PACS dataset audit and CPU feasibility profile
+
+Date: 2026-09-20.
+
+Begin B2.0 solely to test whether PACS can support later stable domain-specific
+competence measurements. The public `flwrlabs/pacs` dataset snapshot is pinned
+to revision `394113073258ead631f617d2e13bb377c0715c4b`; the Parquet artifact is
+191,395,900 bytes with SHA-256
+`4fc041ee92eec6043fe6e2859e8bdd138e5f958bc621afd153879812cbe65ff5`. Direct
+integrity inspection verified 9,991 readable images, the four expected domains
+and seven classes, zero missing/corrupt images, and zero exact byte-hash
+duplicates. The row-level dataset manifest, domain/class counts, and five
+domain-by-class-stratified, disjoint BASE/TRANSFER/VALIDATION/TEST split
+manifests are stored under `results/pilots/b2_pacs_calibration/`; image data
+remain outside Git. The source card's prose omits `house`, but the pinned
+artifact metadata and files include all seven categories.
+
+The planned calibration fixes Fast to ImageNet MobileNetV2 and Deep to ImageNet
+ResNet-50, with BASE fractions `{10%,25%,50%,100%}` for F0 and BASE+TRANSFER
+for the teacher. Before TEST is opened, the smallest fraction must exceed
+chance by validation intervals in every domain, retain observable headroom in
+at least two domains, and show a stable positive teacher gap in at least two
+domains. No transfer factorial, Gamma, routing, costs, or theory changes are
+included.
+
+The available host is macOS arm64 with 12 logical CPUs; CUDA is unavailable and
+PyTorch reports MPS unavailable. A minimal synthetic-batch throughput profile
+(four 224×224 batches of eight per architecture, random initialization) yielded
+23.95 images/s for MobileNetV2 and 15.35 images/s for ResNet-50. Given the
+actual training sizes, the 25 planned fits are estimated to require at least
+70.1 minutes per epoch and 3.51 hours for the fixed three epochs, before image
+decoding/augmentation, validation, or weight/checkpoint I/O. Therefore no model
+fit was started and no validation/test metrics or regime selection exist.
+Status is `COMPUTE_BLOCKED_BEFORE_MODEL_CALIBRATION`. The current available
+CPU-only setup is **NOT VIABLE** for this calibration and the repeated fits
+that follow; this is a compute-feasibility assessment, not a negative result
+about PACS performance/headroom. The PACS dataset itself remains unassessed.
+This is an OBSERVED data audit and feasibility checkpoint only, not a
+model-performance result.

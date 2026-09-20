@@ -1,6 +1,6 @@
 # Heterogeneous Learning Systems — Handover
 
-Last updated: 2026-09-19
+Last updated: 2026-09-20
 Repository state: HLS ontology v1 is closed. The minimal-model record now includes T=2 fixed-priority, additive-equivalence, selection, nonlocal-information, and T=3 continuation-policy boundaries. Each result is model-scoped; none establishes necessary or strictly superior joint management. P1--P4, CIV, B13, and CR0--CR4 retain their subordinate status.
 
 ## Mandatory first reads
@@ -312,6 +312,21 @@ Proposition 7 now has a structural finite-set generalization. For `H(D)=-K(D)+be
 ### B1 exploratory empirical interaction pilot
 
 The first empirical pilot, [B1 README](../experiments/pilots/b1_empirical_interaction/README.md), has now been executed on `sklearn.datasets.load_digits`. It uses the preregistered split roles, LogisticRegression as Fast, RandomForestClassifier as Deep, validation-only confusion-profile competencies (`K=4`), hard pseudo-label transfer as the primary condition, and true-label/random-group controls. Across 10 seeds and budgets `B in {5,10,20,40}`, the run completed 1,620 fits. Fast/Deep test balanced accuracies averaged `0.9533/0.9652`; competence clustering stability was low and variable (ARI mean `0.133`, range `-0.164` to `0.683`). Primary Gamma means were `0.00032`, `-0.00039`, `-0.00083`, and `-0.00046` for the four budgets, with both signs observed and variability larger than the means. The pilot is therefore classified **OBSERVED — WEAK / UNSTABLE INTERACTION**. These are exploratory observations only: they do not alter the theory, RQ0, or any claim about novelty or architectural superiority.
+
+### B2.0 PACS calibration status
+
+The PACS dataset audit and five-seed stratified split manifests are recorded in
+`results/pilots/b2_pacs_calibration/`; the pinned public artifact contains
+9,991 valid images across the four fixed domain competences and seven classes,
+with no corrupt files or exact content-hash duplicates. The prescribed models
+are MobileNetV2 and ResNet-50 with ImageNet weights, but no model fit or
+validation/test metric was produced. The available machine has CPU only because
+PyTorch cannot use its built MPS backend; a minimal throughput profile estimates
+a lower bound of 70.1 minutes per epoch for the planned 25 fits. B2.0 therefore
+stopped before calibration with status `COMPUTE_BLOCKED_BEFORE_MODEL_CALIBRATION`.
+The available CPU-only setup is **NOT VIABLE** for this calibration and
+subsequent many-fit work; PACS performance/headroom itself remains unassessed.
+No theory, RQ0, or paper content changed.
 
 ## Open issue for a later task
 

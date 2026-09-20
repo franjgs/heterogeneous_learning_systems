@@ -1,0 +1,41 @@
+{
+  "pilot": "B2.0 PACS calibration",
+  "dataset_repo": "flwrlabs/pacs",
+  "dataset_revision": "394113073258ead631f617d2e13bb377c0715c4b",
+  "dataset_file": "data/train-00000-of-00001.parquet",
+  "dataset_file_sha256": "4fc041ee92eec6043fe6e2859e8bdd138e5f958bc621afd153879812cbe65ff5",
+  "dataset_file_bytes": 191395900,
+  "split_fractions": {"base": 0.50, "transfer": 0.20, "validation": 0.15, "test": 0.15},
+  "split_seeds": [0, 1, 2, 3, 4],
+  "base_fractions_for_fast": [0.10, 0.25, 0.50, 1.00],
+  "competence_domains": ["photo", "art_painting", "cartoon", "sketch"],
+  "classes": ["dog", "elephant", "giraffe", "guitar", "horse", "house", "person"],
+  "fast": {
+    "architecture": "torchvision.models.mobilenet_v2",
+    "weights": "MobileNet_V2_Weights.DEFAULT",
+    "replace_head_only": true,
+    "optimizer": "SGD",
+    "learning_rate": 0.001,
+    "momentum": 0.9
+  },
+  "deep": {
+    "architecture": "torchvision.models.resnet50",
+    "weights": "ResNet50_Weights.DEFAULT",
+    "replace_head_only": true,
+    "training_data": "BASE + TRANSFER",
+    "optimizer": "SGD",
+    "learning_rate": 0.0001,
+    "momentum": 0.9
+  },
+  "training": {
+    "epochs": 3,
+    "batch_size": 16,
+    "workers": 0,
+    "image_size": 224,
+    "train_augmentation": ["RandomResizedCrop(scale=0.8..1.0)", "RandomHorizontalFlip(p=0.5)"],
+    "evaluation": ["Resize(256)", "CenterCrop(224)"],
+    "normalization": "ImageNet mean/std"
+  },
+  "regime_selection": "smallest BASE fraction satisfying the predeclared validation-only rules in README; TEST is evaluated only after selection",
+  "test_role": "final evaluation only; never training, selection, or calibration"
+}
