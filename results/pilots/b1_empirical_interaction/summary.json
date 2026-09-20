@@ -1,0 +1,38 @@
+{
+  "experiment_id": "B1_empirical_interaction",
+  "status": "OBSERVED",
+  "pilot_classification": "WEAK / UNSTABLE INTERACTION",
+  "classification_rule": "descriptive ratio of primary mean Gamma to seed std; no inferential claim",
+  "dataset": "load_digits",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "budgets": [
+    5,
+    10,
+    20,
+    40
+  ],
+  "fit_count": 1620,
+  "elapsed_seconds": 84.61145687499811,
+  "warning_count": 0,
+  "warnings": [],
+  "f0_validation_mean": 0.9542985969162439,
+  "f0_test_mean": 0.9532500567794685,
+  "deep_validation_mean": 0.9626804830040123,
+  "deep_test_mean": 0.9651931637519873,
+  "clustering_ari_mean": 0.1330128726801982,
+  "clustering_ari_std": 0.20753506002370162,
+  "clustering_ari_min": -0.16379310344827586,
+  "clustering_ari_max": 0.6827794561933535,
+  "results": "OBSERVED descriptive pilot outputs; not evidence of novelty or superiority"
+}

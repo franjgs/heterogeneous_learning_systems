@@ -719,3 +719,37 @@ recovered exactly when `D={1,2}`, costs are additive, and
 frontier, smooth `n=3,4,5` bounds, a nonzero third-order example, equality
 boundaries, and the Fast/Deep reduction. No novelty, centralization, or general
 joint-management superiority claim follows.
+
+## Decision 030 — B1 exploratory empirical interaction pilot
+
+Date: 2026-09-19.
+
+Execute the first **OBSERVED** empirical pilot of interaction between
+development opportunities, without adding `H_i`, costs, discounting, routing
+decisions, or a designed complementary value function. The protocol uses the
+offline `load_digits` dataset, stratified train/transfer/validation/test
+splits, LogisticRegression as the deliberately limited Fast model, and
+RandomForestClassifier as the stronger Deep teacher. Competencies are defined
+before transfer or Gamma measurement from validation confusion profiles of
+`F_0`, clustered deterministically into four groups. The primary intervention
+uses hard pseudo-labels from Deep on seeded transfer examples; true-label and
+random-group conditions are controls. Budgets are `B={5,10,20,40}` and the
+run uses 10 seeds.
+
+The completed run made 1,620 independent fits. Mean validation/test balanced
+accuracy was `0.9543/0.9533` for `F_0` and `0.9627/0.9652` for Deep. Clustering
+stability was low and variable (ARI mean `0.1330`, standard deviation
+`0.2075`, range `-0.1638..0.6828`). In the primary competence/pseudo-label
+condition, mean Gamma by budget was `0.000324` (B5), `-0.000388` (B10),
+`-0.000825` (B20), and `-0.000458` (B40); both positive and negative values
+occurred and the standard deviations exceeded the corresponding means. The
+true-label and random-group controls showed similarly small, variable values.
+The pilot is classified **WEAK / UNSTABLE INTERACTION**, not as a claim of
+separation from noise.
+
+Outputs include individual seed/pair/budget records, competence assignments,
+Delta vectors, ARI statistics, descriptive bootstrap intervals, and
+diagnostic figures under `results/pilots/b1_empirical_interaction/`. This is
+an exploratory empirical checkpoint only. It leaves the theory, ontology,
+RQ0, and the no-superiority/no-novelty boundaries unchanged; no inference is
+made that the observed signs generalize beyond this protocol.
