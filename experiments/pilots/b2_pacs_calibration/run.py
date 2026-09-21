@@ -220,11 +220,40 @@ def choose_fraction(validation: pd.DataFrame, chance: float = 1 / 7) -> float | 
     return None
 
 
+def resolve_device(requested: str, allow_cpu: bool) -> torch.device:
+    """Resolve B2.0's explicit device choice without silently falling back."""
+    if requested == "auto":
+        if torch.cuda.is_available():
+            device = torch.device("cuda")
+        elif torch.backends.mps.is_available():
+            device = torch.device("mps")
+        else:
+            device = torch.device("cpu")
+            if not allow_cpu:
+                raise SystemExit(
+                    "B2.0 calibration is compute-blocked by CPU-only hardware: the measured pilot profile "
+                    "estimates >70 minutes per epoch for all 25 fits before validation. Use an accelerator, "
+                    "or explicitly pass --allow-cpu after reviewing the estimate."
+                )
+        return device
+    if requested == "cpu":
+        return torch.device("cpu")
+    if requested == "mps":
+        if not torch.backends.mps.is_available():
+            raise SystemExit(
+                "MPS was requested with --device mps, but PyTorch reports MPS unavailable "
+                f"(built={torch.backends.mps.is_built()}, available={torch.backends.mps.is_available()})."
+            )
+        return torch.device("mps")
+    raise ValueError(f"unsupported device choice: {requested}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", type=Path, default=ROOT / "results/pilots/b2_pacs_calibration/dataset_manifest.csv")
     parser.add_argument("--image-root", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, default=ROOT / "results/pilots/b2_pacs_calibration")
+    parser.add_argument("--device", choices=("auto", "cpu", "mps"), default="auto")
     parser.add_argument("--allow-cpu", action="store_true", help="explicit override; expected full run is hours")
     args = parser.parse_args()
     config = json.loads((ROOT / "experiments/pilots/b2_pacs_calibration/config.json").read_text())
@@ -232,18 +261,7 @@ def main() -> None:
     validate_manifest(frame)
     if set(frame.class_name) != set(CLASSES) or set(frame.domain) != set(DOMAINS):
         raise RuntimeError("dataset manifest does not match expected PACS domains/classes")
-    if torch.cuda.is_available():
-        device = torch.device("cuda")
-    elif torch.backends.mps.is_available():
-        device = torch.device("mps")
-    else:
-        device = torch.device("cpu")
-    if device.type == "cpu" and not args.allow_cpu:
-        raise SystemExit(
-            "B2.0 calibration is compute-blocked by CPU-only hardware: the measured pilot profile "
-            "estimates >70 minutes per epoch for all 25 fits before validation. Use an accelerator, "
-            "or explicitly pass --allow-cpu after reviewing the estimate."
-        )
+    device = resolve_device(args.device, args.allow_cpu)
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     temporary_checkpoints = tempfile.TemporaryDirectory(prefix="hls_b2_pacs_checkpoints_")
@@ -363,10 +381,14 @@ def main() -> None:
         "test_evaluated": selected is not None,
         "rule": "smallest fraction with bootstrap lower CI above 1/7 in every domain, bootstrap upper CI below 1 in >=2 domains, and teacher-minus-student gap lower CI above zero in >=2 domains",
         "device": str(device),
+        "requested_device": args.device,
+        "actual_device": str(device),
         "note": "B2.0 only; no Gamma, routing, costs, or factorial development comparisons.",
     }, indent=2) + "\n")
     (args.output_dir / "run_metadata.json").write_text(json.dumps({
         "device": str(device),
+        "requested_device": args.device,
+        "actual_device": str(device),
         "cuda_available": torch.cuda.is_available(),
         "mps_available": bool(torch.backends.mps.is_available()),
         "torch_threads": torch.get_num_threads(),

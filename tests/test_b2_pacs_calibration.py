@@ -1,4 +1,5 @@
 import json
+import importlib.util
 from pathlib import Path
 
 import numpy as np
@@ -15,6 +16,14 @@ from hls.b2_pacs_calibration import (
     validate_disjoint_splits,
     validate_manifest,
 )
+
+
+def load_pacs_runner():
+    path = Path(__file__).resolve().parents[1] / "experiments/pilots/b2_pacs_calibration/run.py"
+    spec = importlib.util.spec_from_file_location("b2_pacs_calibration_run", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def toy_manifest(repeats=20):
@@ -126,3 +135,20 @@ def test_generated_pacs_manifest_and_split_outputs_are_consistent():
             "transfer": 1998,
             "validation": 1499,
         }
+
+
+def test_explicit_device_selection_and_cpu_compatibility(monkeypatch):
+    runner = load_pacs_runner()
+    monkeypatch.setattr(runner.torch.cuda, "is_available", lambda: True)
+    monkeypatch.setattr(runner.torch.backends.mps, "is_available", lambda: True)
+    assert str(runner.resolve_device("auto", allow_cpu=False)) == "cuda"
+    assert str(runner.resolve_device("cpu", allow_cpu=False)) == "cpu"
+    assert str(runner.resolve_device("mps", allow_cpu=False)) == "mps"
+
+    monkeypatch.setattr(runner.torch.cuda, "is_available", lambda: False)
+    monkeypatch.setattr(runner.torch.backends.mps, "is_available", lambda: False)
+    with pytest.raises(SystemExit, match="MPS was requested"):
+        runner.resolve_device("mps", allow_cpu=False)
+    with pytest.raises(SystemExit, match="compute-blocked by CPU-only hardware"):
+        runner.resolve_device("auto", allow_cpu=False)
+    assert str(runner.resolve_device("auto", allow_cpu=True)) == "cpu"
