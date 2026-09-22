@@ -23,6 +23,39 @@ N_VALUES = (25, 50, 100)
 COSTS = (0.00, 0.02, 0.05, 0.10, 0.15)
 
 
+class Progress:
+    def __init__(self, total_units: int, total_fits: int = 160):
+        self.total_units = total_units
+        self.total_fits = total_fits
+        self.completed_units = 0
+        self.started = time.perf_counter()
+
+    @staticmethod
+    def duration(seconds: float) -> str:
+        seconds = max(0, int(seconds))
+        hours, rem = divmod(seconds, 3600)
+        minutes, seconds = divmod(rem, 60)
+        return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+
+    def fit_start(self, number: int, description: str) -> None:
+        print(f"[fit {number}/{self.total_fits}] {description}", flush=True)
+
+    def epoch_end(self, epoch: int, epochs: int, epoch_seconds: float, units: int) -> None:
+        self.completed_units += units
+        elapsed = time.perf_counter() - self.started
+        rate = elapsed / self.completed_units if self.completed_units else 0.0
+        eta = rate * (self.total_units - self.completed_units)
+        print(
+            f"[epoch {epoch}/{epochs}] {epoch_seconds:.1f}s | total {self.duration(elapsed)} | "
+            f"ETA B2.1 {self.duration(eta)}",
+            flush=True,
+        )
+
+
+def batches_for(frame: pd.DataFrame, batch_size: int) -> int:
+    return (len(frame) + batch_size - 1) // batch_size
+
+
 def gamma_learn(vij: float, vi: float, vj: float, v0: float) -> float:
     return vij - vi - vj + v0
 
@@ -33,7 +66,7 @@ def operational_value(scores: dict[str, float], deep: dict[str, float], cost: fl
     return value, selected
 
 
-def fit_from_f0(model, frame: pd.DataFrame, seed: int, config: dict, image_root: Path, device: torch.device):
+def fit_from_f0(model, frame: pd.DataFrame, seed: int, config: dict, image_root: Path, device: torch.device, progress: Progress):
     """Apply the unchanged B2.0 SGD rule to a model initialized from F0."""
     params = config["fast"]
     optimizer = torch.optim.SGD(model.parameters(), lr=float(params["learning_rate"]), momentum=float(params["momentum"]))
@@ -43,14 +76,51 @@ def fit_from_f0(model, frame: pd.DataFrame, seed: int, config: dict, image_root:
         num_workers=int(config["training"]["workers"]), generator=torch.Generator().manual_seed(seed), pin_memory=False,
     )
     model.train()
-    for _ in range(int(config["training"]["epochs"])):
+    batches = batches_for(frame, int(config["training"]["batch_size"]))
+    for epoch in range(1, int(config["training"]["epochs"]) + 1):
+        epoch_started = time.perf_counter()
         for images, labels, _, _ in loader:
             images, labels = images.to(device), labels.to(device)
             optimizer.zero_grad(set_to_none=True)
             loss = torch.nn.functional.cross_entropy(model(images), labels)
             loss.backward()
             optimizer.step()
+        progress.epoch_end(epoch, int(config["training"]["epochs"]), time.perf_counter() - epoch_started, batches)
     return model
+
+
+def fit_pretrained(kind: str, frame: pd.DataFrame, seed: int, config: dict, image_root: Path, device: torch.device, progress: Progress):
+    """B2.0 training rule with progress reporting for shared D/F0 fits."""
+    b20.seed_everything(seed)
+    model = b20.make_model(kind, seed, device)
+    params = config[kind]
+    optimizer = torch.optim.SGD(model.parameters(), lr=float(params["learning_rate"]), momentum=float(params["momentum"]))
+    loader = DataLoader(
+        b20.PACSImages(frame, image_root, training=True),
+        batch_size=int(config["training"]["batch_size"]), shuffle=True,
+        num_workers=int(config["training"]["workers"]), generator=torch.Generator().manual_seed(seed), pin_memory=False,
+    )
+    model.train()
+    epochs = int(config["training"]["epochs"])
+    batches = batches_for(frame, int(config["training"]["batch_size"]))
+    for epoch in range(1, epochs + 1):
+        epoch_started = time.perf_counter()
+        for images, labels, _, _ in loader:
+            images, labels = images.to(device), labels.to(device)
+            optimizer.zero_grad(set_to_none=True)
+            loss = torch.nn.functional.cross_entropy(model(images), labels)
+            loss.backward()
+            optimizer.step()
+        progress.epoch_end(epoch, epochs, time.perf_counter() - epoch_started, batches)
+    return model
+
+
+def print_fit_metrics(description: str, scores: dict[str, float]) -> None:
+    print(
+        f"Validation {description}: "
+        + "; ".join(f"{domain} BA={scores[domain]:.3f}" for domain in DOMAINS),
+        flush=True,
+    )
 
 
 def score(model, frame, image_root, device, batch_size):
@@ -81,6 +151,22 @@ def main() -> None:
     args.output_dir.mkdir(parents=True, exist_ok=True)
     rows, state_rows = [], []
     started = time.perf_counter()
+    batch_size = int(config["training"]["batch_size"])
+    total_units = 0
+    for planned_seed in config["split_seeds"]:
+        planned_splits = b20.stratified_splits(frame, planned_seed)
+        planned_lookup = frame.set_index("sample_id", drop=False)
+        planned_base = planned_lookup.loc[planned_splits["base"]]
+        f0_count = len(b20.select_base_fraction(frame, planned_base.sample_id, 0.25, planned_seed + 250))
+        teacher_count = len(planned_splits["base"]) + len(planned_splits["transfer"])
+        total_units += 3 * (batches_for(pd.DataFrame(index=range(teacher_count)), batch_size) + batches_for(pd.DataFrame(index=range(f0_count)), batch_size))
+        total_units += 3 * sum(
+            4 * batches_for(pd.DataFrame(index=range(n)), batch_size) +
+            6 * batches_for(pd.DataFrame(index=range(2 * n)), batch_size)
+            for n in N_VALUES
+        )
+    progress = Progress(total_units)
+    fit_number = 0
     for seed in config["split_seeds"]:
         splits = b20.stratified_splits(frame, seed)
         lookup = frame.set_index("sample_id", drop=False)
@@ -90,9 +176,16 @@ def main() -> None:
         f0_ids = b20.select_base_fraction(frame, base.sample_id, 0.25, seed + 250)
         f0_frame = lookup.loc[f0_ids].reset_index(drop=True)
         teacher_frame = lookup.loc[np.concatenate([splits["base"], splits["transfer"]])].reset_index(drop=True)
-        deep, _ = b20.fit_model("deep", seed + 30000, teacher_frame, args.image_root, device, config, 0, 1.0, started)
-        f0, _ = b20.fit_model("fast", seed + 2500, f0_frame, args.image_root, device, config, 0, 0.25, started)
-        deep_scores, f0_scores = score(deep, validation, args.image_root, device, config["training"]["batch_size"]), score(f0, validation, args.image_root, device, config["training"]["batch_size"])
+        fit_number += 1
+        progress.fit_start(fit_number, f"seed {seed} / D / N=6993 / domains=BASE+TRANSFER")
+        deep = fit_pretrained("deep", teacher_frame, seed + 30000, config, args.image_root, device, progress)
+        deep_scores = score(deep, validation, args.image_root, device, config["training"]["batch_size"])
+        print_fit_metrics(f"seed {seed} / D / N=6993 / domains=BASE+TRANSFER", deep_scores)
+        fit_number += 1
+        progress.fit_start(fit_number, f"seed {seed} / F0 / N=0 / domains=none")
+        f0 = fit_pretrained("fast", f0_frame, seed + 2500, config, args.image_root, device, progress)
+        f0_scores = score(f0, validation, args.image_root, device, config["training"]["batch_size"])
+        print_fit_metrics(f"seed {seed} / F0 / N=0 / domains=none", f0_scores)
         state_rows += [{"seed": seed, "state": "D", "N": None, "domain": None, **{f"ba_{d}": deep_scores[d] for d in DOMAINS}}, {"seed": seed, "state": "F0", "N": 0, "domain": None, **{f"ba_{d}": f0_scores[d] for d in DOMAINS}}]
         for n in N_VALUES:
             interventions = {}
@@ -102,14 +195,22 @@ def main() -> None:
                 interventions[domain]["label"] = [int(x) for x in predict_labels(deep, chosen, args.image_root, device, config["training"]["batch_size"])]
             states = {"F0": (f0_scores, f0)}
             for domain in DOMAINS:
+                fit_number += 1
                 model = copy.deepcopy(f0)
-                scores = score(fit_from_f0(model, interventions[domain], seed + n + DOMAINS.index(domain), config, args.image_root, device), validation, args.image_root, device, config["training"]["batch_size"])
+                description = f"seed {seed} / F_{domain} / N={n} / domains={domain}"
+                progress.fit_start(fit_number, description)
+                scores = score(fit_from_f0(model, interventions[domain], seed + n + DOMAINS.index(domain), config, args.image_root, device, progress), validation, args.image_root, device, config["training"]["batch_size"])
+                print_fit_metrics(description, scores)
                 states[f"F_{domain}"] = (scores, model)
             for i, left in enumerate(DOMAINS):
                 for right in DOMAINS[i + 1:]:
+                    fit_number += 1
                     model = copy.deepcopy(f0)
                     mixed = pd.concat([interventions[left], interventions[right]], ignore_index=True)
-                    scores = score(fit_from_f0(model, mixed, seed + n + 100 + i, config, args.image_root, device), validation, args.image_root, device, config["training"]["batch_size"])
+                    description = f"seed {seed} / F_{left}_{right} / N={n} / domains={left}+{right}"
+                    progress.fit_start(fit_number, description)
+                    scores = score(fit_from_f0(model, mixed, seed + n + 100 + i, config, args.image_root, device, progress), validation, args.image_root, device, config["training"]["batch_size"])
+                    print_fit_metrics(description, scores)
                     states[f"F_{left}_{right}"] = (scores, model)
                     vals = {name: float(np.mean(list(scoreset.values()))) for name, (scoreset, _) in states.items()}
                     rec = {"seed": seed, "N": n, "domain_i": left, "domain_j": right, "gamma_learn": gamma_learn(vals[f"F_{left}_{right}"], vals[f"F_{left}"], vals[f"F_{right}"], vals["F0"]), "v_learn_F0": vals["F0"], "v_learn_Fi": vals[f"F_{left}"], "v_learn_Fj": vals[f"F_{right}"], "v_learn_Fij": vals[f"F_{left}_{right}"]}
