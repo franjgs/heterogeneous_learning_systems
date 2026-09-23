@@ -1,7 +1,7 @@
 # Heterogeneous Learning Systems — Handover
 
-Last updated: 2026-09-20
-Repository state: HLS ontology v1 is closed. The minimal-model record now includes T=2 fixed-priority, additive-equivalence, selection, nonlocal-information, and T=3 continuation-policy boundaries. Each result is model-scoped; none establishes necessary or strictly superior joint management. P1--P4, CIV, B13, and CR0--CR4 retain their subordinate status.
+Last updated: 2026-09-22
+Repository state: HLS ontology v1 is closed. The theoretical record includes equivalence/frontier, opportunity-generation, portfolio-interaction, operational-interaction, and finite-set opportunity-value results. B2.1 supplies validation-only PACS evidence that learned competence developments interact and that Fast/Deep organization transforms those interactions. The full operation-to-learning-opportunity loop remains empirically open. Each theoretical result is model-scoped; none establishes necessary or strictly superior joint management.
 
 ## Mandatory first reads
 
@@ -24,6 +24,7 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 15. `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md` only as diagnostic history, not as the current centre.
 16. [theory_competence_evolution_minimal_model.md](theory_competence_evolution_minimal_model.md) and [experiments/microverification/](../experiments/microverification/) — CR0--CR4 minimal-model audit; not a general HLS result.
 17. [paper/](../paper/) — working draft with a stale RQ0 formulation; do not let it set programme direction and do not update it without a dedicated paper task.
+18. [checkpoints/HLS_checkpoint_after_B21.md](checkpoints/HLS_checkpoint_after_B21.md) — concise scientific checkpoint linking the established theory, negative boundaries, B1, B2.0, B2.1, and the remaining empirical gap.
 
 ## Central programme
 
@@ -313,20 +314,26 @@ Proposition 7 now has a structural finite-set generalization. For `H(D)=-K(D)+be
 
 The first empirical pilot, [B1 README](../experiments/pilots/b1_empirical_interaction/README.md), has now been executed on `sklearn.datasets.load_digits`. It uses the preregistered split roles, LogisticRegression as Fast, RandomForestClassifier as Deep, validation-only confusion-profile competencies (`K=4`), hard pseudo-label transfer as the primary condition, and true-label/random-group controls. Across 10 seeds and budgets `B in {5,10,20,40}`, the run completed 1,620 fits. Fast/Deep test balanced accuracies averaged `0.9533/0.9652`; competence clustering stability was low and variable (ARI mean `0.133`, range `-0.164` to `0.683`). Primary Gamma means were `0.00032`, `-0.00039`, `-0.00083`, and `-0.00046` for the four budgets, with both signs observed and variability larger than the means. The pilot is therefore classified **OBSERVED — WEAK / UNSTABLE INTERACTION**. These are exploratory observations only: they do not alter the theory, RQ0, or any claim about novelty or architectural superiority.
 
-### B2.0 PACS calibration status
+### PACS B2.0/B2.1 status
 
-The PACS dataset audit and five-seed stratified split manifests are recorded in
-`results/pilots/b2_pacs_calibration/`; the pinned public artifact contains
-9,991 valid images across the four fixed domain competences and seven classes,
-with no corrupt files or exact content-hash duplicates. The prescribed models
-are MobileNetV2 and ResNet-50 with ImageNet weights, but no model fit or
-validation/test metric was produced. The available machine has CPU only because
-PyTorch cannot use its built MPS backend; a minimal throughput profile estimates
-a lower bound of 70.1 minutes per epoch for the planned 25 fits. B2.0 therefore
-stopped before calibration with status `COMPUTE_BLOCKED_BEFORE_MODEL_CALIBRATION`.
-The available CPU-only setup is **NOT VIABLE** for this calibration and
-subsequent many-fit work; PACS performance/headroom itself remains unassessed.
-No theory, RQ0, or paper content changed.
+The initial B2.0 CPU-feasibility stop recorded below in the research log was
+superseded by a completed 25-fit CPU calibration. MPS was excluded after a
+diagnostic found label corruption on its non-blocking transfer path. The stored
+B2.0 automatic rule selected 10% and then evaluated TEST; the later B2.1 design
+decision fixed F0 at 25% and did not use TEST. This provenance distinction must
+be preserved.
+
+B2.1 completed 160 CPU fits over five seeds, N in {25,50,100}, and six PACS
+domain pairs. All 18 N-by-pair mean Gamma_learn values were positive; every
+pair was positive in 5/5 seeds at N=50 and 100. Fast/Deep operational valuation
+substantially absorbed those interactions at low Deep cost and approached the
+learning interaction as Deep cost increased. Routing changed in 420/450
+observations, but that association is descriptive rather than causal.
+
+Use [the B2.1 checkpoint](checkpoints/HLS_checkpoint_after_B21.md) for the
+current consolidated scientific position and exact evidence paths. No result
+establishes TEST generalization, Omega empirically, a complete HLS policy, or
+joint-management superiority.
 
 ## Open issue for a later task
 

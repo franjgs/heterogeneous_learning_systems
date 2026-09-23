@@ -43,3 +43,27 @@ hashes, citation keys, Git state, command, and result hash.
 The frozen pre-implementation specification remains in
 `EXPERIMENTAL_SPEC_V0.md`; the executed sequence is preserved in
 `EXECUTION_PLAN.md`.
+
+## Subsequent empirical interaction checkpoints
+
+The later programme pilots are not source-reproduction foundations and should
+not be conflated with B1.1--B13 above. Their consolidated status is recorded in
+[HLS Scientific Checkpoint after B2.1](../checkpoints/HLS_checkpoint_after_B21.md).
+
+- The digits B1 factorial was `OBSERVED — WEAK / UNSTABLE INTERACTION`: models
+  were near ceiling, learned competence clusters were unstable, and mean
+  interactions were small relative to seed variation.
+- PACS B2.0 established four fixed domain competences and heterogeneous
+  MobileNetV2/ResNet-50 validation profiles in a valid CPU run. The initial
+  compute-blocked status was superseded; MPS was excluded after a transfer-path
+  diagnostic. The stored automatic B2.0 selection and the later B2.1 choice of
+  25%-BASE F0 have distinct provenance.
+- PACS B2.1 observed strong positive learning interactions across the fixed
+  domains and showed that domain-level Fast/Deep operational valuation can
+  substantially transform them. B2.1 used VALIDATION only and did not test
+  operation-dependent opportunity generation, Omega, H(D), or a complete HLS
+  policy.
+
+The theory-to-experiment frontier is therefore explicit: B2.1 supports
+`learning -> competence changes -> V(S) -> routing -> Gamma_oper`, while the
+`operation -> learning opportunity` link remains experimentally untested.

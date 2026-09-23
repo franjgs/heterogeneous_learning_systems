@@ -1,9 +1,11 @@
 # B2.0 — PACS calibration
 
-Status: **DATASET AUDIT OBSERVED; MODEL CALIBRATION COMPUTE-BLOCKED**. No model
-quality or PACS suitability conclusion has been obtained. This is calibration
-only: it contains no transfer intervention, factorial, `Gamma`, routing, cost,
-or `H` analysis.
+Status: **SUPERSEDED PRE-RUN PROFILE; CPU CALIBRATION COMPLETED**. The initial
+compute-blocked assessment below is retained as methodological history. A later
+CPU execution completed all 25 fits; its metrics and provenance are under
+`results/pilots/b2_pacs_calibration/`. This remains calibration only: it
+contains no transfer factorial, `Gamma`, routing, development-cost, or `H`
+analysis.
 
 ## Question and competence definition
 
@@ -72,7 +74,22 @@ zero in at least two domains. This is a neutral calibration rule, not a
 claim of statistical significance. TEST is evaluated only after that
 validation-only selection; if no fraction qualifies, TEST remains unused.
 
-## What was actually executed
+## Completed calibration update
+
+The completed valid run explicitly forced CPU. MPS was excluded after a
+diagnostic identified corrupted labels on the non-blocking CPU-to-MPS transfer
+path. MobileNetV2 and ResNet-50 produced heterogeneous validation competence
+profiles across the four domains. The stored automatic B2.0 rule selected the
+10% BASE fraction and then evaluated TEST; TEST remained closed during the
+selection itself. The later B2.1 protocol made a separate, explicit design
+choice to use 25%-BASE F0 and did not use TEST. See the
+[checkpoint after B2.1](../../../docs/checkpoints/HLS_checkpoint_after_B21.md)
+for the consolidated evidence and the provenance distinction.
+
+## Initial preparation checkpoint (superseded)
+
+The remainder of this section is the preserved pre-run snapshot and is not the
+current calibration status.
 
 The pinned dataset was downloaded to an external cache and audited. Split
 membership was generated for all five seeds and checked for disjointness and

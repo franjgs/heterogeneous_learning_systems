@@ -793,3 +793,49 @@ that follow; this is a compute-feasibility assessment, not a negative result
 about PACS performance/headroom. The PACS dataset itself remains unassessed.
 This is an OBSERVED data audit and feasibility checkpoint only, not a
 model-performance result.
+
+## Decision 032 — PACS B2.0/B2.1 completion and scientific consolidation
+
+Date: 2026-09-22.
+
+### Decision
+
+Close B2.1 as a validation-only empirical checkpoint and consolidate the
+programme through it in
+`docs/checkpoints/HLS_checkpoint_after_B21.md`. This decision adds no theory,
+experiment, novelty claim, or paper claim.
+
+### Superseded operational status
+
+Decision 031 accurately records the initial pre-run CPU feasibility stop, but
+its statement that calibration had not run is no longer the current state. A
+subsequent valid CPU execution completed all 25 B2.0 fits. MPS was excluded
+after a diagnostic identified label corruption on a non-blocking CPU-to-MPS
+transfer path. The stored B2.0 automatic calibration output records fraction
+0.10 and subsequent TEST evaluation. The later B2.1 protocol separately fixed
+F0 to fraction 0.25 and never used TEST. This distinction is retained rather
+than rewriting the historical result.
+
+### B2.1 observed result
+
+B2.1 trained F0, Fi, Fj, and direct-from-F0 Fij states on PACS with five seeds,
+N in {25,50,100}, and six fixed domain pairs. All 18 N-by-pair mean
+Gamma_learn values were positive; at N=50 and 100 all six pairs were positive
+in 5/5 seeds. No pair was consistently substitutive, and the mean magnitude
+increased with N for every pair. Pairs containing sketch had the largest
+interactions.
+
+Applying the predeclared Fast/Deep operational value to those same states
+changed the interaction substantially. At c=0, mean Gamma_learn was 0.166432
+and mean Gamma_oper 0.012528; at c=0.15, mean Gamma_oper was 0.091474. Routing
+changed relative to F0 in 420/450 observations. There were 20 amplifications
+and 21 sign changes. These are descriptive associations, not causal estimates
+of a routing effect.
+
+### Programme consequence
+
+B2.1 supports the partial empirical chain
+`learning -> competence changes -> V(S) -> operational routing -> Gamma_oper`.
+It does not instantiate or validate `operation -> learning opportunity`, Omega,
+H(D), a complete HLS policy, TEST generalization, or superiority over a rich
+separated architecture. The full HLS loop remains empirically open.
