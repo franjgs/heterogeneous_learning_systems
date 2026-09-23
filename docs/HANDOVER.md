@@ -1,7 +1,7 @@
 # Heterogeneous Learning Systems — Handover
 
-Last updated: 2026-09-22
-Repository state: HLS ontology v1 is closed. The theoretical record includes equivalence/frontier, opportunity-generation, portfolio-interaction, operational-interaction, and finite-set opportunity-value results. B2.1 supplies validation-only PACS evidence that learned competence developments interact and that Fast/Deep organization transforms those interactions. The full operation-to-learning-opportunity loop remains empirically open. Each theoretical result is model-scoped; none establishes necessary or strictly superior joint management.
+Last updated: 2026-09-23
+Repository state: HLS ontology v1 is closed. The theoretical record includes equivalence/frontier, opportunity-generation, portfolio-interaction, operational-interaction, and finite-set opportunity-value results. B2.1 supplies validation-only PACS evidence that learned competence developments interact and that Fast/Deep organization transforms those interactions. B2.2 is preregistered but not executed; it will test whether a currently inferior Deep action can create a learning opportunity whose future operational value exceeds its present sacrifice. The operation-to-opportunity link remains empirically open until that execution. Each theoretical result is model-scoped; none establishes necessary or strictly superior joint management.
 
 ## Mandatory first reads
 
@@ -25,6 +25,7 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 16. [theory_competence_evolution_minimal_model.md](theory_competence_evolution_minimal_model.md) and [experiments/microverification/](../experiments/microverification/) — CR0--CR4 minimal-model audit; not a general HLS result.
 17. [paper/](../paper/) — working draft with a stale RQ0 formulation; do not let it set programme direction and do not update it without a dedicated paper task.
 18. [checkpoints/HLS_checkpoint_after_B21.md](checkpoints/HLS_checkpoint_after_B21.md) — concise scientific checkpoint linking the established theory, negative boundaries, B1, B2.0, B2.1, and the remaining empirical gap.
+19. [experimental_foundations/B22_PROTOCOL.md](experimental_foundations/B22_PROTOCOL.md) — frozen, unexecuted protocol for testing operation-dependent learning-opportunity value on PACS.
 
 ## Central programme
 
@@ -335,9 +336,21 @@ current consolidated scientific position and exact evidence paths. No result
 establishes TEST generalization, Omega empirically, a complete HLS policy, or
 joint-management superiority.
 
-## Open issue for a later task
+### B2.2 preregistration status
 
-Use the [minimal model](theory/minimal_hls_model.md), [operational-development opportunity-value note](theory/operational_development_opportunity_value.md), closed [ontology](hls_ontology.md), [research questions](research_questions.md), and [research doctrine](../RESEARCH_DOCTRINE.md) as anchors. The next adversarial audit, not started here, will test whether any previously excluded mechanism creates a dependency that does not reduce immediately to a simple price or threshold: (A) changing or uncertain future demand; (B) several agents with alternative competences, where development changes subsequent use, development, or knowledge-source choices; and (C) learning by doing, where operational allocation generates direct experience and changes future competences. This record neither specifies nor analyses A/B/C. HLS is not claimed to be the only way to select the optimum.
+[B22_PROTOCOL.md](experimental_foundations/B22_PROTOCOL.md) freezes the next
+empirical checkpoint without executing it. For the same PACS F0/D system, the
+recorded operational action gates the learning opportunity:
+`D(F)={0}` and `D(D)={0,1}`. The primary event is `rho_k(c)>0` and
+`H_k(c,B,kappa)>0`, equivalently
+`B DeltaV_k(c)>rho_k(c)+kappa`. The primary grid fixes
+`N={25,50,100}`, `c={0,0.02,0.05,0.10,0.15}`, `B={1,2,5,10}`, five seeds,
+four domains, and `kappa=0`. TEST remains closed. This is a preregistration,
+not an empirical result or an end-to-end HLS-policy claim.
+
+## General theory audit retained for later work
+
+Use the [minimal model](theory/minimal_hls_model.md), [operational-development opportunity-value note](theory/operational_development_opportunity_value.md), closed [ontology](hls_ontology.md), [research questions](research_questions.md), and [research doctrine](../RESEARCH_DOCTRINE.md) as anchors. A later adversarial audit, not started here, may test whether any previously excluded mechanism creates a dependency that does not reduce immediately to a simple price or threshold: (A) changing or uncertain future demand; (B) several agents with alternative competences, where development changes subsequent use, development, or knowledge-source choices; and (C) learning by doing, where operational allocation generates direct experience and changes future competences. This record neither specifies nor analyses A/B/C. HLS is not claimed to be the only way to select the optimum.
 
 Do not start a large experiment until the proposition, competence transformation, adversaries, matched information and resources, and validity conditions are explicit.
 

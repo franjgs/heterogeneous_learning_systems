@@ -839,3 +839,44 @@ B2.1 supports the partial empirical chain
 It does not instantiate or validate `operation -> learning opportunity`, Omega,
 H(D), a complete HLS policy, TEST generalization, or superiority over a rich
 separated architecture. The full HLS loop remains empirically open.
+
+## Decision 033 — Preregister B2.2 operational opportunity value
+
+Date: 2026-09-23.
+
+### Decision
+
+Freeze the unexecuted B2.2 protocol in
+`docs/experimental_foundations/B22_PROTOCOL.md`. B2.2 retains the B2.1 PACS
+system and makes opportunity availability depend on the recorded operational
+action: routing the current domain batch to Fast permits only no development,
+while routing it to Deep generates the hard pseudo-labels required for an
+optional student update. TEST remains closed.
+
+### Primary test
+
+For domain `k`, the current sacrifice is
+`rho_k(c)=S_k(F0)-[S_k(D)-c]`. The future value uses all four domain scores,
+`V(F;c)=mean_j max{S_j(F),S_j(D)-c}`, and
+`DeltaV_k(c)=V(F_k;c)-V(F0;c)`. With future-use weight `B`, primary
+`kappa=0`, and use value `Omega_k=-kappa+B DeltaV_k`, the full candidate value
+is `H_k=-rho_k+Omega_k`. The primary event is strictly `rho_k>0` and `H_k>0`,
+equivalently `B DeltaV_k>rho_k+kappa`.
+
+The reported `Omega_k` is the value of using the opportunity. The optimized
+theoretical opportunity value retains the no-use action and is therefore
+`max{0,Omega_k}`. This mapping preserves the existing theory and ontology.
+
+### Frozen design and classification
+
+The grid is five seeds by four domains by `N={25,50,100}` by
+`c={0,0.02,0.05,0.10,0.15}` by `B={1,2,5,10}`, with `kappa=0`: 1,200 reported
+observations. `POSITIVE` requires both a `rho>0,H>0` cell reproduced in at
+least two seeds and a `rho>0,H<=0` cell reproduced in at least two seeds.
+`NULL` means that no grid observation has `rho>0,H>0`. All other valid cases
+are `INCONCLUSIVE`. Failed opportunity-gating, provenance, split, or TEST
+controls invalidate a run rather than constituting a NULL result.
+
+No B2.2 training or result generation occurred at this checkpoint. No
+end-to-end policy, RQ0 conclusion, separated-architecture comparison, novelty
+claim, TEST claim, or B2.3 design is added.

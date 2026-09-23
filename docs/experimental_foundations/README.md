@@ -67,3 +67,17 @@ not be conflated with B1.1--B13 above. Their consolidated status is recorded in
 The theory-to-experiment frontier is therefore explicit: B2.1 supports
 `learning -> competence changes -> V(S) -> routing -> Gamma_oper`, while the
 `operation -> learning opportunity` link remains experimentally untested.
+
+## B2.2 preregistration
+
+[B22_PROTOCOL.md](B22_PROTOCOL.md) freezes the PACS B2.2 operational
+opportunity-value experiment before execution. It makes the learning
+opportunity genuinely action-dependent, retains the B2.1 models, splits,
+seeds, training rule, CPU device, and validation-only evaluation, and keeps
+TEST closed. Its primary event is `rho_k(c)>0` and `H_k(c,B,kappa)>0`, with the
+exact frontier `B DeltaV_k(c)>rho_k(c)+kappa`. The predeclared grid is
+`N={25,50,100}`, `c={0,0.02,0.05,0.10,0.15}`, `B={1,2,5,10}`, and primary
+`kappa=0`.
+
+This entry records a protocol only. It contains no B2.2 observation, policy
+result, RQ0 conclusion, TEST result, novelty claim, or B2.3 design.
