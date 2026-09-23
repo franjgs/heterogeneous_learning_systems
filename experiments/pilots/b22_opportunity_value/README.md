@@ -1,6 +1,6 @@
 # B2.2 PACS operational opportunity value
 
-Status: **IMPLEMENTED — NOT EXECUTED**. The scientific authority is
+Status: **COMPLETED — INCONCLUSIVE**. The scientific authority is
 [B22_PROTOCOL.md](../../../docs/experimental_foundations/B22_PROTOCOL.md).
 This runner does not change its test, grid, models, seeds, splits, or outcome
 criteria.
@@ -44,6 +44,15 @@ KMP_DUPLICATE_LIB_OK=TRUE /Users/fran/Programs/miniconda3/bin/python \
   --image-root /private/tmp/hls-pacs-cache/prepared/394113073258ead631f617d2e13bb377c0715c4b/images
 ```
 
+Analyze the completed artifacts without loading or training models:
+
+```bash
+KMP_DUPLICATE_LIB_OK=TRUE /Users/fran/Programs/miniconda3/bin/python \
+  experiments/pilots/b22_opportunity_value/run.py \
+  --device cpu \
+  --analyze-only
+```
+
 Explicit full repetition:
 
 ```bash
@@ -54,9 +63,8 @@ KMP_DUPLICATE_LIB_OK=TRUE /Users/fran/Programs/miniconda3/bin/python \
   --force
 ```
 
-Historical B2.0 measurements for the five Deep and five 25%-BASE Fast fits
-total 6.07 CPU hours. The B2.1 structural estimate was about 7.1 hours for 160
-fits. B2.2 retains those ten expensive base fits and performs 60 singleton
-updates plus validation, so its estimated total is approximately 6.5–7 CPU
-hours. This is an estimate, not a measured B2.2 duration or guarantee; no B2.2
-smoke training was used to derive it.
+The completed CPU execution took 08:10:14. It produced four favorable
+analytical observations, none reproduced in at least two seeds, with TEST
+closed. See the [diagnostic](../../../results/pilots/b22_opportunity_value/b22_diagnostic.md)
+for the independent reconstruction and the distinction between analytical rows
+and unique learned states.

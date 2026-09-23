@@ -307,3 +307,70 @@ def test_classification_uses_two_seed_reproducibility():
     raw.loc[0, "integration_changes_decision"] = False
     regions.loc[0, "integration_reproducible"] = False
     assert b22.classify_outcome(raw, regions) == "NULL"
+
+
+def completed_raw():
+    return pd.read_csv(ROOT / "results/pilots/b22_opportunity_value/raw_results.csv")
+
+
+def test_completed_results_reproduce_frozen_counts_and_no_test():
+    output = ROOT / "results/pilots/b22_opportunity_value"
+    audit = b22.b22_analysis.audit_results(
+        completed_raw(), None, output / "run_metadata.json", b22.b22_analysis.FROZEN_COUNTS
+    )
+    assert audit["classification"] == "INCONCLUSIVE"
+    assert audit["test"] == "CLOSED"
+    assert {key: audit[key] for key in b22.b22_analysis.FROZEN_COUNTS} == b22.b22_analysis.FROZEN_COUNTS
+
+
+def test_delta_v_summary_deduplicates_B_and_competence_changes_decompose():
+    raw = completed_raw()
+    delta = b22.b22_analysis.delta_v_summaries(raw)
+    global_rows = delta[delta.scope == "global"]
+    assert set(global_rows.metric) == {"DeltaV", "DeltaV_local", "DeltaV_cross"}
+    assert set(global_rows.n) == {300}
+    detail, summary = b22.b22_analysis.competence_change_summaries(raw)
+    assert len(detail) == 60 * 4
+    assert len(summary[summary.scope == "matrix_all_N"]) == 4 * 4
+    updates = raw.sort_values(["c", "B"]).drop_duplicates(["seed", "domain", "N"])
+    for row in updates.itertuples(index=False):
+        observed = detail[
+            (detail.seed == row.seed) & (detail.intervention_domain == row.domain) & (detail.N == row.N)
+        ]
+        expected = sum(getattr(row, f"Fk_ba_{domain}") - getattr(row, f"F0_ba_{domain}") for domain in b22.DOMAINS)
+        assert observed.DeltaS.sum() == pytest.approx(expected)
+
+
+def test_final_summary_formatter_uses_calculated_counts():
+    audit = {
+        "classification": "INCONCLUSIVE", "updates": 60, "rows": 1200, "favorable": 4,
+        "noncompensating": 800, "reproducible_favorable_cells": 0, "cells": 240,
+        "decision_changes": 4, "positive_cross_domain_cases": 0, "frontier_checks": 1200,
+        "test": "CLOSED",
+    }
+    rendered = b22.final_summary(audit, 8 * 3600 + 10 * 60 + 14, b22.DEFAULT_OUTPUT)
+    assert "Classification: INCONCLUSIVE" in rendered
+    assert "4 / 1200" in rendered
+    assert "0 / 240" in rendered
+    assert "Total elapsed: 08:10:14" in rendered
+    assert "b22_diagnostic.md" in rendered
+
+
+def test_analyze_only_never_enters_training(monkeypatch):
+    called = {"analysis": False}
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("analyze-only entered a model/training path")
+
+    def completed(*args, **kwargs):
+        called["analysis"] = True
+        return {}
+
+    monkeypatch.setattr(b22, "ensure_base_models", forbidden)
+    monkeypatch.setattr(b22, "run_one_update", forbidden)
+    monkeypatch.setattr(b22, "write_completed_analysis", completed)
+    monkeypatch.setattr(b22, "historical_signatures", lambda *args: signatures())
+    monkeypatch.setattr(b22, "load_completed_updates", lambda *args: {str(i): {} for i in range(60)})
+    monkeypatch.setattr(b22, "expand_grid", lambda *args: completed_raw())
+    b22.main(["--device", "cpu", "--analyze-only"])
+    assert called["analysis"]

@@ -1,7 +1,7 @@
 # Heterogeneous Learning Systems — Handover
 
 Last updated: 2026-09-23
-Repository state: HLS ontology v1 is closed. The theoretical record includes equivalence/frontier, opportunity-generation, portfolio-interaction, operational-interaction, and finite-set opportunity-value results. B2.1 supplies validation-only PACS evidence that learned competence developments interact and that Fast/Deep organization transforms those interactions. B2.2 is preregistered but not executed; it will test whether a currently inferior Deep action can create a learning opportunity whose future operational value exceeds its present sacrifice. The operation-to-opportunity link remains empirically open until that execution. Each theoretical result is model-scoped; none establishes necessary or strictly superior joint management.
+Repository state: HLS ontology v1 is closed. The theoretical record includes equivalence/frontier, opportunity-generation, portfolio-interaction, operational-interaction, and finite-set opportunity-value results. B2.1 supplies validation-only PACS evidence that learned competence developments interact and that Fast/Deep organization transforms those interactions. B2.2 completed all 60 CPU opportunity updates and 1,200 analytical rows with TEST closed; its frozen classification is `INCONCLUSIVE` because four favorable observations occurred but no favorable cell reproduced in at least two seeds. Each theoretical result is model-scoped; none establishes necessary or strictly superior joint management.
 
 ## Mandatory first reads
 
@@ -25,7 +25,7 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 16. [theory_competence_evolution_minimal_model.md](theory_competence_evolution_minimal_model.md) and [experiments/microverification/](../experiments/microverification/) — CR0--CR4 minimal-model audit; not a general HLS result.
 17. [paper/](../paper/) — working draft with a stale RQ0 formulation; do not let it set programme direction and do not update it without a dedicated paper task.
 18. [checkpoints/HLS_checkpoint_after_B21.md](checkpoints/HLS_checkpoint_after_B21.md) — concise scientific checkpoint linking the established theory, negative boundaries, B1, B2.0, B2.1, and the remaining empirical gap.
-19. [experimental_foundations/B22_PROTOCOL.md](experimental_foundations/B22_PROTOCOL.md) — frozen, unexecuted protocol for testing operation-dependent learning-opportunity value on PACS.
+19. [experimental_foundations/B22_PROTOCOL.md](experimental_foundations/B22_PROTOCOL.md) — frozen protocol for the completed PACS opportunity-value experiment; see [the B2.2 diagnostic](../results/pilots/b22_opportunity_value/b22_diagnostic.md) for the audited result.
 
 ## Central programme
 
@@ -333,20 +333,23 @@ observations, but that association is descriptive rather than causal.
 
 Use [the B2.1 checkpoint](checkpoints/HLS_checkpoint_after_B21.md) for the
 current consolidated scientific position and exact evidence paths. No result
-establishes TEST generalization, Omega empirically, a complete HLS policy, or
-joint-management superiority.
+establishes TEST generalization, a complete HLS policy, or joint-management
+superiority.
 
-### B2.2 preregistration status
+### B2.2 completed status
 
-[B22_PROTOCOL.md](experimental_foundations/B22_PROTOCOL.md) freezes the next
-empirical checkpoint without executing it. For the same PACS F0/D system, the
-recorded operational action gates the learning opportunity:
+[B22_PROTOCOL.md](experimental_foundations/B22_PROTOCOL.md) froze the completed
+empirical checkpoint. For the same PACS F0/D system, the recorded operational
+action gates the learning opportunity:
 `D(F)={0}` and `D(D)={0,1}`. The primary event is `rho_k(c)>0` and
 `H_k(c,B,kappa)>0`, equivalently
 `B DeltaV_k(c)>rho_k(c)+kappa`. The primary grid fixes
 `N={25,50,100}`, `c={0,0.02,0.05,0.10,0.15}`, `B={1,2,5,10}`, five seeds,
-four domains, and `kappa=0`. TEST remains closed. This is a preregistration,
-not an empirical result or an end-to-end HLS-policy claim.
+four domains, and `kappa=0`. The valid CPU run completed 60 updates and 1,200
+analytical rows with TEST closed. Four rows were favorable, but zero of 240
+cells reproduced favorability in at least two seeds, so the frozen result is
+`INCONCLUSIVE`. See [the B2.2 diagnostic](../results/pilots/b22_opportunity_value/b22_diagnostic.md).
+This is not an end-to-end HLS-policy or RQ0 claim.
 
 ## General theory audit retained for later work
 

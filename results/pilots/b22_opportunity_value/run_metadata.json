@@ -1,0 +1,44 @@
+{
+  "B": [
+    1,
+    2,
+    5,
+    10
+  ],
+  "N": [
+    25,
+    50,
+    100
+  ],
+  "analytical_rows": 1200,
+  "classification": "INCONCLUSIVE",
+  "config_sha256": "e9670ae81e1561d2fe7e285c672abc2fad853e3fcbf1f9dac99ecc716081d93e",
+  "costs": [
+    0.0,
+    0.02,
+    0.05,
+    0.1,
+    0.15
+  ],
+  "device": "cpu",
+  "domains": [
+    "photo",
+    "art_painting",
+    "cartoon",
+    "sketch"
+  ],
+  "implementation_sha256": "96956e2179e9a48540efcbdff463a4cc0a08378e66dc7efb4df80307e00d3cf8",
+  "kappa": 0.0,
+  "manifest_sha256": "54958aab2343b42c7813f34ee7bcabb8bff85897e1ead9732cce885ea85c595d",
+  "opportunity_updates": 60,
+  "protocol_id": "B2.2-PACS-opportunity-value-v1",
+  "protocol_sha256": "05debd2c6d0fc3eeb4ff26bd0ef7e25bbf548e23818a41dd9674161430ef1814",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "test_used": false
+}

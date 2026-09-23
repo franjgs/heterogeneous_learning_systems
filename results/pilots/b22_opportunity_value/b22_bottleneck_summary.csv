@@ -1,0 +1,9 @@
+metric,count,denominator,definition
+rho_positive_unique,201,300,current Fast-preferred seed/domain/N/c realizations
+DeltaV_positive_unique,7,300,positive future-value changes; B copies removed
+rho_positive_and_DeltaV_positive,5,300,positive opportunity value where current sacrifice exists
+positive_DeltaV_compensates_at_B10,2,5,positive candidates that cross the frozen largest-B frontier
+cross_domain_DeltaS_negative,165,180,negative nonlocal competence changes
+routing_masked_nonzero_DeltaS,372,1200,nonzero competence changes with zero operational-value contribution
+favorable_distinct_updates,2,60,distinct learned states among favorable analytical rows
+favorable_seeds,1,5,seeds represented among favorable rows

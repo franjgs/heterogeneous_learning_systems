@@ -880,3 +880,39 @@ controls invalidate a run rather than constituting a NULL result.
 No B2.2 training or result generation occurred at this checkpoint. No
 end-to-end policy, RQ0 conclusion, separated-architecture comparison, novelty
 claim, TEST claim, or B2.3 design is added.
+
+## Decision 034 — B2.2 completed with an inconclusive frozen classification
+
+Date: 2026-09-23.
+
+### Validated result
+
+The CPU-only B2.2 execution completed 60/60 opportunity updates and 1,200/1,200
+analytical rows in 08:10:14, with VALIDATION evaluation and TEST closed. An
+independent reconstruction reproduced every primary quantity and the exact
+counts: four observations with `rho>0,H>0`, 800 with `rho>0,H<=0`, zero of 240
+favorable cells reproduced in at least two seeds, four decision changes, zero
+positive-DeltaV cases with positive cross-domain contribution, and 1,200/1,200
+strict-frontier checks.
+
+### Frozen classification and diagnosis
+
+The preregistered classification is `INCONCLUSIVE`. It is not `NULL`, whose
+frozen meaning is no `rho>0,H>0` observation anywhere, because four such rows
+exist. It is not `POSITIVE` because no favorable cell reproduces in at least
+two seeds. Those four rows are valuations of only two learned states, both for
+seed 4 and the cartoon intervention at `c=.02`.
+
+After removing the four B copies of each learned/cost realization, `DeltaV` is
+negative in 283/300 cases, zero in 10, and positive in seven. Nonlocal
+competence changes are negative in 165/180 cases. The dominant observed
+bottleneck is therefore weak or negative absolute singleton opportunity value,
+with broad cross-domain interference, followed by lack of seed
+reproducibility. This does not contradict B2.1: B2.1 measured factorial
+interaction between singleton and joint updates, whereas B2.2 tests whether
+one singleton update has enough absolute value to repay a current sacrifice.
+
+The audit and full factual interpretation are recorded in
+`results/pilots/b22_opportunity_value/b22_diagnostic.md`. B2.2 neither
+establishes nor refutes RQ0 and contains no TEST, end-to-end policy, universal
+HLS-superiority, novelty, or causal-routing claim.

@@ -65,10 +65,12 @@ not be conflated with B1.1--B13 above. Their consolidated status is recorded in
   policy.
 
 The theory-to-experiment frontier is therefore explicit: B2.1 supports
-`learning -> competence changes -> V(S) -> routing -> Gamma_oper`, while the
-`operation -> learning opportunity` link remains experimentally untested.
+`learning -> competence changes -> V(S) -> routing -> Gamma_oper`. B2.2
+instantiated the `operation -> learning opportunity` link, but its frozen
+classification was `INCONCLUSIVE`; it does not yet support that link with the
+preregistered seed reproducibility.
 
-## B2.2 preregistration
+## B2.2 preregistration and completed result
 
 [B22_PROTOCOL.md](B22_PROTOCOL.md) freezes the PACS B2.2 operational
 opportunity-value experiment before execution. It makes the learning
@@ -79,5 +81,13 @@ exact frontier `B DeltaV_k(c)>rho_k(c)+kappa`. The predeclared grid is
 `N={25,50,100}`, `c={0,0.02,0.05,0.10,0.15}`, `B={1,2,5,10}`, and primary
 `kappa=0`.
 
-This entry records a protocol only. It contains no B2.2 observation, policy
-result, RQ0 conclusion, TEST result, novelty claim, or B2.3 design.
+The valid CPU execution completed 60/60 opportunity updates and 1,200/1,200
+analytical rows in 08:10:14 with TEST closed. It found four observations with
+`rho>0,H>0`, 800 with `rho>0,H<=0`, and zero of 240 cells with favorable
+results in at least two seeds. The preregistered result is therefore
+`INCONCLUSIVE`: it is not `NULL` because favorable observations exist, and it
+is not `POSITIVE` because they do not meet the frozen reproducibility rule.
+The independent audit and diagnosis are in
+[b22_diagnostic.md](../../results/pilots/b22_opportunity_value/b22_diagnostic.md).
+This result is not a policy result, RQ0 conclusion, TEST result, novelty claim,
+or B2.3 design.

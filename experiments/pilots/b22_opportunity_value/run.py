@@ -25,6 +25,7 @@ ROOT = Path(__file__).resolve().parents[3]
 PROTOCOL_PATH = ROOT / "docs/experimental_foundations/B22_PROTOCOL.md"
 CONFIG_PATH = ROOT / "experiments/pilots/b2_pacs_calibration/config.json"
 B20_RUN_PATH = ROOT / "experiments/pilots/b2_pacs_calibration/run.py"
+ANALYSIS_PATH = ROOT / "experiments/pilots/b22_opportunity_value/analyze.py"
 DEFAULT_MANIFEST = ROOT / "results/pilots/b2_pacs_calibration/dataset_manifest.csv"
 DEFAULT_OUTPUT = ROOT / "results/pilots/b22_opportunity_value"
 
@@ -40,6 +41,19 @@ def _load_b20():
 
 
 b20 = _load_b20()
+
+
+def _load_analysis():
+    spec = importlib.util.spec_from_file_location("hls_b22_analysis", ANALYSIS_PATH)
+    if spec is None or spec.loader is None:
+        raise RuntimeError("cannot load the B2.2 analysis module")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+b22_analysis = _load_analysis()
 
 DOMAINS = ("photo", "art_painting", "cartoon", "sketch")
 SEEDS = (0, 1, 2, 3, 4)
@@ -59,6 +73,11 @@ OUTPUT_FILES = (
     "representative_cases.csv",
     "analysis_summary.md",
     "run_metadata.json",
+    "b22_diagnostic.md",
+    "b22_favorable_cases.csv",
+    "b22_deltaV_summary.csv",
+    "b22_competence_changes.csv",
+    "b22_bottleneck_summary.csv",
 )
 
 
@@ -103,6 +122,10 @@ def sha256_file(path: Path) -> str:
 
 def sha256_json(value: object) -> str:
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
+def implementation_fingerprint() -> str:
+    return sha256_json({"run.py": sha256_file(Path(__file__)), "analyze.py": sha256_file(ANALYSIS_PATH)})
 
 
 def state_dict_fingerprint(model: nn.Module) -> str:
@@ -770,6 +793,93 @@ def analysis_summary(raw: pd.DataFrame, aggregate: pd.DataFrame, classification:
     ) + "\n"
 
 
+def final_summary(audit: dict[str, object], elapsed_seconds: float, output_dir: Path) -> str:
+    """Format the mandatory terminal result without embedding scientific counts."""
+    try:
+        shown_output = output_dir.relative_to(ROOT)
+    except ValueError:
+        shown_output = output_dir
+    return "\n".join(
+        [
+            "=" * 60,
+            "B2.2 FINAL RESULT",
+            "=" * 60,
+            f"Classification: {audit['classification']}",
+            "",
+            f"Validated opportunity updates: {audit['updates']:>4} / {TOTAL_UPDATES}",
+            f"Analytical observations:       {audit['rows']:>4} / {TOTAL_GRID_ROWS}",
+            "",
+            f"rho > 0 and H > 0:             {audit['favorable']:>4} / {TOTAL_GRID_ROWS}",
+            f"rho > 0 and H <= 0:            {audit['noncompensating']:>4} / {TOTAL_GRID_ROWS}",
+            f"favorable cells >=2 seeds:     {audit['reproducible_favorable_cells']:>4} / {audit['cells']}",
+            f"decision changes:              {audit['decision_changes']:>4} / {TOTAL_GRID_ROWS}",
+            f"positive cross-domain cases:   {audit['positive_cross_domain_cases']:>4} / {TOTAL_GRID_ROWS}",
+            f"frontier checks:               {audit['frontier_checks']:>4} / {TOTAL_GRID_ROWS}",
+            "",
+            f"TEST: {audit['test']}",
+            f"Total elapsed: {format_duration(elapsed_seconds)}",
+            "=" * 60,
+            "",
+            f"Detailed analysis:\n{shown_output / 'analysis_summary.md'}",
+            "",
+            f"Diagnostic:\n{shown_output / 'b22_diagnostic.md'}",
+        ]
+    )
+
+
+def historical_signatures(output_dir: Path, manifest: Path) -> RunSignatures:
+    """Bind analysis-only to the provenance recorded by the completed run."""
+    metadata = json.loads((output_dir / "run_metadata.json").read_text())
+    expected = {
+        "protocol_sha256": sha256_file(PROTOCOL_PATH),
+        "config_sha256": sha256_file(CONFIG_PATH),
+        "manifest_sha256": sha256_file(manifest),
+    }
+    for key, value in expected.items():
+        if metadata.get(key) != value:
+            raise RuntimeError(f"completed-run {key} does not match the current scientific input")
+    return RunSignatures(**{key: str(metadata[key]) for key in asdict(RunSignatures("", "", "", ""))})
+
+
+def write_completed_analysis(
+    raw: pd.DataFrame,
+    output_dir: Path,
+    cache_dir: Path,
+    signatures: RunSignatures,
+    started: float,
+    *,
+    write_metadata: bool,
+    enforce_frozen_counts: bool = False,
+) -> dict[str, object]:
+    """Validate and write completed-run analysis; this function cannot train."""
+    aggregate, regions = aggregate_results(raw)
+    classification = classify_outcome(raw, regions)
+    cases = representative_cases(raw)
+    if write_metadata:
+        atomic_json(
+            output_dir / "run_metadata.json",
+            {
+                "protocol_id": PROTOCOL_ID, "device": "cpu", "seeds": list(SEEDS), "domains": list(DOMAINS),
+                "N": list(N_VALUES), "costs": list(COSTS), "B": list(FUTURE_WEIGHTS), "kappa": KAPPA,
+                "opportunity_updates": TOTAL_UPDATES, "analytical_rows": TOTAL_GRID_ROWS,
+                "test_used": False, "classification": classification, **asdict(signatures),
+            },
+        )
+    expected = b22_analysis.FROZEN_COUNTS if enforce_frozen_counts else None
+    audit = b22_analysis.audit_results(raw, cache_dir / "updates", output_dir / "run_metadata.json", expected)
+    if classification != audit["classification"]:
+        raise RuntimeError("runner and independent frozen classifications differ")
+    atomic_csv(output_dir / "raw_results.csv", raw)
+    atomic_csv(output_dir / "aggregate_results.csv", aggregate)
+    atomic_csv(output_dir / "decision_regions.csv", regions)
+    atomic_csv(output_dir / "representative_cases.csv", cases)
+    (output_dir / "analysis_summary.md").write_text(analysis_summary(raw, aggregate, classification))
+    generate_figures(raw, cases, output_dir)
+    b22_analysis.write_diagnostics(raw, output_dir, audit)
+    print(final_summary(audit, time.perf_counter() - started, output_dir), flush=True)
+    return audit
+
+
 def ensure_base_models(
     frame: pd.DataFrame,
     splits: dict[int, DevelopmentSplits],
@@ -870,10 +980,11 @@ def print_update_progress(records: dict[str, dict[str, object]], session_started
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
-    parser.add_argument("--image-root", type=Path, required=True)
+    parser.add_argument("--image-root", type=Path)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--device", choices=("cpu",), default="cpu")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--analyze-only", action="store_true", help="reanalyze 60 completed updates without loading or training models")
     parser.add_argument("--force", action="store_true", help="discard compatible restart state and repeat all work")
     return parser.parse_args(argv)
 
@@ -888,13 +999,38 @@ def main(argv: list[str] | None = None) -> None:
     validate_protocol_and_config(config)
     if not args.manifest.is_file():
         raise FileNotFoundError(args.manifest)
-    if not args.image_root.is_dir():
-        raise FileNotFoundError(args.image_root)
     if not args.output_dir.is_dir():
         raise FileNotFoundError(f"output directory must already exist: {args.output_dir}")
     frame = pd.read_csv(args.manifest)
     b20.validate_manifest(frame)
     splits = {seed: development_splits(frame, seed) for seed in SEEDS}
+    plan = build_plan(frame, splits)
+    cache_dir = args.output_dir / ".cache"
+
+    if args.analyze_only:
+        if args.force or args.dry_run:
+            raise ValueError("--analyze-only cannot be combined with --force or --dry-run")
+        signatures = historical_signatures(args.output_dir, args.manifest)
+        completed = load_completed_updates(cache_dir, plan, signatures, False)
+        if len(completed) != TOTAL_UPDATES:
+            raise RuntimeError("--analyze-only requires all 60 validated opportunity updates")
+        print(f"Analyze-only: loaded {len(completed)}/{TOTAL_UPDATES} completed updates; no models loaded.", flush=True)
+        phase(4, "Validation competence evaluation", started)
+        raw = expand_grid(completed)
+        existing = pd.read_csv(args.output_dir / "raw_results.csv")
+        if list(existing[["seed", "domain", "N", "c", "B"]].itertuples(index=False, name=None)) != list(raw[["seed", "domain", "N", "c", "B"]].itertuples(index=False, name=None)):
+            raise RuntimeError("regenerated analytical keys differ from existing raw_results.csv")
+        for column in ("rho", "V_F0", "V_Fk", "DeltaV", "Omega", "H", "DeltaV_local", "DeltaV_cross"):
+            if not np.allclose(existing[column], raw[column], atol=NUMERIC_TOLERANCE, rtol=0):
+                raise RuntimeError(f"regenerated {column} differs from existing raw_results.csv")
+        phase(5, "Expanding pre-registered c x B grid", started)
+        phase(6, "Analysis and classification", started)
+        phase(7, "Validation and outputs", started)
+        write_completed_analysis(raw, args.output_dir, cache_dir, signatures, started, write_metadata=False, enforce_frozen_counts=True)
+        return
+
+    if args.image_root is None or not args.image_root.is_dir():
+        raise FileNotFoundError("a valid --image-root is required unless --analyze-only is used")
     visible_ids = {
         sample_id
         for split in splits.values()
@@ -905,14 +1041,12 @@ def main(argv: list[str] | None = None) -> None:
     missing_images = [path for path in visible_frame.relative_path if not (args.image_root / path).is_file()]
     if missing_images:
         raise FileNotFoundError(f"{len(missing_images)} development-visible PACS images are missing from --image-root")
-    plan = build_plan(frame, splits)
     signatures = RunSignatures(
         protocol_sha256=sha256_file(PROTOCOL_PATH),
         config_sha256=sha256_file(CONFIG_PATH),
         manifest_sha256=sha256_file(args.manifest),
-        implementation_sha256=sha256_file(Path(__file__)),
+        implementation_sha256=implementation_fingerprint(),
     )
-    cache_dir = args.output_dir / ".cache"
     completed = load_completed_updates(cache_dir, plan, signatures, args.force)
     print(f"Resuming B2.2: {len(completed)}/{TOTAL_UPDATES} updates already complete.", flush=True)
 
@@ -958,37 +1092,8 @@ def main(argv: list[str] | None = None) -> None:
     raw = expand_grid(completed)
 
     phase(6, "Analysis and classification", started)
-    aggregate, regions = aggregate_results(raw)
-    classification = classify_outcome(raw, regions)
-    cases = representative_cases(raw)
-
     phase(7, "Validation and outputs", started)
-    atomic_csv(args.output_dir / "raw_results.csv", raw)
-    atomic_csv(args.output_dir / "aggregate_results.csv", aggregate)
-    atomic_csv(args.output_dir / "decision_regions.csv", regions)
-    atomic_csv(args.output_dir / "representative_cases.csv", cases)
-    (args.output_dir / "analysis_summary.md").write_text(analysis_summary(raw, aggregate, classification))
-    generate_figures(raw, cases, args.output_dir)
-    atomic_json(
-        args.output_dir / "run_metadata.json",
-        {
-            "protocol_id": PROTOCOL_ID,
-            "device": "cpu",
-            "seeds": list(SEEDS),
-            "domains": list(DOMAINS),
-            "N": list(N_VALUES),
-            "costs": list(COSTS),
-            "B": list(FUTURE_WEIGHTS),
-            "kappa": KAPPA,
-            "opportunity_updates": TOTAL_UPDATES,
-            "analytical_rows": TOTAL_GRID_ROWS,
-            "test_used": False,
-            "classification": classification,
-            **asdict(signatures),
-        },
-    )
-    print(f"B2.2 complete: {TOTAL_UPDATES} updates and {TOTAL_GRID_ROWS} analytical rows.", flush=True)
-    print("TEST remained closed.", flush=True)
+    write_completed_analysis(raw, args.output_dir, cache_dir, signatures, started, write_metadata=True)
 
 
 if __name__ == "__main__":
