@@ -1,7 +1,7 @@
 # Heterogeneous Learning Systems — Handover
 
 Last updated: 2026-09-23
-Repository state: HLS ontology v1 is closed. The theoretical record includes equivalence/frontier, opportunity-generation, portfolio-interaction, operational-interaction, and finite-set opportunity-value results. B2.1 supplies validation-only PACS evidence that learned competence developments interact and that Fast/Deep organization transforms those interactions. B2.2 completed all 60 CPU opportunity updates and 1,200 analytical rows with TEST closed; its frozen classification is `INCONCLUSIVE` because four favorable observations occurred but no favorable cell reproduced in at least two seeds. Each theoretical result is model-scoped; none establishes necessary or strictly superior joint management.
+Repository state: HLS ontology v1 is closed. The theoretical record includes equivalence/frontier, opportunity-generation, portfolio-interaction, operational-interaction, and finite-set opportunity-value results. B2.1 supplies validation-only PACS evidence that learned competence developments interact and that Fast/Deep organization transforms those interactions. B2.2 completed all 60 CPU opportunity updates and 1,200 analytical rows with TEST closed; its frozen classification is `INCONCLUSIVE` because four favorable observations occurred but no favorable cell reproduced in at least two seeds. A retrospective B2.1–B2.2 portfolio bridge was halted because independently trained F0, D, and all 60 singleton vectors were numerically incompatible; it produced no valid H_ij claim. Each theoretical result is model-scoped; none establishes necessary or strictly superior joint management.
 
 ## Mandatory first reads
 
@@ -350,6 +350,17 @@ analytical rows with TEST closed. Four rows were favorable, but zero of 240
 cells reproduced favorability in at least two seeds, so the frozen result is
 `INCONCLUSIVE`. See [the B2.2 diagnostic](../results/pilots/b22_opportunity_value/b22_diagnostic.md).
 This is not an end-to-end HLS-policy or RQ0 claim.
+
+### Retrospective B2.1–B2.2 bridge
+
+The retrospective portfolio analysis in
+[portfolio_bridge.md](../results/pilots/b22_opportunity_value/portfolio_bridge/portfolio_bridge.md)
+was stopped at its compatibility gate. B2.1 and B2.2 had matching nominal
+grids and procedures, but their stored F0 and D vectors differed in every seed
+and their singleton vectors differed in all 60 interventions. Consequently
+zero of 90 learned pair states were counterfactually compatible and no
+`H_i<0, H_j<0, H_ij>0` test was validly performed. This is missing
+identification, not evidence that portfolio rescues are absent.
 
 ## General theory audit retained for later work
 

@@ -91,3 +91,16 @@ The independent audit and diagnosis are in
 [b22_diagnostic.md](../../results/pilots/b22_opportunity_value/b22_diagnostic.md).
 This result is not a policy result, RQ0 conclusion, TEST result, novelty claim,
 or B2.3 design.
+
+## Retrospective B2.1–B2.2 portfolio bridge
+
+A post hoc analysis asked whether B2.1 joint states could be combined with
+B2.2 opportunity costs to test `H_i<0`, `H_j<0`, and `H_ij>0`. The mandatory
+counterfactual compatibility gate failed: stored F0 and D scores differed for
+all five seeds, and B2.1/B2.2 singleton vectors differed for all 60
+seed-domain-N interventions. No one of the 90 pair states was eligible, so the
+analysis stopped before calculating scientific bridge outcomes. The result is
+documented in
+[portfolio_bridge.md](../../results/pilots/b22_opportunity_value/portfolio_bridge/portfolio_bridge.md).
+It is a `RETROSPECTIVE BRIDGE ANALYSIS`, not an amendment to B2.2 and not
+evidence for or against the existence of accumulated-opportunity rescue.

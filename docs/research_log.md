@@ -916,3 +916,40 @@ The audit and full factual interpretation are recorded in
 `results/pilots/b22_opportunity_value/b22_diagnostic.md`. B2.2 neither
 establishes nor refutes RQ0 and contains no TEST, end-to-end policy, universal
 HLS-superiority, novelty, or causal-routing claim.
+
+## Decision 035 — Retrospective portfolio bridge halted at compatibility gate
+
+Date: 2026-09-23.
+
+### Question and status
+
+A `RETROSPECTIVE BRIDGE ANALYSIS` asked whether existing B2.1 joint states and
+B2.2 opportunity valuations could test `H_i<0`, `H_j<0`, and `H_ij>0` without
+new training. This analysis was explicitly outside the preregistered B2.2
+protocol. TEST remained closed.
+
+### Compatibility result
+
+The numerical precondition failed. B2.1 and B2.2 F0 vectors matched in 0/5
+seeds, D vectors matched in 0/5 seeds, and singleton vectors matched in 0/60
+seed-domain-N interventions at tolerance `1e-12`. Maximum component
+differences ranged from 0.021582 to 0.124772 for F0, 0.013191 to 0.048583 for
+D, and 0.009324 to 0.348962 for singleton states. Thus 0/90 pair states and
+0/1,800 analytical valuations passed the counterfactual gate.
+
+The runners share nominal data, model, optimizer, split, selection, and
+validation definitions. They nevertheless independently retrained F0 and D,
+and B2.1 did not preserve the checkpoints or hashes needed to establish exact
+base provenance. In addition, B2.2 reseeded the global RNG before each
+singleton update whereas B2.1 only seeded DataLoader shuffle, so augmentation
+state followed different execution paths. D also differed, preventing proof
+that realized pseudo-labels matched.
+
+### Scientific consequence
+
+No H quantities, rescue counts, sequential values, or representative rescue
+cases were inferred by mixing the runs. Zero eligible observations is not a
+finding of zero rescues. The existing artifacts cannot establish or reject the
+accumulated-opportunity portfolio mechanism or strengthen the empirical claim
+about RQ0. The audit is in
+`results/pilots/b22_opportunity_value/portfolio_bridge/portfolio_bridge.md`.
