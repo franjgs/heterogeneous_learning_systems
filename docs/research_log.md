@@ -953,3 +953,43 @@ finding of zero rescues. The existing artifacts cannot establish or reject the
 accumulated-opportunity portfolio mechanism or strengthen the empirical claim
 about RQ0. The audit is in
 `results/pilots/b22_opportunity_value/portfolio_bridge/portfolio_bridge.md`.
+
+## Decision 036 — Preregister B2.3 accumulated-opportunity portfolio test
+
+Date: 2026-09-24.
+
+### Decision
+
+Freeze the unimplemented protocol in
+`docs/experimental_foundations/B23_PROTOCOL.md`. B2.3 asks whether two
+operation-generated learning opportunities that are individually
+unprofitable can become jointly profitable after accumulation and matched
+joint development. It is a new self-contained execution, not a
+counterfactual merge of the incompatible B2.1 and B2.2 artifacts.
+
+For each of five seeds, B2.3 uses one common F0 and D. Each seed-domain has one
+immutable ordered 100-example opportunity stream whose 25, 50, and 100 views
+are nested prefixes. Singletons and joint states load the exact same F0 and
+reuse the exact same sample IDs and hard teacher labels. Joint states start
+directly from F0. A fixed-step, batch-size-16 update gives singleton and joint
+states identical optimizer-step and processed-example budgets at each N; the
+joint treatment differs by containing two distinct stored opportunities.
+
+### Frozen test and scope
+
+The primary event is strictly `rho_i>0`, `rho_j>0`, `H_i<0`, `H_j<0`, and
+`H_ij>0`, with `H_ij=H_i+H_j+B Gamma_oper`. The grid retains
+`N={25,50,100}`, `c={0,0.02,0.05,0.10,0.15}`, `B={1,2,5,10}`, `kappa=0`, six
+pairs, and five seeds. The design has 5 F0 fits, 5 D fits, 60 singleton
+updates, 90 joint updates, 160 total fits, and 1,800 analytical rows.
+
+`POSITIVE` requires rescue in at least 3/5 seeds in one exact
+`N × pair × c × B` cell. `NULL` means no rescue in any predeclared row.
+A valid run with one or more rescues but no 3/5 cell is `INCONCLUSIVE`;
+provenance or integrity failure is `INVALID`, not an empirical outcome.
+Analytical c/B rows and nested N values are not independent replications.
+
+Status: **B2.3 PREREGISTERED — NOT IMPLEMENTED**. No training was run, no
+result was generated, and TEST remains closed. The protocol does not claim an
+ex-ante opportunity-selection policy, complete closed-loop validation,
+universal HLS superiority, TEST generalization, or novelty.
