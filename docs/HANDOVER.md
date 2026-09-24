@@ -1,7 +1,7 @@
 # Heterogeneous Learning Systems — Handover
 
 Last updated: 2026-09-24
-Repository state: HLS ontology v1 is closed. The theoretical record includes equivalence/frontier, opportunity-generation, portfolio-interaction, operational-interaction, and finite-set opportunity-value results. B2.1 supplies validation-only PACS evidence that learned competence developments interact and that Fast/Deep organization transforms those interactions. B2.2 completed all 60 CPU opportunity updates and 1,200 analytical rows with TEST closed; its frozen classification is `INCONCLUSIVE` because four favorable observations occurred but no favorable cell reproduced in at least two seeds. A retrospective B2.1–B2.2 portfolio bridge was halted because independently trained F0, D, and all 60 singleton vectors were numerically incompatible; it produced no valid H_ij claim. Each theoretical result is model-scoped; none establishes necessary or strictly superior joint management. B2.3 is `PREREGISTERED — NOT IMPLEMENTED`: it will test accumulated-opportunity portfolio rescue in one provenance-locked PACS execution with matched per-opportunity dose and a fixed-total-compute midpoint control.
+Repository state: HLS ontology v1 is closed. The theoretical record includes equivalence/frontier, opportunity-generation, portfolio-interaction, operational-interaction, and finite-set opportunity-value results. B2.1 supplies validation-only PACS evidence that learned competence developments interact and that Fast/Deep organization transforms those interactions. B2.2 completed all 60 CPU opportunity updates and 1,200 analytical rows with TEST closed; its frozen classification is `INCONCLUSIVE` because four favorable observations occurred but no favorable cell reproduced in at least two seeds. A retrospective B2.1–B2.2 portfolio bridge was halted because independently trained F0, D, and all 60 singleton vectors were numerically incompatible; it produced no valid H_ij claim. Each theoretical result is model-scoped; none establishes necessary or strictly superior joint management. B2.3 is `IMPLEMENTED — NOT RUN`: its CPU-only provenance-locked runner will test accumulated-opportunity portfolio rescue with matched per-opportunity dose and a fixed-total-compute midpoint control.
 
 ## Mandatory first reads
 
@@ -378,8 +378,13 @@ requires rescue in at least 3/5 seeds within one
 exact `N × pair × c × B` cell; `NULL` means no rescue anywhere; remaining valid
 nonempty cases are `INCONCLUSIVE`.
 
-Status: **B2.3 PREREGISTERED — NOT IMPLEMENTED**. No B2.3 model has been
-trained, TEST remains closed, and no B2.3 empirical conclusion exists.
+Status: **B2.3 IMPLEMENTED — NOT RUN**. The CPU-only implementation is in
+[`experiments/pilots/b23_portfolio_opportunity/`](../experiments/pilots/b23_portfolio_opportunity/).
+It enforces immutable opportunity hashes, a single shared F0/D pair per seed,
+direct-from-F0 singleton/joint genealogy, the corrected midpoint/final dose,
+safe restart, and compatibility-first analysis. No B2.3 model or opportunity
+has been generated, TEST remains closed, and no B2.3 empirical conclusion
+exists.
 
 ## General theory audit retained for later work
 

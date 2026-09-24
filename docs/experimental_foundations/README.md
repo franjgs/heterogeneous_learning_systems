@@ -124,5 +124,9 @@ valuations. `POSITIVE` requires the event in at least 3/5 seeds
 for one exact `N × pair × c × B` cell; `NULL` requires no event anywhere; any
 other valid nonempty result is `INCONCLUSIVE`.
 
-Status: **B2.3 PREREGISTERED — NOT IMPLEMENTED**. No B2.3 training or result
-exists, and TEST remains closed.
+Status: **B2.3 IMPLEMENTED — NOT RUN**. The CPU-only runner, immutable
+opportunity store, restart/provenance checks, compatibility-first analyzer,
+and synthetic tests are in
+[`experiments/pilots/b23_portfolio_opportunity/`](../../experiments/pilots/b23_portfolio_opportunity/).
+No B2.3 training, teacher inference, or scientific result has been produced;
+TEST remains closed.

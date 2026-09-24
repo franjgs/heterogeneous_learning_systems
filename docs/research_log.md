@@ -1021,3 +1021,19 @@ increase from 160 to 250 and the CPU planning reserve becomes 13–15 hours. The
 portfolio-rescue event, and POSITIVE/NULL/INCONCLUSIVE criteria are unchanged.
 Status remains **B2.3 PREREGISTERED — NOT IMPLEMENTED**; no training occurred
 and TEST remains closed.
+
+## Decision 038 — Implement B2.3 without execution
+
+Date: 2026-09-24.
+
+The frozen B2.3 protocol and its corrected opportunity-matched dose rule are
+implemented in `experiments/pilots/b23_portfolio_opportunity/`. The runner is
+CPU-only and stores immutable nested opportunities, exact F0/D genealogy,
+midpoint continuation state, hashes, and incremental restart records. The
+analyzer refuses scientific classification until all 250 VALIDATION vectors
+pass the counterfactual compatibility audit. Unit tests and dry-run use no
+training or teacher inference.
+
+Status: **B2.3 IMPLEMENTED — NOT RUN**. The planned 160 fits, 60 real
+opportunity constructions, and PACS execution have not been run. TEST remains
+closed and no B2.3 scientific classification exists.
