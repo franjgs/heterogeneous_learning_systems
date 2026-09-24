@@ -161,6 +161,8 @@ def compatibility_audit(output_dir: Path) -> tuple[dict[tuple, dict[str, float]]
     for key, expected in frozen_hashes.items():
         if header.get(key) != expected:
             raise RuntimeError(f"run-level provenance mismatch: {key}")
+    if header.get("derived_seed_scheme") != b23.DERIVED_SEED_SCHEME:
+        raise RuntimeError("run-level provenance mismatch: derived_seed_scheme")
     artifacts = manifest.get("artifacts", {})
     if b23.deterministic_fixture() != b23.deterministic_fixture():
         raise RuntimeError("deterministic CPU fixture did not reproduce")
@@ -250,6 +252,8 @@ def compatibility_audit(output_dir: Path) -> tuple[dict[tuple, dict[str, float]]
             "steps": steps, "batch_size": 16, "total_exposures": exposures,
             "validation_ids_sha256": base_payloads[("F0", spec.seed)]["validation_ids_sha256"],
             "evaluation_split": "validation", "test_used": False,
+            "training_seed": b23.derived_training_seed(spec.seed, spec.n),
+            "rng_seeds": b23.derived_rng_seeds(spec.seed, spec.n), "seed_scheme": b23.DERIVED_SEED_SCHEME,
         }
         schedule = b23.singleton_schedule(spec.seed, spec.n, spec.domain, opportunity_ids[(spec.seed, spec.domain, spec.n)])
         expected["schedule_sha256"] = b23.sha256_json(schedule)
@@ -269,6 +273,8 @@ def compatibility_audit(output_dir: Path) -> tuple[dict[tuple, dict[str, float]]
             "opportunity_i_sha256": opportunity_hashes[(spec.seed, spec.domain_i, spec.n)],
             "opportunity_j_sha256": opportunity_hashes[(spec.seed, spec.domain_j, spec.n)],
             "trajectory_id": artifact_id,
+            "training_seed": b23.derived_training_seed(spec.seed, spec.n),
+            "rng_seeds": b23.derived_rng_seeds(spec.seed, spec.n), "seed_scheme": b23.DERIVED_SEED_SCHEME,
         }
         if any(payload.get(key) != value or cm.get(key) != value for key, value in common.items()):
             raise RuntimeError(f"joint genealogy mismatch {artifact_id}")

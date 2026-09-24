@@ -78,9 +78,16 @@ class PACSImages(Dataset):
         return self.transform(image), int(row.label), str(row.domain), int(row.sample_id)
 
 
+def numpy_compatible_seed(seed: int) -> int:
+    """Map a non-negative Torch/Python seed into NumPy's uint32 domain."""
+    if not isinstance(seed, int) or seed < 0:
+        raise ValueError("seed must be a non-negative integer")
+    return seed % (2**32)
+
+
 def seed_everything(seed: int) -> None:
     random.seed(seed)
-    np.random.seed(seed)
+    np.random.seed(numpy_compatible_seed(seed))
     torch.manual_seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)

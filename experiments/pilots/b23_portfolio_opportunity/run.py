@@ -77,6 +77,9 @@ TOTAL_EVALUATIONS = 250
 TOTAL_PRIMARY_ROWS = 1800
 TOTAL_DOSE_ROWS = 450
 NUMERIC_TOLERANCE = 1e-12
+DERIVED_SEED_SCHEME = "sha256-63bit-python-torch__low32-numpy-v1"
+# Frozen semantic fingerprints remain valid for completed F0/D and opportunity
+# artifacts. The derived-state-only seed adapter is tracked separately below.
 SCIENTIFIC_IMPLEMENTATION_SHA256 = "37769e98591520dc979796b480958eb48c941dc328be28a57d9659c8339300be"
 SCIENTIFIC_ANALYSIS_SHA256 = "677f1b7a5425e1bfc177d440ae9230b45afd1fb3f7c26f672f650025ba7cf6d6"
 SCIENTIFIC_B20_RUNNER_SHA256 = "64dd4a2d642efd9f6e5970444d96250f96dbe6672671d18d7adc9398a5ae091c"
@@ -175,6 +178,22 @@ def state_dict_fingerprint(state_or_model: object) -> str:
 def seed64(*parts: object) -> int:
     payload = PROTOCOL_ID + "|" + "|".join(str(part) for part in parts)
     return int.from_bytes(hashlib.sha256(payload.encode("utf-8")).digest()[:8], "big") & ((1 << 63) - 1)
+
+
+def derived_training_seed(seed: int, n: int) -> int:
+    if seed not in SEEDS or n not in N_VALUES:
+        raise ValueError(f"unregistered derived-state seed coordinates: seed={seed}, N={n}")
+    return seed64("training", seed, n)
+
+
+def derived_rng_seeds(seed: int, n: int) -> dict[str, int | str]:
+    training_seed = derived_training_seed(seed, n)
+    return {
+        "scheme": DERIVED_SEED_SCHEME,
+        "python": training_seed,
+        "numpy": b20.numpy_compatible_seed(training_seed),
+        "torch": training_seed,
+    }
 
 
 def atomic_json(path: Path, value: object) -> None:
@@ -437,7 +456,7 @@ class ScheduledImages:
 
 def seed_everything(seed: int) -> None:
     random.seed(seed)
-    np.random.seed(seed % (2**32))
+    np.random.seed(b20.numpy_compatible_seed(seed))
     torch.manual_seed(seed)
     torch.use_deterministic_algorithms(True)
 
@@ -509,7 +528,7 @@ def train_scheduled(
     midpoint_step: int | None = None, midpoint_callback: Callable[[nn.Module, torch.optim.Optimizer, dict[str, object], int], None] | None = None,
 ) -> tuple[nn.Module, float]:
     device = torch.device("cpu")
-    training_seed = seed64("training", seed, n)
+    training_seed = derived_training_seed(seed, n)
     seed_everything(training_seed)
     model = b20.make_model("fast", training_seed, device, pretrained=False)
     model.load_state_dict(f0_state)
@@ -547,11 +566,30 @@ class ArtifactManifest:
         if path.exists():
             self.data = json.loads(path.read_text())
             existing = self.data.get("header", {})
-            operational_keys = {"git_commit", "command"}
+            operational_keys = {"git_commit", "command", "provenance_migrations"}
             existing_science = {key: value for key, value in existing.items() if key not in operational_keys}
             current_science = {key: value for key, value in header.items() if key not in operational_keys}
             if existing_science != current_science:
-                raise RuntimeError("restart manifest provenance differs; use --force")
+                old_without_scheme = {key: value for key, value in existing_science.items() if key != "derived_seed_scheme"}
+                current_without_scheme = {key: value for key, value in current_science.items() if key != "derived_seed_scheme"}
+                artifact_types = {record.get("artifact_type") for record in self.data.get("artifacts", {}).values()}
+                prederived_types = {"F0", "D", "opportunity", "opportunity_max"}
+                seed_fix_migration = (
+                    "derived_seed_scheme" not in existing_science
+                    and current_science.get("derived_seed_scheme") == DERIVED_SEED_SCHEME
+                    and old_without_scheme == current_without_scheme
+                    and artifact_types.issubset(prederived_types)
+                )
+                if not seed_fix_migration:
+                    raise RuntimeError("restart manifest provenance differs; use --force")
+                migrations = list(existing.get("provenance_migrations", []))
+                migrations.append({
+                    "migration": "B2.3-derived-seed-range-fix",
+                    "preserved_artifact_types": sorted(artifact_types),
+                    "derived_seed_scheme": DERIVED_SEED_SCHEME,
+                })
+                self.data["header"] = header | {"provenance_migrations": migrations}
+                atomic_json(path, self.data)
         else:
             self.data = {"header": header, "artifacts": {}}
 
@@ -633,6 +671,7 @@ def run_manifest_header(args: argparse.Namespace, config: dict) -> dict[str, obj
         "git_commit": git_commit, "device": "cpu", "torch": torch.__version__, "python": sys.version,
         "torchvision": torchvision.__version__, "numpy": np.__version__, "pandas": pd.__version__, "command": sys.argv,
         "threads": torch.get_num_threads(), "deterministic_algorithms": torch.are_deterministic_algorithms_enabled(), "test_used": False,
+        "derived_seed_scheme": DERIVED_SEED_SCHEME,
         "seeds": list(SEEDS), "N": list(N_VALUES), "costs": list(COSTS), "B": list(FUTURE_WEIGHTS), "kappa": KAPPA,
         "visible_config": {
             "split_fractions": {key: config["split_fractions"][key] for key in ("base", "transfer", "validation")},
@@ -855,6 +894,7 @@ def execute_full(args: argparse.Namespace, frame: pd.DataFrame, splits: dict[int
         expected = {
             "artifact_type": "singleton", "seed": spec.seed, "domain": spec.domain, "N": spec.n,
             "parent_f0_sha256": f0_record["sha256"], "opportunity_sha256": op_hash,
+            "training_seed": derived_training_seed(spec.seed, spec.n), "seed_scheme": DERIVED_SEED_SCHEME,
         }
         if artifacts.valid_file(spec.artifact_id, expected):
             timing.adopt_completed(spec.artifact_id, "singleton", float(artifacts.data["artifacts"][spec.artifact_id].get("seconds", 0.0)), f"seed={spec.seed} state=Fi domain={spec.domain} N={spec.n}")
@@ -873,7 +913,8 @@ def execute_full(args: argparse.Namespace, frame: pd.DataFrame, splits: dict[int
             "model_state": {key: value.detach().cpu() for key, value in model.state_dict().items()}, "model_fingerprint": state_dict_fingerprint(model),
             "scores": scores, "artifact_type": "singleton", "seed": spec.seed, "domain": spec.domain, "N": spec.n,
             "parent_f0_sha256": f0_record["sha256"], "deep_sha256": artifacts.data["artifacts"][f"D_s{spec.seed}"]["sha256"],
-            "opportunity_sha256": op_hash, "training_seed": seed64("training", spec.seed, spec.n), **audit,
+            "opportunity_sha256": op_hash, "training_seed": derived_training_seed(spec.seed, spec.n),
+            "rng_seeds": derived_rng_seeds(spec.seed, spec.n), "seed_scheme": DERIVED_SEED_SCHEME, **audit,
             "optimizer": {"class": "SGD", "learning_rate": float(config["fast"]["learning_rate"]), "momentum": float(config["fast"]["momentum"]), "weight_decay": 0.0},
             "validation_ids_sha256": f0["validation_ids_sha256"], "evaluation_split": "validation", "test_used": False,
         }
@@ -895,10 +936,12 @@ def execute_full(args: argparse.Namespace, frame: pd.DataFrame, splits: dict[int
         expected = {
             "artifact_type": "joint", "seed": spec.seed, "N": spec.n, "domain_i": spec.domain_i, "domain_j": spec.domain_j,
             "parent_f0_sha256": f0_record["sha256"], "opportunity_i_sha256": hashes[spec.domain_i], "opportunity_j_sha256": hashes[spec.domain_j],
+            "training_seed": derived_training_seed(spec.seed, spec.n), "seed_scheme": DERIVED_SEED_SCHEME,
         }
         cm_expected = {
             "artifact_type": "joint_cm", "seed": spec.seed, "N": spec.n, "domain_i": spec.domain_i,
             "domain_j": spec.domain_j, "trajectory_id": spec.artifact_id, "parent_f0_sha256": f0_record["sha256"],
+            "training_seed": derived_training_seed(spec.seed, spec.n), "seed_scheme": DERIVED_SEED_SCHEME,
         }
         final_valid = artifacts.valid_file(spec.artifact_id, expected)
         cm_valid = artifacts.valid_file(spec.artifact_id + "_CM", cm_expected)
@@ -922,7 +965,8 @@ def execute_full(args: argparse.Namespace, frame: pd.DataFrame, splits: dict[int
                 "parent_f0_sha256": f0_record["sha256"], "opportunity_i_sha256": hashes[spec.domain_i], "opportunity_j_sha256": hashes[spec.domain_j],
                 "schedule_sha256": sha256_json(schedule), "exposures_i": exposures // 2, "exposures_j": exposures // 2, "test_used": False,
                 "optimizer_state_sha256": sha256_torch_object(optimizer_state), "rng_state_sha256": sha256_torch_object(rng_state),
-                "training_seed": seed64("training", spec.seed, spec.n),
+                "training_seed": derived_training_seed(spec.seed, spec.n),
+                "rng_seeds": derived_rng_seeds(spec.seed, spec.n), "seed_scheme": DERIVED_SEED_SCHEME,
                 "optimizer": {"class": "SGD", "learning_rate": float(config["fast"]["learning_rate"]), "momentum": float(config["fast"]["momentum"]), "weight_decay": 0.0},
             }
             save_checkpoint(cm_path, payload)
@@ -936,7 +980,7 @@ def execute_full(args: argparse.Namespace, frame: pd.DataFrame, splits: dict[int
         )
         cm_payload = load_checkpoint(cm_path)
         validation = lookup.loc[list(splits[spec.seed].validation)].reset_index(drop=True)
-        cm_model = b20.make_model("fast", seed64("training", spec.seed, spec.n), torch.device("cpu"), pretrained=False)
+        cm_model = b20.make_model("fast", derived_training_seed(spec.seed, spec.n), torch.device("cpu"), pretrained=False)
         cm_model.load_state_dict(cm_payload["model_state"])
         cm_scores = score_model(cm_model, validation, args.image_root, torch.device("cpu"))
         final_scores = score_model(model, validation, args.image_root, torch.device("cpu"))
@@ -951,7 +995,9 @@ def execute_full(args: argparse.Namespace, frame: pd.DataFrame, splits: dict[int
             "trajectory_id": spec.artifact_id, "midpoint_sha256": artifacts.data["artifacts"][spec.artifact_id + "_CM"]["sha256"],
             "parent_f0_sha256": f0_record["sha256"], "deep_sha256": artifacts.data["artifacts"][f"D_s{spec.seed}"]["sha256"],
             "opportunity_i_sha256": hashes[spec.domain_i], "opportunity_j_sha256": hashes[spec.domain_j],
-            "training_seed": seed64("training", spec.seed, spec.n), "steps": 2 * steps, "batch_size": BATCH_SIZE,
+            "training_seed": derived_training_seed(spec.seed, spec.n),
+            "rng_seeds": derived_rng_seeds(spec.seed, spec.n), "seed_scheme": DERIVED_SEED_SCHEME,
+            "steps": 2 * steps, "batch_size": BATCH_SIZE,
             "optimizer": {"class": "SGD", "learning_rate": float(config["fast"]["learning_rate"]), "momentum": float(config["fast"]["momentum"]), "weight_decay": 0.0},
             "exposures_i": exposures, "exposures_j": exposures, "schedule_sha256": sha256_json(schedule),
             "validation_ids_sha256": f0["validation_ids_sha256"], "evaluation_split": "validation", "test_used": False,

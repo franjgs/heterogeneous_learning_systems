@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import random
 import sys
 from pathlib import Path
 
@@ -81,6 +82,116 @@ def test_seed64_is_stable_and_identifier_sensitive():
     assert b23.seed64("training", 1, 25) == b23.seed64("training", 1, 25)
     assert b23.seed64("opportunity", 1, "photo") != b23.seed64("opportunity", 1, "sketch")
     assert b23.deterministic_fixture() == b23.deterministic_fixture()
+
+
+def test_regression_raw_first_singleton_seed_exceeds_numpy_range_but_adapter_is_valid():
+    failed_seed = b23.derived_training_seed(0, 25)
+    assert failed_seed == 6117803925591946225
+    assert failed_seed > 2**32 - 1
+    with pytest.raises(ValueError, match="Seed must be between"):
+        np.random.seed(failed_seed)
+    assert b23.b20.numpy_compatible_seed(failed_seed) == failed_seed % (2**32)
+    assert 0 <= b23.b20.numpy_compatible_seed(failed_seed) <= 2**32 - 1
+
+    b23.seed_everything(failed_seed)
+    first = (random.random(), float(np.random.random()), float(torch.rand(())))
+    b23.seed_everything(failed_seed)
+    second = (random.random(), float(np.random.random()), float(torch.rand(())))
+    assert first == second
+
+
+def test_all_b23_training_seeds_are_deterministic_numpy_valid_and_collision_free():
+    coordinates = [(seed, n) for seed in b23.SEEDS for n in b23.N_VALUES]
+    declared = {coordinates_: b23.derived_training_seed(*coordinates_) for coordinates_ in coordinates}
+    numpy_seeds = {coordinates_: b23.derived_rng_seeds(*coordinates_)["numpy"] for coordinates_ in coordinates}
+    assert len(set(declared.values())) == len(coordinates) == 15
+    assert len(set(numpy_seeds.values())) == len(coordinates)
+    assert all(0 <= value <= (1 << 63) - 1 for value in declared.values())
+    assert all(0 <= value <= 2**32 - 1 for value in numpy_seeds.values())
+    for value in declared.values():
+        b23.b20.seed_everything(value)
+    assert declared == {coordinates_: b23.derived_training_seed(*coordinates_) for coordinates_ in coordinates}
+    assert numpy_seeds == {coordinates_: b23.derived_rng_seeds(*coordinates_)["numpy"] for coordinates_ in coordinates}
+
+
+def test_singletons_joints_and_midpoints_share_only_protocol_declared_seed_groups():
+    singletons, joints = b23.plan_specs()
+    for spec in singletons:
+        assert b23.derived_training_seed(spec.seed, spec.n) == b23.seed64("training", spec.seed, spec.n)
+    for spec in joints:
+        joint_seed = b23.derived_training_seed(spec.seed, spec.n)
+        assert joint_seed == b23.seed64("training", spec.seed, spec.n)
+        assert b23.derived_rng_seeds(spec.seed, spec.n)["torch"] == joint_seed
+    assert len({b23.derived_training_seed(spec.seed, spec.n) for spec in singletons + joints}) == 15
+
+    step_seeds = {
+        b23.step_seed(seed, n, step)
+        for seed in b23.SEEDS
+        for n in b23.N_VALUES
+        for step in range(1, 2 * b23.dose(n)[0] + 1)
+    }
+    assert len(step_seeds) == sum(2 * b23.dose(n)[0] for n in b23.N_VALUES) * len(b23.SEEDS) == 390
+    assert all(0 <= value <= (1 << 63) - 1 for value in step_seeds)
+
+
+def test_all_derived_seed_namespaces_are_range_valid_and_noncolliding():
+    training = {b23.derived_training_seed(seed, n) for seed in b23.SEEDS for n in b23.N_VALUES}
+    opportunity = {b23.seed64("opportunity", seed, domain) for seed in b23.SEEDS for domain in b23.DOMAINS}
+    steps = {
+        b23.step_seed(seed, n, step)
+        for seed in b23.SEEDS for n in b23.N_VALUES
+        for step in range(1, 2 * b23.dose(n)[0] + 1)
+    }
+    augmentation = set()
+    for seed in b23.SEEDS:
+        for n in b23.N_VALUES:
+            for domain_index, domain in enumerate(b23.DOMAINS):
+                ids = tuple(seed * 100000 + domain_index * 1000 + index for index in range(n))
+                for item in (item for batch in b23.singleton_schedule(seed, n, domain, ids) for item in batch):
+                    augmentation.add(b23.augmentation_seed(seed, n, item["sample_id"], item["exposure"]))
+    assert tuple(map(len, (training, opportunity, steps, augmentation))) == (15, 20, 390, 12480)
+    all_seeds = training | opportunity | steps | augmentation
+    assert len(all_seeds) == 15 + 20 + 390 + 12480
+    assert all(0 <= value <= (1 << 63) - 1 for value in all_seeds)
+
+
+def test_first_singleton_model_initializes_with_corrected_seed_without_training():
+    training_seed = b23.derived_training_seed(0, 25)
+    first = b23.b20.make_model("fast", training_seed, torch.device("cpu"), pretrained=False)
+    state = first.state_dict()
+    reproduced = b23.b20.make_model("fast", training_seed, torch.device("cpu"), pretrained=False)
+    reproduced.load_state_dict(state)
+    assert b23.state_dict_fingerprint(first) == b23.state_dict_fingerprint(reproduced)
+
+
+def test_seed_fix_preserves_all_base_seed_values_and_restart_contract(tmp_path):
+    old_header = {"protocol": b23.PROTOCOL_ID, "implementation_sha256": b23.SCIENTIFIC_IMPLEMENTATION_SHA256}
+    manifest = b23.ArtifactManifest(tmp_path / "manifest.json", old_header)
+    for seed in b23.SEEDS:
+        for name, training_seed in (("F0", seed + 2500), ("D", seed + 30000)):
+            assert b23.b20.numpy_compatible_seed(training_seed) == training_seed
+            path = tmp_path / f"{name}_s{seed}.pt"
+            path.write_bytes(f"{name}-{seed}".encode())
+            manifest.record(f"{name}_s{seed}", b23.artifact_record(path, name, {"seed": seed}))
+    corrected_header = old_header | {"derived_seed_scheme": b23.DERIVED_SEED_SCHEME}
+    reopened = b23.ArtifactManifest(tmp_path / "manifest.json", corrected_header)
+    assert reopened.data["header"]["derived_seed_scheme"] == b23.DERIVED_SEED_SCHEME
+    assert reopened.data["header"]["provenance_migrations"][0]["migration"] == "B2.3-derived-seed-range-fix"
+    assert sum(
+        reopened.valid_file(f"{name}_s{seed}", {"artifact_type": name, "seed": seed}) is not None
+        for seed in b23.SEEDS for name in ("F0", "D")
+    ) == 10
+
+
+def test_seed_scheme_migration_rejects_any_preexisting_derived_state(tmp_path):
+    old_header = {"protocol": b23.PROTOCOL_ID, "implementation_sha256": b23.SCIENTIFIC_IMPLEMENTATION_SHA256}
+    manifest = b23.ArtifactManifest(tmp_path / "manifest.json", old_header)
+    manifest.record("Fi_s0_photo_n25", {"artifact_type": "singleton", "status": "complete"})
+    with pytest.raises(RuntimeError, match="provenance differs"):
+        b23.ArtifactManifest(
+            tmp_path / "manifest.json",
+            old_header | {"derived_seed_scheme": b23.DERIVED_SEED_SCHEME},
+        )
 
 
 def test_opportunity_selection_is_nested_and_order_independent():
@@ -277,6 +388,7 @@ def test_complete_synthetic_genealogy_passes_compatibility_audit(tmp_path):
         "implementation_sha256": b23.SCIENTIFIC_IMPLEMENTATION_SHA256, "analysis_sha256": b23.SCIENTIFIC_ANALYSIS_SHA256,
         "b20_runner_sha256": b23.SCIENTIFIC_B20_RUNNER_SHA256, "split_library_sha256": b23.sha256_file(b23.B20_LIBRARY_PATH),
         "dataset_revision": b23.DATASET_REVISION, "dataset_sha256": b23.DATASET_SHA256,
+        "derived_seed_scheme": b23.DERIVED_SEED_SCHEME,
     }
     manifest = b23.ArtifactManifest(tmp_path / "run_manifest.json", header)
     split_rows = []
@@ -339,6 +451,8 @@ def test_complete_synthetic_genealogy_passes_compatibility_audit(tmp_path):
             "opportunity_sha256": opportunity_hash[(spec.seed, spec.domain, spec.n)],
             "steps": steps, "batch_size": 16, "total_exposures": exposures, "schedule_sha256": b23.sha256_json(schedule),
             "validation_ids_sha256": validation_hash[spec.seed], "evaluation_split": "validation", "test_used": False,
+            "training_seed": b23.derived_training_seed(spec.seed, spec.n),
+            "rng_seeds": b23.derived_rng_seeds(spec.seed, spec.n), "seed_scheme": b23.DERIVED_SEED_SCHEME,
         }
         path = tmp_path / f"{spec.artifact_id}.pt"
         b23.save_checkpoint(path, payload)
@@ -354,6 +468,8 @@ def test_complete_synthetic_genealogy_passes_compatibility_audit(tmp_path):
             "opportunity_j_sha256": opportunity_hash[(spec.seed, spec.domain_j, spec.n)],
             "schedule_sha256": b23.sha256_json(schedule), "validation_ids_sha256": validation_hash[spec.seed],
             "evaluation_split": "validation", "test_used": False,
+            "training_seed": b23.derived_training_seed(spec.seed, spec.n),
+            "rng_seeds": b23.derived_rng_seeds(spec.seed, spec.n), "seed_scheme": b23.DERIVED_SEED_SCHEME,
         }
         optimizer_state = {"state": {}, "param_groups": []}
         rng_state = {"torch": torch.tensor([1], dtype=torch.uint8)}

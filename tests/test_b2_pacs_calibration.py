@@ -152,3 +152,34 @@ def test_explicit_device_selection_and_cpu_compatibility(monkeypatch):
     with pytest.raises(SystemExit, match="compute-blocked by CPU-only hardware"):
         runner.resolve_device("auto", allow_cpu=False)
     assert str(runner.resolve_device("auto", allow_cpu=True)) == "cpu"
+
+
+def test_numpy_seed_adapter_is_identity_for_all_historical_b20_b21_b22_training_seeds():
+    runner = load_pacs_runner()
+    root = Path(__file__).resolve().parents[1]
+    config = json.loads((root / "experiments/pilots/b2_pacs_calibration/config.json").read_text())
+    seeds = tuple(config["split_seeds"])
+    fractions = tuple(config["base_fractions_for_fast"])
+    n_values = (25, 50, 100)
+
+    b20_seeds = {
+        *(seed + 30000 for seed in seeds),
+        *(seed + int(fraction * 10000) for seed in seeds for fraction in fractions),
+    }
+    b21_seeds = {
+        *(seed + 30000 for seed in seeds),
+        *(seed + 2500 for seed in seeds),
+        *(seed + n + domain_index for seed in seeds for n in n_values for domain_index in range(4)),
+        *(seed + n + 100 + left_index for seed in seeds for n in n_values for left_index in range(3)),
+    }
+    b22_seeds = {
+        *(seed + 30000 for seed in seeds),
+        *(seed + 2500 for seed in seeds),
+        *(seed + n + domain_index for seed in seeds for n in n_values for domain_index in range(4)),
+    }
+
+    for experiment_seeds in (b20_seeds, b21_seeds, b22_seeds):
+        assert min(experiment_seeds) >= 0
+        assert max(experiment_seeds) <= 2**32 - 1
+        assert {runner.numpy_compatible_seed(seed) for seed in experiment_seeds} == experiment_seeds
+        assert all(runner.numpy_compatible_seed(seed) == seed for seed in experiment_seeds)
