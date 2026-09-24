@@ -993,3 +993,31 @@ Status: **B2.3 PREREGISTERED — NOT IMPLEMENTED**. No training was run, no
 result was generated, and TEST remains closed. The protocol does not claim an
 ex-ante opportunity-selection policy, complete closed-loop validation,
 universal HLS superiority, TEST generalization, or novelty.
+
+## Decision 037 — Correct B2.3 singleton/joint training dose before execution
+
+Date: 2026-09-24.
+
+### Methodological audit
+
+The initial B2.3 rule gave F_i, F_j, and F_ij the same `T_N` steps and total
+exposures. Because joint batches split their 16 positions equally, each
+opportunity received only half its singleton exposure in F_ij. The resulting
+Gamma would therefore combine opportunity interaction with factor-dose
+dilution and was not a clean factorial contrast.
+
+Before implementation or execution, the protocol was revised. A singleton
+uses `T_N` steps and `E_N=16T_N` exposures from its N-example opportunity. The
+primary joint endpoint uses `2T_N` balanced 8+8 steps, giving each of its two
+N-example opportunities the same `E_N` exposures as its singleton. The state
+at joint step `T_N` is stored as `F_ij^CM`: it has the same `2N` unique data but
+the singleton total step/exposure budget, and is a descriptive compute-dose
+control rather than a factorial endpoint.
+
+The midpoint adds no fit: B2.3 remains 5 F0 + 5 D + 60 singleton + 90 joint =
+160 fits and 1,800 primary analytical rows. It adds 90 scored checkpoints and
+450 `seed × N × pair × c` dose-control valuations, so validation evaluations
+increase from 160 to 250 and the CPU planning reserve becomes 13–15 hours. The question, seeds, N, pairs, c, B, kappa, strict
+portfolio-rescue event, and POSITIVE/NULL/INCONCLUSIVE criteria are unchanged.
+Status remains **B2.3 PREREGISTERED — NOT IMPLEMENTED**; no training occurred
+and TEST remains closed.

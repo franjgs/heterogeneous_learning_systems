@@ -1,7 +1,7 @@
 # Heterogeneous Learning Systems — Handover
 
 Last updated: 2026-09-24
-Repository state: HLS ontology v1 is closed. The theoretical record includes equivalence/frontier, opportunity-generation, portfolio-interaction, operational-interaction, and finite-set opportunity-value results. B2.1 supplies validation-only PACS evidence that learned competence developments interact and that Fast/Deep organization transforms those interactions. B2.2 completed all 60 CPU opportunity updates and 1,200 analytical rows with TEST closed; its frozen classification is `INCONCLUSIVE` because four favorable observations occurred but no favorable cell reproduced in at least two seeds. A retrospective B2.1–B2.2 portfolio bridge was halted because independently trained F0, D, and all 60 singleton vectors were numerically incompatible; it produced no valid H_ij claim. Each theoretical result is model-scoped; none establishes necessary or strictly superior joint management. B2.3 is `PREREGISTERED — NOT IMPLEMENTED`: it will test accumulated-opportunity portfolio rescue in one provenance-locked PACS execution with matched singleton/joint compute.
+Repository state: HLS ontology v1 is closed. The theoretical record includes equivalence/frontier, opportunity-generation, portfolio-interaction, operational-interaction, and finite-set opportunity-value results. B2.1 supplies validation-only PACS evidence that learned competence developments interact and that Fast/Deep organization transforms those interactions. B2.2 completed all 60 CPU opportunity updates and 1,200 analytical rows with TEST closed; its frozen classification is `INCONCLUSIVE` because four favorable observations occurred but no favorable cell reproduced in at least two seeds. A retrospective B2.1–B2.2 portfolio bridge was halted because independently trained F0, D, and all 60 singleton vectors were numerically incompatible; it produced no valid H_ij claim. Each theoretical result is model-scoped; none establishes necessary or strictly superior joint management. B2.3 is `PREREGISTERED — NOT IMPLEMENTED`: it will test accumulated-opportunity portfolio rescue in one provenance-locked PACS execution with matched per-opportunity dose and a fixed-total-compute midpoint control.
 
 ## Mandatory first reads
 
@@ -369,10 +369,12 @@ identification, not evidence that portfolio rescues are absent.
 self-contained test of whether two operation-generated opportunities that are
 individually unprofitable become profitable when accumulated and developed
 jointly. One F0 and D per seed, immutable nested opportunity streams, exact
-parent/opportunity hashes, and fixed-step updates make singleton and joint
-states counterfactually compatible while matching their optimizer-step and
-processed-example budgets. The frozen design contains 160 fits and 1,800
-analytical rows. `POSITIVE` requires rescue in at least 3/5 seeds within one
+parent/opportunity hashes, and opportunity-matched updates make singleton and
+joint states counterfactually compatible. Each joint fit stores a
+fixed-total-compute midpoint before continuing to the dose-matched endpoint.
+The frozen design contains 160 fits, 250 validation evaluations, 1,800 primary
+analytical rows, and 450 secondary midpoint dose-control valuations. `POSITIVE`
+requires rescue in at least 3/5 seeds within one
 exact `N × pair × c × B` cell; `NULL` means no rescue anywhere; remaining valid
 nonempty cases are `INCONCLUSIVE`.
 

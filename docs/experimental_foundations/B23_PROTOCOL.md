@@ -2,6 +2,7 @@
 
 **Status:** PREREGISTERED — NOT IMPLEMENTED.
 **Date frozen:** 2026-09-24.
+**Dose-audit revision:** 2026-09-24, before implementation or execution.
 **Scope:** CPU, PACS development splits, VALIDATION only. TEST remains closed
 and inaccessible.
 
@@ -106,7 +107,7 @@ forbidden.
 
 ## 4. Opportunity generation and persistence
 
-The protocol identifier is `B2.3-PACS-portfolio-v1`. For each
+The protocol identifier is `B2.3-PACS-portfolio-v2`. For each
 `seed × domain`, sort all eligible TRANSFER sample IDs by the full SHA-256
 digest of
 `protocol ID | opportunity | seed | canonical domain | sample ID` and take
@@ -151,40 +152,95 @@ For every seed and N, train:
 The union contains exactly N examples from each domain, with no resampling,
 new teacher query, or pseudo-label regeneration.
 
-### 5.1 Compute-matched update rule
+### 5.1 Dose audit and primary opportunity-matched update
 
-The B2.1 convention of three epochs would give a 2N joint dataset roughly
-twice as many optimizer steps as an N singleton. B2.3 therefore freezes a
-step-based rule:
+A fixed-total-compute rule is not the primary factorial treatment. Under that
+rule, F_i would receive all batch slots while each constituent of F_ij would
+receive only half, so the dose of factor i would differ between F_i and F_ij.
+That would mix opportunity interaction with dose dilution.
+
+Define
 
 \[
 T_N=3\left\lceil\frac{N}{16}\right\rceil,
+\qquad E_N=16T_N,
 \]
 
-giving (T_{25}=6), (T_{50}=12), and (T_{100}=21) SGD steps. Every
-singleton and every joint state at the same N receives exactly (T_N) steps,
-batch size 16, the same optimizer, learning rate, momentum, loss, and no new
-freezing rule.
+so `T_25=6`, `T_50=12`, and `T_100=21`. An *exposure* is one selected
+sample entering one forward/backward pass; it need not be a unique sample. One
+batch produces one gradient step.
 
-- A singleton batch contains 16 cyclically scheduled examples from its one
-  opportunity.
-- A joint batch contains eight cyclically scheduled examples from each
-  opportunity. Which domain occupies the first half alternates by step.
-- Each opportunity list is deterministically reordered once per cycle by
-  sorting on the SHA-256 digest of
-  `protocol ID | schedule | seed | N | domain | cycle | sample ID`. Cycling
-  continues until `T_N` full batches have been consumed.
-- This schedule exposes every stored example at least once for every N.
+The primary opportunity-matched rule is:
 
-The joint therefore has more unique information, as required by opportunity
-accumulation, but receives neither more optimizer steps nor more processed
-training examples. Each constituent opportunity consequently receives half of
-the joint batch slots that the corresponding singleton receives; that is the
-frozen fixed-total-compute estimand. The singleton states are the same-compute,
-one-opportunity controls. Every derived fit loads F0 weights and starts a fresh
-optimizer; it never loads another derived optimizer or model state.
+| State | Unique i | Unique j | Steps | Batch composition | Exposures i | Exposures j | Total exposures |
+| --- | ---: | ---: | ---: | --- | ---: | ---: | ---: |
+| F_i | N | 0 | T_N | 16 from i | E_N | 0 | E_N |
+| F_j | 0 | N | T_N | 16 from j | 0 | E_N | E_N |
+| F_ij | N | N | 2 T_N | 8 from i + 8 from j | E_N | E_N | 2 E_N |
 
-### 5.2 Deterministic stochasticity
+Thus F_ij has `2N` unique examples and twice the total training exposure, but
+each constituent opportunity has exactly the same unique examples and the same
+number of exposures that it has in its singleton. The extra total compute is
+the sum of applying two opportunity factors, not an uncontrolled increase in
+either factor's dose.
+
+For every list, examples are cycled deterministically. If
+`E_N = qN + r`, exactly `r` scheduled positions use samples for the `(q+1)`th
+time and the remaining `N-r` positions use samples `q` times. The stateless
+augmentation rule in Section 5.3 makes exposure number `m` of a shared sample
+identical in its singleton and joint treatment. Batch grouping differs by
+treatment and is part of the joint learning interaction.
+
+At `N=25`, `T_N=6` and `E_N=96`:
+
+| State | Available dataset | Unique total | Steps/batches | Batch size | Exposures i | Exposures j | Total exposures |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| F_i | e_i only | 25 | 6 | 16 | 96 | 0 | 96 |
+| F_j | e_j only | 25 | 6 | 16 | 0 | 96 | 96 |
+| F_ij primary | union(e_i,e_j) | 50 | 12 | 16 (8+8) | 96 | 96 | 192 |
+
+Within each singleton, 21 samples are exposed four times and four samples three
+times. The same per-opportunity counts hold inside primary F_ij. The ordered
+schedule and which IDs receive the extra exposure are fixed and stored.
+
+### 5.2 Fixed-total-compute midpoint control
+
+Each joint fit supplies the compute-dose control without a separate training
+run. Save the `F_ij^CM` model plus optimizer and RNG continuation state
+immediately after step `T_N` of the same deterministic `2T_N`-step F_ij
+trajectory, before step `T_N+1`, and continue to the primary endpoint. Load and evaluate that saved midpoint only after training finishes so
+validation cannot change the training RNG path.
+
+| State | Unique i | Unique j | Steps | Batch composition | Exposures i | Exposures j | Total exposures |
+| --- | ---: | ---: | ---: | --- | ---: | ---: | ---: |
+| F_ij^CM | N | N | T_N | 8 from i + 8 from j | 8 T_N | 8 T_N | E_N |
+
+`F_ij^CM` has the same union, pseudo-labels, initialization, first `T_N`
+optimizer steps, batch size, total exposures, and total gradient-step budget as
+a singleton. It differs by dividing that budget equally between the two
+opportunities. Every one of its `2N` unique examples is exposed at least once
+for all three N values.
+
+For `N=25`, the control uses the same 50-example union, six batches/steps, and
+96 exposures: 48 from i and 48 from j. Within each domain, 23 samples are
+exposed twice and two once.
+
+This midpoint answers whether an observed joint endpoint depends on the extra
+steps/exposures required to preserve both opportunity doses. Define the
+reported dose sensitivity
+
+\[
+D^{dose}_{ij}(c)=\Delta V_{ij}(c)-\Delta V^{CM}_{ij}(c).
+\]
+
+It is descriptive and is not subtracted from the primary Gamma. In particular,
+`DeltaV_ij^CM-DeltaV_i-DeltaV_j` is not called a factorial interaction because
+the i and j doses in the midpoint are half their singleton doses. The `2N`
+unique examples cannot be controlled away while still claiming to test two
+N-example opportunities: that increase in available experience is the
+accumulation treatment itself.
+
+### 5.3 Deterministic stochasticity
 
 All base and derived training runs set and record Python, NumPy, and Torch RNG
 seeds, Torch version, torchvision version, thread count, and deterministic
@@ -196,11 +252,16 @@ training seed. The implementation must additionally use:
   receives the same augmentation at a shared exposure index;
 - a per-step Torch seed derived from `(protocol ID, seed, N, step)` for model
   stochastic operations;
+- each opportunity is reordered once per cycle by sorting sample IDs on
+  `SHA256(protocol ID | schedule | seed | N | domain | cycle | sample ID)`;
+  a singleton takes the next 16 positions, while a joint takes the next eight
+  positions from each list; in one-indexed odd joint steps the lower canonical
+  domain occupies the first half and in even steps it occupies the second;
 - `num_workers=0`, or a tested worker-seeding scheme with an identical recorded
   schedule.
 
 Every derived integer seed is computed by taking the first eight bytes of
-`SHA256(UTF-8("B2.3-PACS-portfolio-v1|" + x))` in big-endian order and masking
+`SHA256(UTF-8("B2.3-PACS-portfolio-v2|" + x))` in big-endian order and masking
 with `2^63-1`. Here `x` is the exact tuple listed above, serialized with the
 literal ASCII delimiter `|`. No process-global RNG state may determine
 opportunity membership, batch order, augmentation, or a model operation
@@ -212,8 +273,9 @@ does not reproduce its final state hash on the execution environment.
 
 ## 6. Competence profiles and learning interaction
 
-Evaluate (F_0,D,F_i,F_j,F_{ij}) once on the complete VALIDATION split. For
-every state retain
+Evaluate F0, D, every singleton, every primary F_ij endpoint, and every
+`F_ij^CM` midpoint once on the complete VALIDATION split. For every state
+retain
 
 \[
 S(F)=(BA_{photo},BA_{art\_painting},BA_{cartoon},BA_{sketch}).
@@ -247,7 +309,16 @@ I^S_{ij}=\Delta S_{ij}-\Delta S_i-\Delta S_j.
 \]
 
 These quantities distinguish local learning, cross-domain degradation, and
-joint departures from the additive singleton benchmark.
+joint departures from the additive singleton benchmark. In exposure-dose
+coordinates the four primary states are `F0=(0,0)`, `F_i=(E_N,0)`,
+`F_j=(0,E_N)`, and `F_ij=(E_N,E_N)`. Because factor i has identical sample IDs,
+labels, augmentations-by-exposure, and `E_N` exposures in F_i and primary F_ij,
+and likewise for j, Gamma is the mixed finite difference of the two opportunity
+treatments at fixed per-opportunity dose. It includes
+nonlinear learning and shared-optimizer effects of combining the treatments;
+it is not the unadjusted benefit of merely doubling available experience.
+The midpoint is a dose-sensitivity control and never replaces primary F_ij in
+Gamma.
 
 ## 7. Operational value and present sacrifice
 
@@ -279,7 +350,8 @@ Define
 \]
 
 \[
-\Delta V_{ij}=V(F_{ij};c)-V(F_0;c),
+\Delta V_{ij}=V(F_{ij};c)-V(F_0;c),\qquad
+\Delta V^{CM}_{ij}=V(F^{CM}_{ij};c)-V(F_0;c),
 \]
 
 and
@@ -316,6 +388,13 @@ H_i=-\rho_i+B\Delta V_i,
 \[
 H_{ij}=-(\rho_i+\rho_j)+B\Delta V_{ij}.
 \]
+
+H_ij uses the primary opportunity-matched endpoint. A portfolio containing two
+N-example opportunities naturally contains `2N` unique experiences and the
+sum of their development exposure. Equality of total compute between singleton
+and joint states is not required for the validity of this absolute portfolio
+value. The primary `kappa=0` assigns no separate development-compute price; the
+midpoint reports compute sensitivity without changing H or the frozen event.
 
 The primary event is exactly
 
@@ -429,9 +508,12 @@ state remain one seed realization.
    trajectory with no Deep query and no development.
 2. **Singleton controls:** (F_i,F_j) use each immutable opportunity alone and
    identify their absolute values and competence changes.
-3. **Compute-dose control:** (F_i,F_j,F_{ij}) have identical optimizer-step,
-   batch-size, and processed-example budgets at a fixed N. This removes a
-   trivial double-step advantage.
+3. **Compute-dose control:** the stored `F_ij^CM` midpoint has the exact same
+   `2N` unique joint dataset and batch composition as primary F_ij, but the same
+   `T_N` steps and `E_N` total exposures as a singleton. Primary F_ij continues
+   to `2T_N` steps and `2E_N` exposures so each opportunity retains its
+   singleton dose. The paired midpoint-to-endpoint difference reports dose
+   sensitivity without adding a fit.
 4. **Additive portfolio control:** (Delta V_i+Delta V_j), equivalently
    (Gamma_{oper}=0), is the no-interaction benchmark. A rescue necessarily
    requires the observed (B\Gamma_{oper}) to exceed the summed singleton
@@ -448,8 +530,9 @@ freezing: it destroys teacher information rather than isolating portfolio
 structure, and would add 90 fits. A 2N same-domain control would require
 generating a different, larger opportunity and a different operational
 sacrifice. Neither is a matched counterfactual for the stated mechanism. The
-singletons plus fixed-step and exact additive controls address the relevant
-compute and interaction threats without changing the treatment.
+singletons, opportunity-matched primary endpoint, within-trajectory midpoint,
+and exact additive benchmark separate factor dose, total compute, and
+nonadditivity without changing the opportunity treatment.
 
 ## 13. Decomposition of any rescue
 
@@ -488,7 +571,9 @@ The future implementation must create, before scientific analysis:
   action;
 - `development_states.jsonl`: state ID, parent F0 hash, exact opportunity
   hashes, N, unordered pair if applicable, step/batch schedule hash, seeds,
-  hyperparameters, final checkpoint hash, and complete validation S vector;
+  hyperparameters, primary checkpoint hash, midpoint-control model hash and
+  optimizer/RNG continuation-state hash when joint, and complete validation S
+  vectors;
 - incremental completion records and checksums sufficient for safe restart.
 
 No image, model checkpoint, or cache belongs in Git. Manifests and scientific
@@ -499,7 +584,8 @@ The state relation must be machine-checkable:
 ```text
 seed -> {F0 hash, D hash}
 seed,N,domain -> opportunity hash -> Fi hash
-seed,N,pair -> {same two opportunity hashes, same F0 hash} -> Fij hash
+seed,N,pair -> {same two opportunity hashes, same F0 hash}
+            -> {Fij^CM midpoint hash, Fij primary hash}
 ```
 
 ## 15. Mandatory pre-analysis compatibility audit
@@ -513,13 +599,14 @@ Abort before calculating Gamma or H unless all checks pass:
    (F_i,F_j), with no resampling or relabeling;
 5. opportunity sample counts, IDs, pseudo-labels, D hash, and prefix relations
    are exact;
-6. derived step counts equal (T_N), batch sizes equal 16, and schedule/RNG
-   hashes match the protocol;
+6. singleton step counts equal `T_N`, joint primary step counts equal `2T_N`,
+   every midpoint is the exact joint state after step `T_N`, batch sizes equal
+   16, exposure counts match Section 5, and schedule/RNG hashes match;
 7. no sequential derived parent exists;
 8. all scores use the same complete VALIDATION IDs;
 9. TEST is absent from code-visible split objects, manifests, logs, and outputs;
-10. all expected checkpoints, score vectors, hashes, and 160 evaluations are
-    present without duplicates or NaN;
+10. all expected primary and midpoint checkpoints, score vectors, hashes,
+    and 250 evaluations are present without duplicates or NaN;
 11. a deterministic fixture reproduces its checkpoint and score vector;
 12. all Gamma and H algebraic identities pass within (10^{-12}).
 
@@ -528,11 +615,14 @@ Abort before calculating Gamma or H unless all checks pass:
 Report without selecting regimes retrospectively:
 
 - all 1,800 primary rows;
+- all 450 distinct `seed × N × pair × c` midpoint dose-control valuations;
 - rescue counts by exact cell and number of seeds (0 through 5);
 - learned-state counts separately from analytical row counts;
 - cells with rescue in at least 2, at least 3, and 5/5 seeds;
 - distributions and signs of (Delta S,Delta V,Gamma_{learn},Gamma_{oper},H)
   by N and pair;
+- primary-versus-midpoint competence and value differences, including
+  `D^dose_ij(c)`, without treating midpoint contrasts as factorial Gamma;
 - the exact minimum continuation thresholds, when denominators are positive:
   (B^*=(\rho_i+\rho_j)/\Delta V_{ij}),
   (B_i^*=\rho_i/\Delta V_i), and
@@ -557,20 +647,25 @@ Exact trained objects:
 | N-specific opportunity views | 60 |
 | Singleton updates | 60 |
 | Joint updates | 90 |
+| Joint midpoint-control checkpoints | 90 |
 | **Total model fits** | **160** |
-| **Validation evaluations** | **160** |
+| **Validation evaluations** | **250** |
 | **Primary analytical rows** | **1,800** |
+| **Secondary midpoint dose-control valuations** | **450** |
 
 F0 and D are shared across every N and intervention for a seed. Each singleton
-is trained once and reused in its three pairs. c and B are analytical only.
+is trained once and reused in its three pairs. Every midpoint is saved inside
+its existing joint fit, so the control adds 90 checkpoints and evaluations but
+zero fits. c and B are analytical only.
 
 Measured references on this CPU are 6.07 hours for the five D plus five
 25%-BASE F0 fits, 1.68 hours summed across the 60 B2.2 singleton updates and
-their validation work, and 08:10:14 total for B2.2. Scaling the observed
-N-specific update times to 150 compute-matched derived states gives about 4.21
-hours beyond the base fits. The resulting planning estimate is approximately
-10.3 hours before extra manifest/integrity overhead; reserve **10–12 CPU
-hours**. This is an estimate, not a guaranteed runtime.
+their validation work, and 08:10:14 total for B2.2. Sixty singleton endpoints
+plus 90 joint trajectories with two `T_N` segments and two evaluations equal
+240 B2.2-sized update/evaluation units. Scaling the stored N-specific times
+gives about 6.73 hours beyond the base fits and approximately 12.81 hours
+before extra manifest/integrity overhead; reserve **13–15 CPU hours**. This is
+an estimate, not a guaranteed runtime.
 
 ## 18. Relationship to B2.1 and B2.2
 
@@ -581,8 +676,10 @@ B2.3 reuses conceptually:
   sacrifice, c/B grid, and absolute H value.
 
 It corrects the inability to bridge those runs by training every base,
-singleton, and joint state in one provenance-locked execution. It also removes
-the trivial joint step advantage through fixed-step development.
+singleton, and joint state in one provenance-locked execution. It preserves
+each factor's singleton exposure inside primary joint development and records
+a fixed-total-compute midpoint to expose sensitivity to the additional joint
+steps.
 
 From valid B2.3 artifacts, without retraining, one may reconstruct:
 
@@ -593,13 +690,14 @@ From valid B2.3 artifacts, without retraining, one may reconstruct:
 - the B2.3 portfolio analysis: pair sacrifices, joint (Delta V), Gamma, H,
   rescue, and sequential consistency.
 
-These are B2.1-type and B2.2-type results under the B2.3 fixed-step protocol,
-not retroactive replacements for the historical three-epoch results.
+These are B2.1-type and B2.2-type results under the B2.3
+opportunity-matched protocol, not retroactive replacements for the historical
+three-epoch results.
 
 ## 19. Stopping, restart, and result discipline
 
 - Do not stop early for favorable or unfavorable outcomes.
-- Complete all 160 fits and 160 validation evaluations before analysis.
+- Complete all 160 fits and 250 validation evaluations before analysis.
 - An interrupted run may resume only from hash-compatible complete artifacts.
 - Stop and mark INVALID on provenance, determinism, compatibility, split,
   opportunity-gate, or TEST-closure failure.
@@ -611,10 +709,15 @@ not retroactive replacements for the historical three-epoch results.
 
 The final design addresses the following reviewer objections:
 
-- **Trivial joint compute advantage:** removed by identical (T_N), batch
-  size, and processed-example budgets.
-- **Extra unique data:** retained because two distinct stored opportunities are
-  the treatment; its non-additive value is tested against both singletons.
+- **Factor-dose mismatch:** removed in primary Gamma by preserving each
+  opportunity's `N` unique examples and `E_N` exposures in its singleton and
+  the joint endpoint.
+- **Extra total compute:** made explicit as the sum of two opportunity doses;
+  the exact same-data midpoint measures sensitivity at the singleton compute
+  budget and is not mislabeled as a factorial interaction.
+- **Extra unique data:** retained because two distinct N-example opportunities
+  are the accumulation treatment; their additive main effects are subtracted
+  in Gamma.
 - **Pseudoreplication:** seeds within an exact cell are the reproducibility
   units; c/B rows and nested N values are not replicates.
 - **Leakage:** TRANSFER creates opportunities, VALIDATION scores states, TEST is
@@ -628,7 +731,8 @@ The final design addresses the following reviewer objections:
 - **Circular rescue:** H is calculated only after state training and validation;
   no value quantity affects training or selection.
 - **Unfair singleton/joint comparison:** exact shared F0/opportunities and
-  equal compute are audited before analysis.
+  equal per-opportunity primary dose are audited; the fixed-total-compute
+  midpoint is reported separately.
 - **Temporal overclaim:** static rescue is primary; persistence and completion
   consistency are checked, while ex-ante selection remains untested.
 - **Multiple favorable rows:** classification never treats analytical c/B

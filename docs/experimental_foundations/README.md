@@ -112,13 +112,15 @@ the question: can two operation-generated learning opportunities that are
 individually unprofitable become jointly profitable when accumulated and used
 for matched joint development? It does not combine B2.1 and B2.2 states. Every
 singleton and joint state shares the same seed-specific F0, D, immutable sample
-IDs and teacher outputs; fixed-step updates equalize optimizer steps and
-processed-example counts.
+IDs and teacher outputs. Primary joint development preserves each
+opportunity's singleton exposure; an exact midpoint of that trajectory matches
+the singleton total compute and measures dose sensitivity without another fit.
 
 The primary event is strictly `rho_i>0`, `rho_j>0`, `H_i<0`, `H_j<0`, and
 `H_ij>0`, with the identity `H_ij=H_i+H_j+B Gamma_oper`. The frozen design has
 five seeds, `N={25,50,100}`, six pairs, five c values, four B values, 160 fits,
-and 1,800 analytical rows. `POSITIVE` requires the event in at least 3/5 seeds
+250 validation evaluations, 1,800 primary rows, and 450 secondary midpoint
+valuations. `POSITIVE` requires the event in at least 3/5 seeds
 for one exact `N × pair × c × B` cell; `NULL` requires no event anywhere; any
 other valid nonempty result is `INCONCLUSIVE`.
 
