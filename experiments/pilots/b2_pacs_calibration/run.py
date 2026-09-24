@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import random
 import sys
 import tempfile
@@ -37,6 +36,11 @@ from hls.b2_pacs_calibration import (  # noqa: E402
     stratified_splits,
     validate_manifest,
 )
+from hls.experiment_timing import ExperimentTimingLogger  # noqa: E402
+
+
+ACTIVE_TIMING: ExperimentTimingLogger | None = None
+RESTART_COMMAND = "python experiments/pilots/b2_pacs_calibration/run.py [same arguments]"
 
 
 class PACSImages(Dataset):
@@ -126,7 +130,7 @@ def fit_model(
     config: dict,
     fit_number: int,
     fraction: float,
-    run_started: float,
+    timing: ExperimentTimingLogger,
 ) -> tuple[nn.Module, float]:
     seed_everything(seed)
     model = make_model(kind, seed, device)
@@ -159,14 +163,7 @@ def fit_model(
             loss.backward()
             optimizer.step()
         epoch_seconds = time.perf_counter() - epoch_started
-        elapsed = time.perf_counter() - run_started
-        progress = (fit_number - 1) + epoch / epochs
-        eta = elapsed / progress * (25 - progress)
-        print(
-            f"[epoch {epoch}/{epochs}] {epoch_seconds:.1f}s | "
-            f"total {format_duration(elapsed)} | ETA B2.0 {format_duration(eta)}",
-            flush=True,
-        )
+        timing.item_progress(f"epoch {epoch}/{epochs}", epoch_seconds, time.perf_counter() - start)
     return model, time.perf_counter() - start
 
 
@@ -249,6 +246,7 @@ def resolve_device(requested: str, allow_cpu: bool) -> torch.device:
 
 
 def main() -> None:
+    global ACTIVE_TIMING
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", type=Path, default=ROOT / "results/pilots/b2_pacs_calibration/dataset_manifest.csv")
     parser.add_argument("--image-root", type=Path, required=True)
@@ -264,6 +262,20 @@ def main() -> None:
     device = resolve_device(args.device, args.allow_cpu)
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
+    total_fits = len(config["split_seeds"]) * (1 + len(config["base_fractions_for_fast"]))
+    timing = ExperimentTimingLogger(
+        "B2.0 PACS calibration", total_fits,
+        {"D": len(config["split_seeds"]), "Fast": len(config["split_seeds"]) * len(config["base_fractions_for_fast"])},
+        state_path=args.output_dir / ".cache/experiment_timing.json", resume=True,
+    )
+    ACTIVE_TIMING = timing
+    timing.header(
+        [
+            f"Device: {str(device).upper()}",
+            f"Fits: {total_fits}",
+            "TEST: governed by the unchanged B2.0 post-selection rule",
+        ]
+    )
     temporary_checkpoints = tempfile.TemporaryDirectory(prefix="hls_b2_pacs_checkpoints_")
     checkpoint_dir = Path(temporary_checkpoints.name)
     run_started = time.perf_counter()
@@ -275,7 +287,6 @@ def main() -> None:
     lookup = frame.set_index("sample_id", drop=False)
 
     fit_number = 0
-    total_fits = len(splits_by_seed) * (1 + len(config["base_fractions_for_fast"]))
     for seed, splits in splits_by_seed.items():
         for split, ids in splits.items():
             split_rows.extend({"seed": seed, "sample_id": int(i), "split": split} for i in ids)
@@ -284,8 +295,9 @@ def main() -> None:
         validation_frame = lookup.loc[splits["validation"]].reset_index(drop=True)
 
         fit_number += 1
-        print(f"[fit {fit_number}/{total_fits}] deep / seed {seed} / fraction 1.00", flush=True)
-        teacher, elapsed = fit_model("deep", seed + 30000, teacher_frame, args.image_root, device, config, fit_number, 1.0, run_started)
+        description = f"deep / seed {seed} / fraction 1.00"
+        timing.start_item(f"deep_seed{seed}", "D", fit_number, description)
+        teacher, elapsed = fit_model("deep", seed + 30000, teacher_frame, args.image_root, device, config, fit_number, 1.0, timing)
         torch.save({key: value.detach().cpu() for key, value in teacher.state_dict().items()}, checkpoint_dir / f"deep_seed{seed}.pt")
         fit_times.append({"seed": seed, "model": "deep", "fraction": 1.0, "seconds": elapsed, "n_train": len(teacher_frame)})
         for splitname, splitframe in (("validation", validation_frame),):
@@ -300,6 +312,7 @@ def main() -> None:
             for domain in DOMAINS:
                 mask = domains == domain
                 confusion_rows.append({"seed": seed, "model": "deep", "fraction": 1.0, "split": splitname, "domain": domain, "matrix": json.dumps(confusion_matrix(y[mask], pred[mask], labels=list(range(len(CLASSES)))).tolist())})
+        timing.finish_item(description=description)
         del teacher
         if device.type == "cuda":
             torch.cuda.empty_cache()
@@ -308,8 +321,9 @@ def main() -> None:
             subset_ids = select_base_fraction(frame, base.sample_id, fraction, seed + int(fraction * 1000))
             train_frame = lookup.loc[subset_ids].reset_index(drop=True)
             fit_number += 1
-            print(f"[fit {fit_number}/{total_fits}] fast / seed {seed} / fraction {fraction:.2f}", flush=True)
-            model, elapsed = fit_model("fast", seed + int(fraction * 10000), train_frame, args.image_root, device, config, fit_number, fraction, run_started)
+            description = f"fast / seed {seed} / fraction {fraction:.2f}"
+            timing.start_item(f"fast_seed{seed}_fraction{fraction:.2f}", "Fast", fit_number, description)
+            model, elapsed = fit_model("fast", seed + int(fraction * 10000), train_frame, args.image_root, device, config, fit_number, fraction, timing)
             torch.save({key: value.detach().cpu() for key, value in model.state_dict().items()}, checkpoint_dir / f"fast_seed{seed}_fraction{fraction:.2f}.pt")
             fit_times.append({"seed": seed, "model": "fast", "fraction": fraction, "seconds": elapsed, "n_train": len(train_frame)})
             y, pred, domains, ids = evaluate(model, validation_frame, args.image_root, device, config["training"]["batch_size"])
@@ -323,6 +337,7 @@ def main() -> None:
             for domain in DOMAINS:
                 mask = domains == domain
                 confusion_rows.append({"seed": seed, "model": "fast", "fraction": fraction, "split": "validation", "domain": domain, "matrix": json.dumps(confusion_matrix(y[mask], pred[mask], labels=list(range(len(CLASSES)))).tolist())})
+            timing.finish_item(description=description)
             del model
 
         del base
@@ -398,7 +413,14 @@ def main() -> None:
         "warnings": [],
     }, indent=2) + "\n")
     temporary_checkpoints.cleanup()
+    timing.finish(title="B2.0 COMPLETE", extra_lines=[f"Fits: {fit_number}/{total_fits}"])
+    ACTIVE_TIMING = None
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except BaseException as error:
+        if ACTIVE_TIMING is not None:
+            ACTIVE_TIMING.interrupt(RESTART_COMMAND, error)
+        raise

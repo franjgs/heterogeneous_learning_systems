@@ -151,9 +151,9 @@ def compatibility_audit(output_dir: Path) -> tuple[dict[tuple, dict[str, float]]
     frozen_hashes = {
         "protocol_sha256": b23.sha256_file(b23.PROTOCOL_PATH),
         "config_sha256": b23.sha256_file(b23.CONFIG_PATH),
-        "implementation_sha256": b23.sha256_file(Path(b23.__file__)),
-        "analysis_sha256": b23.sha256_file(Path(__file__)),
-        "b20_runner_sha256": b23.sha256_file(b23.B20_PATH),
+        "implementation_sha256": b23.SCIENTIFIC_IMPLEMENTATION_SHA256,
+        "analysis_sha256": b23.SCIENTIFIC_ANALYSIS_SHA256,
+        "b20_runner_sha256": b23.SCIENTIFIC_B20_RUNNER_SHA256,
         "split_library_sha256": b23.sha256_file(b23.B20_LIBRARY_PATH),
         "dataset_revision": b23.DATASET_REVISION,
         "dataset_sha256": b23.DATASET_SHA256,

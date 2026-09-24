@@ -65,3 +65,11 @@ dataset/protocol provenance, CPU, and TEST closure. Any failure prevents the
 
 The preregistered planning estimate is **13–15 CPU hours**, based on the
 observed B2.1/B2.2 times. It is an estimate, not a guaranteed duration.
+
+The common timing logger records `F0`, `D`, singleton, joint, and analysis
+durations at `.cache/experiment_timing.json`. Console output distinguishes the
+current session from accumulated validated work and estimates remaining time
+from observed category means, marking cross-category fallback estimates as
+provisional. Reused checkpoints consume no session time. The timing file is
+separate from `run_manifest.json` and all scientific hashes; the existing
+partial `F0_s0` restart remains compatible. Dry-run does not persist timing.

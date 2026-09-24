@@ -130,3 +130,12 @@ and synthetic tests are in
 [`experiments/pilots/b23_portfolio_opportunity/`](../../experiments/pilots/b23_portfolio_opportunity/).
 No B2.3 training, teacher inference, or scientific result has been produced;
 TEST remains closed.
+
+## Operational timing convention
+
+Long PACS runners B2.0–B2.3 now use the dependency-free common logger described
+in [experiment_timing.md](../experiment_timing.md). It standardizes session and
+accumulated elapsed time, category-aware ETA, restart timing, interruptions,
+and final summaries. Timing is separate operational metadata and does not
+change scientific hashes, protocols, grids, models, splits, or historical
+results.

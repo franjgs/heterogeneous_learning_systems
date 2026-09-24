@@ -125,6 +125,11 @@ def test_cpu_only():
         b22.require_cpu("mps")
 
 
+def test_timing_edits_do_not_change_frozen_scientific_fingerprint():
+    assert b22.implementation_fingerprint() == b22.SCIENTIFIC_IMPLEMENTATION_SHA256
+    assert b22.SCIENTIFIC_IMPLEMENTATION_SHA256 == "96956e2179e9a48540efcbdff463a4cc0a08378e66dc7efb4df80307e00d3cf8"
+
+
 def test_fast_trajectory_cannot_query_teacher():
     record = b22.fast_trajectory_record(spec(), "f0", 25)
     assert record["operational_example_count"] == 25
@@ -372,5 +377,12 @@ def test_analyze_only_never_enters_training(monkeypatch):
     monkeypatch.setattr(b22, "historical_signatures", lambda *args: signatures())
     monkeypatch.setattr(b22, "load_completed_updates", lambda *args: {str(i): {} for i in range(60)})
     monkeypatch.setattr(b22, "expand_grid", lambda *args: completed_raw())
+    class NoTiming:
+        def header(self, *args, **kwargs): pass
+        def adopt_completed(self, *args, **kwargs): pass
+        def phase(self, *args, **kwargs): pass
+        def record_auxiliary(self, *args, **kwargs): pass
+        def finish(self, *args, **kwargs): pass
+    monkeypatch.setattr(b22, "ExperimentTimingLogger", lambda *args, **kwargs: NoTiming())
     b22.main(["--device", "cpu", "--analyze-only"])
     assert called["analysis"]

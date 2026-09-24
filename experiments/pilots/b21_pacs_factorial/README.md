@@ -23,3 +23,10 @@ Observed B2.0 CPU timings imply approximately 7.1 hours for the full 160-fit
 factorial (about 3800 s/teacher, 550 s/F0, with intervention time scaled by
 intervention sample count). This is an estimate only; the full factorial is
 not run by the preparation workflow.
+
+Future executions use the common timing format for `D`, `F0`, singleton, and
+joint fits, with epoch timing, session elapsed time, accumulated work, and
+category-aware ETA. Operational timing is stored separately at
+`results/pilots/b21_pacs_factorial/.cache/experiment_timing.json`. Historical
+durations absent from that file remain explicitly unavailable; scientific
+outputs are not rewritten.

@@ -187,6 +187,27 @@ def test_restart_reuses_only_complete_hash_valid_artifacts(tmp_path):
     assert manifest.valid_file("x", {"artifact_type": "singleton", "seed": 0}) is None
 
 
+def test_restart_header_ignores_only_operational_metadata(tmp_path):
+    path = tmp_path / "manifest.json"
+    original = {"protocol": b23.PROTOCOL_ID, "scientific": "frozen", "git_commit": "old", "command": ["old"]}
+    manifest = b23.ArtifactManifest(path, original)
+    manifest.record("marker", {"status": "complete"})
+
+    changed_operational = original | {"git_commit": "new", "command": ["new"]}
+    reopened = b23.ArtifactManifest(path, changed_operational)
+    assert "marker" in reopened.data["artifacts"]
+
+    changed_scientific = changed_operational | {"scientific": "changed"}
+    with pytest.raises(RuntimeError, match="provenance differs"):
+        b23.ArtifactManifest(path, changed_scientific)
+
+
+def test_b23_scientific_hashes_are_frozen_across_timing_only_edits():
+    assert b23.SCIENTIFIC_IMPLEMENTATION_SHA256 == "37769e98591520dc979796b480958eb48c941dc328be28a57d9659c8339300be"
+    assert b23.SCIENTIFIC_ANALYSIS_SHA256 == "677f1b7a5425e1bfc177d440ae9230b45afd1fb3f7c26f672f650025ba7cf6d6"
+    assert b23.SCIENTIFIC_B20_RUNNER_SHA256 == "64dd4a2d642efd9f6e5970444d96250f96dbe6672671d18d7adc9398a5ae091c"
+
+
 def test_genealogy_metadata_rejects_sequential_parent_by_exact_hash(tmp_path):
     checkpoint = tmp_path / "state.pt"
     torch.save({"value": 1}, checkpoint)
@@ -253,8 +274,8 @@ def test_complete_synthetic_genealogy_passes_compatibility_audit(tmp_path):
     header = {
         "protocol_id": b23.PROTOCOL_ID, "device": "cpu", "test_used": False, "deterministic_algorithms": True,
         "protocol_sha256": b23.sha256_file(b23.PROTOCOL_PATH), "config_sha256": b23.sha256_file(b23.CONFIG_PATH),
-        "implementation_sha256": b23.sha256_file(RUN_PATH), "analysis_sha256": b23.sha256_file(ANALYZE_PATH),
-        "b20_runner_sha256": b23.sha256_file(b23.B20_PATH), "split_library_sha256": b23.sha256_file(b23.B20_LIBRARY_PATH),
+        "implementation_sha256": b23.SCIENTIFIC_IMPLEMENTATION_SHA256, "analysis_sha256": b23.SCIENTIFIC_ANALYSIS_SHA256,
+        "b20_runner_sha256": b23.SCIENTIFIC_B20_RUNNER_SHA256, "split_library_sha256": b23.sha256_file(b23.B20_LIBRARY_PATH),
         "dataset_revision": b23.DATASET_REVISION, "dataset_sha256": b23.DATASET_SHA256,
     }
     manifest = b23.ArtifactManifest(tmp_path / "run_manifest.json", header)

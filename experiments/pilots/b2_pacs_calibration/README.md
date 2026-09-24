@@ -137,3 +137,10 @@ override. Expected outputs after a completed calibration are `metrics.csv`,
 outputs are dataset/audit/split manifests and the CPU profile under
 `results/pilots/b2_pacs_calibration/`. No checkpoint or dataset image is
 committed.
+
+Future executions use the common experiment timing logger. Fit starts and
+completions report session elapsed time, accumulated real work, category-aware
+ETA, and epoch timing. Operational timing persists separately at
+`results/pilots/b2_pacs_calibration/.cache/experiment_timing.json`; unavailable
+historical durations are not reconstructed. This does not alter the completed
+B2.0 results or its scientific protocol.

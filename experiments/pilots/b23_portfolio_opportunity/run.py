@@ -32,6 +32,8 @@ from torch import nn
 from torchvision import transforms
 
 ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT / "src"))
+from hls.experiment_timing import ExperimentTimingLogger  # noqa: E402
 PROTOCOL_PATH = ROOT / "docs/experimental_foundations/B23_PROTOCOL.md"
 CONFIG_PATH = ROOT / "experiments/pilots/b2_pacs_calibration/config.json"
 B20_PATH = ROOT / "experiments/pilots/b2_pacs_calibration/run.py"
@@ -75,6 +77,11 @@ TOTAL_EVALUATIONS = 250
 TOTAL_PRIMARY_ROWS = 1800
 TOTAL_DOSE_ROWS = 450
 NUMERIC_TOLERANCE = 1e-12
+SCIENTIFIC_IMPLEMENTATION_SHA256 = "37769e98591520dc979796b480958eb48c941dc328be28a57d9659c8339300be"
+SCIENTIFIC_ANALYSIS_SHA256 = "677f1b7a5425e1bfc177d440ae9230b45afd1fb3f7c26f672f650025ba7cf6d6"
+SCIENTIFIC_B20_RUNNER_SHA256 = "64dd4a2d642efd9f6e5970444d96250f96dbe6672671d18d7adc9398a5ae091c"
+ACTIVE_TIMING: ExperimentTimingLogger | None = None
+RESTART_COMMAND = "python experiments/pilots/b23_portfolio_opportunity/run.py [same arguments]"
 
 
 @dataclass(frozen=True)
@@ -467,7 +474,9 @@ def train_base(kind: str, seed: int, frame: pd.DataFrame, config: dict, image_ro
         generator=torch.Generator().manual_seed(training_seed),
     )
     started = time.perf_counter()
+    fit_started = time.perf_counter()
     for epoch in range(3):
+        epoch_started = time.perf_counter()
         model.train()
         for images, labels, _, _ in loader:
             optimizer.zero_grad(set_to_none=True)
@@ -475,6 +484,12 @@ def train_base(kind: str, seed: int, frame: pd.DataFrame, config: dict, image_ro
             loss.backward()
             optimizer.step()
         print(f"base {kind} seed={seed} epoch {epoch + 1}/3", flush=True)
+        if ACTIVE_TIMING is not None:
+            ACTIVE_TIMING.item_progress(
+                f"base {kind} seed={seed} epoch {epoch + 1}/3",
+                time.perf_counter() - epoch_started,
+                time.perf_counter() - fit_started,
+            )
     return model, time.perf_counter() - started
 
 
@@ -509,13 +524,18 @@ def train_scheduled(
     started = time.perf_counter()
     model.train()
     for index in range(start_step, len(schedule)):
+        step_started = time.perf_counter()
         torch.manual_seed(step_seed(seed, n, index + 1))
         images, targets = dataset.batch(schedule[index])
         optimizer.zero_grad(set_to_none=True)
         loss = nn.functional.cross_entropy(model(images), targets)
         loss.backward()
         optimizer.step()
-        print(f"step {index + 1}/{len(schedule)} | loss={float(loss):.6f}", flush=True)
+        label = f"step {index + 1}/{len(schedule)} loss={float(loss):.6f}"
+        if ACTIVE_TIMING is not None:
+            ACTIVE_TIMING.item_progress(label, time.perf_counter() - step_started, time.perf_counter() - started)
+        else:
+            print(label, flush=True)
         if midpoint_step is not None and index + 1 == midpoint_step and midpoint_callback is not None:
             midpoint_callback(model, optimizer, capture_rng(), index + 1)
     return model, time.perf_counter() - started
@@ -526,7 +546,11 @@ class ArtifactManifest:
         self.path = path
         if path.exists():
             self.data = json.loads(path.read_text())
-            if self.data.get("header") != header:
+            existing = self.data.get("header", {})
+            operational_keys = {"git_commit", "command"}
+            existing_science = {key: value for key, value in existing.items() if key not in operational_keys}
+            current_science = {key: value for key, value in header.items() if key not in operational_keys}
+            if existing_science != current_science:
                 raise RuntimeError("restart manifest provenance differs; use --force")
         else:
             self.data = {"header": header, "artifacts": {}}
@@ -603,8 +627,8 @@ def run_manifest_header(args: argparse.Namespace, config: dict) -> dict[str, obj
         git_commit = "unknown"
     return {
         "protocol_id": PROTOCOL_ID, "protocol_sha256": sha256_file(PROTOCOL_PATH), "config_sha256": sha256_file(CONFIG_PATH),
-        "implementation_sha256": sha256_file(Path(__file__)), "analysis_sha256": sha256_file(ANALYZE_PATH),
-        "b20_runner_sha256": sha256_file(B20_PATH), "split_library_sha256": sha256_file(B20_LIBRARY_PATH),
+        "implementation_sha256": SCIENTIFIC_IMPLEMENTATION_SHA256, "analysis_sha256": SCIENTIFIC_ANALYSIS_SHA256,
+        "b20_runner_sha256": SCIENTIFIC_B20_RUNNER_SHA256, "split_library_sha256": sha256_file(B20_LIBRARY_PATH),
         "dataset_revision": DATASET_REVISION, "dataset_sha256": DATASET_SHA256, "manifest_sha256": sha256_file(args.manifest),
         "git_commit": git_commit, "device": "cpu", "torch": torch.__version__, "python": sys.version,
         "torchvision": torchvision.__version__, "numpy": np.__version__, "pandas": pd.__version__, "command": sys.argv,
@@ -662,17 +686,28 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 
 def main(argv: list[str] | None = None) -> None:
+    global ACTIVE_TIMING
     args = parse_args(argv)
     started = time.perf_counter()
-    run_header()
     require_cpu(args.device)
     if args.dry_run and args.analyze_only:
         raise ValueError("--dry-run and --analyze-only are mutually exclusive")
     if args.force and (args.dry_run or args.analyze_only):
         raise ValueError("--force applies only to a full execution")
     if args.analyze_only:
+        timing = ExperimentTimingLogger(
+            "B2.3 PACS portfolio-opportunity experiment", TOTAL_FITS,
+            {"F0": 5, "D": 5, "singleton": 60, "joint": 90},
+            state_path=args.output_dir / ".cache/experiment_timing.json", resume=True,
+        )
+        ACTIVE_TIMING = timing
+        timing.header(["Device: CPU", "TEST: CLOSED", f"Fits: {TOTAL_FITS}", "Mode: analyze-only"])
+        analysis_started = time.perf_counter()
         analyzer = _load_module("b23_analyze", ANALYZE_PATH)
         analyzer.run_analysis(args.output_dir, started=started)
+        timing.record_auxiliary("analysis", "analysis", time.perf_counter() - analysis_started)
+        timing.finish(title="B2.3 COMPLETE", extra_lines=["TEST: CLOSED", "Mode: analyze-only"])
+        ACTIVE_TIMING = None
         return
     config = json.loads(CONFIG_PATH.read_text())
     validate_config(config)
@@ -683,6 +718,14 @@ def main(argv: list[str] | None = None) -> None:
     b20.validate_manifest(frame)
     splits = {seed: development_splits(frame, seed) for seed in SEEDS}
     if args.dry_run:
+        timing = ExperimentTimingLogger(
+            "B2.3 PACS portfolio-opportunity experiment", TOTAL_FITS,
+            {"F0": 5, "D": 5, "singleton": 60, "joint": 90},
+            state_path=None, resume=True, persist=False,
+        )
+        timing.header(
+            ["Device: CPU", "TEST: CLOSED", f"Fits: {TOTAL_FITS} | evaluations: {TOTAL_EVALUATIONS}", f"Primary rows: {TOTAL_PRIMARY_ROWS} | dose rows: {TOTAL_DOSE_ROWS}", "Mode: dry-run"]
+        )
         dry_run(frame, splits, args.image_root, args.output_dir)
         return
     if args.image_root is None or not args.image_root.is_dir():
@@ -702,6 +745,14 @@ def execute_full(args: argparse.Namespace, frame: pd.DataFrame, splits: dict[int
     cache.mkdir(parents=True, exist_ok=True)
     header = run_manifest_header(args, config)
     artifacts = ArtifactManifest(output_dir / "run_manifest.json", header)
+    timing = ExperimentTimingLogger(
+        "B2.3 PACS portfolio-opportunity experiment", TOTAL_FITS,
+        {"F0": 5, "D": 5, "singleton": 60, "joint": 90},
+        state_path=cache / "experiment_timing.json", resume=True,
+    )
+    global ACTIVE_TIMING
+    ACTIVE_TIMING = timing
+    timing.header(["Device: CPU", "TEST: CLOSED", f"Fits: {TOTAL_FITS} | evaluations: {TOTAL_EVALUATIONS}", f"Primary rows: {TOTAL_PRIMARY_ROWS} | dose rows: {TOTAL_DOSE_ROWS}"])
     lookup = frame.set_index("sample_id", drop=False)
 
     split_rows: list[dict[str, object]] = []
@@ -717,7 +768,7 @@ def execute_full(args: argparse.Namespace, frame: pd.DataFrame, splits: dict[int
             )
     atomic_csv(output_dir / "split_manifest.csv", pd.DataFrame(split_rows))
 
-    print("[1/6] Base states", flush=True)
+    timing.phase(1, 6, "Base states")
     for seed in SEEDS:
         validation = lookup.loc[list(splits[seed].validation)].reset_index(drop=True)
         f0_ids = b20.select_base_fraction(frame, splits[seed].base, F0_FRACTION, seed + 250)
@@ -729,9 +780,10 @@ def execute_full(args: argparse.Namespace, frame: pd.DataFrame, splits: dict[int
             artifact_id = f"{state_name}_s{seed}"
             expected = {"artifact_type": state_name, "seed": seed}
             if artifacts.valid_file(artifact_id, expected):
-                print(f"reuse {artifact_id}", flush=True)
+                timing.adopt_completed(artifact_id, state_name, float(artifacts.data["artifacts"][artifact_id].get("seconds", 0.0)), f"seed={seed} state={state_name}")
                 continue
-            print(f"[fit {seed * 2 + (1 if state_name == 'F0' else 2)}/{TOTAL_FITS}] seed={seed} state={state_name}", flush=True)
+            description = f"seed={seed} state={state_name}"
+            timing.start_item(artifact_id, state_name, seed * 2 + (1 if state_name == "F0" else 2), description)
             model, seconds = train_base(kind, seed, base_frames[state_name], config, args.image_root, torch.device("cpu"))
             scores = score_model(model, validation, args.image_root, torch.device("cpu"))
             payload = {
@@ -745,9 +797,10 @@ def execute_full(args: argparse.Namespace, frame: pd.DataFrame, splits: dict[int
             path = cache / "base" / f"{artifact_id}.pt"
             save_checkpoint(path, payload)
             artifacts.record(artifact_id, artifact_record(path, state_name, {"seed": seed, "model_fingerprint": payload["model_fingerprint"]}, seconds))
+            timing.finish_item(description=description)
             del model
 
-    print("[2/6] Immutable opportunities", flush=True)
+    timing.phase(2, 6, "Immutable opportunities")
     opportunity_plan = build_opportunity_plan(frame, splits)
     opportunity_hashes: dict[tuple[int, str, int], str] = {}
     completed_streams = 0
@@ -793,9 +846,8 @@ def execute_full(args: argparse.Namespace, frame: pd.DataFrame, splits: dict[int
             print(f"opportunity streams {completed_streams}/20 | views {completed_streams * 3}/{TOTAL_OPPORTUNITIES}", flush=True)
         del deep
 
-    print("[3/6] Singleton development", flush=True)
+    timing.phase(3, 6, "Singleton development")
     singletons, joints = plan_specs()
-    completed_fit_times = [float(record.get("seconds", 0)) for record in artifacts.data["artifacts"].values() if record.get("artifact_type") in {"F0", "D", "singleton", "joint"} and float(record.get("seconds", 0)) > 0]
     for spec in singletons:
         f0_record = artifacts.data["artifacts"][f"F0_s{spec.seed}"]
         op_path = Path(artifacts.data["artifacts"][f"op_s{spec.seed}_{spec.domain}_n{spec.n}"]["path"])
@@ -805,14 +857,15 @@ def execute_full(args: argparse.Namespace, frame: pd.DataFrame, splits: dict[int
             "parent_f0_sha256": f0_record["sha256"], "opportunity_sha256": op_hash,
         }
         if artifacts.valid_file(spec.artifact_id, expected):
-            print(f"reuse singleton {spec.number}/{TOTAL_SINGLETON_FITS}: {spec.artifact_id}", flush=True)
+            timing.adopt_completed(spec.artifact_id, "singleton", float(artifacts.data["artifacts"][spec.artifact_id].get("seconds", 0.0)), f"seed={spec.seed} state=Fi domain={spec.domain} N={spec.n}")
             continue
         f0 = load_checkpoint(Path(f0_record["path"]))
         ids = tuple(int(value) for value in op["sample_ids"])
         labels = {int(row["sample_id"]): int(row["pseudo_label"]) for row in op["samples"]}
         schedule = singleton_schedule(spec.seed, spec.n, spec.domain, ids)
         audit = schedule_audit(schedule, spec.n, (spec.domain,))
-        print(f"[fit {TOTAL_BASE_FITS + spec.number}/{TOTAL_FITS}] seed={spec.seed} state=Fi domain={spec.domain} N={spec.n}", flush=True)
+        description = f"seed={spec.seed} state=Fi domain={spec.domain} N={spec.n}"
+        timing.start_item(spec.artifact_id, "singleton", TOTAL_BASE_FITS + spec.number, description)
         model, seconds = train_scheduled(f0["model_state"], schedule, labels, lookup, args.image_root, spec.seed, spec.n, config)
         validation = lookup.loc[list(splits[spec.seed].validation)].reset_index(drop=True)
         scores = score_model(model, validation, args.image_root, torch.device("cpu"))
@@ -827,13 +880,10 @@ def execute_full(args: argparse.Namespace, frame: pd.DataFrame, splits: dict[int
         path = cache / "singletons" / f"{spec.artifact_id}.pt"
         save_checkpoint(path, payload)
         artifacts.record(spec.artifact_id, artifact_record(path, "singleton", expected | {"parent_f0_sha256": f0_record["sha256"], "opportunity_sha256": op_hash}, seconds))
-        completed_fit_times.append(seconds)
-        completed = sum(record.get("artifact_type") in {"F0", "D", "singleton", "joint"} for record in artifacts.data["artifacts"].values())
-        eta = float(np.mean(completed_fit_times)) * (TOTAL_FITS - completed) if completed_fit_times else 0.0
-        print(f"completed singleton {spec.number}/{TOTAL_SINGLETON_FITS} | total fits {completed}/{TOTAL_FITS} | elapsed {format_duration(time.perf_counter()-started)} | ETA {format_duration(eta)}", flush=True)
+        timing.finish_item(description=description)
         del model
 
-    print("[4/6] Joint development with in-trajectory CM checkpoints", flush=True)
+    timing.phase(4, 6, "Joint development with in-trajectory CM checkpoints")
     for spec in joints:
         f0_record = artifacts.data["artifacts"][f"F0_s{spec.seed}"]
         ops, hashes, ids, labels = {}, {}, {}, {}
@@ -853,7 +903,7 @@ def execute_full(args: argparse.Namespace, frame: pd.DataFrame, splits: dict[int
         final_valid = artifacts.valid_file(spec.artifact_id, expected)
         cm_valid = artifacts.valid_file(spec.artifact_id + "_CM", cm_expected)
         if final_valid and cm_valid:
-            print(f"reuse joint {spec.number}/{TOTAL_JOINT_FITS}: {spec.artifact_id}", flush=True)
+            timing.adopt_completed(spec.artifact_id, "joint", float(artifacts.data["artifacts"][spec.artifact_id].get("seconds", 0.0)), f"seed={spec.seed} state=Fij pair={spec.pair} N={spec.n}")
             continue
         f0 = load_checkpoint(Path(f0_record["path"]))
         schedule = joint_schedule(spec, ids[spec.domain_i], ids[spec.domain_j])
@@ -878,7 +928,8 @@ def execute_full(args: argparse.Namespace, frame: pd.DataFrame, splits: dict[int
             save_checkpoint(cm_path, payload)
             artifacts.record(spec.artifact_id + "_CM", artifact_record(cm_path, "joint_cm", cm_expected | {"parent_f0_sha256": f0_record["sha256"]}))
 
-        print(f"[fit {TOTAL_BASE_FITS + TOTAL_SINGLETON_FITS + spec.number}/{TOTAL_FITS}] seed={spec.seed} state=Fij pair={spec.pair} N={spec.n}", flush=True)
+        description = f"seed={spec.seed} state=Fij pair={spec.pair} N={spec.n}"
+        timing.start_item(spec.artifact_id, "joint", TOTAL_BASE_FITS + TOTAL_SINGLETON_FITS + spec.number, description)
         model, seconds = train_scheduled(
             f0["model_state"], schedule, labels, lookup, args.image_root, spec.seed, spec.n, config,
             resume=resume, midpoint_step=steps, midpoint_callback=None if resume else save_midpoint,
@@ -908,15 +959,17 @@ def execute_full(args: argparse.Namespace, frame: pd.DataFrame, splits: dict[int
         path = cache / "joints" / f"{spec.artifact_id}.pt"
         save_checkpoint(path, payload)
         artifacts.record(spec.artifact_id, artifact_record(path, "joint", expected | {"parent_f0_sha256": f0_record["sha256"], "opportunity_i_sha256": hashes[spec.domain_i], "opportunity_j_sha256": hashes[spec.domain_j]}, seconds))
-        completed_fit_times.append(seconds)
-        remaining = TOTAL_FITS - sum(record.get("artifact_type") in {"F0", "D", "singleton", "joint"} for record in artifacts.data["artifacts"].values())
-        eta = float(np.mean(completed_fit_times)) * remaining if completed_fit_times else 0.0
-        print(f"completed {spec.artifact_id} | elapsed {format_duration(time.perf_counter()-started)} | ETA {format_duration(eta)}", flush=True)
+        timing.finish_item(description=description)
         del model, cm_model
 
-    print("[5/6] Compatibility audit and analysis", flush=True)
+    timing.phase(5, 6, "Compatibility audit and analysis")
+    analysis_started = time.perf_counter()
     analyzer = _load_module("b23_analyze", ANALYZE_PATH)
     analyzer.run_analysis(output_dir, started=started)
+    timing.record_auxiliary("analysis", "analysis", time.perf_counter() - analysis_started)
+    timing.phase(6, 6, "Final timing summary")
+    timing.finish(title="B2.3 COMPLETE", extra_lines=["TEST: CLOSED", "Compatibility: PASS", f"Fits: {TOTAL_FITS}/{TOTAL_FITS}", f"Primary rows: {TOTAL_PRIMARY_ROWS}/{TOTAL_PRIMARY_ROWS}"])
+    ACTIVE_TIMING = None
 
 
 def format_duration(seconds: float) -> str:
@@ -927,4 +980,9 @@ def format_duration(seconds: float) -> str:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except BaseException as error:
+        if ACTIVE_TIMING is not None:
+            ACTIVE_TIMING.interrupt(RESTART_COMMAND, error)
+        raise

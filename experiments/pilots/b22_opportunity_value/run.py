@@ -21,6 +21,9 @@ import torch
 from torch import nn
 from torch.utils.data import DataLoader
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "src"))
+from hls.experiment_timing import ExperimentTimingLogger  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[3]
 PROTOCOL_PATH = ROOT / "docs/experimental_foundations/B22_PROTOCOL.md"
 CONFIG_PATH = ROOT / "experiments/pilots/b2_pacs_calibration/config.json"
@@ -66,6 +69,10 @@ TOTAL_UPDATES = len(SEEDS) * len(DOMAINS) * len(N_VALUES)
 TOTAL_GRID_ROWS = TOTAL_UPDATES * len(COSTS) * len(FUTURE_WEIGHTS)
 NUMERIC_TOLERANCE = 1e-12
 PROTOCOL_ID = "B2.2-PACS-opportunity-value-v1"
+SCIENTIFIC_IMPLEMENTATION_SHA256 = "96956e2179e9a48540efcbdff463a4cc0a08378e66dc7efb4df80307e00d3cf8"
+TOTAL_FITS = 10 + TOTAL_UPDATES
+ACTIVE_TIMING: ExperimentTimingLogger | None = None
+RESTART_COMMAND = "python experiments/pilots/b22_opportunity_value/run.py [same arguments]"
 OUTPUT_FILES = (
     "raw_results.csv",
     "aggregate_results.csv",
@@ -125,7 +132,9 @@ def sha256_json(value: object) -> str:
 
 
 def implementation_fingerprint() -> str:
-    return sha256_json({"run.py": sha256_file(Path(__file__)), "analyze.py": sha256_file(ANALYSIS_PATH)})
+    # Frozen scientific fingerprint from the completed B2.2 implementation.
+    # Timing-only edits must not invalidate compatible scientific artifacts.
+    return SCIENTIFIC_IMPLEMENTATION_SHA256
 
 
 def state_dict_fingerprint(model: nn.Module) -> str:
@@ -370,11 +379,15 @@ def train_model(
         epoch_seconds = time.perf_counter() - epoch_started
         mean_loss = loss_sum / examples
         history.append({"epoch": epoch, "loss": mean_loss, "seconds": epoch_seconds})
-        print(
-            f"epoch {epoch}/{epochs} | loss={mean_loss:.6f} | epoch time={format_duration(epoch_seconds)} "
-            f"| update elapsed={format_duration(time.perf_counter() - started)} | {label}",
-            flush=True,
-        )
+        progress_label = f"epoch {epoch}/{epochs} loss={mean_loss:.6f} {label}"
+        if ACTIVE_TIMING is not None and ACTIVE_TIMING.active is not None:
+            ACTIVE_TIMING.item_progress(progress_label, epoch_seconds, time.perf_counter() - started)
+        else:
+            print(
+                f"epoch {epoch}/{epochs} | loss={mean_loss:.6f} | epoch time={format_duration(epoch_seconds)} "
+                f"| update elapsed={format_duration(time.perf_counter() - started)} | {label}",
+                flush=True,
+            )
     return model, history, time.perf_counter() - started
 
 
@@ -888,6 +901,7 @@ def ensure_base_models(
     device: torch.device,
     cache_dir: Path,
     signatures: RunSignatures,
+    timing: ExperimentTimingLogger | None = None,
 ) -> None:
     lookup = frame.set_index("sample_id", drop=False)
     batch_size = int(config["training"]["batch_size"])
@@ -900,14 +914,24 @@ def ensure_base_models(
         f0_frame = lookup.loc[selected_f0_ids].reset_index(drop=True)
         for kind, training_frame in (("deep", teacher_frame), ("fast", f0_frame)):
             path = cache_dir / "base" / f"{kind}_seed{seed}.pt"
+            category = "D" if kind == "deep" else "F0"
+            item_id = f"base_{kind}_seed{seed}"
+            number = seed * 2 + (1 if kind == "deep" else 2)
+            description = f"seed={seed} state={category}"
             if path.exists():
-                load_base_checkpoint(path, kind, seed, signatures, device)
+                _, _, historical_seconds = load_base_checkpoint(path, kind, seed, signatures, device)
+                if timing is not None:
+                    timing.adopt_completed(item_id, category, historical_seconds, description)
                 print(f"base {kind} seed={seed}: compatible checkpoint found", flush=True)
                 continue
+            if timing is not None:
+                timing.start_item(item_id, category, number, description)
             print(f"training base {kind} seed={seed} on CPU", flush=True)
             model, _, seconds = train_base(kind, seed, training_frame, config, image_root, device)
             scores = score_model(model, validation, image_root, device, batch_size)
             save_base_checkpoint(path, model, scores, _base_metadata(kind, seed, signatures), seconds)
+            if timing is not None:
+                timing.finish_item(description=description)
             del model
 
 
@@ -933,7 +957,7 @@ def run_one_update(
     opportunity, deep_record = deep_opportunity_record(
         spec,
         selected,
-        lambda selected_frame: predict_labels(deep, selected_frame, image_root, device, int(config["training"]["batch_size"])),
+        lambda selected_frame, teacher=deep: predict_labels(teacher, selected_frame, image_root, device, int(config["training"]["batch_size"])),
     )
     fk, history, training_seconds, initial_fingerprint = train_from_f0(f0, opportunity, spec, config, image_root, device)
     if initial_fingerprint != f0_fingerprint:
@@ -990,10 +1014,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 
 def main(argv: list[str] | None = None) -> None:
+    global ACTIVE_TIMING
     args = parse_args(argv)
     started = time.perf_counter()
-    print_header()
-    phase(1, "Protocol and consistency checks", started)
     device = require_cpu(args.device)
     config = json.loads(CONFIG_PATH.read_text())
     validate_protocol_and_config(config)
@@ -1014,8 +1037,20 @@ def main(argv: list[str] | None = None) -> None:
         completed = load_completed_updates(cache_dir, plan, signatures, False)
         if len(completed) != TOTAL_UPDATES:
             raise RuntimeError("--analyze-only requires all 60 validated opportunity updates")
+        timing = ExperimentTimingLogger(
+            "B2.2 PACS opportunity-value experiment", TOTAL_FITS,
+            {"D": 5, "F0": 5, "update": TOTAL_UPDATES},
+            state_path=cache_dir / "experiment_timing.json", resume=True,
+        )
+        ACTIVE_TIMING = timing
+        timing.header(["Device: CPU", "TEST: CLOSED", f"Fits: {TOTAL_FITS}", "Mode: analyze-only"])
+        for update_id, record in completed.items():
+            recorded_id = str(record.get("metadata", {}).get("update_id", update_id))
+            duration = float(record["update_seconds"]) if "update_seconds" in record else None
+            timing.adopt_completed(recorded_id, "update", duration, recorded_id)
         print(f"Analyze-only: loaded {len(completed)}/{TOTAL_UPDATES} completed updates; no models loaded.", flush=True)
-        phase(4, "Validation competence evaluation", started)
+        analysis_started = time.perf_counter()
+        timing.phase(4, 7, "Validation competence evaluation")
         raw = expand_grid(completed)
         existing = pd.read_csv(args.output_dir / "raw_results.csv")
         if list(existing[["seed", "domain", "N", "c", "B"]].itertuples(index=False, name=None)) != list(raw[["seed", "domain", "N", "c", "B"]].itertuples(index=False, name=None)):
@@ -1023,10 +1058,13 @@ def main(argv: list[str] | None = None) -> None:
         for column in ("rho", "V_F0", "V_Fk", "DeltaV", "Omega", "H", "DeltaV_local", "DeltaV_cross"):
             if not np.allclose(existing[column], raw[column], atol=NUMERIC_TOLERANCE, rtol=0):
                 raise RuntimeError(f"regenerated {column} differs from existing raw_results.csv")
-        phase(5, "Expanding pre-registered c x B grid", started)
-        phase(6, "Analysis and classification", started)
-        phase(7, "Validation and outputs", started)
+        timing.phase(5, 7, "Expanding pre-registered c x B grid")
+        timing.phase(6, 7, "Analysis and classification")
+        timing.phase(7, 7, "Validation and outputs")
         write_completed_analysis(raw, args.output_dir, cache_dir, signatures, started, write_metadata=False, enforce_frozen_counts=True)
+        timing.record_auxiliary("analysis", "analysis", time.perf_counter() - analysis_started)
+        timing.finish(title="B2.2 COMPLETE", extra_lines=["TEST: CLOSED", "Mode: analyze-only"])
+        ACTIVE_TIMING = None
         return
 
     if args.image_root is None or not args.image_root.is_dir():
@@ -1051,7 +1089,13 @@ def main(argv: list[str] | None = None) -> None:
     print(f"Resuming B2.2: {len(completed)}/{TOTAL_UPDATES} updates already complete.", flush=True)
 
     if args.dry_run:
-        phase(2, "Loading/reconstructing F0 and D (configuration check only)", started)
+        timing = ExperimentTimingLogger(
+            "B2.2 PACS opportunity-value experiment", TOTAL_FITS,
+            {"D": 5, "F0": 5, "update": TOTAL_UPDATES},
+            state_path=None, resume=True, persist=False,
+        )
+        timing.header(["Device: CPU", "TEST: CLOSED", f"Fits: {TOTAL_FITS}", "Mode: dry-run"])
+        timing.phase(2, 7, "Loading/reconstructing F0 and D (configuration check only)")
         print("F0 configuration: MobileNetV2, 25% BASE, three epochs.", flush=True)
         print("D configuration: ResNet-50, BASE+TRANSFER, three epochs.", flush=True)
         print("Dry-run successful.", flush=True)
@@ -1065,36 +1109,54 @@ def main(argv: list[str] | None = None) -> None:
         reset_outputs(args.output_dir, cache_dir)
         completed = {}
     cache_dir.mkdir(parents=True, exist_ok=True)
-    phase(2, "Loading/reconstructing F0 and D", started)
-    execute_training_phase(False, lambda: ensure_base_models(frame, splits, config, args.image_root, device, cache_dir, signatures))
+    timing = ExperimentTimingLogger(
+        "B2.2 PACS opportunity-value experiment", TOTAL_FITS,
+        {"D": 5, "F0": 5, "update": TOTAL_UPDATES},
+        state_path=cache_dir / "experiment_timing.json", resume=True,
+    )
+    ACTIVE_TIMING = timing
+    timing.header(["Device: CPU", "TEST: CLOSED", f"Fits: {TOTAL_FITS}", f"Analytical rows: {TOTAL_GRID_ROWS}"])
+    for update_id, record in completed.items():
+        recorded_id = str(record.get("metadata", {}).get("update_id", update_id))
+        duration = float(record["update_seconds"]) if "update_seconds" in record else None
+        timing.adopt_completed(recorded_id, "update", duration, recorded_id)
+    timing.phase(2, 7, "Loading/reconstructing F0 and D")
+    execute_training_phase(False, lambda: ensure_base_models(frame, splits, config, args.image_root, device, cache_dir, signatures, timing))
 
-    phase(3, "Training opportunity updates", started)
+    timing.phase(3, 7, "Training opportunity updates")
     for spec in plan:
         if spec.update_id in completed:
             continue
-        print("-" * 60, flush=True)
-        print(f"[update {spec.number}/{TOTAL_UPDATES}]", flush=True)
-        print(f"seed={spec.seed} | domain={spec.domain} | N={spec.n}", flush=True)
-        print("-" * 60, flush=True)
+        description = f"seed={spec.seed} state=Fk domain={spec.domain} N={spec.n}"
+        timing.start_item(spec.update_id, "update", 10 + spec.number, description)
         record = run_one_update(spec, frame, splits, config, args.image_root, device, cache_dir, signatures)
         atomic_json(cache_dir / "updates" / f"{spec.update_id}.json", record)
         completed[spec.update_id] = record
         write_restart_state(cache_dir, completed, signatures)
-        print_update_progress(completed, started, spec.number)
+        timing.finish_item(duration_seconds=float(record["update_seconds"]), description=description)
 
-    phase(4, "Validation competence evaluation", started)
+    timing.phase(4, 7, "Validation competence evaluation")
     if len(completed) != TOTAL_UPDATES:
         raise RuntimeError("all 60 validated opportunity updates are required before analysis")
     for spec in plan:
         validate_update_artifact(completed[spec.update_id], spec, signatures)
 
-    phase(5, "Expanding pre-registered c x B grid", started)
+    timing.phase(5, 7, "Expanding pre-registered c x B grid")
     raw = expand_grid(completed)
 
-    phase(6, "Analysis and classification", started)
-    phase(7, "Validation and outputs", started)
+    timing.phase(6, 7, "Analysis and classification")
+    timing.phase(7, 7, "Validation and outputs")
+    analysis_started = time.perf_counter()
     write_completed_analysis(raw, args.output_dir, cache_dir, signatures, started, write_metadata=True)
+    timing.record_auxiliary("analysis", "analysis", time.perf_counter() - analysis_started)
+    timing.finish(title="B2.2 COMPLETE", extra_lines=["TEST: CLOSED", f"Fits: {TOTAL_FITS}/{TOTAL_FITS}"])
+    ACTIVE_TIMING = None
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except BaseException as error:
+        if ACTIVE_TIMING is not None:
+            ACTIVE_TIMING.interrupt(RESTART_COMMAND, error)
+        raise

@@ -17,18 +17,23 @@ from torch.utils.data import DataLoader
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "experiments/pilots/b2_pacs_calibration"))
 import run as b20  # noqa: E402
+from hls.experiment_timing import ExperimentTimingLogger  # noqa: E402
 
 DOMAINS = tuple(b20.DOMAINS)
 N_VALUES = (25, 50, 100)
 COSTS = (0.00, 0.02, 0.05, 0.10, 0.15)
+ACTIVE_TIMING: ExperimentTimingLogger | None = None
+RESTART_COMMAND = "python experiments/pilots/b21_pacs_factorial/run.py [same arguments]"
 
 
 class Progress:
-    def __init__(self, total_units: int, total_fits: int = 160):
+    def __init__(self, total_units: int, timing: ExperimentTimingLogger, total_fits: int = 160):
         self.total_units = total_units
         self.total_fits = total_fits
         self.completed_units = 0
         self.started = time.perf_counter()
+        self.timing = timing
+        self.fit_started = 0.0
 
     @staticmethod
     def duration(seconds: float) -> str:
@@ -37,19 +42,16 @@ class Progress:
         minutes, seconds = divmod(rem, 60)
         return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
 
-    def fit_start(self, number: int, description: str) -> None:
-        print(f"[fit {number}/{self.total_fits}] {description}", flush=True)
+    def fit_start(self, number: int, description: str, category: str) -> None:
+        self.fit_started = time.perf_counter()
+        self.timing.start_item(f"fit_{number:03d}", category, number, description)
 
     def epoch_end(self, epoch: int, epochs: int, epoch_seconds: float, units: int) -> None:
         self.completed_units += units
-        elapsed = time.perf_counter() - self.started
-        rate = elapsed / self.completed_units if self.completed_units else 0.0
-        eta = rate * (self.total_units - self.completed_units)
-        print(
-            f"[epoch {epoch}/{epochs}] {epoch_seconds:.1f}s | total {self.duration(elapsed)} | "
-            f"ETA B2.1 {self.duration(eta)}",
-            flush=True,
-        )
+        self.timing.item_progress(f"epoch {epoch}/{epochs}", epoch_seconds, time.perf_counter() - self.fit_started)
+
+    def fit_end(self, description: str) -> None:
+        self.timing.finish_item(description=description)
 
 
 def batches_for(frame: pd.DataFrame, batch_size: int) -> int:
@@ -136,6 +138,7 @@ def select_examples(frame: pd.DataFrame, domain: str, n: int, seed: int) -> pd.D
 
 
 def main() -> None:
+    global ACTIVE_TIMING
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", type=Path, default=ROOT / "results/pilots/b2_pacs_calibration/dataset_manifest.csv")
     parser.add_argument("--image-root", type=Path, required=True)
@@ -150,7 +153,13 @@ def main() -> None:
     device = torch.device("cpu")
     args.output_dir.mkdir(parents=True, exist_ok=True)
     rows, state_rows = [], []
-    started = time.perf_counter()
+    timing = ExperimentTimingLogger(
+        "B2.1 PACS domain-development factorial", 160,
+        {"D": 5, "F0": 5, "singleton": 60, "joint": 90},
+        state_path=args.output_dir / ".cache/experiment_timing.json", resume=True,
+    )
+    ACTIVE_TIMING = timing
+    timing.header(["Device: CPU", "TEST: CLOSED", "Fits: 160"])
     batch_size = int(config["training"]["batch_size"])
     total_units = 0
     for planned_seed in config["split_seeds"]:
@@ -165,7 +174,7 @@ def main() -> None:
             6 * batches_for(pd.DataFrame(index=range(2 * n)), batch_size)
             for n in N_VALUES
         )
-    progress = Progress(total_units)
+    progress = Progress(total_units, timing)
     fit_number = 0
     for seed in config["split_seeds"]:
         splits = b20.stratified_splits(frame, seed)
@@ -177,15 +186,19 @@ def main() -> None:
         f0_frame = lookup.loc[f0_ids].reset_index(drop=True)
         teacher_frame = lookup.loc[np.concatenate([splits["base"], splits["transfer"]])].reset_index(drop=True)
         fit_number += 1
-        progress.fit_start(fit_number, f"seed {seed} / D / N=6993 / domains=BASE+TRANSFER")
+        description = f"seed {seed} / D / N=6993 / domains=BASE+TRANSFER"
+        progress.fit_start(fit_number, description, "D")
         deep = fit_pretrained("deep", teacher_frame, seed + 30000, config, args.image_root, device, progress)
         deep_scores = score(deep, validation, args.image_root, device, config["training"]["batch_size"])
         print_fit_metrics(f"seed {seed} / D / N=6993 / domains=BASE+TRANSFER", deep_scores)
+        progress.fit_end(description)
         fit_number += 1
-        progress.fit_start(fit_number, f"seed {seed} / F0 / N=0 / domains=none")
+        description = f"seed {seed} / F0 / N=0 / domains=none"
+        progress.fit_start(fit_number, description, "F0")
         f0 = fit_pretrained("fast", f0_frame, seed + 2500, config, args.image_root, device, progress)
         f0_scores = score(f0, validation, args.image_root, device, config["training"]["batch_size"])
         print_fit_metrics(f"seed {seed} / F0 / N=0 / domains=none", f0_scores)
+        progress.fit_end(description)
         state_rows += [{"seed": seed, "state": "D", "N": None, "domain": None, **{f"ba_{d}": deep_scores[d] for d in DOMAINS}}, {"seed": seed, "state": "F0", "N": 0, "domain": None, **{f"ba_{d}": f0_scores[d] for d in DOMAINS}}]
         for n in N_VALUES:
             interventions = {}
@@ -198,9 +211,10 @@ def main() -> None:
                 fit_number += 1
                 model = copy.deepcopy(f0)
                 description = f"seed {seed} / F_{domain} / N={n} / domains={domain}"
-                progress.fit_start(fit_number, description)
+                progress.fit_start(fit_number, description, "singleton")
                 scores = score(fit_from_f0(model, interventions[domain], seed + n + DOMAINS.index(domain), config, args.image_root, device, progress), validation, args.image_root, device, config["training"]["batch_size"])
                 print_fit_metrics(description, scores)
+                progress.fit_end(description)
                 states[f"F_{domain}"] = (scores, model)
             for i, left in enumerate(DOMAINS):
                 for right in DOMAINS[i + 1:]:
@@ -208,9 +222,10 @@ def main() -> None:
                     model = copy.deepcopy(f0)
                     mixed = pd.concat([interventions[left], interventions[right]], ignore_index=True)
                     description = f"seed {seed} / F_{left}_{right} / N={n} / domains={left}+{right}"
-                    progress.fit_start(fit_number, description)
+                    progress.fit_start(fit_number, description, "joint")
                     scores = score(fit_from_f0(model, mixed, seed + n + 100 + i, config, args.image_root, device, progress), validation, args.image_root, device, config["training"]["batch_size"])
                     print_fit_metrics(description, scores)
+                    progress.fit_end(description)
                     states[f"F_{left}_{right}"] = (scores, model)
                     vals = {name: float(np.mean(list(scoreset.values()))) for name, (scoreset, _) in states.items()}
                     rec = {"seed": seed, "N": n, "domain_i": left, "domain_j": right, "gamma_learn": gamma_learn(vals[f"F_{left}_{right}"], vals[f"F_{left}"], vals[f"F_{right}"], vals["F0"]), "v_learn_F0": vals["F0"], "v_learn_Fi": vals[f"F_{left}"], "v_learn_Fj": vals[f"F_{right}"], "v_learn_Fij": vals[f"F_{left}_{right}"]}
@@ -231,6 +246,8 @@ def main() -> None:
     if rows:
         pd.DataFrame(rows).groupby("N").agg({"gamma_learn": ["mean", "std"], **{f"gamma_oper_c{c:.2f}": ["mean", "std"] for c in COSTS}}).reset_index().to_csv(args.output_dir / "aggregates.csv", index=False)
     (args.output_dir / "protocol.json").write_text(json.dumps({"pilot": "B2.1 PACS domain-development factorial", "device": "cpu", "N": list(N_VALUES), "costs": list(COSTS), "domains": list(DOMAINS), "fits": 160, "test_used": False, "p_k": 0.25, "formulas": {"gamma_learn": "V(Fij)-V(Fi)-V(Fj)+V(F0)", "operational": "mean_k max(S_F(k), S_D(k)-c)"}}, indent=2) + "\n")
+    timing.finish(title="B2.1 COMPLETE", extra_lines=[f"Fits: {fit_number}/160", "TEST: CLOSED"])
+    ACTIVE_TIMING = None
 
 
 def predict_labels(model, frame, image_root, device, batch_size):
@@ -239,4 +256,9 @@ def predict_labels(model, frame, image_root, device, batch_size):
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except BaseException as error:
+        if ACTIVE_TIMING is not None:
+            ACTIVE_TIMING.interrupt(RESTART_COMMAND, error)
+        raise

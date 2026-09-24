@@ -68,3 +68,11 @@ analytical observations, none reproduced in at least two seeds, with TEST
 closed. See the [diagnostic](../../../results/pilots/b22_opportunity_value/b22_diagnostic.md)
 for the independent reconstruction and the distinction between analytical rows
 and unique learned states.
+
+Future full or analyze-only invocations use the common timing format. Timing
+for `D`, `F0`, opportunity updates, and analysis is operational metadata under
+`results/pilots/b22_opportunity_value/.cache/experiment_timing.json`. Restarted
+updates adopt only durations stored in validated artifacts and consume zero
+session time; unavailable older timings are not invented. `--dry-run` never
+writes timing state. The frozen scientific fingerprint remains unchanged by
+this logging-only integration.
