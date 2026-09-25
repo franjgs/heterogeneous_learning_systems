@@ -191,6 +191,54 @@ that singleton development usually reduces future operational value. This is
 a within-B2.3 reconstruction; independently trained B2.2 model states were
 not combined with B2.3.
 
+### 6.1 Post-hoc competence diagnosis
+
+A post-hoc diagnosis used the 60 common-provenance singleton states and the
+same operational value function. For each intervention `i`, it computed
+`DeltaS_{i->k}=S_k(F_i)-S_k(F0)` over all four domains. All 60/60 states had a
+negative sum over the three non-target domains. Thirty-three states improved
+their target competence; all 33 also had negative cross-domain change, and in
+31/33 the cross-domain loss exceeded the local gain.
+
+With numerical-zero tolerance `1e-12`, the state classification was:
+
+| class | definition | states |
+| --- | --- | ---: |
+| A | local improves; cross-domain net worsens | 33 |
+| B | local improves; cross-domain net does not worsen | 0 |
+| C | local does not improve; cross-domain net worsens | 27 |
+| D | local does not improve; cross-domain net does not worsen | 0 |
+
+Across the 300 `singleton × c` valuations, the exact mean decomposition was
+
+```text
+DeltaV = local learning + cross-domain learning + routing adjustment
+       = -0.005234     - 0.092481             + 0.066657
+       = -0.031059.
+```
+
+The cross-domain term was the most negative component in 271/273 valuations
+with `DeltaV<0`. Routing generally mitigated competence losses rather than
+causing the negative value. As D became more costly, that protection weakened
+and more of the Fast-model deterioration entered operational value.
+
+Cross-domain deterioration increased monotonically with development dose:
+
+| N | mean cross-domain sum |
+| ---: | ---: |
+| 25 | -0.179595 |
+| 50 | -0.365525 |
+| 100 | -0.564649 |
+
+Sketch interventions were the most adverse: mean local change was -0.101648,
+mean cross-domain sum was -0.739012, only 4/15 states improved locally, and
+72/75 operational valuations were negative with none positive.
+
+This diagnosis localizes the observed competence-level pattern but does not
+identify its learning cause. The stored evidence cannot distinguish
+catastrophic forgetting, pseudo-label noise, optimization behavior, or other
+candidate mechanisms, and none is claimed.
+
 The corresponding within-B2.3 B2.1-like reconstruction had mean
 `Gamma_learn=0.146596` and mean `Gamma_oper` values
 `0.011967, 0.017105, 0.026938, 0.056897, 0.083097` for
@@ -251,8 +299,13 @@ three robust empirical facts within a common counterfactual provenance:
 
 Portfolio rescue is possible in the observed system but rare and
 non-reproducible under the frozen B2.3 criterion. The empirical bottleneck is
-therefore not the existence of interaction, but whether interaction can be
-large enough relative to the individual development deficits.
+therefore localized more precisely. Positive interaction exists:
+`Gamma_learn>0` in 89/90 pair states and `Gamma_oper>0` in 917/925 rows that
+reached the two-singleton-deficit stage. Singleton development, however,
+produced systematic cross-domain competence interference, and in 914 of those
+917 rows the interaction was too small to overcome the individual development
+deficits. B2.3 failed primarily because these cross-domain losses dominated,
+not because positive interaction was absent.
 
 These statements are scoped to PACS B2.3. They do not establish TEST
 generalization, an ex-ante policy, a complete closed loop, universal HLS
@@ -289,6 +342,8 @@ full compatibility audit.
 - Compute-dose control: `results/pilots/b23_portfolio_opportunity/compute_dose.csv`
 - Competence changes: `results/pilots/b23_portfolio_opportunity/competence_changes.csv`
 - State scores: `results/pilots/b23_portfolio_opportunity/state_metrics.csv`
+- Post-hoc singleton diagnosis:
+  `results/pilots/b23_portfolio_opportunity/singleton_diagnosis.csv`
 - Common provenance and hashes: `results/pilots/b23_portfolio_opportunity/run_manifest.json`
 - Bases, opportunities, and derived-state lineage:
   `results/pilots/b23_portfolio_opportunity/base_states.jsonl`,

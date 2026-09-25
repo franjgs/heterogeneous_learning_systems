@@ -1062,3 +1062,32 @@ rescue or establish the dynamic advantage sought in RQ0.
 
 The closure, limitations, execution record, and evidence map are in
 `docs/checkpoints/HLS_checkpoint_after_B23.md`. No B2.4 has been designed.
+
+## Decision 040 — Complete the post-hoc B2.3 singleton mechanism diagnosis
+
+Date: 2026-09-25.
+
+A post-hoc analysis used only the 60 B2.3 singleton states with their common
+F0/D provenance. All 60 had negative aggregate change across the three
+non-target domains. Thirty-three improved the target competence, but all 33
+had negative cross-domain sums and in 31/33 that loss exceeded the local gain.
+The frozen descriptive classes were A=33, B=0, C=27, and D=0, where A means
+local improvement with net cross-domain deterioration and C means no local
+improvement with net cross-domain deterioration.
+
+Across 300 `singleton × c` valuations, the mean decomposition was local
+-0.005234, cross-domain -0.092481, and routing +0.066657, producing mean
+`DeltaV=-0.031059`. Cross-domain loss was the dominant negative term in
+271/273 negative valuations. Mean cross-domain sums declined monotonically
+from -0.179595 at N=25 to -0.365525 at N=50 and -0.564649 at N=100. Sketch
+interventions were most adverse: mean local -0.101648, mean cross-domain sum
+-0.739012, 4/15 local improvements, and 72/75 negative operational valuations
+with none positive.
+
+Combined with positive `Gamma_learn` in 89/90 pair states and positive
+`Gamma_oper` in 917/925 relevant rows, this localizes the B2.3 bottleneck:
+positive interaction exists, but development-induced cross-domain competence
+losses usually dominate it. Routing generally mitigated those losses. This
+analysis does not identify catastrophic forgetting, pseudo-label noise,
+optimization failure, or another underlying causal mechanism. B2.4 remains
+undesignated.

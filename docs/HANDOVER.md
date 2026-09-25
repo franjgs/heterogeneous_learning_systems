@@ -1,7 +1,7 @@
 # Heterogeneous Learning Systems — Handover
 
 Last updated: 2026-09-25
-Repository state: HLS ontology v1 is closed. The theoretical record includes equivalence/frontier, opportunity-generation, portfolio-interaction, operational-interaction, and finite-set opportunity-value results. B2.3 is **COMPLETE — INCONCLUSIVE**: its common-provenance CPU run completed 160 fits and 1,800 primary rows with TEST closed and compatibility PASS. It found 3/1,800 portfolio rescues in two learned pair states, but 0/360 exact cells met the frozen >=3/5-seed criterion. Learning interaction was positive in 89/90 states; 917/925 rows with both singleton deficits had positive operational interaction, but only three overcame those deficits. Singleton future value was usually negative, and none of the three rescues survived the secondary fixed-total-compute midpoint comparison. No B2.4 has been designed. The next action is a scientific decision based on the B2.3 checkpoint, not automatic experiment expansion.
+Repository state: HLS ontology v1 is closed. B2.3 is **COMPLETE — INCONCLUSIVE** and its **POST-HOC MECHANISM DIAGNOSIS IS COMPLETE**. The common-provenance CPU run completed 160 fits and 1,800 primary rows with TEST closed and compatibility PASS. It found 3/1,800 portfolio rescues but 0/360 exact cells met the frozen >=3/5-seed criterion. Positive interaction was present (`Gamma_learn>0` in 89/90 pair states and `Gamma_oper>0` in 917/925 relevant rows), while all 60 singleton developments had negative cross-domain competence sums. In 271/273 negative singleton valuations, cross-domain loss was the dominant negative term; routing generally mitigated it. No B2.4 has been designed. The next scientific question is: **Can cross-domain interference be reduced while preserving the same learning opportunity, and how does doing so affect development value and interaction?**
 
 ## Mandatory first reads
 
@@ -391,7 +391,20 @@ negative in 273/300 deduplicated valuations. All three rescues disappeared at
 the secondary fixed-total-compute midpoint, so B2.3 does not establish rescue
 under equal total training compute. See the current
 [B2.3 checkpoint](checkpoints/HLS_checkpoint_after_B23.md). No B2.4 has been
-designed; the next action is a scientific decision after this checkpoint.
+designed.
+
+**POST-HOC MECHANISM DIAGNOSIS COMPLETE.** All 60 singleton states had
+negative cross-domain competence sums. Thirty-three improved their target,
+but all 33 harmed the remaining domains in aggregate and in 31/33 that loss
+exceeded the local gain. The mean `DeltaV` decomposition was local -0.005234,
+cross-domain -0.092481, and routing +0.066657, giving -0.031059. Cross-domain
+loss was the dominant negative term in 271/273 negative valuations. This
+localizes the bottleneck to development-induced cross-domain interference;
+the data do not identify its underlying learning mechanism.
+
+**Next scientific question:** Can cross-domain interference be reduced while
+preserving the same learning opportunity, and how does doing so affect
+development value and interaction? **B2.4 NOT YET DESIGNED.**
 
 ## General theory audit retained for later work
 

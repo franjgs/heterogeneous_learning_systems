@@ -16,6 +16,11 @@ the ignored `.cache/` directory and are not versioned.
 - `analysis_aggregates.csv`, `representative_cases.csv`, and
   `continuation_thresholds.csv`: compact generated summaries and cases.
 - `state_metrics.csv`: all 250 VALIDATION competence vectors.
+- `singleton_diagnosis.csv`: 300 post-hoc `singleton × c` rows containing the
+  four `DeltaS` components, local/cross summaries and classes, exact
+  domain-level `DeltaV` contributions, routing adjustment, and dominant
+  negative term. It uses only B2.3 common-provenance states and does not amend
+  the preregistered primary analysis.
 - `timing_summary.json`: compact operational timing extracted from the ignored
   restart timing log; timing is outside scientific fingerprints.
 
