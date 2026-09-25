@@ -1,0 +1,64 @@
+{
+  "N": [
+    25,
+    50,
+    100
+  ],
+  "TEST_STATUS": "PREVIOUSLY_OPENED_NOT_USED_IN_B4",
+  "analysis_sha256": "55200113f5b7636d32c6097855c0421128097b7994b604bc4ee07fbb4a2335b9",
+  "baseline": "B2.4 REP reused without retraining",
+  "block_unit": "one B2.4 REP optimizer step",
+  "c": [
+    0.0,
+    0.02,
+    0.05,
+    0.1,
+    0.15
+  ],
+  "candidate_blocks_by_N": {
+    "100": 21,
+    "25": 6,
+    "50": 12
+  },
+  "candidate_schedule": "exact B2.4 REP schedule, data, labels, optimizer, LR and batch construction",
+  "criteria": {
+    "A_protection": "mean cross-domain PREP-F0 change >= 0 in >=4/5 seeds",
+    "B_learning": "mean local PREP-F0 change >= 0 in >=4/5 seeds",
+    "C_value": "at least one exact domain x N structure has DeltaV_PREP(c) > 0 in >=4/5 seeds for every frozen c",
+    "D_integration": "at least one frozen c x h cell has kappa_star > 0 in >=4/5 seeds",
+    "INCONCLUSIVE": "all other valid outcomes",
+    "NULL": "C_value is false AND D_integration is false",
+    "POSITIVE": "A_protection AND B_learning AND C_value AND D_integration"
+  },
+  "device": "cpu",
+  "domains": [
+    "photo",
+    "art_painting",
+    "cartoon",
+    "sketch"
+  ],
+  "epsilon_cross": 0.0,
+  "epsilon_local": 0.0,
+  "h": [
+    1,
+    2,
+    5,
+    10
+  ],
+  "implementation_sha256": "85a78eaad642c4e95416cbf23c15f7957aa9e6d47e8493180b7f591dcaf84d17",
+  "method": "PREP",
+  "protection_manifest_sha256": "58de67e551090dbae654ea9012811e5d3acccf6375b5bd275f514515afbf17a4",
+  "protocol_id": "B4-PACS-protected-development-v1",
+  "reference": "F0 protection-set scores (never previous block)",
+  "rollback": "model and optimizer restored exactly; scheduled RNG advances; no retry",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "status": "FROZEN_BEFORE_FULL_RUN",
+  "total_candidate_blocks": 780,
+  "training_performed_in_phase_A_outputs": false
+}

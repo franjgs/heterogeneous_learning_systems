@@ -1,0 +1,3976 @@
+{
+  "TEST_STATUS": "PREVIOUSLY_OPENED_NOT_USED_IN_B4",
+  "b23_manifest_sha256": "d06857d9d6af54783d41435b41dc8171e614da5c992e00fd7e41a7b55ffbeafa",
+  "b24_manifest_sha256": "5f749d7ae3b867323da9be9385676667ab6afe1a5c302c8088277460998250d5",
+  "dataset_manifest_sha256": "54958aab2343b42c7813f34ee7bcabb8bff85897e1ead9732cce885ea85c595d",
+  "dataset_revision": "394113073258ead631f617d2e13bb377c0715c4b",
+  "examples_per_class": 4,
+  "examples_per_domain": 28,
+  "manifest_sha256": "58de67e551090dbae654ea9012811e5d3acccf6375b5bd275f514515afbf17a4",
+  "protocol_id": "B4-PACS-protected-development-v1",
+  "sampling": "SHA-256 ordering within seed x domain x class",
+  "sets": {
+    "0": {
+      "parent_f0_sha256": "3e44035d939b2ecbf7caa8e28919e3923e0d8df369a1702ac06d67a433ad5903",
+      "sample_ids_sha256": "cedebe5c81669aebff3edc2b0fb6a1506d7204cb13e426cdbd7a0b42e1aa5ee5",
+      "samples": [
+        {
+          "domain": "photo",
+          "image_sha256": "2906af0c1f58be03bc3f3be4a368a151a88d1d36f335c8f35fa9cfc4a6c619df",
+          "label": 0,
+          "relative_path": "photo/dog/04567.jpg",
+          "sample_id": 4567
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "07ec43580571f982bd1694d960a9a98200ceea149552cb67288cd716a9b9f2fd",
+          "label": 0,
+          "relative_path": "photo/dog/04499.jpg",
+          "sample_id": 4499
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "8c1b7c3545652868ea8a613de54e598598b0a96704b17267f3469fbf391e722c",
+          "label": 0,
+          "relative_path": "photo/dog/04510.jpg",
+          "sample_id": 4510
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "149ccb0812ca03709edb1e40cf5702d926e9b8334474e6152582c6a9f49b60d9",
+          "label": 0,
+          "relative_path": "photo/dog/04443.jpg",
+          "sample_id": 4443
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "2fbb217acd6195cfa321a7d836dbfc902b85df6438a70c773579a80c69c1f2f1",
+          "label": 1,
+          "relative_path": "photo/elephant/04707.jpg",
+          "sample_id": 4707
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "42d2e01d5f742526d22b088252f4f71ef785210d5df9ff7d1662af36538c3755",
+          "label": 1,
+          "relative_path": "photo/elephant/04645.jpg",
+          "sample_id": 4645
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "7c5187edc05086da82e8c58667d51e7c24cb7f1ebd1872ebc6de1ecf6fa98e1e",
+          "label": 1,
+          "relative_path": "photo/elephant/04614.jpg",
+          "sample_id": 4614
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "243cd2fba82b5d8fcb0f663df8fe23e88d996eb5ef0a67ac17d63658896a0874",
+          "label": 1,
+          "relative_path": "photo/elephant/04608.jpg",
+          "sample_id": 4608
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "a79fbe0bc628f39d4354e64e99f22f03d10b4ee75840d30ee171866373c0b7a8",
+          "label": 2,
+          "relative_path": "photo/giraffe/04942.jpg",
+          "sample_id": 4942
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "0803317e43af0d7a62cf5ddb3e6f7b1576f834b79c28b7731ec031a6191c5101",
+          "label": 2,
+          "relative_path": "photo/giraffe/04872.jpg",
+          "sample_id": 4872
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "46052f3c664797c1a9e26cbfef0e862436815032978eb82b8011983b40fe7278",
+          "label": 2,
+          "relative_path": "photo/giraffe/04836.jpg",
+          "sample_id": 4836
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "cc892824de5fc8b58ef795b29178a5166f3dee281ce9082847204276f55d1d03",
+          "label": 2,
+          "relative_path": "photo/giraffe/04876.jpg",
+          "sample_id": 4876
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "aa686a17cbc6fc271a79bfca3dd9debea0ce725204f71ca7d7074f0a412c43b4",
+          "label": 3,
+          "relative_path": "photo/guitar/04981.jpg",
+          "sample_id": 4981
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "450ca90c4b1bc606c82db30dd5648f8c17fe501b0e251bf4e49d66926c765cb1",
+          "label": 3,
+          "relative_path": "photo/guitar/05099.jpg",
+          "sample_id": 5099
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "010afd2d8304de0764d542dea4809381048532cb8f72ab1919367d77d116e9e2",
+          "label": 3,
+          "relative_path": "photo/guitar/05092.jpg",
+          "sample_id": 5092
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "a8ff0cdc9db9a772c8272b35ec63445c4971f3b46f733753e13a866a0fa91a4e",
+          "label": 3,
+          "relative_path": "photo/guitar/04982.jpg",
+          "sample_id": 4982
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "5d6f4cec456507110deb3abcd799444178bc8f85f16e352e8544b27fdf7afc2c",
+          "label": 4,
+          "relative_path": "photo/horse/05177.jpg",
+          "sample_id": 5177
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "4497dc4c1635ffd4f1a9a31347e2f19b67e827bc8d678763c6743e7f850c1d36",
+          "label": 4,
+          "relative_path": "photo/horse/05335.jpg",
+          "sample_id": 5335
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "a2b528b12f270b27b71aa50d6af1b954389e6dbfd73bedc1067910098db41407",
+          "label": 4,
+          "relative_path": "photo/horse/05251.jpg",
+          "sample_id": 5251
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "6c719a73cc11e73104d75eb9c981b72fa6d42b34196384900df72add2ddebfc7",
+          "label": 4,
+          "relative_path": "photo/horse/05228.jpg",
+          "sample_id": 5228
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "432312ec5c804496fcdbb3871a57178a023f26224173cdb063bc1e5fb7111dc6",
+          "label": 5,
+          "relative_path": "photo/house/05470.jpg",
+          "sample_id": 5470
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "46f549962a3bc38547b82805e76be3526d90eb75e9a8ad2c60ba6b5e1d11e25f",
+          "label": 5,
+          "relative_path": "photo/house/05483.jpg",
+          "sample_id": 5483
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "ee8ba3c901ad28f2ca8d5538af6a2f366621ebfc3bf444df8e7164f0d98a93d0",
+          "label": 5,
+          "relative_path": "photo/house/05617.jpg",
+          "sample_id": 5617
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "4d26d54035bf583eb62e81ed1c6d3c57633daf1f4bbad0d0a6880be1d6877f71",
+          "label": 5,
+          "relative_path": "photo/house/05486.jpg",
+          "sample_id": 5486
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "828a71551b2874414837af100ab66abfb52d053e32c14394324d669eb655b043",
+          "label": 6,
+          "relative_path": "photo/person/05794.jpg",
+          "sample_id": 5794
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "bf2ab604685c6dddea45701b221a3a6a304e783196ff03e40011a19153f28f09",
+          "label": 6,
+          "relative_path": "photo/person/05862.jpg",
+          "sample_id": 5862
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "85ba6243b6eccd5f22f16b040a5e0906e27de3e66f9c5130a0a017a2c429c641",
+          "label": 6,
+          "relative_path": "photo/person/05799.jpg",
+          "sample_id": 5799
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "38d60f5cff301e3e21366b9bb77daf7e95e79e0db29900a59cf35bd8ffaa07dc",
+          "label": 6,
+          "relative_path": "photo/person/05926.jpg",
+          "sample_id": 5926
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "1f6f436edf33eb4a59dcd93b0fc3f589580963bfa1b1b580c42f2cc7b7b928be",
+          "label": 0,
+          "relative_path": "art_painting/dog/00356.jpg",
+          "sample_id": 356
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "884571976f583bca0abf7a5bf1126144e7983c9f9d33bb2fc9ca65bd136e5209",
+          "label": 0,
+          "relative_path": "art_painting/dog/00355.jpg",
+          "sample_id": 355
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "e83d2874c4ff2e61fe79d6edf6d5236752d3087c3cab06c62fba64c9d0779883",
+          "label": 0,
+          "relative_path": "art_painting/dog/00191.jpg",
+          "sample_id": 191
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "7663f5aa0763248a3df6ecc624d1af56df7af28512c73f5e6cbb23727ff668ce",
+          "label": 0,
+          "relative_path": "art_painting/dog/00260.jpg",
+          "sample_id": 260
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "2fb7f1a284dde76723d1dbcd679af2836794f928358ceaf9bc829ca9df076476",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00452.jpg",
+          "sample_id": 452
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "1542d93386f1cbc09947bc2ddcf1f7a00689f73f1afcc48fac73750b83c0bdb5",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00580.jpg",
+          "sample_id": 580
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "93128c28d948218854bc5c3ad4f0ef9429834db720f77a4a40d6688e4aaecdc2",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00503.jpg",
+          "sample_id": 503
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "2963355c6889f9dee61e37450e2432b3c80698d8d5735e3b648eb9eba094f98a",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00576.jpg",
+          "sample_id": 576
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "a89a6353b48e0892eb41c4556bdf9cb5396c28e743d8ab1eae0266aa88d32758",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00885.jpg",
+          "sample_id": 885
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "5de56f30be2f3b3acad85696c2b25f3900873df8588eb1ce0b80fa83519f26c3",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00727.jpg",
+          "sample_id": 727
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "662e45582ad45ad2aed5280e43abf2cf9ccbf3258168990ba545a613a7e44fe7",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00892.jpg",
+          "sample_id": 892
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "5d9b7f116c01ac7d8805d9322e9438ccfa50512da87bb1156fe669979e6c7727",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00668.jpg",
+          "sample_id": 668
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "4cdd045db7d6038da66d15cd4039974126d8b41126e5a04a4c0a208e73e8cf88",
+          "label": 3,
+          "relative_path": "art_painting/guitar/00946.jpg",
+          "sample_id": 946
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "98ec0c2eb445dd3772ab06b21d65584e2fbfa75751fe41334d150029a5026555",
+          "label": 3,
+          "relative_path": "art_painting/guitar/01100.jpg",
+          "sample_id": 1100
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "5ce5e94b1e4fe9fec492d535a59f492a6c254f4103aa5d4bab5916c55adfe730",
+          "label": 3,
+          "relative_path": "art_painting/guitar/00947.jpg",
+          "sample_id": 947
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "1d422e5c6acdb2666510c40db1c2221bd846c09a5eb3e38a4693a068cf0f773a",
+          "label": 3,
+          "relative_path": "art_painting/guitar/00955.jpg",
+          "sample_id": 955
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "0c330ff4d40d24913c4fbf10342fd157476b9fb75e2c4280ed94ed849f88f4e7",
+          "label": 4,
+          "relative_path": "art_painting/horse/01256.jpg",
+          "sample_id": 1256
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "e9a1c22b4d24aab81c570f30e0714bb109b7342b56860bd0c5ba198ff0d8871a",
+          "label": 4,
+          "relative_path": "art_painting/horse/01114.jpg",
+          "sample_id": 1114
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "2dcaae0b2dc5f5f331a9d559ce9ca298683ac7c1a544b80d3aa9158f5d00171f",
+          "label": 4,
+          "relative_path": "art_painting/horse/01279.jpg",
+          "sample_id": 1279
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "9dafcdc88beb25d8cbcbeca62e330806aea10308497cc0a76056d5ccd6bca298",
+          "label": 4,
+          "relative_path": "art_painting/horse/01104.jpg",
+          "sample_id": 1104
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "5c18666efd130a9d0463231aa8738edd8938ef74755cb21aaec5899439a06c76",
+          "label": 5,
+          "relative_path": "art_painting/house/01417.jpg",
+          "sample_id": 1417
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "9a2a7fbe8d3276e54bd452f1cef5f54d04a88edf67adc6303b4cec42945bcc1a",
+          "label": 5,
+          "relative_path": "art_painting/house/01521.jpg",
+          "sample_id": 1521
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "ba070c7daeb5cfb455c164ea339369eecded22e2845bbc6b913e5ab44fa39681",
+          "label": 5,
+          "relative_path": "art_painting/house/01542.jpg",
+          "sample_id": 1542
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "ce4fdd94222caad611ecba547d231cacc6ff7759f1538042b75b3d558f33ab2b",
+          "label": 5,
+          "relative_path": "art_painting/house/01549.jpg",
+          "sample_id": 1549
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "9d74d1c37f8905cec515e6d1104ba0aecda2645378df2e2044a6e654b540a836",
+          "label": 6,
+          "relative_path": "art_painting/person/01901.jpg",
+          "sample_id": 1901
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "8e07cca1ff4d2c8d49279cf7b743e6830ac0eef27c53425693baeff2646c1c2a",
+          "label": 6,
+          "relative_path": "art_painting/person/01888.jpg",
+          "sample_id": 1888
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "676bac2a9cebab3b249302ca5aa433368d195a293098b9b8bb16eed61fe630e9",
+          "label": 6,
+          "relative_path": "art_painting/person/01800.jpg",
+          "sample_id": 1800
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "f961882c8e98589b8efecd33d7752a7e2bab01328f05b7cfa9214cc13e8d136b",
+          "label": 6,
+          "relative_path": "art_painting/person/01932.jpg",
+          "sample_id": 1932
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "870805ba3f270b7e6b82ff27d6b8025cfdf4d60e3c1f39ed441e307f83c35b33",
+          "label": 0,
+          "relative_path": "cartoon/dog/02182.jpg",
+          "sample_id": 2182
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "9e5bf6ab9cec7200fc2e0a4216d723c70b8c152bbe32f98f5684aa07a436618e",
+          "label": 0,
+          "relative_path": "cartoon/dog/02228.jpg",
+          "sample_id": 2228
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "55177ab9be7d8824c044398c802173ec807b5cb91e99442f61b92e196930eaf7",
+          "label": 0,
+          "relative_path": "cartoon/dog/02430.jpg",
+          "sample_id": 2430
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "61b2844a2763b371432840b62fdc52108a54cc140850ae3b0253e6cff33970db",
+          "label": 0,
+          "relative_path": "cartoon/dog/02161.jpg",
+          "sample_id": 2161
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "4f7c057d56b1bc3b9fec3afa73e981fdfad339f40925610378fac54bc3237beb",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02521.jpg",
+          "sample_id": 2521
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "beaddf8ca45b45b928d783e665f4805fd7de962b980001b485960eeebfb5ee79",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02856.jpg",
+          "sample_id": 2856
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "718e4fb28e2f46c8eca1e77fcac453b59b3b0ceb354174ebb08d4a06a7a8c611",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02821.jpg",
+          "sample_id": 2821
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "6fe6afb900cbc2ee0ac68f939f414095f27704694fb435e0f584a9614d510af1",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02685.jpg",
+          "sample_id": 2685
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "da95de9e2e7679704ad5e1e992c4b602b9295bed2fa200085d5a929f860d2c63",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03062.jpg",
+          "sample_id": 3062
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "f3cd57e61f310a0481965e5244fa48cec9a78edbad81657d01f96928f586932f",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03040.jpg",
+          "sample_id": 3040
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "e6111b57e87fac4ae0a3273fd79bbf9323c0e2864f9dbadb862e7f5594d5c789",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03077.jpg",
+          "sample_id": 3077
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "c1f085f39a9df2bc119e3ec8b353e70bdb3cf96e350103e82546def71c84738a",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03051.jpg",
+          "sample_id": 3051
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "018ffe85b69442e6291545ff50bf89825a0440d06ada14d4d1fa63b1c56aa59f",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03311.jpg",
+          "sample_id": 3311
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "9283df9a6975500cd8d4fcdcddeb218baad42c94f2653c26d16ca1ddb526fbf0",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03318.jpg",
+          "sample_id": 3318
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "e90ca586f0169385e68fccf5be11d6d74a06cb615f8dc63011057749a4a8f190",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03275.jpg",
+          "sample_id": 3275
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "e8ff74ae103301e4c759d5f86e6112059238b665547a5e54593d0954b33fa0e2",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03298.jpg",
+          "sample_id": 3298
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "db58ac944be25f7bcf5102471770b2372add591c4669956af82bde20e59149ac",
+          "label": 4,
+          "relative_path": "cartoon/horse/03650.jpg",
+          "sample_id": 3650
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "e833d8dc0b66f14579e7ba88ab2073112c3e8cecbe54caad69efa8baa035c86e",
+          "label": 4,
+          "relative_path": "cartoon/horse/03515.jpg",
+          "sample_id": 3515
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "2c747836ec8b056e069b2cc9e6ee995ed850809533d08489562f87c0407631f7",
+          "label": 4,
+          "relative_path": "cartoon/horse/03598.jpg",
+          "sample_id": 3598
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "df25b561ba610db8af06b7e9ac5a0f1c0036d05d90d2949c2e839957d0bab4a6",
+          "label": 4,
+          "relative_path": "cartoon/horse/03513.jpg",
+          "sample_id": 3513
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "10d8474df3d5188525011ff19f7d2ac8c716a6afbd6a43767caf46f5a95f627d",
+          "label": 5,
+          "relative_path": "cartoon/house/03864.jpg",
+          "sample_id": 3864
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "b751e1ad4e0e56fb8875848ba8db8d4faa195b329cc1f7992f39346da36a238e",
+          "label": 5,
+          "relative_path": "cartoon/house/03732.jpg",
+          "sample_id": 3732
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "d203a01f4ca1b801b1e95ef8ce3025ce9fe44cf2c4437c8f0447b9c7c1496ea7",
+          "label": 5,
+          "relative_path": "cartoon/house/03796.jpg",
+          "sample_id": 3796
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "96d5cc7a93fb266e2fadd9fa7c3c6d227ad2b9813a6a82ad66fc814198891580",
+          "label": 5,
+          "relative_path": "cartoon/house/03919.jpg",
+          "sample_id": 3919
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "f9cbe018f7aa32cf7cb8f26ce715d5305789d9cc03e974ff99d9919f8b0c6a68",
+          "label": 6,
+          "relative_path": "cartoon/person/04326.jpg",
+          "sample_id": 4326
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "6db5b529f824d999b7d58341550519f34bf5df28c99f50959d477200e06db5c4",
+          "label": 6,
+          "relative_path": "cartoon/person/04043.jpg",
+          "sample_id": 4043
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "e2efa00c49b6ebc4019d02f6c7ba4ec9fb804b33c3811076b68faccca90f4f8f",
+          "label": 6,
+          "relative_path": "cartoon/person/04144.jpg",
+          "sample_id": 4144
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "321aba12cb20922223f44f97f7db18d377c59395569343e4a689e1ea304f0792",
+          "label": 6,
+          "relative_path": "cartoon/person/04163.jpg",
+          "sample_id": 4163
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "f8ef90d935abb9e684ca264731f39971a8b02db45f022378d2ca508985fb9ad9",
+          "label": 0,
+          "relative_path": "sketch/dog/06236.png",
+          "sample_id": 6236
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "110d27237bb94cd35098d9b7be29f5858f141376d35767f50c8cf080a3f6f391",
+          "label": 0,
+          "relative_path": "sketch/dog/06138.png",
+          "sample_id": 6138
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "c76cd5d86d45ca6203aeb804574838813efeb08411d604ddd8c2efc21cec6b9a",
+          "label": 0,
+          "relative_path": "sketch/dog/06570.png",
+          "sample_id": 6570
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "97d48d8cea7245f5ffa6fbd94b10296e357d164420e484918c04c27f6642ba2a",
+          "label": 0,
+          "relative_path": "sketch/dog/06582.png",
+          "sample_id": 6582
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "0433c90cd6191540fdc74b2a5872c44eff973bc2c49d7e37abb30426e090b2bb",
+          "label": 1,
+          "relative_path": "sketch/elephant/07461.png",
+          "sample_id": 7461
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "129d58919def5486830e3cf942cf827ff71e4f0f2b02600b7723f25474901c11",
+          "label": 1,
+          "relative_path": "sketch/elephant/07197.png",
+          "sample_id": 7197
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "3b1e39c674518a64223757949f612c3d3738bae7d0685a8b68b7ff6419ea4570",
+          "label": 1,
+          "relative_path": "sketch/elephant/07502.png",
+          "sample_id": 7502
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "d179f0e3f652c2f41ba19e9b88e3dbfaa6a47f04d352683fae5bd5849b5d4dc2",
+          "label": 1,
+          "relative_path": "sketch/elephant/07407.png",
+          "sample_id": 7407
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "3a440a18da27deb07602a64fc74b74c83cc934fec10fdc1fb2638369c8641605",
+          "label": 2,
+          "relative_path": "sketch/giraffe/08314.png",
+          "sample_id": 8314
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "d55247c45714b6b974e39b3719d8b3104492a5886ffdf44401b9653861bf007c",
+          "label": 2,
+          "relative_path": "sketch/giraffe/08253.png",
+          "sample_id": 8253
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "d60e19aa7332764f2d1317c12f53b4b639ef97053b8a9cdb1cd5765dc9f27d82",
+          "label": 2,
+          "relative_path": "sketch/giraffe/07728.png",
+          "sample_id": 7728
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "ef4f26903bf4a56d55abc487dbdcbfea6ab38b7ee9dfc1e13d0f7b06622c3989",
+          "label": 2,
+          "relative_path": "sketch/giraffe/08307.png",
+          "sample_id": 8307
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "71a2d6329b47f7fe331bcb71caeaa3717b8ba61c2c0d0d5b7a65b6977758c30d",
+          "label": 3,
+          "relative_path": "sketch/guitar/08670.png",
+          "sample_id": 8670
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "174acf706dcb5d94a4ee4636b2bcec335b77f4d6dd17164aa063fe033cd01f6d",
+          "label": 3,
+          "relative_path": "sketch/guitar/08709.png",
+          "sample_id": 8709
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "acfe24076cf9533bf4c537e07ee53590af14c015c55a7f9e417572cf5d93151d",
+          "label": 3,
+          "relative_path": "sketch/guitar/08784.png",
+          "sample_id": 8784
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "59d5f86c890691b5336efca77875971bfcefe48871e3fc03ee7bb21d079204f9",
+          "label": 3,
+          "relative_path": "sketch/guitar/08475.png",
+          "sample_id": 8475
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "7c0ab24bbd89ad38309e06dbaf0d3f69b735b75d614e250b92a164a3d3791c60",
+          "label": 4,
+          "relative_path": "sketch/horse/09667.png",
+          "sample_id": 9667
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "21b0b45e966e9202e7935c5082533dcbbedd0d02594ee85a250f57b314aa503c",
+          "label": 4,
+          "relative_path": "sketch/horse/09561.png",
+          "sample_id": 9561
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "a75abe33a00d2f4dbf3f9adac8985764d1e77eba60dacad2fdd4cbcb3b2f6a83",
+          "label": 4,
+          "relative_path": "sketch/horse/09511.png",
+          "sample_id": 9511
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "cd535c1ceace011fd79813e98d8654b47263a00f1b71638897e3e5144aff9361",
+          "label": 4,
+          "relative_path": "sketch/horse/09308.png",
+          "sample_id": 9308
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "4bc73999add96506fe11f665b0b16589c8e649719895ae9ff0b82cb5ad6bef91",
+          "label": 5,
+          "relative_path": "sketch/house/09765.png",
+          "sample_id": 9765
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "9e93c2761d737e3abf5db703d589d92dc085ce4484c2825419d4659fb3184c19",
+          "label": 5,
+          "relative_path": "sketch/house/09784.png",
+          "sample_id": 9784
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "a2fc9c00bc791debaadcc8a2bd39c262ba4507c69317150d7b046cf1510c0cea",
+          "label": 5,
+          "relative_path": "sketch/house/09753.png",
+          "sample_id": 9753
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "f4305a9970a4b272021f41247e8a6addc0d4141304f699f9f5708978cbadb158",
+          "label": 5,
+          "relative_path": "sketch/house/09766.png",
+          "sample_id": 9766
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "372b4693d1ee78e9ecb5efec122d61f2588ed0d40bddf5255519526bac1f822c",
+          "label": 6,
+          "relative_path": "sketch/person/09855.png",
+          "sample_id": 9855
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "c1e6fa439774bfda9b7648693a9e3257ae3fc7a0000bf0afc224b6fa6ac5062b",
+          "label": 6,
+          "relative_path": "sketch/person/09843.png",
+          "sample_id": 9843
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "2ff0df5fe179e1e74882b8e02bde7b66551d0b63857ce4bd414d8936ac029da9",
+          "label": 6,
+          "relative_path": "sketch/person/09938.png",
+          "sample_id": 9938
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "66bb4bf207431021212a515311967861f3f8bf1580135105116d25ff4e54d853",
+          "label": 6,
+          "relative_path": "sketch/person/09918.png",
+          "sample_id": 9918
+        }
+      ],
+      "seed": 0,
+      "source_training_ids_sha256": "224353bd479c3efb677690a6ce1d77c642b184c26e6903d07d82555ea8291c3b"
+    },
+    "1": {
+      "parent_f0_sha256": "524e985fcbb833afb87bb2ac7a7478627a24339fe25c270e49310335c62d3af0",
+      "sample_ids_sha256": "ac245c6256abafd184a522ab392c80e83687a1cb0fd47bdb79ca39bc5a074b68",
+      "samples": [
+        {
+          "domain": "photo",
+          "image_sha256": "d452a421fe5453da164329dd913ada171749f031054e54e63d2e0ca7158e1c1f",
+          "label": 0,
+          "relative_path": "photo/dog/04429.jpg",
+          "sample_id": 4429
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "061633a30e4c4d3f9aa74f4aadee63c88bc5e9600b3b3394bbb87028a4ea5e64",
+          "label": 0,
+          "relative_path": "photo/dog/04530.jpg",
+          "sample_id": 4530
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "4fcf1c9c8c906f9283448e81dd73988826f5b0c5b3b1694a52114f0e2413e95a",
+          "label": 0,
+          "relative_path": "photo/dog/04485.jpg",
+          "sample_id": 4485
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "0fd6b5f861627b17349de4e533ba6e94d4edf1675920e8ae826c84327ad66023",
+          "label": 0,
+          "relative_path": "photo/dog/04448.jpg",
+          "sample_id": 4448
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "68153f4110e840e4f6bfd699997d728746224fe39939821be1b8917f5c92631e",
+          "label": 1,
+          "relative_path": "photo/elephant/04606.jpg",
+          "sample_id": 4606
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "28998846e67744d8e96edb11eb5ae601b6317b6b1ced01019f5bdf6aa8f75ccf",
+          "label": 1,
+          "relative_path": "photo/elephant/04771.jpg",
+          "sample_id": 4771
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "74a9e0a3cb7195e0a76b3427457050f0c8657bd078cd1ff089968ea7e2c63c4d",
+          "label": 1,
+          "relative_path": "photo/elephant/04663.jpg",
+          "sample_id": 4663
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "80c2dcbaa405170919c800fdb42688f3d94e6c72aea8e2c811f1a0ee58441450",
+          "label": 1,
+          "relative_path": "photo/elephant/04741.jpg",
+          "sample_id": 4741
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "358ffd9eb337a84df2c5cbf08992ed93c895c32be023dc573514bc727f2ddd74",
+          "label": 2,
+          "relative_path": "photo/giraffe/04821.jpg",
+          "sample_id": 4821
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "aef79697b686db20194dd5e78e3830d6ed8316ab9b9ead0abfadb6668dda9dbc",
+          "label": 2,
+          "relative_path": "photo/giraffe/04888.jpg",
+          "sample_id": 4888
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "5fbcc306863f24dd826c7ec21ee12c337c69093aca05aac1ea7e6b443e8e0cde",
+          "label": 2,
+          "relative_path": "photo/giraffe/04883.jpg",
+          "sample_id": 4883
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "7e2b6c49d9783afefe360833c7a921f7d85d2d87b89c25bc37992ad79772c643",
+          "label": 2,
+          "relative_path": "photo/giraffe/04798.jpg",
+          "sample_id": 4798
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "963dd1b76fbd52be27c246e2ed1d2ae88f8694445a5f731ca59d2a655cfe7ef5",
+          "label": 3,
+          "relative_path": "photo/guitar/05087.jpg",
+          "sample_id": 5087
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "a9c8a50ed601dc0ae1db37f184bcc3219120fbe129422f851d66d667ec78672a",
+          "label": 3,
+          "relative_path": "photo/guitar/05117.jpg",
+          "sample_id": 5117
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "0cfa7bb6c3b05cbf2227b99061b88a80e789daa0c0ff1de70881c71347307155",
+          "label": 3,
+          "relative_path": "photo/guitar/05057.jpg",
+          "sample_id": 5057
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "5bd9dbf23d17f25d4b58687fdd10bf31c9aa7e0912c18e5cd07d0d592a5a529c",
+          "label": 3,
+          "relative_path": "photo/guitar/05116.jpg",
+          "sample_id": 5116
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "9afe824d6257d42cdeabc84fca1859d0ca9c753e6794e76cb655b1f701c5d296",
+          "label": 4,
+          "relative_path": "photo/horse/05306.jpg",
+          "sample_id": 5306
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "4e6034467bc41efe292c5415f9816e90ab5a8271d539a36402ab8529bbb1e588",
+          "label": 4,
+          "relative_path": "photo/horse/05225.jpg",
+          "sample_id": 5225
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "7f8c7e818c1e24e96e9cfe75f9d07a5a7584aa4faa9bf143a6ce2bd952cdd854",
+          "label": 4,
+          "relative_path": "photo/horse/05157.jpg",
+          "sample_id": 5157
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "79bf1a076cecefd543c333ba7782a02021749c02d65edc94619e3b516589000d",
+          "label": 4,
+          "relative_path": "photo/horse/05260.jpg",
+          "sample_id": 5260
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "5e6febb212f875992b33e0ed6a16141661c86564103020be788476c570bf58b2",
+          "label": 5,
+          "relative_path": "photo/house/05552.jpg",
+          "sample_id": 5552
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "906d075ccb09cd3e4f9b973e4e6e57fc6485678eda139d089be52ee51d24bbdc",
+          "label": 5,
+          "relative_path": "photo/house/05456.jpg",
+          "sample_id": 5456
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "4a3a9550d402cd7ed40784602408498e67f8b10275949004ee2124a4fc052775",
+          "label": 5,
+          "relative_path": "photo/house/05506.jpg",
+          "sample_id": 5506
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "57f8d57e01fb5458afae86da3ca58a32ec468255735dfab36def4c778c32995b",
+          "label": 5,
+          "relative_path": "photo/house/05509.jpg",
+          "sample_id": 5509
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "dcd9a87bfca2d4f3921b1e1ef47aef4dfc4096b29c619a1ac0e6c8ef0ab37fff",
+          "label": 6,
+          "relative_path": "photo/person/05712.jpg",
+          "sample_id": 5712
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "1d1dd7bcd6e96a591279236471075b4980f3655b6b7e2cc14e166c72e2685581",
+          "label": 6,
+          "relative_path": "photo/person/05792.jpg",
+          "sample_id": 5792
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "a5daa68af168f0e5ead2999c17ec8ff02456d129379317ca32256be6cca22986",
+          "label": 6,
+          "relative_path": "photo/person/05736.jpg",
+          "sample_id": 5736
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "b87d6466a3686c4fc41371ba2dc8b4fbad01a17483f838f620a85770b1b6c50d",
+          "label": 6,
+          "relative_path": "photo/person/05839.jpg",
+          "sample_id": 5839
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "ae8af0743fb72c129794c063ccbfded2e107ebc7243969bd31ffb6b2989fe63a",
+          "label": 0,
+          "relative_path": "art_painting/dog/00315.jpg",
+          "sample_id": 315
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "b1f5e922b1018b8caec316c522cf93e589c7dffba8a890bfbad4c9b9048e3eda",
+          "label": 0,
+          "relative_path": "art_painting/dog/00059.jpg",
+          "sample_id": 59
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "af7c2c450a1808d584cd195ac211d440757327c790600eaa16f9f57f332defb2",
+          "label": 0,
+          "relative_path": "art_painting/dog/00227.jpg",
+          "sample_id": 227
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "64643e3bece8677311a729aeb80f70eac6d0a801138e0386913e288e5ebdcfe6",
+          "label": 0,
+          "relative_path": "art_painting/dog/00013.jpg",
+          "sample_id": 13
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "70399bd52f2f1a09d30525b4f79f260ee254869fac503b772bcf869e5c6efe06",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00594.jpg",
+          "sample_id": 594
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "1bc44b538a27aa02cb34ed3ef636c81d5d11fb0bf868351335681c93f619c2fb",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00603.jpg",
+          "sample_id": 603
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "2f2a54d70ad6172e723e4ac554cc544dac5c3202a979261b95add9dbfc8bc281",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00477.jpg",
+          "sample_id": 477
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "f1496aa49b42f5873143fd791387cbdde3110f68e8d047873b6bd65d26dbd546",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00469.jpg",
+          "sample_id": 469
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "c5670eeb3d65e3259eb94671b16c544a31ab63b043025c940e79f0195c9ca896",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00651.jpg",
+          "sample_id": 651
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "deeb678317ef73af5a74d7ffb7bf66b2534463b9e694240a16543c8037e8e53e",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00718.jpg",
+          "sample_id": 718
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "648f9c8900cba25a994b14f6b4d9e5fdd0cd021615c3af284fbdfd9379c3e528",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00809.jpg",
+          "sample_id": 809
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "12a42b3e10fd3011b954c21e0a8ef9b028d5371f66d6695bafb5489e4b29a881",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00745.jpg",
+          "sample_id": 745
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "53266b2d2ce55e7bf874fcae2c95166c3d3b91e6aba9f35591c851398c32cfaf",
+          "label": 3,
+          "relative_path": "art_painting/guitar/00967.jpg",
+          "sample_id": 967
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "df7524c77e5227d68cc340e7aed7cc722f353870e2e1e72720b6a9eb7b4fddb2",
+          "label": 3,
+          "relative_path": "art_painting/guitar/01009.jpg",
+          "sample_id": 1009
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "21d4a39cafa7a9fd976b5afc79dcf002823b5a3eae5d8628d01fbb6102ded185",
+          "label": 3,
+          "relative_path": "art_painting/guitar/00965.jpg",
+          "sample_id": 965
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "8eb897417512f6bda13a138f4020dda1c9a2fd9b36458d02c910b81743cc99c5",
+          "label": 3,
+          "relative_path": "art_painting/guitar/00973.jpg",
+          "sample_id": 973
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "2dcaae0b2dc5f5f331a9d559ce9ca298683ac7c1a544b80d3aa9158f5d00171f",
+          "label": 4,
+          "relative_path": "art_painting/horse/01279.jpg",
+          "sample_id": 1279
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "255cb3fd1e0d64949ee5535593881402e513d43bf1418699a64817cd366cc42a",
+          "label": 4,
+          "relative_path": "art_painting/horse/01253.jpg",
+          "sample_id": 1253
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "483a640bf87f704cb36dca41db147fecc856cbfee9e95cd3c2569e9a7ddd4ba8",
+          "label": 4,
+          "relative_path": "art_painting/horse/01258.jpg",
+          "sample_id": 1258
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "b7138f2840e505841394327a195a65538c7a04cb3e7675a0f1cab249271e26e8",
+          "label": 4,
+          "relative_path": "art_painting/horse/01177.jpg",
+          "sample_id": 1177
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "035f39b33d6161421719da726bede6c00903a1176d0540523a9b73e14f41396b",
+          "label": 5,
+          "relative_path": "art_painting/house/01423.jpg",
+          "sample_id": 1423
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "0dbfca4c76f9159586e1a5cf307851a90678a1f6ee872ca9d8a3e387d69be0a3",
+          "label": 5,
+          "relative_path": "art_painting/house/01352.jpg",
+          "sample_id": 1352
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "0880228cf0084d5f01a0b8a61d74df23c6ee0e59aee9033cd776ec810864d736",
+          "label": 5,
+          "relative_path": "art_painting/house/01579.jpg",
+          "sample_id": 1579
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "85eef840c4f4f18520c4cecf0117280d62f5b350640811a46c915e2e82a85dff",
+          "label": 5,
+          "relative_path": "art_painting/house/01406.jpg",
+          "sample_id": 1406
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "0a18eb21e14c28edcf4fc23f7fbb2b24f54d24f60642a5465ddf21e67e3c7d99",
+          "label": 6,
+          "relative_path": "art_painting/person/01876.jpg",
+          "sample_id": 1876
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "75d905486b763f8713576f5a65239d1413149b373d6dca1343afe0cb12ba0acd",
+          "label": 6,
+          "relative_path": "art_painting/person/01909.jpg",
+          "sample_id": 1909
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "6b1eed3b7321ca1f4a0c2df0388879400a623c459d2750160f7bf14ca26ef2d9",
+          "label": 6,
+          "relative_path": "art_painting/person/01890.jpg",
+          "sample_id": 1890
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "bc79dc3ae851c57a0fd16db5cfe3cbbdb895353be8b62622deb839206980233f",
+          "label": 6,
+          "relative_path": "art_painting/person/01965.jpg",
+          "sample_id": 1965
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "84c4de812452e5c50c0256afcdb91529745f0ef25a9ecde5aebed98985772f16",
+          "label": 0,
+          "relative_path": "cartoon/dog/02219.jpg",
+          "sample_id": 2219
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "9cc11b25afff07f1c8a0036b96e5aec38a7770016f21bc714a1ad03f9eeb00d7",
+          "label": 0,
+          "relative_path": "cartoon/dog/02215.jpg",
+          "sample_id": 2215
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "c2e95954151c0970e616a74e3d0f2f141e537cbe76abb761b6930609403a9dc5",
+          "label": 0,
+          "relative_path": "cartoon/dog/02120.jpg",
+          "sample_id": 2120
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "5a67668f291269bcb7727942530520bd65e2f9c73b430e0097aa72155be9b750",
+          "label": 0,
+          "relative_path": "cartoon/dog/02376.jpg",
+          "sample_id": 2376
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "fc983ab98550fcdf2c69a6e7fd8fa4193a7696eab35ea4541124b4564e3eee8b",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02648.jpg",
+          "sample_id": 2648
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "2941bb2c1cf7ac04b4fef43286e91568ad6cd9709356c6eaea1a15c3e6a2e0eb",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02784.jpg",
+          "sample_id": 2784
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "0a22065e49b708b63edcc9f703904307e33db704909c2fb0e5a684c82237fe53",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02761.jpg",
+          "sample_id": 2761
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "5140d027fc6daae73f0572c891f0ca629837d69f0236ea758fa1c28ba3047809",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02729.jpg",
+          "sample_id": 2729
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "22890fa070158ca733c98d84591561753650dd10ec7ff1ba1dfa4a28cb759bab",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03151.jpg",
+          "sample_id": 3151
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "57ffd57c3f6d0f96866dc4b28e788d6dac5c964cc5310f0ba0f5a931ea77c635",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03186.jpg",
+          "sample_id": 3186
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "cedafd2d9d78a229938d6201b47f5bfd9cec7e3ba360d4b4c1e04ea230d2c641",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/02971.jpg",
+          "sample_id": 2971
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "f4716dc72751407975d47e71c8c8617cd83421edcf4747181916c4e34fc7941f",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03020.jpg",
+          "sample_id": 3020
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "08cdf276ed54c5c78f9484370892bcbc71e5147b30748e41b5f18bf1e6882fc3",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03295.jpg",
+          "sample_id": 3295
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "1e29a1bd57397f170912b5c1411f1d0b43d2bcab16c5bdd2f519569ac425c5f6",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03328.jpg",
+          "sample_id": 3328
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "194afdfa64f45ab5f643e065660494dc9b21c2840d4eaf2dbe98aa9abf366824",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03241.jpg",
+          "sample_id": 3241
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "e7a95f3b1846ed20d10868e4a77c86935abcad72513bb0cdb252ad949c4e62a0",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03294.jpg",
+          "sample_id": 3294
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "cdcb3b855cc8f6c91283c2fabe3ec1e67d979ec83307610eeb1122af3b8743f5",
+          "label": 4,
+          "relative_path": "cartoon/horse/03690.jpg",
+          "sample_id": 3690
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "c74e9c7293ce52fa01cdc87e5a62c4ef2d526b1b8e2cda9e3bbeebff9f18ced5",
+          "label": 4,
+          "relative_path": "cartoon/horse/03416.jpg",
+          "sample_id": 3416
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "d5ef7dc05b00410d91336a470f479eb3ff7ea66a2892850e269fe598f0204192",
+          "label": 4,
+          "relative_path": "cartoon/horse/03601.jpg",
+          "sample_id": 3601
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "e3f329a0a0d4c23b8cbbfb8224ab20c92ed481f6e9a5fed2da7dec75f15709e4",
+          "label": 4,
+          "relative_path": "cartoon/horse/03390.jpg",
+          "sample_id": 3390
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "8d01ef2b7ddbe38bd9073ea2a49cfc78b595721ef032c3ae8c3b03b5f049f842",
+          "label": 5,
+          "relative_path": "cartoon/house/03885.jpg",
+          "sample_id": 3885
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "3aee066a4cb7d97e8428af5720269d4897a68a0497183f828ae44b33ce9eadeb",
+          "label": 5,
+          "relative_path": "cartoon/house/03891.jpg",
+          "sample_id": 3891
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "c3e19e98e5cbb793e5319743294e30cddfa8826cf312a058d79e82be042c7f8d",
+          "label": 5,
+          "relative_path": "cartoon/house/03776.jpg",
+          "sample_id": 3776
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "8cafc9519f2384cf4ec3bcf0abf7c4a293eb26447aedcf32e9a3879c837acae4",
+          "label": 5,
+          "relative_path": "cartoon/house/03977.jpg",
+          "sample_id": 3977
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "e3d3582209b3e0003191a1e2ee324ac21efe7b178280c16c18db95acc8967ec4",
+          "label": 6,
+          "relative_path": "cartoon/person/04171.jpg",
+          "sample_id": 4171
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "f1bd41c37f8cda9ce33eb9812b28f8e9ce1be3de60b7ff4555afc36c736267ef",
+          "label": 6,
+          "relative_path": "cartoon/person/04041.jpg",
+          "sample_id": 4041
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "b5c3e6554bfb36f072b11190d920d052a10f89cca6232e30a461380ed2a43871",
+          "label": 6,
+          "relative_path": "cartoon/person/04078.jpg",
+          "sample_id": 4078
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "a00c7b31095e0146de0c2d36d6a993d49e075f94bb1f435f473f51b29eac6e2c",
+          "label": 6,
+          "relative_path": "cartoon/person/04253.jpg",
+          "sample_id": 4253
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "41ad6203530e70943c5deab7692bf9a11317c72d12d86e0b9b7a518619615e15",
+          "label": 0,
+          "relative_path": "sketch/dog/06158.png",
+          "sample_id": 6158
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "cfaf5d097e3864cfd9781e7e1646772c62236428b1c7c2dea8ed70e7f5d32976",
+          "label": 0,
+          "relative_path": "sketch/dog/06101.png",
+          "sample_id": 6101
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "689547495b2aac0d7b68a0b10fe2cd515c8ae324174d48365139414ac29a4855",
+          "label": 0,
+          "relative_path": "sketch/dog/06398.png",
+          "sample_id": 6398
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "009b9d94e5bc0b02f886dc12bfee9128e9729c862f357883a98fb6031783b2f7",
+          "label": 0,
+          "relative_path": "sketch/dog/06595.png",
+          "sample_id": 6595
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "cae1fcbd5222df1d307f7f5712e548b9bbb8ab272a1cd1593b0d380397d33365",
+          "label": 1,
+          "relative_path": "sketch/elephant/07090.png",
+          "sample_id": 7090
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "e6da10cf3599e53a69bacb9b06a760c693e103ecd9d5d737d0fa65822e330f94",
+          "label": 1,
+          "relative_path": "sketch/elephant/07369.png",
+          "sample_id": 7369
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "4cb59ccb0d5884af6e133601a8f7a0050f2e3e177021b4682a551b6ea6b7db82",
+          "label": 1,
+          "relative_path": "sketch/elephant/07261.png",
+          "sample_id": 7261
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "2b44fe0d42b2369e6b0a6f807e93d587b145be7130b2a1518ea51c8c2f9f4417",
+          "label": 1,
+          "relative_path": "sketch/elephant/07462.png",
+          "sample_id": 7462
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "90523c2badef610f45492ad3c11d81ec43398edd62e23aa2d9b551438f24f09c",
+          "label": 2,
+          "relative_path": "sketch/giraffe/07871.png",
+          "sample_id": 7871
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "63be7d4e442753ac4ff4fc007fbf96cb39fc15e794eb3551a555810051e556e8",
+          "label": 2,
+          "relative_path": "sketch/giraffe/08074.png",
+          "sample_id": 8074
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "ab4f7b66d102cda59950fd0bfb5009a0977f5f56e342b8a0fa806b5bc6318db9",
+          "label": 2,
+          "relative_path": "sketch/giraffe/07999.png",
+          "sample_id": 7999
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "96e0f21051857e7c715f1f3fc656365249ad769c3b9caa3386e75b193bb3796b",
+          "label": 2,
+          "relative_path": "sketch/giraffe/07761.png",
+          "sample_id": 7761
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "293cad35c934ce8c7bc6beb117d580f56cb6c6fb6239d9bc9378dea6c894b55c",
+          "label": 3,
+          "relative_path": "sketch/guitar/08795.png",
+          "sample_id": 8795
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "67eda2d3a7b518d2cbe4ca11fceba8949c4a48b1d7da4018024f4cdd848dfa97",
+          "label": 3,
+          "relative_path": "sketch/guitar/08336.png",
+          "sample_id": 8336
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "736c416e0c91a14363db28b3d62af21f129992c3bdfcce2050cf528182c516bd",
+          "label": 3,
+          "relative_path": "sketch/guitar/08617.png",
+          "sample_id": 8617
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "e4017959796951ed1f661cc4f8beab140b91d7c815ad3069e8dbb29fa86fad14",
+          "label": 3,
+          "relative_path": "sketch/guitar/08648.png",
+          "sample_id": 8648
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "b310178b0bf5d75f7034b470d133f993efca138575c2fece0b36ce5fe8bc013d",
+          "label": 4,
+          "relative_path": "sketch/horse/09022.png",
+          "sample_id": 9022
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "d286d7b2105e438ef7fe4b7410add768ecaad8945f47b73acbffafdb9735b36b",
+          "label": 4,
+          "relative_path": "sketch/horse/09229.png",
+          "sample_id": 9229
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "d12ac154b5e76fd961eed8dc554878500e0acc9910a335ccd75610e2be2fd5bd",
+          "label": 4,
+          "relative_path": "sketch/horse/09132.png",
+          "sample_id": 9132
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "d7f8773130a0ab66380377d4e4ca045a742f476ca685a01aba1ac0977bebc243",
+          "label": 4,
+          "relative_path": "sketch/horse/09391.png",
+          "sample_id": 9391
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "3fbf93ac07402bcf21a521d6298c8906c5e803aa56878236102f70be5f8fd1eb",
+          "label": 5,
+          "relative_path": "sketch/house/09763.png",
+          "sample_id": 9763
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "d552e86e90b63b4a0984800411de9d8b0dbe96aa57efb897f74dca7f80463f02",
+          "label": 5,
+          "relative_path": "sketch/house/09789.png",
+          "sample_id": 9789
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "755b160ed88223f5242d15508cd92f11a1b6ddc8725674daa6cc60ac6f9ee448",
+          "label": 5,
+          "relative_path": "sketch/house/09781.png",
+          "sample_id": 9781
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "415f3d7494d364a4dbecf0c973fa2eb024ba18984323e4480661dc12c2540ff1",
+          "label": 5,
+          "relative_path": "sketch/house/09816.png",
+          "sample_id": 9816
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "64dce3d26fa18029688961c4b6856ef8f15f855629b37be8a406a1f752058dd9",
+          "label": 6,
+          "relative_path": "sketch/person/09885.png",
+          "sample_id": 9885
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "3e7957c0f1b5cdee87f931b5476b774c0da808e6824d3069a4b615503be5bee1",
+          "label": 6,
+          "relative_path": "sketch/person/09906.png",
+          "sample_id": 9906
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "57a9703e0fb7448508ec017a2c222757277ed4326f309b5b894231c4198e50b0",
+          "label": 6,
+          "relative_path": "sketch/person/09895.png",
+          "sample_id": 9895
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "7ec1255d66262da048d4188c27bdc765eb3f6b033565be8c958fb81fd03e588c",
+          "label": 6,
+          "relative_path": "sketch/person/09930.png",
+          "sample_id": 9930
+        }
+      ],
+      "seed": 1,
+      "source_training_ids_sha256": "0258cd0c1a9b38198197301f7eb1a319fafb0017a86e5b8351ffd3b558ffb593"
+    },
+    "2": {
+      "parent_f0_sha256": "be68e2e0644a7c688c47def44f56e47c227c8c02f142719759c4f7e374e18a4d",
+      "sample_ids_sha256": "381af9c117ef9ee74b548fe9a785f6e884166bb0644923d1c6ee48f97fccc66d",
+      "samples": [
+        {
+          "domain": "photo",
+          "image_sha256": "17cee39a3282a2de7d7b6c21eab8cc88df29a3aac69dc5d8d23779d26816371a",
+          "label": 0,
+          "relative_path": "photo/dog/04511.jpg",
+          "sample_id": 4511
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "b6db77a0798d4e3b9aa4ea7e9155d37bdb109f8cd73055be608f55a86ea199ce",
+          "label": 0,
+          "relative_path": "photo/dog/04447.jpg",
+          "sample_id": 4447
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "8b17c6ce431ed6c74c161a11a66090f4c32959d4ef364b47e73aae4408899444",
+          "label": 0,
+          "relative_path": "photo/dog/04540.jpg",
+          "sample_id": 4540
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "7db3e3e26ea6bc1e5686169b0e0b5e9ce9bcc00f8435385c05cf2b4e0590da30",
+          "label": 0,
+          "relative_path": "photo/dog/04450.jpg",
+          "sample_id": 4450
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "2bb93af514b5a8dccd8f64a12631efdb8d86230dcb4bc46caf73eb21eea15e09",
+          "label": 1,
+          "relative_path": "photo/elephant/04650.jpg",
+          "sample_id": 4650
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "ca58d8011fde8bc75ae67624375ff5bb3c254b15ad6bebfbf3f8511cca451fcd",
+          "label": 1,
+          "relative_path": "photo/elephant/04646.jpg",
+          "sample_id": 4646
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "39194cab47cc58a68a0b94f9b392609b9e0675e95b8a16efd8db18e2e7cc69a2",
+          "label": 1,
+          "relative_path": "photo/elephant/04769.jpg",
+          "sample_id": 4769
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "414992030bb3dc6ddd1e46d71fff4e13c74e43b4af5ab79f933d86031b912b57",
+          "label": 1,
+          "relative_path": "photo/elephant/04699.jpg",
+          "sample_id": 4699
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "9dfd2ec45aad47b5b54fa74a06b9d2ec9171e18be1a065c11cada8319cb52fe9",
+          "label": 2,
+          "relative_path": "photo/giraffe/04851.jpg",
+          "sample_id": 4851
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "500f87779a3d7df3c83d960ccb08df8ca5be58211f461c3eb321d451d882e1c8",
+          "label": 2,
+          "relative_path": "photo/giraffe/04882.jpg",
+          "sample_id": 4882
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "f07c44d54956b113c0d7f7e37334884125d750e93c3e36ecb24fd637f4c47596",
+          "label": 2,
+          "relative_path": "photo/giraffe/04881.jpg",
+          "sample_id": 4881
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "4b0fb1e2c6af91d830f1a2f3c575472c2c2e89463d163e5bec53438b0b21f276",
+          "label": 2,
+          "relative_path": "photo/giraffe/04953.jpg",
+          "sample_id": 4953
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "8f8a51a09cc09aa2bb04563cf09c760ec321f755ef38fc50d773fec8f704a48e",
+          "label": 3,
+          "relative_path": "photo/guitar/05025.jpg",
+          "sample_id": 5025
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "72b239de258edbce9e8de531468ff4dbc42c1d21c737dfc7d53cd25de0d54e0e",
+          "label": 3,
+          "relative_path": "photo/guitar/05044.jpg",
+          "sample_id": 5044
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "fb29703fca4f363114a0ae68e9cf08a26241f9ef578bf6274be7cd08a3fba23b",
+          "label": 3,
+          "relative_path": "photo/guitar/05027.jpg",
+          "sample_id": 5027
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "d1444d6d71b9b015186d218eacf8b44b00b448e143484c62cbf904731dfd4b0e",
+          "label": 3,
+          "relative_path": "photo/guitar/05047.jpg",
+          "sample_id": 5047
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "e71c08c22cea22ededc981dd4f377c516cf77b464b3ded0c566f2bb8fd3e01cb",
+          "label": 4,
+          "relative_path": "photo/horse/05183.jpg",
+          "sample_id": 5183
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "6c19dea84eb8a3807d59fa05fc2d25a04323527f3c2fc5d9921e8f4165995ad9",
+          "label": 4,
+          "relative_path": "photo/horse/05298.jpg",
+          "sample_id": 5298
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "2d50c3970336d867ab2ea2037a0fe8b7a22bab2176f3a5b456ae427c87665f79",
+          "label": 4,
+          "relative_path": "photo/horse/05194.jpg",
+          "sample_id": 5194
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "c71c7fa2ebe2871f4ea61ed7c151a9e3fa7135e03e05475ea307d547727cafd5",
+          "label": 4,
+          "relative_path": "photo/horse/05337.jpg",
+          "sample_id": 5337
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "432312ec5c804496fcdbb3871a57178a023f26224173cdb063bc1e5fb7111dc6",
+          "label": 5,
+          "relative_path": "photo/house/05470.jpg",
+          "sample_id": 5470
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "fe484cc33fb4009a6526579452dc2004fe6403b145efb3a2828e7525271c4a0b",
+          "label": 5,
+          "relative_path": "photo/house/05594.jpg",
+          "sample_id": 5594
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "4db98503d645945d7ea9377612212104dbcfc25d67ec75f9bba6c9b346b4fa0a",
+          "label": 5,
+          "relative_path": "photo/house/05484.jpg",
+          "sample_id": 5484
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "7b93b9a388eb97a3f5f2e21e8537c865631bd02b6ea440709a48b6ec0c0128e6",
+          "label": 5,
+          "relative_path": "photo/house/05406.jpg",
+          "sample_id": 5406
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "10109e18178ec0038bd7687b19e93378ba154d02f2458ab33dbdd8bae8a6d867",
+          "label": 6,
+          "relative_path": "photo/person/05658.jpg",
+          "sample_id": 5658
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "065ccf642ef334916e1a7db1f5d5ac5a73d62e31f59d8dc718ea3d6f90e438d4",
+          "label": 6,
+          "relative_path": "photo/person/06005.jpg",
+          "sample_id": 6005
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "f5ea5a9a2ec335ab435e51a30a13bcdd77bed6a5ce36c8a7763b683da9e738e5",
+          "label": 6,
+          "relative_path": "photo/person/05724.jpg",
+          "sample_id": 5724
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "769d7a1db4cf9bc047a92bab4dfb30ec07e24ff468b87168e3e99ce569ff89be",
+          "label": 6,
+          "relative_path": "photo/person/05742.jpg",
+          "sample_id": 5742
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "4a517abe381fff9926615d7482731a85420590cc623c7b10d8c647463f82858a",
+          "label": 0,
+          "relative_path": "art_painting/dog/00150.jpg",
+          "sample_id": 150
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "0ccd55f875023004d8b3181e0ecd6a86da8afaaef449440e0dbb1454fb281f2e",
+          "label": 0,
+          "relative_path": "art_painting/dog/00251.jpg",
+          "sample_id": 251
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "4cac8781a76b235e71b92334127dcd2ebde14263c683983d3c72ba277a53ef72",
+          "label": 0,
+          "relative_path": "art_painting/dog/00151.jpg",
+          "sample_id": 151
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "2d1c70f6d2b58fc84655c46fb3d946da9ffd185891c05c46c5f164ee7957e0cc",
+          "label": 0,
+          "relative_path": "art_painting/dog/00091.jpg",
+          "sample_id": 91
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "abf1369d65e2197c457cb89163d0a6582c83c013e45eff7c1e1aadd0d69a15b6",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00467.jpg",
+          "sample_id": 467
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "53813e4f39b40c3cb35c29c5cd86d7f30396081a0a3ce14816685c70efc90cc2",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00543.jpg",
+          "sample_id": 543
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "fea216be5ce30215600e3567b13afcea7124a50dab1e46bb1d53884d21d823f2",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00442.jpg",
+          "sample_id": 442
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "72a8cd27ca3245eda8b9f690be7fe700c02e7793c463f674ac9f8a17812830d7",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00541.jpg",
+          "sample_id": 541
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "8284a065e80bd4f800d55fc1d5de99479e0ea5f91d2077fe7a9fed32e35ede01",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00702.jpg",
+          "sample_id": 702
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "020327c2a969a7f197a6b4347befa5b7cbbc16a6a972b5bae182bd53952d1fca",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00692.jpg",
+          "sample_id": 692
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "e549e7d6e0407b19f0ac271ee73a0a6e04d69b38129d62b11da56d668e915e5f",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00800.jpg",
+          "sample_id": 800
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "5599a438bff1152314300cdf75ad5345f6185306fbbc84e5dbb78d1739966541",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00824.jpg",
+          "sample_id": 824
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "e9cfbab5a9c01603f994a12cf591e59e3419c5eae8d94bbd6cadf057f844d70c",
+          "label": 3,
+          "relative_path": "art_painting/guitar/00980.jpg",
+          "sample_id": 980
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "01fa9e8cf165a955c889770bc04b5383176fec227c61728ab455869650d32bab",
+          "label": 3,
+          "relative_path": "art_painting/guitar/01041.jpg",
+          "sample_id": 1041
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "20ce228aaa3e4c9e1290e2c5fb8f463750b7a3e200addc98ddef93ccfe6580fd",
+          "label": 3,
+          "relative_path": "art_painting/guitar/00936.jpg",
+          "sample_id": 936
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "42bb6c5b8832ce71fe12a18ba7b8496bd4ec721904456ce4b387e2deae757cda",
+          "label": 3,
+          "relative_path": "art_painting/guitar/00971.jpg",
+          "sample_id": 971
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "c9769342da7c05a6af323960cea7923c5f1e9d1f7fb002208ca6b827a40dbf87",
+          "label": 4,
+          "relative_path": "art_painting/horse/01228.jpg",
+          "sample_id": 1228
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "4420c7cb2f1e909239bc9fd49315ddc354cdacb334164bba81ff51cf8d559336",
+          "label": 4,
+          "relative_path": "art_painting/horse/01283.jpg",
+          "sample_id": 1283
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "4cc9fab8599d507fcfb3590cbf2ba11e570edd4f1d686d070b84e6efae2f9629",
+          "label": 4,
+          "relative_path": "art_painting/horse/01127.jpg",
+          "sample_id": 1127
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "0a37df4a930d538a82c7850c8264453f59ad3c73e403a0ed8e2f584e34387c0c",
+          "label": 4,
+          "relative_path": "art_painting/horse/01220.jpg",
+          "sample_id": 1220
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "df74be2087d421190bfd5f6262e3d8b73fd7d8b85576b56b4d1b548b76e0036d",
+          "label": 5,
+          "relative_path": "art_painting/house/01351.jpg",
+          "sample_id": 1351
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "7efadd7266832c158c72dca6c5729f16b90b0bf16dc6aadd4b6634abe65cbc67",
+          "label": 5,
+          "relative_path": "art_painting/house/01391.jpg",
+          "sample_id": 1391
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "0fd83e3154c2c1f50fbbc7618378015dd8287b816c1988e76554d883aaa1a242",
+          "label": 5,
+          "relative_path": "art_painting/house/01562.jpg",
+          "sample_id": 1562
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "cf4bdce9094620b7363e780aeb0e8323797e9af22dea9b89a8b20406ad0ffb9a",
+          "label": 5,
+          "relative_path": "art_painting/house/01545.jpg",
+          "sample_id": 1545
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "451bdb2da88fd04a89eabc080b1e8233742d648684cedce8c1fddbc9169e432f",
+          "label": 6,
+          "relative_path": "art_painting/person/01906.jpg",
+          "sample_id": 1906
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "e648ba107c53543425eb40b429f42a6729509fd0362d6346778efa88416cae4e",
+          "label": 6,
+          "relative_path": "art_painting/person/01865.jpg",
+          "sample_id": 1865
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "c6f708e6b9d84588bb8962b63f1a8cd1dc614cb74596d37b3003c71e61f5ceb5",
+          "label": 6,
+          "relative_path": "art_painting/person/01880.jpg",
+          "sample_id": 1880
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "9fdc4b9b45974e57dad65e2a17d3830f8bf4d4337e57929a67f20a46e08d87ff",
+          "label": 6,
+          "relative_path": "art_painting/person/01957.jpg",
+          "sample_id": 1957
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "7910ebd5b61b7d8111ffb84211100cf2a4da050330c8720252b6dc2c63567ac5",
+          "label": 0,
+          "relative_path": "cartoon/dog/02280.jpg",
+          "sample_id": 2280
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "5f5e9788da3ea4c030ee3856ac9ed336e866be0b4ada9463d235f15475911ea6",
+          "label": 0,
+          "relative_path": "cartoon/dog/02400.jpg",
+          "sample_id": 2400
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "a0ca061c27e284114c7fe1a97e0f5b524c9605fd4a5b476a084d693ed038b1e6",
+          "label": 0,
+          "relative_path": "cartoon/dog/02358.jpg",
+          "sample_id": 2358
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "3129df73f1ec5d2d57fdaefa061b45606350a4952591bde7eed96c0b1e274280",
+          "label": 0,
+          "relative_path": "cartoon/dog/02122.jpg",
+          "sample_id": 2122
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "4501ebce161c3d6ff43eb4991b29cd81b59ca9aa5e4f3eba8a9187035b731566",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02891.jpg",
+          "sample_id": 2891
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "5a272c3c403b2cb6187f13c997f460ba36fc70b577bfc6e0fb860161d352bc1e",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02708.jpg",
+          "sample_id": 2708
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "cfb8c5d8c21c28c63ad052d7d1076d4208d59b5d8bfb87db474bcce22213cea8",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02881.jpg",
+          "sample_id": 2881
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "dc06c7c2e5ceefb30c1aa93e5b878b79f9004ea0c023a9444620c7048d505587",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02720.jpg",
+          "sample_id": 2720
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "173734b161575266d0697d6d2b1958a1c61a1fa62b8b58e02365b74acec047a3",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03009.jpg",
+          "sample_id": 3009
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "8de3b8affdda3ab3cb87882be0139fd4515c5a56bb25c51954a1295c0880ffc7",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03044.jpg",
+          "sample_id": 3044
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "51f90299def6613237a1088b26964d5b08f8245b2c329c9a445fd99dd98b50cc",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03034.jpg",
+          "sample_id": 3034
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "bb9d321701ebcecf15bcaa9081f9316ee82b26d4d9bc6c281f5ea8a86cc7f954",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03075.jpg",
+          "sample_id": 3075
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "dc4720c3866f273fa90e6b9ecf0c47d9256b948aba7ad84c673acce4961f1ae8",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03271.jpg",
+          "sample_id": 3271
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "77931ceec4128dc73e8ff84fd0db3ecf5d1a25d933c332ca494458335d963fea",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03302.jpg",
+          "sample_id": 3302
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "f8e7ffcb3007380f085ca4a14016cfcd2fd85133db453d6c7beb43ca85f6a768",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03359.jpg",
+          "sample_id": 3359
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "379b092d9af81cf8dd00cc032b2bae6ef1aaee0c96f2a1fd6ceeb51fbdb498b7",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03361.jpg",
+          "sample_id": 3361
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "a3d842f24c3f90357bfe7c8615072886a140e89dde77edf35803ef641d364c56",
+          "label": 4,
+          "relative_path": "cartoon/horse/03544.jpg",
+          "sample_id": 3544
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "00966a975d566c451e2d2758c1f7341ebd54489e4aaabc172f0c84c2fb1de08c",
+          "label": 4,
+          "relative_path": "cartoon/horse/03592.jpg",
+          "sample_id": 3592
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "8f1541c8499491d63450082671ddc0bc8e3dbc6590fcf7c0bd287cfa525e7167",
+          "label": 4,
+          "relative_path": "cartoon/horse/03484.jpg",
+          "sample_id": 3484
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "a7543f30227e751182d9bd70dac22971cdebcd759e5d43205a9c65630426aa63",
+          "label": 4,
+          "relative_path": "cartoon/horse/03493.jpg",
+          "sample_id": 3493
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "32923ec68a0a431a68156d7de09fce807505de1fd24fa4fcb56ec622a7637f81",
+          "label": 5,
+          "relative_path": "cartoon/house/03961.jpg",
+          "sample_id": 3961
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "76b63063c21970222954b1f20ad28b64de5f3e1aaa7ff07b44f963e62128e9b3",
+          "label": 5,
+          "relative_path": "cartoon/house/03883.jpg",
+          "sample_id": 3883
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "bb2d83919a20b9bf0c6cffbc02bf82ec096128eb96720fb1618a874cc1a680c6",
+          "label": 5,
+          "relative_path": "cartoon/house/03931.jpg",
+          "sample_id": 3931
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "818f569c4bde49a3c121370c8f465af201d26bfe1ce5fdbaec6b80ad3a90ca17",
+          "label": 5,
+          "relative_path": "cartoon/house/03737.jpg",
+          "sample_id": 3737
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "8da2b385b0b345f1561e7c35013aa7adba800c54f9004ce972ec58f8672cf38a",
+          "label": 6,
+          "relative_path": "cartoon/person/04307.jpg",
+          "sample_id": 4307
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "4da6c20dc4526584e73e2bfef6e138aba443a86e5e511ea22e0d4727513b3cbb",
+          "label": 6,
+          "relative_path": "cartoon/person/04349.jpg",
+          "sample_id": 4349
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "bb43c21f833d56c1b936417c113c234611d5d179e2ed67470fb056be0d08b950",
+          "label": 6,
+          "relative_path": "cartoon/person/04266.jpg",
+          "sample_id": 4266
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "6c190b1f2c7891702b9b6e5d9dbac52f304c80a084a593cc9cba79fbfb2f31e9",
+          "label": 6,
+          "relative_path": "cartoon/person/04104.jpg",
+          "sample_id": 4104
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "49dbc3c49bf5124223b659b74a0d46dfbef50d376910f5f8f642f196627616d4",
+          "label": 0,
+          "relative_path": "sketch/dog/06668.png",
+          "sample_id": 6668
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "8bbbe824eeeea0e97257e9e17d25ce6c85acac69f07285da871076ac82c77418",
+          "label": 0,
+          "relative_path": "sketch/dog/06120.png",
+          "sample_id": 6120
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "889505a82599123a8fdf52d3cd148e542e35c147c03d8083d7d869555baac1b6",
+          "label": 0,
+          "relative_path": "sketch/dog/06775.png",
+          "sample_id": 6775
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "ff1da5e987eb77bed4f04d9b2bccb659922732d10f2091a53fe4acf957254c60",
+          "label": 0,
+          "relative_path": "sketch/dog/06228.png",
+          "sample_id": 6228
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "1895274e9021f3ce549444a9ed60586595191787aac8b930fbe33c1dac9ba0ee",
+          "label": 1,
+          "relative_path": "sketch/elephant/07125.png",
+          "sample_id": 7125
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "dde48dbc08ad92ad1096922fd73962b3b5a2ff0c534de109944c08b365b358c2",
+          "label": 1,
+          "relative_path": "sketch/elephant/07514.png",
+          "sample_id": 7514
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "b346e74b2a2670564d946d31b2f6dac6414eacdbfc6b580496605d269bb9d215",
+          "label": 1,
+          "relative_path": "sketch/elephant/07527.png",
+          "sample_id": 7527
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "e5952a4271c5fb835b1a360393effb3beaab509068e29a3bceea706f7cb4a275",
+          "label": 1,
+          "relative_path": "sketch/elephant/07040.png",
+          "sample_id": 7040
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "892cf58ff89d33e2bb782abcd3fbdd51903eeedc56b1adf58f65f437e2ad0daa",
+          "label": 2,
+          "relative_path": "sketch/giraffe/08122.png",
+          "sample_id": 8122
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "6f568ab44ad736ab046e854144313589e5dedb2a93494e67ce3fcf886744816a",
+          "label": 2,
+          "relative_path": "sketch/giraffe/07740.png",
+          "sample_id": 7740
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "2a03de503292ff7dd479babaace107eb37601a899704f8a991828da47fef765d",
+          "label": 2,
+          "relative_path": "sketch/giraffe/08095.png",
+          "sample_id": 8095
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "0f0d7f941ffe7c958ac095f5173287c5bf3c797eabee0eb840eae1fa6f380503",
+          "label": 2,
+          "relative_path": "sketch/giraffe/07897.png",
+          "sample_id": 7897
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "8f28aa0b347d6e64542a5fecf29c481c78ea623c5bf296de80288f80d3f776c1",
+          "label": 3,
+          "relative_path": "sketch/guitar/08517.png",
+          "sample_id": 8517
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "3a953324d79d8b60cfbabaa45647283bb2c33955f617dbe9f0b5abf7a6acb392",
+          "label": 3,
+          "relative_path": "sketch/guitar/08902.png",
+          "sample_id": 8902
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "1fbba3739da5dba251b6c797387eba3867e724a892f17c548d5693e6300ba938",
+          "label": 3,
+          "relative_path": "sketch/guitar/08742.png",
+          "sample_id": 8742
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "9878ae67d4615efe0c3870fa889fdeed190a2cd5e34f430f5da1c3e29bca6c54",
+          "label": 3,
+          "relative_path": "sketch/guitar/08721.png",
+          "sample_id": 8721
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "e22b77bd13a8a5679ebb76c6d6165f1f92943b1de1c180cd0cbf9d87f3fa88a8",
+          "label": 4,
+          "relative_path": "sketch/horse/09593.png",
+          "sample_id": 9593
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "61fcceee10c4b0cff944628fccfd4fe385294e926c14c46b2ada05baccd3cdfc",
+          "label": 4,
+          "relative_path": "sketch/horse/09151.png",
+          "sample_id": 9151
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "494299194e7acc1ab16a51e587d90092e184ee8a5e2a26e20607968dd4c5bb88",
+          "label": 4,
+          "relative_path": "sketch/horse/09471.png",
+          "sample_id": 9471
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "62e7105d8464566c096d340281990434564675e38325e192df0f6d7647da91c4",
+          "label": 4,
+          "relative_path": "sketch/horse/09276.png",
+          "sample_id": 9276
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "1930237b5e43ab7554b99ec9d9ee09a8e0be1f61d473a5f4d93b0c2d08449e53",
+          "label": 5,
+          "relative_path": "sketch/house/09814.png",
+          "sample_id": 9814
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "3fbf93ac07402bcf21a521d6298c8906c5e803aa56878236102f70be5f8fd1eb",
+          "label": 5,
+          "relative_path": "sketch/house/09763.png",
+          "sample_id": 9763
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "6ff3cdc3d5d1d45dac58603a49f819c8d764d6ab9c4e16492d489e931049066b",
+          "label": 5,
+          "relative_path": "sketch/house/09764.png",
+          "sample_id": 9764
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "2098743b31ac2a6efbae71c122e2d28dabd3e20643eb50c2ebb2383303ef4d8f",
+          "label": 5,
+          "relative_path": "sketch/house/09803.png",
+          "sample_id": 9803
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "45ac0c9492a1008d3d95023aba7c84b3f9de5dc4014b20fa6452b6e24fdcb83a",
+          "label": 6,
+          "relative_path": "sketch/person/09846.png",
+          "sample_id": 9846
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "9c7f08cec722a2ac3739032f78a652b882b105fbabcd8ef966db0169fa8ce19c",
+          "label": 6,
+          "relative_path": "sketch/person/09887.png",
+          "sample_id": 9887
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "ca0f3ab1629b3b7068c3784808eec55b12b889dc450307d72a27bb3332b5b87f",
+          "label": 6,
+          "relative_path": "sketch/person/09945.png",
+          "sample_id": 9945
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "71b595401a3b335fadfabb4833e4f97b65342592feecceff836d08234a5ed7ed",
+          "label": 6,
+          "relative_path": "sketch/person/09961.png",
+          "sample_id": 9961
+        }
+      ],
+      "seed": 2,
+      "source_training_ids_sha256": "36f9e01eca18f16ebbe80751d28983c0ea2f4388b06e1c55b8b89f688f565f41"
+    },
+    "3": {
+      "parent_f0_sha256": "81c7bb3d32bc3eaa5416d5b281186c0621c3125ee920fdd5d14dd050101aaedd",
+      "sample_ids_sha256": "ebff33a6274f11aa186fb1466c6009a9eba7d6919400e7131a026baea7eae1d1",
+      "samples": [
+        {
+          "domain": "photo",
+          "image_sha256": "c91bbb493c38c6bd334e075f410607bdc9d3e106b207be3b8e2b49238595f0ca",
+          "label": 0,
+          "relative_path": "photo/dog/04549.jpg",
+          "sample_id": 4549
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "c86c420722b43bc56a912d8030e1de56b55b62d2e2efb95f07167a32cda50d01",
+          "label": 0,
+          "relative_path": "photo/dog/04432.jpg",
+          "sample_id": 4432
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "94d093baddd55a9590d2d6307b1d7ef4d70245935f4ab05086b53acda0fb9f86",
+          "label": 0,
+          "relative_path": "photo/dog/04397.jpg",
+          "sample_id": 4397
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "0912fed58b236776358bb5c6c6b9ca7f4ffe61b8b7dcb57ed603329d0c625313",
+          "label": 0,
+          "relative_path": "photo/dog/04403.jpg",
+          "sample_id": 4403
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "461dc31b1af7b58740d82a874df2be1f3ca5ac8eb758f97195d6148805721183",
+          "label": 1,
+          "relative_path": "photo/elephant/04724.jpg",
+          "sample_id": 4724
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "2fbb217acd6195cfa321a7d836dbfc902b85df6438a70c773579a80c69c1f2f1",
+          "label": 1,
+          "relative_path": "photo/elephant/04707.jpg",
+          "sample_id": 4707
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "243cd2fba82b5d8fcb0f663df8fe23e88d996eb5ef0a67ac17d63658896a0874",
+          "label": 1,
+          "relative_path": "photo/elephant/04608.jpg",
+          "sample_id": 4608
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "b5a0d774778022487dd36e4f83ca053e2cd4ca96937149310dcb75c0fdc8d339",
+          "label": 1,
+          "relative_path": "photo/elephant/04730.jpg",
+          "sample_id": 4730
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "0593e704955534618a2d5a056ebd088c2d4cf97da60e5e943ebf95a010ef634c",
+          "label": 2,
+          "relative_path": "photo/giraffe/04852.jpg",
+          "sample_id": 4852
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "96d6d1b38c88803dd108fbd1e651729d7b47a2fd13293fd75377174029ad62f5",
+          "label": 2,
+          "relative_path": "photo/giraffe/04936.jpg",
+          "sample_id": 4936
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "debec49367c8407eefbe6e97c0f1bca92e33893189f840f88fe91efdf50a12fc",
+          "label": 2,
+          "relative_path": "photo/giraffe/04929.jpg",
+          "sample_id": 4929
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "3dcfe5dcea8535bf114b055fdf5545018cbb7c94fd12e0df2db5110acf09a0f8",
+          "label": 2,
+          "relative_path": "photo/giraffe/04945.jpg",
+          "sample_id": 4945
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "8658438d35e33dced85e673039f4394b7dfefa7daf713f01bd4bd372f3f579b6",
+          "label": 3,
+          "relative_path": "photo/guitar/05029.jpg",
+          "sample_id": 5029
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "28dd1b6551feb8ce25f69bc8d6ba974322543264d38ac64d98575bd46693b996",
+          "label": 3,
+          "relative_path": "photo/guitar/05068.jpg",
+          "sample_id": 5068
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "a8ff0cdc9db9a772c8272b35ec63445c4971f3b46f733753e13a866a0fa91a4e",
+          "label": 3,
+          "relative_path": "photo/guitar/04982.jpg",
+          "sample_id": 4982
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "fecf6e4092bcf3b78edc891573d393b3c2e9b358a93212206fcb9ed7b600c7fb",
+          "label": 3,
+          "relative_path": "photo/guitar/05060.jpg",
+          "sample_id": 5060
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "86ec555cc7b0f826275f8698c232794ee5938910b2a911d6e77621f83e3d1254",
+          "label": 4,
+          "relative_path": "photo/horse/05347.jpg",
+          "sample_id": 5347
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "d138c39add425867900524ad5f30d7bde2b3f23738becaee3861ee17003758e5",
+          "label": 4,
+          "relative_path": "photo/horse/05325.jpg",
+          "sample_id": 5325
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "8d67a8fdead9f9c9cc678c227f1dbea2c747c57b22e4b67a083240fa102f7f9b",
+          "label": 4,
+          "relative_path": "photo/horse/05288.jpg",
+          "sample_id": 5288
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "0f8a5fb2e371edb88d65954f4bee80a0ca9f0360181535ff7337741da06cf2be",
+          "label": 4,
+          "relative_path": "photo/horse/05239.jpg",
+          "sample_id": 5239
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "24fb81db2960b0fd7d82ade0637e2efff280ca68bfdccc4eb8bdc42d94b5b3e7",
+          "label": 5,
+          "relative_path": "photo/house/05500.jpg",
+          "sample_id": 5500
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "9f28bab6939ec0f9fc9149236ab043976624dd9292097c26eb3b87cb8921319d",
+          "label": 5,
+          "relative_path": "photo/house/05392.jpg",
+          "sample_id": 5392
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "c72af1f9dd5487e4ca7462d9a420778cdeb2b20f8c106620214a7cad5864498c",
+          "label": 5,
+          "relative_path": "photo/house/05380.jpg",
+          "sample_id": 5380
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "2b082307bb46b4720cdceffe0d9900c615c1a158a8abe29b16505471db651207",
+          "label": 5,
+          "relative_path": "photo/house/05482.jpg",
+          "sample_id": 5482
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "dee58b7f4fe66ca39e9cad841d04b9b6afe4967cdb0c6b74caf3026db24eebd0",
+          "label": 6,
+          "relative_path": "photo/person/05939.jpg",
+          "sample_id": 5939
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "c61ed4b90e0b0cc93733061a156ca7d830f7e3c92c2fa7d874b8efd55108340f",
+          "label": 6,
+          "relative_path": "photo/person/05663.jpg",
+          "sample_id": 5663
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "45a8efd097493d7cda34c4cff172f4562beaadd5da43ec04b15cbe8e19d35fec",
+          "label": 6,
+          "relative_path": "photo/person/05631.jpg",
+          "sample_id": 5631
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "5035c62d90d165e96861bbf2dbaaf729e89e467621eb9ce0e62ed2a3a084d680",
+          "label": 6,
+          "relative_path": "photo/person/05962.jpg",
+          "sample_id": 5962
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "af7c2c450a1808d584cd195ac211d440757327c790600eaa16f9f57f332defb2",
+          "label": 0,
+          "relative_path": "art_painting/dog/00227.jpg",
+          "sample_id": 227
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "70ba2e891d943a45def9cf8ed01987c26e90ee5ea841170157a6be09f034da0f",
+          "label": 0,
+          "relative_path": "art_painting/dog/00004.jpg",
+          "sample_id": 4
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "4fb0bd79d8e6227634594dc5374a09d3b968f2e18e3ab623765b7757dac10479",
+          "label": 0,
+          "relative_path": "art_painting/dog/00157.jpg",
+          "sample_id": 157
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "1f25cfb3c50cd4aebf8636cad9f2c62617be138c1255d6e944fe5466c8d4b317",
+          "label": 0,
+          "relative_path": "art_painting/dog/00203.jpg",
+          "sample_id": 203
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "72a8cd27ca3245eda8b9f690be7fe700c02e7793c463f674ac9f8a17812830d7",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00541.jpg",
+          "sample_id": 541
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "e598a9c17078392b8524160dbd0561192d2e42c00e8061c45a4e2592964d9c93",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00464.jpg",
+          "sample_id": 464
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "2e44385321a6c05176ebd2a1774eee540546253d4397dd358cb1a0b3358aef75",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00544.jpg",
+          "sample_id": 544
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "22f24c6eb78cc32661aa077753b46dfa37a959448578aedaffc4cb65637b8ecd",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00530.jpg",
+          "sample_id": 530
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "a295aa33bcefda95d36e1831569bfbc5cdcdc30c2807100f0e0e3925fa2f9a4d",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00903.jpg",
+          "sample_id": 903
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "e0f933c63048fdf12f6af97f819342fca0358f42127d2a648be97a7aee437092",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00709.jpg",
+          "sample_id": 709
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "901bf660240083911e03da9dee3db52d9ecb0a7a231ef2843c1789ac41aeee5d",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00787.jpg",
+          "sample_id": 787
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "76d9ff80a2bf2fbbb13ccaf4c610a62ec75a7981eea16d72151da4370425e8cf",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00734.jpg",
+          "sample_id": 734
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "4f0e17a2af11bf2c2b3fb414fd77cec1dfdfe91a60dba28f539315c930424183",
+          "label": 3,
+          "relative_path": "art_painting/guitar/01067.jpg",
+          "sample_id": 1067
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "1d422e5c6acdb2666510c40db1c2221bd846c09a5eb3e38a4693a068cf0f773a",
+          "label": 3,
+          "relative_path": "art_painting/guitar/00955.jpg",
+          "sample_id": 955
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "d74871402dfba554500b56cff80cab8c00fc21abcdfa15ea7484a024c8dc5eb6",
+          "label": 3,
+          "relative_path": "art_painting/guitar/01015.jpg",
+          "sample_id": 1015
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "fc486b7ceba187ddad1163d54a9ad675592646e800bcdfa9d5088f81998c8efe",
+          "label": 3,
+          "relative_path": "art_painting/guitar/00954.jpg",
+          "sample_id": 954
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "89371e4db42476ed038c55846aa4e71446320e8bb540ad0dca658d25761e9b63",
+          "label": 4,
+          "relative_path": "art_painting/horse/01194.jpg",
+          "sample_id": 1194
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "163cb87cd17c7f786fb4980a014668d4308724f624c4136f059eb0bc83df8dea",
+          "label": 4,
+          "relative_path": "art_painting/horse/01132.jpg",
+          "sample_id": 1132
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "e208ac6c7d38f22cf6e9377d8d9c391ef0e0faa3d1506e7aa985ad83d04d0017",
+          "label": 4,
+          "relative_path": "art_painting/horse/01301.jpg",
+          "sample_id": 1301
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "6d25165a778b5c3b1d539e60c9bd4be1f209f275a987832d0daccb94ddb85e3e",
+          "label": 4,
+          "relative_path": "art_painting/horse/01251.jpg",
+          "sample_id": 1251
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "1f0f2293706a4b606c46731201e52ae4155d11cb3318ffb5fa00011489410f30",
+          "label": 5,
+          "relative_path": "art_painting/house/01501.jpg",
+          "sample_id": 1501
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "d81c4499d12ea847ac615358cfc45129f65d3a21d1a3190a499a96008b1286b1",
+          "label": 5,
+          "relative_path": "art_painting/house/01512.jpg",
+          "sample_id": 1512
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "6fa9a85ef4d26c0a3369bf92fc14586e0e99f1a06084f282a34a483c680b98d5",
+          "label": 5,
+          "relative_path": "art_painting/house/01324.jpg",
+          "sample_id": 1324
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "4d5e2cde98f7da2f038a15ae63e78cd2b2cd026b32fd657796893fdf6fe077a8",
+          "label": 5,
+          "relative_path": "art_painting/house/01492.jpg",
+          "sample_id": 1492
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "6e0485a8c4c4a149e03c58c0461bcffea01df973225d1de0d2204db208a8be36",
+          "label": 6,
+          "relative_path": "art_painting/person/01630.jpg",
+          "sample_id": 1630
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "5ab73b0dd02bd058cbec4b397eefc4940201708cba7cf9742051c85ff284db24",
+          "label": 6,
+          "relative_path": "art_painting/person/02022.jpg",
+          "sample_id": 2022
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "05713e5eada48878f229eddde9e7c917490997cf800662a5ff580b473d2bea4a",
+          "label": 6,
+          "relative_path": "art_painting/person/01785.jpg",
+          "sample_id": 1785
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "24b279d1ea47f8d84e90954df4b7accf2229b81d660199ae6e401daf5123ae6d",
+          "label": 6,
+          "relative_path": "art_painting/person/01929.jpg",
+          "sample_id": 1929
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "27a217cf9e14a43acf9f4450a043f0deb079609a4f88309ca45774815d58ac42",
+          "label": 0,
+          "relative_path": "cartoon/dog/02231.jpg",
+          "sample_id": 2231
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "48c67ec5a2266db8edeb4e2dfd64610046b83144c58d2a62caf01dfae827b4ce",
+          "label": 0,
+          "relative_path": "cartoon/dog/02253.jpg",
+          "sample_id": 2253
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "166b6aef42416f2ea7e9ad1cb01244080c1a5b3e2401eb01033639b12fdd3954",
+          "label": 0,
+          "relative_path": "cartoon/dog/02170.jpg",
+          "sample_id": 2170
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "dcf27b29ae4a851e5b439e6f4b98e536457c5efefb7c108c5fa423ebef63eba2",
+          "label": 0,
+          "relative_path": "cartoon/dog/02346.jpg",
+          "sample_id": 2346
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "f5709b1df72f20e5d3aa9db45d639efbac1fa81ac1dc8fd4ff02b2893c03cdec",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02822.jpg",
+          "sample_id": 2822
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "096093aebee2367079b36895633281d2590f1b798af13baa52f2b21086c02160",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02791.jpg",
+          "sample_id": 2791
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "b1a29b815d25e37a93ef198b325c7bbf658816eae637ebf2107c288d6019bbeb",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02758.jpg",
+          "sample_id": 2758
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "80381ffa35e19d3d3146422f69eaceb25702f3f6231fe13b148d879f9b40d664",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02563.jpg",
+          "sample_id": 2563
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "b849561088fdc71ac19da900f33fa7549e285554be8bb2e162ec7f034b54a5fb",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03115.jpg",
+          "sample_id": 3115
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "05c597657da63cdcc87b2148381cf41fcfb3190a1a25d3a7e38c03550cc86ea7",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03038.jpg",
+          "sample_id": 3038
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "9dc8c32e7bc6a69644b7498f8bc1b6c249d46434645ff8e887f0cb1a194f1f20",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/02922.jpg",
+          "sample_id": 2922
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "d8520001069e43c946cde183ba2f6e663df5db9b6755755a0fadb9e5c43b246e",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03215.jpg",
+          "sample_id": 3215
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "1e29a1bd57397f170912b5c1411f1d0b43d2bcab16c5bdd2f519569ac425c5f6",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03328.jpg",
+          "sample_id": 3328
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "a5f72a72e5a91b0248ed17cf2c9c5c800b337b954abb697cb0caa639bfbf6576",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03257.jpg",
+          "sample_id": 3257
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "95bf5bc0e306217d6a9b92ffdea46f53d2c8b42aef2fd0519006833c4c0e4e8e",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03345.jpg",
+          "sample_id": 3345
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "93de565134c034d6af656f7455030c315d31b70822f72597e473169aa4ee5160",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03278.jpg",
+          "sample_id": 3278
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "880d65fd780f5769e1986f333b0774724132b1df69c4d862267575170aa283d7",
+          "label": 4,
+          "relative_path": "cartoon/horse/03630.jpg",
+          "sample_id": 3630
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "9ec1074b378633e603dad187ccd9785f0269b498a0359dec82fdc0b609b95b42",
+          "label": 4,
+          "relative_path": "cartoon/horse/03506.jpg",
+          "sample_id": 3506
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "c53eb1352389aec0239928301c35713eda809dd6c1469c411cf12b1180f5b684",
+          "label": 4,
+          "relative_path": "cartoon/horse/03666.jpg",
+          "sample_id": 3666
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "6eef78e8502361450031bca59a025a83b508e497bb472b68dea61b6ddc128db3",
+          "label": 4,
+          "relative_path": "cartoon/horse/03510.jpg",
+          "sample_id": 3510
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "d37f289fcfae854b9821aa167966163382d3a2791d110156e338aae3fd00858c",
+          "label": 5,
+          "relative_path": "cartoon/house/03964.jpg",
+          "sample_id": 3964
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "a0c4748098dd8662b8dab38214fca037e64efd51a2edf085113237f9043b8ac7",
+          "label": 5,
+          "relative_path": "cartoon/house/03816.jpg",
+          "sample_id": 3816
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "63df5e3dd4d3692e9992f840bfbd88827ab2c033a8eaab127cac6289e5e56258",
+          "label": 5,
+          "relative_path": "cartoon/house/03923.jpg",
+          "sample_id": 3923
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "0259ffcfd5c5beeabda7ed0d4e33464541ea73b1bc18288274d5181f5866cd30",
+          "label": 5,
+          "relative_path": "cartoon/house/03720.jpg",
+          "sample_id": 3720
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "b089e8e3f68a90d56a481077cab6b147938ed79c4552495d22c665c86244aaf0",
+          "label": 6,
+          "relative_path": "cartoon/person/04115.jpg",
+          "sample_id": 4115
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "a906e64f77b61b2a5f71f87e826653fdc7c9cdd2efe73933fec70fc5fbf50564",
+          "label": 6,
+          "relative_path": "cartoon/person/04173.jpg",
+          "sample_id": 4173
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "bfbfca94bd3e022a5055e5e23a5710526fe730b330e591a37e40c31c8c9d25c1",
+          "label": 6,
+          "relative_path": "cartoon/person/04022.jpg",
+          "sample_id": 4022
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "d42fee6a5c0e65bcd242c851e4ddce5be2a45b2b21d698db90b64459108cba8a",
+          "label": 6,
+          "relative_path": "cartoon/person/04391.jpg",
+          "sample_id": 4391
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "ff1da5e987eb77bed4f04d9b2bccb659922732d10f2091a53fe4acf957254c60",
+          "label": 0,
+          "relative_path": "sketch/dog/06228.png",
+          "sample_id": 6228
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "cb29c55755156f02f0e9dcb2428c35e2a90aa9a11dc3bdac5b263007fb1ed9bc",
+          "label": 0,
+          "relative_path": "sketch/dog/06286.png",
+          "sample_id": 6286
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "64f46c7f4d11a5ef6504fecd2424c58e102cb79a66e7ae004ad8771002669665",
+          "label": 0,
+          "relative_path": "sketch/dog/06400.png",
+          "sample_id": 6400
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "0972d543c513b9ec7aae912db6d57c96917ec33f387e3b02fa9be74c6a4bd146",
+          "label": 0,
+          "relative_path": "sketch/dog/06531.png",
+          "sample_id": 6531
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "edd9c94b4454fe6d1afe3a044433ebe9ff93afe4084107e806406698a6868283",
+          "label": 1,
+          "relative_path": "sketch/elephant/07286.png",
+          "sample_id": 7286
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "f143ca3acadcc34354d4f1cec3ee92a0362ae501c908c3b1d1659467f040cd54",
+          "label": 1,
+          "relative_path": "sketch/elephant/07171.png",
+          "sample_id": 7171
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "a5e6c825724d256dbf662f3f7dd5f3649b7817c9f1f398121ed55cd20d477b26",
+          "label": 1,
+          "relative_path": "sketch/elephant/07308.png",
+          "sample_id": 7308
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "e8eddc49c53e2b70edfee851181bb463a6645fdfb7a317356cc1584982eaa62d",
+          "label": 1,
+          "relative_path": "sketch/elephant/07573.png",
+          "sample_id": 7573
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "8fcfed4e3be2b001f66978ae6d0c4b512d06568426f1088451292854602fa6bb",
+          "label": 2,
+          "relative_path": "sketch/giraffe/07750.png",
+          "sample_id": 7750
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "283b865c902861669127ae1c02b457df40eb8241345853676cfd4c8429c52d3f",
+          "label": 2,
+          "relative_path": "sketch/giraffe/07607.png",
+          "sample_id": 7607
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "c545af55f3326f494af93807d4992aa4f5a990cd4702df9b8c4201119f8f9eb9",
+          "label": 2,
+          "relative_path": "sketch/giraffe/08160.png",
+          "sample_id": 8160
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "860b98855e4415bdcfa0767c63575be3af8beb8380f36e0f5b39d49e5d1ffbf2",
+          "label": 2,
+          "relative_path": "sketch/giraffe/07691.png",
+          "sample_id": 7691
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "88907b8e05aa628f05ad1a17d91c41b29279beb534df16f0de9b7a9e072566aa",
+          "label": 3,
+          "relative_path": "sketch/guitar/08334.png",
+          "sample_id": 8334
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "0a85f514b887f873b7c6953904e2c74e3e1239d2b7e25378750e3d204bc15a16",
+          "label": 3,
+          "relative_path": "sketch/guitar/08864.png",
+          "sample_id": 8864
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "51ca42107074786eabf43cf751bc21da76be75f29e4ae07ad66d490f6782714b",
+          "label": 3,
+          "relative_path": "sketch/guitar/08406.png",
+          "sample_id": 8406
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "a6f30391062d310c893b7b3d526615e4fad7a0a7f9067aced5d250c99bd69676",
+          "label": 3,
+          "relative_path": "sketch/guitar/08542.png",
+          "sample_id": 8542
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "a4feadc307843092ddb583c112115b1b7a7ac2f0597d886ffeef2d90ff804db8",
+          "label": 4,
+          "relative_path": "sketch/horse/09578.png",
+          "sample_id": 9578
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "0644ac5d32ff9748928afff8429c23adc18a43b76664618f5d2ec6235b5bc208",
+          "label": 4,
+          "relative_path": "sketch/horse/09726.png",
+          "sample_id": 9726
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "ea4529beccd6a6f82903fc305dec613dcbd419166904deeae422f21f8149db33",
+          "label": 4,
+          "relative_path": "sketch/horse/09231.png",
+          "sample_id": 9231
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "a02d4ed29d665e2426f3fc1a4c9e6788a148a829288a88a9c437993cb7f20e75",
+          "label": 4,
+          "relative_path": "sketch/horse/09053.png",
+          "sample_id": 9053
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "39bf4dcdb51f2c45c5b7484a08c34df8a3b2a1c84662354042d83c1715c488ab",
+          "label": 5,
+          "relative_path": "sketch/house/09788.png",
+          "sample_id": 9788
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "aca6d883d6ff9cf2496d6546ef497e3db451108daf45fd78a7d73cf3ca5ec1e5",
+          "label": 5,
+          "relative_path": "sketch/house/09782.png",
+          "sample_id": 9782
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "fbf9453d453ca6a4b3cdf9ff6873ef6ec9d89b91a7f55779d023dd8dc7f5b409",
+          "label": 5,
+          "relative_path": "sketch/house/09824.png",
+          "sample_id": 9824
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "046cf953c709c159870f5bd8a82cfa60f83ad73bbabf003de83808a5dcfc32c4",
+          "label": 5,
+          "relative_path": "sketch/house/09776.png",
+          "sample_id": 9776
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "a9bf7d73422efd0063f6eff50d75df661853f2d18c879971f034b20821c27809",
+          "label": 6,
+          "relative_path": "sketch/person/09856.png",
+          "sample_id": 9856
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "21314a6a922e3f66dc6935865968981786801818a32a74e7669dff9b6b1617b9",
+          "label": 6,
+          "relative_path": "sketch/person/09963.png",
+          "sample_id": 9963
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "cfbb307bed21fa2a6af3dd5c2b4b411f76d2b186aeb8e80efca5d8838e1e7a0d",
+          "label": 6,
+          "relative_path": "sketch/person/09917.png",
+          "sample_id": 9917
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "dae0c2d79cd39d0542c01f70fd21f719fe24def1853dd3ab39d213cb15b7a0a6",
+          "label": 6,
+          "relative_path": "sketch/person/09922.png",
+          "sample_id": 9922
+        }
+      ],
+      "seed": 3,
+      "source_training_ids_sha256": "cdacd2c4a19fc501831dd182dc79487943432e3e92981220d664180059a74ed2"
+    },
+    "4": {
+      "parent_f0_sha256": "afb82425109eba4e8a5574e17b21ddcf56c209c3b3a28692eff2210bd088b2c2",
+      "sample_ids_sha256": "ee47d46056cf1fcc1783404c57e0801eb46363a5b8515c41a7a368f578babd39",
+      "samples": [
+        {
+          "domain": "photo",
+          "image_sha256": "b1e66a84c2b9957378959f7c9e3659cd49459c2ea117bc1ed3b97e57c9fd2c43",
+          "label": 0,
+          "relative_path": "photo/dog/04528.jpg",
+          "sample_id": 4528
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "8291a27bcd4fd11f5cd1d94b07dce091dc092206353d52d18858d4ec42b7fdcc",
+          "label": 0,
+          "relative_path": "photo/dog/04488.jpg",
+          "sample_id": 4488
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "aef2e4a90b1fa24c6a2cb0d061334c6f56047f45cdf44ace5b2ce5d645469d8c",
+          "label": 0,
+          "relative_path": "photo/dog/04526.jpg",
+          "sample_id": 4526
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "8b17c6ce431ed6c74c161a11a66090f4c32959d4ef364b47e73aae4408899444",
+          "label": 0,
+          "relative_path": "photo/dog/04540.jpg",
+          "sample_id": 4540
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "2fbb217acd6195cfa321a7d836dbfc902b85df6438a70c773579a80c69c1f2f1",
+          "label": 1,
+          "relative_path": "photo/elephant/04707.jpg",
+          "sample_id": 4707
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "522c47efbbc3890ed72a2c2a50597b0244de10818e555282ef83f6d7f65a0141",
+          "label": 1,
+          "relative_path": "photo/elephant/04704.jpg",
+          "sample_id": 4704
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "42d2e01d5f742526d22b088252f4f71ef785210d5df9ff7d1662af36538c3755",
+          "label": 1,
+          "relative_path": "photo/elephant/04645.jpg",
+          "sample_id": 4645
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "a4845760c90abd85f2d6dac50cac48490834d51aee62de733893057c0729eda6",
+          "label": 1,
+          "relative_path": "photo/elephant/04600.jpg",
+          "sample_id": 4600
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "f7dda129517d322d8cbd9f4e67f06b7d59e6915a1c774f0e70d42a4d7dd34060",
+          "label": 2,
+          "relative_path": "photo/giraffe/04793.jpg",
+          "sample_id": 4793
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "e570f4c5ecdfc6993d555e9a93a01014f0b5b2ad69f3a742339aca03d650e3ca",
+          "label": 2,
+          "relative_path": "photo/giraffe/04825.jpg",
+          "sample_id": 4825
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "0efc01300bad2bb9591fd93017b45e716a21d54018ced4ffb815ff16dfd67bb6",
+          "label": 2,
+          "relative_path": "photo/giraffe/04854.jpg",
+          "sample_id": 4854
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "4e984e2e0b7dd6814a3c5209673289734fbfde5bc8968b0cf8cdd408b78d55e0",
+          "label": 2,
+          "relative_path": "photo/giraffe/04841.jpg",
+          "sample_id": 4841
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "6eeed5d85ef45b7cec903db0b8213ebefb8af08d5e3851a410b3ee40ff08f854",
+          "label": 3,
+          "relative_path": "photo/guitar/05031.jpg",
+          "sample_id": 5031
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "da6d6f422922aefc20ac53addf348ff86009caffd4186fa8ab774811a899d57b",
+          "label": 3,
+          "relative_path": "photo/guitar/05072.jpg",
+          "sample_id": 5072
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "6077750b4734efa3d4cf5b9188fd4820d443d440cb1b36634f3fd7476dcb2873",
+          "label": 3,
+          "relative_path": "photo/guitar/04986.jpg",
+          "sample_id": 4986
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "75e781c9135dd2b6adc0fc224285be758d5166fa35951bde52f6826e778ce345",
+          "label": 3,
+          "relative_path": "photo/guitar/05130.jpg",
+          "sample_id": 5130
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "3b8824a223d5e34827442080ff2dcc6542ce28c96af62a84d233570d93f3c619",
+          "label": 4,
+          "relative_path": "photo/horse/05349.jpg",
+          "sample_id": 5349
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "320aef21b495bd7277ce6e0f131ca48a3be3af599e00104298fee49dfe7e194c",
+          "label": 4,
+          "relative_path": "photo/horse/05333.jpg",
+          "sample_id": 5333
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "810af7bda40bf9cf6f213efca420f22a1ea791711329dd080fce50b9569843ae",
+          "label": 4,
+          "relative_path": "photo/horse/05322.jpg",
+          "sample_id": 5322
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "908be34fd8b004e10c53c18cb72c1b91a883d5cffe31d9692e3f7b3b0dc627ee",
+          "label": 4,
+          "relative_path": "photo/horse/05189.jpg",
+          "sample_id": 5189
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "98da3ecba1c12bd20786f22996bbaf249a6d3bd163c97e612dca57c18f2da831",
+          "label": 5,
+          "relative_path": "photo/house/05549.jpg",
+          "sample_id": 5549
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "6737fca2abb665573a94f0ddbbf2fcbc2087782dfc4dede45f2ac9fce5ad94b1",
+          "label": 5,
+          "relative_path": "photo/house/05626.jpg",
+          "sample_id": 5626
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "32e2d09e893042ed8980b812f4f930626c08fbd02b46486f12de74ca93893cea",
+          "label": 5,
+          "relative_path": "photo/house/05493.jpg",
+          "sample_id": 5493
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "42680e8014fbdfbd4b2861e58cfd6a6f7cb722f38e56d62c04d916f13c8cc48a",
+          "label": 5,
+          "relative_path": "photo/house/05373.jpg",
+          "sample_id": 5373
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "08d7578fa9b4fef241bebe06d966ac15bebe223963145585479890db607a0999",
+          "label": 6,
+          "relative_path": "photo/person/05855.jpg",
+          "sample_id": 5855
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "b094e177af0d97c35b3f7595be1e2f22b4e04a150d02caa7469b1e629d6538c4",
+          "label": 6,
+          "relative_path": "photo/person/06034.jpg",
+          "sample_id": 6034
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "551acb7dc0c2eed2fcf818ac9ba021cae5afb180f28a692c26f61d67fc64f785",
+          "label": 6,
+          "relative_path": "photo/person/05922.jpg",
+          "sample_id": 5922
+        },
+        {
+          "domain": "photo",
+          "image_sha256": "10ae347618a98083e5b3314380a4a4cde53b3b6682fa6a07fb1a860f122ad4d4",
+          "label": 6,
+          "relative_path": "photo/person/05744.jpg",
+          "sample_id": 5744
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "7214cedd33f74dbbd1d2d93fa02a479e64ff37b69eec4f22c1db58239a47d19e",
+          "label": 0,
+          "relative_path": "art_painting/dog/00378.jpg",
+          "sample_id": 378
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "9ed44401268e3bb639249dce800b6bb09415aa65b2e7f801666961113ed4458f",
+          "label": 0,
+          "relative_path": "art_painting/dog/00268.jpg",
+          "sample_id": 268
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "18b5c0d3290b6162e81a8f77538d7ce7b671bd6c377004c7bd0d45d9558eb354",
+          "label": 0,
+          "relative_path": "art_painting/dog/00083.jpg",
+          "sample_id": 83
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "9191f0afaae76c323dd1bd7604049c239cbd6a5188b6a172953c20b340c7bc27",
+          "label": 0,
+          "relative_path": "art_painting/dog/00188.jpg",
+          "sample_id": 188
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "8712e7d06fdc72c6ac773304a28f54eccd481b4d1ae2f9dd99eb73cdf97e66ac",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00390.jpg",
+          "sample_id": 390
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "49ffffc272c7ae8f9dc0bcb48ae1408d25898ffb1ea7672da391bac6c7640e45",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00612.jpg",
+          "sample_id": 612
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "1946348e61907b1e9ed329a2f04327aabd24f04720ebd5950ae6dee83027cf51",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00608.jpg",
+          "sample_id": 608
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "34922483cbd334301f7fb6dbf834057d7d0f62e9636363e6f82205d8b383fda3",
+          "label": 1,
+          "relative_path": "art_painting/elephant/00472.jpg",
+          "sample_id": 472
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "a295aa33bcefda95d36e1831569bfbc5cdcdc30c2807100f0e0e3925fa2f9a4d",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00903.jpg",
+          "sample_id": 903
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "2ac4e7d480148f020c432c254ecb40d5b144c676cf60c2f14f0acf098a6b27e8",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00767.jpg",
+          "sample_id": 767
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "2d242ce1bb9cb1ead59849279b0e3f852c26a75a51b4d350d5f12169336362cd",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00761.jpg",
+          "sample_id": 761
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "5a931542893296ae5d73d2e428877e9cb7960c8e6cc540cef20a9be0bf09b5bd",
+          "label": 2,
+          "relative_path": "art_painting/giraffe/00646.jpg",
+          "sample_id": 646
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "886adfef7eafbcdbceb94b6ac41a8f523c4c62cb9bf892c1be90cd34d1f8c0d9",
+          "label": 3,
+          "relative_path": "art_painting/guitar/01001.jpg",
+          "sample_id": 1001
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "fdefacb50eb0ea7610e98a5df583c89e4daf7741a214f1cd98555ffed391c17b",
+          "label": 3,
+          "relative_path": "art_painting/guitar/00963.jpg",
+          "sample_id": 963
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "d0c4ede2db6038a82d2d43e91f6d10f0bdb080b390833be5b31f5acb5cb9426b",
+          "label": 3,
+          "relative_path": "art_painting/guitar/00922.jpg",
+          "sample_id": 922
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "cc3c70d19a18579079d2706c89e8c2614f0a01fa393c947301a4fe1477363dea",
+          "label": 3,
+          "relative_path": "art_painting/guitar/01029.jpg",
+          "sample_id": 1029
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "3f721dec683e2c02773b6d619b14459a93a3874d512f67c46657016de1686727",
+          "label": 4,
+          "relative_path": "art_painting/horse/01172.jpg",
+          "sample_id": 1172
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "dc736744c0419dc66e582482c52544e8f0161fa4b86c73f09576c4c1d44ce952",
+          "label": 4,
+          "relative_path": "art_painting/horse/01163.jpg",
+          "sample_id": 1163
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "2cd6a72e7422a272fd08cce4712c896863ebdc6f345a0816de4afd7c152adfbd",
+          "label": 4,
+          "relative_path": "art_painting/horse/01294.jpg",
+          "sample_id": 1294
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "5dceadfd3e00b74f6737d5c20ccca2f45b96a29314b0bc8f94d6470469ddc9fd",
+          "label": 4,
+          "relative_path": "art_painting/horse/01189.jpg",
+          "sample_id": 1189
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "5b8a996f413553486c3c58bef2e394394e1c95251cd34681919e1a29a73c978b",
+          "label": 5,
+          "relative_path": "art_painting/house/01478.jpg",
+          "sample_id": 1478
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "994bc6cce7526752969b8af08130801380e7f5b78d2293c05fd60f826c093690",
+          "label": 5,
+          "relative_path": "art_painting/house/01573.jpg",
+          "sample_id": 1573
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "0988de296424f44adae440e7ff7d652c7f0e1c05e9fbb3f35d3a9c8bca7d53ea",
+          "label": 5,
+          "relative_path": "art_painting/house/01365.jpg",
+          "sample_id": 1365
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "9b6ce32558a4938e646251bceff5493911a762c667cf9868b91c9488917af725",
+          "label": 5,
+          "relative_path": "art_painting/house/01566.jpg",
+          "sample_id": 1566
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "38c447446bcc2e5cebcabc11bd31129d115c296b3ba2a742c2c48048d72d3d8b",
+          "label": 6,
+          "relative_path": "art_painting/person/01797.jpg",
+          "sample_id": 1797
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "47f61e22233626e6588eee2165c8216dd25ce9b36e353a31364f93f386a84550",
+          "label": 6,
+          "relative_path": "art_painting/person/01742.jpg",
+          "sample_id": 1742
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "2d6f4ebc1ceba116e4e41b5383746236c3b1c1498526d5542f3e6876e7ca39ee",
+          "label": 6,
+          "relative_path": "art_painting/person/01954.jpg",
+          "sample_id": 1954
+        },
+        {
+          "domain": "art_painting",
+          "image_sha256": "d38c54e7f5ba1433c0d942112b3206eadab1eb89af8c4076d05033325e5b7adb",
+          "label": 6,
+          "relative_path": "art_painting/person/01615.jpg",
+          "sample_id": 1615
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "06ba760b7d7083ea3b61fa90217ed40c2dd95fe9c8182a01c8455c4124803f37",
+          "label": 0,
+          "relative_path": "cartoon/dog/02255.jpg",
+          "sample_id": 2255
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "1f0267a55ab88162b0bf38b7a66d132a2056a4fce3353bee98e73f132ae99772",
+          "label": 0,
+          "relative_path": "cartoon/dog/02074.jpg",
+          "sample_id": 2074
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "a28911ec53c8d46cf9ff8879cf94c7005d93002e020e5b4e675ed35351e1c010",
+          "label": 0,
+          "relative_path": "cartoon/dog/02233.jpg",
+          "sample_id": 2233
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "ca4fd909ac45b808e6447d022e3f1459437fa3f5b94d77cda63798665616c6bf",
+          "label": 0,
+          "relative_path": "cartoon/dog/02365.jpg",
+          "sample_id": 2365
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "25ed40daba706fb7c2b99cf3abc11fd2a4ed8fc64e5617aaee1a2eb4652c2316",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02861.jpg",
+          "sample_id": 2861
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "a74d7e56b6a15e46ebca093f78ee17b291385af5106d81cc55d9258cad66f890",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02887.jpg",
+          "sample_id": 2887
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "6d4ec22f9026d0bd04e45d2900c8be2b06283cff5b811cab938c825d63aefc72",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02643.jpg",
+          "sample_id": 2643
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "6c48b5e44604e4fd5bc9fc1af63b2d5354edee6478a9c67294ad4e4246319072",
+          "label": 1,
+          "relative_path": "cartoon/elephant/02679.jpg",
+          "sample_id": 2679
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "f5ed24543dd319e7f066c3a242df50468254768c78b124bcee702692aadcb979",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03049.jpg",
+          "sample_id": 3049
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "f82c38063876b14205939a50b76323c535b30a9724cbe16d0356225e4e03d66d",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03184.jpg",
+          "sample_id": 3184
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "71db38874331be05f72ad733c8bb166b8ca7bcf448fbaf6b333554ee8ab0c81c",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03018.jpg",
+          "sample_id": 3018
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "6341bb4650139324f4c3b0bc83b77e140d10c6ab6f82e17987ace137c5e394b6",
+          "label": 2,
+          "relative_path": "cartoon/giraffe/03132.jpg",
+          "sample_id": 3132
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "95bf5bc0e306217d6a9b92ffdea46f53d2c8b42aef2fd0519006833c4c0e4e8e",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03345.jpg",
+          "sample_id": 3345
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "69342a4c806b187831151500ed4c8d36564cdc5849f7ca921fa48335abb68f58",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03355.jpg",
+          "sample_id": 3355
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "bfb86160c7c41290504d2c1d2ccc63562299a908063f7b34404bdef03b160585",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03246.jpg",
+          "sample_id": 3246
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "1bebfe691db2bd97884ff3520da54736cd36e3a942cd1d5e248c9fe61493e161",
+          "label": 3,
+          "relative_path": "cartoon/guitar/03261.jpg",
+          "sample_id": 3261
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "ed1c0f194fdfebe5e2d9177a0615405002d7dacbdde7648b590a149155373a1a",
+          "label": 4,
+          "relative_path": "cartoon/horse/03498.jpg",
+          "sample_id": 3498
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "8635fe5a873ea62ea8bea09b7225289afc2c64557460a9520c798af6f5263008",
+          "label": 4,
+          "relative_path": "cartoon/horse/03467.jpg",
+          "sample_id": 3467
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "ad6457f3caf1d8ece81fd7743c8df0935c2ddcebbf73c4885957e44d4bfed7fd",
+          "label": 4,
+          "relative_path": "cartoon/horse/03494.jpg",
+          "sample_id": 3494
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "f2b5d57acc746362329719af14417279a3e5882b40ae92afd628b4f7be69e8f5",
+          "label": 4,
+          "relative_path": "cartoon/horse/03633.jpg",
+          "sample_id": 3633
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "d5db7f4b498348e3abe40ad51783eda5b92291218dee4b82021fecb8c57ce8de",
+          "label": 5,
+          "relative_path": "cartoon/house/03985.jpg",
+          "sample_id": 3985
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "a6d6053050b7ef1e1a90fff3e4bfa2c6b8f25715d3bda702ff3a280090e5fa13",
+          "label": 5,
+          "relative_path": "cartoon/house/03819.jpg",
+          "sample_id": 3819
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "3e11226f688af4ead70284da5692464789137af7d07055a1d66cce0521f1e31f",
+          "label": 5,
+          "relative_path": "cartoon/house/03870.jpg",
+          "sample_id": 3870
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "e6d1bcad4ea1d57b1d1be7dd892082e338d479470af93e6ce958b83100e7b6c4",
+          "label": 5,
+          "relative_path": "cartoon/house/03846.jpg",
+          "sample_id": 3846
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "27e735e9a1993ec9e9fdf5c88df66e740d8f1c5bf02b632d966373d2c6e81d58",
+          "label": 6,
+          "relative_path": "cartoon/person/04162.jpg",
+          "sample_id": 4162
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "4530829dc5e937589cffad71dab4149b80102cf6ebd4622edad49468b37a5bdf",
+          "label": 6,
+          "relative_path": "cartoon/person/04048.jpg",
+          "sample_id": 4048
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "40e3dc8ee54042fc3624c43c802eb5e76bdc8a5ea7de0de2fa8c02c9824912b8",
+          "label": 6,
+          "relative_path": "cartoon/person/04350.jpg",
+          "sample_id": 4350
+        },
+        {
+          "domain": "cartoon",
+          "image_sha256": "02de230e90d8b7990a315d32588f4c5f2c1bfb1e941d8935dff5f7472c505ac3",
+          "label": 6,
+          "relative_path": "cartoon/person/04324.jpg",
+          "sample_id": 4324
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "1c319e93c3f0542cc3ca08e175445877969bdb883d09e41257d2822cf843fb98",
+          "label": 0,
+          "relative_path": "sketch/dog/06724.png",
+          "sample_id": 6724
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "39f03ae3d2b7596cd43108cb504e4cc7312df0b7f778fe04684dbf09d8124d25",
+          "label": 0,
+          "relative_path": "sketch/dog/06445.png",
+          "sample_id": 6445
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "0ae9e4acfc64106264b318a8197670dbcf2d6e561f109f35ab09a9f6fec8f172",
+          "label": 0,
+          "relative_path": "sketch/dog/06331.png",
+          "sample_id": 6331
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "35ac15a669208d6952f61b87de34da2740083b46f9bc6dcb17cf480dbd9300b8",
+          "label": 0,
+          "relative_path": "sketch/dog/06123.png",
+          "sample_id": 6123
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "f9fe3cc08a2fa089f84de170c5a764a02d9fad12a26c4abb3439575f80fab3a8",
+          "label": 1,
+          "relative_path": "sketch/elephant/07398.png",
+          "sample_id": 7398
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "81f9e0e67b43a5d538841ce6a75a76c7ae0953f9e422db738a62bbfb5d420e52",
+          "label": 1,
+          "relative_path": "sketch/elephant/07026.png",
+          "sample_id": 7026
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "3e6405742194332d1fc8ed6295e2f0fe2c0eef4eddf1feb40a8277a66c77f924",
+          "label": 1,
+          "relative_path": "sketch/elephant/06983.png",
+          "sample_id": 6983
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "5bc7c20c85e5d5589ea16e13aba035c3f2f1a222b6cca124ebb6e18b204446a2",
+          "label": 1,
+          "relative_path": "sketch/elephant/07316.png",
+          "sample_id": 7316
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "840a4325103d747e9b08f1fa77ba43873afe0375e6b025fdef9417ae967e31a4",
+          "label": 2,
+          "relative_path": "sketch/giraffe/08241.png",
+          "sample_id": 8241
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "48f01c9f264942d7c0a5401075cfa99b0ef53b2355b8756a48aec96583e7e5ef",
+          "label": 2,
+          "relative_path": "sketch/giraffe/07947.png",
+          "sample_id": 7947
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "ed54d8d72b2eb6d2d4fa31f7a817fdc919184598cadb3a560e490fa78c8dfe7d",
+          "label": 2,
+          "relative_path": "sketch/giraffe/07670.png",
+          "sample_id": 7670
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "39df8ad6b39a2cdc477cb1ba075121e94515dfa5cc8c4380890b02c23b0b8f31",
+          "label": 2,
+          "relative_path": "sketch/giraffe/07903.png",
+          "sample_id": 7903
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "7c1560a16f19879fa6e4e8b23185ce225efce9beb55ce1343addebab73465a86",
+          "label": 3,
+          "relative_path": "sketch/guitar/08928.png",
+          "sample_id": 8928
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "05db2b4077774dc0d34313982c06e8490576529c3289f40c27e41bb76e0466a3",
+          "label": 3,
+          "relative_path": "sketch/guitar/08437.png",
+          "sample_id": 8437
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "594b567dd87a75f754f36d46f6345373394c099b77b220f6f1ffb7f3de8a5d84",
+          "label": 3,
+          "relative_path": "sketch/guitar/08358.png",
+          "sample_id": 8358
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "210bb504f6e480533cbf07d6868228a9078de85d43bc77af4ea807cdd404a08b",
+          "label": 3,
+          "relative_path": "sketch/guitar/08405.png",
+          "sample_id": 8405
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "b5134989a191ee90bf04098a7fc46092cddb739b72907f0cf35946f4049e1942",
+          "label": 4,
+          "relative_path": "sketch/horse/09459.png",
+          "sample_id": 9459
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "0b3fc05b54c0021982c72b22dfb265db2508c5f54eea4b1ba1ddaa42b58d55ac",
+          "label": 4,
+          "relative_path": "sketch/horse/09094.png",
+          "sample_id": 9094
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "71f8954433c519e8466c6dc3f2a7452e23890b0fa108d3422f564bb6f072f29d",
+          "label": 4,
+          "relative_path": "sketch/horse/09009.png",
+          "sample_id": 9009
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "4d407d7462c8e94657e990ad71e7b1a4d4e72fe65df2b8118973d9b1e77786ce",
+          "label": 4,
+          "relative_path": "sketch/horse/09531.png",
+          "sample_id": 9531
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "09eae5242be117cf3e304a1a25df725ff622beef3d823cbb8325f4ca07602624",
+          "label": 5,
+          "relative_path": "sketch/house/09822.png",
+          "sample_id": 9822
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "05d905921a396689d3a2b82114e180bf8fe400c3d492e1a2437dc30567948805",
+          "label": 5,
+          "relative_path": "sketch/house/09759.png",
+          "sample_id": 9759
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "fd9c294d84438f7b7ea33152fa40e22b391469e428788a988b50934feb38500b",
+          "label": 5,
+          "relative_path": "sketch/house/09804.png",
+          "sample_id": 9804
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "5df98307df0d6fb404790daae84bf1b4d1cd6ec578439f4f6071be2f6728d274",
+          "label": 5,
+          "relative_path": "sketch/house/09799.png",
+          "sample_id": 9799
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "28fadd650bda7c60c68c50b7becfb39db65c263fa847e373c18656c7b2a5df50",
+          "label": 6,
+          "relative_path": "sketch/person/09870.png",
+          "sample_id": 9870
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "a5e05b8aebf4e53f52f3da5034d656571b673b60eeacdbc11e2b9f0ec64d7969",
+          "label": 6,
+          "relative_path": "sketch/person/09950.png",
+          "sample_id": 9950
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "ad98060f4b548368c222bcb7efcbf06689aa426bbc2e5b54cef76d842e95a49d",
+          "label": 6,
+          "relative_path": "sketch/person/09832.png",
+          "sample_id": 9832
+        },
+        {
+          "domain": "sketch",
+          "image_sha256": "65f29fe6c72ba2998891696b8106e700587b37336a280634b528a70bc5b6fe7d",
+          "label": 6,
+          "relative_path": "sketch/person/09902.png",
+          "sample_id": 9902
+        }
+      ],
+      "seed": 4,
+      "source_training_ids_sha256": "267f04a89338180c7c8eddc42ea59fe169bbf484eeba890bc336f5b457dada8a"
+    }
+  },
+  "source": "exact F0 training IDs (BASE subset) only",
+  "total_per_seed": 112
+}
