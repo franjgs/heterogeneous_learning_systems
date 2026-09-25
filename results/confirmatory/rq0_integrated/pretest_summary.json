@@ -1,0 +1,16 @@
+{
+  "TEST_STATUS": "CLOSED",
+  "hash_mismatches": 0,
+  "hls_sepomega_mismatches": 0,
+  "max_frozen_value_error": 9.93129189996722e-17,
+  "max_identity_error": 0.0,
+  "nan_count": 0,
+  "pretest_status": "PASS",
+  "protocol_commit": "8b16394",
+  "provenance_mismatches": 0,
+  "states_expected": 70,
+  "states_verified": 70,
+  "test_barrier_passed": true,
+  "tests_passed": true,
+  "validation_max_error": 1.1102230246251565e-16
+}

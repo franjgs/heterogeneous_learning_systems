@@ -1,0 +1,41 @@
+{
+  "TEST_STATUS": "CLOSED",
+  "created_at": "2026-09-25T13:17:45.033421+00:00",
+  "evaluation_manifest_sha256": "a803b6a016a8f60fd220e28c85197bcc751e6c82a1cca287019a9507b1f9b145",
+  "grids": {
+    "N": [
+      25,
+      50,
+      100
+    ],
+    "c": [
+      0.0,
+      0.02,
+      0.05,
+      0.1,
+      0.15
+    ],
+    "domains": [
+      "photo",
+      "art_painting",
+      "cartoon",
+      "sketch"
+    ],
+    "h": [
+      1,
+      2,
+      5,
+      10
+    ],
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "policy_checks_sha256": "5451f81fe61959b76d37fc784180cfdcd58337822f4330d41e9cb44b0ea6ca12",
+  "protocol_commit": "8b16394",
+  "validation_scores_sha256": "be633518f953593b418d95f2eaab4941c234df784db1adcfaebb7d6e74d872f6"
+}
