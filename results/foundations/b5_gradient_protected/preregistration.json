@@ -38,7 +38,7 @@
     5,
     10
   ],
-  "implementation_sha256": "9b6211f9fce30e4450ce9867190aa4e5d49d9e9167dfade9d9d6067bf387033a",
+  "implementation_sha256": "6d057b467b5cb86f294499c0b57f657fb1010a6d1f99fcf51f283c49b789d4c2",
   "method": "GREP",
   "optimizer": "SGD, same B2.4 learning rate/momentum/weight decay",
   "parent_audit": {
@@ -48,6 +48,7 @@
     "provenance": "PASS"
   },
   "projection_eps": 1e-12,
+  "projection_numerics": "float64-scalars-and-projected-vector-v2",
   "projection_tolerance": 1e-07,
   "protocol_id": "B5-PACS-gradient-protected-v1",
   "seeds": [

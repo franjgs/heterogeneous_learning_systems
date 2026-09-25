@@ -41,6 +41,7 @@ COSTS = (0.0, 0.02, 0.05, 0.10, 0.15)
 HORIZONS = (1, 2, 5, 10)
 PROJECTION_EPS = 1e-12
 PROJECTION_TOLERANCE = 1e-7
+PROJECTION_NUMERICS = "float64-scalars-and-projected-vector-v2"
 TOTAL_FITS = 60
 TOTAL_VALIDATION_EVALUATIONS = 60
 TOTAL_STEPS = sum(20 * (3 * int(np.ceil(n / 16))) for n in N_VALUES)
@@ -124,6 +125,7 @@ def preregistration(parent_audit: dict[str, object]) -> dict[str, object]:
         "gradient_rule": "if dot>=0: g=g_opp+g_mem; else g=g_opp-(dot/(norm_mem_sq+1e-12))*g_mem+g_mem",
         "projection_eps": PROJECTION_EPS,
         "projection_tolerance": PROJECTION_TOLERANCE,
+        "projection_numerics": PROJECTION_NUMERICS,
         "criteria": {
             "A_cross": "mean GREP cross_change >=0 in >=4/5 seeds",
             "B_local": "mean GREP local_change >=0 in >=4/5 seeds",
@@ -161,14 +163,24 @@ def project_gradients(
     projected = bool(dot.item() < 0)
     if projected:
         coefficient = dot / (norm_mem_sq + PROJECTION_EPS)
-        opp_projected = tuple(go - coefficient.to(go.dtype) * gm for go, gm in zip(grad_opp, grad_mem, strict=True))
+        # Keep the projection itself in float64.  Casting the coefficient to
+        # float32 before this subtraction creates a large cancellation residue
+        # for model-sized gradients.  Only the final combined gradient is cast
+        # back to the parameter dtype required by the optimizer.
+        opp_projected = tuple(
+            go.double() - coefficient * gm.double()
+            for go, gm in zip(grad_opp, grad_mem, strict=True)
+        )
     else:
-        opp_projected = tuple(go.clone() for go in grad_opp)
-    dot_after = sum((gp.double() * gm.double()).sum() for gp, gm in zip(opp_projected, grad_mem, strict=True))
-    norm_projected_sq = sum((gp.double() ** 2).sum() for gp in opp_projected)
+        opp_projected = tuple(go.double() for go in grad_opp)
+    dot_after = sum((gp * gm.double()).sum() for gp, gm in zip(opp_projected, grad_mem, strict=True))
+    norm_projected_sq = sum((gp ** 2).sum() for gp in opp_projected)
     if projected and dot_after.item() < -PROJECTION_TOLERANCE:
         raise RuntimeError(f"projected gradient constraint failed: {dot_after.item()}")
-    combined = tuple(gp + gm for gp, gm in zip(opp_projected, grad_mem, strict=True))
+    combined = tuple(
+        (gp + gm.double()).to(dtype=go.dtype)
+        for gp, gm, go in zip(opp_projected, grad_mem, grad_opp, strict=True)
+    )
     return combined, {
         "dot_before": float(dot), "dot_after": float(dot_after),
         "norm_opp": float(torch.sqrt(norm_opp_sq)),
@@ -319,15 +331,20 @@ def run_full(args: argparse.Namespace) -> None:
     cache.mkdir(parents=True, exist_ok=True)
     progress_path = args.output_dir / "progress.json"
     prereg_hash = sha256_json(prereg)
-    progress = json.loads(progress_path.read_text()) if progress_path.is_file() else {
+    fresh_progress = {
         "header": {"protocol_id": PROTOCOL_ID, "preregistration_sha256": prereg_hash, "TEST_STATUS": TEST_STATUS},
         "fits": {},
     }
+    progress = json.loads(progress_path.read_text()) if progress_path.is_file() else fresh_progress
     if progress["header"].get("preregistration_sha256") != prereg_hash:
-        raise RuntimeError("restart preregistration mismatch")
+        # A numerically different implementation cannot reuse a prior state.
+        # Start a new generation while leaving the invalidated checkpoint on
+        # disk for audit; the empty progress map prevents its reuse.
+        progress = fresh_progress
+        atomic_json(progress_path, progress)
     timing = ExperimentTimingLogger(
         "B5 Gradient-Protected Development", TOTAL_FITS, {"GREP": TOTAL_FITS},
-        state_path=cache / "experiment_timing.json", resume=True, persist=True,
+        state_path=cache / f"experiment_timing_{prereg_hash[:12]}.json", resume=True, persist=True,
     )
     timing.header(["Device: CPU", f"TEST: {TEST_STATUS}", "Fits: 60 GREP", "VALIDATION evaluations: 60"])
     step_rows = []
