@@ -65,10 +65,10 @@ not be conflated with B1.1--B13 above. Their consolidated status is recorded in
   policy.
 
 The theory-to-experiment frontier is therefore explicit: B2.1 supports
-`learning -> competence changes -> V(S) -> routing -> Gamma_oper`. B2.2
-instantiated the `operation -> learning opportunity` link, but its frozen
-classification was `INCONCLUSIVE`; it does not yet support that link with the
-preregistered seed reproducibility.
+`learning -> competence changes -> V(S) -> routing -> Gamma_oper`. B2.2 and
+B2.3 instantiated operation-gated singleton and accumulated opportunities,
+respectively, but both frozen classifications were `INCONCLUSIVE`; neither
+establishes the complete RQ0 mechanism with preregistered seed reproducibility.
 
 ## B2.2 preregistration and completed result
 
@@ -105,7 +105,7 @@ documented in
 It is a `RETROSPECTIVE BRIDGE ANALYSIS`, not an amendment to B2.2 and not
 evidence for or against the existence of accumulated-opportunity rescue.
 
-## B2.3 accumulated-opportunity portfolio preregistration
+## B2.3 accumulated-opportunity portfolio result
 
 [B23_PROTOCOL.md](B23_PROTOCOL.md) freezes a self-contained PACS experiment for
 the question: can two operation-generated learning opportunities that are
@@ -124,12 +124,21 @@ valuations. `POSITIVE` requires the event in at least 3/5 seeds
 for one exact `N × pair × c × B` cell; `NULL` requires no event anywhere; any
 other valid nonempty result is `INCONCLUSIVE`.
 
-Status: **B2.3 IMPLEMENTED — NOT RUN**. The CPU-only runner, immutable
-opportunity store, restart/provenance checks, compatibility-first analyzer,
-and synthetic tests are in
+Status: **B2.3 COMPLETE — INCONCLUSIVE**. The CPU-only run completed 160/160
+fits, 250/250 VALIDATION evaluations, 1,800/1,800 primary rows, and 450/450
+midpoint valuations. Compatibility passed and TEST remained closed. Three
+rows in two learned pair states met the strict rescue event; none of the 360
+exact cells reproduced rescue in at least 3/5 seeds. Learning interaction was
+positive in 89/90 states, but only three of 917 positive-interaction candidate
+rows overcame both singleton deficits. Singleton value was usually negative,
+and 0/3 rescues survived the secondary fixed-total-compute midpoint check.
+
+The runner, immutable opportunity store, restart/provenance checks,
+compatibility-first analyzer, and tests are in
 [`experiments/pilots/b23_portfolio_opportunity/`](../../experiments/pilots/b23_portfolio_opportunity/).
-No B2.3 training, teacher inference, or scientific result has been produced;
-TEST remains closed.
+The full closure and evidence paths are in
+[HLS Scientific Checkpoint after B2.3](../checkpoints/HLS_checkpoint_after_B23.md)
+and the [result audit map](../../results/pilots/b23_portfolio_opportunity/AUDIT_README.md).
 
 ## Operational timing convention
 

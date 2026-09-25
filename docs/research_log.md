@@ -1037,3 +1037,28 @@ training or teacher inference.
 Status: **B2.3 IMPLEMENTED — NOT RUN**. The planned 160 fits, 60 real
 opportunity constructions, and PACS execution have not been run. TEST remains
 closed and no B2.3 scientific classification exists.
+
+## Decision 039 — B2.3 completed with an inconclusive frozen classification
+
+Date: 2026-09-25.
+
+The common-provenance CPU execution completed 160/160 fits, 250/250 VALIDATION
+evaluations, 1,800/1,800 primary rows, and 450/450 midpoint valuations. The
+compatibility audit passed and TEST remained closed. Three rows, representing
+two of 90 learned pair states, met the strict portfolio-rescue event. All three
+exact `N × pair × c × B` cells reproduced in only 1/5 seeds, so zero of 360
+cells met the frozen >=3/5 criterion and the classification is
+`INCONCLUSIVE`.
+
+The autopsy found positive `Gamma_learn` in 89/90 states, with its mean rising
+from 0.057592 at N=25 to 0.250782 at N=100. In the primary funnel, 917/925 rows
+with both singleton deficits had positive `Gamma_oper`, but only three were
+large enough to overcome `-(H_i+H_j)`. Within the same B2.3 provenance,
+singleton `DeltaV` was negative in 273/300 deduplicated valuations. None of
+the three primary rescues survived the secondary fixed-total-compute midpoint
+comparison. Thus B2.3 records systematic positive learning interaction and
+operational masking, but does not provide reproducible support for portfolio
+rescue or establish the dynamic advantage sought in RQ0.
+
+The closure, limitations, execution record, and evidence map are in
+`docs/checkpoints/HLS_checkpoint_after_B23.md`. No B2.4 has been designed.

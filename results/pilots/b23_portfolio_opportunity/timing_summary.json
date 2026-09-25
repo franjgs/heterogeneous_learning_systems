@@ -1,0 +1,36 @@
+{
+  "experiment": "B2.3 PACS portfolio-opportunity experiment",
+  "started_at": "2026-09-24 09:51:06 +0200",
+  "finished_at": "2026-09-25 07:12:03 +0200",
+  "experiment_accumulated_seconds": 47596.168121884286,
+  "experiment_accumulated_hhmmss": "13:13:16",
+  "categories": {
+    "F0": {
+      "count": 5,
+      "total_seconds": 3213.071505540982,
+      "total_hhmmss": "00:53:33"
+    },
+    "D": {
+      "count": 5,
+      "total_seconds": 20629.81933899998,
+      "total_hhmmss": "05:43:49"
+    },
+    "singleton": {
+      "count": 60,
+      "total_seconds": 5933.869463129027,
+      "total_hhmmss": "01:38:53"
+    },
+    "joint": {
+      "count": 90,
+      "total_seconds": 17812.095283505274,
+      "total_hhmmss": "04:56:52"
+    },
+    "analysis": {
+      "count": 1,
+      "total_seconds": 7.312530709023122,
+      "total_hhmmss": "00:00:07"
+    }
+  },
+  "source": ".cache/experiment_timing.json",
+  "note": "Compact operational summary only; timing is excluded from scientific fingerprints."
+}

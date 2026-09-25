@@ -1,9 +1,17 @@
 # PACS B2.3 portfolio opportunity experiment
 
-Status: **IMPLEMENTED — NOT RUN**. The frozen scientific authority is
+Status: **COMPLETE — INCONCLUSIVE**. The frozen scientific authority is
 [`B23_PROTOCOL.md`](../../../docs/experimental_foundations/B23_PROTOCOL.md).
 This implementation does not alter its models, grids, dose rule, event, or
 classification.
+
+The valid CPU execution completed 160/160 fits, 250/250 VALIDATION
+evaluations, 1,800/1,800 primary rows, and 450/450 midpoint valuations with
+TEST closed. Three rows met the strict portfolio-rescue event, but no exact
+cell reproduced it in at least 3/5 seeds. The compatibility audit passed and
+the frozen classification is `INCONCLUSIVE`. See
+[`HLS_checkpoint_after_B23.md`](../../../docs/checkpoints/HLS_checkpoint_after_B23.md)
+and the [result audit map](../../../results/pilots/b23_portfolio_opportunity/AUDIT_README.md).
 
 The CPU-only runner creates one `F0` and one `D` for each seed, 20 immutable
 100-example teacher streams with 60 nested `N={25,50,100}` opportunity views,

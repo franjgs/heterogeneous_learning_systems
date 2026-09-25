@@ -1,11 +1,12 @@
 # PACS B2.3 results
 
-Status: **NOT RUN**. This directory is prepared for the outputs of the frozen
-B2.3 protocol. No scientific result, model checkpoint, opportunity artifact,
-or partial execution is stored in Git. Runtime checkpoints and caches are
-written under `.cache/`, which is ignored.
+Status: **COMPLETE — INCONCLUSIVE**. The valid CPU run completed 160/160 fits,
+250/250 VALIDATION evaluations, 1,800/1,800 primary rows, and 450/450 midpoint
+valuations with TEST closed. It found three portfolio rescues in two learned
+pair states, but no exact cell reproduced the event in at least 3/5 seeds.
 
-The completed runner will create the machine-readable manifests, state
-metrics, 1,800 primary rows, 450 midpoint dose-control valuations,
-reproducibility table, competence-change decomposition, representative cases,
-and final summary only after the mandatory compatibility audit succeeds.
+The compatibility audit passed. See [AUDIT_README.md](AUDIT_README.md) for the
+preserved machine-readable evidence and
+[HLS_checkpoint_after_B23.md](../../../docs/checkpoints/HLS_checkpoint_after_B23.md)
+for the scientific closure.
+Runtime checkpoints and caches remain under the ignored `.cache/` directory.

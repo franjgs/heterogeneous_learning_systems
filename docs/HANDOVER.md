@@ -1,7 +1,7 @@
 # Heterogeneous Learning Systems — Handover
 
-Last updated: 2026-09-24
-Repository state: HLS ontology v1 is closed. The theoretical record includes equivalence/frontier, opportunity-generation, portfolio-interaction, operational-interaction, and finite-set opportunity-value results. B2.1 supplies validation-only PACS evidence that learned competence developments interact and that Fast/Deep organization transforms those interactions. B2.2 completed all 60 CPU opportunity updates and 1,200 analytical rows with TEST closed; its frozen classification is `INCONCLUSIVE` because four favorable observations occurred but no favorable cell reproduced in at least two seeds. A retrospective B2.1–B2.2 portfolio bridge was halted because independently trained F0, D, and all 60 singleton vectors were numerically incompatible; it produced no valid H_ij claim. Each theoretical result is model-scoped; none establishes necessary or strictly superior joint management. B2.3 is `IMPLEMENTED — NOT RUN`: its CPU-only provenance-locked runner will test accumulated-opportunity portfolio rescue with matched per-opportunity dose and a fixed-total-compute midpoint control.
+Last updated: 2026-09-25
+Repository state: HLS ontology v1 is closed. The theoretical record includes equivalence/frontier, opportunity-generation, portfolio-interaction, operational-interaction, and finite-set opportunity-value results. B2.3 is **COMPLETE — INCONCLUSIVE**: its common-provenance CPU run completed 160 fits and 1,800 primary rows with TEST closed and compatibility PASS. It found 3/1,800 portfolio rescues in two learned pair states, but 0/360 exact cells met the frozen >=3/5-seed criterion. Learning interaction was positive in 89/90 states; 917/925 rows with both singleton deficits had positive operational interaction, but only three overcame those deficits. Singleton future value was usually negative, and none of the three rescues survived the secondary fixed-total-compute midpoint comparison. No B2.4 has been designed. The next action is a scientific decision based on the B2.3 checkpoint, not automatic experiment expansion.
 
 ## Mandatory first reads
 
@@ -26,7 +26,8 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 17. [paper/](../paper/) — working draft with a stale RQ0 formulation; do not let it set programme direction and do not update it without a dedicated paper task.
 18. [checkpoints/HLS_checkpoint_after_B21.md](checkpoints/HLS_checkpoint_after_B21.md) — concise scientific checkpoint linking the established theory, negative boundaries, B1, B2.0, B2.1, and the remaining empirical gap.
 19. [experimental_foundations/B22_PROTOCOL.md](experimental_foundations/B22_PROTOCOL.md) — frozen protocol for the completed PACS opportunity-value experiment; see [the B2.2 diagnostic](../results/pilots/b22_opportunity_value/b22_diagnostic.md) for the audited result.
-20. [experimental_foundations/B23_PROTOCOL.md](experimental_foundations/B23_PROTOCOL.md) — frozen, unimplemented PACS protocol for accumulated-opportunity portfolio rescue with common counterfactual provenance.
+20. [experimental_foundations/B23_PROTOCOL.md](experimental_foundations/B23_PROTOCOL.md) — frozen protocol for the completed PACS accumulated-opportunity portfolio experiment.
+21. [checkpoints/HLS_checkpoint_after_B23.md](checkpoints/HLS_checkpoint_after_B23.md) — current scientific checkpoint, including the B2.3 autopsy, compute-dose sensitivity, and evidence map.
 
 ## Central programme
 
@@ -363,7 +364,7 @@ zero of 90 learned pair states were counterfactually compatible and no
 `H_i<0, H_j<0, H_ij>0` test was validly performed. This is missing
 identification, not evidence that portfolio rescues are absent.
 
-### B2.3 preregistered status
+### B2.3 completed status
 
 [B23_PROTOCOL.md](experimental_foundations/B23_PROTOCOL.md) freezes a
 self-contained test of whether two operation-generated opportunities that are
@@ -378,13 +379,19 @@ requires rescue in at least 3/5 seeds within one
 exact `N × pair × c × B` cell; `NULL` means no rescue anywhere; remaining valid
 nonempty cases are `INCONCLUSIVE`.
 
-Status: **B2.3 IMPLEMENTED — NOT RUN**. The CPU-only implementation is in
+Status: **B2.3 COMPLETE — INCONCLUSIVE**. The CPU-only implementation is in
 [`experiments/pilots/b23_portfolio_opportunity/`](../experiments/pilots/b23_portfolio_opportunity/).
-It enforces immutable opportunity hashes, a single shared F0/D pair per seed,
-direct-from-F0 singleton/joint genealogy, the corrected midpoint/final dose,
-safe restart, and compatibility-first analysis. No B2.3 model or opportunity
-has been generated, TEST remains closed, and no B2.3 empirical conclusion
-exists.
+The compatibility audit passed all 250 VALIDATION vectors; TEST remained
+closed. The run completed 160/160 fits and 1,800/1,800 primary rows. Three rows
+met the rescue event, but no exact cell reproduced it in at least 3/5 seeds.
+Learning interaction was positive in 89/90 states. The main bottleneck was
+magnitude: 917 rows reached the positive-operational-interaction stage, but
+only three interactions overcame both singleton deficits. Singleton value was
+negative in 273/300 deduplicated valuations. All three rescues disappeared at
+the secondary fixed-total-compute midpoint, so B2.3 does not establish rescue
+under equal total training compute. See the current
+[B2.3 checkpoint](checkpoints/HLS_checkpoint_after_B23.md). No B2.4 has been
+designed; the next action is a scientific decision after this checkpoint.
 
 ## General theory audit retained for later work
 
