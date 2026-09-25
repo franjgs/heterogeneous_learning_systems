@@ -1,0 +1,68 @@
+{
+  "N": [
+    25,
+    50,
+    100
+  ],
+  "TEST_STATUS": "PREVIOUSLY_OPENED_NOT_USED_IN_B5",
+  "analysis_sha256": "9af32fc035b46669f33cb4514f2259cd9b93b7ffa2bea53a6fcb363641825d46",
+  "baseline": "frozen B2.4 REP reused without retraining",
+  "batch": "exact B2.4 REP: 8 opportunity + 8 replay",
+  "c": [
+    0.0,
+    0.02,
+    0.05,
+    0.1,
+    0.15
+  ],
+  "criteria": {
+    "A_cross": "mean GREP cross_change >=0 in >=4/5 seeds",
+    "B_local": "mean GREP local_change >=0 in >=4/5 seeds",
+    "C_value": "at least one domain x N has DeltaV_GREP(c)>0 in >=4/5 seeds for every c",
+    "D_integration": "at least one c x h cell has kappa_star>0 in >=4/5 seeds",
+    "INCONCLUSIVE": "all other valid outcomes",
+    "NULL": "C_value false AND D_integration false AND GREP does not improve mean cross_change versus REP in >=4/5 seeds",
+    "POSITIVE": "A_cross AND B_local AND C_value AND D_integration"
+  },
+  "device": "cpu",
+  "domains": [
+    "photo",
+    "art_painting",
+    "cartoon",
+    "sketch"
+  ],
+  "gradient_rule": "if dot>=0: g=g_opp+g_mem; else g=g_opp-(dot/(norm_mem_sq+1e-12))*g_mem+g_mem",
+  "h": [
+    1,
+    2,
+    5,
+    10
+  ],
+  "implementation_sha256": "9b6211f9fce30e4450ce9867190aa4e5d49d9e9167dfade9d9d6067bf387033a",
+  "method": "GREP",
+  "optimizer": "SGD, same B2.4 learning rate/momentum/weight decay",
+  "parent_audit": {
+    "b23_manifest_sha256": "d06857d9d6af54783d41435b41dc8171e614da5c992e00fd7e41a7b55ffbeafa",
+    "b24_manifest_sha256": "5f749d7ae3b867323da9be9385676667ab6afe1a5c302c8088277460998250d5",
+    "families": 60,
+    "provenance": "PASS"
+  },
+  "projection_eps": 1e-12,
+  "projection_tolerance": 1e-07,
+  "protocol_id": "B5-PACS-gradient-protected-v1",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "status": "FROZEN_BEFORE_FULL_RUN",
+  "steps_by_N": {
+    "100": 21,
+    "25": 6,
+    "50": 12
+  },
+  "total_steps": 780,
+  "training_performed_in_phase_A_outputs": false
+}
