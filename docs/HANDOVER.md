@@ -1,7 +1,17 @@
 # Heterogeneous Learning Systems — Handover
 
 Last updated: 2026-09-25
-Repository state: HLS ontology v1 is closed. B2.3 is **COMPLETE — INCONCLUSIVE** and its **POST-HOC MECHANISM DIAGNOSIS IS COMPLETE**. The common-provenance CPU run completed 160 fits and 1,800 primary rows with TEST closed and compatibility PASS. It found 3/1,800 portfolio rescues but 0/360 exact cells met the frozen >=3/5-seed criterion. Positive interaction was present (`Gamma_learn>0` in 89/90 pair states and `Gamma_oper>0` in 917/925 relevant rows), while all 60 singleton developments had negative cross-domain competence sums. In 271/273 negative singleton valuations, cross-domain loss was the dominant negative term; routing generally mitigated it. No B2.4 has been designed. The next scientific question is: **Can cross-domain interference be reduced while preserving the same learning opportunity, and how does doing so affect development value and interaction?**
+Repository state: HLS ontology v1 is closed. B2.4 is **COMPLETE** with TEST
+closed and compatibility PASS. The preregistered REP-minus-O50 contrast was
+POSITIVE for interference reduction, local learning, and future value at all
+five declared costs. Cross-domain recovery averaged +0.336271 and was
+favorable in 59/60 states; 12/12 exact domain-by-N cells reached at least 4/5
+favorable seeds. Mean local change was +0.032682. Of the mean +0.025107 future
+value improvement across costs, +0.022300 (88.8%) came from non-target
+competences. B2.4 therefore shows that much of the B2.3 interference pattern
+depends on the tested development mechanism. It does not identify the internal
+learning cause, establish generalization outside PACS/VALIDATION, answer RQ0,
+or provide a TEST result.
 
 ## Mandatory first reads
 
@@ -27,7 +37,9 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 18. [checkpoints/HLS_checkpoint_after_B21.md](checkpoints/HLS_checkpoint_after_B21.md) — concise scientific checkpoint linking the established theory, negative boundaries, B1, B2.0, B2.1, and the remaining empirical gap.
 19. [experimental_foundations/B22_PROTOCOL.md](experimental_foundations/B22_PROTOCOL.md) — frozen protocol for the completed PACS opportunity-value experiment; see [the B2.2 diagnostic](../results/pilots/b22_opportunity_value/b22_diagnostic.md) for the audited result.
 20. [experimental_foundations/B23_PROTOCOL.md](experimental_foundations/B23_PROTOCOL.md) — frozen protocol for the completed PACS accumulated-opportunity portfolio experiment.
-21. [checkpoints/HLS_checkpoint_after_B23.md](checkpoints/HLS_checkpoint_after_B23.md) — current scientific checkpoint, including the B2.3 autopsy, compute-dose sensitivity, and evidence map.
+21. [checkpoints/HLS_checkpoint_after_B23.md](checkpoints/HLS_checkpoint_after_B23.md) — prior scientific checkpoint, including the B2.3 autopsy, compute-dose sensitivity, and evidence map.
+22. [experimental_foundations/B24_PROTOCOL.md](experimental_foundations/B24_PROTOCOL.md) — frozen protocol for the completed interference-controlled development experiment.
+23. [checkpoints/HLS_checkpoint_after_B24.md](checkpoints/HLS_checkpoint_after_B24.md) — current scientific checkpoint, including preregistered B2.4 classifications, controls, limitations, and evidence map.
 
 ## Central programme
 
@@ -390,8 +402,7 @@ only three interactions overcame both singleton deficits. Singleton value was
 negative in 273/300 deduplicated valuations. All three rescues disappeared at
 the secondary fixed-total-compute midpoint, so B2.3 does not establish rescue
 under equal total training compute. See the current
-[B2.3 checkpoint](checkpoints/HLS_checkpoint_after_B23.md). No B2.4 has been
-designed.
+[B2.3 checkpoint](checkpoints/HLS_checkpoint_after_B23.md).
 
 **POST-HOC MECHANISM DIAGNOSIS COMPLETE.** All 60 singleton states had
 negative cross-domain competence sums. Thirty-three improved their target,
@@ -402,9 +413,29 @@ loss was the dominant negative term in 271/273 negative valuations. This
 localizes the bottleneck to development-induced cross-domain interference;
 the data do not identify its underlying learning mechanism.
 
-**Next scientific question:** Can cross-domain interference be reduced while
-preserving the same learning opportunity, and how does doing so affect
-development value and interaction? **B2.4 NOT YET DESIGNED.**
+### B2.4 completed status
+
+[B24_PROTOCOL.md](experimental_foundations/B24_PROTOCOL.md) froze a paired
+test of the specific replay substitution relative to O50, with equal compute
+and exactly matched effective opportunity exposure. The CPU run completed
+120/120 new fits, 180/180 new VALIDATION evaluations, and 1,200/1,200 value
+rows in 04:57:04. Compatibility passed and TEST remained closed.
+
+All preregistered global outcomes were **POSITIVE**: interference reduction,
+local learning, and future value at each `c={0,.02,.05,.10,.15}`. Mean
+cross-domain recovery was +0.336271, favorable in 59/60 states; all 12 exact
+domain-by-N regimes reached at least 4/5 favorable seeds. Mean `DeltaL` was
++0.032682. Mean future-value improvement across c was +0.025107, of which
++0.022300 (88.8%) came from non-target competences. REP2 did not improve REP
+when full opportunity exposure was restored by adding compute, although REP2
+remained better than STD.
+
+The scientific method-state count is 240: 60 each for STD, O50, REP, and REP2.
+The generated `360/240` summary label included 120 repeated F0/D lookup views
+in its numerator and is not a scientific discrepancy. See the current
+[B2.4 checkpoint](checkpoints/HLS_checkpoint_after_B24.md) and
+[result audit map](../results/pilots/b24_interference_controlled/AUDIT_README.md).
+No subsequent experiment has been designed.
 
 ## General theory audit retained for later work
 

@@ -67,8 +67,11 @@ not be conflated with B1.1--B13 above. Their consolidated status is recorded in
 The theory-to-experiment frontier is therefore explicit: B2.1 supports
 `learning -> competence changes -> V(S) -> routing -> Gamma_oper`. B2.2 and
 B2.3 instantiated operation-gated singleton and accumulated opportunities,
-respectively, but both frozen classifications were `INCONCLUSIVE`; neither
-establishes the complete RQ0 mechanism with preregistered seed reproducibility.
+respectively, but both frozen classifications were `INCONCLUSIVE`. B2.4 then
+tested one controlled development intervention on the common B2.3
+opportunities. Its replay substitution reproducibly reduced cross-domain
+interference and improved future value, but it does not establish the complete
+RQ0 mechanism or an end-to-end policy.
 
 ## B2.2 preregistration and completed result
 
@@ -140,9 +143,32 @@ The full closure and evidence paths are in
 [HLS Scientific Checkpoint after B2.3](../checkpoints/HLS_checkpoint_after_B23.md)
 and the [result audit map](../../results/pilots/b23_portfolio_opportunity/AUDIT_README.md).
 
+## B2.4 interference-controlled development result
+
+[B24_PROTOCOL.md](B24_PROTOCOL.md), frozen at commit `491659c`, compares REP
+with O50 while holding compute and effective opportunity exposure fixed. It
+reuses the compatible B2.3 F0, D, splits, immutable opportunities, and STD
+states. Historical replay comes only from labelled training IDs already used
+by F0; no additional TRANSFER, VALIDATION, TEST, or teacher query enters it.
+
+Status: **B2.4 COMPLETE**. The CPU run completed 120/120 new fits, 180/180 new
+VALIDATION evaluations, and 1,200/1,200 value rows in 04:57:04. Compatibility
+passed and TEST remained closed. The frozen classifications were POSITIVE for
+interference reduction, local learning, and future value at all five declared
+costs. Cross-domain recovery averaged +0.336271 and was favorable in 59/60
+states; mean local change was +0.032682. Across costs, 88.8% of the mean future
+value improvement came from non-target competences. REP2 did not improve REP
+when full opportunity exposure was restored through extra compute.
+
+The scientific result, controls, limitations, and evidence paths are in
+[HLS Scientific Checkpoint after B2.4](../checkpoints/HLS_checkpoint_after_B24.md)
+and the [B2.4 result audit map](../../results/pilots/b24_interference_controlled/AUDIT_README.md).
+The generated `360/240 method states` label counts 120 repeated F0/D lookup
+views; the scientific CSVs contain the expected 240 STD/O50/REP/REP2 states.
+
 ## Operational timing convention
 
-Long PACS runners B2.0–B2.3 now use the dependency-free common logger described
+Long PACS runners B2.0–B2.4 now use the dependency-free common logger described
 in [experiment_timing.md](../experiment_timing.md). It standardizes session and
 accumulated elapsed time, category-aware ETA, restart timing, interruptions,
 and final summaries. Timing is separate operational metadata and does not

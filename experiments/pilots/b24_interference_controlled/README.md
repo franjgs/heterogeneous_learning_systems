@@ -1,6 +1,6 @@
 # PACS B2.4 interference-controlled development
 
-Status: **IMPLEMENTED — NOT RUN**. The frozen scientific authority is
+Status: **COMPLETE**. The frozen scientific authority is
 [`B24_PROTOCOL.md`](../../../docs/experimental_foundations/B24_PROTOCOL.md),
 commit `491659c`.
 
@@ -16,6 +16,14 @@ doses, RNG provenance, checkpoints, and validation provenance. A restart
 reuses only complete hash-valid artifacts. A valid REP midpoint resumes its
 same trajectory toward REP2. `--force` explicitly discards B2.4 artifacts
 only; it never modifies B2.3.
+
+The completed CPU run produced 120/120 new fits, 180/180 new VALIDATION
+evaluations, and 1,200/1,200 value rows in accumulated runtime `04:57:04`.
+Compatibility passed and TEST remained closed. The preregistered outcomes were
+POSITIVE for interference reduction, local learning, and future value at each
+of the five declared costs. See the
+[scientific checkpoint](../../../docs/checkpoints/HLS_checkpoint_after_B24.md)
+and [result audit map](../../../results/pilots/b24_interference_controlled/AUDIT_README.md).
 
 Dry-run, without training or teacher inference:
 

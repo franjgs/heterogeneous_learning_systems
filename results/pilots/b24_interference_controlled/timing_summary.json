@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "O50": {
+      "count": 60,
+      "max_seconds": 119.01449174998561,
+      "mean_seconds": 98.57777453473439,
+      "median_seconds": 96.0969177710067,
+      "min_seconds": 79.69822733302135,
+      "total_seconds": 5914.666472084064
+    },
+    "analysis": {
+      "count": 1,
+      "max_seconds": 22.18547391705215,
+      "mean_seconds": 22.18547391705215,
+      "median_seconds": 22.18547391705215,
+      "min_seconds": 22.18547391705215,
+      "total_seconds": 22.18547391705215
+    },
+    "mixed": {
+      "count": 60,
+      "max_seconds": 240.53295508306473,
+      "mean_seconds": 198.13114351936383,
+      "median_seconds": 192.9560134380008,
+      "min_seconds": 162.25553741597105,
+      "total_seconds": 11887.86861116183
+    }
+  },
+  "completed_records": 121,
+  "experiment_accumulated_hms": "04:57:04",
+  "experiment_accumulated_seconds": 17824.720557162946,
+  "experiment_name": "B2.4 PACS interference-controlled development",
+  "finished_at": "2026-09-25 13:53:50 +0200",
+  "scientific_hash_input": false,
+  "session_elapsed_seconds": 17836.860219457943,
+  "source": ".cache/experiment_timing.json",
+  "started_at": "2026-09-25 08:56:33 +0200",
+  "status": "complete"
+}

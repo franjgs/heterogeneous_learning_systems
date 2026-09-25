@@ -1091,3 +1091,37 @@ losses usually dominate it. Routing generally mitigated those losses. This
 analysis does not identify catastrophic forgetting, pseudo-label noise,
 optimization failure, or another underlying causal mechanism. B2.4 remains
 undesignated.
+
+## Decision 041 — B2.4 completed with positive preregistered outcomes
+
+Date: 2026-09-25.
+
+B2.4 reused the compatible B2.3 bases, splits, immutable opportunities, and
+STD states to compare REP with the O50 opportunity-duplication control under
+equal compute and exactly matched effective opportunity exposure. The CPU run
+completed 120/120 new fits, 180/180 new VALIDATION evaluations, and
+1,200/1,200 value rows in accumulated runtime 04:57:04. Compatibility passed
+and TEST remained closed.
+
+The frozen classifications were POSITIVE for interference reduction, local
+learning, and future value at every declared cost. REP-minus-O50 cross-domain
+recovery averaged +0.336271 and was favorable in 59/60 states; all 12 exact
+domain-by-N cells reached at least 4/5 favorable seeds. Mean local change was
++0.032682. Mean future-value improvements were +0.005406, +0.008802,
++0.017846, +0.038176, and +0.055304 for `c=0,.02,.05,.10,.15`. Across costs,
++0.022300 of the mean +0.025107 improvement came from non-target competences.
+
+STD exactly reproduced the B2.3 singleton pattern. REP changed mean
+cross-domain competence from -0.374822 under O50 to -0.038552 and improved
+future value. REP2 did not improve REP after full opportunity exposure was
+restored through added compute, though it remained better than STD. These
+results support a specific empirical chain from historical replay to reduced
+cross-domain interference, an improved competence portfolio, and higher
+future operational value. They do not identify the internal learning cause,
+generalize beyond PACS/VALIDATION or the replay policy tested, answer RQ0, or
+constitute a TEST result.
+
+The scientific CSVs contain 240 method states. The generated `360/240` label
+also counts 120 repeated F0/D lookup views and is only a reporting-label issue.
+The closure is in `docs/checkpoints/HLS_checkpoint_after_B24.md`; no subsequent
+experiment is designed here.
