@@ -1,6 +1,7 @@
 # B4 Protected Portfolio Development
 
-Status: **IMPLEMENTED — FULL RUN NOT EXECUTED**.
+Status: **FULL RUN COMPLETE** (`60/60` fits; `COMPLETE.json` status:
+`complete`).
 
 - Device: CPU only.
 - TEST status: `PREVIOUSLY_OPENED_NOT_USED_IN_B4`.
@@ -13,5 +14,5 @@ Status: **IMPLEMENTED — FULL RUN NOT EXECUTED**.
 - Rejected blocks restore model and optimizer exactly, advance the scheduled
   RNG stream, and are not retried.
 
-The future full run requires explicit `--run-full`; default execution is a
-training-free dry run. Restart reuses only hash-valid completed PREP fits.
+The completed run used the explicit `--run-full` mode. Restart reuses only
+hash-valid completed PREP fits.

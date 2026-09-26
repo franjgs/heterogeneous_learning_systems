@@ -70,8 +70,9 @@ B2.3 instantiated operation-gated singleton and accumulated opportunities,
 respectively, but both frozen classifications were `INCONCLUSIVE`. B2.4 then
 tested one controlled development intervention on the common B2.3
 opportunities. Its replay substitution reproducibly reduced cross-domain
-interference and improved future value, but it does not establish the complete
-RQ0 mechanism or an end-to-end policy.
+interference and improved future value, but it did not establish the complete
+RQ0 mechanism or an end-to-end policy. The current cross-experiment record is
+[HLS Scientific Checkpoint after B5](../checkpoints/HLS_checkpoint_after_B5.md).
 
 ## B2.2 preregistration and completed result
 
@@ -165,6 +166,21 @@ The scientific result, controls, limitations, and evidence paths are in
 and the [B2.4 result audit map](../../results/pilots/b24_interference_controlled/AUDIT_README.md).
 The generated `360/240 method states` label counts 120 repeated F0/D lookup
 views; the scientific CSVs contain the expected 240 STD/O50/REP/REP2 states.
+
+## Post-B2.4 integrated and protection results
+
+The frozen integrated RQ0 executable evaluated 70 pre-existing PACS states on
+TEST once. Its result was **INCONCLUSIVE**; HLS equalled SEP-Omega exactly,
+and only seeds 2 and 4 had any frozen HLS--SEP divergence. B3 is a
+retrospective VALIDATION-only adaptive-action diagnostic with viability **NO**.
+
+B4's TRAIN protection-set block filter was **INCONCLUSIVE**: it did not
+generalize reliable cross-domain protection. B5's single GREP method was
+**NULL**: projecting instantaneous opportunity/memory gradient conflict did
+not provide robust competence preservation or value. Neither B3, B4, nor B5
+uses TEST metrics. The complete distinctions, evidence paths, limits, and
+post-B5 strategic decision are in
+[HLS Scientific Checkpoint after B5](../checkpoints/HLS_checkpoint_after_B5.md).
 
 ## Operational timing convention
 

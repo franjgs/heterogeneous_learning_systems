@@ -1,17 +1,18 @@
 # Heterogeneous Learning Systems — Handover
 
-Last updated: 2026-09-25
-Repository state: HLS ontology v1 is closed. B2.4 is **COMPLETE** with TEST
-closed and compatibility PASS. The preregistered REP-minus-O50 contrast was
-POSITIVE for interference reduction, local learning, and future value at all
-five declared costs. Cross-domain recovery averaged +0.336271 and was
-favorable in 59/60 states; 12/12 exact domain-by-N cells reached at least 4/5
-favorable seeds. Mean local change was +0.032682. Of the mean +0.025107 future
-value improvement across costs, +0.022300 (88.8%) came from non-target
-competences. B2.4 therefore shows that much of the B2.3 interference pattern
-depends on the tested development mechanism. It does not identify the internal
-learning cause, establish generalization outside PACS/VALIDATION, answer RQ0,
-or provide a TEST result.
+Last updated: 2026-09-26
+
+**Current checkpoint:** [HLS_checkpoint_after_B5.md](checkpoints/HLS_checkpoint_after_B5.md).
+Any new work must begin with that checkpoint and
+[RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md).
+
+Repository state: the PACS B2.1--B5 sequence is closed. The one-shot,
+70-state integrated RQ0 TEST evaluation was **INCONCLUSIVE** and verified
+`HLS = SEP-Omega`; B3 viability was **NO**; B4 was **INCONCLUSIVE**; and B5
+GREP was **NULL**. B2.4's replay result remains positive for its declared
+VALIDATION contrast, but it did not eliminate seed dependence. Do not start a
+B6-style PACS continual-learning variant automatically; the next decision is
+whether another minimal, non-artificial environment can test RQ0 directly.
 
 ## Mandatory first reads
 
@@ -39,7 +40,8 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 20. [experimental_foundations/B23_PROTOCOL.md](experimental_foundations/B23_PROTOCOL.md) — frozen protocol for the completed PACS accumulated-opportunity portfolio experiment.
 21. [checkpoints/HLS_checkpoint_after_B23.md](checkpoints/HLS_checkpoint_after_B23.md) — prior scientific checkpoint, including the B2.3 autopsy, compute-dose sensitivity, and evidence map.
 22. [experimental_foundations/B24_PROTOCOL.md](experimental_foundations/B24_PROTOCOL.md) — frozen protocol for the completed interference-controlled development experiment.
-23. [checkpoints/HLS_checkpoint_after_B24.md](checkpoints/HLS_checkpoint_after_B24.md) — current scientific checkpoint, including preregistered B2.4 classifications, controls, limitations, and evidence map.
+23. [checkpoints/HLS_checkpoint_after_B24.md](checkpoints/HLS_checkpoint_after_B24.md) — historical B2.4 checkpoint.
+24. [checkpoints/HLS_checkpoint_after_B5.md](checkpoints/HLS_checkpoint_after_B5.md) — current checkpoint: B3, integrated RQ0, B4, B5, and the post-B5 strategic decision.
 
 ## Central programme
 
@@ -435,7 +437,8 @@ The generated `360/240` summary label included 120 repeated F0/D lookup views
 in its numerator and is not a scientific discrepancy. See the current
 [B2.4 checkpoint](checkpoints/HLS_checkpoint_after_B24.md) and
 [result audit map](../results/pilots/b24_interference_controlled/AUDIT_README.md).
-No subsequent experiment has been designed.
+Subsequent B3, integrated RQ0, B4, and B5 work is consolidated in the current
+[B5 checkpoint](checkpoints/HLS_checkpoint_after_B5.md).
 
 ## General theory audit retained for later work
 

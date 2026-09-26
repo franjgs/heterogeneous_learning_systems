@@ -1125,3 +1125,78 @@ The scientific CSVs contain 240 method states. The generated `360/240` label
 also counts 120 repeated F0/D lookup views and is only a reporting-label issue.
 The closure is in `docs/checkpoints/HLS_checkpoint_after_B24.md`; no subsequent
 experiment is designed here.
+
+## Decision 042 — Integrated RQ0 confirmatory evaluation
+
+Date: 2026-09-25.
+
+The frozen integrated protocol evaluated exactly 70 pre-existing PACS states
+on TEST once: 5 F0, 5 D, and 60 REP. The confirmatory label was
+`INCONCLUSIVE`; no common positive kappa interval satisfied the full frozen
+grid criterion. HLS and SEP-Omega were exactly equivalent
+(`max_delta_coord=0`). Frozen HLS/SEP divergence occurred only in seeds 2 and
+4. This is a confirmatory TEST result, not confirmation of RQ0, superiority
+over rich coordination, or a general HLS claim.
+
+## Decision 043 — B3 retrospective adaptive-development viability analysis
+
+Date: 2026-09-25.
+
+B3 used frozen B2.4 VALIDATION quantities only to choose retrospectively among
+`0, STD, O50, REP`, with tie order `0 > REP > O50 > STD`. Viability was `NO`:
+adaptive selection did not create a reproducible positive development region
+and did not rescue seeds 0, 1, or 3. This is retrospective diagnosis, not an
+amendment to the RQ0 confirmatory protocol.
+
+## Decision 044 — Ideal-protection counterfactual ceiling
+
+Date: 2026-09-25.
+
+A retrospective diagnostic retained REP local gains while truncating only its
+cross-domain losses to zero. Nine of 12 domain-by-N structures then reached
+positive DeltaV in at least 4/5 seeds, and 15/20 c-by-h cells had some positive
+kappa-star region in 5/5 seeds. This is `POTENTIAL YES`: a ceiling showing
+what preservation could enable, not an implementable method or scientific
+outcome.
+
+## Decision 045 — B4 protected portfolio development
+
+Date: 2026-09-25.
+
+B4 used zero-tolerance F0-referenced TRAIN protection-set accuracy to accept
+or reject REP blocks. Its preregistered classification was `INCONCLUSIVE`:
+cross-domain protection was nonnegative in 1/5 seeds, local learning in 4/5,
+with no robust domain-by-N value structure and eight c-by-h integration cells
+at 4/5. The small TRAIN protection signal was not reliably generalizable; this
+does not identify a latent learning mechanism.
+
+## Decision 046 — B5 gradient-protected development
+
+Date: 2026-09-26.
+
+B5 GREP projected only a conflicting opportunity gradient against the replay
+gradient, preserving the B2.4 data, optimizer, schedules, and CPU setup. A
+float32 cancellation bug stopped an initial partial invocation; its correction
+moved projection arithmetic and audit to float64 while retaining the frozen
+`1e-7` tolerance and final float32 optimizer gradients. The partial fit was
+invalidated and not reused.
+
+The valid 60-fit, 780-step, VALIDATION-only execution was `NULL`: only one
+seed had GREP mean cross-domain improvement versus REP, one had nonnegative
+cross change, one nonnegative local change, and no value structure or c-by-h
+integration cell met 4/5. GREP therefore did not robustly control the observed
+generalizable interference. It does not falsify gradient projection,
+continual learning, HLS, or RQ0 in general.
+
+## Decision 047 — Strategic stop after B5
+
+Date: 2026-09-26.
+
+Do not automatically continue with another PACS replay variant, epsilon,
+larger protection set, TRAIN filter, gradient-projection variant, or continual
+learning algorithm. B4 and B5 failed to robustly realize the ideal-protection
+ceiling and further local-method iteration risks replacing RQ0 with a
+MobileNet/PACS interference problem. The next scientific decision is whether
+a minimal but non-artificial environment can control competence dynamics enough
+to directly demonstrate or falsify RQ0 while permitting HLS=SEP, SEP-winning,
+and HLS-winning outcomes. No next experiment is designed by this decision.
