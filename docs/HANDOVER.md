@@ -2,47 +2,131 @@
 
 Last updated: 2026-09-28
 
-**Current checkpoint:** [HLS_checkpoint_after_B5.md](checkpoints/HLS_checkpoint_after_B5.md).
-Any new work must begin with that checkpoint and
-[RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md).
+## Handover entry protocol
 
-Repository state: the PACS B2.1--B5 sequence is closed. The one-shot,
-70-state integrated RQ0 TEST evaluation was **INCONCLUSIVE** and verified
-`HLS = SEP-Omega`; B3 viability was **NO**; B4 was **INCONCLUSIVE**; and B5
-GREP was **NULL**. B2.4's replay result remains positive for its declared
-VALIDATION contrast, but it did not eliminate seed dependence. Do not start a
-B6-style PACS continual-learning variant. PACS and the subsequent B0 vehicle
-screen are now closed; the current strategy is recorded below.
+This file is the **single canonical operational entry point** for continuing
+the HLS research programme across sessions, agents, or collaborators.
+
+There must be no second active `HANDOVER.md`. The canonical path is:
+
+`docs/HANDOVER.md`
+
+Before proposing new theory, algorithms, experiments, datasets, literature
+directions, or candidate environments, recover the programme state from the
+essential documents below. Historical protocols and branch-specific records
+are consulted only when the task requires their provenance.
+
+### Current scientific checkpoint
+
+[HLS_checkpoint_after_B5.md](checkpoints/HLS_checkpoint_after_B5.md)
+
+The PACS B2.1--B5 sequence and the subsequent Office-Home B0 vehicle screen
+are closed. The current programme priority is the **HLS Synthetic
+Environment**. A1a--A1c are **CLOSED / PASS**. RQ0 remains **OPEN**.
+
+## Current focus — mandatory anti-drift anchor
+
+The current work is **not** to choose the chronologically next experiment.
+
+We are designing and progressively validating a **configurable, falsifiable
+synthetic data/scenario generation framework for Heterogeneous Learning
+Systems (HLS)**. Its purpose is to provide a controlled experimental testbed
+for determining:
+
+- when dynamic joint management of competence allocation/use and competence
+  development/evolution can improve long-term system performance;
+- why such an advantage can arise;
+- when it does not arise;
+- the capabilities and limitations of HLS;
+- the boundaries and equivalence regimes in which separated management is
+  sufficient.
+
+The framework must not encode `HLS > SEP` by construction. It must support
+positive, null, boundary, adverse, and reducible regimes.
+
+**A1 is not the framework.** A1 is its first minimal analytical
+validation/use. A1 established controlled L0 phase structure and exact
+boundaries under its frozen assumptions; it did not validate RQ0 generally.
+
+Before recommending any next step, ask:
+
+> **What capability does the synthetic framework still need in order to test
+> a scientifically important capability, limitation, mechanism, or boundary
+> of HLS that A1 cannot test?**
+
+Only after answering that question should a new experimental protocol be
+designed.
+
+Do not replace this question with “what experiment comes after A1?” and do
+not assume in advance that the answer is longer horizon, `T>2`, more agents,
+more tasks, transfer, interference, nonstationarity, real data, or any other
+particular mechanism. Such additions require a scientific reason tied to the
+framework and RQ0.
+
+The detailed scientific contract for the generator is
+[HLS_SYNTHETIC_ENVIRONMENT.md](experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md).
 
 ## Mandatory first reads
 
-Before proposing new theory, algorithms, or experiments, read in this order:
+Before substantive HLS work, read this **essential core**, in this order:
 
-1. [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md) — general methodology and anti-drift rules above any individual HLS mechanism.
-2. `README.md` — short project entry point. **Do not rewrite it to follow every intermediate hypothesis.**
-3. [general_research_model.md](general_research_model.md) — canonical HLS scientific object and architecture.
-4. [research_questions.md](research_questions.md) — canonical wording of official RQ0 and subordinate H1.
-5. [hls_ontology.md](hls_ontology.md) — canonical HLS concepts, units/ranges, mapping classes, and source-to-HLS mapping discipline.
-6. [theory/minimal_hls_model.md](theory/minimal_hls_model.md) — v1; Propositions 1–3 on additive equivalence, selection, and nonlocal information; and the T=3 continuation-policy boundary.
-7. [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md) — canonical map of established principles to understand, map, translate, and test.
-8. [theory/two_beam/README.md](theory/two_beam/README.md) — current technical skeleton connecting organization/use with competence development/evolution; not a complete HLS model.
-9. [experimental_foundations/README.md](experimental_foundations/README.md) and [experimental_foundations/EXPERIMENTAL_SPEC_V0.md](experimental_foundations/EXPERIMENTAL_SPEC_V0.md) — audited Beam 1, Beam 2, and interface-reproduction block; B2.5 remains `FAILED_SOURCE_REPRODUCTION`, and B13 is diagnostic only.
-10. `research_origin_and_chronology.md` — historical provenance and superseded directions.
-11. [research_program_checkpoint_004.md](research_program_checkpoint_004.md) — historical pre-ontology checkpoint, not the current RQ0 source.
-12. `research_strategy_cross_domain_toolkit.md` — supporting protocol for importing mathematics without replacing the HLS problem.
-13. `landscape/landscape_001_consolidated.md` and `literature/references.bib`.
-14. [theory_integrated_competence_investment_model.md](theory_integrated_competence_investment_model.md) and [theory_civ_adversarial_stress_test.md](theory_civ_adversarial_stress_test.md) — subordinate CIV model and its branch register; portfolio exposure is not a current programme priority.
-15. `models/model_M0.md` and `models/model_M0_1_gap_dependent_learning.md` only as diagnostic history, not as the current centre.
-16. [theory_competence_evolution_minimal_model.md](theory_competence_evolution_minimal_model.md) and [experiments/microverification/](../experiments/microverification/) — CR0--CR4 minimal-model audit; not a general HLS result.
-17. [paper/](../paper/) — working draft with a stale RQ0 formulation; do not let it set programme direction and do not update it without a dedicated paper task.
-18. [checkpoints/HLS_checkpoint_after_B21.md](checkpoints/HLS_checkpoint_after_B21.md) — concise scientific checkpoint linking the established theory, negative boundaries, B1, B2.0, B2.1, and the remaining empirical gap.
-19. [experimental_foundations/B22_PROTOCOL.md](experimental_foundations/B22_PROTOCOL.md) — frozen protocol for the completed PACS opportunity-value experiment; see [the B2.2 diagnostic](../results/pilots/b22_opportunity_value/b22_diagnostic.md) for the audited result.
-20. [experimental_foundations/B23_PROTOCOL.md](experimental_foundations/B23_PROTOCOL.md) — frozen protocol for the completed PACS accumulated-opportunity portfolio experiment.
-21. [checkpoints/HLS_checkpoint_after_B23.md](checkpoints/HLS_checkpoint_after_B23.md) — prior scientific checkpoint, including the B2.3 autopsy, compute-dose sensitivity, and evidence map.
-22. [experimental_foundations/B24_PROTOCOL.md](experimental_foundations/B24_PROTOCOL.md) — frozen protocol for the completed interference-controlled development experiment.
-23. [checkpoints/HLS_checkpoint_after_B24.md](checkpoints/HLS_checkpoint_after_B24.md) — historical B2.4 checkpoint.
-24. [checkpoints/HLS_checkpoint_after_B5.md](checkpoints/HLS_checkpoint_after_B5.md) — current checkpoint: B3, integrated RQ0, B4, B5, and the post-B5 strategic decision.
-25. [experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md](experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md) — current experimental framework and detailed A1a pre-implementation audit.
+1. **This `docs/HANDOVER.md`**, especially the Current focus section above.
+2. [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md) — programme-level
+   methodology, evidence discipline, and anti-drift rules.
+3. [checkpoints/HLS_scientific_continuity.md](checkpoints/HLS_scientific_continuity.md)
+   — continuity document connecting RQ0, the two theoretical beams, ontology,
+   cross-domain foundations, retained theory, accumulated evidence, closed
+   paths, and the scientific point from which work continues.
+4. [experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md](experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md)
+   — current configurable/falsifiable synthetic framework and detailed A1
+   record.
+5. [research_questions.md](research_questions.md) — canonical wording and
+   interpretation of RQ0.
+6. [theoretical_foundations_cross_domain.md](theoretical_foundations_cross_domain.md)
+   — established theoretical foundations and their HLS mappings.
+7. [theory/two_beam/README.md](theory/two_beam/README.md) — technical
+   skeleton connecting organization/use with competence development/evolution.
+8. [hls_ontology.md](hls_ontology.md) — canonical HLS concepts and mapping
+   discipline.
+9. [general_research_model.md](general_research_model.md) — canonical HLS
+   scientific object and architecture.
+10. **Current scientific checkpoint**, presently
+    [HLS_checkpoint_after_B5.md](checkpoints/HLS_checkpoint_after_B5.md),
+    when detailed pre-synthetic empirical provenance is needed.
+
+These files define the minimum context for deciding programme direction.
+`README.md`, historical experimental protocols, earlier checkpoints,
+microverification records, landscape files, literature records, paper drafts,
+and supporting strategy documents are **supporting material**, not mandatory
+first reads. Consult them when the current task requires their detailed
+provenance.
+
+Whenever a new scientific checkpoint supersedes the current one, update the
+checkpoint pointer here and in `HLS_scientific_continuity.md`. Do not create
+another handover file.
+
+## Anti-drift rules for the current phase
+
+Unless explicitly required by development or validation of the synthetic
+framework, do not drift into:
+
+- designing a paper instead of the framework;
+- searching for novelty for every individual mechanism;
+- reopening PACS or Office-Home repair branches;
+- choosing a real dataset prematurely;
+- adding complexity merely for realism;
+- trying to prove universal `HLS > SEP`;
+- weakening SEP to manufacture an advantage;
+- treating SEP-Omega as an ordinary weak baseline;
+- redefining RQ0 around A1;
+- treating the A1 opportunity kernel as the definition of HLS;
+- adding a mechanism without stating which HLS capability, limitation, or
+  boundary it allows the framework to test.
+
+Established theoretical mechanisms may and should be reused when they provide
+a sound foundation, with explicit mapping to the HLS ontology. The programme
+does not require novelty in every component; the scientific object is the
+system-level integration and its consequences.
 
 ## Current experimental strategy after PACS/B0
 
@@ -93,10 +177,11 @@ The detailed post-run record is
 [HLS_SYNTHETIC_ENVIRONMENT.md](experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md).
 RQ0 remains **OPEN**.
 
-**Next decision boundary:** further sweeps of the same `T=2` L0 world are
-low-value unless a specific theoretical ambiguity requires them. Any next step
-should add a qualitatively new mechanism, most naturally repeated competence
-evolution over `T>2`; its design has not started here.
+**Current decision boundary:** further sweeps of the same `T=2` L0 world are
+low-value unless a specific theoretical ambiguity requires them. The next
+scientific action must be selected by auditing which capability the synthetic
+framework needs in order to test an HLS capability, limitation, mechanism, or
+boundary not resolved by A1. No particular next mechanism is preselected here.
 
 ## Central programme
 
