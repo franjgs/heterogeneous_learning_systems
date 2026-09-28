@@ -786,11 +786,568 @@ above are reproduced.
 **Status after audit: A1a = READY FOR IMPLEMENTATION DESIGN.** This does not
 mean `A1a = POSITIVE`, `A1a = VALIDATED`, or `RQ0 = SUPPORTED`.
 
-## 20. Current decision boundary
+## 20. A1a frozen primitive specification and analytical reference worlds
+
+**Status: FROZEN FOR IMPLEMENTATION**
+
+Worlds A--F are exact reference worlds and future solver acceptance tests. They
+are not experimental evidence for RQ0. Their parameters must not be retuned
+after solver implementation to improve outcomes. World E is a constructive,
+numerically robust positive case, not evidence of robustness or prevalence. Any
+later scientific sweep must be specified independently over primitive world
+parameters before comparative outcomes are inspected.
+
+### 20.1 Frozen dimensions, task sequence, and competence state
+
+The primitive A1a world has
+
+\[
+M=2,\qquad K=2,\qquad T=2,
+\]
+
+with competence state
+
+\[
+C=\begin{bmatrix}c_{11}&c_{12}\\c_{21}&c_{22}\end{bmatrix},
+\qquad c_{ik}\in[0,1].
+\]
+
+Here `c_ik` is learner `i`'s expected operational success probability, or
+competence, on task type `k`. Reference worlds use the deterministic sequence
+
+\[
+q_0=1,\qquad q_1=2
+\]
+
+and initial state
+
+\[
+C_0=\begin{bmatrix}0.80&0.50\\0.70&0.20\end{bmatrix}.
+\]
+
+There are no operational costs in A1a: `s_ik=0`, hence
+
+\[
+r(S,k,i)=c_{ik}.
+\]
+
+For `q_0=1`, the unique immediate optimum is `h=M1` and the alternative is
+`s=M2`, giving
+
+\[
+\delta_R=r(h)-r(s)=0.80-0.70=0.10.
+\]
+
+### 20.2 Frozen opportunity-generation family
+
+Opportunity propensity is a separate primitive
+
+\[
+E=[e_{ik}],\qquad e_{ik}\in[0,1].
+\]
+
+`E` is not competence. `e_ik` is the base capacity/probability associated with
+execution by learner `i` on task `k` generating a useful development
+opportunity. No monotone relation between `C` and `E` is assumed; in particular,
+`e_ik=1-c_ik` is not canonical.
+
+Freeze the A1a family
+
+\[
+g_{ik}(\rho)=(1-\rho)\bar e_k+\rho e_{ik},
+\qquad \rho\in[0,1],
+\]
+
+followed after execution by
+
+\[
+Z\sim\operatorname{Bernoulli}(g_{ik}(\rho)).
+\]
+
+At `rho=0`, opportunity generation is independent of the operational learner;
+at `rho=1`, it is fully executor-specific. `rho` controls coupling strength and
+is not an HLS bonus.
+
+Only task type 1 is used for opportunity generation in these worlds:
+
+\[
+\bar e_1=0.50,\qquad e_{11}=0.20,\qquad e_{21}=0.90.
+\]
+
+Thus
+
+\[
+g_h(\rho)=0.50-0.30\rho,
+\qquad
+g_s(\rho)=0.50+0.40\rho,
+\]
+
+and
+
+\[
+g_s(\rho)-g_h(\rho)=0.70\rho.
+\]
+
+Entries of `E` for task type 2 are **unused / not identified by A1a**. An
+implementation schema may represent that status explicitly but must not invent
+scientific values for them.
+
+### 20.3 Development action, cost, and transition
+
+If `Z=1`, the admissible development actions are
+
+```text
+null
+develop M1 on task type 2
+develop M2 on task type 2
+```
+
+The opportunity may be assigned to either learner. Operational actor and
+development recipient are distinct variables, so `a != d` is permitted and
+`a=d` must not be imposed. If `Z=0`, no non-null development action is
+available.
+
+The frozen development cost is
+
+\[
+\kappa(d)=0.02
+\]
+
+for either non-null action and `kappa(null)=0`. Developing learner `j` on task
+type 2 gives
+
+\[
+c'_{j2}=c_{j2}+\eta(1-c_{j2}),
+\qquad \eta\in[0,1],
+\]
+
+with every other entry unchanged.
+
+A1a excludes transfer, interference, forgetting, representation learning,
+additional competence capacity, stochastic competence updates beyond
+opportunity generation, replay, adapters, and neural-network training.
+
+### 20.4 Terminal value and derived development value
+
+Reference worlds fix `beta=1`. There is no development after `t=1`, and because
+`q_1=2` deterministically,
+
+\[
+V_1(S_1)=\max_i c_{i2,1}.
+\]
+
+The broader contract retains
+
+\[
+V_1(S_1)=\sum_k p_k\max_i c_{ik,1}
+\]
+
+for a future random terminal task, but A--F use `P(q_1=2)=1`.
+
+Define, with the null action always available,
+
+\[
+N(S)=\beta V_1(S),
+\]
+
+\[
+D(S,k)=\max_d\{-\kappa(d)+\beta V_1(F(S,k,d))\}.
+\]
+
+For the base world with `eta=0.80`,
+
+\[
+N=\max\{0.50,0.20\}=0.50.
+\]
+
+Developing M1 yields
+
+\[
+c'_{12}=0.50+0.80(1-0.50)=0.90,
+\qquad 0.90-0.02=0.88,
+\]
+
+while developing M2 yields
+
+\[
+c'_{22}=0.20+0.80(1-0.20)=0.84,
+\qquad 0.84-0.02=0.82.
+\]
+
+Therefore
+
+\[
+D=\max\{0.50,0.88,0.82\}=0.88,
+\qquad d^*=\text{develop M1},
+\qquad D-N=0.38.
+\]
+
+In positive World E, M2 executes but M1 is the optimal development recipient:
+`who acts` and `who learns` are concretely separated.
+
+### 20.5 Derived continuation value and phase boundary
+
+For operational action `i`,
+
+\[
+G(i)=g_i(\rho)D+[1-g_i(\rho)]N
+=N+g_i(\rho)(D-N).
+\]
+
+`G(i)` is derived and cannot be a configurable world parameter. For `h=M1`
+and `s=M2`,
+
+\[
+\delta_G=G(s)-G(h)
+=[g_s(\rho)-g_h(\rho)](D-N)
+=0.70\rho\times0.38
+=0.266\rho.
+\]
+
+The switch condition becomes
+
+\[
+0.266\rho>0.10.
+\]
+
+Its exact phase boundary is
+
+\[
+\rho^*=\frac{0.10}{0.266}=\frac{50}{133}
+\approx0.3759398496.
+\]
+
+For this family generally,
+
+\[
+\delta_G=\rho(e_s-e_h)(D-N),
+\]
+
+and, when the denominator is positive,
+
+\[
+\rho^*=\frac{\delta_R}{(e_s-e_h)(D-N)}.
+\]
+
+These are exact A1a properties under the frozen parametrization, not general
+HLS theorems.
+
+### 20.6 Frozen policy values
+
+HLS solves
+
+\[
+J_{HLS}=\max_i\{r(i)+G(i)\}.
+\]
+
+Strong SEP chooses `a_SEP` from `argmax_i r(i)` and then optimizes development
+exactly using the opportunity it actually obtains. For unique immediate optimum
+`h`,
+
+\[
+J_{SEP}=r(h)+G(h).
+\]
+
+SEP is not heuristic or deliberately weak. SEP-Omega is a separated
+architecture whose operational module receives sufficient exact continuation
+information. It must be solved independently of HLS; under the A1a
+reducibility conditions, the acceptance target is
+
+\[
+J_{SEP\text{-}Omega}=J_{HLS}.
+\]
+
+### 20.7 Reference World A — no learning
+
+Freeze `eta=0`, `rho=1`. Development cannot change competence and costs 0.02,
+so `d*=null` and
+
+\[
+D=N=0.50,\qquad\delta_G=0.
+\]
+
+Although `g_h=0.20` and `g_s=0.90`, opportunity has no development value:
+
+\[
+J(h)=0.80+0.50=1.30,
+\qquad
+J(s)=0.70+0.50=1.20.
+\]
+
+Expected acceptance result:
+
+\[
+a_{HLS}=a_{SEP}=h,
+\qquad J_{HLS}=J_{SEP}=1.30.
+\]
+
+Purpose: no-learning negative control.
+
+### 20.8 Reference World B — learning, no coupling
+
+Freeze `eta=0.80`, `rho=0`. Then `D=0.88`, `N=0.50`, and
+
+\[
+g_h=g_s=0.50,
+\qquad G(h)=G(s)=0.50+0.50(0.38)=0.69.
+\]
+
+Hence
+
+\[
+J(h)=1.49,
+\qquad J(s)=1.39,
+\]
+
+and
+
+\[
+a_{HLS}=a_{SEP}=h,
+\qquad J_{HLS}=J_{SEP}=1.49.
+\]
+
+Purpose: learning alone is insufficient when opportunity is independent of the
+operational learner.
+
+### 20.9 Reference World C — insufficient coupling
+
+Freeze `eta=0.80`, `rho=0.25`. Then
+
+\[
+g_h=0.425,
+\qquad g_s=0.600,
+\]
+
+\[
+G(h)=0.6615,
+\qquad G(s)=0.728,
+\qquad \delta_G=0.0665<\delta_R=0.10.
+\]
+
+Thus
+
+\[
+J(h)=1.4615,
+\qquad J(s)=1.428,
+\]
+
+and
+
+\[
+a_{HLS}=a_{SEP}=h,
+\qquad J_{HLS}=J_{SEP}=1.4615.
+\]
+
+Purpose: coupling is not sufficient for strict joint advantage.
+
+### 20.10 Reference World D — exact boundary
+
+Freeze `eta=0.80` and
+
+\[
+\rho=\rho^*=\frac{50}{133}.
+\]
+
+The exact values are
+
+\[
+g_h=\frac{103}{266}\approx0.3872180451,
+\qquad
+g_s=\frac{173}{266}\approx0.6503759398,
+\]
+
+\[
+G(h)=\frac{453}{700}\approx0.6471428571,
+\qquad
+G(s)=\frac{523}{700}\approx0.7471428571,
+\]
+
+and
+
+\[
+\delta_G=\delta_R=0.10.
+\]
+
+Therefore
+
+\[
+J(h)=J(s)=\frac{1013}{700}\approx1.4471428571.
+\]
+
+The expected HLS optimal-action set is `{h,s}`. The solver may use an explicit,
+deterministic output tie rule, but the mathematical acceptance test compares
+the optimal-action set and value, not arbitrary `argmax` order. No strict HLS
+advantage may be claimed.
+
+Purpose: exact phase-boundary test.
+
+### 20.11 Reference World E — strict joint advantage
+
+Freeze `eta=0.80`, `rho=0.75`. Then
+
+\[
+g_h=0.275,
+\qquad g_s=0.800,
+\]
+
+\[
+G(h)=0.6045,
+\qquad G(s)=0.804,
+\qquad \delta_G=0.1995>0.10.
+\]
+
+Strong SEP chooses `h=M1`:
+
+\[
+J_{SEP}=0.80+0.6045=1.4045.
+\]
+
+HLS chooses `s=M2`:
+
+\[
+J_{HLS}=0.70+0.804=1.504.
+\]
+
+Thus
+
+\[
+\Delta_{joint}=J_{HLS}-J_{SEP}=0.0995>0.
+\]
+
+The causal chain is
+
+```text
+M2 executes
+    -> higher probability of useful opportunity
+    -> optimal development assigns the opportunity to M1
+    -> M1 competence on the future task increases
+    -> future operational value increases
+```
+
+Thus `a_0=M2`, while, conditional on opportunity, `d_0=develop M1`.
+
+Purpose: constructive existence test for strict joint advantage. This is not
+evidence that HLS generally improves over SEP. The deliberately large
+`e_s-e_h=0.70` gives a robust solver test; its magnitude is neither realistic
+nor empirically supported. Scientific support would require a predefined,
+non-zero parameter region rather than this single point.
+
+### 20.12 Reference World F — SEP-Omega reducibility
+
+World F uses exactly World E: identical `C`, `E`, `eta`, `rho`, `kappa`,
+`beta`, `q_0`, and `q_1`. Only the separated operational architecture's
+information/coordination changes.
+
+Strong SEP sees immediate operational value and chooses `h=M1`. SEP-Omega
+receives exact sufficient continuation values and independently computes
+
+\[
+Q_{SEP\text{-}Omega}(h)=0.80+0.6045=1.4045,
+\]
+
+\[
+Q_{SEP\text{-}Omega}(s)=0.70+0.804=1.504.
+\]
+
+It therefore chooses `s=M2`, giving
+
+\[
+J_{HLS}=J_{SEP\text{-}Omega}=1.504>J_{SEP}=1.4045.
+\]
+
+Purpose: exact reducibility/equivalence acceptance test. SEP-Omega must not call
+or alias HLS; both policies must be solved independently and equality must
+emerge as a test result.
+
+### 20.13 Reference-world acceptance summary
+
+| World | `eta` | `rho` | `delta_G` | `delta_R` | Exact acceptance result |
+| --- | ---: | ---: | ---: | ---: | --- |
+| A | `0` | `1` | `0` | `0.10` | `HLS = SEP = 1.30` |
+| B | `0.8` | `0` | `0` | `0.10` | `HLS = SEP = 1.49` |
+| C | `0.8` | `0.25` | `0.0665` | `0.10` | `HLS = SEP = 1.4615` |
+| D | `0.8` | `50/133` | `0.10` | `0.10` | boundary; `{h,s}` optimal; value `1013/700` |
+| E | `0.8` | `0.75` | `0.1995` | `0.10` | `HLS=1.504 > SEP=1.4045` |
+| F | same as E | same as E | same as E | same as E | `HLS = SEP-Omega = 1.504 > SEP` |
+
+A--F are acceptance tests, not the empirical study. Together they require the
+implementation to reproduce no learning, no coupling, insufficient coupling,
+the exact boundary, strict joint advantage, and exact reducibility.
+
+### 20.14 Frozen primitive tuple
+
+The first implementation must represent
+
+\[
+\Theta_{A1a}=(\Theta_Q,\Theta_C,\Theta_O,\Theta_D,
+\Theta_R,\Theta_K,\Theta_I)
+\]
+
+with:
+
+- `Theta_Q`: deterministic `q_0=1`, `q_1=2`;
+- `Theta_C`: the frozen `C_0` matrix above;
+- `Theta_O`: `ebar_1=0.50`, `e_11=0.20`, `e_21=0.90`, Bernoulli opportunity,
+  and world-specific `rho`;
+- `Theta_D`: bounded task-2 transition with world-specific `eta`, no transfer
+  or interference;
+- `Theta_R`: `r(S,k,i)=c_ik` and terminal maximum competence for task 2;
+- `Theta_K`: `kappa=0.02`, `beta=1`, no operational cost or extra constraints;
+- `Theta_I`: separate contracts for HLS, strong SEP, and independently solved
+  SEP-Omega.
+
+`G`, `delta_G`, policy values, and preferred actions are derived outputs, not
+members of `Theta_A1a`.
+
+### 20.15 Anti-cherry-picking and later sweeps
+
+The eventual scientific experiment must use predefined sweeps over primitives,
+never over `delta_G` or a desired outcome. Relevant future dimensions include
+`rho`, `eta`, `kappa`, competence geometry `C`, opportunity geometry `E`,
+`e_s-e_h`, task distribution `P_Q`, and `beta`; no sweep ranges are frozen here.
+
+For the World E family, the exact opportunity-contrast threshold is
+
+\[
+(e_s-e_h)^*=\frac{\delta_R}{\rho(D-N)}.
+\]
+
+At `rho=0.75`, `delta_R=0.10`, and `D-N=0.38`,
+
+\[
+(e_s-e_h)^*=\frac{20}{57}\approx0.350877193.
+\]
+
+World E uses `e_s-e_h=0.70`, intentionally well inside the positive region.
+That is desirable for a solver acceptance test and is not scientific evidence
+of robustness.
+
+### 20.16 Freeze rule and next step
+
+**A1a primitive specification and reference worlds A--F are FROZEN for the
+first implementation.** After implementation begins:
+
+- do not change A--F because an acceptance test fails;
+- treat a mismatch first as an implementation/specification problem;
+- document and version any scientifically motivated revision explicitly;
+- keep reference worlds distinct from later experimental sweep configurations.
+
+Status:
+
+```text
+A1a primitive specification = FROZEN
+A1a reference worlds A–F = FROZEN
+A1a implementation = NOT STARTED
+```
+
+Next step: implement the exact A1a solver and require A--F acceptance tests to
+pass before any parameter sweep.
+
+## 21. Current decision boundary
 
 PACS and B0 are closed vehicle screens and are not evidence against RQ0. The
 methodological priority is now controlled synthetic analysis before another
 real-data vehicle. Candidate A/iWildCam remains parked, not rejected. A1a is
-ready for implementation design, but no implementation has started. The next
-task is to freeze the concrete A1a primitive world specification and exact
-solver tests before coding.
+frozen for implementation, but no implementation has started. The next task is
+to implement the exact solver and require reference worlds A--F to pass before
+any parameter sweep.
