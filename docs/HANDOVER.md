@@ -11,8 +11,8 @@ Repository state: the PACS B2.1--B5 sequence is closed. The one-shot,
 `HLS = SEP-Omega`; B3 viability was **NO**; B4 was **INCONCLUSIVE**; and B5
 GREP was **NULL**. B2.4's replay result remains positive for its declared
 VALIDATION contrast, but it did not eliminate seed dependence. Do not start a
-B6-style PACS continual-learning variant automatically; the next decision is
-whether another minimal, non-artificial environment can test RQ0 directly.
+B6-style PACS continual-learning variant. PACS and the subsequent B0 vehicle
+screen are now closed; the current strategy is recorded below.
 
 ## Mandatory first reads
 
@@ -42,6 +42,39 @@ Before proposing new theory, algorithms, or experiments, read in this order:
 22. [experimental_foundations/B24_PROTOCOL.md](experimental_foundations/B24_PROTOCOL.md) — frozen protocol for the completed interference-controlled development experiment.
 23. [checkpoints/HLS_checkpoint_after_B24.md](checkpoints/HLS_checkpoint_after_B24.md) — historical B2.4 checkpoint.
 24. [checkpoints/HLS_checkpoint_after_B5.md](checkpoints/HLS_checkpoint_after_B5.md) — current checkpoint: B3, integrated RQ0, B4, B5, and the post-B5 strategic decision.
+25. [experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md](experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md) — current experimental framework and detailed A1a pre-implementation audit.
+
+## Current experimental strategy after PACS/B0
+
+PACS is closed as the current RQ0 vehicle; this is not evidence against RQ0.
+Do not reopen it for N=25/100, replay variants, adapters, learning-rate or epoch
+tuning, gradient protection, or other incremental repairs. Its historical
+results and statuses below remain unchanged.
+
+The Office-Home screen concluded **B0 = STOP B**. Its frozen-representation
+transitions were more predictable than PACS, but its dominated portfolio and
+limited reproducibly positive development did not supply the complementary,
+non-dominated RQ0 vehicle sought. This is not evidence against RQ0. Do not
+repair B0 by changing architectures, N, learning rate, epochs, adapters,
+replay, protection mechanisms, or hyperparameters.
+
+The methodological priority is now the **HLS Synthetic Environment**: controlled,
+configurable, and falsifiable study of RQ0 mechanisms, limits, and equivalence
+boundaries before returning to real datasets. This pivot does not modify RQ0.
+Candidate A/iWildCam is **PARKED**, not rejected.
+
+The A1a `T=2` pre-implementation mathematical audit is **COMPLETE** and
+`A1a = READY FOR IMPLEMENTATION DESIGN`. In the minimal model, `G(a)` must be
+derived through `a -> O -> d -> S' -> V`, never configured directly; a strict
+switch requires `delta_G > delta_R`. Operation-independent opportunity and no
+learning each imply `HLS = strong SEP` under their documented assumptions.
+Coupling is necessary for this minimal mechanism but not sufficient for strict
+advantage. Independently solved SEP-Omega equality remains a consistency target
+under reducibility. The detailed source is
+[HLS_SYNTHETIC_ENVIRONMENT.md](experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md).
+
+**Next step:** freeze the concrete A1a primitive world specification and exact
+hand-solvable reference worlds before implementation.
 
 ## Central programme
 
