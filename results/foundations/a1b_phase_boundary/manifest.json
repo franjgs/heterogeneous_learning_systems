@@ -1,0 +1,58 @@
+{
+  "code": [
+    {
+      "path": "src/hls/a1a.py",
+      "sha256": "635da02c8d2fce894f624642bc56e18034f1653389610e9c171a235d6848eeb6"
+    },
+    {
+      "path": "src/hls/a1b.py",
+      "sha256": "5a33eafbde24fed3d1ead4853faf497a24e61c0df402c59c0e7797f69eb2544d"
+    },
+    {
+      "path": "experiments/synthetic/a1b/run_sweep.py",
+      "sha256": "d1f06c24c528bca273218c900174aa2bd2c6396d61e0d216bdc25f2c321423a2"
+    }
+  ],
+  "command": "python experiments/synthetic/a1b/run_sweep.py",
+  "counts": {
+    "A1b.1": 28,
+    "A1b.2": 546,
+    "A1b.3": 446
+  },
+  "deterministic": true,
+  "experiment_id": "A1b",
+  "kind": "pre_registered_exact_phase_boundary_sweep",
+  "protocol": {
+    "path": "docs/experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md",
+    "section": "21. A1b predefined primitive-parameter phase-boundary sweep",
+    "sha256": "f2a0cbb8e1d3cb03a2d4107af98c47fcb12f587c39f4e7968847595a2b17836b"
+  },
+  "repository_commit": "5fc36a3843a8269c6ef4c7f670e36d9050788162",
+  "results": [
+    {
+      "path": "results/foundations/a1b_phase_boundary/all_configurations.csv",
+      "sha256": "f02f097cf49a64f53223d9fb7c7c4e834e5b2f9b400e35f383cdecb9cd0cabfc"
+    },
+    {
+      "path": "results/foundations/a1b_phase_boundary/summary.json",
+      "sha256": "8dafac17e58c840060dac3863b708a3ddab820ad465e4c694fa7d02484a971a8"
+    },
+    {
+      "path": "results/foundations/a1b_phase_boundary/a1b1_delta_j_vs_rho.png",
+      "sha256": "91c9b8d9a9460d7a6c6e0bbd63619976a2983a31edab79e9287eb46699bed297"
+    },
+    {
+      "path": "results/foundations/a1b_phase_boundary/a1b2_eta_kappa_phase_map.png",
+      "sha256": "ffee9ebb9a4bd34abf7275a2850b716a16b1b9a5ad55c101f41c6e9fa5c4c69a"
+    },
+    {
+      "path": "results/foundations/a1b_phase_boundary/a1b3_opportunity_geometry_phase_map.png",
+      "sha256": "f39737a96973d733655b90d7edd9e589f3ea70bc5067b792aa073f3aa8b9e9c0"
+    }
+  ],
+  "schema_version": 1,
+  "seeds": [],
+  "status": "PASS",
+  "tolerance": 1e-12,
+  "working_tree_dirty_at_run": true
+}

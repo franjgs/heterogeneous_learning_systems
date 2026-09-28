@@ -1,0 +1,132 @@
+{
+  "SEP_Omega_violation_count": 0,
+  "conservative_metric": "J_HLS-J_SEP_max",
+  "count_match": {
+    "A1b.1": true,
+    "A1b.2": true,
+    "A1b.3": true
+  },
+  "deterministic": true,
+  "effective_counts": {
+    "A1b.1": 28,
+    "A1b.2": 546,
+    "A1b.3": 446
+  },
+  "expected_counts": {
+    "A1b.1": 28,
+    "A1b.2": 546,
+    "A1b.3": 446
+  },
+  "experiment_id": "A1b",
+  "interpretation": "Agreement of the exact solver with pre-registered A1a phase boundaries; not empirical validation of RQ0.",
+  "mandatory_negative_controls": [
+    "D_equals_N",
+    "e_s_equals_e_h",
+    "e_s_less_than_e_h",
+    "eta_zero",
+    "positive_coupling_insufficient_delta_G",
+    "rho_zero"
+  ],
+  "mismatch_count": 0,
+  "negative_control_violation_count": 0,
+  "negative_controls_complete": true,
+  "passed": true,
+  "phases": {
+    "A1b.1": {
+      "SEP_Omega_violation_count": 0,
+      "SEP_Omega_violations": [],
+      "mismatch_count": 0,
+      "mismatches": [],
+      "n_configurations": 28,
+      "negative_control_coverage": {
+        "positive_coupling_insufficient_delta_G": 10,
+        "rho_zero": 1
+      },
+      "negative_control_violation_count": 0,
+      "negative_control_violations": [],
+      "observed": {
+        "NEGATIVE_UNEXPECTED": 0,
+        "NO_ADVANTAGE": 12,
+        "STRICT_ADVANTAGE": 16
+      },
+      "predicted": {
+        "BOUNDARY": 1,
+        "GREATER": 16,
+        "LESS": 11
+      }
+    },
+    "A1b.2": {
+      "SEP_Omega_violation_count": 0,
+      "SEP_Omega_violations": [],
+      "mismatch_count": 0,
+      "mismatches": [],
+      "n_configurations": 546,
+      "negative_control_coverage": {
+        "D_equals_N": 276,
+        "eta_zero": 26,
+        "positive_coupling_insufficient_delta_G": 161
+      },
+      "negative_control_violation_count": 0,
+      "negative_control_violations": [],
+      "observed": {
+        "NEGATIVE_UNEXPECTED": 0,
+        "NO_ADVANTAGE": 437,
+        "STRICT_ADVANTAGE": 109
+      },
+      "predicted": {
+        "BOUNDARY": 0,
+        "GREATER": 109,
+        "LESS": 437
+      }
+    },
+    "A1b.3": {
+      "SEP_Omega_violation_count": 0,
+      "SEP_Omega_violations": [],
+      "mismatch_count": 0,
+      "mismatches": [],
+      "n_configurations": 446,
+      "negative_control_coverage": {
+        "e_s_equals_e_h": 21,
+        "e_s_less_than_e_h": 210,
+        "positive_coupling_insufficient_delta_G": 121
+      },
+      "negative_control_violation_count": 0,
+      "negative_control_violations": [],
+      "observed": {
+        "NEGATIVE_UNEXPECTED": 0,
+        "NO_ADVANTAGE": 353,
+        "STRICT_ADVANTAGE": 93
+      },
+      "predicted": {
+        "BOUNDARY": 1,
+        "GREATER": 93,
+        "LESS": 352
+      }
+    }
+  },
+  "provenance": {
+    "a1a_solver": {
+      "path": "src/hls/a1a.py",
+      "sha256": "635da02c8d2fce894f624642bc56e18034f1653389610e9c171a235d6848eeb6"
+    },
+    "a1b_implementation": {
+      "path": "src/hls/a1b.py",
+      "sha256": "5a33eafbde24fed3d1ead4853faf497a24e61c0df402c59c0e7797f69eb2544d"
+    },
+    "deterministic": true,
+    "protocol": {
+      "path": "docs/experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md",
+      "section": "21. A1b predefined primitive-parameter phase-boundary sweep",
+      "sha256": "f2a0cbb8e1d3cb03a2d4107af98c47fcb12f587c39f4e7968847595a2b17836b"
+    },
+    "runner": {
+      "path": "experiments/synthetic/a1b/run_sweep.py",
+      "sha256": "d1f06c24c528bca273218c900174aa2bd2c6396d61e0d216bdc25f2c321423a2"
+    },
+    "seeds": []
+  },
+  "seeds": [],
+  "status": "PASS",
+  "tolerance": 1e-12,
+  "total_configurations": 1020
+}

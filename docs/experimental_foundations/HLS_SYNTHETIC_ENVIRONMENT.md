@@ -1343,11 +1343,400 @@ A1a implementation = NOT STARTED
 Next step: implement the exact A1a solver and require A--F acceptance tests to
 pass before any parameter sweep.
 
-## 21. Current decision boundary
+## 21. A1b predefined primitive-parameter phase-boundary sweep
+
+**Status: PRE-REGISTERED / NOT RUN**
+
+A1b is a deterministic, predefined sweep of the frozen `T=2` A1a world family.
+It does not seek to maximize HLS-minus-SEP value or search for favorable
+examples. It asks:
+
+> For the frozen T=2 A1a world family, in which regions of primitive-parameter
+> space does joint management obtain strict value over strong SEP, and do the
+> observed regions coincide with the analytical phase boundaries implied by
+> A1a?
+
+The primary conservative advantage quantity is
+
+\[
+\Delta J_{cons}=J_{HLS}-J_{SEP,max},
+\]
+
+where
+
+\[
+J_{SEP,max}=\max_{a\in A_{SEP}}\{r(a)+G(a)\},
+\qquad
+A_{SEP}=\arg\max_a r(a).
+\]
+
+The corresponding lower endpoint is
+
+\[
+J_{SEP,min}=\min_{a\in A_{SEP}}\{r(a)+G(a)\}.
+\]
+
+With a unique immediate optimum,
+`J_SEP_min=J_SEP_max=J_SEP`. Strict conservative joint advantage requires
+`Delta_J_cons>0` outside the frozen numerical tolerance. Equality and broad
+no-advantage regions are valid expected outcomes, not failures. A1b tests phase
+boundaries rather than effect-size maximization. No primitive, grid point,
+probe, metric, or tolerance may be changed after observing results merely to
+enlarge a positive region.
+
+### 21.1 Fixed base world
+
+Unless a phase below explicitly sweeps a primitive, freeze
+
+\[
+M=2,\qquad K=2,\qquad T=2,
+\]
+
+\[
+q_0=1,\qquad q_1=2,
+\]
+
+and
+
+\[
+C=\begin{bmatrix}0.80&0.50\\0.70&0.20\end{bmatrix}.
+\]
+
+Therefore `h=M1`, `s=M2`, and `delta_R=0.10`. Also freeze:
+
+- `ebar_1=0.50`;
+- `beta=1`;
+- no operational costs;
+- base `eta=0.80` and `kappa=0.02` when development parameters are not swept;
+- base `e_h=e_11=0.20` and `e_s=e_21=0.90` when opportunity parameters are
+  not swept.
+
+**A1b does not vary `C`.** Competence geometry belongs to the separate A1c
+boundary stated below. Because `C` is fixed, strong SEP has the unique immediate
+optimum `M1` throughout A1b; nevertheless every row must retain both
+`J_SEP_min` and `J_SEP_max` under the general strong-SEP contract.
+
+### 21.2 Analytical reference
+
+At the base `eta=0.80`, `kappa=0.02`,
+
+\[
+N=0.50,\qquad D=0.88,\qquad D-N=0.38=\frac{19}{50}.
+\]
+
+For this family,
+
+\[
+\delta_G=\rho(e_s-e_h)(D-N),
+\]
+
+and the strict switch condition is
+
+\[
+\rho(e_s-e_h)(D-N)>\delta_R.
+\]
+
+With `e_h=0.20` and `e_s=0.90`,
+
+\[
+\delta_G=0.266\rho,
+\qquad
+\rho^*=\frac{50}{133}\approx0.37593984962406015.
+\]
+
+More generally, when its denominator is positive,
+
+\[
+\rho^*=\frac{\delta_R}{(e_s-e_h)(D-N)},
+\]
+
+and the opportunity-geometry threshold is
+
+\[
+(e_s-e_h)^*=\frac{\delta_R}{\rho(D-N)}.
+\]
+
+Development phases must use the actual `D(eta,kappa)` returned by exact
+development enumeration, including the null action. No unverified hard-coded
+development formula may replace that calculation.
+
+### 21.3 A1b.1 — coupling sweep
+
+**Purpose.** Test the `rho` phase boundary with all other primitives fixed:
+`eta=0.80`, `kappa=0.02`, `e_h=0.20`, `e_s=0.90`, `ebar=0.50`, `beta=1`, and
+the base `C`.
+
+The frozen global grid is
+
+```text
+rho = 0.00, 0.05, 0.10, ..., 1.00
+```
+
+inclusive with step `0.05`. Add exactly these analytical probes:
+
+```text
+rho* = 50/133
+rho* ± 0.01
+rho* ± 0.001
+rho* ± 0.0001
+```
+
+Duplicates, if any, are removed before evaluation; no later points may be
+added. None of these probes duplicates the global grid, so the frozen unique
+count is `21+7=28` configurations.
+
+Expected classification:
+
+- `rho<rho*`: no strict HLS advantage;
+- `rho=rho*`: boundary and equal total optimum;
+- `rho>rho*`: strict HLS advantage;
+- `rho=0`: mandatory negative control.
+
+Each row must contain `rho`, `g_h`, `g_s`, `N`, `D`, `delta_R`, `delta_G`,
+`J_HLS`, `J_SEP_min`, `J_SEP_max`, `Delta_J_cons`, HLS optimal-action set,
+SEP immediate-optimal-action set, `J_SEP_Omega`, analytical predicted regime,
+observed regime, and match/mismatch.
+
+A1b.1 passes iff every point agrees with the analytical regime outside the
+frozen tolerance, `rho=0` has no strict advantage, exact `rho*` is a boundary,
+and `J_SEP_Omega=J_HLS` at every point. A mismatch is reported and investigated;
+it is not repaired by moving probes or changing tolerance.
+
+### 21.4 A1b.2 — development effectiveness/cost sweep
+
+**Purpose.** Test that coupling alone is insufficient and that a positive
+region appears only when development creates enough continuation value.
+
+Freeze `rho=0.75`, `e_h=0.20`, `e_s=0.90`, `ebar=0.50`, `beta=1`, and base
+`C`. Use the complete frozen grids
+
+```text
+eta   = 0.00, 0.05, 0.10, ..., 1.00
+kappa = 0.00, 0.02, 0.04, ..., 0.50
+```
+
+giving exactly `21*26=546` configurations. The grid must not be optimized or
+adapted after results.
+
+For every configuration derive exactly `N`, `D`, `D-N`, `delta_R`,
+
+\[
+\delta_G=\rho(e_s-e_h)(D-N),
+\]
+
+`J_HLS`, `J_SEP_min`, `J_SEP_max`, `Delta_J_cons`, optimal development-action
+set, HLS optimal-action set, and SEP-Omega value.
+
+Classify by comparing `rho(e_s-e_h)(D-N)` with `delta_R=0.10`:
+
+- `LESS`: no strict advantage;
+- `BOUNDARY`: equality within the frozen tolerance;
+- `GREATER`: strict advantage.
+
+Because `D` includes null development, ineffective or sufficiently expensive
+development produces `D=N`, not negative development value. This is a
+mandatory negative-control region.
+
+A1b.2 passes iff every configuration matches its analytical
+`LESS/BOUNDARY/GREATER` regime, all `D=N` configurations show no strict
+advantage, no `delta_G<delta_R` configuration shows strict advantage, every
+`delta_G>delta_R` configuration does, and SEP-Omega equals HLS throughout. The
+coarse grid need not contain an exact equality point; absence of one is not a
+failure.
+
+### 21.5 A1b.3 — opportunity-geometry sweep
+
+**Purpose.** Attack directly the possible artificiality of World E by varying
+the action-conditioned opportunity geometry over its full admissible square.
+
+Freeze `rho=0.75`, `eta=0.80`, `kappa=0.02`, `ebar=0.50`, `beta=1`, and base
+`C`. Use
+
+```text
+e_h = 0.00, 0.05, 0.10, ..., 1.00
+e_s = 0.00, 0.05, 0.10, ..., 1.00
+```
+
+as a full Cartesian `21*21=441` grid. The sweep must not be restricted to
+`e_s>e_h`.
+
+For this phase,
+
+\[
+D-N=0.38,
+\qquad
+\delta_G=0.75(e_s-e_h)(0.38)=0.285(e_s-e_h),
+\]
+
+and
+
+\[
+(e_s-e_h)^*=\frac{0.10}{0.285}=\frac{20}{57}
+\approx0.3508771929824561.
+\]
+
+Expected regimes are:
+
+- `e_s-e_h<=0`: no positive A1a mechanism;
+- `0<e_s-e_h<20/57`: opportunity asymmetry exists but is insufficient;
+- `e_s-e_h=20/57`: boundary;
+- `e_s-e_h>20/57`: strict HLS advantage.
+
+The `0.05` grid need not contain the exact boundary. Add exactly five probes
+with fixed `e_h=0.20`:
+
+```text
+e_s = 0.20 + 20/57
+e_s = 0.20 + 20/57 ± 0.01
+e_s = 0.20 + 20/57 ± 0.001
+```
+
+Their `e_s` values range from approximately `0.5408771929824562` to
+`0.5608771929824561`, so every probe lies in `[0,1]`. None duplicates the
+Cartesian grid. The frozen unique count is therefore `441+5=446`
+configurations. No additional probe may be added after observing results.
+
+Every row records `e_h`, `e_s`, `e_s-e_h`, `g_h`, `g_s`, `D-N`, `delta_G`,
+`delta_R`, `J_HLS`, `J_SEP_min`, `J_SEP_max`, `Delta_J_cons`, HLS action set,
+SEP immediate action set, SEP-Omega value, predicted regime, observed regime,
+and match/mismatch.
+
+A1b.3 passes iff the full grid and probes agree with analytical classification,
+there is no strict advantage for `e_s<=e_h` or below threshold, strict advantage
+occurs above threshold, the exact boundary probe gives equality, and SEP-Omega
+equals HLS throughout.
+
+### 21.6 Frozen numerical classification
+
+All classifications use unrounded internal values and the A1a absolute
+tolerance
+
+\[
+tol=10^{-12}.
+\]
+
+For
+
+\[
+x=\delta_G-\delta_R,
+\]
+
+classify:
+
+```text
+x < -tol       -> LESS
+abs(x) <= tol  -> BOUNDARY
+x > tol        -> GREATER
+```
+
+Apply equivalent logic to `Delta_J_cons`. Record any analytical/observed
+difference attributable only to tolerance. Printed rounding must never define
+a scientific region, and tolerance must not be enlarged after results.
+
+### 21.7 Mandatory negative and reducibility controls
+
+The frozen phases explicitly cover:
+
+1. `rho=0` in A1b.1;
+2. `eta=0` in A1b.2;
+3. `D=N` through ineffective or expensive development in A1b.2;
+4. `e_s=e_h` along the A1b.3 diagonal;
+5. `e_s<e_h` in the lower opportunity-contrast half of A1b.3;
+6. positive coupling with `delta_G<delta_R` in all three phases.
+
+Every case must have no strict conservative joint advantage.
+
+At every A1b point, compute SEP-Omega and require
+
+\[
+J_{HLS}=J_{SEP\text{-}Omega}
+\]
+
+within `tol`. This is a mathematical reducibility consistency check under the
+A1a assumptions, not an independent algorithmic benchmark. Any violation is a
+failure and investigation trigger.
+
+### 21.8 Required row and aggregate outputs
+
+An eventual implementation must emit machine-readable rows with at least:
+
+- phase and configuration identifier;
+- all primitive parameters varied or fixed for that row;
+- `N`, `D`, `D_minus_N`, `delta_R`, and `delta_G`;
+- `J_HLS`, `J_SEP_min`, `J_SEP_max`, `Delta_J_cons`, and `J_SEP_Omega`;
+- HLS optimal-action set, SEP immediate-optimal-action set, and optimal
+  development-action set;
+- predicted regime, observed regime, and match indicator.
+
+A1b is exact and deterministic: it uses no seeds and needs no stochastic
+confidence intervals.
+
+For each phase, aggregate:
+
+- number of configurations;
+- predicted and observed counts for `LESS`, `BOUNDARY`, and `GREATER`;
+- mismatches;
+- negative-control violations;
+- SEP-Omega equivalence violations.
+
+Do not report only the percentage of HLS wins. Phase-boundary agreement is the
+scientific object.
+
+### 21.9 Pre-registered visualizations
+
+No visualization is generated at design time. A later A1b run may produce only
+the following pre-registered views:
+
+- **A1b.1:** `Delta_J_cons` versus `rho`, with analytical `rho*` marked;
+- **A1b.2:** two-dimensional `eta` by `kappa` regime map based on
+  `Delta_J_cons`, with the analytical boundary overlaid where defined;
+- **A1b.3:** two-dimensional `e_h` by `e_s` regime map with
+  `e_s-e_h=20/57` overlaid.
+
+Plots must show equality/no-advantage regions as prominently as positive
+regions. No cosmetic parameter selection is permitted after results.
+
+### 21.10 A1b success, failure, and interpretation
+
+**A1b PASS** requires every one of the `28+546+446=1020` frozen configurations
+and probes to reproduce its analytical regime, all mandatory negative controls
+to hold, and SEP-Omega equivalence to hold throughout.
+
+**A1b FAIL** means one or more genuine mismatches remain after excluding only
+demonstrated implementation or numerical bugs. Failure is scientifically
+informative and must not be repaired by tuning parameters.
+
+PASS does not empirically validate RQ0. It establishes only that the exact
+solver and analytical A1a theory agree over predefined primitive-parameter
+regions, recovering the controlled phase structure of this minimal modeled
+mechanism.
+
+### 21.11 Anti-cherry-picking freeze
+
+Once this section is accepted, the following are frozen:
+
+- `rho`, `eta`, `kappa`, `e_h`, and `e_s` grids;
+- every boundary probe;
+- `tol=1e-12`;
+- row and aggregate metrics;
+- regime definitions and PASS/FAIL criteria.
+
+Any later additional sweep is exploratory, must be labelled as such, and must
+remain separate from A1b confirmatory results.
+
+### 21.12 A1c boundary
+
+A1b does not vary competence geometry `C`. Varying `C` simultaneously changes
+the immediate operational gap `delta_R`, terminal competence geometry, `D-N`,
+the possible optimal development recipient, and the identity or multiplicity
+of immediate-optimal SEP actions. Those coupled changes require a separate
+experiment, **A1c competence-geometry sweep**. A1c is not designed here.
+
+## 22. Current decision boundary
 
 PACS and B0 are closed vehicle screens and are not evidence against RQ0. The
-methodological priority is now controlled synthetic analysis before another
-real-data vehicle. Candidate A/iWildCam remains parked, not rejected. A1a is
-frozen for implementation, but no implementation has started. The next task is
-to implement the exact solver and require reference worlds A--F to pass before
-any parameter sweep.
+methodological priority is controlled synthetic analysis before another
+real-data vehicle. Candidate A/iWildCam remains parked, not rejected. The A1a
+exact solver and reference worlds A--F are validated. A1b is pre-registered but
+has not been implemented or run; its frozen primitive sweep is the next
+experimental task.
