@@ -1,6 +1,6 @@
 # Heterogeneous Learning Systems — Handover
 
-Last updated: 2026-09-26
+Last updated: 2026-09-28
 
 **Current checkpoint:** [HLS_checkpoint_after_B5.md](checkpoints/HLS_checkpoint_after_B5.md).
 Any new work must begin with that checkpoint and
@@ -63,18 +63,40 @@ configurable, and falsifiable study of RQ0 mechanisms, limits, and equivalence
 boundaries before returning to real datasets. This pivot does not modify RQ0.
 Candidate A/iWildCam is **PARKED**, not rejected.
 
-The A1a `T=2` pre-implementation mathematical audit is **COMPLETE** and
-`A1a = READY FOR IMPLEMENTATION DESIGN`. In the minimal model, `G(a)` must be
-derived through `a -> O -> d -> S' -> V`, never configured directly; a strict
-switch requires `delta_G > delta_R`. Operation-independent opportunity and no
-learning each imply `HLS = strong SEP` under their documented assumptions.
-Coupling is necessary for this minimal mechanism but not sufficient for strict
-advantage. Independently solved SEP-Omega equality remains a consistency target
-under reducibility. The detailed source is
-[HLS_SYNTHETIC_ENVIRONMENT.md](experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md).
+The exact L0 sequence is now **A1 CLOSED / PASS**: A1a established the
+hand-solvable `M=2`, `K=2`, `T=2` worlds and exact solver; A1b reproduced the
+primitive-parameter phase boundary in 1,020 preregistered configurations; and
+A1c reproduced the competence-geometry boundary in 458 preregistered
+configurations. Both sweeps had zero analytical mismatches and zero SEP-Omega
+violations; A1c also had zero physical-relabeling and future-pair invariance
+violations.
 
-**Next step:** freeze the concrete A1a primitive world specification and exact
-hand-solvable reference worlds before implementation.
+For a unique immediate optimum `h` and alternative `s`, the model-scoped A1
+condition is
+
+```text
+delta_G = [g(s)-g(h)](D-N) > delta_R = r(h)-r(s),
+```
+
+or `rho(e_s-e_h)(D-N) > delta_R` under the frozen opportunity family. Strong
+SEP routes by immediate reward and then optimizes development exactly; ties
+retain the complete immediate-optimal set and use `J_SEP_max` for conservative
+comparison. `HLS = SEP-Omega` at every A1b/A1c configuration: SEP-Omega is the
+reducibility boundary with sufficient exact continuation information, not an
+independent algorithmic benchmark.
+
+A1 establishes controlled phase structure for the minimal mechanism, not
+empirical validation of RQ0. It does not establish realistic-data performance,
+trainable-model learning, long-horizon feedback, partial-observation
+robustness, multi-step transfer/interference, or superiority over SEP-Omega.
+The detailed post-run record is
+[HLS_SYNTHETIC_ENVIRONMENT.md](experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md).
+RQ0 remains **OPEN**.
+
+**Next decision boundary:** further sweeps of the same `T=2` L0 world are
+low-value unless a specific theoretical ambiguity requires them. Any next step
+should add a qualitatively new mechanism, most naturally repeated competence
+evolution over `T>2`; its design has not started here.
 
 ## Central programme
 

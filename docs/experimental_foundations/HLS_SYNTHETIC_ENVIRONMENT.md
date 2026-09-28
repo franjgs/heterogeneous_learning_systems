@@ -2065,11 +2065,158 @@ Once this section is accepted, the following are frozen before implementation:
 No A1c parameter may be changed after seeing results. A1c introduces no A1d
 design. Any later experiment requires a separate, prospective protocol.
 
-## 23. Current decision boundary
+## 23. A1 post-run outcome
+
+**STATUS: A1 CLOSED / PASS**
+
+This is a post-run record. It does not alter the frozen A1a reference worlds or
+the preregistered A1b/A1c protocols above. A1 is the completed L0 sequence:
+
+- **A1a:** analytical constructive world and exact deterministic solver;
+- **A1b:** primitive-parameter phase-boundary sweep;
+- **A1c:** competence-geometry phase sweep.
+
+A1 PASS means that exact solver outcomes and the preregistered analytical
+boundaries agree throughout the tested minimal family. It does **not** mean
+that RQ0 is empirically validated.
+
+### 23.1 A1a exact constructive foundation
+
+A1a uses `M=2`, `K=2`, and `T=2` with exact deterministic evaluation. The
+operational actor and development recipient are distinct decisions and can
+differ. Strong SEP selects the complete set of actions maximizing immediate
+operational reward and then optimizes development exactly after the realized
+opportunity. If immediate operational rewards tie, it reports
+`[J_SEP_min,J_SEP_max]`; conservative joint advantage is measured against
+`J_SEP_max`.
+
+SEP-Omega receives sufficient exact continuation-value information. It is a
+reducibility consistency control, not an independent algorithmic benchmark.
+Worlds A--F reproduce no-learning and no-coupling controls, insufficient
+coupling, the exact boundary, strict joint advantage, and reducibility.
+
+The constructive positive World E has
+
+```text
+J_HLS       = 1.504
+J_SEP       = 1.4045
+Delta_joint = 0.0995
+```
+
+with `M2` as operational actor and `M1` as optimal development recipient. This
+single constructive world is an exact acceptance case, not scientific evidence
+of robustness by itself.
+
+### 23.2 A1b primitive-parameter outcome
+
+A1b evaluated exactly 1,020 preregistered configurations:
+
+| Phase | N | LESS | BOUNDARY | GREATER | Strict advantage | No advantage | Mismatches |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| A1b.1 coupling | 28 | 11 | 1 | 16 | 16 | 12 | 0 |
+| A1b.2 development/cost | 546 | 437 | 0 | 109 | 109 | 437 | 0 |
+| A1b.3 opportunity geometry | 446 | 352 | 1 | 93 | 93 | 353 | 0 |
+| **Total** | **1020** | **800** | **2** | **218** | **218** | **802** | **0** |
+
+There were zero negative-control violations and zero SEP-Omega violations. All
+mandatory controls held: `rho=0`, `eta=0`, `D=N`, `e_s=e_h`, `e_s<e_h`, and
+positive but insufficient coupling.
+
+A1b shows that the constructive mechanism is not restricted to World E:
+positive and no-advantage regions follow the analytical phase boundary over the
+predefined primitive grids. The ratio `218/1020` is a property of those grids,
+not a probability that HLS helps in naturally occurring worlds.
+
+### 23.3 A1c competence-geometry outcome
+
+A1c evaluated exactly 458 preregistered configurations.
+
+For A1c.1 (`N=17`), the outcome was 13 `LESS`, zero `BOUNDARY`, three
+`GREATER`, and one immediate SEP tie. There were three strict-advantage and 14
+no-advantage configurations, with zero mismatches. Specifically, `c_21=0.60`
+was `LESS`, `c_21=0.65` was `GREATER`, and `c_21=0.80` produced the conservative
+SEP immediate tie.
+
+For A1c.2 (`N=441`), the outcome was 216 `LESS`, zero `BOUNDARY`, and 225
+`GREATER`: 225 strict-advantage and 216 no-advantage configurations, with zero
+mismatches. All 41 `D=N` configurations had no strict advantage.
+
+The optimal development-action geometry was:
+
+| Development category | Configurations | Strict advantage | No advantage |
+|---|---:|---:|---:|
+| null | 41 | 0 | 41 |
+| M1 | 190 | 105 | 85 |
+| M2 | 190 | 105 | 85 |
+| ties | 20 | 15 | 5 |
+
+The initial terminal-best learner was M1 in 210 configurations, M2 in 210, and
+tied in 21. Physical relabeling produced zero violations in 458 checks;
+future-pair invariance produced zero violations in 441 checks; and SEP-Omega
+produced zero violations in 458 checks.
+
+Thus the mechanism is not tied to M1 as development recipient, to a fixed
+future-best learner, or to World E's particular competence matrix.
+
+### 23.4 Core A1 phase condition
+
+For a unique immediate operational optimum `h` and alternative `s`, define
+
+```text
+delta_R = r(h)-r(s)
+delta_G = [g(s)-g(h)](D-N).
+```
+
+Strict joint advantage occurs in A1 when
+
+```text
+delta_G > delta_R.
+```
+
+Under the frozen A1 opportunity parameterization this becomes
+
+```text
+rho (e_s-e_h)(D-N) > delta_R.
+```
+
+This is an A1/L0 result under its frozen assumptions, not yet a universal HLS
+theorem. A1 separately identifies the roles of present operational sacrifice
+`delta_R`, operation-to-opportunity coupling `rho`, opportunity geometry
+`e_s-e_h`, future development value `D-N`, and competence geometry `C`.
+Negative and equality regions are part of the result, not failures.
+
+### 23.5 Reducibility boundary
+
+Across every A1b and A1c configuration,
+
+```text
+J_HLS = J_SEP-Omega
+```
+
+within `tol=1e-12`. A1 therefore does not establish intrinsic superiority of
+monolithic joint control over a separated architecture supplied with sufficient
+exact continuation-value information. It establishes advantage over strong SEP
+only where its immediate operational decision does not internalize that
+continuation value. This is the expected theoretical reducibility boundary.
+
+### 23.6 Scope and limitations
+
+A1 does not establish realistic-data performance, learning with trainable
+models, long-horizon competence trajectories, repeated endogenous
+routing/development feedback, robustness to partial observation,
+transfer/interference across multiple steps, superiority over SEP-Omega, or
+generality beyond the L0 assumptions. PACS and Office-Home remain prior vehicle
+screens and are not rewritten as support for A1.
+
+RQ0 remains **OPEN**.
+
+## 24. Current decision boundary
 
 PACS and B0 are closed vehicle screens and are not evidence against RQ0. The
 methodological priority is controlled synthetic analysis before another
-real-data vehicle. Candidate A/iWildCam remains parked, not rejected. The A1a
-exact solver and reference worlds A--F are validated. A1c is now
-pre-registered but has not been implemented or run; implementation must follow
-the frozen competence grids and acceptance criteria above.
+real-data vehicle. Candidate A/iWildCam remains parked, not rejected. A1 is
+closed with PASS at L0. Further sweeps of the same `T=2` world are currently
+low-value unless a specific theoretical ambiguity requires them. A subsequent
+research step should require a qualitative increase in mechanism, most
+naturally repeated competence evolution over `T>2`, but no such experiment is
+designed here.
