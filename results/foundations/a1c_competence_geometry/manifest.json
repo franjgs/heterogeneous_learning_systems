@@ -1,0 +1,53 @@
+{
+  "code": [
+    {
+      "path": "src/hls/a1a.py",
+      "sha256": "635da02c8d2fce894f624642bc56e18034f1653389610e9c171a235d6848eeb6"
+    },
+    {
+      "path": "src/hls/a1c.py",
+      "sha256": "a399511d6b6786286f8412257778bf4ffc5bb48fe962fcd634dc36fef250ee4d"
+    },
+    {
+      "path": "experiments/synthetic/a1c/run_sweep.py",
+      "sha256": "0fb1b55b96ebb40bf652bd622488217f415a8dc693c34106552c2551d27fc960"
+    }
+  ],
+  "command": "python experiments/synthetic/a1c/run_sweep.py",
+  "counts": {
+    "A1c.1": 17,
+    "A1c.2": 441
+  },
+  "deterministic": true,
+  "experiment_id": "A1c",
+  "kind": "pre_registered_exact_competence_geometry_sweep",
+  "protocol": {
+    "path": "docs/experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md",
+    "section": "22. A1c competence-geometry phase sweep",
+    "sha256": "bc5231b1def1f0eb6fd071f84b1687a0937f5983041b9691b96dca86befd3741"
+  },
+  "repository_commit": "4d2b8e7f4e92a4159776463319be4f15cd264450",
+  "results": [
+    {
+      "path": "results/foundations/a1c_competence_geometry/all_configurations.csv",
+      "sha256": "b33b4353d97ef3d60900b5650db904adbb389ab3fb11c62d578095c2aa296ef1"
+    },
+    {
+      "path": "results/foundations/a1c_competence_geometry/summary.json",
+      "sha256": "e05321651c32c20bf6db0199f3c34f8d8321c39c34ec2493ad9def4dd6952b62"
+    },
+    {
+      "path": "results/foundations/a1c_competence_geometry/a1c1_delta_j_vs_delta_r.png",
+      "sha256": "48e0fcba9e730d54343c906595511020f7986b362859828ed25f9ff02a5cf380"
+    },
+    {
+      "path": "results/foundations/a1c_competence_geometry/a1c2_future_competence_phase_map.png",
+      "sha256": "7a7fadf4c0b41b1b1c9f13a65c997847d27bb03b0da2b7eafa388ca5226e0ea5"
+    }
+  ],
+  "schema_version": 1,
+  "seeds": [],
+  "status": "PASS",
+  "tolerance": 1e-12,
+  "working_tree_dirty_at_run": true
+}

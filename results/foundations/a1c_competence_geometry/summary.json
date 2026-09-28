@@ -1,0 +1,167 @@
+{
+  "D_equals_N_violation_count": 0,
+  "SEP_Omega_violation_count": 0,
+  "above_threshold_violation_count": 0,
+  "below_threshold_violation_count": 0,
+  "conservative_metric": "J_HLS-J_SEP_max",
+  "count_match": {
+    "A1c.1": true,
+    "A1c.2": true
+  },
+  "deterministic": true,
+  "effective_counts": {
+    "A1c.1": 17,
+    "A1c.2": 441
+  },
+  "expected_counts": {
+    "A1c.1": 17,
+    "A1c.2": 441
+  },
+  "experiment_id": "A1c",
+  "full_relabeling_violation_count": 0,
+  "future_pair_violation_count": 0,
+  "interpretation": "Controlled competence-geometry phase-structure agreement in the minimal modeled family; not empirical validation of RQ0.",
+  "mismatch_count": 0,
+  "passed": true,
+  "phases": {
+    "A1c.1": {
+      "D_equals_N_count": 0,
+      "D_equals_N_violation_count": 0,
+      "SEP_Omega_violation_count": 0,
+      "SEP_Omega_violations": [],
+      "above_threshold_violation_count": 0,
+      "below_threshold_violation_count": 0,
+      "development_recipients": {
+        "M1": 17,
+        "M2": 0,
+        "null": 0,
+        "ties": 0
+      },
+      "full_relabeling_violation_count": 0,
+      "full_relabeling_violations": [],
+      "future_pair_violation_count": 0,
+      "future_pair_violations": [],
+      "immediate_ties": 1,
+      "initial_terminal_best": {
+        "M1": 17,
+        "M2": 0,
+        "tie": 0
+      },
+      "mismatch_count": 0,
+      "mismatches": [],
+      "n_configurations": 17,
+      "observed": {
+        "NEGATIVE_UNEXPECTED": 0,
+        "NO_ADVANTAGE": 14,
+        "STRICT_ADVANTAGE": 3
+      },
+      "predicted": {
+        "BOUNDARY": 0,
+        "GREATER": 3,
+        "IMMEDIATE_TIE": 1,
+        "LESS": 13
+      },
+      "strict_no_advantage_by_development_recipient": {
+        "M1": {
+          "no_advantage": 14,
+          "strict_advantage": 3
+        },
+        "M2": {
+          "no_advantage": 0,
+          "strict_advantage": 0
+        },
+        "null": {
+          "no_advantage": 0,
+          "strict_advantage": 0
+        },
+        "ties": {
+          "no_advantage": 0,
+          "strict_advantage": 0
+        }
+      }
+    },
+    "A1c.2": {
+      "D_equals_N_count": 41,
+      "D_equals_N_violation_count": 0,
+      "SEP_Omega_violation_count": 0,
+      "SEP_Omega_violations": [],
+      "above_threshold_violation_count": 0,
+      "below_threshold_violation_count": 0,
+      "development_recipients": {
+        "M1": 190,
+        "M2": 190,
+        "null": 41,
+        "ties": 20
+      },
+      "full_relabeling_violation_count": 0,
+      "full_relabeling_violations": [],
+      "future_pair_violation_count": 0,
+      "future_pair_violations": [],
+      "immediate_ties": 0,
+      "initial_terminal_best": {
+        "M1": 210,
+        "M2": 210,
+        "tie": 21
+      },
+      "mismatch_count": 0,
+      "mismatches": [],
+      "n_configurations": 441,
+      "observed": {
+        "NEGATIVE_UNEXPECTED": 0,
+        "NO_ADVANTAGE": 216,
+        "STRICT_ADVANTAGE": 225
+      },
+      "predicted": {
+        "BOUNDARY": 0,
+        "GREATER": 225,
+        "IMMEDIATE_TIE": 0,
+        "LESS": 216
+      },
+      "strict_no_advantage_by_development_recipient": {
+        "M1": {
+          "no_advantage": 85,
+          "strict_advantage": 105
+        },
+        "M2": {
+          "no_advantage": 85,
+          "strict_advantage": 105
+        },
+        "null": {
+          "no_advantage": 41,
+          "strict_advantage": 0
+        },
+        "ties": {
+          "no_advantage": 5,
+          "strict_advantage": 15
+        }
+      }
+    }
+  },
+  "provenance": {
+    "a1a_solver": {
+      "path": "src/hls/a1a.py",
+      "sha256": "635da02c8d2fce894f624642bc56e18034f1653389610e9c171a235d6848eeb6"
+    },
+    "a1c_implementation": {
+      "path": "src/hls/a1c.py",
+      "sha256": "a399511d6b6786286f8412257778bf4ffc5bb48fe962fcd634dc36fef250ee4d"
+    },
+    "deterministic": true,
+    "protocol": {
+      "path": "docs/experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md",
+      "section": "22. A1c competence-geometry phase sweep",
+      "sha256": "bc5231b1def1f0eb6fd071f84b1687a0937f5983041b9691b96dca86befd3741"
+    },
+    "runner": {
+      "path": "experiments/synthetic/a1c/run_sweep.py",
+      "sha256": "0fb1b55b96ebb40bf652bd622488217f415a8dc693c34106552c2551d27fc960"
+    },
+    "seeds": []
+  },
+  "required_development_coverage": true,
+  "required_terminal_best_coverage": true,
+  "seeds": [],
+  "status": "PASS",
+  "tolerance": 1e-12,
+  "total_configurations": 458
+}

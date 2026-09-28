@@ -1732,11 +1732,344 @@ the possible optimal development recipient, and the identity or multiplicity
 of immediate-optimal SEP actions. Those coupled changes require a separate
 experiment, **A1c competence-geometry sweep**. A1c is not designed here.
 
-## 22. Current decision boundary
+## 22. A1c competence-geometry phase sweep
+
+**STATUS: PRE-REGISTERED / NOT RUN**
+
+A1c determines how competence geometry `C` conditions joint-management value
+inside the same frozen `M=2`, `K=2`, `T=2` A1a world. It adds no mechanism and
+does not search for a favorable geometry. Its confirmatory object is agreement
+between exact policy values and the phase structure implied by the primitive
+world parameters as `C` changes.
+
+A1c is not empirical validation of RQ0. Equality, no-advantage regions,
+development ties, and geometries favoring either development recipient are
+valid and necessary outcomes.
+
+### 22.1 Fixed world, metric, and numerical discipline
+
+Both A1c phases freeze:
+
+- `M=2`, `K=2`, `T=2`;
+- `q_0=1`, `q_1=2` deterministically;
+- `rho=0.75`, `eta=0.80`, `kappa=0.02`, `ebar_1=0.50`, and `beta=1`;
+- `e_11=0.20` and `e_21=0.90`;
+- zero operational costs;
+- the A1a world, development, HLS, strong-SEP, and SEP-Omega semantics.
+
+A1c does not re-sweep `rho`, `eta`, `kappa`, `E`, `ebar`, or `beta`. The
+primary conservative advantage quantity remains
+
+```text
+Delta_J_cons = J_HLS - J_SEP_max,
+```
+
+where `J_SEP_max` is the maximum total value induced by any immediately
+optimal SEP action. The fixed numerical tolerance is
+
+```text
+tol = 1e-12.
+```
+
+All classifications use unrounded internal values. Negative values of
+`Delta_J_cons` must be retained rather than truncated.
+
+### 22.2 Adversarial validity of the analytical comparison
+
+For a unique immediate operational optimum `h` and alternative `s`, the frozen
+A1a semantics still imply
+
+```text
+delta_G = rho (e_s-e_h) (D-N)
+```
+
+and the strict-switch condition
+
+```text
+rho (e_s-e_h) (D-N) > delta_R.
+```
+
+This remains valid while `C` changes because A1a opportunities can be assigned
+to either learner and the exact opportunity value `D` is independent of the
+operational actor after an opportunity exists. Competence geometry can change
+`N`, `D`, `D-N`, the terminal-best learner, and the optimal development
+recipient; these quantities must therefore be recomputed from every world.
+Once recomputed, `D-N` captures their effect on the two operational actions
+under the frozen A1a mechanism. No recipient or regime may be hard-coded from
+the geometry.
+
+Development-action ties can change the categorical interpretation but not the
+scalar value `D`, because every tied optimal action attains the same exact
+value. If immediate operational rewards tie, however, `h/s` is not uniquely
+defined: A1c must use the complete SEP action set and the conservative
+`J_SEP_max` comparison rather than imposing a label-based resolution.
+
+The full future-competence square `[0,1]^2` is admissible under A1a. The bounded
+transition preserves `[0,1]`, and the null action remains available everywhere.
+
+### 22.3 A1c.1 -- present operational competence gap
+
+**Purpose.** Isolate the effect of the present operational sacrifice
+`delta_R` while holding future competence geometry fixed.
+
+Freeze
+
+```text
+c_11 = 0.80
+c_12 = 0.50
+c_22 = 0.20
+```
+
+and sweep exactly
+
+```text
+c_21 = 0.00, 0.05, ..., 0.80
+```
+
+inclusive: **17 configurations**, with no additional probes.
+
+For every configuration derive from the world, rather than hard-code:
+
+- the immediate-optimal SEP action set;
+- `h`, `s`, and `delta_R` only when the immediate optimum is unique;
+- `N`, `D`, `D-N`, and the optimal development-action set;
+- each operational action's opportunity probability, `G`, and total value;
+- `delta_G` only where `h/s` is well-defined;
+- `J_HLS`, `J_SEP_min`, `J_SEP_max`, `Delta_J_cons`, and `J_SEP_Omega`;
+- the HLS optimal-action set and the analytical and observed regimes.
+
+For `c_21<0.80`, `M1` is the unique immediate optimum and the analytical
+prediction is obtained from the derived quantities:
+
+```text
+rho (e_s-e_h) (D-N) > delta_R
+```
+
+if and only if strict joint advantage is predicted. At `c_21=0.80`, the
+immediate rewards tie. The implementation must preserve the complete SEP set,
+report `J_SEP_min` and `J_SEP_max`, and classify conservatively through
+`Delta_J_cons`; it must not define `h/s` or resolve the tie using learner labels
+or continuation value.
+
+The exact strict-switch point for this frozen future geometry would be
+`c_21=0.6005`, which is not on the predefined `0.05` grid. Points on both sides
+are already present, and exact boundary equality is not a PASS requirement for
+A1c.1, so no off-grid probe is added.
+
+### 22.4 A1c.2 -- future competence geometry
+
+**Purpose.** Determine how future competence geometry controls `N`, `D`,
+`D-N`, and the identity or multiplicity of the optimal development recipient.
+
+Freeze the present column:
+
+```text
+c_11 = 0.80
+c_21 = 0.70
+```
+
+and sweep the full Cartesian square
+
+```text
+c_12 = 0.00, 0.05, ..., 1.00
+c_22 = 0.00, 0.05, ..., 1.00
+```
+
+inclusive: **21 x 21 = 441 configurations**, with no additional probes. The
+grid must not be restricted by competence ordering or by an expected
+development recipient.
+
+For every configuration derive:
+
+- `N`, `D`, `D-N`, and the complete optimal development-action set;
+- the initial terminal-best learner set;
+- `delta_R`, `delta_G`, and each operational action's `G`;
+- the HLS and immediate-optimal SEP action sets;
+- `J_HLS`, `J_SEP_min`, `J_SEP_max`, `Delta_J_cons`, and `J_SEP_Omega`;
+- the predicted regime, observed regime, and match indicator.
+
+Here the immediate optimum is uniquely `M1` throughout, so
+
+```text
+delta_R = 0.10
+e_s-e_h = 0.70
+rho(e_s-e_h) = 0.75 * 0.70 = 21/40 = 0.525.
+```
+
+The candidate strict-advantage condition is therefore
+
+```text
+(21/40)(D-N) > 1/10,
+```
+
+equivalently
+
+```text
+D-N > 4/21 = 0.190476190476190476...
+```
+
+The exact solver must derive `D-N`; this threshold is used only for analytical
+classification and must not assign policy winners or development recipients.
+The predefined grid contains configurations below and above the threshold but
+no exact equality. Exact threshold equality is not required for PASS, so no
+off-grid probe is added.
+
+### 22.5 Development geometry and required coverage
+
+A1c.2 must allow the exact development solver to produce, without special
+cases:
+
+- unique `M1` development;
+- unique `M2` development;
+- null development;
+- ties among optimal development actions;
+- `M1`, `M2`, or both as initially terminal-best.
+
+No assumption is made that the strongest, weakest, or operational learner is
+the best development recipient. A pre-execution exact admissibility check of
+the fixed grid confirms that every required category is represented. For
+example, future pairs `(c_12,c_22)=(0.05,0.00)`, `(0.00,0.05)`, `(0.00,1.00)`,
+and `(0.00,0.00)` respectively provide candidate geometries for unique `M1`,
+unique `M2`, null, and tied optimal development. The implemented solver must
+nevertheless derive the categories and their counts; these labels must not be
+encoded as expected outputs.
+
+The grids also already contain all required negative and boundary controls:
+
+- large `delta_R` and no advantage in A1c.1;
+- the immediate SEP tie at `c_21=0.80`;
+- `D=N` and no advantage;
+- `D-N` below and above `4/21`;
+- future symmetry `c_12=c_22`;
+- geometries with `M1` and with `M2` as optimal development recipient.
+
+Consequently, **no extra analytical probes are preregistered**. A1c contains
+exactly `17+441=458` configurations.
+
+### 22.6 Classification and invariance checks
+
+For every configuration with a unique immediate optimum, define
+
+```text
+x = rho (e_s-e_h) (D-N) - delta_R.
+```
+
+Classify analytically using the frozen tolerance:
+
+```text
+x < -tol       -> LESS
+abs(x) <= tol  -> BOUNDARY
+x > tol        -> GREATER.
+```
+
+Classify the observed conservative value from `Delta_J_cons`:
+
+```text
+Delta_J_cons < -tol       -> NEGATIVE
+abs(Delta_J_cons) <= tol  -> NO_ADVANTAGE
+Delta_J_cons > tol        -> STRICT_ADVANTAGE.
+```
+
+The preregistered correspondence is `LESS -> NO_ADVANTAGE`, `BOUNDARY ->
+NO_ADVANTAGE`, and `GREATER -> STRICT_ADVANTAGE`. A negative observed value is
+preserved and is not treated as zero.
+
+Immediate-tie configurations are reported separately. Their scientific
+comparison is always `J_HLS-J_SEP_max`; no unique `h/s`, signed `delta_G`, or
+label-based SEP value is invented.
+
+The following invariance checks use existing grid configurations and add no
+worlds:
+
+1. At the A1c.1 immediate tie, physically swapping learner labels must preserve
+   the SEP interval `[J_SEP_min,J_SEP_max]`, `J_HLS`, `Delta_J_cons`, and the
+   cardinalities of optimal-action sets, with labels swapped accordingly.
+2. For every paired A1c.2 geometry `(c_12,c_22)` and `(c_22,c_12)`, the future
+   development problem must preserve `N`, `D`, and `D-N`, while swapping `M1`
+   and `M2` in terminal-best and development-recipient sets. Because present
+   operational competence and opportunity geometry remain attached to their
+   learners, this check applies to the future-development subproblem; it does
+   not assert invariance of the complete operational policy value under this
+   partial swap.
+3. `J_HLS=J_SEP_Omega` must hold within `tol` throughout. This remains an A1a
+   reducibility consistency check, not an independent algorithmic benchmark.
+
+### 22.7 Preregistered outputs and aggregation
+
+Machine-readable rows must contain at least:
+
+- `phase` and `configuration_id`;
+- all four entries of `C`;
+- `N`, `D`, and `D_minus_N`;
+- `delta_R`, and `delta_G` where uniquely defined;
+- the immediate-optimal SEP action set;
+- the initial terminal-best learner set;
+- the complete optimal development-action set;
+- `G` for every operational action;
+- the HLS optimal-action set;
+- `J_HLS`, `J_SEP_min`, `J_SEP_max`, `Delta_J_cons`, and `J_SEP_Omega`;
+- predicted regime, observed regime, and match indicator.
+
+Aggregate A1c.1 and A1c.2 separately, reporting configuration count, predicted
+and observed regime counts, mismatches, negative-control violations,
+SEP-Omega-equivalence violations, and invariance violations. A1c.2 must also
+report exact counts by optimal development category: null, unique `M1`, unique
+`M2`, and ties. Do not report only the percentage of HLS wins.
+
+### 22.8 Preregistered visualizations
+
+Only two primary visualizations are preregistered:
+
+1. **A1c.1:** `Delta_J_cons` versus derived `delta_R`.
+2. **A1c.2:** a `c_12 x c_22` phase map of `Delta_J_cons`, with development-
+   recipient structure available as an annotation or secondary categorical
+   representation only when it does not obscure the primary map.
+
+No additional plot is part of confirmatory A1c.
+
+### 22.9 PASS, FAIL, and interpretation
+
+**A1c PASS** requires all of the following:
+
+1. every unique-immediate-optimum configuration agrees with its analytical
+   `LESS/BOUNDARY/GREATER` prediction;
+2. immediate-tie configurations obey the conservative SEP interval semantics
+   without label dependence;
+3. no `D=N` configuration has strict joint advantage;
+4. no configuration below the derived `D-N` threshold has strict advantage;
+5. configurations above that threshold have strict advantage whenever the
+   unique-immediate assumptions apply;
+6. `J_HLS=J_SEP_Omega` within `tol` throughout;
+7. the preregistered relabeling and future-geometry invariance checks pass.
+
+**A1c FAIL** means one or more genuine mismatches remain after excluding only
+demonstrated implementation or numerical bugs. Failure must not be repaired by
+changing the grids, fixed parameters, tolerance, metric, or classifications.
+
+PASS would establish controlled competence-geometry phase structure in the
+minimal modeled family. It would not empirically validate RQ0, establish
+prevalence in real systems, or justify a new mechanism.
+
+### 22.10 Anti-cherry-picking freeze
+
+Once this section is accepted, the following are frozen before implementation:
+
+- both competence grids and the decision to add no probes;
+- every fixed world parameter;
+- `tol=1e-12`;
+- `Delta_J_cons=J_HLS-J_SEP_max` as the primary metric;
+- analytical and observed classifications;
+- invariance checks, required outputs, and PASS/FAIL criteria;
+- the two primary visualizations.
+
+No A1c parameter may be changed after seeing results. A1c introduces no A1d
+design. Any later experiment requires a separate, prospective protocol.
+
+## 23. Current decision boundary
 
 PACS and B0 are closed vehicle screens and are not evidence against RQ0. The
 methodological priority is controlled synthetic analysis before another
 real-data vehicle. Candidate A/iWildCam remains parked, not rejected. The A1a
-exact solver and reference worlds A--F are validated. A1b is pre-registered but
-has not been implemented or run; its frozen primitive sweep is the next
-experimental task.
+exact solver and reference worlds A--F are validated. A1c is now
+pre-registered but has not been implemented or run; implementation must follow
+the frozen competence grids and acceptance criteria above.
