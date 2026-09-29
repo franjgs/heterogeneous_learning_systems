@@ -1,6 +1,6 @@
 # RQ0 Experimental Campaign — Canonical Research Guide
 
-STATUS: PROSPECTIVE DESIGN — NO RQ0 CAMPAIGN RESULTS YET
+STATUS: INITIAL RQ0-B CLOSED / POST-CAMPAIGN DIAGNOSTICS RECORDED / RQ0 OPEN
 
 ## 1. Purpose of this document
 
@@ -1712,3 +1712,129 @@ More specifically:
 No such result is assumed.
 
 RQ0 therefore remains **OPEN**.
+
+### 15.8 Post-campaign routing-inversion and reachability diagnostics
+
+The diagnostics recorded here are exact analyses of the current G0+C1--C5
+physics. They are not additional campaign configurations, a parameter search,
+or evidence that RQ0 has a positive or negative general answer.
+
+#### Local routing-as-teaching exists
+
+Physically reachable states exist in which exact HLS routing sacrifices
+immediate operational reward in order to increase the probability of a future
+development opportunity. Thus routing and learning are not trivially separable
+at every state in the current framework.
+
+For an HLS action and an immediate-reward-optimal action in the audited states,
+the exact local Bellman difference is
+
+\[
+Q_{\mathrm{HLS}}-Q_{\mathrm{greedy}}
+=
+\Delta_R+\Delta_p D,
+\]
+
+where
+
+\[
+\Delta_R=R_{\mathrm{HLS}}-R_{\mathrm{greedy}}<0,
+\qquad
+\Delta_p=p_{\mathrm{HLS}}-p_{\mathrm{greedy}}>0,
+\]
+
+and
+
+\[
+D=V(O=1)-V(O=0).
+\]
+
+This identifies the local causal mechanism: routing can acquire value through
+its action-conditioned effect on the availability of development opportunity.
+
+#### Local inversion is not yet global integration value
+
+The routing-inverted states found in the fixed `eta=0.5` diagnostic world are
+physically reachable but are not reachable under any exact HLS-optimal
+continuation from `S0`. The constrained-reachability calculation is
+
+\[
+J^{\to S}=\max_\pi J(\pi)
+\quad\text{subject to}\quad
+P_\pi(\operatorname{reach}S)>0,
+\]
+
+with exact HLS control retained on branches not leading to the target. Define
+
+\[
+C_{\mathrm{reach}}(S)=J_{\mathrm{HLS}}(S_0)-J^{\to S}.
+\]
+
+For the base diagnostic (`s=0.5`, `eta=0.5`, `gamma=0`, `rho=0.5`),
+
+| Quantity | Exact value |
+| --- | ---: |
+| `J_HLS(S0)` | `3.203857421875` |
+| `J^{->S}` | `3.174560546875` |
+| `C_reach` | `0.029296875` |
+| local `G_inv` | `0.0015625` |
+
+Hence the local inversion does not by itself establish globally useful
+integration from `S0`.
+
+#### Demand-persistence causal diagnostic
+
+Only future persistence of demand for the relevant competence was changed; the
+remaining diagnostic physics was held fixed. After correction of the builder,
+`L=0` exactly reproduces the base `eta=0.5` values:
+
+\[
+J_{\mathrm{HLS}}
+=J_{\mathrm{SEP,min}}
+=J_{\mathrm{SEP,max}}
+=3.203857421875.
+\]
+
+| Persistence `L` | max local `G_inv` | `C_reach` | `G_inv/C_reach` |
+| ---: | ---: | ---: | ---: |
+| 0 | `0.0015625000` | `0.0292968750` | `0.05333333` |
+| 1 | `0.0156250000` | `0.0781250000` | `0.20000000` |
+| 2 | `0.0252929687` | `0.0781250000` | `0.32375000` |
+| 3 | `0.0319396973` | `0.0781250000` | `0.408828125` |
+
+For every audited `L`, no routing inversion is reachable under an HLS-optimal
+continuation (`opt_inv=0`) and
+
+\[
+J_{\mathrm{HLS}}=J_{\mathrm{SEP,max}}.
+\]
+
+The supported conclusion is limited: in the audited cases, demand persistence
+systematically strengthens the *local* routing-as-teaching incentive but does
+not remove the global barrier to reaching the states where it is valuable.
+
+Do not infer from this table a recurrence for local opportunity value, a
+constant reachability cost, a global switching ratio, a finite or absent
+threshold `L*`, or any claim about unbounded persistence. These numerical
+diagnostics are specific to the stated world; they do not establish global
+reducibility of G0+C1--C5 or resolve RQ0.
+
+#### Current RQ0 bifurcator
+
+The initial campaign and follow-up diagnostics distinguish two questions:
+
+1. Can routing affect learning-relevant continuation value? **Yes, locally**:
+   exact routing inversions and their Bellman mechanism are present.
+2. Can that local coupling create global value from `S0` beyond fair strong
+   SEP? **Not yet demonstrated**.
+
+The next diagnostic must therefore address the global barrier directly:
+
+> Is the failure to include a routing inversion in an HLS-optimal trajectory
+> from `S0` an artefact of this diagnostic world's geometry, or a structural
+> consequence of the current G0+C1--C5 physics by which strong SEP can always
+> reconstruct HLS value?
+
+This is a research bifurcator, not a protocol for a new experiment. Do not
+extend the persistence ladder or tune parameters merely to obtain
+`J_HLS > J_SEP`.

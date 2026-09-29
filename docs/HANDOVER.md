@@ -188,9 +188,21 @@ evolution; C2 derived collective portfolio geometry; C3 persistent scarce
 development resources; C4 signed transfer/interference physics; and C5
 stationary, time-indexed, and Markov task demand. All current gates pass on
 the same policy-neutral G0 framework; they are capabilities and controls, not
-evidence that RQ0 holds. The framework is **READY FOR FIRST RQ0 CAMPAIGN**,
-which is not designed here. C6--C8 remain unimplemented and RQ0 remains
-**OPEN**.
+evidence that RQ0 holds. C6--C8 remain unimplemented.
+
+**RQ0-B and diagnostic state:** the initial campaign closed **B-REDUCIBLE**:
+HLS and strong SEP tied throughout its preregistered configurations. Exact
+follow-up diagnostics nevertheless found physically reachable local routing
+inversions: routing can sacrifice immediate reward to raise development-
+opportunity value. Those states remain outside every HLS-optimal continuation
+from `S0`; constrained reachability finds a strictly positive access cost in
+the audited `eta=0.5` world. Increasing relevant future-demand persistence
+strengthened the local inversion signal for `L=0..3`, but did not produce an
+optimal-reachable inversion or `J_HLS > J_SEP_max`. This is neither a global
+reducibility claim nor a negative answer to RQ0. The current bifurcator is
+whether that global barrier is world-geometry-specific or structural in the
+current G0+C1--C5 physics. RQ0 remains **OPEN**; do not continue a blind
+persistence search or tune parameters for a positive result.
 
 ## Central programme
 
