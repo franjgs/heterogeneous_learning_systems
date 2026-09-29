@@ -1,6 +1,6 @@
 # HLS Synthetic Environment — Generative Experimental Framework for RQ0
 
-**Status: DESIGN / NOT YET IMPLEMENTED**
+**Status: ACTIVE DEVELOPMENT — G0 IMPLEMENTED / A1 CLOSED / RQ0 OPEN**
 
 ## 1. Purpose and scientific role
 
@@ -2220,3 +2220,293 @@ low-value unless a specific theoretical ambiguity requires them. A subsequent
 research step should require a qualitative increase in mechanism, most
 naturally repeated competence evolution over `T>2`, but no such experiment is
 designed here.
+
+## 25. G0 — General Generative Skeleton
+
+**STATUS: IMPLEMENTED / PASS**
+
+G0 is infrastructure for representing the parametric world family
+`E(Theta)`. It introduces no new scientific mechanism, policy claim, or RQ0
+result. In particular:
+
+> G0 generalizes the representation of experimental worlds, not the scientific
+> claims obtained from A1.
+
+### 25.1 Frozen architectural contract
+
+`SyntheticEnvironment` composes seven explicit, independently replaceable
+blocks:
+
+```text
+Theta_Q  TaskProcess
+Theta_C  CompetenceModel
+Theta_O  OpportunityKernel
+Theta_D  DevelopmentKernel
+Theta_R  RewardModel
+Theta_K  ResourceModel
+Theta_I  InformationModel
+```
+
+The general state representation must admit arbitrary positive `M` learners
+and `K` competence/task dimensions. The task interface must not impose a
+particular horizon, `q_0/q_1`, or `T=2`. Immutable `WorldState` and trajectory
+records must preserve the conceptual transition tuple
+
+```text
+(S_t, q_t, a_t, O_t, d_t, r_t, cost_t, S_t+1).
+```
+
+Operational and development actions remain distinct. Opportunity generation
+does not itself change competence; competence changes only through the declared
+development kernel. Randomness is an explicit injectable dependency, although
+the A1 gate uses exact analytical integration and no sampling.
+
+The world contains no HLS, SEP, or SEP-Omega policy implementation and no
+policy-specific reward or transition. Policies receive immutable views under
+explicit information contracts. Thus `WORLD != POLICY` is a structural
+property rather than a naming convention.
+
+### 25.2 Initial component implementations
+
+G0 implements only the component semantics required to express A1:
+
+- a finite deterministic task process, without making finite deterministic
+  sequences universal;
+- bounded matrix competence state with arbitrary `M x K` shape;
+- the A1 opportunity kernel
+  `g_ik(rho)=(1-rho)ebar_k+rho e_ik` as one replaceable kernel;
+- the A1 bounded development transition
+  `c'=c+eta(1-c)` with a null action and independently selectable recipient;
+- the A1 operational reward `R(S,q,a)=c_aq` as one reward model;
+- the A1 non-null development cost `kappa` and discount `beta` as the minimal
+  resource model;
+- explicit information contracts sufficient to represent A1 joint HLS,
+  strong SEP, and SEP-Omega semantics without embedding those policies in the
+  environment.
+
+No transfer, interference, forgetting, nonstationarity, partial observation,
+new budget system, or longer-horizon scientific protocol is introduced by G0.
+
+### 25.3 A1 compatibility gate
+
+`src/hls/a1a.py` remains the independent frozen reference implementation. G0
+must express each `A1aWorld` through an adapter and reproduce, at the frozen
+`tol=1e-12`, all applicable values and sets:
+
+- `N`, `D`, and `D-N`;
+- opportunity probabilities and continuation values `G`;
+- immediate rewards;
+- optimal operational and development action sets;
+- `J_HLS`, `J_SEP_min`, `J_SEP_max`, `J_SEP-Omega`, and `Delta_J_cons`;
+- phase classifications, tie semantics, and relevant relabeling/invariance
+  checks.
+
+The mandatory gate is:
+
+```text
+A1 reference worlds A--F: exact agreement
+A1b: 1020/1020 configurations
+A1c: 458/458 configurations
+total sweep gate: 1478/1478
+```
+
+No A1 protocol, result, tolerance, grid, or solver expectation may be changed
+to make G0 pass.
+
+### 25.4 G0 PASS criterion
+
+G0 is PASS only if all seven interfaces exist separately; the world-policy
+boundary is structurally preserved; general objects are not fixed to
+`M=K=T=2`; A1 is expressible as an adapter; A--F and all 1,478 sweep
+configurations agree exactly within the frozen tolerance; architectural tests
+pass; and the existing A1 tests remain unchanged and pass. Otherwise G0 is
+`FAIL / INCOMPLETE`.
+
+### 25.5 Post-implementation validation outcome
+
+G0 satisfies the frozen architectural contract. The seven `Theta` blocks are
+separate replaceable components, policies remain outside the world, and the
+general state and task interfaces admit dimensions and horizons other than the
+A1 `M=K=T=2` instance.
+
+The unchanged A1 implementation served as the independent regression oracle.
+At the frozen `tol=1e-12`, the G0 A1 adapter reproduced:
+
+```text
+A1 reference worlds A--F: PASS
+A1b: 1020/1020 configurations agree
+A1c: 458/458 configurations agree
+total sweep gate: 1478/1478
+architectural and G0 regression tests: 22/22 PASS
+combined existing A1 and G0 tests: 73/73 PASS
+```
+
+The comparison covered the applicable primitive-derived values, continuation
+values, policy values, complete optimal-action sets, strong-SEP tie interval,
+phase classifications, and relabeling invariants. No A1 protocol, tolerance,
+solver, or scientific result was changed. G0 introduces no new experimental
+result for RQ0.
+
+## 26. Post-G0 scientific capability audit and dependency map
+
+**STATUS: CAPABILITY AUDIT / NO NEW EXPERIMENT DESIGNED**
+
+G0 supplies a composable representation of
+
+```text
+Theta = (Theta_Q, Theta_C, Theta_O, Theta_D,
+         Theta_R, Theta_K, Theta_I).
+```
+
+That architectural fact does not establish that every scientifically useful
+behavior associated with those blocks exists or has been tested. This audit
+therefore applies the strict distinction
+
+```text
+INTERFACE != CAPABILITY != VALIDATED CAPABILITY.
+```
+
+An **interface** is a substitution point or contract. A **capability** is an
+implemented composition that can express the stated mechanism without changing
+its semantics. A **validated capability** additionally has direct tests or
+evidence showing that it behaves correctly over its declared domain. G0's PASS
+validates the composable architecture and its exact A1 compatibility; it does
+not validate all mechanisms that the interfaces could later host.
+
+### 26.1 Closed L0 scope and immediate scientific gap
+
+A1 already characterizes the minimal L0 mechanism and must not be repeated. It
+contains no-learning and no-coupling controls, insufficient coupling, the exact
+boundary, strict joint advantage, SEP-Omega reducibility/equivalence, and the
+competence-geometry phase structure inside the A1 domain. Its minimal
+model-scoped condition remains
+
+```text
+delta_G > delta_R.
+```
+
+This is not a general answer to RQ0, which remains open.
+
+The scientific gap immediately after G0/A1 is **repeated endogenous competence
+evolution**. This is not merely the syntactic condition `T>2`. The required
+capability is repeated causal feedback:
+
+```text
+S_t
+  -> operational action a_t
+  -> opportunity O_t
+  -> development action d_t
+  -> S_t+1
+  -> future operational/development decisions
+  -> S_t+2
+  -> ...
+```
+
+Longer horizon is a technical consequence. The scientific object is feedback
+among routing, generated experience/opportunity, development allocation,
+competence change, and subsequent routing and development decisions. G0 has
+the component interfaces and one-step transition records needed to host such a
+capability, but it does not yet implement or validate the repeated closed-loop
+decision process.
+
+### 26.2 Capability dependency matrix
+
+Statuses are conservative and refer to capability after G0, not to the mere
+presence of a Python protocol.
+
+| Capability | Current status after G0 | What A1 cannot test without it | Logical prerequisites | Principal `Theta` blocks | Scientific role relative to RQ0 |
+| --- | --- | --- | --- | --- | --- |
+| **C1 — Repeated endogenous competence evolution** | **PARTIALLY REPRESENTABLE**: immutable states, one-step transitions, trajectory records, and task access exist; repeated policy-conditioned feedback is not implemented or validated. | Path dependence, repeated routing--learning feedback, delayed sacrifices, and whether local advantages persist, reverse, or compound. | G0; explicit multistep world/policy semantics. | `Q,C,O,D,R,K,I` | Tests whether joint management has value when current actions repeatedly reshape future competence and choices. |
+| **C2 — Collective portfolio geometry** | **PARTIALLY REPRESENTABLE**: general states admit arbitrary `M x K`; generators and classifiers for genuine `M,K>2` portfolio families are absent. | Collective coverage, redundancy, complementarity, specialization, dominance, and non-dominance beyond the A1 two-learner geometry. | G0; normally C1 when geometry evolves endogenously. | `C`, with `Q,R,D` for interpretation | Tests which collective competence structures make allocation and development jointly relevant, rather than treating heterogeneity as variance alone. |
+| **C3 — Scarce competence-development resources** | **INTERFACE ONLY** beyond A1's scalar `kappa`: no shared budgets, capacities, or mutually exclusive development allocation. | Opportunity cost between developing different learners/competences and portfolio-level allocation of scarce development. | G0; meaningful portfolio choices from C2; repeated use commonly requires C1. | `K,D`, with `O` | Tests whether integration matters because development alternatives compete for genuinely scarce resources. |
+| **C4 — Competence interactions** | **INTERFACE ONLY**: no transfer, interference, forgetting/depreciation, finite capacity, heterogeneous rates, or derived `Gamma` capability is implemented. | Whether development of one competence changes the value or evolution of others and whether portfolio interaction changes separability. | G0; C1; usually C2 and C3 for collective interaction questions. | `C,D,K`, optionally `R` | Attacks A1's independent bounded-development assumption and tests interaction and reducibility boundaries. |
+| **C5 — Dynamic task demand** | **PARTIALLY REPRESENTABLE**: `TaskProcess` is replaceable and finite deterministic sequences exist; stationary stochastic, non-stationary, Markov, and context-dependent demand are not implemented or validated. | Adaptation to changing demand and whether competence investment value depends on demand dynamics rather than a fixed sequence. | G0; C1 for endogenous adaptation questions. | `Q`, with `R,C` | Provides a demand-side stress axis while retaining stationary demand as a required control. |
+| **C6 — Information/coordination restrictions** | **PARTIALLY REPRESENTABLE**: explicit A1 information contracts exist; partial/noisy competence information and richer coordination constraints do not. | Separation of integration value from extra-information value under imperfect or restricted observability. | G0; a target mechanism whose information requirements can be varied fairly. | `I`, with observable projections of `C,O,Q` | Tests whether an apparent HLS advantage survives information-matched comparisons and where coordinated separation remains sufficient. |
+| **C7 — Stochastic/adversarial dynamics** | **PARTIALLY REPRESENTABLE**: randomness is injectable and A1 integrates Bernoulli opportunity exactly; stochastic development, perishability, delays, and history-dependent opportunities are absent. | Robustness to shocks, timing, delayed feedback, perishable opportunities, and explicitly adversarial violations of simplifying assumptions. | G0; the specific causal capability being stressed; common-randomness semantics where applicable. | `O,D,Q,K`, with history in `C`/trajectory | Supplies orthogonal stress tests only when each perturbation targets a declared RQ0 assumption or boundary. |
+| **C8 — Feature-generating worlds + actual learners** | **INTERFACE ONLY**: no `P_k(x)`, incremental classifier/regressor, or feature-level competence dynamics exist. | Whether controlled mechanisms survive learning with actual data-generating distributions and trainable learners. | G0; selected earlier capabilities with established scientific value. | `Q,C,D,R`, potentially `O,K,I` | Bridges controlled synthetic mechanisms toward synthetic-realistic systems before returning to real datasets. |
+
+No C1--C8 capability is declared `IMPLEMENTED` or `VALIDATED` by this audit.
+The implemented and validated objects are narrower: G0's architecture and A1
+compatibility are validated; A1's L0 phase results are closed within their
+frozen domain.
+
+### 26.3 Logical dependency map, not a mandatory experiment sequence
+
+The approximate causal core is
+
+```text
+G0 composable world architecture
+  -> C1 repeated endogenous competence evolution
+  -> C2 genuine collective portfolio structure
+  -> C3 scarce development allocation
+  -> C4 competence interactions
+```
+
+This arrow denotes logical or interpretive dependence, not an instruction to
+run four experiments in order. C2 can have static controls, C3 can isolate a
+resource question before every interaction is present, and a negative or
+reducibility result can stop or redirect later work.
+
+Three partially orthogonal stress axes can branch from the relevant mechanism:
+
+```text
+C5 demand dynamics
+C6 information/coordination restrictions
+C7 stochastic/adversarial dynamics
+```
+
+C8 is a later representational bridge, not an automatic final step. The order
+of any future experiments requires independent prospective protocols and may
+branch, stop, or change when evidence shows no advantage, reducibility, an
+invalid mechanism, or insufficient scientific value. This map must not be read
+as the mandatory linear sequence `C1,C2,...,C8`.
+
+The dependency map and the conditional complexity ladder in Section 15 are
+different axes:
+
+- the **capability dependency map** states which mechanisms must exist and
+  what they depend on;
+- **L0--L4** describe levels of experimental complexity.
+
+A capability may support more than one level, and a complexity level may
+combine only the capabilities needed for its specific falsifiable question.
+This audit supplements rather than replaces the L0--L4 ladder.
+
+### 26.4 Capability admission and anti-confirmation rule
+
+Capabilities must not be added merely to make the simulator more complex or
+realistic. In particular, transfer/interference, nonstationarity, partial
+observability, stochasticity, and real classifiers remain out of scope until
+each enables a prospective falsifiable question about RQ0 or attacks a named
+assumption or boundary of an existing model. Their inclusion must preserve an
+appropriate simpler control so that added realism is not confounded with a new
+mechanism.
+
+The framework must continue to generate, according to declared mechanisms,
+worlds where HLS:
+
+- wins;
+- ties;
+- is reducible to coordinated separation;
+- or provides no advantage.
+
+The capability map is therefore not a recipe for constructing favorable HLS
+worlds. Negative, equality, and reducibility regions remain first-class
+scientific outcomes, and no capability may encode an HLS bonus or SEP penalty.
+
+### 26.5 State after the audit
+
+```text
+G0  = IMPLEMENTED / PASS
+A1  = CLOSED / PASS
+RQ0 = OPEN
+
+NEXT SCIENTIFIC OBJECT:
+C1 capability specification — repeated endogenous competence evolution
+
+C1 = NOT YET DESIGNED
+```
+
+This audit does not specify C1 parameters, horizon, sweep, policy solver,
+PASS/FAIL criteria, or implementation. Those choices require a separate
+prospective design task.
