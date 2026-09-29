@@ -190,19 +190,32 @@ stationary, time-indexed, and Markov task demand. All current gates pass on
 the same policy-neutral G0 framework; they are capabilities and controls, not
 evidence that RQ0 holds. C6--C8 remain unimplemented.
 
-**RQ0-B and diagnostic state:** the initial campaign closed **B-REDUCIBLE**:
-HLS and strong SEP tied throughout its preregistered configurations. Exact
-follow-up diagnostics nevertheless found physically reachable local routing
-inversions: routing can sacrifice immediate reward to raise development-
-opportunity value. Those states remain outside every HLS-optimal continuation
-from `S0`; constrained reachability finds a strictly positive access cost in
-the audited `eta=0.5` world. Increasing relevant future-demand persistence
-strengthened the local inversion signal for `L=0..3`, but did not produce an
-optimal-reachable inversion or `J_HLS > J_SEP_max`. This is neither a global
-reducibility claim nor a negative answer to RQ0. The current bifurcator is
-whether that global barrier is world-geometry-specific or structural in the
-current G0+C1--C5 physics. RQ0 remains **OPEN**; do not continue a blind
-persistence search or tune parameters for a positive result.
+**RQ0 causal state:** the initial RQ0-B campaign and the frozen 21-point
+routing--opportunity `lambda` family are **SEP-REDUCIBLE**. The original
+`eta=.5` diagnostic nevertheless established physically reachable local
+routing inversions, while constrained reachability and demand persistence
+`L=0..3` showed that those diagnostic inversions remain off every HLS-optimal
+root continuation. These negative results remain evidence about their stated
+families, not global reducibility.
+
+A separate frozen zero-sum T2 geometry family now establishes a model-scoped
+positive existence result relative to strong SEP:
+
+```text
+5/16 < alpha < 1/2  =>  J_HLS > J_SEP,max.
+```
+
+In that interval every HLS-optimal policy requires an on-policy non-greedy
+routing action; SEP-Omega still equals HLS as the coordination/reducibility
+boundary. Thus RQ0 status is: **existence YES under the exact model and
+strong-SEP contract; structural characterization IN PROGRESS; robustness and
+empirical relevance NOT ESTABLISHED.** RQ0 remains **OPEN**.
+
+Do not run new experiments or tune the diagnostic/persistence/lambda/geometry
+families. Current priority is **structural characterization theory**, using
+[RQ0_EXPERIMENTAL_CAMPAIGN.md](experimental_foundations/RQ0_EXPERIMENTAL_CAMPAIGN.md),
+[RQ0_GEOMETRY_REDISTRIBUTION_PROTOCOL.md](experimental_foundations/RQ0_GEOMETRY_REDISTRIBUTION_PROTOCOL.md),
+and [rq0_routing_integration_boundaries.md](theory/rq0_routing_integration_boundaries.md).
 
 ## Central programme
 

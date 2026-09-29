@@ -3170,7 +3170,7 @@ here.
 
 ## 29. G0+C1--C5 consolidated capability state
 
-**STATUS: G0 IMPLEMENTED / C1--C5 REFERENCE-GATE PASS / READY FOR FIRST RQ0 CAMPAIGN**
+**STATUS: G0 IMPLEMENTED / C1--C5 REFERENCE-GATE PASS / INITIAL RQ0 CAMPAIGN AND CAUSAL FOLLOW-UPS RECORDED**
 
 This is an infrastructure and reference-gate state, not a result about RQ0.
 Every capability remains policy-neutral world semantics or a derived diagnostic;
@@ -3197,10 +3197,12 @@ C1 builds `SyntheticEnvironment`; C2 uses the common competence state/model;
 C3 stores its budget in immutable world state; C4 is a development kernel; and
 C5 is a task-process implementation consumed by `SyntheticEnvironment`.
 
-With G0 and C1--C5 passing their current gates, the framework is **READY FOR
-FIRST RQ0 CAMPAIGN**. This readiness means only that the currently implemented
-world capabilities and controls are available for a separately specified
-campaign. It neither designs that campaign nor makes G0 complete for future
-research. C6 information/coordination restrictions, C7 stochastic/adversarial
-dynamics, and C8 feature-generating worlds with actual learners remain **NOT
-IMPLEMENTED**. RQ0 remains **OPEN**.
+G0 and C1--C5 supplied the policy-neutral capability state used by the initial
+RQ0 campaign and its causal follow-ups. The campaign ledger is
+[RQ0_EXPERIMENTAL_CAMPAIGN.md](RQ0_EXPERIMENTAL_CAMPAIGN.md); the model-scoped
+theory of strict integration, local inversion, and the exact geometry window
+is [rq0_routing_integration_boundaries.md](../theory/rq0_routing_integration_boundaries.md).
+This does not make G0 complete for future research. C6
+information/coordination restrictions, C7 stochastic/adversarial dynamics, and
+C8 feature-generating worlds with actual learners remain **NOT IMPLEMENTED**.
+RQ0 remains **OPEN**.

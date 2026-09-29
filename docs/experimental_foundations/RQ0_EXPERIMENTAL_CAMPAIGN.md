@@ -1,6 +1,6 @@
 # RQ0 Experimental Campaign — Canonical Research Guide
 
-STATUS: INITIAL RQ0-B CLOSED / POST-CAMPAIGN DIAGNOSTICS RECORDED / RQ0 OPEN
+STATUS: INITIAL RQ0-B CLOSED / CAUSAL FOLLOW-UPS RECORDED / RQ0 OPEN
 
 ## 1. Purpose of this document
 
@@ -17,7 +17,8 @@ The synthetic framework has already been constructed and validated sufficiently 
 * C3 = IMPLEMENTED / REFERENCE-GATE PASS.
 * C4 = IMPLEMENTED / REFERENCE-GATE PASS.
 * C5 = IMPLEMENTED / REFERENCE-GATE PASS.
-* G0+C1–C5 = READY FOR FIRST RQ0 CAMPAIGN.
+* G0+C1–C5 = IMPLEMENTED; the initial RQ0 campaign and its recorded causal
+  follow-ups have been completed.
 * C6–C8 = NOT IMPLEMENTED.
 * RQ0 = OPEN.
 
@@ -1229,14 +1230,17 @@ For the two operational tasks,
 \bar e_1=\bar e_2=0.5.
 \]
 
-The executor-specific values are frozen from the initial competence geometry:
+For this RQ0-A/B campaign only, the executor-specific values are frozen from
+the initial competence geometry:
 
 \[
 e_{i,q}=c_{i,q}^{(0)},\qquad q\in\{1,2\}.
 \]
 
 They are parameters of the world instantiated from \(C(s)\); they are not
-updated when competence evolves during a trajectory.
+updated when competence evolves during a trajectory. This is not a global
+contract of the opportunity kernel: the later geometry-redistribution family
+holds its executor primitives independently fixed.
 
 Consequently, at \(\rho=0\),
 
@@ -1819,14 +1823,14 @@ threshold `L*`, or any claim about unbounded persistence. These numerical
 diagnostics are specific to the stated world; they do not establish global
 reducibility of G0+C1--C5 or resolve RQ0.
 
-#### Current RQ0 bifurcator
+#### Historical RQ0 bifurcator after the negative diagnostic
 
 The initial campaign and follow-up diagnostics distinguish two questions:
 
 1. Can routing affect learning-relevant continuation value? **Yes, locally**:
    exact routing inversions and their Bellman mechanism are present.
 2. Can that local coupling create global value from `S0` beyond fair strong
-   SEP? **Not yet demonstrated**.
+   SEP in this diagnostic world? **Not demonstrated by this diagnostic.**
 
 The next diagnostic must therefore address the global barrier directly:
 
@@ -1835,6 +1839,47 @@ The next diagnostic must therefore address the global barrier directly:
 > consequence of the current G0+C1--C5 physics by which strong SEP can always
 > reconstruct HLS value?
 
-This is a research bifurcator, not a protocol for a new experiment. Do not
-extend the persistence ladder or tune parameters merely to obtain
-`J_HLS > J_SEP`.
+This was a research bifurcator, not a protocol for a new experiment. It must
+now be read with the subsequent causal ledger below: a later frozen geometry
+family established a model-scoped positive existence result without revising
+this diagnostic. Do not extend the persistence ladder or tune parameters
+merely to obtain `J_HLS > J_SEP`.
+
+## 16. Post-campaign causal ledger
+
+This ledger preserves the order of evidence. It distinguishes frozen protocols,
+exact executions, and subsequent analytical derivation; it is not a
+retrospective claim that the positive geometry result was selected in advance.
+
+1. **RQ0-A/B.** The nine preregistered configurations were executed and closed
+   B-REDUCIBLE: `J_HLS = J_SEP_max` throughout.
+2. **Local inversion diagnosis.** Physically reachable routing inversions were
+   identified, establishing local routing-as-teaching without yet establishing
+   strict root value.
+3. **Constrained reachability.** The audited `eta=.5` target inversions lay
+   outside every HLS-optimal continuation from `S0` and had strictly positive
+   constrained-reachability cost.
+4. **Demand persistence.** The preregistered diagnostic levels `L=0,1,2,3`
+   strengthened the local signal but remained root-value neutral and did not
+   make an inversion optimal-reachable.
+5. **Routing--opportunity coupling.** The independently frozen 21-point
+   `lambda` protocol was executed with `Phi=0` at every point. See
+   [RQ0_ROUTING_OPPORTUNITY_COUPLING_PROTOCOL.md](RQ0_ROUTING_OPPORTUNITY_COUPLING_PROTOCOL.md).
+6. **Geometry formulation and freeze.** A separate zero-sum T2 competence
+   redistribution `C(alpha)` was formulated with fixed opportunity primitives,
+   fixed `lambda=1`, and a predeclared 21-point grid. See
+   [RQ0_GEOMETRY_REDISTRIBUTION_PROTOCOL.md](RQ0_GEOMETRY_REDISTRIBUTION_PROTOCOL.md).
+7. **Frozen geometry execution.** The one grid execution found strict
+   integration only at sampled `alpha=.35,.40,.45`; no point was added and no
+   primitive was changed.
+8. **Post-run analysis.** Solving the already frozen finite Bellman tree
+   symbolically established the exact integration interval
+   `5/16 < alpha < 1/2`. This derivation was after the grid execution and was
+   not a pre-run parameter-selection rule.
+
+The resulting model-scoped conclusion is an existence result relative to the
+strong-SEP contract: the current G0/C1 physics can produce strict root value
+through a required on-policy non-greedy routing action. It does not establish
+prevalence, robustness, empirical relevance, or superiority over SEP-Omega.
+The canonical proof and scope limits are in
+[rq0_routing_integration_boundaries.md](../theory/rq0_routing_integration_boundaries.md).
