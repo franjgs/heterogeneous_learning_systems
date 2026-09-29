@@ -1,6 +1,6 @@
 # HLS Synthetic Environment — Generative Experimental Framework for RQ0
 
-**Status: ACTIVE DEVELOPMENT — G0 IMPLEMENTED / A1 CLOSED / RQ0 OPEN**
+**Status: ACTIVE DEVELOPMENT — G0 IMPLEMENTED / A1 CLOSED / C1--C5 REFERENCE-GATE PASS / RQ0 OPEN**
 
 ## 1. Purpose and scientific role
 
@@ -2510,3 +2510,697 @@ C1 = NOT YET DESIGNED
 This audit does not specify C1 parameters, horizon, sweep, policy solver,
 PASS/FAIL criteria, or implementation. Those choices require a separate
 prospective design task.
+
+## 27. C1 pre-implementation mathematical audit — repeated endogenous competence evolution
+
+**STATUS: MATHEMATICAL AUDIT / NOT YET DESIGNED**
+
+This section asks what additional mathematical structure would make C1 more
+than the A1 mechanism repeated or evaluated over a longer horizon. It is an
+audit of a capability boundary, not a C1 protocol, implementation plan, or
+argument that C1 must produce joint-management value.
+
+### 27.1 Scope and exclusions
+
+C1 is restricted to **repeated endogenous competence evolution**: a competence
+change produced in one operation--opportunity--development cycle can alter a
+later decision, and that later decision can alter another opportunity or
+competence transition. C1 should remain as close as possible to the A1 L0
+world so that this repeated feedback, rather than an added mechanism, is the
+source of any new structure.
+
+The following remain explicitly outside this audit:
+
+- **C2:** `M,K>2` portfolio geometry as a scientific object and general
+  multi-agent redundancy or complementarity;
+- **C3:** budgets, scarce development capacity, and competition among several
+  development investments;
+- **C4:** transfer, interference, forgetting/depreciation, new finite-capacity
+  mechanisms, and heterogeneous learning dynamics as a scientific object;
+- **C5:** non-stationary, Markov, or context-dependent demand as a new
+  mechanism;
+- **C6:** partial observation, noisy competence estimates, or new information
+  restrictions;
+- **C7:** additional stochastic/adversarial mechanisms, delayed feedback, and
+  perishable opportunities;
+- **C8:** feature distributions, real features, and trainable
+  classifiers/regressors.
+
+The capability dependency map in Section 26 remains unchanged. This audit does
+not design C2--C8 and does not imply a mandatory experimental sequence.
+
+### 27.2 Honest within-cycle chronology
+
+Let `h_t` contain the declared history not already summarized by `S_t`. A
+single complete cycle has the chronology
+
+```text
+(S_t,h_t)
+  -> q_t
+  -> policy chooses operational action a_t
+  -> operational reward r_t = R(S_t,q_t,a_t)
+  -> O_t ~ P_O(. | S_t,q_t,a_t,h_t)
+  -> policy observes its authorized information about O_t
+  -> policy chooses d_t in D(S_t,q_t,a_t,O_t,h_t)
+  -> pays K_t(S_t,q_t,a_t,O_t,d_t,h_t)
+  -> S_t+1 ~ P_D(. | S_t,O_t,d_t)
+  -> h_t+1.
+```
+
+Because `d_t` is selected after `O_t`, a simultaneous maximization over
+`(a_t,d_t)` would generally give the wrong information structure. For a joint
+policy with the relevant observations, a finite-horizon recursion is instead
+
+\[
+V_t(s,h)=\mathbb E_{q_t\mid s,h}\left[
+\max_{a_t}\left\{
+R(s,q_t,a_t)+
+\mathbb E_{O_t\mid s,q_t,a_t,h}\left[
+\max_{d_t\in\mathcal D(s,q_t,a_t,O_t,h)}
+\left\{-K_t+\beta
+\mathbb E_{S_{t+1}\mid s,O_t,d_t}
+V_{t+1}(S_{t+1},h_{t+1})\right\}
+\right]\right\}\right].
+\]
+
+The maxima must be replaced by the relevant policy optimization or policy
+evaluation when the policy class or information contract is restricted. This
+Bellman representation is standard dynamic programming; writing it does not by
+itself establish C1, HLS advantage, or scientific novelty.
+
+### 27.3 One-step continuation effect
+
+A world exhibits a **one-step continuation effect** when an action in one
+cycle changes the distribution or value of `S_{t+1}`, and that changed state
+affects a terminal payoff or a later operational use, but there is no later
+state-responsive decision that mediates another development-relevant
+opportunity or competence transition.
+
+Schematically:
+
+```text
+(a_t,d_t) -> S_t+1 -> terminal/use value.
+```
+
+The continuation may include a terminal routing choice, and that choice may
+depend on `S_t+1`; this is still one-step continuation if it cannot affect a
+subsequent `O` or `S` transition. A1 has exactly this form: the first
+operational action changes opportunity probability, development can produce
+`S_1`, and `S_1` determines terminal task value. There is no second complete
+operation--opportunity--development--transition cycle.
+
+Repeating the A1 arithmetic at several independent dates, or adding several
+fixed terminal rewards, does not create recursive endogenous feedback when
+each copy can be solved without state produced by another copy changing a
+later transition-producing decision.
+
+### 27.4 Proposed definition of genuine recursive endogenous feedback
+
+Consider paired counterfactual realizations with identical exogenous inputs
+and two feasible earlier interventions `u_t=(a_t,d_t)` and `u'_t`. Let their
+reachable next states be `S_{t+1}(u_t)` and `S_{t+1}(u'_t)`. Genuine recursive
+endogenous competence feedback requires a **decision-mediated second state
+effect**:
+
+1. **endogenous state effect:** the earlier interventions induce different
+   distributions of `S_{t+1}` with positive probability;
+2. **decision response:** for at least one later decision node reached under
+   the paired worlds, the authorized policy correspondence for
+   `a_{t+1}` or `d_{t+1}` differs because of the competence-state difference,
+   not merely because an unrelated exogenous history differs;
+3. **second-order physical effect:** substituting the counterfactual later
+   decision while holding the later state and exogenous realization fixed
+   changes the conditional distribution of a development-relevant
+   `O_{t+1}`, `S_{t+2}`, or another later competence state/value channel.
+
+In causal shorthand:
+
+```text
+u_t -> S_t+1 -> (a_t+1 or d_t+1) -> (O_t+1 or S_t+2).
+```
+
+The last arrow is essential. The shorter path
+
+```text
+u_t -> S_t+1 -> later decision -> immediate/terminal value
+```
+
+is decisional feedback but not repeated competence evolution when the later
+decision cannot influence another development opportunity or state transition.
+
+For discrete A1-like worlds, differing optimal-action sets or policy action
+distributions are the appropriate sensitivity notion. A derivative such as
+`partial policy/partial S != 0` is neither necessary nor well-defined at ties
+or discrete boundaries. Complete policy correspondences and explicit tie rules
+must therefore be retained.
+
+### 27.5 Minimum causal horizon
+
+The minimum is determined by events, not by the symbol `T`. Genuine recursive
+feedback requires at least:
+
+1. an earlier operation/opportunity/development decision and transition
+   `S_0 -> S_1`;
+2. a later operational or development decision that can respond to `S_1`;
+3. a second development-relevant opportunity or transition whose law/value can
+   be changed by that later decision, yielding at least `S_2` or an equivalent
+   future competence channel.
+
+Thus the minimum is **two complete decision/transition cycles**, optionally
+followed by terminal evaluation. Under a convention in which `T` counts task
+periods and the last period is terminal use only, this requires three periods
+(`t=0`, `t=1`, and terminal `t=2`). Under a convention in which each of two
+periods includes development and a transition followed by a separate terminal
+value, it could be labelled `T=2`. Consequently, “`T=3`” is not the invariant
+claim; “two endogenous transitions with an intervening state-responsive
+decision” is.
+
+The frozen A1 convention has one development transition followed by terminal
+use, so its `T=2` cannot exhibit the recursive effect defined above. Merely
+renaming its terminal use as a second period would not change that conclusion.
+
+### 27.6 Reducibility to A1
+
+Bellman compression and causal reducibility must be distinguished. Every
+finite Markov decision problem can be represented by a continuation value
+`V_{t+1}`; that computational fact does not remove recursive feedback, because
+`V_{t+1}` may itself encode state-responsive future policies and transitions.
+
+A multi-step world is **A1-reducible for the capability under study** when its
+post-cycle consequences can be replaced by a one-step continuation functional
+without deleting any decision-mediated effect on a later competence
+transition. Equivalently, no paired feasible intervention satisfies all three
+conditions in Section 27.4. Sufficient routes to this reducibility include:
+
+- future operational and development policy correspondences are invariant to
+  every competence-state difference reachable from the earlier intervention;
+- future policies may respond to state, but their differing actions cannot
+  affect any later opportunity or competence transition;
+- no development after the first cycle can alter a state that enters another
+  decision-producing cycle;
+- all later action-dependent effects enter only terminal/use value;
+- the horizon decomposes into conditionally independent A1 copies whose state,
+  action, opportunity, and transition laws do not carry decision-relevant
+  endogenous information across copies.
+
+Policy independence of a continuation value is sufficient only when stated
+carefully. A fixed terminal functional common to all compared policies may be
+collapsed. An exact optimized `V_{t+1}` that depends on future policy choices
+is not evidence of A1 reducibility; it may be the mathematical location of C1.
+
+### 27.7 Minimal counterfactual audit matrix
+
+All comparisons use the same physical world and paired exogenous realization
+where mathematically valid. None presupposes `HLS > SEP`.
+
+| Case | Required counterfactual structure | Interpretation |
+| --- | --- | --- |
+| **A — No evolution** | Earlier interventions do not change the law of any later `S`. | Negative control: no competence evolution. |
+| **B — Evolution without decisional feedback** | `S_t+1` changes, but all relevant later policy correspondences/actions remain the same. | State evolution has value or diagnostic effects only. |
+| **C — Decisional feedback without second-order state effect** | `S_t+1` changes and a later decision changes, but substituting that decision cannot change a later opportunity or competence transition. | Decision-mediated value, not repeated competence evolution. |
+| **D — Recursive feedback** | The three conditions in Section 27.4 hold. | Genuine C1 structure, irrespective of comparative value. |
+| **E — Transient path divergence** | Paired state/action paths diverge and later reconverge in the relevant state or policy correspondence. | Feedback exists but is not persistent. |
+| **F — Persistent path divergence** | Divergent paths remain distinct through the declared horizon. | Persistent path dependence; not automatically beneficial. |
+| **G — Value-neutral recursive feedback** | D holds, but compared policy values are equal within the declared exact/tie semantics. | C1 exists without joint advantage. |
+| **H — Strict value effect** | D holds and the compared, prospectively defined policy values differ strictly. | Value consequence; its sign need not favor HLS. |
+| **I — Boundary** | Relevant state/action paths or correspondences differ while total values tie exactly. | Structural boundary, not a null implementation. |
+
+Cases E and F refine D's trajectory behavior; G--I refine its value behavior.
+They are not mutually exclusive partitions of all worlds.
+
+### 27.8 Strong SEP in a multi-step world
+
+The A1 strong-SEP rule does not have a unique recursive extension. At least
+three legitimate candidates exist:
+
+1. **stagewise immediate router:** at every `t`, the operational module
+   optimizes immediate operational reward only; after the realized opportunity,
+   a strong development module optimizes its permitted continuation problem;
+2. **dynamic operational module:** the router optimizes its own multi-step
+   operational objective while the development module separately optimizes its
+   own dynamic objective, requiring an explicit equilibrium or coordination
+   convention;
+3. **modular receding policy:** both modules use shared state and prospective
+   models but exchange only the information/signals authorized by a frozen
+   architectural contract.
+
+The first is the closest literal extension of A1 but can become an artificially
+myopic baseline once repeated feedback is the object under study. The second
+and third avoid that immediate myopia but are under-specified until objectives,
+beliefs, timing, commitments, tie handling, and mutual anticipation are fixed.
+No one of these is selected by this audit.
+
+Every admissible strong SEP must retain the same physical world, feasible
+actions, costs, horizon, and exogenous realization as HLS; must use a strong
+development manager; and must differ only through prospectively declared
+management/objective/information separation. A future C1 design must either
+choose and justify one recursive SEP contract or compare multiple legitimate
+contracts. Silently carrying the A1 router forward would confound repeated
+feedback with imposed myopia.
+
+### 27.9 Multi-step SEP-Omega and reducibility
+
+A separated operational module supplied at every decision node with exact,
+sufficient action-conditioned continuation information can choose
+
+\[
+a_t\in\arg\max_a Q_t^{*}(S_t,h_t,a),
+\]
+
+where `Q_t^{*}` includes the optimally managed downstream opportunity,
+development, transition, and future decisions under the stated physical and
+information model. If its development module implements the same downstream
+optimum and tie semantics, such a recursively informed SEP-Omega can reproduce
+the joint dynamic solution.
+
+That equality would be a reducibility boundary, not an independent algorithmic
+benchmark. Indeed, if `Q_t^{*}` is obtained from the same Bellman solution used
+by HLS, `HLS = SEP-Omega` is true by construction. The scientifically relevant
+question would then be what information, computation, communication, or
+contract is sufficient to represent the continuation signal—not whether a
+renamed copy of the joint value function wins.
+
+This audit therefore preserves SEP-Omega as an adversarial upper coordination
+control while refusing to treat its equality with HLS as evidence for or
+against C1.
+
+### 27.10 Adversarial anti-tautology audit
+
+C1 would add no identified scientific structure if any apparent result were
+explained solely by one of the following:
+
+- increasing the horizon merely sums independent A1 margins;
+- HLS alone receives the exact `V_t` or model dynamics while SEP is denied
+  information allowed by its own declared contract;
+- SEP is stagewise myopic only because that choice makes HLS look dynamic;
+- terminal competence is rewarded directly without an independently justified
+  operational interpretation;
+- a hand-built transition forces path divergence or absorbing advantage;
+- policy labels alter world kernels;
+- an exact Bellman solution and SEP-Omega call the same policy and are then
+  presented as independent agreement;
+- the second transition is unaffected by the intervening decision, leaving
+  only a longer one-step continuation effect.
+
+Controls required to kill these explanations include:
+
+- the A--C counterfactual controls and explicit D criterion above;
+- matched physics, horizon, resources, information provenance, and exogenous
+  realizations across policies;
+- a strong non-myopic separated comparator or an explicit demonstration of why
+  a particular separation contract excludes the needed continuation signal;
+- terminal value derived from operational use, plus a terminal-value removal
+  or replacement audit when it could dominate the result;
+- worlds on both sides of state-responsive decision boundaries, including
+  recursive feedback with equality or adverse value;
+- causal ablations that sever `S_t+1 -> later decision` and `later decision ->
+  O_t+1/S_t+2` separately;
+- an independent check that multiple-step value is not the sum of independent
+  A1 copies.
+
+These are mathematical/design controls, not a preregistered C1 experiment.
+
+### 27.11 What survives from A1
+
+`delta_R` remains a useful **local, state- and time-indexed** immediate reward
+sacrifice between two operational actions. `D-N` remains a useful local value
+of having and optimally using an opportunity, but in C1 its continuation can
+contain later state-responsive decisions; it is no longer generally a fixed
+scalar shared across the horizon. Canonical `Omega` remains a nonnegative
+action-conditioned opportunity value under its no-use option, now potentially
+indexed by `(t,S_t,h_t)`.
+
+`delta_G` can still be defined locally as a difference between
+action-conditioned continuations. At a fixed decision node, a pairwise switch
+can always be written
+
+```text
+delta_G_t(S_t,h_t) > delta_R_t(S_t,h_t).
+```
+
+But this is an algebraic local comparison, not a new global C1 law. The correct
+general object is the time-, state-, history-, policy-contract-, and
+action-dependent `Q_t` or value-function difference. Recursive feedback is
+encoded inside those continuations and may change later optimal-action sets.
+No single horizon-wide scalar analogous to A1's fixed `delta_G` is guaranteed
+to exist.
+
+The A1 SEP-Omega equivalence also survives as a reducibility warning: exact
+sufficient recursive continuation information may coordinate separation all
+the way to the joint optimum.
+
+### 27.12 Compact structural existence criterion
+
+A world exhibits **genuine repeated endogenous competence feedback** if and
+only if there exist a time `t`, paired feasible earlier interventions under the
+same exogenous realization, and a later reachable decision node such that:
+
+```text
+(i)   the earlier intervention changes the law of S_t+1;
+(ii)  that state change changes the later authorized policy correspondence
+      for a_t+1 or d_t+1; and
+(iii) the induced later decision change changes the conditional law or value
+      of a subsequent development opportunity or competence state.
+```
+
+Condition (iii) must be established by a decision intervention at a common
+later state/history where the compared actions are feasible, so that a direct
+state effect is not mistaken for mediation by the later decision. Ties are
+handled as sets or action distributions, not by arbitrary labels.
+
+This criterion depends only on world causality and induced decisions. It does
+not mention, require, or imply `HLS > SEP`. Failure of the criterion means the
+candidate is no more than one-step continuation, decision-only feedback, or a
+collection of A1-reducible subproblems for the purpose of C1.
+
+### 27.13 Open issues after the audit
+
+The audit leaves the following questions deliberately unresolved:
+
+- which state/history is sufficient without importing C5 or C7 mechanisms;
+- which legitimate recursive strong-SEP contract is the primary scientific
+  comparator, or whether several must be retained;
+- how exact continuation information should be represented without making
+  SEP-Omega an alias of the joint dynamic program;
+- how to define paired counterfactuals when policies induce different
+  endogenous histories while keeping exogenous inputs common;
+- whether a minimal `M=K=2` world can satisfy the criterion without relying on
+  a contrived transition or terminal value;
+- whether recursive feedback yields structure beyond standard dynamic
+  programming and, if so, which restriction makes that structure scientifically
+  relevant to RQ0;
+- whether C1 can be isolated cleanly without prematurely requiring scarce
+  resources, richer portfolio geometry, or another C2--C8 capability.
+
+The audit therefore does not yet establish that C1 is scientifically
+productive. It establishes a falsifiable structural boundary between A1-like
+one-step continuation and genuine repeated endogenous competence feedback.
+The next state remains:
+
+```text
+C1 = NOT YET DESIGNED
+```
+
+## 28. C1 exact reference worlds and G0 acceptance gate
+
+**STATUS: C1 IMPLEMENTED / REFERENCE-GATE PASS**
+
+These five exact worlds materialize the Section 27 criterion on G0. They are
+acceptance cases, not a phase sweep, prevalence claim, or answer to RQ0.
+
+### 28.1 Common primitive specification and temporal convention
+
+Every world uses `M=K=2`, full information, deterministic tasks, zero
+operational cost, `kappa=0`, `beta=1`, and competence reward
+`R(S,q,i)=c_iq`. The chronology is identical:
+
+```text
+S0 -> cycle 0 on task 1 -> O0 -> d0 targets task 2 -> S1
+   -> cycle 1 on task 2 -> O1 -> d1 targets task 1 -> S2
+   -> terminal operational use of task 1.
+```
+
+There are two operational decisions, two opportunity realizations, two
+development decisions, two transitions, two cycle rewards, and one terminal
+operational reward. Opportunities retain the A1 family with `rho=1` and
+`ebar_1=ebar_2=0`:
+
+\[
+g_{ik}=e_{ik}\in\{0,1\}.
+\]
+
+Development retains `c'=c+eta(1-c)`. The only G0 extension is a general
+time-indexed target for that same kernel: task 2 at cycle 0 and task 1 at cycle
+1. No transfer, interference, forgetting, scarcity, demand shift, partial
+observation, extra stochasticity, features, or larger portfolio is introduced.
+
+### 28.2 Operational strong dynamic SEP and SEP-Omega
+
+At each state, strong SEP's router retains the complete set
+
+\[
+A^{SEP}_t(S)=\arg\max_a R(S,q_t,a).
+\]
+
+This router is dynamic and state-aware. In these worlds, every effect of
+routing on future operational value passes exclusively through the generated
+development opportunity; internalizing that cross-effect would merge the two
+optimizations. Conditional on the router's actual action and opportunity, the
+development manager solves its full remaining SEP continuation problem
+exactly. For immediate ties, every route is retained and
+`[J_SEP_min,J_SEP_max]` is reported; no label tie-break is used.
+
+SEP-Omega independently evaluates the exact action-conditioned recursive
+continuation and therefore solves the same Bellman objective as HLS. Its
+equality with HLS is constructive reducibility, not an independent benchmark.
+
+### 28.3 Exact reference worlds
+
+Write rows of `C` as `(task 1, task 2)` and let `f(c)=c+3(1-c)/4` when
+`eta=3/4`.
+
+#### R1 — no evolution
+
+```text
+C0 = ((4/5,4/5),(3/5,3/5)); eta=0
+E(task1)=E(task2)=(0,1).
+```
+
+All development actions preserve state. M1 is optimal in both cycles and
+terminal competence is `4/5`:
+
+```text
+J_HLS = J_SEP = 4/5 + 4/5 + 4/5 = 12/5.
+```
+
+No paired intervention changes `S1`; links `(i,ii,iii)=(0,0,0)`.
+
+#### R2 — evolution without decisional feedback
+
+```text
+C0 = ((4/5,4/5),(3/5,3/5)); eta=3/4
+E(task1)=E(task2)=(1,1).
+```
+
+Cycle 0 routes to M1 and optimally develops M1/task2:
+
+```text
+S1 = ((4/5,19/20),(3/5,3/5)).
+```
+
+Cycle 1 still routes to M1, then develops M1/task1, giving
+
+```text
+S2 = ((19/20,19/20),(3/5,3/5)),
+J_HLS = J_SEP = 4/5 + 19/20 + 19/20 = 27/10.
+```
+
+Comparing null versus development at cycle 0 changes `S1` but not the later
+route: `(i,ii,iii)=(1,0,0)`. Learning alone is not C1.
+
+#### R3 — decisional feedback without second-order effect
+
+```text
+C0 = ((4/5,4/5),(3/5,3/5)); eta=3/4
+E(task1)=(0,1); E(task2)=(1,1).
+```
+
+The counterfactual M2 cycle-0 route develops M2/task2 and produces
+
+```text
+S1' = ((4/5,4/5),(3/5,9/10)),
+```
+
+which changes the cycle-1 route from M1 to M2. But both cycle-1 routes generate
+the same opportunity with probability one and the development manager makes
+the same optimal M1/task1 update. The later decision has no causal effect on
+the second opportunity/transition. The optimal HLS and SEP path instead routes
+M1 twice, then develops M1/task1:
+
+```text
+J_HLS = J_SEP = 4/5 + 4/5 + 19/20 = 51/20.
+```
+
+Thus `(i,ii,iii)=(1,1,0)`: a state-responsive decision is not sufficient.
+
+#### R4 — genuine recursive feedback, value-neutral exact boundary
+
+```text
+C0 = ((4/5,4/5),(14/25,14/25)); eta=3/4
+E(task1)=E(task2)=(0,1).
+```
+
+The M1 path receives no opportunities and returns
+
+```text
+4/5 + 4/5 + 4/5 = 12/5.
+```
+
+The M2 path receives the first opportunity, develops M2/task2, and gives
+
+```text
+S1 = ((4/5,4/5),(14/25,89/100)).
+```
+
+That state switches cycle-1 routing to M2; its action generates the second
+opportunity, which develops M1/task1 to `19/20`:
+
+```text
+S2 = ((19/20,4/5),(14/25,89/100)),
+14/25 + 89/100 + 19/20 = 12/5.
+```
+
+HLS therefore retains the exact optimal set `{M1,M2}`. Strong SEP has the
+unique immediate route M1 and value `12/5`. Hence
+
+```text
+J_HLS = J_SEP_min = J_SEP_max = J_SEP-Omega = 12/5,
+Delta_J_cons = 0.
+```
+
+All links are active: `(i,ii,iii)=(1,1,1)`. This is both the value-neutral
+recursive control and exact boundary; recursive feedback does not imply HLS
+advantage.
+
+#### R5 — genuine recursive feedback with strict joint value
+
+```text
+C0 = ((4/5,4/5),(3/5,3/5)); eta=3/4
+E(task1)=E(task2)=(0,1).
+```
+
+Strong SEP routes M1 in cycle 0, receives no opportunity, routes M1 again, and
+receives no opportunity:
+
+```text
+J_SEP = 4/5 + 4/5 + 4/5 = 12/5.
+```
+
+HLS routes M2 in cycle 0, develops M2/task2, and reaches
+
+```text
+S1 = ((4/5,4/5),(3/5,9/10)).
+```
+
+The new state switches cycle-1 routing to M2. That action creates the second
+opportunity; optimal development targets M1/task1 (actor and recipient differ)
+and reaches
+
+```text
+S2 = ((19/20,4/5),(3/5,9/10)).
+```
+
+Therefore
+
+```text
+J_HLS = 3/5 + 9/10 + 19/20 = 49/20,
+J_SEP_min = J_SEP_max = 12/5,
+Delta_J_cons = 1/20,
+J_SEP-Omega = 49/20.
+```
+
+All links are active. The state paths remain different through terminal
+evaluation, providing persistent divergence. No additional transient world is
+needed for the minimum gate; transient reconvergence is not required to
+identify C1 and would add no missing logical link.
+
+### 28.4 Acceptance summary
+
+| World | Structural role | (i) | (ii) | (iii) | Genuine C1 | `J_HLS` | `J_SEP_min` | `J_SEP_max` | `Delta_J_cons` | `J_SEP-Omega` |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| R1 | no evolution | no | no | no | no | `12/5` | `12/5` | `12/5` | `0` | `12/5` |
+| R2 | learning, no decision response | yes | no | no | no | `27/10` | `27/10` | `27/10` | `0` | `27/10` |
+| R3 | decision response, no second-order effect | yes | yes | no | no | `51/20` | `51/20` | `51/20` | `0` | `51/20` |
+| R4 | genuine, value-neutral boundary/tie | yes | yes | yes | yes | `12/5` | `12/5` | `12/5` | `0` | `12/5` |
+| R5 | genuine, strict value, persistent path | yes | yes | yes | yes | `49/20` | `12/5` | `12/5` | `1/20` | `49/20` |
+
+### 28.5 G0 mapping and capability extension
+
+| Element | G0 mapping | Status |
+| --- | --- | --- |
+| state and dimensions | immutable `WorldState`, `BoundedMatrixCompetence` | directly generable |
+| task sequence | `FiniteTaskSequence((1,2))` | directly generable |
+| opportunity physics | `A1MixtureOpportunityKernel` | directly generable |
+| reward and cost | `CompetenceRewardModel`, `A1ResourceModel` | directly generable |
+| information | common full-state `ContractInformationModel` | directly generable |
+| repeated transition target | `ScheduledSaturatingDevelopmentKernel` | minimal C1 implementation extension |
+| exact policies | C1 adapter/solver over the same `SyntheticEnvironment` | implemented outside WORLD |
+
+The existing `DevelopmentKernel` interface already supported the required
+extension conceptually. What was missing was one concrete general component
+that selects the developed competence by world time. No interface redesign or
+policy-specific world branch was required.
+
+### 28.6 Anti-triviality and acceptance result
+
+The gate verifies that world kernels never inspect policy identity; all
+policies share one physical environment; states are immutable; both
+transitions pass through `DevelopmentKernel`; actor and recipient can differ;
+ties remain complete sets; physical relabeling preserves scalar values and
+maps action labels; strong SEP receives no joint continuation signal; and
+SEP-Omega is solved independently rather than calling HLS.
+
+R1--R3 separately kill no-learning, learning-only, and decision-only
+explanations. R4 kills the claim that recursive feedback implies strict value.
+R5's `1/20` advantage comes from the declared causal chain, not extra
+information, resources, terminal competence reward, label order, or a stored
+winner. None of C2--C8 is active.
+
+The mandatory C1 suite passes all 22 tests. Existing G0 and A1 compatibility
+tests remain unchanged. The reference gate therefore closes with:
+
+```text
+C1 = IMPLEMENTED / REFERENCE-GATE PASS
+RQ0 = OPEN
+```
+
+Limitations remain: these are exact constructed worlds, not a measure of
+prevalence or robustness; strong SEP is the strongest stagewise operational
+separation under this deliberately minimal physics; and SEP-Omega equality is
+constructive dynamic reducibility.
+
+The next step is exactly:
+
+```text
+G0-RQ0 dynamic phase campaign
+```
+
+That campaign, its parameter space, and its PASS/FAIL criteria are not designed
+here.
+
+## 29. G0+C1--C5 consolidated capability state
+
+**STATUS: G0 IMPLEMENTED / C1--C5 REFERENCE-GATE PASS / READY FOR FIRST RQ0 CAMPAIGN**
+
+This is an infrastructure and reference-gate state, not a result about RQ0.
+Every capability remains policy-neutral world semantics or a derived diagnostic;
+the environment does not branch on HLS, SEP, or SEP-Omega, and the gates do not
+claim that any policy wins outside their declared reference cases.
+
+| Capability | Implemented G0 surface | Reference-gate scope |
+| --- | --- | --- |
+| C1 | scheduled saturating development over repeated transitions | endogenous competence evolution, decision-mediated second-order effect, equality, strict-value, and SEP-Omega controls |
+| C2 | `WorldState`/competence matrices with arbitrary `M,K`; derived geometry diagnosis | dominance, redundancy, specialization, complementarity, coverage, and physical relabeling |
+| C3 | persistent development-budget state and resource admissibility | non-null development consumes finite physical budget; null development does not |
+| C4 | `CoupledDevelopmentKernel` with declared signed `Gamma` map | independent control, transfer, interference, bounded updates, and C1--C3 composition |
+| C5 | replaceable `Theta_Q` task processes with injected randomness | deterministic control plus stationary, time-indexed, and first-order Markov demand |
+
+The minimal implementation structure is deliberate: `src/hls/synthetic/`
+contains the G0 composition root, interfaces, components, and the five
+capability modules; `tests/synthetic/` contains their acceptance gates. The
+only capability runner is C1's exact reference-world printer under
+`experiments/synthetic/c1/`; C2--C5 have no runner or results directory because
+they are component/reference gates, not experiments or campaigns.
+
+The combined gates verify composition with G0 rather than a parallel framework:
+C1 builds `SyntheticEnvironment`; C2 uses the common competence state/model;
+C3 stores its budget in immutable world state; C4 is a development kernel; and
+C5 is a task-process implementation consumed by `SyntheticEnvironment`.
+
+With G0 and C1--C5 passing their current gates, the framework is **READY FOR
+FIRST RQ0 CAMPAIGN**. This readiness means only that the currently implemented
+world capabilities and controls are available for a separately specified
+campaign. It neither designs that campaign nor makes G0 complete for future
+research. C6 information/coordination restrictions, C7 stochastic/adversarial
+dynamics, and C8 feature-generating worlds with actual learners remain **NOT
+IMPLEMENTED**. RQ0 remains **OPEN**.

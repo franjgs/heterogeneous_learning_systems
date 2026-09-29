@@ -1,7 +1,10 @@
 """Initial replaceable components for the G0 synthetic environment."""
 
 from .competence import BoundedMatrixCompetence
-from .development import A1SaturatingDevelopmentKernel
+from .development import (
+    A1SaturatingDevelopmentKernel,
+    ScheduledSaturatingDevelopmentKernel,
+)
 from .information import ContractInformationModel
 from .opportunities import A1MixtureOpportunityKernel
 from .resources import A1ResourceModel
@@ -16,4 +19,5 @@ __all__ = [
     "CompetenceRewardModel",
     "ContractInformationModel",
     "FiniteTaskSequence",
+    "ScheduledSaturatingDevelopmentKernel",
 ]

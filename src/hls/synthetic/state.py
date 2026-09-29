@@ -19,6 +19,7 @@ class WorldState:
 
     competence: CompetenceMatrix
     time: int = 0
+    resources: tuple[tuple[str, float], ...] = ()
 
     def __post_init__(self) -> None:
         if self.time < 0:
@@ -39,6 +40,19 @@ class WorldState:
     def n_competences(self) -> int:
         return len(self.competence[0])
 
-    def advanced(self, competence: CompetenceMatrix) -> "WorldState":
+    def resource_dict(self) -> dict[str, float]:
+        """Return the immutable resource payload as a plain mapping."""
+        return dict(self.resources)
+
+    def advanced(
+        self,
+        competence: CompetenceMatrix,
+        *,
+        resources: tuple[tuple[str, float], ...] | None = None,
+    ) -> "WorldState":
         """Return a new state; the current state is never mutated."""
-        return WorldState(competence=competence, time=self.time + 1)
+        return WorldState(
+            competence=competence,
+            time=self.time + 1,
+            resources=self.resources if resources is None else resources,
+        )

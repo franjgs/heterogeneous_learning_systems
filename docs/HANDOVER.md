@@ -181,7 +181,16 @@ RQ0 remains **OPEN**.
 low-value unless a specific theoretical ambiguity requires them. The next
 scientific action must be selected by auditing which capability the synthetic
 framework needs in order to test an HLS capability, limitation, mechanism, or
-boundary not resolved by A1. No particular next mechanism is preselected here.
+boundary not resolved by A1. The completed capability audit selected C1.
+
+**G0+C1--C5 reference gates:** C1 provides repeated endogenous competence
+evolution; C2 derived collective portfolio geometry; C3 persistent scarce
+development resources; C4 signed transfer/interference physics; and C5
+stationary, time-indexed, and Markov task demand. All current gates pass on
+the same policy-neutral G0 framework; they are capabilities and controls, not
+evidence that RQ0 holds. The framework is **READY FOR FIRST RQ0 CAMPAIGN**,
+which is not designed here. C6--C8 remain unimplemented and RQ0 remains
+**OPEN**.
 
 ## Central programme
 

@@ -6,6 +6,7 @@ from dataclasses import dataclass
 import math
 
 from ..interfaces import DevelopmentDecision, Opportunity
+from ..state import WorldState
 
 
 @dataclass(frozen=True)
@@ -26,7 +27,9 @@ class A1ResourceModel:
 
     def development_is_admissible(
         self,
+        state: WorldState,
         action: DevelopmentDecision,
         opportunity: Opportunity,
     ) -> bool:
+        del state
         return action.is_null or opportunity.available

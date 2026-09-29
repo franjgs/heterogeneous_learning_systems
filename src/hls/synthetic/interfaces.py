@@ -135,6 +135,7 @@ class ResourceModel(Protocol):
 
     def development_is_admissible(
         self,
+        state: WorldState,
         action: DevelopmentDecision,
         opportunity: Opportunity,
     ) -> bool: ...

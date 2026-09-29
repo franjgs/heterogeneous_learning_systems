@@ -44,6 +44,26 @@ class SyntheticEnvironment:
     def initial_state(self) -> WorldState:
         return self.competence.initial_state()
 
+    def task_at(
+        self,
+        state: WorldState,
+        trajectory: Trajectory = Trajectory(),
+    ):
+        """Resolve deterministic or stochastic task demand using G0 randomness."""
+        sampler = getattr(self.tasks, "sample_task", None)
+        if sampler is not None:
+            return sampler(
+                state.time,
+                state,
+                trajectory.transitions,
+                self.randomness,
+            )
+        return self.tasks.task_at(
+            state.time,
+            state,
+            trajectory.transitions,
+        )
+
     def sample_transition(
         self,
         state: WorldState,
@@ -57,7 +77,7 @@ class SyntheticEnvironment:
         Bernoulli opportunity analytically.
         """
         self.competence.validate(state)
-        task = self.tasks.task_at(state.time, state, trajectory.transitions)
+        task = self.task_at(state, trajectory)
         probability = self.opportunities.probability(
             state, task, operational_action, trajectory.transitions
         )
@@ -66,7 +86,7 @@ class SyntheticEnvironment:
         if development_action not in admissible:
             raise ValueError("development action is not admissible")
         if not self.resources.development_is_admissible(
-            development_action, opportunity
+            state, development_action, opportunity
         ):
             raise ValueError("development action violates resource semantics")
         next_state = self.development.transition(
