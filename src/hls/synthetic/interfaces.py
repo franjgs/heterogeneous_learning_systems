@@ -140,6 +140,12 @@ class ResourceModel(Protocol):
         opportunity: Opportunity,
     ) -> bool: ...
 
+    def consume(
+        self,
+        state: WorldState,
+        action: DevelopmentDecision,
+    ) -> tuple[tuple[str, float], ...]: ...
+
 
 @runtime_checkable
 class InformationModel(Protocol):

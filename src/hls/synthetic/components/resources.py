@@ -33,3 +33,12 @@ class A1ResourceModel:
     ) -> bool:
         del state
         return action.is_null or opportunity.available
+
+    def consume(
+        self,
+        state: WorldState,
+        action: DevelopmentDecision,
+    ) -> tuple[tuple[str, float], ...]:
+        """A1 has no persistent resource stock to consume."""
+        del action
+        return state.resources

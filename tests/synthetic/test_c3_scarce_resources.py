@@ -184,3 +184,149 @@ def test_invalid_budget_rejected(budget):
 def test_invalid_development_cost_rejected(cost):
     with pytest.raises(ValueError):
         BudgetedDevelopmentResources(cost)
+
+
+def test_g0_composes_c3_budget_consumption_with_c4_competence_transition():
+    """G0 must compose C4 competence physics with persistent C3 resources."""
+    from hls.synthetic.c3 import (
+        BudgetedDevelopmentResources,
+        remaining_budget,
+        with_development_budget,
+    )
+    from hls.synthetic.c4 import CoupledDevelopmentKernel
+    from hls.synthetic.components import (
+        A1MixtureOpportunityKernel,
+        BoundedMatrixCompetence,
+        CompetenceRewardModel,
+        ContractInformationModel,
+        FiniteTaskSequence,
+    )
+    from hls.synthetic.environment import SyntheticEnvironment
+    from hls.synthetic.interfaces import DevelopmentDecision
+    from hls.synthetic.randomness import SeededRandomSource
+
+    learners = {"M1": 0, "M2": 1, "M3": 2}
+    competences = {1: 0, 2: 1, 3: 2}
+
+    initial_matrix = (
+        (0.8, 0.4, 0.2),
+        (0.4, 0.8, 0.2),
+        (0.4, 0.2, 0.8),
+    )
+
+    competence_model = BoundedMatrixCompetence(initial_matrix)
+
+    development = CoupledDevelopmentKernel(
+        learners,
+        competences,
+        {0: 2, 1: 3},
+        eta=0.5,
+        gamma={
+            ("M1", 2, "M1", 1): 0.25,
+            ("M1", 2, "M1", 3): 0.25,
+        },
+    )
+
+    resources = BudgetedDevelopmentResources(
+        budget_per_development=1.0,
+        beta=1.0,
+    )
+
+    environment = SyntheticEnvironment(
+        tasks=FiniteTaskSequence((1, 2)),
+        competence=competence_model,
+        opportunities=A1MixtureOpportunityKernel(
+            {1: 1.0, 2: 1.0},
+            {
+                ("M1", 1): 1.0,
+                ("M2", 1): 1.0,
+                ("M3", 1): 1.0,
+                ("M1", 2): 1.0,
+                ("M2", 2): 1.0,
+                ("M3", 2): 1.0,
+            },
+            rho=0.0,
+        ),
+        development=development,
+        reward=CompetenceRewardModel(learners, competences),
+        resources=resources,
+        information=ContractInformationModel(),
+        randomness=SeededRandomSource(0),
+    )
+
+    # Inject the preregistered persistent development budget into S0.
+    s0 = with_development_budget(environment.initial_state(), 2.0)
+
+    d0 = DevelopmentDecision("M1", 2)
+
+    record0 = environment.sample_transition(
+        s0,
+        operational_action="M1",
+        development_action=d0,
+    )
+    s1 = record0.next_state
+
+    # C4 happened.
+    assert s1.competence != s0.competence
+    assert s1.competence[0][1] > s0.competence[0][1]
+    assert s1.competence[0][0] > s0.competence[0][0]
+    assert s1.competence[0][2] > s0.competence[0][2]
+
+    # C3 happened in the SAME transition.
+    assert remaining_budget(s1) == 1.0
+
+    d1 = DevelopmentDecision("M2", 3)
+
+    record1 = environment.sample_transition(
+        s1,
+        operational_action="M1",
+        development_action=d1,
+    )
+    s2 = record1.next_state
+
+    assert remaining_budget(s2) == 0.0
+
+    # A third non-null development is now physically inadmissible.
+    assert not resources.development_is_admissible(
+        s2,
+        DevelopmentDecision("M3", 3),
+        record1.opportunity,
+    )
+
+
+def test_budget_consumption_is_distinct_from_objective_cost():
+    """One budget unit may be consumed without imposing objective penalty."""
+    from hls.synthetic.c3 import (
+        BudgetedDevelopmentResources,
+        remaining_budget,
+        with_development_budget,
+    )
+    from hls.synthetic.interfaces import DevelopmentDecision, Opportunity
+    from hls.synthetic.state import WorldState
+
+    resources = BudgetedDevelopmentResources(
+        budget_per_development=1.0,
+        objective_cost_per_development=0.0,
+        beta=1.0,
+    )
+    state = with_development_budget(
+        WorldState(((0.5,),)),
+        1.0,
+    )
+    action = DevelopmentDecision("M1", 1)
+
+    assert resources.development_is_admissible(
+        state, action, Opportunity(True)
+    )
+    assert resources.development_cost(action) == 0.0
+
+    consumed = resources.consume(state, action)
+    next_state = state.advanced(
+        state.competence,
+        resources=consumed,
+    )
+
+    assert remaining_budget(next_state) == 0.0
+    assert not resources.development_is_admissible(
+        next_state, action, Opportunity(True)
+    )

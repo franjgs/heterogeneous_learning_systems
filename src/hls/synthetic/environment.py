@@ -89,8 +89,16 @@ class SyntheticEnvironment:
             state, development_action, opportunity
         ):
             raise ValueError("development action violates resource semantics")
-        next_state = self.development.transition(
+        developed_state = self.development.transition(
             state, opportunity, development_action
+        )
+        next_resources = self.resources.consume(
+            state, development_action
+        )
+        next_state = WorldState(
+            competence=developed_state.competence,
+            time=developed_state.time,
+            resources=next_resources,
         )
         self.competence.validate(next_state)
         return TransitionRecord(
