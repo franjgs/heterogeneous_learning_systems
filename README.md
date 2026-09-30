@@ -138,8 +138,6 @@ For technical depth:
 - [Theory Registry](docs/theory/README.md) — formal results and scoped models;
 - [Experimental Documentation Registry](docs/experiments/README.md) — worlds,
   protocols, runners, and evidence;
-- [Theoretical Foundations](docs/theoretical_foundations_cross_domain.md) —
-  established theories and their relationship to HLS;
 - [Literature Collection](docs/literature/README.md) — source and literature
   policy;
 - [Scientific History](docs/HISTORY.md) — the compact scientific path to the
@@ -157,7 +155,6 @@ docs/
 ├── research_questions.md
 ├── HLS_CURRENT_STATE.md
 ├── HISTORY.md
-├── theoretical_foundations_cross_domain.md
 ├── theory/
 ├── experiments/
 ├── experimental_foundations/

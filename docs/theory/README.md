@@ -15,8 +15,10 @@ current-state document and does not replace the ontology or research doctrine.
   coordination results.
 - [Operational-development opportunity value](operational_development_opportunity_value.md):
   model-scoped opportunity-value identities and portfolio extensions.
-- [Cross-domain foundations](../theoretical_foundations_cross_domain.md):
-  compact imported-theory register and explicit HLS mappings.
+
+Cross-domain theory import is governed by the
+[Research Doctrine](../../RESEARCH_DOCTRINE.md), while semantic mappings and
+compatibility judgments belong to the [HLS ontology](../hls_ontology.md).
 
 The M0/M0.1 specifications remain supporting model material because their
 executable checks still use their equations. The former CIV records were
