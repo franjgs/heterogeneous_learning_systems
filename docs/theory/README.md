@@ -5,6 +5,10 @@ current-state document and does not replace the ontology or research doctrine.
 
 ## Current canonical theory
 
+- [Static HLS theoretical foundation — T0--T3](HLS_STATIC_THEORY.md): the
+  consolidated static scaffold for feasible capability, collective expansion,
+  organizational sufficiency, and organizational realization; it sets the
+  boundary to T4 dynamic capability.
 - [RQ0 routing integration boundaries](rq0_routing_integration_boundaries.md):
   policy-class inclusion, global reducibility, local routing-as-teaching, and
   the exact C(alpha) existence construction.
