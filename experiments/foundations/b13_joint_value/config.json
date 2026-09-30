@@ -1,0 +1,21 @@
+{
+  "experiment_id": "B13",
+  "title": "Joint organization-development value",
+  "kind": "hls_translation",
+  "periods": 2,
+  "grid": {
+    "z1": [-0.8, -0.4, 0.0, 0.4],
+    "z2": [-0.8, -0.4, 0.0, 0.4],
+    "w1": [0.8, 1.0, 1.2],
+    "w2": [0.8, 1.0, 1.2],
+    "eta1": [0.0, 0.2, 0.5, 0.8],
+    "eta2": [0.0, 0.2, 0.5, 0.8],
+    "beta1": [0.0, 0.2],
+    "beta2": [0.0, 0.2]
+  },
+  "costs": {
+    "k1": 0.0,
+    "k2": 0.0
+  },
+  "tolerance": 1e-12
+}

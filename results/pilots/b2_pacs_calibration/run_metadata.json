@@ -1,40 +1,188 @@
 {
-  "status": "COMPUTE_BLOCKED_BEFORE_MODEL_CALIBRATION",
-  "current_setup_viability": "NOT VIABLE for the available CPU-only machine; PACS model-performance viability is unassessed",
-  "hardware": {
-    "platform": "macOS-27.0-arm64-arm-64bit",
-    "machine": "arm64",
-    "logical_cpu_count": 12,
-    "torch_threads": 6,
-    "cuda_available": false,
-    "mps_built": true,
-    "mps_available": false,
-    "selected_device": "cpu"
-  },
-  "benchmark": {
-    "kind": "four synthetic 224x224 forward/backward/SGD batches of size 8 per architecture; random initialization, no PACS data, no pretrained weights",
-    "profile_wall_seconds": 3.8996754999971017,
-    "fast_mobilenet_v2_images_per_second": 23.95247230689942,
-    "deep_resnet50_images_per_second": 15.346701771126508,
-    "fast_training_images_per_seed_per_epoch": 9237,
-    "deep_training_images_per_seed_per_epoch": 6993,
-    "fast_training_images_all_seeds_per_epoch": 46185,
-    "deep_training_images_all_seeds_per_epoch": 34965,
-    "estimated_lower_bound_seconds_per_epoch_all_25_fits": 4206.533147003192,
-    "estimated_lower_bound_minutes_per_epoch_all_25_fits": 70.10888578338654,
-    "epochs_configured": 3,
-    "estimated_lower_bound_hours_training_only": 3.505444289169327,
-    "excludes": [
-      "image decoding and augmentation",
-      "validation/test inference",
-      "ImageNet weight download",
-      "checkpoint save/load"
-    ]
-  },
-  "model_fit_count_if_run": 25,
-  "full_calibration_started": false,
-  "reason": "CPU-only training profile exceeded the practical calibration budget; no architecture or regime was silently changed.",
-  "warnings": [
-    "Arrow emitted sandbox-denied sysctl cache/NEON probe notices during dataset scanning; dataset integrity checks completed."
-  ]
+  "device": "cpu",
+  "requested_device": "cpu",
+  "actual_device": "cpu",
+  "cuda_available": false,
+  "mps_available": true,
+  "torch_threads": 8,
+  "total_fits": 25,
+  "total_seconds": 43444.003175624995,
+  "fit_times": [
+    {
+      "seed": 0,
+      "model": "deep",
+      "fraction": 1.0,
+      "seconds": 3793.9398790830164,
+      "n_train": 6993
+    },
+    {
+      "seed": 0,
+      "model": "fast",
+      "fraction": 0.1,
+      "seconds": 222.37579020799603,
+      "n_train": 499
+    },
+    {
+      "seed": 0,
+      "model": "fast",
+      "fraction": 0.25,
+      "seconds": 551.0724764999759,
+      "n_train": 1246
+    },
+    {
+      "seed": 0,
+      "model": "fast",
+      "fraction": 0.5,
+      "seconds": 1119.3615643329977,
+      "n_train": 2497
+    },
+    {
+      "seed": 0,
+      "model": "fast",
+      "fraction": 1.0,
+      "seconds": 2256.732983583992,
+      "n_train": 4995
+    },
+    {
+      "seed": 1,
+      "model": "deep",
+      "fraction": 1.0,
+      "seconds": 3816.8253533749958,
+      "n_train": 6993
+    },
+    {
+      "seed": 1,
+      "model": "fast",
+      "fraction": 0.1,
+      "seconds": 223.21277529199142,
+      "n_train": 499
+    },
+    {
+      "seed": 1,
+      "model": "fast",
+      "fraction": 0.25,
+      "seconds": 558.2080996249861,
+      "n_train": 1246
+    },
+    {
+      "seed": 1,
+      "model": "fast",
+      "fraction": 0.5,
+      "seconds": 1119.7728847080143,
+      "n_train": 2497
+    },
+    {
+      "seed": 1,
+      "model": "fast",
+      "fraction": 1.0,
+      "seconds": 2319.530767707998,
+      "n_train": 4995
+    },
+    {
+      "seed": 2,
+      "model": "deep",
+      "fraction": 1.0,
+      "seconds": 3827.94265695801,
+      "n_train": 6993
+    },
+    {
+      "seed": 2,
+      "model": "fast",
+      "fraction": 0.1,
+      "seconds": 221.20023895800114,
+      "n_train": 499
+    },
+    {
+      "seed": 2,
+      "model": "fast",
+      "fraction": 0.25,
+      "seconds": 550.7096612500027,
+      "n_train": 1246
+    },
+    {
+      "seed": 2,
+      "model": "fast",
+      "fraction": 0.5,
+      "seconds": 1118.7221877920092,
+      "n_train": 2497
+    },
+    {
+      "seed": 2,
+      "model": "fast",
+      "fraction": 1.0,
+      "seconds": 2255.6435104999982,
+      "n_train": 4995
+    },
+    {
+      "seed": 3,
+      "model": "deep",
+      "fraction": 1.0,
+      "seconds": 3828.8826997500146,
+      "n_train": 6993
+    },
+    {
+      "seed": 3,
+      "model": "fast",
+      "fraction": 0.1,
+      "seconds": 226.9835925840016,
+      "n_train": 499
+    },
+    {
+      "seed": 3,
+      "model": "fast",
+      "fraction": 0.25,
+      "seconds": 562.1240144170006,
+      "n_train": 1246
+    },
+    {
+      "seed": 3,
+      "model": "fast",
+      "fraction": 0.5,
+      "seconds": 1138.520284792001,
+      "n_train": 2497
+    },
+    {
+      "seed": 3,
+      "model": "fast",
+      "fraction": 1.0,
+      "seconds": 2242.092815290991,
+      "n_train": 4995
+    },
+    {
+      "seed": 4,
+      "model": "deep",
+      "fraction": 1.0,
+      "seconds": 3824.7439769580087,
+      "n_train": 6993
+    },
+    {
+      "seed": 4,
+      "model": "fast",
+      "fraction": 0.1,
+      "seconds": 221.30293225002242,
+      "n_train": 499
+    },
+    {
+      "seed": 4,
+      "model": "fast",
+      "fraction": 0.25,
+      "seconds": 551.8121232499834,
+      "n_train": 1246
+    },
+    {
+      "seed": 4,
+      "model": "fast",
+      "fraction": 0.5,
+      "seconds": 1114.8061461250181,
+      "n_train": 2497
+    },
+    {
+      "seed": 4,
+      "model": "fast",
+      "fraction": 1.0,
+      "seconds": 2235.55606308399,
+      "n_train": 4995
+    }
+  ],
+  "warnings": []
 }

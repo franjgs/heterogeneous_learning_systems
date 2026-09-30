@@ -1,0 +1,29 @@
+{
+  "pilot": "B2.1 PACS domain-development factorial",
+  "device": "cpu",
+  "N": [
+    25,
+    50,
+    100
+  ],
+  "costs": [
+    0.0,
+    0.02,
+    0.05,
+    0.1,
+    0.15
+  ],
+  "domains": [
+    "photo",
+    "art_painting",
+    "cartoon",
+    "sketch"
+  ],
+  "fits": 160,
+  "test_used": false,
+  "p_k": 0.25,
+  "formulas": {
+    "gamma_learn": "V(Fij)-V(Fi)-V(Fj)+V(F0)",
+    "operational": "mean_k max(S_F(k), S_D(k)-c)"
+  }
+}

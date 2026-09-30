@@ -1,0 +1,386 @@
+{
+  "status": "REPRODUCTION_MISMATCH_CAUSE_NOT_IDENTIFIED",
+  "run_environment_probe": {
+    "python": "/Users/fran/Programs/miniconda3/bin/python",
+    "torch": "2.4.1",
+    "torchvision": "0.19.1",
+    "mps_built": true,
+    "mps_available_outside_sandbox": true,
+    "cuda_available": false,
+    "explicit_tensor_device": "mps:0",
+    "explicit_model_device": "mps:0",
+    "explicit_forward_output_device": "mps:0"
+  },
+  "original_run": {
+    "reported_device": "mps",
+    "total_fits": 25,
+    "torch_and_torchvision_versions_recorded": false,
+    "per_epoch_losses_recorded": false,
+    "initial_teacher_checkpoints_retained": false,
+    "validation_deep": [
+      {
+        "seed": 0,
+        "model": "deep",
+        "fraction": 1.0,
+        "split": "validation",
+        "n": 1499,
+        "accuracy": 0.3062041360907271,
+        "balanced_accuracy": 0.2749915929708609,
+        "ba_photo": 0.416078466030794,
+        "ba_art_painting": 0.2731935560293769,
+        "ba_cartoon": 0.1994717957503408,
+        "ba_sketch": 0.2017814406289307,
+        "acc_photo": 0.472,
+        "acc_art_painting": 0.3322475570032573,
+        "acc_cartoon": 0.2301136363636363,
+        "acc_sketch": 0.2677966101694915,
+        "n_photo": 250,
+        "n_art_painting": 307,
+        "n_cartoon": 352,
+        "n_sketch": 590
+      },
+      {
+        "seed": 1,
+        "model": "deep",
+        "fraction": 1.0,
+        "split": "validation",
+        "n": 1499,
+        "accuracy": 0.1534356237491661,
+        "balanced_accuracy": 0.1428571428571428,
+        "ba_photo": 0.1428571428571428,
+        "ba_art_painting": 0.1428571428571428,
+        "ba_cartoon": 0.1428571428571428,
+        "ba_sketch": 0.1428571428571428,
+        "acc_photo": 0.1155378486055776,
+        "acc_art_painting": 0.0983606557377049,
+        "acc_cartoon": 0.1363636363636363,
+        "acc_sketch": 0.2081218274111675,
+        "n_photo": 251,
+        "n_art_painting": 305,
+        "n_cartoon": 352,
+        "n_sketch": 591
+      },
+      {
+        "seed": 2,
+        "model": "deep",
+        "fraction": 1.0,
+        "split": "validation",
+        "n": 1499,
+        "accuracy": 0.3862575050033355,
+        "balanced_accuracy": 0.3716498324336955,
+        "ba_photo": 0.5561373339539556,
+        "ba_art_painting": 0.3077395328889317,
+        "ba_cartoon": 0.2225785068950623,
+        "ba_sketch": 0.290255291215154,
+        "acc_photo": 0.632,
+        "acc_art_painting": 0.3680781758957654,
+        "acc_cartoon": 0.2556818181818182,
+        "acc_sketch": 0.3694915254237288,
+        "n_photo": 250,
+        "n_art_painting": 307,
+        "n_cartoon": 352,
+        "n_sketch": 590
+      },
+      {
+        "seed": 3,
+        "model": "deep",
+        "fraction": 1.0,
+        "split": "validation",
+        "n": 1499,
+        "accuracy": 0.3709139426284189,
+        "balanced_accuracy": 0.3465136605566454,
+        "ba_photo": 0.6082852619480619,
+        "ba_art_painting": 0.2820826052337667,
+        "ba_cartoon": 0.3004239993906963,
+        "ba_sketch": 0.2203159029644225,
+        "acc_photo": 0.66,
+        "acc_art_painting": 0.3452768729641693,
+        "acc_cartoon": 0.3153409090909091,
+        "acc_sketch": 0.2949152542372881,
+        "n_photo": 250,
+        "n_art_painting": 307,
+        "n_cartoon": 352,
+        "n_sketch": 590
+      },
+      {
+        "seed": 4,
+        "model": "deep",
+        "fraction": 1.0,
+        "split": "validation",
+        "n": 1499,
+        "accuracy": 0.1734489659773182,
+        "balanced_accuracy": 0.1428571428571428,
+        "ba_photo": 0.1428571428571428,
+        "ba_art_painting": 0.1428571428571428,
+        "ba_cartoon": 0.1428571428571428,
+        "ba_sketch": 0.1428571428571428,
+        "acc_photo": 0.1115537848605577,
+        "acc_art_painting": 0.1862745098039215,
+        "acc_cartoon": 0.168091168091168,
+        "acc_sketch": 0.1962774957698815,
+        "n_photo": 251,
+        "n_art_painting": 306,
+        "n_cartoon": 351,
+        "n_sketch": 591
+      }
+    ],
+    "collapsed_prediction_histograms": {
+      "1": {
+        "predicted_class_histogram": [
+          0,
+          0,
+          0,
+          0,
+          1499,
+          0,
+          0
+        ],
+        "predicted_class": 4
+      },
+      "4": {
+        "predicted_class_histogram": [
+          1499,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "predicted_class": 0
+      }
+    }
+  },
+  "reproduction": {
+    "same_manifest_and_split_membership": true,
+    "same_source_runner_model_construction_and_training_protocol": true,
+    "test_opened": false,
+    "seed0": {
+      "torch": "2.4.1",
+      "seed": 0,
+      "training_history": [
+        {
+          "epoch": 1,
+          "seconds": 69.15564124999219,
+          "train_loss": 1.7582563571488075,
+          "train_accuracy": 0.38981838981838984,
+          "validation_loss": 1.5382287014795193,
+          "validation_accuracy": 0.6137424949966644,
+          "validation_balanced_accuracy": 0.6202319485726785,
+          "predicted_class_histogram": [
+            246,
+            404,
+            186,
+            99,
+            241,
+            113,
+            210
+          ],
+          "validation_label_histogram": [
+            260,
+            249,
+            234,
+            168,
+            229,
+            142,
+            217
+          ],
+          "validation_ba_by_domain": {
+            "photo": 0.7833025188817339,
+            "art_painting": 0.5595744870349292,
+            "cartoon": 0.5312921441514417,
+            "sketch": 0.46583697713605693
+          }
+        },
+        {
+          "epoch": 2,
+          "seconds": 66.99165416700998,
+          "train_loss": 1.3491107542832215,
+          "train_accuracy": 0.6566566566566566,
+          "validation_loss": 1.2310437899259348,
+          "validation_accuracy": 0.7478318879252835,
+          "validation_balanced_accuracy": 0.760142490494803,
+          "predicted_class_histogram": [
+            285,
+            254,
+            246,
+            159,
+            201,
+            135,
+            219
+          ],
+          "validation_label_histogram": [
+            260,
+            249,
+            234,
+            168,
+            229,
+            142,
+            217
+          ],
+          "validation_ba_by_domain": {
+            "photo": 0.9029229167875282,
+            "art_painting": 0.6838252347286126,
+            "cartoon": 0.7384183285379614,
+            "sketch": 0.5973112946715765
+          }
+        },
+        {
+          "epoch": 3,
+          "seconds": 70.32612170799985,
+          "train_loss": 0.9602355213784428,
+          "train_accuracy": 0.7644787644787645,
+          "validation_loss": 0.7837647198437849,
+          "validation_accuracy": 0.8178785857238159,
+          "validation_balanced_accuracy": 0.8300772382294709,
+          "predicted_class_histogram": [
+            240,
+            273,
+            261,
+            159,
+            223,
+            147,
+            196
+          ],
+          "validation_label_histogram": [
+            260,
+            249,
+            234,
+            168,
+            229,
+            142,
+            217
+          ],
+          "validation_ba_by_domain": {
+            "photo": 0.9594754228474235,
+            "art_painting": 0.7426829333461585,
+            "cartoon": 0.8176522090147477,
+            "sketch": 0.7941192455287321
+          }
+        }
+      ]
+    },
+    "seed1": {
+      "torch": "2.4.1",
+      "seed": 1,
+      "training_history": [
+        {
+          "epoch": 1,
+          "seconds": 70.90991350001423,
+          "train_loss": 1.772826389677958,
+          "train_accuracy": 0.37008437008437006,
+          "validation_loss": 1.5706699669878033,
+          "validation_accuracy": 0.6077384923282189,
+          "validation_balanced_accuracy": 0.6163620578102739,
+          "predicted_class_histogram": [
+            272,
+            328,
+            190,
+            86,
+            270,
+            114,
+            239
+          ],
+          "validation_label_histogram": [
+            260,
+            249,
+            235,
+            167,
+            230,
+            141,
+            217
+          ],
+          "validation_ba_by_domain": {
+            "photo": 0.7219794480639864,
+            "art_painting": 0.5123435000889832,
+            "cartoon": 0.5734513774963446,
+            "sketch": 0.4514754662054879
+          }
+        },
+        {
+          "epoch": 2,
+          "seconds": 66.25759679099428,
+          "train_loss": 1.3601081912377422,
+          "train_accuracy": 0.6728156728156728,
+          "validation_loss": 1.2671387178886724,
+          "validation_accuracy": 0.7404936624416277,
+          "validation_balanced_accuracy": 0.7530069267692613,
+          "predicted_class_histogram": [
+            290,
+            294,
+            206,
+            144,
+            230,
+            131,
+            204
+          ],
+          "validation_label_histogram": [
+            260,
+            249,
+            235,
+            167,
+            230,
+            141,
+            217
+          ],
+          "validation_ba_by_domain": {
+            "photo": 0.9044005811445824,
+            "art_painting": 0.6769619931891283,
+            "cartoon": 0.7650419794034882,
+            "sketch": 0.5357024812511428
+          }
+        },
+        {
+          "epoch": 3,
+          "seconds": 67.95671537501039,
+          "train_loss": 0.974777448710907,
+          "train_accuracy": 0.7666237666237666,
+          "validation_loss": 0.8313120086643201,
+          "validation_accuracy": 0.8125416944629753,
+          "validation_balanced_accuracy": 0.8204464387167587,
+          "predicted_class_histogram": [
+            264,
+            297,
+            273,
+            155,
+            197,
+            129,
+            184
+          ],
+          "validation_label_histogram": [
+            260,
+            249,
+            235,
+            167,
+            230,
+            141,
+            217
+          ],
+          "validation_ba_by_domain": {
+            "photo": 0.9613780996269475,
+            "art_painting": 0.7601260668200406,
+            "cartoon": 0.7877265413190564,
+            "sketch": 0.7026497940065817
+          }
+        }
+      ]
+    }
+  },
+  "audit": {
+    "imagenet_resnet50_v2_tensors_equal_to_official_checkpoint": [
+      "conv1.weight",
+      "layer4.2.conv3.weight"
+    ],
+    "fc_shape": [
+      2048,
+      7
+    ],
+    "trainable_parameters": 23522375,
+    "optimizer_parameter_identity_check": true,
+    "learning_rate": 0.0001,
+    "train_validation_label_mapping_same": true,
+    "profile_cpu_measures_cpu_by_construction": true,
+    "runner_selects_mps_when_is_available": true
+  },
+  "conclusion": "The current MPS reproduction learns normally for seeds 0 and 1, unlike ORIGINAL. Existing ORIGINAL artifacts lack the runtime/config/checkpoint provenance needed to attribute their collapse or justify a corrected rerun."
+}

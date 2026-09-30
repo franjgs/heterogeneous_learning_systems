@@ -1,0 +1,20 @@
+{
+  "TEST_STATUS": "PREVIOUSLY_OPENED_NOT_USED_IN_B5",
+  "classification": "NULL",
+  "cross_improved_vs_REP_seeds": 1,
+  "cross_nonnegative_seeds": 1,
+  "integration_cells_4of5": 0,
+  "local_nonnegative_seeds": 1,
+  "parent_compatibility": {
+    "compatible": true,
+    "families": 60,
+    "matched_opportunity_projections": 60,
+    "method_states": 360,
+    "new_evaluations": 180,
+    "new_fits": 120,
+    "test": "CLOSED"
+  },
+  "provenance": "PASS",
+  "technical_status": "PASS",
+  "value_structures_4of5_all_costs": 0
+}

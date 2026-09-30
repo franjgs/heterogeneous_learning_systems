@@ -382,8 +382,8 @@ part of this document.
 
 ## 16. Canonical anchors
 
-- [HLS checkpoint after B2.1](../checkpoints/HLS_checkpoint_after_B21.md)
+- [HLS scientific history](../HISTORY.md#4-empirical-vehicle-search)
 - [HLS ontology](../hls_ontology.md)
 - [Research questions](../research_questions.md)
 - [Operational-development opportunity value](../theory/operational_development_opportunity_value.md)
-- [B2.1 PACS factorial protocol](../../experiments/pilots/b21_pacs_factorial/README.md)
+- [B2.1 PACS implementation](../../experiments/pilots/b21_pacs_factorial/)

@@ -1,0 +1,3208 @@
+{
+  "diagnostic": "B2.0 normal runner vs isolated ResNet-50 teacher path",
+  "seed": 0,
+  "device": "mps",
+  "test_opened": false,
+  "mobile_net_run": false,
+  "elapsed_seconds": 397.4707026249962,
+  "max_steps": null,
+  "environment": {
+    "python": "3.11.9 (main, Apr 19 2024, 11:43:47) [Clang 14.0.6 ]",
+    "torch": "2.4.1",
+    "device": "mps",
+    "mps_built": true,
+    "mps_available": true,
+    "cuda_available": false,
+    "torch_deterministic_algorithms": false,
+    "cudnn_deterministic": true,
+    "cudnn_benchmark": false,
+    "mps_fallback_env": null,
+    "configured_seed": 0,
+    "model_train_seed": 30000
+  },
+  "dataset": {
+    "n_train": 6993,
+    "training_sample_ids_sha256": "58977d6236d42eafdaf37ccd4300f3e3569757c3cf55669656fce12589687e06",
+    "training_rows_and_image_hashes_sha256": "bc3df7ab98515b6e56180c14a44eebeb348b97829048e0559f8e9ef1207d8ca2",
+    "domain_class_counts": {
+      "art_painting|dog": 265,
+      "art_painting|elephant": 179,
+      "art_painting|giraffe": 200,
+      "art_painting|guitar": 129,
+      "art_painting|horse": 141,
+      "art_painting|house": 206,
+      "art_painting|person": 314,
+      "cartoon|dog": 272,
+      "cartoon|elephant": 320,
+      "cartoon|giraffe": 242,
+      "cartoon|guitar": 95,
+      "cartoon|horse": 227,
+      "cartoon|house": 202,
+      "cartoon|person": 283,
+      "photo|dog": 133,
+      "photo|elephant": 141,
+      "photo|giraffe": 127,
+      "photo|guitar": 130,
+      "photo|horse": 140,
+      "photo|house": 196,
+      "photo|person": 302,
+      "sketch|dog": 540,
+      "sketch|elephant": 518,
+      "sketch|giraffe": 527,
+      "sketch|guitar": 425,
+      "sketch|horse": 571,
+      "sketch|house": 56,
+      "sketch|person": 112
+    }
+  },
+  "paths": {
+    "A_normal_runner": {
+      "entry_point": "run.py main() limited diagnostically to the seed teacher fit",
+      "host_to_device_transfer": "Tensor.to(device, non_blocking=True)",
+      "rng_seed_calls": [
+        {
+          "seed": 30000,
+          "rng_after_seed": {
+            "python": "8e2b54eb736afb20b489963881cb25495b3adf9bbf3867ad3392c2c653429eb1",
+            "numpy": "b25169e9533f28b219f89987d9ca98f327a85e58718f0cced36d643f76d0fac0",
+            "torch_cpu": "d2a591a4902ca49264107fac90ffd058db607c6151ab8b5ea8b46e9495da8eb8",
+            "torch_mps": "746e490e0113a0800a7b6b06c2cee75257762b4a535df92b7365de97be74d3e9"
+          }
+        },
+        {
+          "seed": 30000,
+          "rng_after_seed": {
+            "python": "8e2b54eb736afb20b489963881cb25495b3adf9bbf3867ad3392c2c653429eb1",
+            "numpy": "b25169e9533f28b219f89987d9ca98f327a85e58718f0cced36d643f76d0fac0",
+            "torch_cpu": "d2a591a4902ca49264107fac90ffd058db607c6151ab8b5ea8b46e9495da8eb8",
+            "torch_mps": "746e490e0113a0800a7b6b06c2cee75257762b4a535df92b7365de97be74d3e9"
+          }
+        }
+      ],
+      "model_constructor": {
+        "rng_before_resnet_constructor": {
+          "python": "8e2b54eb736afb20b489963881cb25495b3adf9bbf3867ad3392c2c653429eb1",
+          "numpy": "b25169e9533f28b219f89987d9ca98f327a85e58718f0cced36d643f76d0fac0",
+          "torch_cpu": "d2a591a4902ca49264107fac90ffd058db607c6151ab8b5ea8b46e9495da8eb8",
+          "torch_mps": "746e490e0113a0800a7b6b06c2cee75257762b4a535df92b7365de97be74d3e9"
+        },
+        "weights_arg": "ResNet50_Weights.IMAGENET1K_V2",
+        "weights_url": "https://download.pytorch.org/models/resnet50-11ad3fa6.pth",
+        "rng_after_resnet_constructor": {
+          "python": "8e2b54eb736afb20b489963881cb25495b3adf9bbf3867ad3392c2c653429eb1",
+          "numpy": "b25169e9533f28b219f89987d9ca98f327a85e58718f0cced36d643f76d0fac0",
+          "torch_cpu": "39be1fde01e74cfbcb20a09bc087b584a8ae95d75ddbaffbfd441f7f17b121dd",
+          "torch_mps": "746e490e0113a0800a7b6b06c2cee75257762b4a535df92b7365de97be74d3e9"
+        },
+        "pre_head_state_dict_sha256": "9368984a6d68a58c2c47ccc5d77b79931f82872c406cfd49e7f38c5847ca96cd"
+      },
+      "initial_model": {
+        "weights": "ResNet50_Weights.IMAGENET1K_V2",
+        "state_dict_sha256": "e2102ef845280632dfa88718883cd2cd32d8b2545737aac50cbc8498a12983e6",
+        "fc_weight_sha256": "222bc76a567d701a4b3f963376ff90fa4292f50d86f5d605a301eedb60c83aa3",
+        "fc_bias_sha256": "229cdf15386cffd338fcc797a51c7dc486dbc2f1460d3f869bb31f6fdb585b2f",
+        "fc_weight_stats": {
+          "mean": -0.00012060644803568721,
+          "std": 0.012806879356503487,
+          "min": -0.022094162181019783,
+          "max": 0.02209519036114216
+        },
+        "fc_shape": [
+          7,
+          2048
+        ],
+        "parameters_total": 23522375,
+        "parameters_trainable": 23522375,
+        "parameters_requires_grad": 161,
+        "parameters_frozen": 0,
+        "parameter_device": "mps:0"
+      },
+      "optimizer": {
+        "class": "torch.optim.sgd.SGD",
+        "parameter_groups": 1,
+        "parameters_in_optimizer": 161,
+        "parameters_included": 161,
+        "contains_exact_model_parameters": true,
+        "groups": [
+          {
+            "lr": 0.0001,
+            "momentum": 0.9,
+            "weight_decay": 0,
+            "nesterov": false
+          }
+        ]
+      },
+      "first_batch": {
+        "batch": 1,
+        "samples": [
+          {
+            "sample_id": 731,
+            "label": 2,
+            "domain": "art_painting",
+            "transformed_tensor_sha256": "666c23084c364fedf8756b2140ab087a20177ab67fa6e5932a51645d6f35bbc0"
+          },
+          {
+            "sample_id": 6634,
+            "label": 0,
+            "domain": "sketch",
+            "transformed_tensor_sha256": "d415d64a1e261c0889e354e1846b57b1d4329127d003bbad35ee27bc476e5d87"
+          },
+          {
+            "sample_id": 4700,
+            "label": 1,
+            "domain": "photo",
+            "transformed_tensor_sha256": "474e036af124248b542f9155e3a42a616950a2d6e054b8ff0e1ba3f9f021321b"
+          },
+          {
+            "sample_id": 1578,
+            "label": 5,
+            "domain": "art_painting",
+            "transformed_tensor_sha256": "1b711e022c5f8ecccb53719a4163f3a2c5cbdbb8628c1106951b6574e292661b"
+          },
+          {
+            "sample_id": 7723,
+            "label": 2,
+            "domain": "sketch",
+            "transformed_tensor_sha256": "c0c1a4ddd87ab1e6da0a32ddbde78f99c28c3db5621501106396065b87527a92"
+          },
+          {
+            "sample_id": 9504,
+            "label": 4,
+            "domain": "sketch",
+            "transformed_tensor_sha256": "3c3a0dbb082ebc3a986140f3e4742cd4580fc02fd4a55c970c3ca690fc116868"
+          },
+          {
+            "sample_id": 8681,
+            "label": 3,
+            "domain": "sketch",
+            "transformed_tensor_sha256": "0653b849c5c1373afbd537a372f75c0fe16259e2a861291b69477fb60711aea4"
+          },
+          {
+            "sample_id": 2595,
+            "label": 1,
+            "domain": "cartoon",
+            "transformed_tensor_sha256": "b0744e718728c7aa3e08644c57eae70a69b86b2a46daf9fd4394a0055b8a6be1"
+          },
+          {
+            "sample_id": 3132,
+            "label": 2,
+            "domain": "cartoon",
+            "transformed_tensor_sha256": "522bbd2bc6710c92f3414890881da81ea60f39fe7b282b77e8d256a13e5e8740"
+          },
+          {
+            "sample_id": 9449,
+            "label": 4,
+            "domain": "sketch",
+            "transformed_tensor_sha256": "4849b4688944667f93fe9a9f080138dc71ab4efd6a1a78a42fd2ad5949d5ffdc"
+          },
+          {
+            "sample_id": 7139,
+            "label": 1,
+            "domain": "sketch",
+            "transformed_tensor_sha256": "57673fd3c40ad0bc2e3f25966a06618be6f4f23f4890a6e18a26f3be19b76343"
+          },
+          {
+            "sample_id": 5500,
+            "label": 5,
+            "domain": "photo",
+            "transformed_tensor_sha256": "387e4143afa9e8e9bf97468c6dbd75051f629974af1a78e70b91a261e5bce660"
+          },
+          {
+            "sample_id": 3635,
+            "label": 4,
+            "domain": "cartoon",
+            "transformed_tensor_sha256": "a036fd0e58120cad7afeefc53447520fc6921e1054b29a939306253070b8078e"
+          },
+          {
+            "sample_id": 9441,
+            "label": 4,
+            "domain": "sketch",
+            "transformed_tensor_sha256": "bd396dd9d1e69671ae405a32a87ca9c294bfd194b3841ab5d588add480ac7b52"
+          },
+          {
+            "sample_id": 3060,
+            "label": 2,
+            "domain": "cartoon",
+            "transformed_tensor_sha256": "c08323dc7b36a8047264ae8e584e5a652d5fb38d964a93030e4bed879344b66f"
+          },
+          {
+            "sample_id": 8105,
+            "label": 2,
+            "domain": "sketch",
+            "transformed_tensor_sha256": "71fd44e1fcd728e70843a96e7e71b25413631b94ecfa475fe4351bff6f51ab69"
+          }
+        ],
+        "logits_shape": [
+          16,
+          7
+        ],
+        "logits_sha256": "16ec912deb5e42958c548ed6925dec71d835b530c4f31eab87710e59cbbbe154",
+        "logits_mean": -0.04360973462462425,
+        "logits_std": 0.1542382687330246,
+        "logits_min": -0.5669076442718506,
+        "logits_max": 0.44817182421684265,
+        "loss": 1.9865994453430176,
+        "labels": [
+          2,
+          0,
+          1,
+          5,
+          2,
+          4,
+          3,
+          1,
+          2,
+          4,
+          1,
+          5,
+          4,
+          4,
+          2,
+          2
+        ],
+        "labels_sha256": "d426def7b89e878964e528967c96f67fd389d805c68131291b5400fea481ba46",
+        "logits_finite": true,
+        "loss_finite": true
+      },
+      "first_batch_sample_ids": [
+        731,
+        6634,
+        4700,
+        1578,
+        7723,
+        9504,
+        8681,
+        2595,
+        3132,
+        9449,
+        7139,
+        5500,
+        3635,
+        9441,
+        3060,
+        8105
+      ],
+      "first_batch_labels": [
+        2,
+        0,
+        1,
+        5,
+        2,
+        4,
+        3,
+        1,
+        2,
+        4,
+        1,
+        5,
+        4,
+        4,
+        2,
+        2
+      ],
+      "first_batch_domains": [
+        "art_painting",
+        "sketch",
+        "photo",
+        "art_painting",
+        "sketch",
+        "sketch",
+        "sketch",
+        "cartoon",
+        "cartoon",
+        "sketch",
+        "sketch",
+        "photo",
+        "cartoon",
+        "sketch",
+        "cartoon",
+        "sketch"
+      ],
+      "first_step": {
+        "step": 1,
+        "gradient_tensors": 161,
+        "gradient_global_norm": 4.586170049766114,
+        "fc_weight_gradient_norm": 2.635770797729492,
+        "gradients_finite": true,
+        "fc_weight_sha256_before": "222bc76a567d701a4b3f963376ff90fa4292f50d86f5d605a301eedb60c83aa3",
+        "fc_gradient_sha256": "24fa1ce729f9fce069eac79b3043dafa62ccfc8552e28e88fbb264d1b1bbdb3a",
+        "weight_decay": 0,
+        "fc_weight_sha256_after": "87ff62b00ee59baf850a5cd6ce2aed1b4f80311d73051da7cfddb3da71202d09",
+        "fc_weight_delta_norm": 0.0002635773562360555,
+        "fc_weight_changed": true,
+        "parameters_finite_after_step": true
+      },
+      "first_batches": [
+        {
+          "batch": 1,
+          "samples": [
+            {
+              "sample_id": 731,
+              "label": 2,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "666c23084c364fedf8756b2140ab087a20177ab67fa6e5932a51645d6f35bbc0"
+            },
+            {
+              "sample_id": 6634,
+              "label": 0,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "d415d64a1e261c0889e354e1846b57b1d4329127d003bbad35ee27bc476e5d87"
+            },
+            {
+              "sample_id": 4700,
+              "label": 1,
+              "domain": "photo",
+              "transformed_tensor_sha256": "474e036af124248b542f9155e3a42a616950a2d6e054b8ff0e1ba3f9f021321b"
+            },
+            {
+              "sample_id": 1578,
+              "label": 5,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "1b711e022c5f8ecccb53719a4163f3a2c5cbdbb8628c1106951b6574e292661b"
+            },
+            {
+              "sample_id": 7723,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "c0c1a4ddd87ab1e6da0a32ddbde78f99c28c3db5621501106396065b87527a92"
+            },
+            {
+              "sample_id": 9504,
+              "label": 4,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "3c3a0dbb082ebc3a986140f3e4742cd4580fc02fd4a55c970c3ca690fc116868"
+            },
+            {
+              "sample_id": 8681,
+              "label": 3,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "0653b849c5c1373afbd537a372f75c0fe16259e2a861291b69477fb60711aea4"
+            },
+            {
+              "sample_id": 2595,
+              "label": 1,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "b0744e718728c7aa3e08644c57eae70a69b86b2a46daf9fd4394a0055b8a6be1"
+            },
+            {
+              "sample_id": 3132,
+              "label": 2,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "522bbd2bc6710c92f3414890881da81ea60f39fe7b282b77e8d256a13e5e8740"
+            },
+            {
+              "sample_id": 9449,
+              "label": 4,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "4849b4688944667f93fe9a9f080138dc71ab4efd6a1a78a42fd2ad5949d5ffdc"
+            },
+            {
+              "sample_id": 7139,
+              "label": 1,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "57673fd3c40ad0bc2e3f25966a06618be6f4f23f4890a6e18a26f3be19b76343"
+            },
+            {
+              "sample_id": 5500,
+              "label": 5,
+              "domain": "photo",
+              "transformed_tensor_sha256": "387e4143afa9e8e9bf97468c6dbd75051f629974af1a78e70b91a261e5bce660"
+            },
+            {
+              "sample_id": 3635,
+              "label": 4,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "a036fd0e58120cad7afeefc53447520fc6921e1054b29a939306253070b8078e"
+            },
+            {
+              "sample_id": 9441,
+              "label": 4,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "bd396dd9d1e69671ae405a32a87ca9c294bfd194b3841ab5d588add480ac7b52"
+            },
+            {
+              "sample_id": 3060,
+              "label": 2,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "c08323dc7b36a8047264ae8e584e5a652d5fb38d964a93030e4bed879344b66f"
+            },
+            {
+              "sample_id": 8105,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "71fd44e1fcd728e70843a96e7e71b25413631b94ecfa475fe4351bff6f51ab69"
+            }
+          ],
+          "logits_shape": [
+            16,
+            7
+          ],
+          "logits_sha256": "16ec912deb5e42958c548ed6925dec71d835b530c4f31eab87710e59cbbbe154",
+          "logits_mean": -0.04360973462462425,
+          "logits_std": 0.1542382687330246,
+          "logits_min": -0.5669076442718506,
+          "logits_max": 0.44817182421684265,
+          "loss": 1.9865994453430176,
+          "labels": [
+            2,
+            0,
+            1,
+            5,
+            2,
+            4,
+            3,
+            1,
+            2,
+            4,
+            1,
+            5,
+            4,
+            4,
+            2,
+            2
+          ],
+          "labels_sha256": "d426def7b89e878964e528967c96f67fd389d805c68131291b5400fea481ba46",
+          "logits_finite": true,
+          "loss_finite": true
+        },
+        {
+          "batch": 2,
+          "samples": [
+            {
+              "sample_id": 3291,
+              "label": 3,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "975285c796161e3fbb755fc87037bf9f3ebe27f73ec6bcf3dbd3b824711e5fcb"
+            },
+            {
+              "sample_id": 3262,
+              "label": 3,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "b00e56ac96a4ceb03acc1176386077430021b8b6bcb1ecf4ae5d46c43c5273ae"
+            },
+            {
+              "sample_id": 5742,
+              "label": 6,
+              "domain": "photo",
+              "transformed_tensor_sha256": "8a55320d01a70201847e2f970aaebeb62d13cb856d5100ac49851e2d1a8e0bae"
+            },
+            {
+              "sample_id": 1392,
+              "label": 5,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "393aded7134ac493ec7f7a012229e01acdf8bbd47aa5f9f6976b452c97321967"
+            },
+            {
+              "sample_id": 5695,
+              "label": 6,
+              "domain": "photo",
+              "transformed_tensor_sha256": "34fe8572013e6b1e201a2c528f2240fd281cecb6cb072d0bf8073aad721076e7"
+            },
+            {
+              "sample_id": 9268,
+              "label": 4,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "592a1eae4be4e7ab7adf34bb43215a1c6c6f3d272039d8e4cb7eb99667d3897d"
+            },
+            {
+              "sample_id": 3297,
+              "label": 3,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "cb984383afa989885c219d1e48789ae8cb068f9c1039202f862911d26a623146"
+            },
+            {
+              "sample_id": 6394,
+              "label": 0,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "a71ac7527f6722497a42bf8b1075bbaa3c8305944ed651a9662e494fe18f6020"
+            },
+            {
+              "sample_id": 7818,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "76ce193fd079548bfbc5e9d41f4f73dac52e9b61ac7c0b89f37b0ecab79b47dc"
+            },
+            {
+              "sample_id": 4191,
+              "label": 6,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "eb30839271a1e95bb386c2d43bd0bfd91a478250b5e37a95ffb034a006f9f8ed"
+            },
+            {
+              "sample_id": 4558,
+              "label": 0,
+              "domain": "photo",
+              "transformed_tensor_sha256": "7d75dc1f65b8c7638ddf7f2ad9608bddc803d879bdc58130de838be2925846c3"
+            },
+            {
+              "sample_id": 5119,
+              "label": 3,
+              "domain": "photo",
+              "transformed_tensor_sha256": "44d15b0edcce70e174216d4fa066c7c649bf60b4a186bf4800b166d5d098a42a"
+            },
+            {
+              "sample_id": 9617,
+              "label": 4,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "884eb41e255309ce19de4dcca570d331ba1b0ad256fbb95813f1d46458feb284"
+            },
+            {
+              "sample_id": 5920,
+              "label": 6,
+              "domain": "photo",
+              "transformed_tensor_sha256": "ad9bdd45a9690fe66fac220b654bc5794bb3fa6cefdfbf872fdfeb55dc3e2b40"
+            },
+            {
+              "sample_id": 4892,
+              "label": 2,
+              "domain": "photo",
+              "transformed_tensor_sha256": "a2d61eca0712780c91c679b20eb17100ab38b4d52e04285c58f1764297b28a2c"
+            },
+            {
+              "sample_id": 1747,
+              "label": 6,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "79c6d715fc96be38b9259c68d3c279dcecc51893de90938a39a909621442b101"
+            }
+          ],
+          "logits_shape": [
+            16,
+            7
+          ],
+          "logits_sha256": "f5b3f67366ec66c44d7b38c5c4049fea0c524cc98f64efbe581a62a5e6173e46",
+          "logits_mean": -0.03530450537800789,
+          "logits_std": 0.15234611928462982,
+          "logits_min": -0.3347545564174652,
+          "logits_max": 0.3917628228664398,
+          "loss": 1.990710973739624,
+          "labels": [
+            3,
+            3,
+            6,
+            5,
+            6,
+            4,
+            3,
+            0,
+            2,
+            6,
+            0,
+            3,
+            4,
+            6,
+            2,
+            6
+          ],
+          "labels_sha256": "1a71bd5eb4b833aca06f5a491037273f48410000c3e8a144e38046ab1b6ee2d8",
+          "logits_finite": true,
+          "loss_finite": true
+        },
+        {
+          "batch": 3,
+          "samples": [
+            {
+              "sample_id": 9961,
+              "label": 6,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "5231239a9fad4f9172032bdf2960744717071b8d10841747a0234d7a8264eee2"
+            },
+            {
+              "sample_id": 9451,
+              "label": 4,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "3748ea0a1025902923419b9d65cc10ed76ef698efe8a049f868a4a9ed3b84c19"
+            },
+            {
+              "sample_id": 7916,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "2eaef25fef84dd6d614309175e4c6b5d00ad2e8e56f8da8758d387b1a3d32c8e"
+            },
+            {
+              "sample_id": 7637,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "7c23aa4a88d6db5d074c35057527e0e23efd20da76214a4c93f66c215b8f5376"
+            },
+            {
+              "sample_id": 815,
+              "label": 2,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "3436b767eceea4daaaf19847b11a41c98f142a10089bb037759f0b3ae6cfdccd"
+            },
+            {
+              "sample_id": 1304,
+              "label": 5,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "4fa5fd223507f675304e9a6afa7b156e42dc555e5460857a2a885fe42a9ec173"
+            },
+            {
+              "sample_id": 5273,
+              "label": 4,
+              "domain": "photo",
+              "transformed_tensor_sha256": "d3c7effdb21dfe0f02a6a200ec2aa29f4dce47acd59884148a73890f58902d9c"
+            },
+            {
+              "sample_id": 907,
+              "label": 2,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "d94d4b2bfb1e6443c99497792de9620b1ef5f03e8ad63b8a40354f6fba6656c7"
+            },
+            {
+              "sample_id": 6366,
+              "label": 0,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "aae3ed041c8b91e6eed6be58ccd7653c03c272b7ae5b21c4f95ea055db9e170f"
+            },
+            {
+              "sample_id": 1845,
+              "label": 6,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "51c6a7f6e80c80ca82628bec0fdc275f2726a9652837ee356eea41996d311118"
+            },
+            {
+              "sample_id": 362,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "68f6f8324dddb7c72cd797b78694fe55f63754d5b398696be464d239828b25d9"
+            },
+            {
+              "sample_id": 2766,
+              "label": 1,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "600af4650be0016a872f6fb9a7d1db35975471a28c115e20f01aa1dd704028fa"
+            },
+            {
+              "sample_id": 8692,
+              "label": 3,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "cd57cf5a142bac82efb01a83a9de71b41de0c8f503b276fefd271a42031b8cd1"
+            },
+            {
+              "sample_id": 72,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "3145d867324e5e985579ebf6b75196bffc1258450f6b920350d43e1c4be3c827"
+            },
+            {
+              "sample_id": 4603,
+              "label": 1,
+              "domain": "photo",
+              "transformed_tensor_sha256": "8c7e93c09dc4128e10e727252c60e088a54e3b551ee8d284844a988ee90fa80a"
+            },
+            {
+              "sample_id": 357,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "73fe54993a3e3141d76c62e7fb53db748ff5a3c0788b6d0ecd9104f9eae1696a"
+            }
+          ],
+          "logits_shape": [
+            16,
+            7
+          ],
+          "logits_sha256": "216734da20f5d9af9d448027870282dd556494062a3010c2b08a207c3145c3b4",
+          "logits_mean": -0.019194448366761208,
+          "logits_std": 0.1382594108581543,
+          "logits_min": -0.40827614068984985,
+          "logits_max": 0.30908194184303284,
+          "loss": 1.776625633239746,
+          "labels": [
+            12,
+            4,
+            2,
+            2,
+            2,
+            5,
+            4,
+            2,
+            0,
+            6,
+            0,
+            1,
+            3,
+            0,
+            1,
+            0
+          ],
+          "labels_sha256": "76a03ba253d8b1a726e4a0636147759645826060fc60840eba6dea7e2a196b22",
+          "logits_finite": true,
+          "loss_finite": true
+        },
+        {
+          "batch": 4,
+          "samples": [
+            {
+              "sample_id": 4749,
+              "label": 1,
+              "domain": "photo",
+              "transformed_tensor_sha256": "ce8e28fb3cfb1ceecdca1880fce770b3bd3998de2afdbbea446203fe035021c4"
+            },
+            {
+              "sample_id": 4341,
+              "label": 6,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "00d638790221c51c345395c5878e676a9bed1238ed118ca84a95701001808a93"
+            },
+            {
+              "sample_id": 1921,
+              "label": 6,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "8ba7b7d58b3d48df25b7dfb00a54c0df0390d0bc92a889438dd087eda34a3e2e"
+            },
+            {
+              "sample_id": 1469,
+              "label": 5,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "c74ba3d35a32c9f0b528718ff7e8b5417305e141fd465ace5d9b4005809f436e"
+            },
+            {
+              "sample_id": 2678,
+              "label": 1,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "16ee8e9dd5f28b40eb5bf1028bd4875fd4bd441b5b3e2ee81a56fc9dfcc101a1"
+            },
+            {
+              "sample_id": 4689,
+              "label": 1,
+              "domain": "photo",
+              "transformed_tensor_sha256": "13a4c3be03dd470aa5b2127415d702c414ab0c5701ae5eb04036f5b1f548fc9b"
+            },
+            {
+              "sample_id": 1087,
+              "label": 3,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "97c079331875572197b3f69ff93b85ca6fea5422159f8c329535fe5eab36580d"
+            },
+            {
+              "sample_id": 1836,
+              "label": 6,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "2ee6d22bab87e836519bbb207951af0bac25721e24d146e2cc9a89599d9320db"
+            },
+            {
+              "sample_id": 356,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "2689bb84ec41f1f48545f77ed6cb42fa8921336f7baa35d8410b13c6041f6454"
+            },
+            {
+              "sample_id": 9791,
+              "label": 5,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "39ef6bcb86e7aaa1a06ae086ca1b4208711803ee413aee350c4714225d4ec90b"
+            },
+            {
+              "sample_id": 7612,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "0b73dde285e5dd667b5086e7de4fe76b054b8322d03bdaeb3a97d0282f3f14c4"
+            },
+            {
+              "sample_id": 6721,
+              "label": 0,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "ef9296b5dabc02dccb8e69ef9b6de021f34be7fa784ef387e50b47962d940a46"
+            },
+            {
+              "sample_id": 404,
+              "label": 1,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "0b827d1d58b206681de211530c81392d3baf08069439e0e8e5d2cae1153dd56d"
+            },
+            {
+              "sample_id": 4780,
+              "label": 1,
+              "domain": "photo",
+              "transformed_tensor_sha256": "2a00df2ad2609b6777d0f9e81cf5ea611fb89726f7a6d360139d02d51a4c75b7"
+            },
+            {
+              "sample_id": 324,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "46858b6ca068f7d84619ea6423a72378ec4568674fb11eb35fd4f677eb22465f"
+            },
+            {
+              "sample_id": 9938,
+              "label": 6,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "f66552c11317681a446ead2b8f89a444c438b22d637ba0b76fb3b9ebd5f945e8"
+            }
+          ],
+          "logits_shape": [
+            16,
+            7
+          ],
+          "logits_sha256": "174978ff8a02eb25d94539ae49f98a8652f4d07f9a7d8a6227edea75e6aeec3e",
+          "logits_mean": -0.012561107985675335,
+          "logits_std": 0.15112093091011047,
+          "logits_min": -0.4605397880077362,
+          "logits_max": 0.351082444190979,
+          "loss": 1.8784058094024658,
+          "labels": [
+            1,
+            6,
+            6,
+            5,
+            1,
+            1,
+            3,
+            6,
+            0,
+            5,
+            2,
+            0,
+            1,
+            1,
+            0,
+            6
+          ],
+          "labels_sha256": "4f3c2ee1b59da11bb0d7a25fe711b32ee46ac1a838aea7694a151e3805fc0428",
+          "logits_finite": true,
+          "loss_finite": true
+        },
+        {
+          "batch": 5,
+          "samples": [
+            {
+              "sample_id": 8181,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "e15c42708a5caef8638ae70410612ed766b10c28e0d9e914384ab0ed3daeeecd"
+            },
+            {
+              "sample_id": 7651,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "7ee50aa005d85b070870493de76559f93a1fea36540aebf49f3350fe33fbaa32"
+            },
+            {
+              "sample_id": 5451,
+              "label": 5,
+              "domain": "photo",
+              "transformed_tensor_sha256": "c26361f9fd4b42514b55cfbee2c849497975f06a517788ce3ebbb1deef0eb9c7"
+            },
+            {
+              "sample_id": 8544,
+              "label": 3,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "a1bd57d52554a1fb127997e68f1468c2be085877ac5d295ddbeee207d0825c5d"
+            },
+            {
+              "sample_id": 5885,
+              "label": 6,
+              "domain": "photo",
+              "transformed_tensor_sha256": "e8ac1b4fdbdac80e9b011f1ea113fc309123fc332c92143e9df439d73b6b44cb"
+            },
+            {
+              "sample_id": 8842,
+              "label": 3,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "c11229ebb7a795ebf776af794428d585f6bc726715eb485088f97e3cbd048366"
+            },
+            {
+              "sample_id": 307,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "e7f2b10cf4cdd83afd6a6e1a0e711a5b7d00c74840e447fff117a6cff8d62f97"
+            },
+            {
+              "sample_id": 9923,
+              "label": 6,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "61314bac8b926cdf87af55fbd5b058f5d2cd4a58bf050832eab17c7db6c03635"
+            },
+            {
+              "sample_id": 3437,
+              "label": 4,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "1456139c708e493db03696ca6f3685f0d7b93830956345b3f477da8cfef1db74"
+            },
+            {
+              "sample_id": 7079,
+              "label": 1,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "1d32867cdbda1d46bb212deed44f0dc2ab7f7843525899966423b9b8c65e3797"
+            },
+            {
+              "sample_id": 3063,
+              "label": 2,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "896269acd7149e72ff65cf41e7025fa47180070693939ac88cdf4d1f253a4def"
+            },
+            {
+              "sample_id": 6008,
+              "label": 6,
+              "domain": "photo",
+              "transformed_tensor_sha256": "275a25645f5eb515659ee101e9f98203954df9de5f692cf911b00306a4535462"
+            },
+            {
+              "sample_id": 4266,
+              "label": 6,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "0829c0aee9ba18b6ce3e674be2d3a8d8b75ffc3bb30d18ee75bfe562555fac47"
+            },
+            {
+              "sample_id": 4684,
+              "label": 1,
+              "domain": "photo",
+              "transformed_tensor_sha256": "4dd34ef4ca51bf07482e030405a1555e98ea6b6dd066b8333e6dd83cc6c4c199"
+            },
+            {
+              "sample_id": 5194,
+              "label": 4,
+              "domain": "photo",
+              "transformed_tensor_sha256": "8a8e3bee7820c5a50c4614f9ff8755c4646a36b1999972e379f7e0df8d0f11d8"
+            },
+            {
+              "sample_id": 4209,
+              "label": 6,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "edc8d8741014cb0329453087a6024e826a43c9b63009dbbc86215a42f0cca83c"
+            }
+          ],
+          "logits_shape": [
+            16,
+            7
+          ],
+          "logits_sha256": "ac3402389950fcaef792a70ad0a6ee5067b98b639ee79a18af9d4d7d99b9bec0",
+          "logits_mean": -0.0203238595277071,
+          "logits_std": 0.15356729924678802,
+          "logits_min": -0.3824891746044159,
+          "logits_max": 0.48383110761642456,
+          "loss": 1.9445462226867676,
+          "labels": [
+            2,
+            2,
+            5,
+            3,
+            6,
+            3,
+            0,
+            6,
+            4,
+            1,
+            2,
+            6,
+            6,
+            1,
+            4,
+            6
+          ],
+          "labels_sha256": "a32db5e82599b1e1a8c8256e64a7db250711442bf1e261f861569cd8a97061ca",
+          "logits_finite": true,
+          "loss_finite": true
+        },
+        {
+          "batch": 6,
+          "samples": [
+            {
+              "sample_id": 8216,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "f26cc7fa855ea54ee7387a3d787bb45f8be832ea1b2ddd5dadeb9f0f20079dd7"
+            },
+            {
+              "sample_id": 7826,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "66749dedc2592bf21b41a6289a2bfcb1abe764ecc025bbb8634177f032b26ac1"
+            },
+            {
+              "sample_id": 5746,
+              "label": 6,
+              "domain": "photo",
+              "transformed_tensor_sha256": "8ae97447a12bb93f35bf2ae4f6081aabb095f84b11cf8079fa75aee0e4e68d1a"
+            },
+            {
+              "sample_id": 5239,
+              "label": 4,
+              "domain": "photo",
+              "transformed_tensor_sha256": "e8e1ba82f2b5cee5ed700eb1f498b9f2d4f4927f2f33a2c156ee3008861c1803"
+            },
+            {
+              "sample_id": 1128,
+              "label": 4,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "dbc73f1a7646c8b78b6e7a0ed678cb409668d5668e1e136c003046f0258fa263"
+            },
+            {
+              "sample_id": 1619,
+              "label": 6,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "d0f87158126b2aa011d899f5931694a1086bc9100eec3c38114a51aac6260b19"
+            },
+            {
+              "sample_id": 384,
+              "label": 1,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "e22589fcd73b9151e7f5889d01cdfc370746c5ca7e5d1f1f4a7c8fcca09054b5"
+            },
+            {
+              "sample_id": 2029,
+              "label": 6,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "b5f93fecc2e39ab9d9228a37d4ca7ef8c4d33d24e1658fb710c77fa568ed78ec"
+            },
+            {
+              "sample_id": 9491,
+              "label": 4,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "76e07bf39c510599c1dc125d7e98c6abe54740880fc9aafb2683bc1cf45ac9ff"
+            },
+            {
+              "sample_id": 3253,
+              "label": 3,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "f41f3d44a3007494827c528dd60dd5e94b7ea5210c5cd70e8ef0f5785e0faec2"
+            },
+            {
+              "sample_id": 7640,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "d36964a85327945b7910d14b7531d2a7518c55e1e3fc2812f9204e9dedcd10cd"
+            },
+            {
+              "sample_id": 6181,
+              "label": 0,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "71a138b2a43c0e6a0b6b72304afd4e67d4630e948624d4d855eb3591ea19360c"
+            },
+            {
+              "sample_id": 8250,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "c9349e92411c282f1e13449d7e3597c5298ff9cfb136333b818fe54c37f02f24"
+            },
+            {
+              "sample_id": 7362,
+              "label": 1,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "e0bb05aac85d7d3d794d76465d7d502ffadab83a717f3e6c05ec7a23ecdab4d0"
+            },
+            {
+              "sample_id": 8810,
+              "label": 3,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "c0f2370625c264b52ec7209e62b0bea052706017f29fbe77e47faf84b4edaf86"
+            },
+            {
+              "sample_id": 420,
+              "label": 1,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "e24bb05c0bfc187ec79a2fb0907136b602510755e0ed86e85c82af0d72e713db"
+            }
+          ],
+          "logits_shape": [
+            16,
+            7
+          ],
+          "logits_sha256": "6b57423f4da34488ccf396cea5b7a160538b721c12a9fd8bd9061d6666517659",
+          "logits_mean": -0.02607910893857479,
+          "logits_std": 0.16571533679962158,
+          "logits_min": -0.37104088068008423,
+          "logits_max": 0.6655777096748352,
+          "loss": 1.9587163925170898,
+          "labels": [
+            2,
+            2,
+            6,
+            4,
+            4,
+            6,
+            1,
+            6,
+            4,
+            3,
+            2,
+            0,
+            2,
+            1,
+            3,
+            1
+          ],
+          "labels_sha256": "73c8d638b2a594cca94ebea143269aa29178a115aaf49a104073d7f9a6ef8593",
+          "logits_finite": true,
+          "loss_finite": true
+        },
+        {
+          "batch": 7,
+          "samples": [
+            {
+              "sample_id": 659,
+              "label": 2,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "89faa1d4879e10d0a549319989b32b7041d17e93add45389e644c756c8d943ae"
+            },
+            {
+              "sample_id": 4946,
+              "label": 2,
+              "domain": "photo",
+              "transformed_tensor_sha256": "107c63342c1b39b6b898de7c1cdb5ebdd3cf6b39c9ef9a62451ff7b66ba013ba"
+            },
+            {
+              "sample_id": 4443,
+              "label": 0,
+              "domain": "photo",
+              "transformed_tensor_sha256": "aab2004caccdb05a385dd9bda545196d7a0fe01b1ab10d8858fdba93f52e6fc4"
+            },
+            {
+              "sample_id": 221,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "7efa297381e8f5bd74b32dc103bea2ff085e74bb22ac6fe41e07a621ef341a7b"
+            },
+            {
+              "sample_id": 3749,
+              "label": 5,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "69377ad916a28888afdbd0c400efd67da5ea192c932d3c92b1e03bb322a7d4ca"
+            },
+            {
+              "sample_id": 4417,
+              "label": 0,
+              "domain": "photo",
+              "transformed_tensor_sha256": "0736d1e730043985596cab0e595d6e35228470aec626d91d21f777d723d33322"
+            },
+            {
+              "sample_id": 2410,
+              "label": 0,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "3fa9b3c8151a144f71186603e2477ec1a1246fccf9cb7b53fd4dfefadefe6737"
+            },
+            {
+              "sample_id": 817,
+              "label": 2,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "e08c2e000c1f4da9c7b05afb33eb7e7985149e4af7fcb0b459f0b1ed5a3c77a0"
+            },
+            {
+              "sample_id": 7305,
+              "label": 1,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "cfa3306c892991f2ebd445a20cd23360c5b3e7de50d537a93818a153df536f86"
+            },
+            {
+              "sample_id": 8636,
+              "label": 3,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "bc95a15ac47a2fe1528f8fa2b24bf4aad7ee33997c68502f489cdc9765573f4f"
+            },
+            {
+              "sample_id": 1614,
+              "label": 6,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "ef1b023c7f30d12e602b219061028a08f896a9fa110789943c03bf03e8e62da8"
+            },
+            {
+              "sample_id": 1043,
+              "label": 3,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "ae0a7d529a9ac69e46adca5dee813f09cf4802e74de1fb96da9acd4c6bab482e"
+            },
+            {
+              "sample_id": 7685,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "a3171550eeb0774d02933c6b927f903908bb60d32a53471d159b2b0a67d05fc7"
+            },
+            {
+              "sample_id": 2693,
+              "label": 1,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "c1d3edf508e26b0c72201cfb08a9722f060db85cfd65336c241b47cc02630b68"
+            },
+            {
+              "sample_id": 8529,
+              "label": 3,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "831e93b8d460963f0dca32dff55fc2ef7e9cb067d5211351298fbc8c413cb0ab"
+            },
+            {
+              "sample_id": 5474,
+              "label": 5,
+              "domain": "photo",
+              "transformed_tensor_sha256": "32eb9bf0bf8976e9ac5edb1c91905e47eb620528a9194f693d3d91a7489cbb96"
+            }
+          ],
+          "logits_shape": [
+            16,
+            7
+          ],
+          "logits_sha256": "046b17db29831f3c1ff8cb6ac1c748e85ae3c12ced0ccd36f473f51304f0e83f",
+          "logits_mean": -0.018863495439291,
+          "logits_std": 0.17714686691761017,
+          "logits_min": -0.5955976843833923,
+          "logits_max": 0.5534576177597046,
+          "loss": 1.9084656238555908,
+          "labels": [
+            2,
+            2,
+            0,
+            0,
+            5,
+            0,
+            0,
+            2,
+            1,
+            3,
+            6,
+            3,
+            2,
+            1,
+            3,
+            5
+          ],
+          "labels_sha256": "ebac4224f57be543478a00b26d4952d5a4ccba3e96931fec4e47e9ba9f3ec4d5",
+          "logits_finite": true,
+          "loss_finite": true
+        },
+        {
+          "batch": 8,
+          "samples": [
+            {
+              "sample_id": 2773,
+              "label": 1,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "a70c3de46ba92947ee6f32ccc32d85a3c8c105525c343c48ba00582225574efb"
+            },
+            {
+              "sample_id": 1991,
+              "label": 6,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "bae03630f2551eac2c285148633a526f04fa414bd0a49e7474a65b881ad8e784"
+            },
+            {
+              "sample_id": 6997,
+              "label": 1,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "ffba9874f62fa567ba4ba8b00b09762010d702c171db29333be5101f27a90aa8"
+            },
+            {
+              "sample_id": 7452,
+              "label": 1,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "b2691f9e24efa3a55266e7d75787c7188ca2bf8ab01c77fa3fa91e514cdaf285"
+            },
+            {
+              "sample_id": 995,
+              "label": 3,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "62fe0f65bccd8ac6e26852cafc30629e70201fb14ad06f8bea460482b0719663"
+            },
+            {
+              "sample_id": 2092,
+              "label": 0,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "6cee237b9198f52ba28155ff90dbbecc6434508048523e30d80fbe9df4784537"
+            },
+            {
+              "sample_id": 8935,
+              "label": 4,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "522ad53d61d21987810537b192baf7ac100e44d4d00a3b9a091cd5d8caff3ebd"
+            },
+            {
+              "sample_id": 4745,
+              "label": 1,
+              "domain": "photo",
+              "transformed_tensor_sha256": "b378cee8ac3e9763bc446d5a38b3c254a53438efd2fd6e9b6c18d403f28daac6"
+            },
+            {
+              "sample_id": 255,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "646e96a67b1af5a7364f4071516b90ff99e15024aa59cdf368bbfdc379e446b8"
+            },
+            {
+              "sample_id": 6694,
+              "label": 0,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "f5037b806064276242149b427c8e412436403b7c1dadacd17aaf3b050424e346"
+            },
+            {
+              "sample_id": 4383,
+              "label": 6,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "3712553aad95e40df9884d93f875be020abbfe8af338f7c40b8b39fe981f1879"
+            },
+            {
+              "sample_id": 5909,
+              "label": 6,
+              "domain": "photo",
+              "transformed_tensor_sha256": "256fb8a1aa109e1c1c98ebeeee15466a86c817d6631444217fc577c4033f2a02"
+            },
+            {
+              "sample_id": 247,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "d8728ff9dea380e62aec0748c2eb74d7616e5011f54caaea2cc9787d8c78ceb7"
+            },
+            {
+              "sample_id": 3320,
+              "label": 3,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "342d0f15117eb812e33a2b12b7113e18fd46cc45d5418378529ca66bc1e1d0be"
+            },
+            {
+              "sample_id": 7003,
+              "label": 1,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "c79dac0f32f95bad7627ef09bed0165065a70e32c5243ef5c06df27fd1d80a0b"
+            },
+            {
+              "sample_id": 2821,
+              "label": 1,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "87496d55c0f72e6125dab764393340454500b62822f9f76449df6bb4d7b11fb4"
+            }
+          ],
+          "logits_shape": [
+            16,
+            7
+          ],
+          "logits_sha256": "f8a857147b8b120b29907b8444391262b4d7d62816eb8ee0e086f021773821c4",
+          "logits_mean": -0.04903711751103401,
+          "logits_std": 0.16651828587055206,
+          "logits_min": -0.5167794227600098,
+          "logits_max": 0.31063026189804077,
+          "loss": 1.9145565032958984,
+          "labels": [
+            1,
+            6,
+            1,
+            1,
+            3,
+            0,
+            4,
+            1,
+            0,
+            0,
+            6,
+            6,
+            0,
+            3,
+            1,
+            1
+          ],
+          "labels_sha256": "7516b0334d08c0176e6db1cf285ec90d1dafdcf65c36f4eb4efea9642ce0b96b",
+          "logits_finite": true,
+          "loss_finite": true
+        }
+      ],
+      "first_steps": [
+        {
+          "step": 1,
+          "gradient_tensors": 161,
+          "gradient_global_norm": 4.586170049766114,
+          "fc_weight_gradient_norm": 2.635770797729492,
+          "gradients_finite": true,
+          "fc_weight_sha256_before": "222bc76a567d701a4b3f963376ff90fa4292f50d86f5d605a301eedb60c83aa3",
+          "fc_gradient_sha256": "24fa1ce729f9fce069eac79b3043dafa62ccfc8552e28e88fbb264d1b1bbdb3a",
+          "weight_decay": 0,
+          "fc_weight_sha256_after": "87ff62b00ee59baf850a5cd6ce2aed1b4f80311d73051da7cfddb3da71202d09",
+          "fc_weight_delta_norm": 0.0002635773562360555,
+          "fc_weight_changed": true,
+          "parameters_finite_after_step": true
+        },
+        {
+          "step": 2,
+          "gradient_tensors": null,
+          "gradient_global_norm": 3.2177967030171812,
+          "fc_weight_gradient_norm": 3.217797040939331,
+          "gradients_finite": true,
+          "fc_weight_sha256_before": "87ff62b00ee59baf850a5cd6ce2aed1b4f80311d73051da7cfddb3da71202d09",
+          "fc_gradient_sha256": "ed7e0e95a0d361b8f547b10e24a64e43eb349bc3c7a41f5f607536a77f527917",
+          "weight_decay": 0,
+          "fc_weight_sha256_after": "181e5cf51e3848737a7feb0035c797437a06fa2cfb1f3d54f0e059aa7d3f26c8",
+          "fc_weight_delta_norm": 0.0003820883866865188,
+          "fc_weight_changed": true,
+          "parameters_finite_after_step": true
+        },
+        {
+          "step": 3,
+          "gradient_tensors": null,
+          "gradient_global_norm": 2.343904719014326,
+          "fc_weight_gradient_norm": 2.343904733657837,
+          "gradients_finite": true,
+          "fc_weight_sha256_before": "181e5cf51e3848737a7feb0035c797437a06fa2cfb1f3d54f0e059aa7d3f26c8",
+          "fc_gradient_sha256": "d43f323d68cbb673fb0e1636f580f260d2930fef4131bff00a9c2fde198265a2",
+          "weight_decay": 0,
+          "fc_weight_sha256_after": "fe952cc304f894a11290174b7ed67a728e5c12d65637cf809c74850da7c45e2a",
+          "fc_weight_delta_norm": 0.0004414086288306862,
+          "fc_weight_changed": true,
+          "parameters_finite_after_step": true
+        },
+        {
+          "step": 4,
+          "gradient_tensors": null,
+          "gradient_global_norm": 2.7603157072978224,
+          "fc_weight_gradient_norm": 2.7603158950805664,
+          "gradients_finite": true,
+          "fc_weight_sha256_before": "fe952cc304f894a11290174b7ed67a728e5c12d65637cf809c74850da7c45e2a",
+          "fc_gradient_sha256": "5ec61f22ec97ac845ad297984bf316ad7a331ab9d8c968a22b103f76b13c2744",
+          "weight_decay": 0,
+          "fc_weight_sha256_after": "46edd89390b2ec89e0d3447d98e108986e32de41b3e5c09925a492b04f84a244",
+          "fc_weight_delta_norm": 0.0005007403087802231,
+          "fc_weight_changed": true,
+          "parameters_finite_after_step": true
+        },
+        {
+          "step": 5,
+          "gradient_tensors": null,
+          "gradient_global_norm": 2.743201174405198,
+          "fc_weight_gradient_norm": 2.74320125579834,
+          "gradients_finite": true,
+          "fc_weight_sha256_before": "46edd89390b2ec89e0d3447d98e108986e32de41b3e5c09925a492b04f84a244",
+          "fc_gradient_sha256": "52bfc7ab7188d44b7b636f932d9a02743fdd9cd6be6913ec37b024cea2ae712c",
+          "weight_decay": 0,
+          "fc_weight_sha256_after": "351059a852c168b9b74659b2dbf4714329a64119e95b2040a2a964cc7c0f7659",
+          "fc_weight_delta_norm": 0.0006063245818950236,
+          "fc_weight_changed": true,
+          "parameters_finite_after_step": true
+        },
+        {
+          "step": 6,
+          "gradient_tensors": null,
+          "gradient_global_norm": 2.6332838955194053,
+          "fc_weight_gradient_norm": 2.633284091949463,
+          "gradients_finite": true,
+          "fc_weight_sha256_before": "351059a852c168b9b74659b2dbf4714329a64119e95b2040a2a964cc7c0f7659",
+          "fc_gradient_sha256": "8ddb64ae644fe821d5b0979e0c6e7a885026d15e4665baac6c35342381833798",
+          "weight_decay": 0,
+          "fc_weight_sha256_after": "73411f6f949c8a502d98d2c7e70dab48546644e0a22ea248afb16dbf1f03a0fd",
+          "fc_weight_delta_norm": 0.000691273424308747,
+          "fc_weight_changed": true,
+          "parameters_finite_after_step": true
+        },
+        {
+          "step": 7,
+          "gradient_tensors": null,
+          "gradient_global_norm": 2.848171946189098,
+          "fc_weight_gradient_norm": 2.848172187805176,
+          "gradients_finite": true,
+          "fc_weight_sha256_before": "73411f6f949c8a502d98d2c7e70dab48546644e0a22ea248afb16dbf1f03a0fd",
+          "fc_gradient_sha256": "5e4a469b4647a4f7ba1ccdb8d4c938480112e16b3184b98b538120438bd5d6d8",
+          "weight_decay": 0,
+          "fc_weight_sha256_after": "cd6ef6fb8790492904799a533c1e6fb4e40c3b353e9326a4d9785101580ce6a9",
+          "fc_weight_delta_norm": 0.0007110463338904083,
+          "fc_weight_changed": true,
+          "parameters_finite_after_step": true
+        },
+        {
+          "step": 8,
+          "gradient_tensors": null,
+          "gradient_global_norm": 3.112488534438988,
+          "fc_weight_gradient_norm": 3.1124887466430664,
+          "gradients_finite": true,
+          "fc_weight_sha256_before": "cd6ef6fb8790492904799a533c1e6fb4e40c3b353e9326a4d9785101580ce6a9",
+          "fc_gradient_sha256": "704486c1f99b0e57bd2fbd6e162d6e564efea0c153bd1e607fe606b2bd13adde",
+          "weight_decay": 0,
+          "fc_weight_sha256_after": "072202cbb8feb8bb7303dc5c761230728945cdbe549b975159a3f08fac691fa7",
+          "fc_weight_delta_norm": 0.0007799494778737426,
+          "fc_weight_changed": true,
+          "parameters_finite_after_step": true
+        }
+      ],
+      "epoch_metrics": [
+        {
+          "epoch": 1,
+          "train_loss": 1.8136498832948114,
+          "train_accuracy": 0.16816817224025726,
+          "train_samples": 6993,
+          "validation_loss": 26.351521679188426,
+          "validation_accuracy": 0.1734489659773182,
+          "validation_balanced_accuracy": 0.14285714285714285,
+          "predicted_class_histogram": [
+            1499,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "label_histogram": [
+            260,
+            249,
+            234,
+            168,
+            229,
+            142,
+            217
+          ],
+          "validation_ba_by_domain": {
+            "photo": 0.14285714285714285,
+            "art_painting": 0.14285714285714285,
+            "cartoon": 0.14285714285714285,
+            "sketch": 0.14285714285714285
+          }
+        },
+        {
+          "epoch": 2,
+          "train_loss": 1.8243924389747392,
+          "train_accuracy": 0.1811811774969101,
+          "train_samples": 6993,
+          "validation_loss": 1.943754551170507,
+          "validation_accuracy": 0.1734489659773182,
+          "validation_balanced_accuracy": 0.14285714285714285,
+          "predicted_class_histogram": [
+            1499,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "label_histogram": [
+            260,
+            249,
+            234,
+            168,
+            229,
+            142,
+            217
+          ],
+          "validation_ba_by_domain": {
+            "photo": 0.14285714285714285,
+            "art_painting": 0.14285714285714285,
+            "cartoon": 0.14285714285714285,
+            "sketch": 0.14285714285714285
+          }
+        },
+        {
+          "epoch": 3,
+          "train_loss": 1.8394688455976336,
+          "train_accuracy": 0.1777491718530655,
+          "train_samples": 6993,
+          "validation_loss": 1.9339611059510764,
+          "validation_accuracy": 0.1734489659773182,
+          "validation_balanced_accuracy": 0.14285714285714285,
+          "predicted_class_histogram": [
+            1499,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "label_histogram": [
+            260,
+            249,
+            234,
+            168,
+            229,
+            142,
+            217
+          ],
+          "validation_ba_by_domain": {
+            "photo": 0.14285714285714285,
+            "art_painting": 0.14285714285714285,
+            "cartoon": 0.14285714285714285,
+            "sketch": 0.14285714285714285
+          }
+        }
+      ]
+    },
+    "B_isolated_diagnostic": {
+      "entry_point": "standalone constructor and fit loop used by the earlier diagnostic",
+      "host_to_device_transfer": "Tensor.to(device), blocking default",
+      "per_batch_cpu_synchronization": "loss.cpu() and training_accuracy.cpu() after every optimizer step",
+      "rng_seed_calls": [
+        {
+          "seed": 30000,
+          "rng_after_seed": {
+            "python": "8e2b54eb736afb20b489963881cb25495b3adf9bbf3867ad3392c2c653429eb1",
+            "numpy": "b25169e9533f28b219f89987d9ca98f327a85e58718f0cced36d643f76d0fac0",
+            "torch_cpu": "d2a591a4902ca49264107fac90ffd058db607c6151ab8b5ea8b46e9495da8eb8",
+            "torch_mps": "746e490e0113a0800a7b6b06c2cee75257762b4a535df92b7365de97be74d3e9"
+          }
+        }
+      ],
+      "model_constructor": {
+        "rng_before_resnet_constructor": {
+          "python": "8e2b54eb736afb20b489963881cb25495b3adf9bbf3867ad3392c2c653429eb1",
+          "numpy": "b25169e9533f28b219f89987d9ca98f327a85e58718f0cced36d643f76d0fac0",
+          "torch_cpu": "d2a591a4902ca49264107fac90ffd058db607c6151ab8b5ea8b46e9495da8eb8",
+          "torch_mps": "746e490e0113a0800a7b6b06c2cee75257762b4a535df92b7365de97be74d3e9"
+        },
+        "weights_arg": "ResNet50_Weights.IMAGENET1K_V2",
+        "weights_url": "https://download.pytorch.org/models/resnet50-11ad3fa6.pth",
+        "rng_after_resnet_constructor": {
+          "python": "8e2b54eb736afb20b489963881cb25495b3adf9bbf3867ad3392c2c653429eb1",
+          "numpy": "b25169e9533f28b219f89987d9ca98f327a85e58718f0cced36d643f76d0fac0",
+          "torch_cpu": "39be1fde01e74cfbcb20a09bc087b584a8ae95d75ddbaffbfd441f7f17b121dd",
+          "torch_mps": "746e490e0113a0800a7b6b06c2cee75257762b4a535df92b7365de97be74d3e9"
+        },
+        "pre_head_state_dict_sha256": "9368984a6d68a58c2c47ccc5d77b79931f82872c406cfd49e7f38c5847ca96cd",
+        "official_backbone_checks_equal": {
+          "conv1.weight": true,
+          "layer4.2.conv3.weight": true
+        },
+        "rng_after_official_weight_check": {
+          "python": "8e2b54eb736afb20b489963881cb25495b3adf9bbf3867ad3392c2c653429eb1",
+          "numpy": "b25169e9533f28b219f89987d9ca98f327a85e58718f0cced36d643f76d0fac0",
+          "torch_cpu": "39be1fde01e74cfbcb20a09bc087b584a8ae95d75ddbaffbfd441f7f17b121dd",
+          "torch_mps": "746e490e0113a0800a7b6b06c2cee75257762b4a535df92b7365de97be74d3e9"
+        }
+      },
+      "initial_model": {
+        "weights": "ResNet50_Weights.IMAGENET1K_V2",
+        "state_dict_sha256": "e2102ef845280632dfa88718883cd2cd32d8b2545737aac50cbc8498a12983e6",
+        "fc_weight_sha256": "222bc76a567d701a4b3f963376ff90fa4292f50d86f5d605a301eedb60c83aa3",
+        "fc_bias_sha256": "229cdf15386cffd338fcc797a51c7dc486dbc2f1460d3f869bb31f6fdb585b2f",
+        "fc_weight_stats": {
+          "mean": -0.00012060644803568721,
+          "std": 0.012806879356503487,
+          "min": -0.022094162181019783,
+          "max": 0.02209519036114216
+        },
+        "fc_shape": [
+          7,
+          2048
+        ],
+        "parameters_total": 23522375,
+        "parameters_trainable": 23522375,
+        "parameters_requires_grad": 161,
+        "parameters_frozen": 0,
+        "parameter_device": "mps:0"
+      },
+      "optimizer": {
+        "class": "torch.optim.sgd.SGD",
+        "parameter_groups": 1,
+        "parameters_in_optimizer": 161,
+        "parameters_included": 161,
+        "contains_exact_model_parameters": true,
+        "groups": [
+          {
+            "lr": 0.0001,
+            "momentum": 0.9,
+            "weight_decay": 0,
+            "nesterov": false
+          }
+        ]
+      },
+      "first_batch": {
+        "batch": 1,
+        "samples": [
+          {
+            "sample_id": 731,
+            "label": 2,
+            "domain": "art_painting",
+            "transformed_tensor_sha256": "666c23084c364fedf8756b2140ab087a20177ab67fa6e5932a51645d6f35bbc0"
+          },
+          {
+            "sample_id": 6634,
+            "label": 0,
+            "domain": "sketch",
+            "transformed_tensor_sha256": "d415d64a1e261c0889e354e1846b57b1d4329127d003bbad35ee27bc476e5d87"
+          },
+          {
+            "sample_id": 4700,
+            "label": 1,
+            "domain": "photo",
+            "transformed_tensor_sha256": "474e036af124248b542f9155e3a42a616950a2d6e054b8ff0e1ba3f9f021321b"
+          },
+          {
+            "sample_id": 1578,
+            "label": 5,
+            "domain": "art_painting",
+            "transformed_tensor_sha256": "1b711e022c5f8ecccb53719a4163f3a2c5cbdbb8628c1106951b6574e292661b"
+          },
+          {
+            "sample_id": 7723,
+            "label": 2,
+            "domain": "sketch",
+            "transformed_tensor_sha256": "c0c1a4ddd87ab1e6da0a32ddbde78f99c28c3db5621501106396065b87527a92"
+          },
+          {
+            "sample_id": 9504,
+            "label": 4,
+            "domain": "sketch",
+            "transformed_tensor_sha256": "3c3a0dbb082ebc3a986140f3e4742cd4580fc02fd4a55c970c3ca690fc116868"
+          },
+          {
+            "sample_id": 8681,
+            "label": 3,
+            "domain": "sketch",
+            "transformed_tensor_sha256": "0653b849c5c1373afbd537a372f75c0fe16259e2a861291b69477fb60711aea4"
+          },
+          {
+            "sample_id": 2595,
+            "label": 1,
+            "domain": "cartoon",
+            "transformed_tensor_sha256": "b0744e718728c7aa3e08644c57eae70a69b86b2a46daf9fd4394a0055b8a6be1"
+          },
+          {
+            "sample_id": 3132,
+            "label": 2,
+            "domain": "cartoon",
+            "transformed_tensor_sha256": "522bbd2bc6710c92f3414890881da81ea60f39fe7b282b77e8d256a13e5e8740"
+          },
+          {
+            "sample_id": 9449,
+            "label": 4,
+            "domain": "sketch",
+            "transformed_tensor_sha256": "4849b4688944667f93fe9a9f080138dc71ab4efd6a1a78a42fd2ad5949d5ffdc"
+          },
+          {
+            "sample_id": 7139,
+            "label": 1,
+            "domain": "sketch",
+            "transformed_tensor_sha256": "57673fd3c40ad0bc2e3f25966a06618be6f4f23f4890a6e18a26f3be19b76343"
+          },
+          {
+            "sample_id": 5500,
+            "label": 5,
+            "domain": "photo",
+            "transformed_tensor_sha256": "387e4143afa9e8e9bf97468c6dbd75051f629974af1a78e70b91a261e5bce660"
+          },
+          {
+            "sample_id": 3635,
+            "label": 4,
+            "domain": "cartoon",
+            "transformed_tensor_sha256": "a036fd0e58120cad7afeefc53447520fc6921e1054b29a939306253070b8078e"
+          },
+          {
+            "sample_id": 9441,
+            "label": 4,
+            "domain": "sketch",
+            "transformed_tensor_sha256": "bd396dd9d1e69671ae405a32a87ca9c294bfd194b3841ab5d588add480ac7b52"
+          },
+          {
+            "sample_id": 3060,
+            "label": 2,
+            "domain": "cartoon",
+            "transformed_tensor_sha256": "c08323dc7b36a8047264ae8e584e5a652d5fb38d964a93030e4bed879344b66f"
+          },
+          {
+            "sample_id": 8105,
+            "label": 2,
+            "domain": "sketch",
+            "transformed_tensor_sha256": "71fd44e1fcd728e70843a96e7e71b25413631b94ecfa475fe4351bff6f51ab69"
+          }
+        ],
+        "logits_shape": [
+          16,
+          7
+        ],
+        "logits_sha256": "16ec912deb5e42958c548ed6925dec71d835b530c4f31eab87710e59cbbbe154",
+        "logits_mean": -0.04360973462462425,
+        "logits_std": 0.1542382687330246,
+        "logits_min": -0.5669076442718506,
+        "logits_max": 0.44817182421684265,
+        "loss": 1.9865994453430176,
+        "labels": [
+          2,
+          0,
+          1,
+          5,
+          2,
+          4,
+          3,
+          1,
+          2,
+          4,
+          1,
+          5,
+          4,
+          4,
+          2,
+          2
+        ],
+        "labels_sha256": "d426def7b89e878964e528967c96f67fd389d805c68131291b5400fea481ba46",
+        "logits_finite": true,
+        "loss_finite": true
+      },
+      "first_batch_sample_ids": [
+        731,
+        6634,
+        4700,
+        1578,
+        7723,
+        9504,
+        8681,
+        2595,
+        3132,
+        9449,
+        7139,
+        5500,
+        3635,
+        9441,
+        3060,
+        8105
+      ],
+      "first_batch_labels": [
+        2,
+        0,
+        1,
+        5,
+        2,
+        4,
+        3,
+        1,
+        2,
+        4,
+        1,
+        5,
+        4,
+        4,
+        2,
+        2
+      ],
+      "first_batch_domains": [
+        "art_painting",
+        "sketch",
+        "photo",
+        "art_painting",
+        "sketch",
+        "sketch",
+        "sketch",
+        "cartoon",
+        "cartoon",
+        "sketch",
+        "sketch",
+        "photo",
+        "cartoon",
+        "sketch",
+        "cartoon",
+        "sketch"
+      ],
+      "first_step": {
+        "step": 1,
+        "gradient_tensors": 161,
+        "gradient_global_norm": 4.586170049766114,
+        "fc_weight_gradient_norm": 2.635770797729492,
+        "gradients_finite": true,
+        "fc_weight_sha256_before": "222bc76a567d701a4b3f963376ff90fa4292f50d86f5d605a301eedb60c83aa3",
+        "fc_gradient_sha256": "24fa1ce729f9fce069eac79b3043dafa62ccfc8552e28e88fbb264d1b1bbdb3a",
+        "weight_decay": 0,
+        "fc_weight_sha256_after": "87ff62b00ee59baf850a5cd6ce2aed1b4f80311d73051da7cfddb3da71202d09",
+        "fc_weight_delta_norm": 0.0002635773562360555,
+        "fc_weight_changed": true,
+        "parameters_finite_after_step": true
+      },
+      "first_batches": [
+        {
+          "batch": 1,
+          "samples": [
+            {
+              "sample_id": 731,
+              "label": 2,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "666c23084c364fedf8756b2140ab087a20177ab67fa6e5932a51645d6f35bbc0"
+            },
+            {
+              "sample_id": 6634,
+              "label": 0,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "d415d64a1e261c0889e354e1846b57b1d4329127d003bbad35ee27bc476e5d87"
+            },
+            {
+              "sample_id": 4700,
+              "label": 1,
+              "domain": "photo",
+              "transformed_tensor_sha256": "474e036af124248b542f9155e3a42a616950a2d6e054b8ff0e1ba3f9f021321b"
+            },
+            {
+              "sample_id": 1578,
+              "label": 5,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "1b711e022c5f8ecccb53719a4163f3a2c5cbdbb8628c1106951b6574e292661b"
+            },
+            {
+              "sample_id": 7723,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "c0c1a4ddd87ab1e6da0a32ddbde78f99c28c3db5621501106396065b87527a92"
+            },
+            {
+              "sample_id": 9504,
+              "label": 4,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "3c3a0dbb082ebc3a986140f3e4742cd4580fc02fd4a55c970c3ca690fc116868"
+            },
+            {
+              "sample_id": 8681,
+              "label": 3,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "0653b849c5c1373afbd537a372f75c0fe16259e2a861291b69477fb60711aea4"
+            },
+            {
+              "sample_id": 2595,
+              "label": 1,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "b0744e718728c7aa3e08644c57eae70a69b86b2a46daf9fd4394a0055b8a6be1"
+            },
+            {
+              "sample_id": 3132,
+              "label": 2,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "522bbd2bc6710c92f3414890881da81ea60f39fe7b282b77e8d256a13e5e8740"
+            },
+            {
+              "sample_id": 9449,
+              "label": 4,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "4849b4688944667f93fe9a9f080138dc71ab4efd6a1a78a42fd2ad5949d5ffdc"
+            },
+            {
+              "sample_id": 7139,
+              "label": 1,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "57673fd3c40ad0bc2e3f25966a06618be6f4f23f4890a6e18a26f3be19b76343"
+            },
+            {
+              "sample_id": 5500,
+              "label": 5,
+              "domain": "photo",
+              "transformed_tensor_sha256": "387e4143afa9e8e9bf97468c6dbd75051f629974af1a78e70b91a261e5bce660"
+            },
+            {
+              "sample_id": 3635,
+              "label": 4,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "a036fd0e58120cad7afeefc53447520fc6921e1054b29a939306253070b8078e"
+            },
+            {
+              "sample_id": 9441,
+              "label": 4,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "bd396dd9d1e69671ae405a32a87ca9c294bfd194b3841ab5d588add480ac7b52"
+            },
+            {
+              "sample_id": 3060,
+              "label": 2,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "c08323dc7b36a8047264ae8e584e5a652d5fb38d964a93030e4bed879344b66f"
+            },
+            {
+              "sample_id": 8105,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "71fd44e1fcd728e70843a96e7e71b25413631b94ecfa475fe4351bff6f51ab69"
+            }
+          ],
+          "logits_shape": [
+            16,
+            7
+          ],
+          "logits_sha256": "16ec912deb5e42958c548ed6925dec71d835b530c4f31eab87710e59cbbbe154",
+          "logits_mean": -0.04360973462462425,
+          "logits_std": 0.1542382687330246,
+          "logits_min": -0.5669076442718506,
+          "logits_max": 0.44817182421684265,
+          "loss": 1.9865994453430176,
+          "labels": [
+            2,
+            0,
+            1,
+            5,
+            2,
+            4,
+            3,
+            1,
+            2,
+            4,
+            1,
+            5,
+            4,
+            4,
+            2,
+            2
+          ],
+          "labels_sha256": "d426def7b89e878964e528967c96f67fd389d805c68131291b5400fea481ba46",
+          "logits_finite": true,
+          "loss_finite": true
+        },
+        {
+          "batch": 2,
+          "samples": [
+            {
+              "sample_id": 3291,
+              "label": 3,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "975285c796161e3fbb755fc87037bf9f3ebe27f73ec6bcf3dbd3b824711e5fcb"
+            },
+            {
+              "sample_id": 3262,
+              "label": 3,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "b00e56ac96a4ceb03acc1176386077430021b8b6bcb1ecf4ae5d46c43c5273ae"
+            },
+            {
+              "sample_id": 5742,
+              "label": 6,
+              "domain": "photo",
+              "transformed_tensor_sha256": "8a55320d01a70201847e2f970aaebeb62d13cb856d5100ac49851e2d1a8e0bae"
+            },
+            {
+              "sample_id": 1392,
+              "label": 5,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "393aded7134ac493ec7f7a012229e01acdf8bbd47aa5f9f6976b452c97321967"
+            },
+            {
+              "sample_id": 5695,
+              "label": 6,
+              "domain": "photo",
+              "transformed_tensor_sha256": "34fe8572013e6b1e201a2c528f2240fd281cecb6cb072d0bf8073aad721076e7"
+            },
+            {
+              "sample_id": 9268,
+              "label": 4,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "592a1eae4be4e7ab7adf34bb43215a1c6c6f3d272039d8e4cb7eb99667d3897d"
+            },
+            {
+              "sample_id": 3297,
+              "label": 3,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "cb984383afa989885c219d1e48789ae8cb068f9c1039202f862911d26a623146"
+            },
+            {
+              "sample_id": 6394,
+              "label": 0,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "a71ac7527f6722497a42bf8b1075bbaa3c8305944ed651a9662e494fe18f6020"
+            },
+            {
+              "sample_id": 7818,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "76ce193fd079548bfbc5e9d41f4f73dac52e9b61ac7c0b89f37b0ecab79b47dc"
+            },
+            {
+              "sample_id": 4191,
+              "label": 6,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "eb30839271a1e95bb386c2d43bd0bfd91a478250b5e37a95ffb034a006f9f8ed"
+            },
+            {
+              "sample_id": 4558,
+              "label": 0,
+              "domain": "photo",
+              "transformed_tensor_sha256": "7d75dc1f65b8c7638ddf7f2ad9608bddc803d879bdc58130de838be2925846c3"
+            },
+            {
+              "sample_id": 5119,
+              "label": 3,
+              "domain": "photo",
+              "transformed_tensor_sha256": "44d15b0edcce70e174216d4fa066c7c649bf60b4a186bf4800b166d5d098a42a"
+            },
+            {
+              "sample_id": 9617,
+              "label": 4,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "884eb41e255309ce19de4dcca570d331ba1b0ad256fbb95813f1d46458feb284"
+            },
+            {
+              "sample_id": 5920,
+              "label": 6,
+              "domain": "photo",
+              "transformed_tensor_sha256": "ad9bdd45a9690fe66fac220b654bc5794bb3fa6cefdfbf872fdfeb55dc3e2b40"
+            },
+            {
+              "sample_id": 4892,
+              "label": 2,
+              "domain": "photo",
+              "transformed_tensor_sha256": "a2d61eca0712780c91c679b20eb17100ab38b4d52e04285c58f1764297b28a2c"
+            },
+            {
+              "sample_id": 1747,
+              "label": 6,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "79c6d715fc96be38b9259c68d3c279dcecc51893de90938a39a909621442b101"
+            }
+          ],
+          "logits_shape": [
+            16,
+            7
+          ],
+          "logits_sha256": "f5b3f67366ec66c44d7b38c5c4049fea0c524cc98f64efbe581a62a5e6173e46",
+          "logits_mean": -0.03530450537800789,
+          "logits_std": 0.15234611928462982,
+          "logits_min": -0.3347545564174652,
+          "logits_max": 0.3917628228664398,
+          "loss": 1.990710973739624,
+          "labels": [
+            3,
+            3,
+            6,
+            5,
+            6,
+            4,
+            3,
+            0,
+            2,
+            6,
+            0,
+            3,
+            4,
+            6,
+            2,
+            6
+          ],
+          "labels_sha256": "1a71bd5eb4b833aca06f5a491037273f48410000c3e8a144e38046ab1b6ee2d8",
+          "logits_finite": true,
+          "loss_finite": true
+        },
+        {
+          "batch": 3,
+          "samples": [
+            {
+              "sample_id": 9961,
+              "label": 6,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "5231239a9fad4f9172032bdf2960744717071b8d10841747a0234d7a8264eee2"
+            },
+            {
+              "sample_id": 9451,
+              "label": 4,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "3748ea0a1025902923419b9d65cc10ed76ef698efe8a049f868a4a9ed3b84c19"
+            },
+            {
+              "sample_id": 7916,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "2eaef25fef84dd6d614309175e4c6b5d00ad2e8e56f8da8758d387b1a3d32c8e"
+            },
+            {
+              "sample_id": 7637,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "7c23aa4a88d6db5d074c35057527e0e23efd20da76214a4c93f66c215b8f5376"
+            },
+            {
+              "sample_id": 815,
+              "label": 2,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "3436b767eceea4daaaf19847b11a41c98f142a10089bb037759f0b3ae6cfdccd"
+            },
+            {
+              "sample_id": 1304,
+              "label": 5,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "4fa5fd223507f675304e9a6afa7b156e42dc555e5460857a2a885fe42a9ec173"
+            },
+            {
+              "sample_id": 5273,
+              "label": 4,
+              "domain": "photo",
+              "transformed_tensor_sha256": "d3c7effdb21dfe0f02a6a200ec2aa29f4dce47acd59884148a73890f58902d9c"
+            },
+            {
+              "sample_id": 907,
+              "label": 2,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "d94d4b2bfb1e6443c99497792de9620b1ef5f03e8ad63b8a40354f6fba6656c7"
+            },
+            {
+              "sample_id": 6366,
+              "label": 0,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "aae3ed041c8b91e6eed6be58ccd7653c03c272b7ae5b21c4f95ea055db9e170f"
+            },
+            {
+              "sample_id": 1845,
+              "label": 6,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "51c6a7f6e80c80ca82628bec0fdc275f2726a9652837ee356eea41996d311118"
+            },
+            {
+              "sample_id": 362,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "68f6f8324dddb7c72cd797b78694fe55f63754d5b398696be464d239828b25d9"
+            },
+            {
+              "sample_id": 2766,
+              "label": 1,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "600af4650be0016a872f6fb9a7d1db35975471a28c115e20f01aa1dd704028fa"
+            },
+            {
+              "sample_id": 8692,
+              "label": 3,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "cd57cf5a142bac82efb01a83a9de71b41de0c8f503b276fefd271a42031b8cd1"
+            },
+            {
+              "sample_id": 72,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "3145d867324e5e985579ebf6b75196bffc1258450f6b920350d43e1c4be3c827"
+            },
+            {
+              "sample_id": 4603,
+              "label": 1,
+              "domain": "photo",
+              "transformed_tensor_sha256": "8c7e93c09dc4128e10e727252c60e088a54e3b551ee8d284844a988ee90fa80a"
+            },
+            {
+              "sample_id": 357,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "73fe54993a3e3141d76c62e7fb53db748ff5a3c0788b6d0ecd9104f9eae1696a"
+            }
+          ],
+          "logits_shape": [
+            16,
+            7
+          ],
+          "logits_sha256": "216734da20f5d9af9d448027870282dd556494062a3010c2b08a207c3145c3b4",
+          "logits_mean": -0.019194448366761208,
+          "logits_std": 0.1382594108581543,
+          "logits_min": -0.40827614068984985,
+          "logits_max": 0.30908194184303284,
+          "loss": 1.8946864604949951,
+          "labels": [
+            6,
+            4,
+            2,
+            2,
+            2,
+            5,
+            4,
+            2,
+            0,
+            6,
+            0,
+            1,
+            3,
+            0,
+            1,
+            0
+          ],
+          "labels_sha256": "f5e3e4a02021d2d7cfa5f2fbbefbe43dfe559e92e779805f82f61598e063c078",
+          "logits_finite": true,
+          "loss_finite": true
+        },
+        {
+          "batch": 4,
+          "samples": [
+            {
+              "sample_id": 4749,
+              "label": 1,
+              "domain": "photo",
+              "transformed_tensor_sha256": "ce8e28fb3cfb1ceecdca1880fce770b3bd3998de2afdbbea446203fe035021c4"
+            },
+            {
+              "sample_id": 4341,
+              "label": 6,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "00d638790221c51c345395c5878e676a9bed1238ed118ca84a95701001808a93"
+            },
+            {
+              "sample_id": 1921,
+              "label": 6,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "8ba7b7d58b3d48df25b7dfb00a54c0df0390d0bc92a889438dd087eda34a3e2e"
+            },
+            {
+              "sample_id": 1469,
+              "label": 5,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "c74ba3d35a32c9f0b528718ff7e8b5417305e141fd465ace5d9b4005809f436e"
+            },
+            {
+              "sample_id": 2678,
+              "label": 1,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "16ee8e9dd5f28b40eb5bf1028bd4875fd4bd441b5b3e2ee81a56fc9dfcc101a1"
+            },
+            {
+              "sample_id": 4689,
+              "label": 1,
+              "domain": "photo",
+              "transformed_tensor_sha256": "13a4c3be03dd470aa5b2127415d702c414ab0c5701ae5eb04036f5b1f548fc9b"
+            },
+            {
+              "sample_id": 1087,
+              "label": 3,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "97c079331875572197b3f69ff93b85ca6fea5422159f8c329535fe5eab36580d"
+            },
+            {
+              "sample_id": 1836,
+              "label": 6,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "2ee6d22bab87e836519bbb207951af0bac25721e24d146e2cc9a89599d9320db"
+            },
+            {
+              "sample_id": 356,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "2689bb84ec41f1f48545f77ed6cb42fa8921336f7baa35d8410b13c6041f6454"
+            },
+            {
+              "sample_id": 9791,
+              "label": 5,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "39ef6bcb86e7aaa1a06ae086ca1b4208711803ee413aee350c4714225d4ec90b"
+            },
+            {
+              "sample_id": 7612,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "0b73dde285e5dd667b5086e7de4fe76b054b8322d03bdaeb3a97d0282f3f14c4"
+            },
+            {
+              "sample_id": 6721,
+              "label": 0,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "ef9296b5dabc02dccb8e69ef9b6de021f34be7fa784ef387e50b47962d940a46"
+            },
+            {
+              "sample_id": 404,
+              "label": 1,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "0b827d1d58b206681de211530c81392d3baf08069439e0e8e5d2cae1153dd56d"
+            },
+            {
+              "sample_id": 4780,
+              "label": 1,
+              "domain": "photo",
+              "transformed_tensor_sha256": "2a00df2ad2609b6777d0f9e81cf5ea611fb89726f7a6d360139d02d51a4c75b7"
+            },
+            {
+              "sample_id": 324,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "46858b6ca068f7d84619ea6423a72378ec4568674fb11eb35fd4f677eb22465f"
+            },
+            {
+              "sample_id": 9938,
+              "label": 6,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "f66552c11317681a446ead2b8f89a444c438b22d637ba0b76fb3b9ebd5f945e8"
+            }
+          ],
+          "logits_shape": [
+            16,
+            7
+          ],
+          "logits_sha256": "d45989025eabcb513dbc656f069bc2b6a3a06d26002014354359b6bb0e30f8b4",
+          "logits_mean": -0.012560509145259857,
+          "logits_std": 0.1511259377002716,
+          "logits_min": -0.4605620205402374,
+          "logits_max": 0.3510241210460663,
+          "loss": 1.8783751726150513,
+          "labels": [
+            1,
+            6,
+            6,
+            5,
+            1,
+            1,
+            3,
+            6,
+            0,
+            5,
+            2,
+            0,
+            1,
+            1,
+            0,
+            6
+          ],
+          "labels_sha256": "4f3c2ee1b59da11bb0d7a25fe711b32ee46ac1a838aea7694a151e3805fc0428",
+          "logits_finite": true,
+          "loss_finite": true
+        },
+        {
+          "batch": 5,
+          "samples": [
+            {
+              "sample_id": 8181,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "e15c42708a5caef8638ae70410612ed766b10c28e0d9e914384ab0ed3daeeecd"
+            },
+            {
+              "sample_id": 7651,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "7ee50aa005d85b070870493de76559f93a1fea36540aebf49f3350fe33fbaa32"
+            },
+            {
+              "sample_id": 5451,
+              "label": 5,
+              "domain": "photo",
+              "transformed_tensor_sha256": "c26361f9fd4b42514b55cfbee2c849497975f06a517788ce3ebbb1deef0eb9c7"
+            },
+            {
+              "sample_id": 8544,
+              "label": 3,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "a1bd57d52554a1fb127997e68f1468c2be085877ac5d295ddbeee207d0825c5d"
+            },
+            {
+              "sample_id": 5885,
+              "label": 6,
+              "domain": "photo",
+              "transformed_tensor_sha256": "e8ac1b4fdbdac80e9b011f1ea113fc309123fc332c92143e9df439d73b6b44cb"
+            },
+            {
+              "sample_id": 8842,
+              "label": 3,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "c11229ebb7a795ebf776af794428d585f6bc726715eb485088f97e3cbd048366"
+            },
+            {
+              "sample_id": 307,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "e7f2b10cf4cdd83afd6a6e1a0e711a5b7d00c74840e447fff117a6cff8d62f97"
+            },
+            {
+              "sample_id": 9923,
+              "label": 6,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "61314bac8b926cdf87af55fbd5b058f5d2cd4a58bf050832eab17c7db6c03635"
+            },
+            {
+              "sample_id": 3437,
+              "label": 4,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "1456139c708e493db03696ca6f3685f0d7b93830956345b3f477da8cfef1db74"
+            },
+            {
+              "sample_id": 7079,
+              "label": 1,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "1d32867cdbda1d46bb212deed44f0dc2ab7f7843525899966423b9b8c65e3797"
+            },
+            {
+              "sample_id": 3063,
+              "label": 2,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "896269acd7149e72ff65cf41e7025fa47180070693939ac88cdf4d1f253a4def"
+            },
+            {
+              "sample_id": 6008,
+              "label": 6,
+              "domain": "photo",
+              "transformed_tensor_sha256": "275a25645f5eb515659ee101e9f98203954df9de5f692cf911b00306a4535462"
+            },
+            {
+              "sample_id": 4266,
+              "label": 6,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "0829c0aee9ba18b6ce3e674be2d3a8d8b75ffc3bb30d18ee75bfe562555fac47"
+            },
+            {
+              "sample_id": 4684,
+              "label": 1,
+              "domain": "photo",
+              "transformed_tensor_sha256": "4dd34ef4ca51bf07482e030405a1555e98ea6b6dd066b8333e6dd83cc6c4c199"
+            },
+            {
+              "sample_id": 5194,
+              "label": 4,
+              "domain": "photo",
+              "transformed_tensor_sha256": "8a8e3bee7820c5a50c4614f9ff8755c4646a36b1999972e379f7e0df8d0f11d8"
+            },
+            {
+              "sample_id": 4209,
+              "label": 6,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "edc8d8741014cb0329453087a6024e826a43c9b63009dbbc86215a42f0cca83c"
+            }
+          ],
+          "logits_shape": [
+            16,
+            7
+          ],
+          "logits_sha256": "90f4c6af3594ffe0f47afb8a4bb8d6a41f1874d94c1dfdaa5ffc14ce53af5e3f",
+          "logits_mean": -0.020321089774370193,
+          "logits_std": 0.15356013178825378,
+          "logits_min": -0.38254624605178833,
+          "logits_max": 0.4837702512741089,
+          "loss": 1.9444726705551147,
+          "labels": [
+            2,
+            2,
+            5,
+            3,
+            6,
+            3,
+            0,
+            6,
+            4,
+            1,
+            2,
+            6,
+            6,
+            1,
+            4,
+            6
+          ],
+          "labels_sha256": "a32db5e82599b1e1a8c8256e64a7db250711442bf1e261f861569cd8a97061ca",
+          "logits_finite": true,
+          "loss_finite": true
+        },
+        {
+          "batch": 6,
+          "samples": [
+            {
+              "sample_id": 8216,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "f26cc7fa855ea54ee7387a3d787bb45f8be832ea1b2ddd5dadeb9f0f20079dd7"
+            },
+            {
+              "sample_id": 7826,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "66749dedc2592bf21b41a6289a2bfcb1abe764ecc025bbb8634177f032b26ac1"
+            },
+            {
+              "sample_id": 5746,
+              "label": 6,
+              "domain": "photo",
+              "transformed_tensor_sha256": "8ae97447a12bb93f35bf2ae4f6081aabb095f84b11cf8079fa75aee0e4e68d1a"
+            },
+            {
+              "sample_id": 5239,
+              "label": 4,
+              "domain": "photo",
+              "transformed_tensor_sha256": "e8e1ba82f2b5cee5ed700eb1f498b9f2d4f4927f2f33a2c156ee3008861c1803"
+            },
+            {
+              "sample_id": 1128,
+              "label": 4,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "dbc73f1a7646c8b78b6e7a0ed678cb409668d5668e1e136c003046f0258fa263"
+            },
+            {
+              "sample_id": 1619,
+              "label": 6,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "d0f87158126b2aa011d899f5931694a1086bc9100eec3c38114a51aac6260b19"
+            },
+            {
+              "sample_id": 384,
+              "label": 1,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "e22589fcd73b9151e7f5889d01cdfc370746c5ca7e5d1f1f4a7c8fcca09054b5"
+            },
+            {
+              "sample_id": 2029,
+              "label": 6,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "b5f93fecc2e39ab9d9228a37d4ca7ef8c4d33d24e1658fb710c77fa568ed78ec"
+            },
+            {
+              "sample_id": 9491,
+              "label": 4,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "76e07bf39c510599c1dc125d7e98c6abe54740880fc9aafb2683bc1cf45ac9ff"
+            },
+            {
+              "sample_id": 3253,
+              "label": 3,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "f41f3d44a3007494827c528dd60dd5e94b7ea5210c5cd70e8ef0f5785e0faec2"
+            },
+            {
+              "sample_id": 7640,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "d36964a85327945b7910d14b7531d2a7518c55e1e3fc2812f9204e9dedcd10cd"
+            },
+            {
+              "sample_id": 6181,
+              "label": 0,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "71a138b2a43c0e6a0b6b72304afd4e67d4630e948624d4d855eb3591ea19360c"
+            },
+            {
+              "sample_id": 8250,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "c9349e92411c282f1e13449d7e3597c5298ff9cfb136333b818fe54c37f02f24"
+            },
+            {
+              "sample_id": 7362,
+              "label": 1,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "e0bb05aac85d7d3d794d76465d7d502ffadab83a717f3e6c05ec7a23ecdab4d0"
+            },
+            {
+              "sample_id": 8810,
+              "label": 3,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "c0f2370625c264b52ec7209e62b0bea052706017f29fbe77e47faf84b4edaf86"
+            },
+            {
+              "sample_id": 420,
+              "label": 1,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "e24bb05c0bfc187ec79a2fb0907136b602510755e0ed86e85c82af0d72e713db"
+            }
+          ],
+          "logits_shape": [
+            16,
+            7
+          ],
+          "logits_sha256": "921034f86c782eca44a38de99a0833b72cada04e4f9e272212ad566e65076f5d",
+          "logits_mean": -0.026069113984704018,
+          "logits_std": 0.16572359204292297,
+          "logits_min": -0.37111803889274597,
+          "logits_max": 0.6655207872390747,
+          "loss": 1.9587292671203613,
+          "labels": [
+            2,
+            2,
+            6,
+            4,
+            4,
+            6,
+            1,
+            6,
+            4,
+            3,
+            2,
+            0,
+            2,
+            1,
+            3,
+            1
+          ],
+          "labels_sha256": "73c8d638b2a594cca94ebea143269aa29178a115aaf49a104073d7f9a6ef8593",
+          "logits_finite": true,
+          "loss_finite": true
+        },
+        {
+          "batch": 7,
+          "samples": [
+            {
+              "sample_id": 659,
+              "label": 2,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "89faa1d4879e10d0a549319989b32b7041d17e93add45389e644c756c8d943ae"
+            },
+            {
+              "sample_id": 4946,
+              "label": 2,
+              "domain": "photo",
+              "transformed_tensor_sha256": "107c63342c1b39b6b898de7c1cdb5ebdd3cf6b39c9ef9a62451ff7b66ba013ba"
+            },
+            {
+              "sample_id": 4443,
+              "label": 0,
+              "domain": "photo",
+              "transformed_tensor_sha256": "aab2004caccdb05a385dd9bda545196d7a0fe01b1ab10d8858fdba93f52e6fc4"
+            },
+            {
+              "sample_id": 221,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "7efa297381e8f5bd74b32dc103bea2ff085e74bb22ac6fe41e07a621ef341a7b"
+            },
+            {
+              "sample_id": 3749,
+              "label": 5,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "69377ad916a28888afdbd0c400efd67da5ea192c932d3c92b1e03bb322a7d4ca"
+            },
+            {
+              "sample_id": 4417,
+              "label": 0,
+              "domain": "photo",
+              "transformed_tensor_sha256": "0736d1e730043985596cab0e595d6e35228470aec626d91d21f777d723d33322"
+            },
+            {
+              "sample_id": 2410,
+              "label": 0,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "3fa9b3c8151a144f71186603e2477ec1a1246fccf9cb7b53fd4dfefadefe6737"
+            },
+            {
+              "sample_id": 817,
+              "label": 2,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "e08c2e000c1f4da9c7b05afb33eb7e7985149e4af7fcb0b459f0b1ed5a3c77a0"
+            },
+            {
+              "sample_id": 7305,
+              "label": 1,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "cfa3306c892991f2ebd445a20cd23360c5b3e7de50d537a93818a153df536f86"
+            },
+            {
+              "sample_id": 8636,
+              "label": 3,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "bc95a15ac47a2fe1528f8fa2b24bf4aad7ee33997c68502f489cdc9765573f4f"
+            },
+            {
+              "sample_id": 1614,
+              "label": 6,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "ef1b023c7f30d12e602b219061028a08f896a9fa110789943c03bf03e8e62da8"
+            },
+            {
+              "sample_id": 1043,
+              "label": 3,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "ae0a7d529a9ac69e46adca5dee813f09cf4802e74de1fb96da9acd4c6bab482e"
+            },
+            {
+              "sample_id": 7685,
+              "label": 2,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "a3171550eeb0774d02933c6b927f903908bb60d32a53471d159b2b0a67d05fc7"
+            },
+            {
+              "sample_id": 2693,
+              "label": 1,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "c1d3edf508e26b0c72201cfb08a9722f060db85cfd65336c241b47cc02630b68"
+            },
+            {
+              "sample_id": 8529,
+              "label": 3,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "831e93b8d460963f0dca32dff55fc2ef7e9cb067d5211351298fbc8c413cb0ab"
+            },
+            {
+              "sample_id": 5474,
+              "label": 5,
+              "domain": "photo",
+              "transformed_tensor_sha256": "32eb9bf0bf8976e9ac5edb1c91905e47eb620528a9194f693d3d91a7489cbb96"
+            }
+          ],
+          "logits_shape": [
+            16,
+            7
+          ],
+          "logits_sha256": "501a446c84986e1c21c61788ee1996cb411ba4c21390f193ee5aad018922b18e",
+          "logits_mean": -0.018864048644900322,
+          "logits_std": 0.17714594304561615,
+          "logits_min": -0.5956982374191284,
+          "logits_max": 0.5533544421195984,
+          "loss": 1.9085280895233154,
+          "labels": [
+            2,
+            2,
+            0,
+            0,
+            5,
+            0,
+            0,
+            2,
+            1,
+            3,
+            6,
+            3,
+            2,
+            1,
+            3,
+            5
+          ],
+          "labels_sha256": "ebac4224f57be543478a00b26d4952d5a4ccba3e96931fec4e47e9ba9f3ec4d5",
+          "logits_finite": true,
+          "loss_finite": true
+        },
+        {
+          "batch": 8,
+          "samples": [
+            {
+              "sample_id": 2773,
+              "label": 1,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "a70c3de46ba92947ee6f32ccc32d85a3c8c105525c343c48ba00582225574efb"
+            },
+            {
+              "sample_id": 1991,
+              "label": 6,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "bae03630f2551eac2c285148633a526f04fa414bd0a49e7474a65b881ad8e784"
+            },
+            {
+              "sample_id": 6997,
+              "label": 1,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "ffba9874f62fa567ba4ba8b00b09762010d702c171db29333be5101f27a90aa8"
+            },
+            {
+              "sample_id": 7452,
+              "label": 1,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "b2691f9e24efa3a55266e7d75787c7188ca2bf8ab01c77fa3fa91e514cdaf285"
+            },
+            {
+              "sample_id": 995,
+              "label": 3,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "62fe0f65bccd8ac6e26852cafc30629e70201fb14ad06f8bea460482b0719663"
+            },
+            {
+              "sample_id": 2092,
+              "label": 0,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "6cee237b9198f52ba28155ff90dbbecc6434508048523e30d80fbe9df4784537"
+            },
+            {
+              "sample_id": 8935,
+              "label": 4,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "522ad53d61d21987810537b192baf7ac100e44d4d00a3b9a091cd5d8caff3ebd"
+            },
+            {
+              "sample_id": 4745,
+              "label": 1,
+              "domain": "photo",
+              "transformed_tensor_sha256": "b378cee8ac3e9763bc446d5a38b3c254a53438efd2fd6e9b6c18d403f28daac6"
+            },
+            {
+              "sample_id": 255,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "646e96a67b1af5a7364f4071516b90ff99e15024aa59cdf368bbfdc379e446b8"
+            },
+            {
+              "sample_id": 6694,
+              "label": 0,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "f5037b806064276242149b427c8e412436403b7c1dadacd17aaf3b050424e346"
+            },
+            {
+              "sample_id": 4383,
+              "label": 6,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "3712553aad95e40df9884d93f875be020abbfe8af338f7c40b8b39fe981f1879"
+            },
+            {
+              "sample_id": 5909,
+              "label": 6,
+              "domain": "photo",
+              "transformed_tensor_sha256": "256fb8a1aa109e1c1c98ebeeee15466a86c817d6631444217fc577c4033f2a02"
+            },
+            {
+              "sample_id": 247,
+              "label": 0,
+              "domain": "art_painting",
+              "transformed_tensor_sha256": "d8728ff9dea380e62aec0748c2eb74d7616e5011f54caaea2cc9787d8c78ceb7"
+            },
+            {
+              "sample_id": 3320,
+              "label": 3,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "342d0f15117eb812e33a2b12b7113e18fd46cc45d5418378529ca66bc1e1d0be"
+            },
+            {
+              "sample_id": 7003,
+              "label": 1,
+              "domain": "sketch",
+              "transformed_tensor_sha256": "c79dac0f32f95bad7627ef09bed0165065a70e32c5243ef5c06df27fd1d80a0b"
+            },
+            {
+              "sample_id": 2821,
+              "label": 1,
+              "domain": "cartoon",
+              "transformed_tensor_sha256": "87496d55c0f72e6125dab764393340454500b62822f9f76449df6bb4d7b11fb4"
+            }
+          ],
+          "logits_shape": [
+            16,
+            7
+          ],
+          "logits_sha256": "2da38b10d6884f6edd08598b721c2dc91d896e37397187f029ae65fbd492ebc4",
+          "logits_mean": -0.049048494547605515,
+          "logits_std": 0.16652128100395203,
+          "logits_min": -0.5169816017150879,
+          "logits_max": 0.3105975091457367,
+          "loss": 1.9145433902740479,
+          "labels": [
+            1,
+            6,
+            1,
+            1,
+            3,
+            0,
+            4,
+            1,
+            0,
+            0,
+            6,
+            6,
+            0,
+            3,
+            1,
+            1
+          ],
+          "labels_sha256": "7516b0334d08c0176e6db1cf285ec90d1dafdcf65c36f4eb4efea9642ce0b96b",
+          "logits_finite": true,
+          "loss_finite": true
+        }
+      ],
+      "first_steps": [
+        {
+          "step": 1,
+          "gradient_tensors": 161,
+          "gradient_global_norm": 4.586170049766114,
+          "fc_weight_gradient_norm": 2.635770797729492,
+          "gradients_finite": true,
+          "fc_weight_sha256_before": "222bc76a567d701a4b3f963376ff90fa4292f50d86f5d605a301eedb60c83aa3",
+          "fc_gradient_sha256": "24fa1ce729f9fce069eac79b3043dafa62ccfc8552e28e88fbb264d1b1bbdb3a",
+          "weight_decay": 0,
+          "fc_weight_sha256_after": "87ff62b00ee59baf850a5cd6ce2aed1b4f80311d73051da7cfddb3da71202d09",
+          "fc_weight_delta_norm": 0.0002635773562360555,
+          "fc_weight_changed": true,
+          "parameters_finite_after_step": true
+        },
+        {
+          "step": 2,
+          "gradient_tensors": null,
+          "gradient_global_norm": 3.2177967030171812,
+          "fc_weight_gradient_norm": 3.217797040939331,
+          "gradients_finite": true,
+          "fc_weight_sha256_before": "87ff62b00ee59baf850a5cd6ce2aed1b4f80311d73051da7cfddb3da71202d09",
+          "fc_gradient_sha256": "ed7e0e95a0d361b8f547b10e24a64e43eb349bc3c7a41f5f607536a77f527917",
+          "weight_decay": 0,
+          "fc_weight_sha256_after": "181e5cf51e3848737a7feb0035c797437a06fa2cfb1f3d54f0e059aa7d3f26c8",
+          "fc_weight_delta_norm": 0.0003820883866865188,
+          "fc_weight_changed": true,
+          "parameters_finite_after_step": true
+        },
+        {
+          "step": 3,
+          "gradient_tensors": null,
+          "gradient_global_norm": 2.374044527299886,
+          "fc_weight_gradient_norm": 2.374044418334961,
+          "gradients_finite": true,
+          "fc_weight_sha256_before": "181e5cf51e3848737a7feb0035c797437a06fa2cfb1f3d54f0e059aa7d3f26c8",
+          "fc_gradient_sha256": "c9d4b50b517e93b6082f861471f227d166471035866f50c86110ea170e67b216",
+          "weight_decay": 0,
+          "fc_weight_sha256_after": "2e0aef1be74492d9ae399381462c55fb8ed7f98b67e6ae6d9e773362ea344d90",
+          "fc_weight_delta_norm": 0.00044367267400957644,
+          "fc_weight_changed": true,
+          "parameters_finite_after_step": true
+        },
+        {
+          "step": 4,
+          "gradient_tensors": null,
+          "gradient_global_norm": 2.760235810503106,
+          "fc_weight_gradient_norm": 2.7602360248565674,
+          "gradients_finite": true,
+          "fc_weight_sha256_before": "2e0aef1be74492d9ae399381462c55fb8ed7f98b67e6ae6d9e773362ea344d90",
+          "fc_gradient_sha256": "fdadfd348a8a4e2420a2f103d20fb872fd8c8dfad73efa884875ffd90e0a034f",
+          "weight_decay": 0,
+          "fc_weight_sha256_after": "a5207ec70d042d13b2761296df318b458a2ae8a0f01afb6a333f39570dbc0e62",
+          "fc_weight_delta_norm": 0.0005073449574410915,
+          "fc_weight_changed": true,
+          "parameters_finite_after_step": true
+        },
+        {
+          "step": 5,
+          "gradient_tensors": null,
+          "gradient_global_norm": 2.7429968354154406,
+          "fc_weight_gradient_norm": 2.74299693107605,
+          "gradients_finite": true,
+          "fc_weight_sha256_before": "a5207ec70d042d13b2761296df318b458a2ae8a0f01afb6a333f39570dbc0e62",
+          "fc_gradient_sha256": "93e18fdf569f49126bf6c9f1bd66cc3dbf091b196c88febb6a1d6ab3354f6d63",
+          "weight_decay": 0,
+          "fc_weight_sha256_after": "a81431fd0e0b747d7727db3522fc4c794c0944f5cf56eff07c3e3d952bc6cf93",
+          "fc_weight_delta_norm": 0.0006161025376059115,
+          "fc_weight_changed": true,
+          "parameters_finite_after_step": true
+        },
+        {
+          "step": 6,
+          "gradient_tensors": null,
+          "gradient_global_norm": 2.6331660092789204,
+          "fc_weight_gradient_norm": 2.6331660747528076,
+          "gradients_finite": true,
+          "fc_weight_sha256_before": "a81431fd0e0b747d7727db3522fc4c794c0944f5cf56eff07c3e3d952bc6cf93",
+          "fc_gradient_sha256": "b6d7253f92281cdc7b17d77aaac71a55e9f0394fda8eda3cfe652177e8845599",
+          "weight_decay": 0,
+          "fc_weight_sha256_after": "7880026895c57dc602ad39b444e626462aca36a44d8dff0d65637ee036090a95",
+          "fc_weight_delta_norm": 0.0006983096245676279,
+          "fc_weight_changed": true,
+          "parameters_finite_after_step": true
+        },
+        {
+          "step": 7,
+          "gradient_tensors": null,
+          "gradient_global_norm": 2.8482718933812285,
+          "fc_weight_gradient_norm": 2.8482720851898193,
+          "gradients_finite": true,
+          "fc_weight_sha256_before": "7880026895c57dc602ad39b444e626462aca36a44d8dff0d65637ee036090a95",
+          "fc_gradient_sha256": "d5f1940fba8d116f0bd19effc7858cf6c367155748989f9b4db03f474d1e3900",
+          "weight_decay": 0,
+          "fc_weight_sha256_after": "5d4b0924850e1fab08063acc9a04ee2dc4ee5a8d5efb3b3bb6e43e0f32250742",
+          "fc_weight_delta_norm": 0.0007151808822527528,
+          "fc_weight_changed": true,
+          "parameters_finite_after_step": true
+        },
+        {
+          "step": 8,
+          "gradient_tensors": null,
+          "gradient_global_norm": 3.1126654768621713,
+          "fc_weight_gradient_norm": 3.1126654148101807,
+          "gradients_finite": true,
+          "fc_weight_sha256_before": "5d4b0924850e1fab08063acc9a04ee2dc4ee5a8d5efb3b3bb6e43e0f32250742",
+          "fc_gradient_sha256": "6f38c4fe0b536e78ae850aaaaa686d6759c4c942dc6cd5c8bf631d0a4ec72a86",
+          "weight_decay": 0,
+          "fc_weight_sha256_after": "6370572cd5a45ab6ca584abeed7b74625c0bddb75b8572c136baa229fbcd475c",
+          "fc_weight_delta_norm": 0.000783052179031074,
+          "fc_weight_changed": true,
+          "parameters_finite_after_step": true
+        }
+      ],
+      "epoch_metrics": [
+        {
+          "epoch": 1,
+          "train_loss": 1.7582563571488075,
+          "train_accuracy": 0.389818400144577,
+          "train_samples": 6993,
+          "validation_loss": 1.5382287014795193,
+          "validation_accuracy": 0.6137424949966644,
+          "validation_balanced_accuracy": 0.6202319485726785,
+          "predicted_class_histogram": [
+            246,
+            404,
+            186,
+            99,
+            241,
+            113,
+            210
+          ],
+          "label_histogram": [
+            260,
+            249,
+            234,
+            168,
+            229,
+            142,
+            217
+          ],
+          "validation_ba_by_domain": {
+            "photo": 0.7833025188817339,
+            "art_painting": 0.5595744870349292,
+            "cartoon": 0.5312921441514417,
+            "sketch": 0.46583697713605693
+          }
+        },
+        {
+          "epoch": 2,
+          "train_loss": 1.3491107542832215,
+          "train_accuracy": 0.6566566824913025,
+          "train_samples": 6993,
+          "validation_loss": 1.2310437899259348,
+          "validation_accuracy": 0.7478318879252835,
+          "validation_balanced_accuracy": 0.760142490494803,
+          "predicted_class_histogram": [
+            285,
+            254,
+            246,
+            159,
+            201,
+            135,
+            219
+          ],
+          "label_histogram": [
+            260,
+            249,
+            234,
+            168,
+            229,
+            142,
+            217
+          ],
+          "validation_ba_by_domain": {
+            "photo": 0.9029229167875282,
+            "art_painting": 0.6838252347286126,
+            "cartoon": 0.7384183285379614,
+            "sketch": 0.5973112946715765
+          }
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.9602355213784428,
+          "train_accuracy": 0.7644787430763245,
+          "train_samples": 6993,
+          "validation_loss": 0.7837647198437849,
+          "validation_accuracy": 0.8178785857238159,
+          "validation_balanced_accuracy": 0.8300772382294709,
+          "predicted_class_histogram": [
+            240,
+            273,
+            261,
+            159,
+            223,
+            147,
+            196
+          ],
+          "label_histogram": [
+            260,
+            249,
+            234,
+            168,
+            229,
+            142,
+            217
+          ],
+          "validation_ba_by_domain": {
+            "photo": 0.9594754228474235,
+            "art_painting": 0.7426829333461585,
+            "cartoon": 0.8176522090147477,
+            "sketch": 0.7941192455287321
+          }
+        }
+      ]
+    }
+  },
+  "comparisons": {
+    "data_fingerprint_equal": true,
+    "seed_calls_equal": true,
+    "constructor_rng_equal": true,
+    "pre_head_state_equal": true,
+    "initial_state_dict_equal": true,
+    "initial_fc_weight_equal": true,
+    "initial_fc_bias_equal": true,
+    "first_batch_ids_equal": true,
+    "first_batch_labels_equal": true,
+    "first_batch_transformed_tensors_equal": true,
+    "optimizer_equal": true,
+    "first_batch_cpu_samples_equal": true,
+    "first_batch_targets_at_cross_entropy_equal": true,
+    "first_batch_logits_equal": true,
+    "first_batch_loss_equal": true,
+    "first_step_equal": true,
+    "first_8_batches_equal": false,
+    "first_8_steps_equal": false,
+    "epoch_metrics_equal": false
+  },
+  "first_divergence": "batch 3: host dataset label differs from target passed to cross_entropy in normal MPS runner",
+  "interpretation": "All checkpoints through first optimizer step match. At MPS batch 3, sample_id 9961 has host label 6 but runner cross_entropy target 12; isolated path target remains 6. CPU comparison matches through 3 steps. Concrete path difference is normal runner Tensor.to(device, non_blocking=True) on CPU batches versus isolated blocking Tensor.to(device); cause is the non-blocking CPU-to-MPS transfer path, with no silent device fallback.",
+  "temporary_snapshots": "/var/folders/66/5bt1cgxs14l3gsc3yffmw5rm0000gp/T/b2_teacher_path_compare_9clya2_0",
+  "first_data_target_divergence": {
+    "batch": 3,
+    "runner": {
+      "path": "A_normal_runner",
+      "batch": 3,
+      "position": 0,
+      "sample_id": 9961,
+      "dataset_label": 6,
+      "cross_entropy_target": 12
+    },
+    "isolated": null,
+    "targeted_comparison": [
+      {
+        "path": "A_normal_runner",
+        "batch": 3,
+        "position": 0,
+        "sample_id": 9961,
+        "dataset_label": 6,
+        "cross_entropy_target": 12
+      }
+    ]
+  }
+}

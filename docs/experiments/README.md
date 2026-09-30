@@ -1,0 +1,24 @@
+# Experimental Documentation Registry
+
+Executable experiments and results remain in the repository-level
+`experiments/`, `results/`, and `tests/` directories. This page is the compact
+conceptual index; it is not a second results ledger.
+
+## Current synthetic framework
+
+- [G0 current instrument](G0.md)
+- [A1 reference specification](../experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md)
+- [RQ0 campaign ledger](../experimental_foundations/RQ0_EXPERIMENTAL_CAMPAIGN.md)
+- [Geometry redistribution protocol/outcome](../experimental_foundations/RQ0_GEOMETRY_REDISTRIBUTION_PROTOCOL.md)
+- [Routing--opportunity coupling protocol/outcome](../experimental_foundations/RQ0_ROUTING_OPPORTUNITY_COUPLING_PROTOCOL.md)
+- [Synthetic runners](../../experiments/synthetic/)
+
+## Foundation and empirical evidence
+
+- [Foundation reproductions](../../experiments/foundations/)
+- [Pilot implementations](../../experiments/pilots/)
+- [Versioned result artifacts](../../results/)
+
+Frozen protocols remain authoritative for their declared designs. Result
+directories remain authoritative for numerical evidence and provenance.
+Neither is a substitute for [HLS Current State](../HLS_CURRENT_STATE.md).

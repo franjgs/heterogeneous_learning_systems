@@ -780,7 +780,7 @@ seed reproduction. Neither result refutes RQ0 in general.
 - `docs/hls_ontology.md`
 - `docs/theory/minimal_hls_model.md`
 - `docs/theory/operational_development_opportunity_value.md`
-- `docs/checkpoints/HLS_checkpoint_after_B21.md`
+- `docs/HISTORY.md` (historical B2.1 context)
 - `docs/experimental_foundations/B22_PROTOCOL.md`
 - `results/pilots/b22_opportunity_value/b22_diagnostic.md`
 - `results/pilots/b22_opportunity_value/portfolio_bridge/portfolio_bridge.md`

@@ -1,0 +1,82 @@
+{
+  "dataset_images": 15588,
+  "classes": 65,
+  "domains": [
+    "art",
+    "clipart",
+    "product",
+    "real_world"
+  ],
+  "models": [
+    "resnet18",
+    "mobilenet_v2"
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "n_develop": 50,
+  "interventions": 40,
+  "test_surface": false,
+  "protocol_sha256": "4f129799d06c40218abdb87ae5a4705bdf171a6536585fd16e4d0f029c3a5f8f",
+  "runner_sha256": "d176bff14071817015655a8eb00b472f73c8e8f7177c92e67f105d7b2a4d2df3",
+  "inventory_sha256": "3fca67b3d84f6a1af668ad918902bd4a27d4e7edc0d54d2ecf76cf720cac7f77",
+  "trainable_parameters": {
+    "resnet18": [
+      "weight",
+      "bias"
+    ],
+    "mobilenet_v2": [
+      "weight",
+      "bias"
+    ]
+  },
+  "embedding_dims": {
+    "resnet18": 512,
+    "mobilenet_v2": 1280
+  },
+  "image_root": "/Volumes/Lacie_8Tb/Datasets/OfficeHomeDataset",
+  "domain_paths": {
+    "art": "/Volumes/Lacie_8Tb/Datasets/OfficeHomeDataset/Art",
+    "clipart": "/Volumes/Lacie_8Tb/Datasets/OfficeHomeDataset/Clipart",
+    "product": "/Volumes/Lacie_8Tb/Datasets/OfficeHomeDataset/Product",
+    "real_world": "/Volumes/Lacie_8Tb/Datasets/OfficeHomeDataset/Real World"
+  },
+  "base_per_class": 3,
+  "val_fraction": 0.25,
+  "base_epochs": 25,
+  "develop_epochs": 10,
+  "lr": 0.05,
+  "weight_decay": 0.0001,
+  "device": "cpu",
+  "torch_version": "2.4.1",
+  "torchvision_version": "0.19.1",
+  "started_unix": 1790583705.355424,
+  "split_manifest_sha256": "96f91964e6639f304f548e1c58c9de76e80b19e79e268a305fdf977cb831bc3a",
+  "embedding_cache": {
+    "resnet18": {
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/pilots/b0_officehome_vehicle_gate/.cache/resnet18_embeddings.pt",
+      "sha256": "becac3a4d226729c7798fbbb02cd7b98758f7b65c4d3ad9b07192825c776b7ea",
+      "reused": false,
+      "rows": 15588,
+      "dimension": 512
+    },
+    "mobilenet_v2": {
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/pilots/b0_officehome_vehicle_gate/.cache/mobilenet_v2_embeddings.pt",
+      "sha256": "acdc3168c7ff33b92b3b44941f40e2587c19d3baf30c7255298b23145a9558e6",
+      "reused": false,
+      "rows": 15588,
+      "dimension": 1280
+    }
+  },
+  "finished_unix": 1790584563.8545668,
+  "rows": {
+    "base_competences": 40,
+    "state_metrics": 160,
+    "transition_summary": 32,
+    "local_effectiveness": 8
+  }
+}

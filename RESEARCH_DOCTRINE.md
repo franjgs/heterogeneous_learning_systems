@@ -1,425 +1,397 @@
-# Research Principles and Operating Doctrine
+# Research Doctrine
 
-Status: canonical programme-level methodology and anti-drift document. It does not alter RQ0 or establish any HLS result.
+**Status:** Canonical programme-level research methodology and anti-drift
+document.
 
-## Purpose
+This document defines **how HLS research should be conducted**. It does not
+define HLS, prescribe a particular architecture or formalism, establish a
+scientific result, or replace the current research questions.
 
-This document defines the **general research doctrine** of the project. It is not a description of a particular Heterogeneous Learning System (HLS), model, paper, experiment, or research question. For the HLS scientific object, use [docs/general_research_model.md](docs/general_research_model.md); for canonical concepts and source mappings, use [docs/hls_ontology.md](docs/hls_ontology.md); for the current foundation map, use [docs/theoretical_foundations_cross_domain.md](docs/theoretical_foundations_cross_domain.md).
+For the scientific vision and purpose of HLS, see
+[HLS_PHILOSOPHY.md](docs/HLS_PHILOSOPHY.md).
 
-Its purpose is to prevent the research from losing focus.
+For the current research question and scientific state, see
+[research_questions.md](docs/research_questions.md) and
+[HLS_CURRENT_STATE.md](docs/HLS_CURRENT_STATE.md).
 
-When there is uncertainty about what to investigate next, what deserves theoretical effort, whether an existing result threatens novelty, or whether an experiment is worth running, **return to this document first**.
+The purpose of this doctrine is simple:
 
----
-
-## 1. The unit of novelty is the system, not every component
-
-A research system is built from pieces.
-
-Those pieces do **not** need to be individually novel.
-
-A strong contribution may combine:
-- established theory;
-- known mathematical results;
-- existing mechanisms;
-- standard algorithms;
-- results imported from other disciplines;
-- adaptations of known methods;
-- and genuinely new components where they are actually required.
-
-The scientific question is whether the resulting system, its organization, its interactions, or the behaviour that emerges from them is new and useful.
-
-Therefore:
-
-> The existence of previous work on one component is not evidence that the research direction is occupied.
-
-And:
-
-> Do not manufacture novelty in a component when a sound established result already provides what the system needs.
+> **Keep the research directed by the scientific problem rather than by the
+> mechanisms, mathematical formalisms, experiments, papers, or technical
+> branches encountered while investigating it.**
 
 ---
 
-## 2. Start from what is already known
-
-Before developing new theory for a component, search broadly for established foundations that may already solve or illuminate the problem.
-
-The search is **cross-domain**.
-
-Relevant knowledge may come from Machine Learning, economics, finance, operations research, control, cybernetics, organizational science, human resources, psychology, education, biology, ecology, evolution, reliability engineering, robotics, multi-agent systems, statistics, decision theory, or any other field.
-
-Do not constrain the search by the vocabulary of the current application.
-
-Search for the **underlying problem structure**.
-
-Examples include:
-- allocation of heterogeneous resources;
-- specialization;
-- complementarity;
-- redundancy;
-- distributed knowledge;
-- coordination;
-- learning;
-- competence acquisition;
-- changing value of capabilities;
-- adaptation;
-- reconfiguration;
-- uncertainty;
-- costs;
-- response time;
-- capacity;
-- robustness;
-- changing environments.
-
----
-
-## 3. Prefer established foundations to unnecessary reinvention
-
-For each important component, identify whenever possible:
-
-1. the canonical or strongest reference;
-2. the established principle, theorem, result, hypothesis, or model;
-3. its assumptions;
-4. its mathematical formulation;
-5. what has actually been demonstrated;
-6. its limitations;
-7. what can legitimately be transferred to our problem.
-
-The preferred sequence is:
-
-`established result -> understand -> reproduce when useful -> map to common ontology -> translate -> adapt -> extend only if necessary`.
-
-New theory should be developed where the existing foundations are insufficient for the system, not merely because novelty is desirable.
-
-### Constructive use of reductions and adversarial analysis
-
-Do not ask whether HLS escapes existing theory. Ask what structure HLS induces, which established theories exploit that structure, how compatible results can be integrated, and what useful HLS-specific consequences follow.
-
-A reduction to optimal control, an MDP, restless multi-armed bandits (RMAB), Whittle indices, resource allocation, portfolio theory, Machine Teaching, state abstraction, or combinatorial optimization is not a reason to discard an HLS phenomenon. Depending on the assumptions, it can supply a rigorous solution, a scalable and interpretable policy, a guarantee, an equivalence boundary, or one component of a wider HLS architecture.
-
-Use adversarial analysis after constructive translation and integration. Its role is to delimit claims: identify equality, reducibility, no-advantage, sufficiency, and failure conditions. It is not a default filter that turns “can be represented by established theory” into “is not worth studying.” A negative or boundary result is scientifically useful because it states when no new HLS-specific machinery is needed.
-
----
-
-## 4. Establish a common ontology before transferring theory
-
-Before translating or integrating results from another domain, define the common conceptual layer that connects the source theory to our system.
-
-For every relevant object or quantity, specify:
-
-- its definition;
-- its mathematical nature;
-- its units or normalization;
-- its admissible domain or range;
-- its operational meaning;
-- its role in the source theory;
-- its corresponding concept in our system, if one exists.
-
-Classify every proposed mapping as:
-
-- **EQUIVALENT** — the quantities represent the same concept and can be identified;
-- **RELATED** — they are different quantities connected by an explicit mapping or model;
-- **INCOMPATIBLE** — they must not be identified;
-- **UNRESOLVED** — the relationship has not yet been established.
-
-The translation must therefore proceed through a common ontology:
-
-\[
-\text{source theory}
-\longleftrightarrow
-\text{common system ontology}
-\longleftrightarrow
-\text{our model}.
-\]
-
-Do not combine equations merely because variables have similar interpretations, mathematical forms, numerical ranges, or normalizations.
-
-In particular, **semantic and dimensional compatibility must be established before quantities imported from different theories are equated, compared, added, or used as inputs to one another**.
-
-A common numerical range does not imply a common physical or operational meaning. Normalization does not establish dimensional equivalence.
-
-When several external theories are integrated, each must first be mapped independently to the common ontology:
-
-\[
-\text{Theory A}
-\longleftrightarrow
-\text{common ontology}
-\longleftrightarrow
-\text{Theory B}.
-\]
-
-Integration must then be performed through that common layer rather than by directly identifying variables across papers.
-
-If a valid mapping requires an additional transformation,
-
-\[
-y=g(x),
-\]
-
-that transformation is part of our model and must be stated explicitly. It must not be silently treated as if \(x\) and \(y\) were the same quantity.
-
-If no defensible mapping can be established, the theories must remain separate until the incompatibility is resolved.
-
-The ontology is therefore not merely terminology. It is a **consistency layer for theoretical integration**.
-
-It is not the scientific objective or a contribution by itself. Its role is to prevent incoherent transfer while supporting the construction and evaluation of the HLS system.
-
----
-
-## 5. Two parallel research lines
-
-The project follows two complementary research lines.
-
-### Line A — Theoretical foundations
-
-Capture the strongest theoretical foundations that can support the system.
-
-For each foundation:
-
-`original problem -> established result -> assumptions -> mathematical structure -> ontology mapping -> relevance to our system -> limitations -> possible adaptation`.
-
-The objective is to build a theoretical base from proven knowledge.
-
-Theoretical work should answer questions such as:
-- Which established results justify a component?
-- Under what conditions are they valid?
-- Can they be transferred directly?
-- Which source concepts are genuinely equivalent to concepts in our system?
-- Which require an explicit mapping?
-- Are their units, domains, and operational meanings compatible?
-- What changes when the resources are learning models?
-- What part, if any, requires new theory?
-
-### Line B — Experimental foundations
-
-Build minimal experiments that reproduce important established results and test their transfer to our setting.
-
-The preferred sequence is:
-
-`reproduce known result -> verify mechanism -> map to common ontology -> translate to learning models -> test limits -> adapt to our problem`.
-
-The objective is not merely to obtain positive results. Experiments must reveal whether the imported principle actually survives the translation.
-
-Negative results are useful when they identify where an analogy or ontology mapping breaks.
-
----
-
-## 6. Theory and experiments must interact
-
-The two lines are not sequential.
-
-Theory suggests experiments.
-
-Experiments test assumptions and expose missing theory.
-
-Results from one domain may suggest a mechanism; a minimal experiment can determine whether that mechanism exists when the resources are Machine Learning models or Large Language Models.
-
-The cycle is:
-
-`established theory -> minimal reproduction -> ontology mapping -> translation -> experimental stress test -> theoretical refinement`.
-
-A failed translation may indicate that:
-- an assumption does not survive;
-- two quantities thought to be equivalent are only related;
-- a mapping function is missing;
-- units or scales are incompatible;
-- or the imported theory does not apply.
-
-Such failures are scientific results, not reasons to force the analogy.
-
----
-
-## 7. Build from foundations toward the complete system
-
-Do not let a local mechanism become the research objective merely because it is mathematically interesting or easy to experiment with.
-
-Every theoretical development or experiment must be traceable to the system.
-
-Ask:
-
-> What part of the system does this support?
-
-If there is no clear answer, park it.
-
-The research should progress approximately as:
-
-`fundamental principles -> supported components -> interactions among components -> system architecture/method -> system-level properties -> validation`.
-
----
-
-## 8. Distinguish imported knowledge from our contribution
-
-Maintain explicit epistemic status.
-
-For every important statement, distinguish among:
-
-- **ESTABLISHED** — supported by prior literature.
-- **REPRODUCED** — independently replicated experimentally.
-- **TRANSFERRED** — established result shown to hold in our setting.
-- **ADAPTED** — established result modified for our setting.
-- **DERIVED-IN-MODEL** — result mathematically obtained within our stated model.
-- **OBSERVED** — empirical result in our experiments.
-- **CANDIDATE / HYPOTHESIS** — plausible but not established.
-- **PARKED** — not currently worth pursuing, without implying falsehood.
-- **REJECTED** — contradicted or abandoned under the stated conditions.
-- **NULL RESULT** — a tested mechanism produces no useful effect under the stated conditions.
-
-Never present imported theory as our novelty.
-
-Never discard imported theory merely because it is not novel.
-
-A proposed correspondence between concepts from different theories is not **TRANSFERRED** merely because it is plausible. The ontology mapping itself must be justified.
-
----
-
-## 9. Novelty should emerge at the correct level
-
-Possible sources of genuine contribution include:
-- a new system architecture;
-- a new way of combining established principles;
-- interactions between components that have not previously been studied together;
-- a new decision problem created by those interactions;
-- an adaptation required because the resources are learning models;
-- a new mathematical property of the integrated system;
-- a new method for managing the system;
-- a new empirical phenomenon;
-- a demonstrated improvement over strong alternatives;
-- a generalization that unifies previously separate results.
-
-The project does **not** require every item in this list.
-
-The contribution should be judged at the level where the scientific novelty actually occurs.
-
----
-
-## 10. Improvement must be demonstrated
-
-Novel organization alone is insufficient.
-
-The final system must provide a measurable advantage under clearly stated conditions.
-
-The relevant advantage may involve:
-- quality;
-- cost;
-- latency;
-- capacity;
-- robustness;
-- adaptability;
-- learning efficiency;
-- long-term performance;
-- or a justified combination of these.
-
-Comparisons must use strong alternatives and fair budgets.
-
-Do not weaken baselines to create an apparent contribution.
-
-In comparisons between joint and separate management, the separate policy must be scientifically strong and must not be defined as weak myopia merely to obtain a strict advantage. If the joint policy is defined as the global optimum over a policy class containing the separate policy, weak dominance is tautological; the research content lies in meaningful policy definitions and strict, equality, and no-advantage conditions.
-
-If several components contribute to a common objective, their contributions must be expressed in compatible quantities or connected through explicitly defined mappings before system-level improvement is computed.
-
----
-
-## 11. Experimental discipline
-
-Before large experiments:
-
-1. state the theoretical principle being tested;
-2. define what outcome supports it;
-3. define what outcome contradicts it;
-4. identify confounders;
-5. verify that the quantities being compared have compatible meanings and scales;
-6. use the smallest experiment capable of distinguishing the alternatives.
-
-Prefer:
-
-`minimal controlled experiment -> constructive transfer/integration test -> adversarial audit of claims -> realistic scenario -> broader validation`.
-
-Do not begin with a large benchmark when a small experiment can answer the scientific question.
-
----
-
-## 12. Do not overinterpret analogies
-
-Cross-domain similarity is a source of theory, not proof.
-
-For every imported idea, ask:
-- What is structurally equivalent?
-- What is merely related?
-- What is incompatible?
-- What remains unresolved?
-- Which assumptions survive?
-- Which quantities need new definitions?
-- Are their units and domains compatible?
-- Which conclusions cannot be transferred?
-
-For example, a competence may be treated *like* an asset for some purposes, but that does not make every result of financial portfolio theory automatically valid for competences.
-
-Likewise, two quantities normalized to \([0,1]\) are not interchangeable merely because they share the same numerical range.
-
-Translation must be demonstrated, not asserted.
-
----
-
-## 13. Terminology discipline
-
-Use the simplest term that accurately describes the phenomenon.
-
-Do not create terminology merely to make an idea sound novel.
-
-Do not add qualifiers unless they distinguish scientifically different cases.
-
-Define every acronym before first use.
-
-Prefer clear statements such as:
-
-> who does what
-
-> who learns what and from whom
-
-over abstract terminology when the abstraction adds no precision.
-
-The common ontology should stabilize terminology across imported theories. Source-specific terminology may be retained when discussing a source, but its relationship to the common system terminology must remain explicit.
-
----
-
-## 14. Anti-drift rules
-
-Stop and return to this document when any of the following occurs:
-
-- a secondary mathematical construct begins to dominate the research;
-- substantial effort is spent proving something that the system does not require;
-- novelty is rejected because individual pieces have prior literature;
-- new terminology replaces a simple underlying idea;
-- experiments are proposed without a theoretical question;
-- theory is developed without an identifiable role in the system;
-- literature search becomes keyword matching instead of structural reasoning;
-- a toy model starts dictating the architecture;
-- one current source paper starts defining an entire theoretical beam;
-- a diagnostic experiment starts dictating the research question;
-- an attractive side result pulls the project away from the main objective;
-- quantities from different theories are identified because their notation or mathematical form looks similar;
-- normalized quantities are combined without establishing semantic or dimensional compatibility;
-- a cross-domain analogy is used as if it were already a validated mapping.
-
-The corrective questions are:
-
-> Does this strengthen the theoretical foundation, the construction, or the demonstrated value of the system?
-
-and, when importing or combining theories:
-
-> Are we combining genuinely compatible concepts, or merely mathematically similar quantities?
+## 1. Philosophy before formalism
+
+The HLS philosophy defines the scientific problem.
+
+Research questions isolate uncertainties within that problem. Theory, models,
+algorithms, synthetic worlds, experiments, and empirical systems are tools for
+investigating those questions.
+
+The direction of influence must therefore be:
+
+```text
+HLS philosophy
+      |
+      v
+scientific question or need
+      |
+      v
+theory / formalism / model / experiment
+```
+
+not:
+
+```text
+current formalism or mechanism
+      |
+      v
+redefinition of HLS
+```
+
+A useful formalization may deliberately study only a restricted part of HLS.
+Its results must then be interpreted at that scope.
+
+No current mechanism—routing, knowledge transfer, teaching, hierarchy,
+specialization, a particular learning rule, or any other mechanism—should
+silently become the definition of HLS merely because it is the object currently
+being studied.
+
+When a technical branch becomes dominant, ask:
+
+> **Does this genuinely help us build, understand, or test the scientific
+> problem posed by HLS?**
 
 If not, park it.
 
 ---
 
-## 15. Core operating rule
+## 2. Scientific need before mechanism or literature
 
-The general research strategy is:
+Do not begin by looking for papers, theories, algorithms, or mechanisms that
+appear similar to HLS.
 
-> **Use the strongest knowledge already available. Map it rigorously to a common ontology. Verify that it transfers. Adapt it where necessary. Develop new theory only where the system genuinely requires it. Integrate the pieces into a system whose novelty and improvement are demonstrated at system level.**
+First identify the missing scientific object:
 
-Or, compactly:
+- What do we need to understand?
+- What decision must be made?
+- What phenomenon requires explanation?
+- What property must be characterized?
+- What capability is missing?
+- What prevents the current system from solving the problem?
 
-`FOUNDATIONS -> REPRODUCTION -> ONTOLOGY -> TRANSFER -> ADAPTATION -> INTEGRATION -> SYSTEM -> DEMONSTRATED IMPROVEMENT`
+Only then ask whether established knowledge already addresses that object.
 
-This is the project's research doctrine.
+The correct direction is:
+
+```text
+HLS need
+    ->
+missing scientific object
+    ->
+relevant existing knowledge
+    ->
+mapping
+    ->
+import / adaptation / new development
+```
+
+not:
+
+```text
+interesting paper or theory
+    ->
+possible similarity to HLS
+    ->
+search for a role inside the programme
+```
+
+Search by **problem structure**, not by superficial terminology or keyword
+similarity.
+
+The relevant theory may come from machine learning or from another discipline.
+Its disciplinary origin is secondary to whether it actually solves a problem
+that HLS has.
+
+---
+
+## 3. Reuse before reinvention
+
+HLS is an integrative research programme. Its components do not need to be
+individually novel.
+
+When established theory, mechanisms, algorithms, or methods solve a required
+piece of the problem, prefer to understand and reuse them rather than recreate
+them for the sake of novelty.
+
+The preferred sequence is:
+
+```text
+identify need
+    ->
+find established knowledge
+    ->
+understand assumptions and result
+    ->
+map to HLS
+    ->
+import if valid
+    ->
+adapt if necessary
+    ->
+develop new theory only where required
+```
+
+A reduction of an HLS problem to known theory is not a failure. It may provide
+the correct solution, an equivalence result, a boundary, an efficient method,
+or evidence that no HLS-specific machinery is required under those conditions.
+
+Conversely, the fact that individual components are known does not imply that
+the HLS-level problem has been solved.
+
+Novelty should be assessed at the level where the scientific contribution
+actually occurs.
+
+Integration of known components is scientifically relevant only when it
+produces a substantive new capability, explanation, method, property,
+characterization, or demonstrated improvement.
+
+“Those components have not previously been combined” is not sufficient by
+itself.
+
+---
+
+## 4. Map before importing or integrating
+
+Cross-domain similarity is a source of hypotheses and tools, not proof of
+equivalence.
+
+Before importing a result, establish how its objects correspond to the HLS
+ontology.
+
+For a proposed correspondence, distinguish:
+
+- **EQUIVALENT** — the objects represent the same concept under the stated
+  assumptions;
+- **RELATED** — they are different objects connected by an explicit
+  relationship;
+- **INCOMPATIBLE** — they must not be identified;
+- **UNRESOLVED** — the relationship has not been established.
+
+Similar notation, mathematical form, numerical range, or normalization does
+not establish semantic equivalence.
+
+If a transformation is required,
+
+```text
+y = g(x)
+```
+
+then that transformation is part of the HLS model and must be explicit.
+
+When several external theories are combined, each should first be mapped
+independently into the common HLS semantic layer. Integration should occur
+through that layer rather than by directly identifying variables across
+sources.
+
+The ontology is therefore a **consistency mechanism for reasoning and
+integration**, not the scientific objective of HLS and not a contribution
+merely because it exists.
+
+If the current ontology cannot faithfully represent a phenomenon genuinely
+required by the HLS philosophy, the ontology may need to evolve.
+
+---
+
+## 5. System relevance before local technical interest
+
+A technically interesting result is not automatically an HLS result.
+
+Every substantial theoretical development, mechanism, algorithm, or experiment
+should have an identifiable role in the system-level problem.
+
+Ask:
+
+> **If this problem were solved completely, what would we know or be able to
+> do about HLS that we cannot know or do now?**
+
+If the answer is unclear or negligible, reconsider the priority of the branch.
+
+Do not allow:
+
+- a routing mechanism to replace the organization problem;
+- a learning rule to replace competence development;
+- a toy model to dictate the architecture;
+- a source paper to define an entire scientific beam;
+- a diagnostic experiment to redefine the research question;
+- an attractive mathematical result to become the objective simply because it
+  is tractable;
+- or a benchmark to determine what HLS is because data happen to be available.
+
+Mechanisms are subordinate to the scientific problem.
+
+---
+
+## 6. Strong alternatives, negative results, and claim discipline
+
+HLS should be tested against scientifically strong alternatives.
+
+Do not construct weak baselines merely to obtain positive results.
+
+If one policy class contains another, weak dominance resulting solely from
+that inclusion is not by itself a substantive scientific result. The important
+questions concern strict advantage, equality, reducibility, sufficiency,
+failure conditions, and the mechanisms that separate those regimes.
+
+Negative results are scientifically useful when they constrain the programme.
+
+A result showing that:
+
+- a mechanism is insufficient;
+- an apparent advantage disappears under stronger coordination;
+- an HLS problem reduces to established theory;
+- a modular architecture is sufficient;
+- an analogy fails;
+- or a proposed effect occurs only under restrictive conditions
+
+may be as informative as a positive result.
+
+For every important statement, preserve its epistemic status. Useful
+categories include:
+
+- **ESTABLISHED** — supported by prior knowledge;
+- **REPRODUCED** — independently replicated;
+- **TRANSFERRED** — an established result shown to hold in the HLS setting;
+- **ADAPTED** — an established result modified for the HLS setting;
+- **DERIVED-IN-MODEL** — mathematically obtained under stated model
+  assumptions;
+- **OBSERVED** — found experimentally;
+- **HYPOTHESIS / CONJECTURE** — proposed but not established;
+- **NULL RESULT** — tested without the proposed useful effect under the stated
+  conditions;
+- **REJECTED** — contradicted or abandoned under stated conditions;
+- **PARKED** — not currently worth pursuing without implying falsehood.
+
+Never silently promote a definition, intuition, model-scoped theorem,
+experimental observation, or analogy into a general HLS claim.
+
+---
+
+## 7. Theory and experiments are instruments, not prescribed stages
+
+HLS does not require a fixed research pipeline.
+
+Some questions may require formal theory. Others may require controlled
+experiments, empirical evidence, simulation, imported results, counterexamples,
+or combinations of these.
+
+Theory and experiments should interact whenever useful:
+
+```text
+question
+   ->
+appropriate theoretical and/or experimental instrument
+   ->
+evidence
+   ->
+interpretation
+   ->
+refined understanding
+```
+
+Use the smallest instrument capable of answering the scientific question.
+
+Before an experiment, make explicit where appropriate:
+
+1. what question or mechanism is being tested;
+2. what outcome would support the claim;
+3. what outcome would weaken or contradict it;
+4. what important confounders exist;
+5. what scope the result would have.
+
+Prefer a minimal controlled experiment when it can distinguish the alternatives
+more cleanly than a large benchmark.
+
+But do not create a toy experiment merely because it is controllable. The
+experiment must still address a genuine HLS question.
+
+When an HLS method or architecture claims improvement, demonstrate that
+improvement against strong alternatives under fair conditions and relevant
+constraints.
+
+HLS research does not, however, require every result to demonstrate an
+improvement. Equality, reducibility, impossibility, sufficiency, boundary, and
+negative results may themselves be substantive scientific contributions.
+
+---
+
+## 8. Return to the scientific problem
+
+Technical research naturally creates attractive side branches.
+
+This is expected.
+
+The danger is not exploring them. The danger is allowing them to replace the
+problem that motivated the research.
+
+Return to the HLS philosophy when:
+
+- a local mathematical construct begins to dominate the programme;
+- substantial effort is being spent on something whose system relevance is
+  unclear;
+- literature search becomes keyword matching;
+- novelty is being manufactured inside components;
+- novelty is being dismissed merely because components are known;
+- an analogy is being treated as a validated mapping;
+- a toy model begins defining HLS;
+- an experiment is proposed because it can be run rather than because it
+  answers a question;
+- a current formalism starts constraining the broader HLS vision;
+- or a negative result is being resisted because it threatens a preferred
+  narrative.
+
+Then ask:
+
+> **What HLS need are we trying to satisfy?**
+
+> **What do we actually know?**
+
+> **What is hypothesis, definition, imported knowledge, model-scoped result,
+> observation, or conjecture?**
+
+> **Does the current branch help us build, understand, or test HLS?**
+
+If not, park it.
+
+---
+
+## Core operating rule
+
+The research doctrine can be summarized as:
+
+> **Let the HLS problem determine what knowledge, theory, formalism, and
+> experiments are needed. Reuse established knowledge when it genuinely maps
+> to that need. Develop new machinery only where necessary. Test claims
+> against strong alternatives. Preserve negative and boundary results. Never
+> allow the instrument currently being used to redefine the scientific
+> problem.**
+
+Or, more compactly:
+
+```text
+PROBLEM
+   ->
+SCIENTIFIC NEED
+   ->
+BEST AVAILABLE KNOWLEDGE OR NEW DEVELOPMENT
+   ->
+RIGOROUS MAPPING / FORMALIZATION
+   ->
+APPROPRIATE EVIDENCE
+   ->
+SYSTEM-LEVEL UNDERSTANDING
+   ->
+BACK TO THE PROBLEM
+```

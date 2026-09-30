@@ -1,0 +1,10 @@
+{
+  "status": "OBSERVED",
+  "selected_base_fraction_validation_only": 0.1,
+  "test_evaluated": true,
+  "rule": "smallest fraction with bootstrap lower CI above 1/7 in every domain, bootstrap upper CI below 1 in >=2 domains, and teacher-minus-student gap lower CI above zero in >=2 domains",
+  "device": "cpu",
+  "requested_device": "cpu",
+  "actual_device": "cpu",
+  "note": "B2.0 only; no Gamma, routing, costs, or factorial development comparisons."
+}

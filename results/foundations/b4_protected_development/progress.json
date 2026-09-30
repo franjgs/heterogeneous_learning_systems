@@ -1,0 +1,370 @@
+{
+  "fits": {
+    "PREP_s0_art_painting_n100": {
+      "finished_at": "2026-09-25T17:55:49.686915+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s0_art_painting_n100.pt",
+      "sha256": "996948bbf9423ba2963de62f3279af7c97c423a579beb37a6182f7e13bcf25cd",
+      "status": "complete"
+    },
+    "PREP_s0_art_painting_n25": {
+      "finished_at": "2026-09-25T17:33:49.063402+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s0_art_painting_n25.pt",
+      "sha256": "27990a06075a3bf629f3b7cd86f86ffb71fd21a46bce6bf29e3a4e2ec956e03c",
+      "status": "complete"
+    },
+    "PREP_s0_art_painting_n50": {
+      "finished_at": "2026-09-25T17:42:57.319200+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s0_art_painting_n50.pt",
+      "sha256": "ea396af40d2796657240052f4ee28d63fa828a740ff604be98676e509cec7aa9",
+      "status": "complete"
+    },
+    "PREP_s0_cartoon_n100": {
+      "finished_at": "2026-09-25T17:59:35.354586+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s0_cartoon_n100.pt",
+      "sha256": "a3c3f2b9825a0f614390491147320317d4aa956b47a1c63ce7fe6a8248e0f4e0",
+      "status": "complete"
+    },
+    "PREP_s0_cartoon_n25": {
+      "finished_at": "2026-09-25T17:35:43.284367+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s0_cartoon_n25.pt",
+      "sha256": "d5e76fc1abec58916373af8d67e6cf015449a96e6ce92cb5f32f9443075a42e4",
+      "status": "complete"
+    },
+    "PREP_s0_cartoon_n50": {
+      "finished_at": "2026-09-25T17:45:37.419161+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s0_cartoon_n50.pt",
+      "sha256": "c5e35ffcafe2131d759d5ed92b7c82f981a8922b7a774fc1f6cbded05d8dc619",
+      "status": "complete"
+    },
+    "PREP_s0_photo_n100": {
+      "finished_at": "2026-09-25T17:52:03.503695+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s0_photo_n100.pt",
+      "sha256": "3a2b63ac7add0303c42654e550610225476c571d677d522c1728769ed3182171",
+      "status": "complete"
+    },
+    "PREP_s0_photo_n25": {
+      "finished_at": "2026-09-25T17:31:54.256779+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s0_photo_n25.pt",
+      "sha256": "da333f978b1237575abdbbba6a61284197fd0acfcefdbf34a8e3430ca2d5ced4",
+      "status": "complete"
+    },
+    "PREP_s0_photo_n50": {
+      "finished_at": "2026-09-25T17:40:17.952984+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s0_photo_n50.pt",
+      "sha256": "5b2c0b70d46c27b21416af7438349b86b941f0ac61f49c3b96320390edc05f89",
+      "status": "complete"
+    },
+    "PREP_s0_sketch_n100": {
+      "finished_at": "2026-09-25T18:03:22.036751+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s0_sketch_n100.pt",
+      "sha256": "f0171e5c6d0f112548ba1a98e561a03e0859dae9a28d1e8ea011865d69891675",
+      "status": "complete"
+    },
+    "PREP_s0_sketch_n25": {
+      "finished_at": "2026-09-25T17:37:38.906401+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s0_sketch_n25.pt",
+      "sha256": "58ce26dc3d8ca19884b2cea11e0d093d56df81dd5583bf91bddcb52525197568",
+      "status": "complete"
+    },
+    "PREP_s0_sketch_n50": {
+      "finished_at": "2026-09-25T17:48:17.248939+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s0_sketch_n50.pt",
+      "sha256": "e327d825bdc5aee2fad8b7221d347978d7772db4aabc7c306407451bbb6741ba",
+      "status": "complete"
+    },
+    "PREP_s1_art_painting_n100": {
+      "finished_at": "2026-09-25T18:29:20.870733+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s1_art_painting_n100.pt",
+      "sha256": "8b09bf663f77e71ab4f3100abf2028f342e4274a477716d3116da3e375e6615b",
+      "status": "complete"
+    },
+    "PREP_s1_art_painting_n25": {
+      "finished_at": "2026-09-25T18:07:14.389864+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s1_art_painting_n25.pt",
+      "sha256": "7b5fe28ec88e147e3b582e35d4e2ba794fdf38cb1ea31da81f2b9f1bb231ffb1",
+      "status": "complete"
+    },
+    "PREP_s1_art_painting_n50": {
+      "finished_at": "2026-09-25T18:16:25.609336+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s1_art_painting_n50.pt",
+      "sha256": "c9309c52f2b8c9efa59ce2492467c2e9807fc114422364a99ad3fb44438b2ba1",
+      "status": "complete"
+    },
+    "PREP_s1_cartoon_n100": {
+      "finished_at": "2026-09-25T18:33:07.293872+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s1_cartoon_n100.pt",
+      "sha256": "e4a9deb8d9a2f547c9f3a8afcd421b51ac50f9d0637299bdf8daf485595281c4",
+      "status": "complete"
+    },
+    "PREP_s1_cartoon_n25": {
+      "finished_at": "2026-09-25T18:09:09.855129+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s1_cartoon_n25.pt",
+      "sha256": "8b8135d9d41cfc443f7061b7fbaec2d1b7cfb1e3cf64c5ea35bb721bca75704e",
+      "status": "complete"
+    },
+    "PREP_s1_cartoon_n50": {
+      "finished_at": "2026-09-25T18:19:05.488991+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s1_cartoon_n50.pt",
+      "sha256": "709e4dcded51ba638a33c8b4fba95c4931010e9c7f98c6d6e1b5c350ae110e87",
+      "status": "complete"
+    },
+    "PREP_s1_photo_n100": {
+      "finished_at": "2026-09-25T18:25:33.963898+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s1_photo_n100.pt",
+      "sha256": "7d483df3354f5d303eea5522604e96f5608f03e16c3fbb3616ca57754d748872",
+      "status": "complete"
+    },
+    "PREP_s1_photo_n25": {
+      "finished_at": "2026-09-25T18:05:18.276444+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s1_photo_n25.pt",
+      "sha256": "83091dd34858b47cd953049a33d33063e76b75e1650a573193d547f8a3ccff98",
+      "status": "complete"
+    },
+    "PREP_s1_photo_n50": {
+      "finished_at": "2026-09-25T18:13:45.209140+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s1_photo_n50.pt",
+      "sha256": "8eba852bb977920f79c6c502debbea02db8032b61544199cb50a8bb0871e2666",
+      "status": "complete"
+    },
+    "PREP_s1_sketch_n100": {
+      "finished_at": "2026-09-25T18:36:53.905586+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s1_sketch_n100.pt",
+      "sha256": "77baa594759502237d47b10942faaed94a4b9ed435678d5cb66ffea73ed343a6",
+      "status": "complete"
+    },
+    "PREP_s1_sketch_n25": {
+      "finished_at": "2026-09-25T18:11:05.259762+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s1_sketch_n25.pt",
+      "sha256": "7da8e3032f09fd59f69096f9015aff0bce7d6b42cc0f92bb46421382aa0a8951",
+      "status": "complete"
+    },
+    "PREP_s1_sketch_n50": {
+      "finished_at": "2026-09-25T18:21:47.503517+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s1_sketch_n50.pt",
+      "sha256": "8fb71d6816d404d40e97f4893bd83d734710dabea3873a229bdf002d0fbd8377",
+      "status": "complete"
+    },
+    "PREP_s2_art_painting_n100": {
+      "finished_at": "2026-09-25T19:02:56.278233+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s2_art_painting_n100.pt",
+      "sha256": "aea8ac9093eb48b7570d5b0b49f783acd0663478c97cf519b8a8cb4189d8e0d3",
+      "status": "complete"
+    },
+    "PREP_s2_art_painting_n25": {
+      "finished_at": "2026-09-25T18:40:45.799808+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s2_art_painting_n25.pt",
+      "sha256": "f00be9691152ea4ca8f89e3b8e4d39c82bece04e1564780c1a0896d010bf85d7",
+      "status": "complete"
+    },
+    "PREP_s2_art_painting_n50": {
+      "finished_at": "2026-09-25T18:49:59.901234+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s2_art_painting_n50.pt",
+      "sha256": "73a89ba0154d6e8ef7a194d389335a1ec0d37c0be18c3e1ff3159a04885355b2",
+      "status": "complete"
+    },
+    "PREP_s2_cartoon_n100": {
+      "finished_at": "2026-09-25T19:06:44.049478+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s2_cartoon_n100.pt",
+      "sha256": "314b7a8df3ec3347b75482bc89909b4c708dc807b728d8f8a71bd651e89c1284",
+      "status": "complete"
+    },
+    "PREP_s2_cartoon_n25": {
+      "finished_at": "2026-09-25T18:42:41.433090+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s2_cartoon_n25.pt",
+      "sha256": "9ffe6ea315405d98ee139be2c79e78daa2f99b957057641af6f57e68b49ccbd8",
+      "status": "complete"
+    },
+    "PREP_s2_cartoon_n50": {
+      "finished_at": "2026-09-25T18:52:40.651550+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s2_cartoon_n50.pt",
+      "sha256": "cf5dbc6fc10f3b05fc98e2f56f10eeb68faf43ef1bbc84b1f3541b9b20bc403a",
+      "status": "complete"
+    },
+    "PREP_s2_photo_n100": {
+      "finished_at": "2026-09-25T18:59:08.791003+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s2_photo_n100.pt",
+      "sha256": "4cf497609f32689aab78b638fde7df9e6696368f0b3b074126d607f7df14ea6a",
+      "status": "complete"
+    },
+    "PREP_s2_photo_n25": {
+      "finished_at": "2026-09-25T18:38:50.112012+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s2_photo_n25.pt",
+      "sha256": "66c72f7b5c91f676904a7d7039488239babb0792bac2a57aadeffe03ba54be33",
+      "status": "complete"
+    },
+    "PREP_s2_photo_n50": {
+      "finished_at": "2026-09-25T18:47:19.080124+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s2_photo_n50.pt",
+      "sha256": "be5b81d18abae89d589b8a1c1d4c4eb66cffa7b1d8e49dfe79ae12c3431c9069",
+      "status": "complete"
+    },
+    "PREP_s2_sketch_n100": {
+      "finished_at": "2026-09-25T19:10:30.746465+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s2_sketch_n100.pt",
+      "sha256": "553f85510ef98bb1e5a5ab0d84765cc12fe3d36ce2c2f185316b138d42fd801e",
+      "status": "complete"
+    },
+    "PREP_s2_sketch_n25": {
+      "finished_at": "2026-09-25T18:44:37.839745+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s2_sketch_n25.pt",
+      "sha256": "6b5bfb9cc173d062e26731e3fdd11d825869bb4a6da26ded6a5440be9eac5e3f",
+      "status": "complete"
+    },
+    "PREP_s2_sketch_n50": {
+      "finished_at": "2026-09-25T18:55:21.444778+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s2_sketch_n50.pt",
+      "sha256": "a8e569e9760c637dbf66c407578669457f5c5d8e7c120dd618e8b38f3009da3a",
+      "status": "complete"
+    },
+    "PREP_s3_art_painting_n100": {
+      "finished_at": "2026-09-25T19:36:31.349334+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s3_art_painting_n100.pt",
+      "sha256": "f8ccfde692c4895e37ea6383d1a50fb98705dbe35acc5cd2c1ba89ff53b40e87",
+      "status": "complete"
+    },
+    "PREP_s3_art_painting_n25": {
+      "finished_at": "2026-09-25T19:14:22.905057+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s3_art_painting_n25.pt",
+      "sha256": "9fa18cad1c1b0a4d817a81d4e6ad685e8fafc9a5ed8f6d2c480f7ce8d7522deb",
+      "status": "complete"
+    },
+    "PREP_s3_art_painting_n50": {
+      "finished_at": "2026-09-25T19:23:34.601112+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s3_art_painting_n50.pt",
+      "sha256": "620784074d8512f4aac64afe98d1c32b375bf896c24e01cbb84c09562da7fcad",
+      "status": "complete"
+    },
+    "PREP_s3_cartoon_n100": {
+      "finished_at": "2026-09-25T19:40:17.792590+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s3_cartoon_n100.pt",
+      "sha256": "56d599d931830452069accff899bef16697e1017d459f75f8d603c91c5a961bd",
+      "status": "complete"
+    },
+    "PREP_s3_cartoon_n25": {
+      "finished_at": "2026-09-25T19:16:18.762580+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s3_cartoon_n25.pt",
+      "sha256": "7c7e2900134392512b68458bf804f7b22d9ab79ef9cc2728864bd7100d1ab345",
+      "status": "complete"
+    },
+    "PREP_s3_cartoon_n50": {
+      "finished_at": "2026-09-25T19:26:16.124488+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s3_cartoon_n50.pt",
+      "sha256": "c08be1c9dc252824e3b425c58f87d3a24e671f2257262418c2c4b225082f7edb",
+      "status": "complete"
+    },
+    "PREP_s3_photo_n100": {
+      "finished_at": "2026-09-25T19:32:44.165302+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s3_photo_n100.pt",
+      "sha256": "cb03912d6adc6cafcfb51c4ea74180ab6ec56ea8ab8f4b09be05667d5d071cbb",
+      "status": "complete"
+    },
+    "PREP_s3_photo_n25": {
+      "finished_at": "2026-09-25T19:12:27.850040+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s3_photo_n25.pt",
+      "sha256": "6e4469cc0de6586a2f25849f87ee89d844e0aea0befcab0c97644f37560efdb9",
+      "status": "complete"
+    },
+    "PREP_s3_photo_n50": {
+      "finished_at": "2026-09-25T19:20:54.286160+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s3_photo_n50.pt",
+      "sha256": "73bbee3aacae0301b63efe6487a2fb6de8e0e47dbfa1452bf86524e830952dba",
+      "status": "complete"
+    },
+    "PREP_s3_sketch_n100": {
+      "finished_at": "2026-09-25T19:44:04.859765+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s3_sketch_n100.pt",
+      "sha256": "5bf2ba896048e3704355f9302f197a0028e4bcb8568de9bbf998f032ad4e8a8e",
+      "status": "complete"
+    },
+    "PREP_s3_sketch_n25": {
+      "finished_at": "2026-09-25T19:18:14.602222+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s3_sketch_n25.pt",
+      "sha256": "dd529e348fd1b95394b75b27f3e4ce038feffb406791bd400810d1ba1676086d",
+      "status": "complete"
+    },
+    "PREP_s3_sketch_n50": {
+      "finished_at": "2026-09-25T19:28:56.407672+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s3_sketch_n50.pt",
+      "sha256": "6fa6b6ef359ef0b8c2db0b312a462efdffbb0f5083b585bf73bec576c9015449",
+      "status": "complete"
+    },
+    "PREP_s4_art_painting_n100": {
+      "finished_at": "2026-09-25T20:10:09.329559+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s4_art_painting_n100.pt",
+      "sha256": "60fbf48caceefdd6cb8c90453f3b58b184fb631fdfcf6da6f67fdd39a5965a26",
+      "status": "complete"
+    },
+    "PREP_s4_art_painting_n25": {
+      "finished_at": "2026-09-25T19:47:57.209321+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s4_art_painting_n25.pt",
+      "sha256": "1d5c8b3616e98d1cbe19795829cfd64d6bdbd7c3b756e2ed4277ea9ea85ebc74",
+      "status": "complete"
+    },
+    "PREP_s4_art_painting_n50": {
+      "finished_at": "2026-09-25T19:57:09.948288+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s4_art_painting_n50.pt",
+      "sha256": "0e384fea423a5d2b4fb9c56b27d66b64794835a163c4d948f7694fe2a048a3db",
+      "status": "complete"
+    },
+    "PREP_s4_cartoon_n100": {
+      "finished_at": "2026-09-25T20:13:57.867249+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s4_cartoon_n100.pt",
+      "sha256": "c64442275cd9c2b7f49d79426593451eec5f915bf2e12d19f5d33a4271126639",
+      "status": "complete"
+    },
+    "PREP_s4_cartoon_n25": {
+      "finished_at": "2026-09-25T19:49:53.605706+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s4_cartoon_n25.pt",
+      "sha256": "5d3968ef2ef3b59326f3d358458ad64ab49f3fc09c5dfe0255f30324762f1bc8",
+      "status": "complete"
+    },
+    "PREP_s4_cartoon_n50": {
+      "finished_at": "2026-09-25T19:59:50.948145+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s4_cartoon_n50.pt",
+      "sha256": "5c6f91620c957199f39aafc22192db1ea0dab25b5edd5383298b85e6e5346ca4",
+      "status": "complete"
+    },
+    "PREP_s4_photo_n100": {
+      "finished_at": "2026-09-25T20:06:21.298264+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s4_photo_n100.pt",
+      "sha256": "4c1cc89494dcc8c634d40c66f0e23d97f9592c5e045e96629424a2974da42f9b",
+      "status": "complete"
+    },
+    "PREP_s4_photo_n25": {
+      "finished_at": "2026-09-25T19:46:01.021470+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s4_photo_n25.pt",
+      "sha256": "793c99559d7c8c7607cc4cfa65cbc5d6e0971108d56635ac7450bd5312c26bbf",
+      "status": "complete"
+    },
+    "PREP_s4_photo_n50": {
+      "finished_at": "2026-09-25T19:54:30.104551+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s4_photo_n50.pt",
+      "sha256": "01e33061fc3b0715829e466e75a4293ef3d0f338e89975a50767fca27e9f26dc",
+      "status": "complete"
+    },
+    "PREP_s4_sketch_n100": {
+      "finished_at": "2026-09-25T20:17:45.182349+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s4_sketch_n100.pt",
+      "sha256": "973b0e7f466744dc8d1234191da9a8e5db2b725dca8dd8ddfc162b39bd196925",
+      "status": "complete"
+    },
+    "PREP_s4_sketch_n25": {
+      "finished_at": "2026-09-25T19:51:49.949596+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s4_sketch_n25.pt",
+      "sha256": "4d9325edf4d7da7b391c8bb261d559d035bcd267f2a7779e1efcb8acfdffd32a",
+      "status": "complete"
+    },
+    "PREP_s4_sketch_n50": {
+      "finished_at": "2026-09-25T20:02:33.270859+00:00",
+      "path": "/Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/foundations/b4_protected_development/.cache/states/PREP_s4_sketch_n50.pt",
+      "sha256": "ffdcb81378552a16f201f13c2b04d176dfc6d526ffd54081db9e9ef91b33698f",
+      "status": "complete"
+    }
+  },
+  "header": {
+    "TEST_STATUS": "PREVIOUSLY_OPENED_NOT_USED_IN_B4",
+    "preregistration_sha256": "197780a97c4c1078c445e724cd6581584b4d74e9682b0806873e976ab17f8d31",
+    "protection_manifest_sha256": "58de67e551090dbae654ea9012811e5d3acccf6375b5bd275f514515afbf17a4",
+    "protocol_id": "B4-PACS-protected-development-v1"
+  }
+}

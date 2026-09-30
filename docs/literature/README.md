@@ -12,9 +12,9 @@ may keep a smaller local bibliography for portable compilation, but every entry
 it uses must agree in citation key and bibliographic metadata with the master
 file.  Local bibliographies are curated subsets, not competing authorities.
 
-`literature_map.md` remains the cross-reference map.  Add a note under
-`notes/` only for a reference that is active enough to need a source-result,
-assumption, mathematical-content, HLS-translation, and limitation record.
+Only retain a source note when it supports a current HLS result, imported
+theory, novelty boundary, or decisive falsification. Broad thematic similarity
+alone is not a reason to add or retain a document.
 
 ## Source-document categories
 

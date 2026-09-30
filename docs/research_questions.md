@@ -2,55 +2,37 @@
 
 ## RQ0 — Dynamic allocation and development of competences
 
-Can the dynamic allocation and development of competences in a
-heterogeneous learning system improve long-term system performance
-compared with architectures that manage task allocation and knowledge
-transfer separately?
+> **Can the dynamic allocation and development of competences in a
+> heterogeneous learning system improve long-term system performance
+> compared with architectures that manage task allocation and knowledge
+> transfer separately?**
 
-**Status:** HYPOTHESIS and sole official research question. This formulation
-supersedes the earlier wording based on “deliberate evolution of competence
-allocation.” Historical documents may retain that wording when recording the
-programme's development.
+**Status:** OPEN. RQ0 is currently the sole official research question.
 
-The target comparison is between a policy `pi_joint`, whose present
-organization and use decisions internalize their effects on experience,
-competence evolution, and future system performance, and a scientifically
-strong `pi_separate`, which manages task allocation and competence development
-or knowledge transfer separately without correctly internalizing that
-cross-effect. The programme seeks strict-advantage, equality, and no-advantage
-conditions. It must not define `pi_separate` as a weak myopic baseline, and it
-must not treat `J(pi_joint) >= J(pi_separate)` as substantive when that inequality
-follows only because the joint policy class contains the separate class.
+RQ0 investigates a structural question arising from the two foundational
+beams of HLS: whether the organization/use of current competences and the
+development/evolution of future competences have system-level interactions
+that make their joint consideration valuable.
 
-The derived equivalence boundaries mean that this comparison is not an obligation
-to show intrinsic joint-control superiority over a perfectly coordinated modular
-architecture. Alongside strict-advantage conditions, it must retain equality,
-reducibility, and modular-sufficiency conditions. The current constructive
-orientation is to identify exploitable structure induced by routing, learning,
-transfer, and a changing competence portfolio, then determine which established
-theories can be integrated to use that structure efficiently. This orientation
-is not promoted to a new RQ.
+A scientifically useful answer need not establish universal superiority of
+joint management. The programme seeks to characterize conditions for:
 
-## Current working hypothesis
+- strict advantage;
+- equality;
+- reducibility;
+- no advantage;
+- and modular sufficiency under adequate coordination.
 
-**H1 — WORKING HYPOTHESIS.** It is falsifiable, not an official research
-question, and does not replace RQ0.
+Comparisons must therefore use scientifically strong separate-management
+architectures. A weak or artificially myopic baseline is insufficient, and
+an inequality that follows only from nesting one policy class inside another
+is not by itself a substantive HLS result.
 
-“Failure frequency and quality gap are insufficient statistics for selecting
-competence-improvement actions in a heterogeneous model portfolio. A useful
-selection policy should account for the expected learnability of the recipient
-model and the downstream operational value created by the competence change.”
+The current exact routing/development formalization is one instantiation of
+RQ0, not its definition. Its present results and open structural questions are
+recorded in [HLS_CURRENT_STATE.md](HLS_CURRENT_STATE.md).
 
-### Current interpretation
-
-H1 is not merely a comparison of `frequency * quality_gap` with learnability.
-The broader unresolved issue is how to value a competence-changing action by
-its expected effect on future system operation. This interpretation is
-conceptual scaffolding, not a final objective, algorithm, theorem, or promoted
-RQ.
-
-## Candidate questions not yet promoted to RQ status
-
-No additional question is promoted at initial setup. Possible distinctions
-between execution allocation, learning/knowledge allocation, and retention or
-competence evolution are conceptual scaffolding, not formal research questions.
+RQ0 is itself not the definition of HLS. It is the programme's current first
+structural question about the interaction between organization/use and
+development/evolution. The broader scientific motivation and scope of HLS are
+defined in [HLS_PHILOSOPHY.md](HLS_PHILOSOPHY.md).

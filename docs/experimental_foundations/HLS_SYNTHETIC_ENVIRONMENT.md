@@ -1,6 +1,11 @@
 # HLS Synthetic Environment — Generative Experimental Framework for RQ0
 
-**Status: ACTIVE DEVELOPMENT — G0 IMPLEMENTED / A1 CLOSED / C1--C5 REFERENCE-GATE PASS / RQ0 OPEN**
+**Status: FROZEN REFERENCE RECORD — A1 CLOSED / G0+C1--C5 GATES PASS / RQ0 OPEN**
+
+**Document role:** preserved exact A1 specification, A1b/A1c protocols, and
+G0/C1--C5 compatibility records. The compact current framework contract is
+[G0](../experiments/G0.md); sections labelled pre-implementation or pre-run
+are frozen historical specifications, not current status.
 
 ## 1. Purpose and scientific role
 
@@ -44,9 +49,9 @@ chosen merely to make HLS win.
 The environment is intended to test, not redefine:
 
 - P1 (collective competence) and P2 (local--collective misalignment) from the
-  [general research model](../general_research_model.md);
+  current programme state and [HLS ontology](../hls_ontology.md);
 - the two beams and their mappings in the [HLS ontology](../hls_ontology.md)
-  and [two-beam theory](../theory/two_beam/README.md);
+  and [theory registry](../theory/README.md);
 - the equivalence and reducibility boundaries in the
   [minimal HLS model](../theory/minimal_hls_model.md);
 - canonical opportunity value `Omega` and portfolio interaction `Gamma` from

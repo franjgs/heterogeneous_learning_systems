@@ -1,0 +1,9 @@
+model,target_domain,measured_domain,mean_delta,std_delta,positive_seeds,negative_seeds,zero_seeds,majority_sign,majority_n,sign_agreement_4of5,local_positive_4of5_and_mean
+resnet18,art,art,-0.022915008623986943,0.0212566561533554,0,5,0,negative,5,1,0
+resnet18,clipart,clipart,-0.013539499174055026,0.0163450081234031,2,3,0,negative,3,0,0
+resnet18,product,product,-0.01925917969981252,0.010160154457926252,0,5,0,negative,5,1,0
+resnet18,real_world,real_world,-0.03497463524598861,0.01023224863671606,0,5,0,negative,5,1,0
+mobilenet_v2,art,art,0.0014355663256591766,0.01274474455559547,3,2,0,positive,3,0,0
+mobilenet_v2,clipart,clipart,0.002219117933216541,0.007911389885744219,3,2,0,positive,3,0,0
+mobilenet_v2,product,product,0.012927204761326782,0.01262240748700704,5,0,0,positive,5,1,1
+mobilenet_v2,real_world,real_world,0.005367587555318609,0.004768686279232471,5,0,0,positive,5,1,1

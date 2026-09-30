@@ -1,0 +1,27 @@
+{
+  "completed_fits": 40,
+  "header": {
+    "b23_manifest_sha256": "d06857d9d6af54783d41435b41dc8171e614da5c992e00fd7e41a7b55ffbeafa",
+    "b24_manifest_sha256": "5f749d7ae3b867323da9be9385676667ab6afe1a5c302c8088277460998250d5",
+    "device": "cpu",
+    "protocol": "SPRINT0-PACS-COMPETENCE-GATE",
+    "screen_N": 50,
+    "test_used": false,
+    "trainable_parameter_names": {
+      "H": [
+        "classifier.1.weight",
+        "classifier.1.bias"
+      ],
+      "LB": [
+        "features.18.0.weight",
+        "features.18.1.weight",
+        "features.18.1.bias",
+        "classifier.1.weight",
+        "classifier.1.bias"
+      ]
+    }
+  },
+  "method_values_rows": 200,
+  "model_weights_stored": false,
+  "state_metrics_rows": 40
+}
