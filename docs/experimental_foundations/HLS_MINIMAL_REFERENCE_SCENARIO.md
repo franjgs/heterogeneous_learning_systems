@@ -1,7 +1,7 @@
 # HLS Minimal Reference Scenario
 
-**Status:** Canonical reference-scenario specification; documentation only\
-**Scope:** Minimal adaptive HLS scenario for later implementation on G0\
+**Status:** Canonical reference-scenario specification; deterministic reference implementation available\
+**Scope:** Minimal adaptive HLS scenario; not a G0 extension\
 **Authorities:** `HLS_CURRENT_STATE.md`, `HLS_DYNAMIC_THEORY.md`,
 `experiments/G0.md`, and `RESEARCH_DOCTRINE.md`
 
@@ -10,12 +10,16 @@
 This document specifies the minimum adaptive reference scenario that remains
 after the Phase-II mathematical and adversarial audit.  It is a small,
 implementable scenario for testing the distinction between present competence
-use and future collective capability.  It is not a redefinition of G0, a new
-dynamic-programming theorem, a new HLS mechanism, or an implementation.
+use and future collective capability.  The deterministic reference evaluator
+is `src/hls/minimal_reference_scenario.py`; this document remains its
+specification.  Neither is a redefinition or extension of G0, a new
+dynamic-programming theorem, or a new HLS mechanism.
 
-G0 remains the policy-neutral generator of worlds.  The scenario below is one
-future G0 instantiation: its world physics must be common to every compared
-policy (`WORLD != POLICY`).
+G0 remains the policy-neutral generator of worlds.  The scenario may later be
+expressed through a G0 adapter, but its first evaluator is intentionally
+standalone because G0's current execution contract requires a separate
+development action that this scenario does not have.  In both forms, world
+physics must be common to every compared policy (`WORLD != POLICY`).
 
 The scenario uses two workers, two task/competence types, and two periods:
 
@@ -51,6 +55,10 @@ opportunity:
 - `D`: developmental/anticipatory allocation, which assigns the opportunity
   to the worker for whom its future collective contribution is higher.
 
+These exhaust the one-to-one assignments only in this minimal 2-worker ×
+2-task instance.  They do not restrict the organizational action space of HLS
+in general.
+
 An admissible organizational policy selects between these actions; no manager
 architecture, information structure beyond the stated comparison, or solution
 method is prescribed.
@@ -60,6 +68,10 @@ training action.  Work supplies the learning-relevant experience; the
 state transition determines whether that experience changes competence.
 For the displayed comparison, labels are chosen so that `E` assigns the `B`
 opportunity to `w2`, while `D` assigns it to `w1`.
+
+In the first implementation, each worker receives direct learning-by-doing on
+the task that worker executes.  `B` is the opportunity whose recipient
+difference is evaluated by `G`; it is not a detached development allocation.
 
 Write the operational loss from choosing `D` rather than `E` as
 

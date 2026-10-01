@@ -102,8 +102,9 @@ The first documentary step is now closed: the
 specifies a policy-neutral, implementable 2-worker × 2-task/competence ×
 2-period adaptive scenario for later instantiation on G0.  It preserves
 static, adaptive-but-fixed-competence, decision-equivalent-development, and
-decision-relevant controls.  It is not yet an implementation, evidence of
-policy superiority, or a replacement for G0.
+decision-relevant controls.  Its deterministic reference evaluator and tests
+are now available without extending G0; this is not evidence of policy
+superiority or a replacement for G0.
 
 This reference problem must contain, at minimum:
 
@@ -567,7 +568,8 @@ organization/development.
 
 The next work is **not** another parameter sweep or an extension of the
 existing RQ0 synthetic campaign.  The minimum reference scenario has been
-documented, but no implementation has begun.
+documented and has a deterministic reference evaluator, but no broader G0
+integration or experimental campaign has begun.
 
 T4--T6 and G2 establish an analytical baseline with deterministic D0/D1/D2
 computational validation.  Any implementation must preserve the declared
