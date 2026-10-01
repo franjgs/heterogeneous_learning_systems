@@ -163,7 +163,7 @@ The minimal regimes are:
 
 - **Static sufficiency:** $\Delta^{dev}=0$, hence $\Delta J=\Delta R$.
 - **Alignment:** present and future terms favor the same action.
-- **Trade-off:** $\Delta R,\Delta^{dev}<0$.
+- **Trade-off:** $\Delta R\cdot\Delta^{dev}<0$.
 - **Decision reversal:** $\operatorname{sign}(\Delta J)\neq
   \operatorname{sign}(\Delta R)$.
 
