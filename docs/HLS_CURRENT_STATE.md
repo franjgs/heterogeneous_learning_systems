@@ -97,6 +97,14 @@ broader programme-level reference problem remains subject to the explicit
 operational semantics, constraints, performance choices, and scope discipline
 described below.
 
+The first documentary step is now closed: the
+[HLS Minimal Reference Scenario](experimental_foundations/HLS_MINIMAL_REFERENCE_SCENARIO.md)
+specifies a policy-neutral, implementable 2-worker × 2-task/competence ×
+2-period adaptive scenario for later instantiation on G0.  It preserves
+static, adaptive-but-fixed-competence, decision-equivalent-development, and
+decision-relevant controls.  It is not yet an implementation, evidence of
+policy superiority, or a replacement for G0.
+
 This reference problem must contain, at minimum:
 
 - a stream or distribution of problems/requests;
@@ -415,9 +423,11 @@ consolidation.
 
 ### 10.1 Minimal HLS reference problem
 
-A broader minimal reference problem must be specified without embedding the
-desired answer in its physics. T4--T6/G2 provide the initial analytical dynamic
-baseline, not a complete universal reference problem.
+The minimal reference scenario is now documented in
+[HLS Minimal Reference Scenario](experimental_foundations/HLS_MINIMAL_REFERENCE_SCENARIO.md)
+without embedding the desired answer in its physics.  It is a 2×2×2 adaptive
+reference for later G0 implementation, not a complete universal reference
+problem.  T4--T6/G2 remain its initial analytical dynamic baseline.
 
 ### 10.2 Workers
 
@@ -556,11 +566,12 @@ organization/development.
 ## 13. Current implementation boundary
 
 The next work is **not** another parameter sweep or an extension of the
-existing RQ0 synthetic campaign.
+existing RQ0 synthetic campaign.  The minimum reference scenario has been
+documented, but no implementation has begun.
 
 T4--T6 and G2 establish an analytical baseline with deterministic D0/D1/D2
-computational validation. Before any extension, the relevant specification
-should determine:
+computational validation.  Any implementation must preserve the declared
+reference-scenario scope and determine:
 
 1. which primitives can be imported from the Garicano organizational model;
 2. which primitives can be imported from the Gutjahr competence-development model;
@@ -606,10 +617,10 @@ empirical relevance:         NOT ESTABLISHED
 Those results are retained.
 
 The immediate programme-level priority is now broader: operationalize and
-validate a minimal HLS reference problem with explicit organization,
-limitations, constraints, performance, experience, learning, and competence
-evolution, grounded in the T0--T6 baseline, existing theory, and the HLS
-ontology.
+validate the documented minimal HLS reference scenario with explicit
+organization, limitations, constraints, performance, experience, learning,
+and competence evolution, grounded in the T0--T6 baseline, existing theory,
+and the HLS ontology.
 
 This is not a rejection of RQ0 or of the existing synthetic work. It is a
 change in scientific hierarchy:
