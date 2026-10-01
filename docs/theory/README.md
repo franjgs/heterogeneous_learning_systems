@@ -9,6 +9,10 @@ current-state document and does not replace the ontology or research doctrine.
   consolidated static scaffold for feasible capability, collective expansion,
   organizational sufficiency, and organizational realization; it sets the
   boundary to T4 dynamic capability.
+- [G1 static experimental ground truth](HLS_G1_STATIC_EXPERIMENTAL_GROUND_TRUTH.md):
+  computational T0--T3 support through equal-resource and bicriterion
+  two-agent/two-task null and positive controls; a static baseline, not a
+  claim of novel Operations Research theory.
 - [RQ0 routing integration boundaries](rq0_routing_integration_boundaries.md):
   policy-class inclusion, global reducibility, local routing-as-teaching, and
   the exact C(alpha) existence construction.

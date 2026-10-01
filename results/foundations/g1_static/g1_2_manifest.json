@@ -1,0 +1,16 @@
+{
+  "budget_sweep_sha256": "66f1f81b7221e491ea4434736c2e61ade1803e178b468aa705483ab1b7614621",
+  "command": "python experiments/synthetic/g1/run_g1_2.py",
+  "deterministic": true,
+  "experiment_id": "G1.2",
+  "figure_sha256": {
+    "g1_2_canonical_frontiers.png": "5272a63816ce18b9e939ce76feda2778d1f8a1bf43862a4e20e9c11cf760905c",
+    "g1_2_s5_budget_window.png": "e512352d661d0212a6bafb2c2bd87c25bdaeb7c93a98443e10d817c6f60a704b",
+    "g1_2_s5_operating_map.png": "9a81f39cc1d023c5ab24c57311f81bcaa1df08799912953be6b596425c3cd721"
+  },
+  "model_sha256": "cc2085f4b6e27e0700a7b372accedd66f0e4db43ac90b3fbd14d6fb05081e375",
+  "operating_map_sha256": "615c94e3eea486bc0b1697a3354b634288dcb2468d85f2bd862c974fd97e454b",
+  "runner_sha256": "b07275d2d6d00ad86ef466552ab5c6bceff41e5f6a0a346e13684048c795b140",
+  "seeds": null,
+  "summary_sha256": "fbc3c1c4d5cca58ebf447f294b8634018b1ca3070e11ecd63123146ba68c4faa"
+}

@@ -1,0 +1,429 @@
+{
+  "description": "static bicriterion effectiveness-resource two-agent/two-task ground truth",
+  "deterministic": true,
+  "experiment_id": "G1.2",
+  "grid": {
+    "budget_max": 1.0,
+    "budget_sweep_points": 1001,
+    "diagnostic_p": 0.5,
+    "operating_budget_points": 201,
+    "operating_map_scenarios": [
+      "S2_g11_embedded_equal_resource",
+      "S3_bicriterion_tradeoff",
+      "S4_geometric_expansion_null",
+      "S5_bounded_gain_window"
+    ],
+    "operating_p_points": 101
+  },
+  "positive_gain_interval_semantics": "Each [start, end] denotes the open interval (start, end); null end denotes persistence after saturation.",
+  "scenarios": {
+    "S0_homogeneous_null": {
+      "D": 0.0,
+      "breakpoints": [
+        0.5
+      ],
+      "deterministic_points": {
+        "11": {
+          "R": 0.5,
+          "Y": 0.8
+        },
+        "12": {
+          "R": 0.5,
+          "Y": 0.8
+        },
+        "21": {
+          "R": 0.5,
+          "Y": 0.8
+        },
+        "22": {
+          "R": 0.5,
+          "Y": 0.8
+        }
+      },
+      "matrix": {
+        "M1_q1": {
+          "r": 0.5,
+          "y": 0.8
+        },
+        "M1_q2": {
+          "r": 0.5,
+          "y": 0.8
+        },
+        "M2_q1": {
+          "r": 0.5,
+          "y": 0.8
+        },
+        "M2_q2": {
+          "r": 0.5,
+          "y": 0.8
+        }
+      },
+      "maximizing_budget": 0.5,
+      "maximum_delta_y": 0.0,
+      "minimum_delta_y_on_budget_grid": 0.0,
+      "one_upper_hull": [
+        {
+          "R": 0.5,
+          "Y": 0.8
+        }
+      ],
+      "p": 0.5,
+      "parallelogram_area_at_p_half": 0.0,
+      "parallelogram_closed_form_at_p_half": 0.0,
+      "positive_gain_budget_intervals": [],
+      "route_upper_hull": [
+        {
+          "R": 0.5,
+          "Y": 0.8
+        }
+      ]
+    },
+    "S1_pareto_dominance_null": {
+      "D": 2.7755575615628914e-17,
+      "breakpoints": [
+        0.45
+      ],
+      "deterministic_points": {
+        "11": {
+          "R": 0.45,
+          "Y": 0.8500000000000001
+        },
+        "12": {
+          "R": 0.6000000000000001,
+          "Y": 0.7
+        },
+        "21": {
+          "R": 0.6,
+          "Y": 0.7
+        },
+        "22": {
+          "R": 0.75,
+          "Y": 0.55
+        }
+      },
+      "matrix": {
+        "M1_q1": {
+          "r": 0.4,
+          "y": 0.9
+        },
+        "M1_q2": {
+          "r": 0.5,
+          "y": 0.8
+        },
+        "M2_q1": {
+          "r": 0.7,
+          "y": 0.6
+        },
+        "M2_q2": {
+          "r": 0.8,
+          "y": 0.5
+        }
+      },
+      "maximizing_budget": 0.45,
+      "maximum_delta_y": 0.0,
+      "minimum_delta_y_on_budget_grid": 0.0,
+      "one_upper_hull": [
+        {
+          "R": 0.45,
+          "Y": 0.8500000000000001
+        }
+      ],
+      "p": 0.5,
+      "parallelogram_area_at_p_half": 1.3877787807814457e-17,
+      "parallelogram_closed_form_at_p_half": 6.938893903907228e-18,
+      "positive_gain_budget_intervals": [],
+      "route_upper_hull": [
+        {
+          "R": 0.45,
+          "Y": 0.8500000000000001
+        }
+      ]
+    },
+    "S2_g11_embedded_equal_resource": {
+      "D": -0.0,
+      "breakpoints": [
+        0.5
+      ],
+      "deterministic_points": {
+        "11": {
+          "R": 0.5,
+          "Y": 0.6
+        },
+        "12": {
+          "R": 0.5,
+          "Y": 1.0
+        },
+        "21": {
+          "R": 0.5,
+          "Y": 0.2
+        },
+        "22": {
+          "R": 0.5,
+          "Y": 0.6
+        }
+      },
+      "matrix": {
+        "M1_q1": {
+          "r": 0.5,
+          "y": 1.0
+        },
+        "M1_q2": {
+          "r": 0.5,
+          "y": 0.2
+        },
+        "M2_q1": {
+          "r": 0.5,
+          "y": 0.2
+        },
+        "M2_q2": {
+          "r": 0.5,
+          "y": 1.0
+        }
+      },
+      "maximizing_budget": 0.5,
+      "maximum_delta_y": 0.4,
+      "minimum_delta_y_on_budget_grid": 0.4,
+      "one_upper_hull": [
+        {
+          "R": 0.5,
+          "Y": 0.6
+        }
+      ],
+      "p": 0.5,
+      "parallelogram_area_at_p_half": 0.0,
+      "parallelogram_closed_form_at_p_half": 0.0,
+      "positive_gain_budget_intervals": [
+        [
+          0.5,
+          null
+        ]
+      ],
+      "route_upper_hull": [
+        {
+          "R": 0.5,
+          "Y": 1.0
+        }
+      ]
+    },
+    "S3_bicriterion_tradeoff": {
+      "D": -5.551115123125783e-17,
+      "breakpoints": [
+        0.4,
+        0.6000000000000001,
+        0.8
+      ],
+      "deterministic_points": {
+        "11": {
+          "R": 0.6000000000000001,
+          "Y": 0.65
+        },
+        "12": {
+          "R": 0.8,
+          "Y": 0.95
+        },
+        "21": {
+          "R": 0.4,
+          "Y": 0.35
+        },
+        "22": {
+          "R": 0.6000000000000001,
+          "Y": 0.65
+        }
+      },
+      "matrix": {
+        "M1_q1": {
+          "r": 0.8,
+          "y": 1.0
+        },
+        "M1_q2": {
+          "r": 0.4,
+          "y": 0.3
+        },
+        "M2_q1": {
+          "r": 0.4,
+          "y": 0.4
+        },
+        "M2_q2": {
+          "r": 0.8,
+          "y": 0.9
+        }
+      },
+      "maximizing_budget": 0.8,
+      "maximum_delta_y": 0.29999999999999993,
+      "minimum_delta_y_on_budget_grid": -1.1102230246251565e-16,
+      "one_upper_hull": [
+        {
+          "R": 0.6000000000000001,
+          "Y": 0.65
+        }
+      ],
+      "p": 0.5,
+      "parallelogram_area_at_p_half": 6.938893903907228e-18,
+      "parallelogram_closed_form_at_p_half": 1.3877787807814457e-17,
+      "positive_gain_budget_intervals": [
+        [
+          0.6000000000000001,
+          null
+        ]
+      ],
+      "route_upper_hull": [
+        {
+          "R": 0.4,
+          "Y": 0.35
+        },
+        {
+          "R": 0.8,
+          "Y": 0.95
+        }
+      ]
+    },
+    "S4_geometric_expansion_null": {
+      "D": -0.18,
+      "breakpoints": [
+        0.4
+      ],
+      "deterministic_points": {
+        "11": {
+          "R": 0.4,
+          "Y": 1.0
+        },
+        "12": {
+          "R": 0.5,
+          "Y": 0.65
+        },
+        "21": {
+          "R": 0.6000000000000001,
+          "Y": 0.75
+        },
+        "22": {
+          "R": 0.7,
+          "Y": 0.4
+        }
+      },
+      "matrix": {
+        "M1_q1": {
+          "r": 0.4,
+          "y": 1.0
+        },
+        "M1_q2": {
+          "r": 0.4,
+          "y": 1.0
+        },
+        "M2_q1": {
+          "r": 0.8,
+          "y": 0.5
+        },
+        "M2_q2": {
+          "r": 0.6,
+          "y": 0.3
+        }
+      },
+      "maximizing_budget": 0.4,
+      "maximum_delta_y": 0.0,
+      "minimum_delta_y_on_budget_grid": 0.0,
+      "one_upper_hull": [
+        {
+          "R": 0.4,
+          "Y": 1.0
+        }
+      ],
+      "p": 0.5,
+      "parallelogram_area_at_p_half": 0.045000000000000026,
+      "parallelogram_closed_form_at_p_half": 0.045,
+      "positive_gain_budget_intervals": [],
+      "route_upper_hull": [
+        {
+          "R": 0.4,
+          "Y": 1.0
+        }
+      ]
+    },
+    "S5_bounded_gain_window": {
+      "D": -0.09999999999999996,
+      "breakpoints": [
+        0.25,
+        0.4,
+        0.6499999999999999
+      ],
+      "deterministic_points": {
+        "11": {
+          "R": 0.6499999999999999,
+          "Y": 0.8
+        },
+        "12": {
+          "R": 0.4,
+          "Y": 0.8
+        },
+        "21": {
+          "R": 0.5,
+          "Y": 0.7
+        },
+        "22": {
+          "R": 0.25,
+          "Y": 0.7
+        }
+      },
+      "matrix": {
+        "M1_q1": {
+          "r": 0.6,
+          "y": 0.7
+        },
+        "M1_q2": {
+          "r": 0.7,
+          "y": 0.9
+        },
+        "M2_q1": {
+          "r": 0.3,
+          "y": 0.5
+        },
+        "M2_q2": {
+          "r": 0.2,
+          "y": 0.9
+        }
+      },
+      "maximizing_budget": 0.4,
+      "maximum_delta_y": 0.0625,
+      "minimum_delta_y_on_budget_grid": 0.0,
+      "one_upper_hull": [
+        {
+          "R": 0.25,
+          "Y": 0.7
+        },
+        {
+          "R": 0.6499999999999999,
+          "Y": 0.8
+        }
+      ],
+      "p": 0.5,
+      "parallelogram_area_at_p_half": 0.025000000000000012,
+      "parallelogram_closed_form_at_p_half": 0.02499999999999999,
+      "positive_gain_budget_intervals": [
+        [
+          0.25,
+          0.6499999999999999
+        ]
+      ],
+      "route_upper_hull": [
+        {
+          "R": 0.25,
+          "Y": 0.7
+        },
+        {
+          "R": 0.4,
+          "Y": 0.8
+        }
+      ]
+    }
+  },
+  "seeds": null,
+  "tolerance": 1e-12,
+  "verification": {
+    "maximum_monotonicity_violation": 2.220446049250313e-16,
+    "maximum_parallelogram_area_formula_error": 2.7755575615628914e-17,
+    "maximum_parallelogram_identity_error": 2.220446049250313e-16,
+    "minimum_delta_y_budget_grid": -1.1102230246251565e-16,
+    "minimum_delta_y_operating_map": -2.220446049250313e-16,
+    "s2_max_abs_closed_form_error": 1.1102230246251565e-16,
+    "s5_max_abs_closed_form_error": 1.1449174941446927e-16
+  }
+}

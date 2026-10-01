@@ -64,6 +64,13 @@ provisionally closed at the level needed to continue the programme. Its next
 theoretical boundary is T4 --- Dynamic Capability; no dynamic mechanism is
 part of T0--T3.
 
+The [G1 static experimental ground truth](theory/HLS_G1_STATIC_EXPERIMENTAL_GROUND_TRUTH.md)
+is the validated computational support for this block. It establishes only
+scoped fixed-competence Beam-1 results: heterogeneity, attainable-set
+expansion, efficient frontier expansion, and organizational value are distinct;
+the latter depends on `(S, P, B, Pi)`, not on `S` alone. G1 is a static
+baseline, not evidence about learning, competence evolution, RQ0, or T4--T6.
+
 The immediate foundational objective is to define a minimal but complete HLS
 reference problem in which the essential programme-level concepts have explicit
 operational semantics.

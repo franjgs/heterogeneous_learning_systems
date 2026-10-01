@@ -1,0 +1,64 @@
+{
+  "description": "equal-resource static two-agent/two-task ground truth",
+  "deterministic": true,
+  "exact_tolerance": 1e-12,
+  "experiment_id": "G1.1",
+  "points_per_scenario": 1001,
+  "scenarios": {
+    "asymmetric_crossed": {
+      "y11": 0.9,
+      "y12": 0.5,
+      "y21": 0.3,
+      "y22": 0.9
+    },
+    "dominance": {
+      "y11": 0.9,
+      "y12": 0.8,
+      "y21": 0.4,
+      "y22": 0.2
+    },
+    "homogeneous": {
+      "y11": 0.7,
+      "y12": 0.4,
+      "y21": 0.7,
+      "y22": 0.4
+    },
+    "symmetric_crossed": {
+      "y11": 1.0,
+      "y12": 0.2,
+      "y21": 0.2,
+      "y22": 1.0
+    }
+  },
+  "seeds": null,
+  "verification": {
+    "asymmetric_crossed": {
+      "analytical_max_gain": 0.24000000000000005,
+      "analytical_p_star": 0.4,
+      "max_abs_closed_form_error": 1.3877787807814457e-16,
+      "observed_max_gain": 0.2400000000000001,
+      "observed_max_p": 0.4
+    },
+    "dominance": {
+      "analytical_max_gain": null,
+      "analytical_p_star": null,
+      "max_abs_closed_form_error": null,
+      "observed_max_gain": 0.0,
+      "observed_max_p": 0.0
+    },
+    "homogeneous": {
+      "analytical_max_gain": null,
+      "analytical_p_star": null,
+      "max_abs_closed_form_error": null,
+      "observed_max_gain": 0.0,
+      "observed_max_p": 0.0
+    },
+    "symmetric_crossed": {
+      "analytical_max_gain": 0.4000000000000001,
+      "analytical_p_star": 0.5,
+      "max_abs_closed_form_error": 1.1102230246251565e-16,
+      "observed_max_gain": 0.4,
+      "observed_max_p": 0.5
+    }
+  }
+}

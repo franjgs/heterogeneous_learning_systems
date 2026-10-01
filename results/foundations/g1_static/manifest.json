@@ -1,0 +1,11 @@
+{
+  "command": "python experiments/synthetic/g1/run_g1_1.py",
+  "demand_sweep_sha256": "1c5623b2e6f34f12ad52afe426251b813e88e9d1b390f6c0df926ba9f3b5851b",
+  "deterministic": true,
+  "experiment_id": "G1.1",
+  "figure_sha256": "25c06f9c52ae76f3d7775d7c4d45228deb59dffc54d15cb3cd1559d197ae5e2d",
+  "model_sha256": "cc2085f4b6e27e0700a7b372accedd66f0e4db43ac90b3fbd14d6fb05081e375",
+  "runner_sha256": "81bb24e25ee80e2e4312e2baac10d393d99712ee557d15e91462392614850580",
+  "seeds": null,
+  "summary_sha256": "4a0201c13d7402cde0a0fd78471dc0c29a8f6b38e4fafdf1df96db3164a56502"
+}
