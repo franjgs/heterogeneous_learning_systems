@@ -132,6 +132,8 @@ For the current research:
    under investigation.
 5. [HLS Current State](docs/HLS_CURRENT_STATE.md) — what is currently
    established, what has been ruled out, and what remains open.
+6. [Repository Guide](docs/REPOSITORY_GUIDE.md) — repository authority,
+   provenance, and implementation map.
 
 For technical depth:
 

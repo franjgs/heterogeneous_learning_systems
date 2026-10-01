@@ -71,9 +71,25 @@ expansion, efficient frontier expansion, and organizational value are distinct;
 the latter depends on `(S, P, B, Pi)`, not on `S` alone. G1 is a static
 baseline, not evidence about learning, competence evolution, RQ0, or T4--T6.
 
-The immediate foundational objective is to define a minimal but complete HLS
-reference problem in which the essential programme-level concepts have explicit
-operational semantics.
+### Dynamic theoretical foundation
+
+T4--T6 are consolidated as a scoped dynamic working foundation in
+[HLS Dynamic Theoretical Foundation](theory/HLS_DYNAMIC_THEORY.md): dynamic
+collective capability/reachability (T4), competence-development value (T5),
+and organization--development coupling (T6). The accompanying
+[G2 Dynamic Ground Truth](theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md) is a minimal
+analytical constructive/null reference for these distinctions.
+
+This foundation does not claim new general control or dynamic-programming
+theory, irreducibly joint management, RQ0, prevalence, robustness, empirical
+relevance, or a universal dynamic HLS model. G2 is not yet an implemented
+computational campaign; G0 remains the existing synthetic instrument for the
+separate RQ0 formalization.
+
+The T4--T6/G2 baseline supplies a minimal analytical dynamic reference. The
+broader programme-level reference problem remains subject to the explicit
+operational semantics, constraints, performance choices, and scope discipline
+described below.
 
 This reference problem must contain, at minimum:
 
@@ -387,13 +403,15 @@ formalism for other HLS organization/development mechanisms.
 
 ## 10. Current foundational gaps
 
-Before extending the experimental programme, the following programme-level
-objects require explicit definition or consolidation.
+Before extending the experimental programme beyond the T4--T6/G2 analytical
+baseline, the following programme-level objects require explicit definition or
+consolidation.
 
 ### 10.1 Minimal HLS reference problem
 
-A minimal but complete problem must be specified without embedding the desired
-answer in its physics.
+A broader minimal reference problem must be specified without embedding the
+desired answer in its physics. T4--T6/G2 provide the initial analytical dynamic
+baseline, not a complete universal reference problem.
 
 ### 10.2 Workers
 
@@ -429,8 +447,9 @@ claims of architectural superiority can be made.
 The reference problem must distinguish work from experience and experience
 from actual competence change.
 
-A minimal competence-evolution mechanism is required, but richer mechanisms
-should not be added without a scientific reason.
+G2 provides deterministic action-dependent learning by doing as the minimal
+constructive realization. Richer mechanisms should not be added without a
+scientific reason.
 
 ### 10.8 Collective competence and complementarity
 
@@ -443,8 +462,9 @@ heterogeneity or diversity is intrinsically beneficial.
 The programme will not proceed by progressively enriching the existing RQ0
 synthetic world merely to obtain broader positive HLS results.
 
-The next foundational objective is to construct a minimal, neutral, and
-scientifically controlled HLS reference problem.
+The T4--T6/G2 analytical baseline now supplies the minimum dynamic structure
+for a neutral, scientifically controlled HLS reference problem. Its use or
+extension must preserve the following discipline.
 
 The construction should proceed from established theoretical components where
 they genuinely match the HLS ontology, particularly the organization/use and
@@ -527,14 +547,14 @@ The existing RQ0 theory becomes one component of this broader programme:
 it characterizes one possible boundary between separated and jointly managed
 organization/development.
 
-## 13. Immediate next scientific task
+## 13. Current implementation boundary
 
-The next task is **not** another parameter sweep or an extension of the
+The next work is **not** another parameter sweep or an extension of the
 existing RQ0 synthetic campaign.
 
-It is the scientific specification of the minimal HLS reference problem.
-
-Before implementation, that specification should determine:
+T4--T6 and G2 establish an analytical baseline; they do not yet provide an
+implemented G2 campaign. Before any implementation or extension, the relevant
+specification should determine:
 
 1. which primitives can be imported from the Garicano organizational model;
 2. which primitives can be imported from the Gutjahr competence-development model;
@@ -556,7 +576,10 @@ be implemented.
 
 ## 14. Current research position
 
-The HLS programme is in **foundational consolidation and reference-problem design**.
+The HLS programme is in **foundational consolidation**: T0--T3 and the scoped
+T4--T6/G2 analytical baseline are in place, while broader reference-problem
+operationalization and computational validation remain bounded by the stated
+scope.
 
 The previous RQ0 phase has established a useful exact result:
 
@@ -576,10 +599,11 @@ empirical relevance:         NOT ESTABLISHED
 
 Those results are retained.
 
-However, the immediate programme-level priority is now broader: establish a
-minimal HLS reference problem with explicit organization, limitations,
-constraints, performance, experience, learning, and competence evolution,
-grounded in existing theory and the HLS ontology.
+The immediate programme-level priority is now broader: operationalize and
+validate a minimal HLS reference problem with explicit organization,
+limitations, constraints, performance, experience, learning, and competence
+evolution, grounded in the T0--T6 baseline, existing theory, and the HLS
+ontology.
 
 This is not a rejection of RQ0 or of the existing synthetic work. It is a
 change in scientific hierarchy:
@@ -614,6 +638,9 @@ them to define HLS itself.
 - Semantics: [hls_ontology.md](hls_ontology.md)
 - Research questions: [research_questions.md](research_questions.md)
 - Method: [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md)
+- Static foundation: [HLS_STATIC_THEORY.md](theory/HLS_STATIC_THEORY.md)
+- Dynamic foundation: [HLS_DYNAMIC_THEORY.md](theory/HLS_DYNAMIC_THEORY.md)
+- Dynamic ground truth: [HLS_G2_DYNAMIC_GROUND_TRUTH.md](theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md)
 
 ### Current RQ0 theory and evidence
 
