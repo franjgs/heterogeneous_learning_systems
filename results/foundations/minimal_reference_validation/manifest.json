@@ -1,0 +1,14 @@
+{
+  "baseline_commit": "68169de",
+  "command": "python experiments/synthetic/minimal_reference/run_validation.py",
+  "deterministic": true,
+  "experiment_id": "minimal_reference_phase_v",
+  "model_sha256": "b3a32ea2b1c118d4fe1412c2795af5dccd13edfeedc6e9d2c290f539c7a8021e",
+  "repository_commit_at_run": "68169de42e968b02ee3bab28e6259b8823aa8a1c",
+  "runner_sha256": "399c6453e5005784046092c62a2ca433c45bdaf1e027e822c37f043269531405",
+  "seeds": null,
+  "summary_sha256": "4554e1d7b2fff5e2598d83488519c8a05964baea5312b6fb063262e5457145e3",
+  "validation_sha256": "b5a126337bf7fccbbadd1123d1b4d47527f6f97f500e53804d0366dc285f6087",
+  "working_tree_dirty_at_run": true,
+  "worlds_sha256": "f6e8b56b46f5c790b72962eb6498fdb17c15fec613afdc9878f1d8cbbd8341bf"
+}
