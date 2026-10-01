@@ -57,8 +57,8 @@ classification.
 | [theory/README.md](theory/README.md) | Theory registry | CURRENT | Locate canonical and supporting theory. | Independent scientific-status authority. |
 | [theory/HLS_STATIC_THEORY.md](theory/HLS_STATIC_THEORY.md) | Static theoretical foundation | CONSOLIDATED | T0--T3 and the fixed-competence/static boundary. | Dynamic T4--T6 theory. |
 | [theory/HLS_G1_STATIC_EXPERIMENTAL_GROUND_TRUTH.md](theory/HLS_G1_STATIC_EXPERIMENTAL_GROUND_TRUTH.md) | Static validation interpretation | CONSOLIDATED | Scope, controls, and non-claims of G1.1/G1.2. | A novelty claim about static OR theory. |
-| [theory/HLS_DYNAMIC_THEORY.md](theory/HLS_DYNAMIC_THEORY.md) | Dynamic theoretical foundation | CONSOLIDATED working foundation | T4--T6 scaffold and stated scope. | A claim of irreducible joint management or completed computational validation. |
-| [theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md](theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md) | Dynamic ground-truth specification | CANONICAL minimal constructive ground truth | D0/D1/D2 constructive/null reference and stated non-claims. | A universal dynamic model or experimental validation. |
+| [theory/HLS_DYNAMIC_THEORY.md](theory/HLS_DYNAMIC_THEORY.md) | Dynamic theoretical foundation | CONSOLIDATED working foundation | T4--T6 scaffold and stated scope. | A claim of irreducible joint management or validation beyond G2's stated scope. |
+| [theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md](theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md) | Dynamic ground-truth specification | CANONICAL minimal constructive ground truth | D0/D1/D2 constructive/null reference and stated non-claims. | A universal dynamic model or validation beyond D0/D1/D2. |
 | [theory/minimal_hls_model.md](theory/minimal_hls_model.md) | Reduced dynamic testbed | SUPPORTING | Model-scoped separability, threshold, coordination, and boundary lessons. | General T4--T6 theory. |
 | [theory/operational_development_opportunity_value.md](theory/operational_development_opportunity_value.md) | Mechanism-level theory | SUPPORTING | Opportunity-value decomposition under stated assumptions. | General proof that joint management has value. |
 | [theory/rq0_routing_integration_boundaries.md](theory/rq0_routing_integration_boundaries.md) | RQ0 formal theory | CANONICAL for stated RQ0 formalization | Policy classes, local/global distinction, C(alpha), and SEP-Omega boundary. | Prevalence, robustness, or empirical relevance. |
@@ -91,8 +91,9 @@ HLS
 T0--T3 are consolidated in [HLS Static Theory](theory/HLS_STATIC_THEORY.md).
 T4--T6 form the scoped dynamic working foundation in
 [HLS Dynamic Theory](theory/HLS_DYNAMIC_THEORY.md), with G2 as its minimal
-constructive/null reference. Neither document claims a universal dynamic model,
-irreducible joint management, or completed computational validation.
+constructive/null reference. Its D0/D1/D2 identities have deterministic
+computational validation. Neither document claims a universal dynamic model,
+irreducible joint management, or validation beyond that scope.
 
 RQ0 is a specific open dynamic research question, not the definition of HLS.
 G0 is a policy-neutral synthetic instrument for controlled RQ0 work, not a
@@ -119,7 +120,9 @@ universal HLS model. See [Research Questions](research_questions.md),
 | --- | --- | --- |
 | Theory | [theory/HLS_DYNAMIC_THEORY.md](theory/HLS_DYNAMIC_THEORY.md) | Consolidated working T4--T6 foundation. |
 | Ground truth | [theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md](theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md) | D0/D1/D2 analytical/constructive reference. |
-| Code, tests, runners, results | No dedicated G2 implementation is currently identified. | Do not infer executable validation from the documents. |
+| Code | `src/hls/g2_dynamic.py` | Exact D0/D1/D2 state, frontier, value, and regime evaluation. |
+| Tests | `tests/test_g2_dynamic.py` | Analytical identities, nulls, frontiers, regimes, and manifest checks. |
+| Runner / results | `experiments/synthetic/g2/run_g2.py`; `results/foundations/g2_dynamic/` | Deterministic sweep, summary, and SHA-256 provenance manifest. |
 
 ### A1, G0, C1--C5, and synthetic RQ0
 
@@ -145,7 +148,7 @@ universal HLS model. See [Research Questions](research_questions.md),
 | Class | Material | What it establishes | What it does not establish | Current role |
 | --- | --- | --- | --- | --- |
 | General/current programme | [Current State](HLS_CURRENT_STATE.md), [Research Questions](research_questions.md), [G0](experiments/G0.md) | Official current question, scope, and current synthetic-framework contract. | A universal dynamic model. | Read first for active dynamic work. |
-| Dynamic foundation and ground truth | [HLS_DYNAMIC_THEORY.md](theory/HLS_DYNAMIC_THEORY.md), [HLS_G2_DYNAMIC_GROUND_TRUTH.md](theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md) | Their stated T4--T6 and D0/D1/D2 scoped analytical/constructive boundaries. | Implemented G2 evidence, universal theory, or irreducible joint-management result. | Current dynamic analytical baseline. |
+| Dynamic foundation and ground truth | [HLS_DYNAMIC_THEORY.md](theory/HLS_DYNAMIC_THEORY.md), [HLS_G2_DYNAMIC_GROUND_TRUTH.md](theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md) | Their stated T4--T6 and D0/D1/D2 scoped analytical boundaries, with deterministic computational validation. | Universal theory, irreducible joint-management result, or validation beyond D0/D1/D2. | Current dynamic analytical/computational baseline. |
 | Reduced dynamic testbeds | [minimal_hls_model.md](theory/minimal_hls_model.md), [M0](models/model_M0.md), [M0.1](models/model_M0_1_gap_dependent_learning.md) | Model-scoped separability, threshold, information, and resource-share lessons. | General T4--T6 theory or RQ0 resolution. | Supporting constraints and reproducibility. |
 | Exact RQ0 theory | [rq0_routing_integration_boundaries.md](theory/rq0_routing_integration_boundaries.md) | Policy-class criterion, local-versus-root distinction, and scoped C(alpha) construction. | Prevalence, genericity, robustness, or empirical relevance. | Canonical formal reference for the current RQ0 formalization. |
 | Mechanism-level support | [operational_development_opportunity_value.md](theory/operational_development_opportunity_value.md) | Conditional opportunity-value decomposition under its assumptions. | That local opportunity value yields global integration value. | Supporting mechanism analysis. |
@@ -189,7 +192,6 @@ protocol, pilot, or historical section of
 | B23 names `results/pilots/b22_opportunity_value/b22_diagnostic.md` and `.../portfolio_bridge/portfolio_bridge.md`, which are absent. | Dead-end reproduction/navigation references. | Do not infer missing contents; use retained B22/B23 material. | Unresolved documentation debt. |
 | [experiments/README.md](experiments/README.md) does not index G1. | Static ground-truth evidence is harder to discover from the experiment registry. | Navigate through [theory/README.md](theory/README.md) and G1's theory document. | Documentation debt. |
 | [HLS Static Theory](theory/HLS_STATIC_THEORY.md) contains raw `{=tex}` rendering artifacts. | Display degradation may obscure notation. | Use source text and linked ground-truth documentation. | Documentation debt. |
-| [HLS Dynamic Theory](theory/HLS_DYNAMIC_THEORY.md) and [G2](theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md) also contain raw `{=tex}` rendering artifacts. | Display degradation may obscure notation in the newly consolidated dynamic material. | Use the source text; do not alter mathematical meaning merely to repair rendering. | Documentation debt. |
 
 ## Recommended reading path
 

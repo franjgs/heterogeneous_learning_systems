@@ -83,8 +83,9 @@ analytical constructive/null reference for these distinctions.
 This foundation does not claim new general control or dynamic-programming
 theory, irreducibly joint management, RQ0, prevalence, robustness, empirical
 relevance, or a universal dynamic HLS model. G2 is not yet an implemented
-computational campaign; G0 remains the existing synthetic instrument for the
-separate RQ0 formalization.
+computational campaign beyond its minimal scope. Its D0/D1/D2 analytical
+controls are now deterministically implemented and validated; G0 remains the
+existing synthetic instrument for the separate RQ0 formalization.
 
 The T4--T6/G2 baseline supplies a minimal analytical dynamic reference. The
 broader programme-level reference problem remains subject to the explicit
@@ -552,9 +553,9 @@ organization/development.
 The next work is **not** another parameter sweep or an extension of the
 existing RQ0 synthetic campaign.
 
-T4--T6 and G2 establish an analytical baseline; they do not yet provide an
-implemented G2 campaign. Before any implementation or extension, the relevant
-specification should determine:
+T4--T6 and G2 establish an analytical baseline with deterministic D0/D1/D2
+computational validation. Before any extension, the relevant specification
+should determine:
 
 1. which primitives can be imported from the Garicano organizational model;
 2. which primitives can be imported from the Gutjahr competence-development model;
@@ -578,7 +579,7 @@ be implemented.
 
 The HLS programme is in **foundational consolidation**: T0--T3 and the scoped
 T4--T6/G2 analytical baseline are in place, while broader reference-problem
-operationalization and computational validation remain bounded by the stated
+operationalization and validation beyond D0/D1/D2 remain bounded by the stated
 scope.
 
 The previous RQ0 phase has established a useful exact result:
@@ -641,6 +642,7 @@ them to define HLS itself.
 - Static foundation: [HLS_STATIC_THEORY.md](theory/HLS_STATIC_THEORY.md)
 - Dynamic foundation: [HLS_DYNAMIC_THEORY.md](theory/HLS_DYNAMIC_THEORY.md)
 - Dynamic ground truth: [HLS_G2_DYNAMIC_GROUND_TRUTH.md](theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md)
+- G2 implementation and results: [experiments/synthetic/g2](../experiments/synthetic/g2/) and [results/foundations/g2_dynamic](../results/foundations/g2_dynamic/)
 
 ### Current RQ0 theory and evidence
 

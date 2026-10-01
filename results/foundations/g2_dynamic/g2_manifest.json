@@ -1,0 +1,10 @@
+{
+  "command": "python experiments/synthetic/g2/run_g2.py",
+  "deterministic": true,
+  "experiment_id": "G2",
+  "model_sha256": "021000ee204590f547f432433795d4b4e0728fd881041114fa408369d21c4fd7",
+  "runner_sha256": "7a946de60060a28781f464ae6a55cf4e087ffd8a31a154a9016f2b748512d3bd",
+  "seeds": null,
+  "summary_sha256": "607ba3ea4497ca7a01875b7a5335098cf6f51ce9279e698234af0de786a51cdf",
+  "sweep_sha256": "0d713d2a0677bcccb9b797b23cbfc8da475bbfc987695230eea4dd77424c50ba"
+}

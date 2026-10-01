@@ -7,6 +7,7 @@ conceptual index; it is not a second results ledger.
 ## Current synthetic framework
 
 - [G0 current instrument](G0.md)
+- [G2 D0/D1/D2 dynamic ground truth runner](../../experiments/synthetic/g2/)
 - [A1 reference specification](../experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md)
 - [RQ0 campaign ledger](../experimental_foundations/RQ0_EXPERIMENTAL_CAMPAIGN.md)
 - [Geometry redistribution protocol/outcome](../experimental_foundations/RQ0_GEOMETRY_REDISTRIBUTION_PROTOCOL.md)
@@ -18,6 +19,7 @@ conceptual index; it is not a second results ledger.
 - [Foundation reproductions](../../experiments/foundations/)
 - [Pilot implementations](../../experiments/pilots/)
 - [Versioned result artifacts](../../results/)
+- [G2 result artifacts](../../results/foundations/g2_dynamic/)
 
 Frozen protocols remain authoritative for their declared designs. Result
 directories remain authoritative for numerical evidence and provenance.

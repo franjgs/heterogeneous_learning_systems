@@ -1,0 +1,240 @@
+{
+  "d0": {
+    "delta_dev": 0.0,
+    "frontier_action_1": [
+      [
+        0.8,
+        0.8
+      ]
+    ],
+    "frontier_action_2": [
+      [
+        0.8,
+        0.8
+      ]
+    ],
+    "future_state_action_1": [
+      [
+        0.7,
+        0.8
+      ],
+      [
+        0.8,
+        0.6
+      ]
+    ],
+    "future_state_action_2": [
+      [
+        0.7,
+        0.8
+      ],
+      [
+        0.8,
+        0.6
+      ]
+    ],
+    "learning_rates": [
+      0.0,
+      0.0
+    ],
+    "state_0": [
+      [
+        0.7,
+        0.8
+      ],
+      [
+        0.8,
+        0.6
+      ]
+    ]
+  },
+  "d1": {
+    "attainable_action_1": {
+      "11": [
+        0.5,
+        0.8
+      ],
+      "12": [
+        0.5,
+        0.4
+      ],
+      "21": [
+        0.8,
+        0.8
+      ],
+      "22": [
+        0.8,
+        0.4
+      ]
+    },
+    "attainable_action_2": {
+      "11": [
+        0.4,
+        0.8
+      ],
+      "12": [
+        0.4,
+        0.4
+      ],
+      "21": [
+        0.8,
+        0.8
+      ],
+      "22": [
+        0.8,
+        0.4
+      ]
+    },
+    "delta_dev": 0.0,
+    "frontier_action_1": [
+      [
+        0.8,
+        0.8
+      ]
+    ],
+    "frontier_action_2": [
+      [
+        0.8,
+        0.8
+      ]
+    ],
+    "future_state_action_1": [
+      [
+        0.5,
+        0.8
+      ],
+      [
+        0.8,
+        0.4
+      ]
+    ],
+    "future_state_action_2": [
+      [
+        0.4,
+        0.8
+      ],
+      [
+        0.8,
+        0.4
+      ]
+    ],
+    "learning_rates": [
+      0.1,
+      0.0
+    ],
+    "state_0": [
+      [
+        0.4,
+        0.8
+      ],
+      [
+        0.8,
+        0.4
+      ]
+    ],
+    "value_action_1": 0.8,
+    "value_action_2": 0.8
+  },
+  "d2_at_p_half": {
+    "attainable_action_1": {
+      "11": [
+        1.0,
+        0.8
+      ],
+      "12": [
+        1.0,
+        0.6
+      ],
+      "21": [
+        0.8,
+        0.8
+      ],
+      "22": [
+        0.8,
+        0.6
+      ]
+    },
+    "attainable_action_2": {
+      "11": [
+        0.7,
+        0.8
+      ],
+      "12": [
+        0.7,
+        0.6
+      ],
+      "21": [
+        0.8,
+        0.8
+      ],
+      "22": [
+        0.8,
+        0.6
+      ]
+    },
+    "delta_dev": 0.09999999999999998,
+    "delta_j": -1.1102230246251565e-16,
+    "delta_r": -0.10000000000000009,
+    "frontier_action_1": [
+      [
+        1.0,
+        0.8
+      ]
+    ],
+    "frontier_action_2": [
+      [
+        0.8,
+        0.8
+      ]
+    ],
+    "future_state_action_1": [
+      [
+        1.0,
+        0.8
+      ],
+      [
+        0.8,
+        0.6
+      ]
+    ],
+    "future_state_action_2": [
+      [
+        0.7,
+        0.8
+      ],
+      [
+        0.8,
+        0.6
+      ]
+    ],
+    "learning_rates": [
+      0.3,
+      0.0
+    ],
+    "state_0": [
+      [
+        0.7,
+        0.8
+      ],
+      [
+        0.8,
+        0.6
+      ]
+    ]
+  },
+  "d2_sweep": {
+    "maximum_absolute_errors": {
+      "delta_dev": 1.1102230246251565e-16,
+      "delta_j": 1.942890293094024e-16,
+      "delta_r": 8.326672684688674e-17
+    },
+    "p_j_star": 0.5,
+    "p_v_star": 0.0,
+    "points": 101
+  },
+  "description": "deterministic 2-agent/2-task/2-period T4--T6 ground truth",
+  "deterministic": true,
+  "experiment_id": "G2",
+  "seeds": null,
+  "tolerance": 1e-12
+}
