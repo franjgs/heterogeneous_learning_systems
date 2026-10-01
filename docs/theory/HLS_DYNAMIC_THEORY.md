@@ -122,6 +122,20 @@ V_{t+1}(F(S_t,a');\theta_{t+1}).
 }
 $$
 
+### T4 → T5 consistency condition
+
+Under common future operating conditions and a future performance criterion
+compatible with T0 (that is, one evaluated from the same collective-capability
+object), equal future collective capability implies equal future value:
+
+$$
+\mathcal C_{t+1}(a)=\mathcal C_{t+1}(a')
+\quad\Longrightarrow\quad
+V_{t+1}(F(S_t,a);\theta_{t+1})
+=
+V_{t+1}(F(S_t,a');\theta_{t+1}).
+$$
+
 ### T5 null boundary
 
 Different efficient future capabilities can have equal value:
@@ -184,7 +198,40 @@ A sufficient continuation value, price, threshold, incentive, or other
 coordination signal may still reproduce the dynamic optimum. Irreducibility is
 outside this minimal T4--T6 foundation.
 
-## 7. Minimality
+## 7. HLS Relevance Cascade
+
+For alternatives $a,a'$ under common future operating conditions, the
+structural relevance screen is:
+
+```text
+a_t → S_{t+1} → C_{t+1} → V_{t+1} → optimal present choice
+      F1          F2          F3             F4
+```
+
+- **F1 — state divergence:** $F(S_t,a)\neq F(S_t,a')$.
+- **F2 — capability relevance:** $\mathcal C_{t+1}(a)\neq
+  \mathcal C_{t+1}(a')$.
+- **F3 — value relevance:** the corresponding future values differ under the
+  common future conditions.
+- **F4 — decision relevance:** in a two-alternative present choice with a
+  strict static preference, the future value changes the optimal present
+  choice.
+
+By the transition, T0-compatible value evaluation, and the T6 decomposition,
+
+$$
+\boxed{F4\Rightarrow F3\Rightarrow F2\Rightarrow F1.}
+$$
+
+The converses do not hold in general. This is a structural HLS screen for
+locating where relevance is lost; it is not a new dynamic-programming theorem.
+
+G2 supplies its minimal controls: D0 blocks F1; D1 blocks F2; D2 with $p=0$
+blocks F3; D2 with $0<p<0.5$ does not reach F4; and D2 with $p>0.5$ reaches
+F4. At $p=0.5$, D2 is intertemporally indifferent and likewise does not reach
+F4.
+
+## 8. Minimality
 
 All three blocks are required.
 
@@ -203,14 +250,14 @@ partial information, centralized management, or irreducible joint management.
 **Complexity rule:** no new mechanism without a reduction it is intended to
 break.
 
-## 8. Relation to established theory
+## 9. Relation to established theory
 
 T4 admits a reachability/control interpretation. T5 is a value comparison over
 reachable future capability. T6 is a two-stage dynamic-programming/
 continuation-value decomposition. These reductions are intentional baselines,
 not defects.
 
-## 9. Consolidated chain
+## 10. Consolidated chain
 
 ```text
 T0–T3: fixed competence
@@ -235,7 +282,7 @@ current operational value -----+
 T6: organization–development coupling
 ```
 
-## 10. Scoped claims
+## 11. Scoped claims
 
 The foundation supports only these claims:
 

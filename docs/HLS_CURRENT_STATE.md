@@ -80,6 +80,11 @@ and organization--development coupling (T6). The accompanying
 [G2 Dynamic Ground Truth](theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md) is a minimal
 analytical constructive/null reference for these distinctions.
 
+The dynamic foundation also records the HLS Relevance Cascade as a structural
+screen from action-induced state divergence through capability and value
+relevance to decision relevance. Its D0/D1/D2 controls identify where that
+screen stops; it is not a new dynamic-programming result.
+
 This foundation does not claim new general control or dynamic-programming
 theory, irreducibly joint management, RQ0, prevalence, robustness, empirical
 relevance, or a universal dynamic HLS model. G2 is not yet an implemented

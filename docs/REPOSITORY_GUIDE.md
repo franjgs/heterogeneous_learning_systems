@@ -57,7 +57,7 @@ classification.
 | [theory/README.md](theory/README.md) | Theory registry | CURRENT | Locate canonical and supporting theory. | Independent scientific-status authority. |
 | [theory/HLS_STATIC_THEORY.md](theory/HLS_STATIC_THEORY.md) | Static theoretical foundation | CONSOLIDATED | T0--T3 and the fixed-competence/static boundary. | Dynamic T4--T6 theory. |
 | [theory/HLS_G1_STATIC_EXPERIMENTAL_GROUND_TRUTH.md](theory/HLS_G1_STATIC_EXPERIMENTAL_GROUND_TRUTH.md) | Static validation interpretation | CONSOLIDATED | Scope, controls, and non-claims of G1.1/G1.2. | A novelty claim about static OR theory. |
-| [theory/HLS_DYNAMIC_THEORY.md](theory/HLS_DYNAMIC_THEORY.md) | Dynamic theoretical foundation | CONSOLIDATED working foundation | T4--T6 scaffold and stated scope. | A claim of irreducible joint management or validation beyond G2's stated scope. |
+| [theory/HLS_DYNAMIC_THEORY.md](theory/HLS_DYNAMIC_THEORY.md) | Dynamic theoretical foundation | CONSOLIDATED working foundation | T4--T6 scaffold, HLS Relevance Cascade, and stated scope. | A claim of irreducible joint management or validation beyond G2's stated scope. |
 | [theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md](theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md) | Dynamic ground-truth specification | CANONICAL minimal constructive ground truth | D0/D1/D2 constructive/null reference and stated non-claims. | A universal dynamic model or validation beyond D0/D1/D2. |
 | [theory/minimal_hls_model.md](theory/minimal_hls_model.md) | Reduced dynamic testbed | SUPPORTING | Model-scoped separability, threshold, coordination, and boundary lessons. | General T4--T6 theory. |
 | [theory/operational_development_opportunity_value.md](theory/operational_development_opportunity_value.md) | Mechanism-level theory | SUPPORTING | Opportunity-value decomposition under stated assumptions. | General proof that joint management has value. |
@@ -92,7 +92,8 @@ T0--T3 are consolidated in [HLS Static Theory](theory/HLS_STATIC_THEORY.md).
 T4--T6 form the scoped dynamic working foundation in
 [HLS Dynamic Theory](theory/HLS_DYNAMIC_THEORY.md), with G2 as its minimal
 constructive/null reference. Its D0/D1/D2 identities have deterministic
-computational validation. Neither document claims a universal dynamic model,
+computational validation and instantiate the cascade's structural controls.
+Neither document claims a universal dynamic model,
 irreducible joint management, or validation beyond that scope.
 
 RQ0 is a specific open dynamic research question, not the definition of HLS.
