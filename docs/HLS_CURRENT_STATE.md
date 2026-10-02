@@ -617,7 +617,15 @@ organization/development.
 
 The next work is **not** another parameter sweep or an extension of the
 existing RQ0 synthetic campaign.  The minimum reference scenario has been
-documented and has a deterministic reference evaluator, but no broader G0
+documented and has a deterministic reference evaluator.  Its closed
+[information audit](experimental_foundations/HLS_MINIMAL_REFERENCE_INFORMATION_AUDIT.md)
+retains a model-scoped exact reconstruction
+`G=max(h,v)-max(h+u,0)` and, for `L>0,beta>0`, the decision compression
+`m=min(v,v-u-h)`.  The latter matches the oracle on the declared Phase-V
+formal domain but has a documented direct-double numerical robustness limit
+under continuous extreme/saturation attacks.  The methodological result is to
+seek compact estimates of organizational value from action-induced competence
+development, not to claim general scalar sufficiency.  No broader G0
 integration or experimental campaign has begun.
 
 T4--T6 and G2 establish an analytical baseline with deterministic D0/D1/D2

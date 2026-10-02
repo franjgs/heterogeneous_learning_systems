@@ -1,0 +1,13 @@
+{
+  "audit_sha256": "220b4530e125161a889851fa990075b6b93c44deb90c13f41e129ece9dc7161e",
+  "command": "python experiments/synthetic/minimal_reference/run_information_audit.py",
+  "deterministic": true,
+  "experiment_id": "minimal_reference_phase_v_information_audit",
+  "repository_commit_at_run": "d99a3f1a6ec6794e2240897d3cdc5606a2f8a7cf",
+  "runner_sha256": "4598c048668f52bd67ebb1fb1f4c1da5f16874cf41f8790762d74e21cbf9ad74",
+  "scenario_sha256": "b3a32ea2b1c118d4fe1412c2795af5dccd13edfeedc6e9d2c290f539c7a8021e",
+  "seeds": null,
+  "summary_sha256": "a16aa431a47d7337ceff2cdb9aaba8c474948f5789e132ea422dceb922eb099b",
+  "validation_sha256": "b5a126337bf7fccbbadd1123d1b4d47527f6f97f500e53804d0366dc285f6087",
+  "working_tree_dirty_at_run": true
+}
