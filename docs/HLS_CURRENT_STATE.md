@@ -54,6 +54,55 @@ of the investigation.
 The programme is returning to a more foundational level after an intensive
 analysis of one specific organization/development question.
 
+### Current scientific orientation and experimental strategy
+
+HLS is not intended to constitute a new mathematical class of systems. Beam 1
+and Beam 2 are deliberately grounded in the best existing theories of
+organization/allocation and competence evolution/development. Antecedents for
+an HLS component are a strength, not a weakness. T0--T6, G1/G2, the HLS
+Relevance Cascade, and the Minimal Reference Scenario remain foundations for
+understanding structure, interactions, limits, nulls, and results; they need
+not be the principal novelty.
+
+The current scientific question is:
+
+> “What is the minimum integration between operational organization and competence evolution that adds value over managing them separately, and under what conditions?”
+
+The intended contribution is to identify which mechanisms are worth
+integrating, construct a minimal effective and efficient integration, and
+experimentally characterize when it improves the use and development of
+heterogeneous resources over competitive alternatives.
+
+The provisional experimental ladder is:
+
+```text
+L1 Operational-only
+L2 Separated/myopic development
+L3 Modular look-ahead
+L4 Minimal joint HLS
+L5 Full DP oracle
+```
+
+L5 is a ceiling/oracle, not an HLS competitor. The critical comparison is
+especially L3 versus L4; surpassing myopic policies is not sufficient. L4
+must begin with the minimum possible joint information, without fixing a
+definitive algorithm yet. If it fails against the oracle, the methodological
+rule is first to identify what information is missing and add only the
+minimum information whose necessity and value can be demonstrated
+experimentally.
+
+L4 is not expected to win everywhere. A valid result characterizes regions in
+which operational-only control suffices, the modular solution suffices,
+minimal integration adds value, or more complete dynamic look-ahead is
+required. No expansion to additional workers, tasks, uncertainty, LLMs,
+communication, hierarchies, or other mechanisms is authorized at this stage;
+the next work starts in the already validated minimal environment.
+
+The file `hls_foundations_v02` is frozen for now. It is neither to be modified
+nor incorporated into the paper's official state. This orientation changes the
+role and priority of the pieces; it does not retrospectively invalidate prior
+valid evidence or results.
+
 ### Static theoretical foundation
 
 T0--T3 are now consolidated in the canonical
