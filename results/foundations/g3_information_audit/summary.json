@@ -1,0 +1,2560 @@
+{
+  "campaign": "g3_phase_v_adversarial_information_audit",
+  "regimes": {
+    "dual": {
+      "action_observations": 234375,
+      "learning_scales": [
+        0.0,
+        0.25,
+        0.5,
+        1.0,
+        2.0
+      ],
+      "max_direct_algebraic_residual": 0.0,
+      "regime": "dual",
+      "representations": {
+        "amount": {
+          "action_classes": 66,
+          "d_collision_classes": 65,
+          "d_collision_observations": 186000,
+          "d_counterexample": {
+            "D_span": 0.75,
+            "feature": [
+              0.75
+            ],
+            "high": {
+              "D": 0.75,
+              "action": 0,
+              "feature": [
+                0.75
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.0,
+              "action": 1,
+              "feature": [
+                0.75
+              ],
+              "learning_scale": 2.0,
+              "state": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.25,
+                  1.0
+                ],
+                [
+                  1.0,
+                  1.0
+                ]
+              ]
+            }
+          },
+          "max_d_span": 2.0,
+          "oracle_agreement": 0.9630208,
+          "oracle_development_value_recovered": 0.9918220286247666,
+          "ranking_classes": 34824,
+          "ranking_collision_classes": 3375,
+          "ranking_counterexample": {
+            "first": {
+              "oracle_action": 0,
+              "world": {
+                "D": 1.125,
+                "action": 0,
+                "feature": [
+                  1.125
+                ],
+                "learning_scale": 0.5,
+                "state": [
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.5
+                  ]
+                ]
+              }
+            },
+            "second": {
+              "oracle_action": 2,
+              "world": {
+                "D": 1.125,
+                "action": 0,
+                "feature": [
+                  1.125
+                ],
+                "learning_scale": 2.0,
+                "state": [
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    1.0,
+                    1.0
+                  ],
+                  [
+                    0.5,
+                    0.75
+                  ]
+                ]
+              }
+            },
+            "signature": [
+              [
+                1.125
+              ],
+              [
+                1.125
+              ],
+              [
+                1.5
+              ]
+            ]
+          },
+          "regret_mean": 0.0039426,
+          "regret_total": 308.015625,
+          "regret_worst": 0.4375
+        },
+        "full_exact": {
+          "action_classes": 28002,
+          "d_collision_classes": 0,
+          "d_collision_observations": 0,
+          "d_counterexample": null,
+          "max_d_span": 0.0,
+          "oracle_agreement": 1.0,
+          "oracle_development_value_recovered": 1.0,
+          "ranking_classes": 62562,
+          "ranking_collision_classes": 0,
+          "ranking_counterexample": null,
+          "regret_mean": 0.0,
+          "regret_total": 0.0,
+          "regret_worst": 0.0
+        },
+        "localized": {
+          "action_classes": 438,
+          "d_collision_classes": 437,
+          "d_collision_observations": 186000,
+          "d_counterexample": {
+            "D_span": 0.5,
+            "feature": [
+              0.25,
+              0.25,
+              0.25
+            ],
+            "high": {
+              "D": 0.75,
+              "action": 0,
+              "feature": [
+                0.25,
+                0.25,
+                0.25
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.25,
+              "action": 2,
+              "feature": [
+                0.25,
+                0.25,
+                0.25
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.5
+                ]
+              ]
+            }
+          },
+          "max_d_span": 2.0,
+          "oracle_agreement": 0.9964416,
+          "oracle_development_value_recovered": 0.9989844430616055,
+          "ranking_classes": 60978,
+          "ranking_collision_classes": 345,
+          "ranking_counterexample": {
+            "first": {
+              "oracle_action": 0,
+              "world": {
+                "D": 1.125,
+                "action": 0,
+                "feature": [
+                  0.5,
+                  0.5,
+                  0.125
+                ],
+                "learning_scale": 0.5,
+                "state": [
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.5
+                  ]
+                ]
+              }
+            },
+            "second": {
+              "oracle_action": 2,
+              "world": {
+                "D": 1.125,
+                "action": 0,
+                "feature": [
+                  0.5,
+                  0.5,
+                  0.125
+                ],
+                "learning_scale": 2.0,
+                "state": [
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.5,
+                    0.75
+                  ]
+                ]
+              }
+            },
+            "signature": [
+              [
+                0.5,
+                0.5,
+                0.125
+              ],
+              [
+                0.5,
+                0.5,
+                0.125
+              ],
+              [
+                0.5,
+                0.5,
+                0.5
+              ]
+            ]
+          },
+          "regret_mean": 0.0004896,
+          "regret_total": 38.25,
+          "regret_worst": 0.25
+        },
+        "localized_best_advantage": {
+          "action_classes": 2236,
+          "d_collision_classes": 1842,
+          "d_collision_observations": 165147,
+          "d_counterexample": {
+            "D_span": 0.5,
+            "feature": [
+              0.25,
+              0.25,
+              0.25,
+              0.0
+            ],
+            "high": {
+              "D": 0.75,
+              "action": 0,
+              "feature": [
+                0.25,
+                0.25,
+                0.25,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.25,
+              "action": 2,
+              "feature": [
+                0.25,
+                0.25,
+                0.25,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.5
+                ]
+              ]
+            }
+          },
+          "max_d_span": 1.0,
+          "oracle_agreement": 0.9990784,
+          "oracle_development_value_recovered": 0.9997610454262601,
+          "ranking_classes": 62066,
+          "ranking_collision_classes": 86,
+          "ranking_counterexample": {
+            "first": {
+              "oracle_action": 0,
+              "world": {
+                "D": 1.125,
+                "action": 0,
+                "feature": [
+                  0.5,
+                  0.5,
+                  0.125,
+                  0.0
+                ],
+                "learning_scale": 0.5,
+                "state": [
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.5
+                  ]
+                ]
+              }
+            },
+            "second": {
+              "oracle_action": 2,
+              "world": {
+                "D": 1.125,
+                "action": 0,
+                "feature": [
+                  0.5,
+                  0.5,
+                  0.125,
+                  0.0
+                ],
+                "learning_scale": 2.0,
+                "state": [
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.5,
+                    0.75
+                  ]
+                ]
+              }
+            },
+            "signature": [
+              [
+                0.5,
+                0.5,
+                0.125,
+                0.0
+              ],
+              [
+                0.5,
+                0.5,
+                0.125,
+                0.0
+              ],
+              [
+                0.5,
+                0.5,
+                0.5,
+                0.0
+              ]
+            ]
+          },
+          "regret_mean": 0.0001152,
+          "regret_total": 9.0,
+          "regret_worst": 0.125
+        },
+        "localized_best_second_advantage": {
+          "action_classes": 8676,
+          "d_collision_classes": 5221,
+          "d_collision_observations": 144024,
+          "d_counterexample": {
+            "D_span": 0.5,
+            "feature": [
+              0.25,
+              0.25,
+              0.25,
+              0.0,
+              0.0
+            ],
+            "high": {
+              "D": 0.75,
+              "action": 0,
+              "feature": [
+                0.25,
+                0.25,
+                0.25,
+                0.0,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.25,
+              "action": 2,
+              "feature": [
+                0.25,
+                0.25,
+                0.25,
+                0.0,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.5
+                ]
+              ]
+            }
+          },
+          "max_d_span": 1.0,
+          "oracle_agreement": 0.9996544,
+          "oracle_development_value_recovered": 0.9999103920348476,
+          "ranking_classes": 62264,
+          "ranking_collision_classes": 31,
+          "ranking_counterexample": {
+            "first": {
+              "oracle_action": 0,
+              "world": {
+                "D": 1.125,
+                "action": 0,
+                "feature": [
+                  0.5,
+                  0.5,
+                  0.125,
+                  0.0,
+                  0.0
+                ],
+                "learning_scale": 0.5,
+                "state": [
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.5
+                  ]
+                ]
+              }
+            },
+            "second": {
+              "oracle_action": 2,
+              "world": {
+                "D": 1.125,
+                "action": 0,
+                "feature": [
+                  0.5,
+                  0.5,
+                  0.125,
+                  0.0,
+                  0.0
+                ],
+                "learning_scale": 2.0,
+                "state": [
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.5,
+                    0.75
+                  ]
+                ]
+              }
+            },
+            "signature": [
+              [
+                0.5,
+                0.5,
+                0.125,
+                0.0,
+                0.0
+              ],
+              [
+                0.5,
+                0.5,
+                0.125,
+                0.0,
+                0.0
+              ],
+              [
+                0.5,
+                0.5,
+                0.5,
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          "regret_mean": 4.32e-05,
+          "regret_total": 3.375,
+          "regret_worst": 0.125
+        },
+        "localized_own_gap": {
+          "action_classes": 2674,
+          "d_collision_classes": 852,
+          "d_collision_observations": 46134,
+          "d_counterexample": {
+            "D_span": 0.109375,
+            "feature": [
+              0.25,
+              0.25,
+              0.140625,
+              0.5
+            ],
+            "high": {
+              "D": 0.25,
+              "action": 0,
+              "feature": [
+                0.25,
+                0.25,
+                0.140625,
+                0.5
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.75,
+                  0.25
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.140625,
+              "action": 2,
+              "feature": [
+                0.25,
+                0.25,
+                0.140625,
+                0.5
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.25
+                ],
+                [
+                  0.0,
+                  0.5
+                ]
+              ]
+            }
+          },
+          "max_d_span": 0.5,
+          "oracle_agreement": 1.0,
+          "oracle_development_value_recovered": 1.0,
+          "ranking_classes": 62562,
+          "ranking_collision_classes": 0,
+          "ranking_counterexample": null,
+          "regret_mean": 0.0,
+          "regret_total": 0.0,
+          "regret_worst": 0.0
+        },
+        "localized_two_gaps": {
+          "action_classes": 11980,
+          "d_collision_classes": 426,
+          "d_collision_observations": 20085,
+          "d_counterexample": {
+            "D_span": 0.109375,
+            "feature": [
+              0.25,
+              0.25,
+              0.140625,
+              0.5,
+              0.0
+            ],
+            "high": {
+              "D": 0.25,
+              "action": 1,
+              "feature": [
+                0.25,
+                0.25,
+                0.140625,
+                0.5,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.5
+                ],
+                [
+                  0.25,
+                  0.25
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.140625,
+              "action": 2,
+              "feature": [
+                0.25,
+                0.25,
+                0.140625,
+                0.5,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.25
+                ],
+                [
+                  0.0,
+                  0.5
+                ]
+              ]
+            }
+          },
+          "max_d_span": 0.5,
+          "oracle_agreement": 1.0,
+          "oracle_development_value_recovered": 1.0,
+          "ranking_classes": 62562,
+          "ranking_collision_classes": 0,
+          "ranking_counterexample": null,
+          "regret_mean": 0.0,
+          "regret_total": 0.0,
+          "regret_worst": 0.0
+        }
+      },
+      "state_values": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "structural_diagnostics": {
+        "any_action_changes_terminal_assignment_worlds": 46800,
+        "f3_shared_B_D_differences": 0,
+        "f3_shared_B_comparisons": 0,
+        "f4_amount_vs_D_reversed_pairs": 75204,
+        "f4_comparable_action_pairs": 131724,
+        "generalist_or_equal_competence_state_worlds": 38125,
+        "pre_assignment_tie_worlds": 15125,
+        "pure_specialist_state_worlds": 17290,
+        "saturation_state_worlds": 57645,
+        "worlds": 78125
+      },
+      "worlds": 78125
+    },
+    "g3a": {
+      "action_observations": 468750,
+      "learning_scales": [
+        0.0,
+        0.25,
+        0.5,
+        1.0,
+        2.0
+      ],
+      "max_direct_algebraic_residual": 0.0,
+      "regime": "g3a",
+      "representations": {
+        "amount": {
+          "action_classes": 31,
+          "d_collision_classes": 30,
+          "d_collision_observations": 360000,
+          "d_counterexample": {
+            "D_span": 0.5,
+            "feature": [
+              0.5
+            ],
+            "high": {
+              "D": 0.5,
+              "action": [
+                0,
+                1
+              ],
+              "feature": [
+                0.5
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.0,
+              "action": [
+                2,
+                0
+              ],
+              "feature": [
+                0.5
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.5
+                ]
+              ]
+            }
+          },
+          "max_d_span": 2.0,
+          "oracle_agreement": 0.9964416,
+          "oracle_development_value_recovered": 0.9976195440293266,
+          "ranking_classes": 60739,
+          "ranking_collision_classes": 322,
+          "ranking_counterexample": {
+            "first": {
+              "oracle_action": [
+                0,
+                2
+              ],
+              "world": {
+                "D": 0.5,
+                "action": [
+                  0,
+                  1
+                ],
+                "feature": [
+                  1.0
+                ],
+                "learning_scale": 0.5,
+                "state": [
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.5
+                  ]
+                ]
+              }
+            },
+            "second": {
+              "oracle_action": [
+                0,
+                1
+              ],
+              "world": {
+                "D": 0.75,
+                "action": [
+                  0,
+                  1
+                ],
+                "feature": [
+                  1.0
+                ],
+                "learning_scale": 2.0,
+                "state": [
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.5,
+                    0.75
+                  ]
+                ]
+              }
+            },
+            "signature": [
+              [
+                1.0
+              ],
+              [
+                0.625
+              ],
+              [
+                1.0
+              ],
+              [
+                0.625
+              ],
+              [
+                1.0
+              ],
+              [
+                1.0
+              ]
+            ]
+          },
+          "regret_mean": 0.0004704,
+          "regret_total": 36.75,
+          "regret_worst": 0.25
+        },
+        "full_exact": {
+          "action_classes": 8532,
+          "d_collision_classes": 0,
+          "d_collision_observations": 0,
+          "d_counterexample": null,
+          "max_d_span": 0.0,
+          "oracle_agreement": 1.0,
+          "oracle_development_value_recovered": 1.0,
+          "ranking_classes": 66138,
+          "ranking_collision_classes": 0,
+          "ranking_counterexample": null,
+          "regret_mean": 0.0,
+          "regret_total": 0.0,
+          "regret_worst": 0.0
+        },
+        "localized": {
+          "action_classes": 78,
+          "d_collision_classes": 77,
+          "d_collision_observations": 360000,
+          "d_counterexample": {
+            "D_span": 0.5,
+            "feature": [
+              0.25,
+              0.25
+            ],
+            "high": {
+              "D": 0.5,
+              "action": [
+                0,
+                1
+              ],
+              "feature": [
+                0.25,
+                0.25
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.0,
+              "action": [
+                2,
+                0
+              ],
+              "feature": [
+                0.25,
+                0.25
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.5
+                ]
+              ]
+            }
+          },
+          "max_d_span": 2.0,
+          "oracle_agreement": 0.9964416,
+          "oracle_development_value_recovered": 0.9976195440293266,
+          "ranking_classes": 60978,
+          "ranking_collision_classes": 304,
+          "ranking_counterexample": {
+            "first": {
+              "oracle_action": [
+                0,
+                2
+              ],
+              "world": {
+                "D": 0.5,
+                "action": [
+                  0,
+                  1
+                ],
+                "feature": [
+                  0.5,
+                  0.5
+                ],
+                "learning_scale": 0.5,
+                "state": [
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.5
+                  ]
+                ]
+              }
+            },
+            "second": {
+              "oracle_action": [
+                0,
+                1
+              ],
+              "world": {
+                "D": 0.75,
+                "action": [
+                  0,
+                  1
+                ],
+                "feature": [
+                  0.5,
+                  0.5
+                ],
+                "learning_scale": 2.0,
+                "state": [
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.5,
+                    0.75
+                  ]
+                ]
+              }
+            },
+            "signature": [
+              [
+                0.5,
+                0.5
+              ],
+              [
+                0.5,
+                0.125
+              ],
+              [
+                0.5,
+                0.5
+              ],
+              [
+                0.5,
+                0.125
+              ],
+              [
+                0.5,
+                0.5
+              ],
+              [
+                0.5,
+                0.5
+              ]
+            ]
+          },
+          "regret_mean": 0.0004704,
+          "regret_total": 36.75,
+          "regret_worst": 0.25
+        },
+        "localized_g_ij": {
+          "action_classes": 434,
+          "d_collision_classes": 151,
+          "d_collision_observations": 135672,
+          "d_counterexample": {
+            "D_span": 0.25,
+            "feature": [
+              0.25,
+              0.25,
+              0.5
+            ],
+            "high": {
+              "D": 0.25,
+              "action": [
+                0,
+                1
+              ],
+              "feature": [
+                0.25,
+                0.25,
+                0.5
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.5
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.0,
+              "action": [
+                2,
+                0
+              ],
+              "feature": [
+                0.25,
+                0.25,
+                0.5
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.5
+                ]
+              ]
+            }
+          },
+          "max_d_span": 0.5,
+          "oracle_agreement": 1.0,
+          "oracle_development_value_recovered": 1.0,
+          "ranking_classes": 66138,
+          "ranking_collision_classes": 0,
+          "ranking_counterexample": null,
+          "regret_mean": 0.0,
+          "regret_total": 0.0,
+          "regret_worst": 0.0
+        },
+        "localized_g_ij_g_ik": {
+          "action_classes": 1896,
+          "d_collision_classes": 406,
+          "d_collision_observations": 82434,
+          "d_counterexample": {
+            "D_span": 0.25,
+            "feature": [
+              0.25,
+              0.25,
+              0.5,
+              0.5
+            ],
+            "high": {
+              "D": 0.25,
+              "action": [
+                0,
+                1
+              ],
+              "feature": [
+                0.25,
+                0.25,
+                0.5,
+                0.5
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.5,
+                  0.0
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.0,
+              "action": [
+                2,
+                0
+              ],
+              "feature": [
+                0.25,
+                0.25,
+                0.5,
+                0.5
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.5
+                ]
+              ]
+            }
+          },
+          "max_d_span": 0.5,
+          "oracle_agreement": 1.0,
+          "oracle_development_value_recovered": 1.0,
+          "ranking_classes": 66138,
+          "ranking_collision_classes": 0,
+          "ranking_counterexample": null,
+          "regret_mean": 0.0,
+          "regret_total": 0.0,
+          "regret_worst": 0.0
+        },
+        "localized_g_ij_g_kj": {
+          "action_classes": 1896,
+          "d_collision_classes": 406,
+          "d_collision_observations": 82434,
+          "d_counterexample": {
+            "D_span": 0.25,
+            "feature": [
+              0.25,
+              0.25,
+              0.5,
+              0.5
+            ],
+            "high": {
+              "D": 0.25,
+              "action": [
+                0,
+                1
+              ],
+              "feature": [
+                0.25,
+                0.25,
+                0.5,
+                0.5
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.5
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.0,
+              "action": [
+                2,
+                0
+              ],
+              "feature": [
+                0.25,
+                0.25,
+                0.5,
+                0.5
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.5
+                ]
+              ]
+            }
+          },
+          "max_d_span": 0.5,
+          "oracle_agreement": 1.0,
+          "oracle_development_value_recovered": 1.0,
+          "ranking_classes": 66138,
+          "ranking_collision_classes": 0,
+          "ranking_counterexample": null,
+          "regret_mean": 0.0,
+          "regret_total": 0.0,
+          "regret_worst": 0.0
+        },
+        "localized_g_ik": {
+          "action_classes": 568,
+          "d_collision_classes": 417,
+          "d_collision_observations": 335328,
+          "d_counterexample": {
+            "D_span": 0.25,
+            "feature": [
+              0.25,
+              0.25,
+              0.0
+            ],
+            "high": {
+              "D": 0.5,
+              "action": [
+                0,
+                1
+              ],
+              "feature": [
+                0.25,
+                0.25,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.25,
+              "action": [
+                0,
+                1
+              ],
+              "feature": [
+                0.25,
+                0.25,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.25
+                ]
+              ]
+            }
+          },
+          "max_d_span": 1.0,
+          "oracle_agreement": 1.0,
+          "oracle_development_value_recovered": 1.0,
+          "ranking_classes": 66138,
+          "ranking_collision_classes": 0,
+          "ranking_counterexample": null,
+          "regret_mean": 0.0,
+          "regret_total": 0.0,
+          "regret_worst": 0.0
+        },
+        "localized_g_ik_g_kj": {
+          "action_classes": 3448,
+          "d_collision_classes": 1500,
+          "d_collision_observations": 264780,
+          "d_counterexample": {
+            "D_span": 0.25,
+            "feature": [
+              0.25,
+              0.25,
+              0.0,
+              0.0
+            ],
+            "high": {
+              "D": 0.5,
+              "action": [
+                0,
+                1
+              ],
+              "feature": [
+                0.25,
+                0.25,
+                0.0,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.25,
+              "action": [
+                0,
+                1
+              ],
+              "feature": [
+                0.25,
+                0.25,
+                0.0,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.25,
+                  0.25
+                ]
+              ]
+            }
+          },
+          "max_d_span": 1.0,
+          "oracle_agreement": 1.0,
+          "oracle_development_value_recovered": 1.0,
+          "ranking_classes": 66138,
+          "ranking_collision_classes": 0,
+          "ranking_counterexample": null,
+          "regret_mean": 0.0,
+          "regret_total": 0.0,
+          "regret_worst": 0.0
+        },
+        "localized_g_kj": {
+          "action_classes": 568,
+          "d_collision_classes": 417,
+          "d_collision_observations": 335328,
+          "d_counterexample": {
+            "D_span": 0.25,
+            "feature": [
+              0.25,
+              0.25,
+              0.0
+            ],
+            "high": {
+              "D": 0.5,
+              "action": [
+                0,
+                1
+              ],
+              "feature": [
+                0.25,
+                0.25,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.25,
+              "action": [
+                0,
+                1
+              ],
+              "feature": [
+                0.25,
+                0.25,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.25,
+                  0.0
+                ]
+              ]
+            }
+          },
+          "max_d_span": 1.0,
+          "oracle_agreement": 1.0,
+          "oracle_development_value_recovered": 1.0,
+          "ranking_classes": 66138,
+          "ranking_collision_classes": 0,
+          "ranking_counterexample": null,
+          "regret_mean": 0.0,
+          "regret_total": 0.0,
+          "regret_worst": 0.0
+        },
+        "localized_global_gap": {
+          "action_classes": 368,
+          "d_collision_classes": 256,
+          "d_collision_observations": 343164,
+          "d_counterexample": {
+            "D_span": 0.5,
+            "feature": [
+              0.25,
+              0.25,
+              0.0
+            ],
+            "high": {
+              "D": 0.5,
+              "action": [
+                0,
+                1
+              ],
+              "feature": [
+                0.25,
+                0.25,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.0,
+              "action": [
+                2,
+                0
+              ],
+              "feature": [
+                0.25,
+                0.25,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.5
+                ]
+              ]
+            }
+          },
+          "max_d_span": 2.0,
+          "oracle_agreement": 0.998336,
+          "oracle_development_value_recovered": 0.9988826431158063,
+          "ranking_classes": 61666,
+          "ranking_collision_classes": 156,
+          "ranking_counterexample": {
+            "first": {
+              "oracle_action": [
+                0,
+                2
+              ],
+              "world": {
+                "D": 0.5,
+                "action": [
+                  0,
+                  1
+                ],
+                "feature": [
+                  0.5,
+                  0.5,
+                  0.0
+                ],
+                "learning_scale": 0.5,
+                "state": [
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.5
+                  ]
+                ]
+              }
+            },
+            "second": {
+              "oracle_action": [
+                0,
+                1
+              ],
+              "world": {
+                "D": 0.75,
+                "action": [
+                  0,
+                  1
+                ],
+                "feature": [
+                  0.5,
+                  0.5,
+                  0.0
+                ],
+                "learning_scale": 2.0,
+                "state": [
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.5,
+                    0.75
+                  ]
+                ]
+              }
+            },
+            "signature": [
+              [
+                0.5,
+                0.5,
+                0.0
+              ],
+              [
+                0.5,
+                0.125,
+                0.0
+              ],
+              [
+                0.5,
+                0.5,
+                0.0
+              ],
+              [
+                0.5,
+                0.125,
+                0.0
+              ],
+              [
+                0.5,
+                0.5,
+                0.0
+              ],
+              [
+                0.5,
+                0.5,
+                0.0
+              ]
+            ]
+          },
+          "regret_mean": 0.0002208,
+          "regret_total": 17.25,
+          "regret_worst": 0.25
+        }
+      },
+      "state_values": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "structural_diagnostics": {
+        "any_action_changes_terminal_assignment_worlds": 43710,
+        "f3_shared_B_D_differences": 328800,
+        "f3_shared_B_comparisons": 468750,
+        "f4_amount_vs_D_reversed_pairs": 234954,
+        "f4_comparable_action_pairs": 420696,
+        "generalist_or_equal_competence_state_worlds": 38125,
+        "pre_assignment_tie_worlds": 27125,
+        "pure_specialist_state_worlds": 17290,
+        "saturation_state_worlds": 57645,
+        "worlds": 78125
+      },
+      "worlds": 78125
+    },
+    "g3b": {
+      "action_observations": 234375,
+      "learning_scales": [
+        0.0,
+        0.25,
+        0.5,
+        1.0,
+        2.0
+      ],
+      "max_direct_algebraic_residual": 0.0,
+      "regime": "g3b",
+      "representations": {
+        "amount": {
+          "action_classes": 66,
+          "d_collision_classes": 65,
+          "d_collision_observations": 186000,
+          "d_counterexample": {
+            "D_span": 0.75,
+            "feature": [
+              0.75
+            ],
+            "high": {
+              "D": 0.75,
+              "action": 0,
+              "feature": [
+                0.75
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.0,
+              "action": 2,
+              "feature": [
+                0.75
+              ],
+              "learning_scale": 2.0,
+              "state": [
+                [
+                  0.25,
+                  1.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  1.0
+                ]
+              ]
+            }
+          },
+          "max_d_span": 2.0,
+          "oracle_agreement": 0.9630208,
+          "oracle_development_value_recovered": 0.9918220286247666,
+          "ranking_classes": 34824,
+          "ranking_collision_classes": 3375,
+          "ranking_counterexample": {
+            "first": {
+              "oracle_action": 2,
+              "world": {
+                "D": 1.0,
+                "action": 0,
+                "feature": [
+                  1.5
+                ],
+                "learning_scale": 0.5,
+                "state": [
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.5
+                  ]
+                ]
+              }
+            },
+            "second": {
+              "oracle_action": 0,
+              "world": {
+                "D": 1.25,
+                "action": 0,
+                "feature": [
+                  1.5
+                ],
+                "learning_scale": 2.0,
+                "state": [
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    1.0,
+                    1.0
+                  ],
+                  [
+                    0.5,
+                    0.75
+                  ]
+                ]
+              }
+            },
+            "signature": [
+              [
+                1.5
+              ],
+              [
+                1.5
+              ],
+              [
+                1.125
+              ]
+            ]
+          },
+          "regret_mean": 0.0039426,
+          "regret_total": 308.015625,
+          "regret_worst": 0.4375
+        },
+        "full_exact": {
+          "action_classes": 28002,
+          "d_collision_classes": 0,
+          "d_collision_observations": 0,
+          "d_counterexample": null,
+          "max_d_span": 0.0,
+          "oracle_agreement": 1.0,
+          "oracle_development_value_recovered": 1.0,
+          "ranking_classes": 62562,
+          "ranking_collision_classes": 0,
+          "ranking_counterexample": null,
+          "regret_mean": 0.0,
+          "regret_total": 0.0,
+          "regret_worst": 0.0
+        },
+        "localized": {
+          "action_classes": 438,
+          "d_collision_classes": 437,
+          "d_collision_observations": 186000,
+          "d_counterexample": {
+            "D_span": 0.5,
+            "feature": [
+              0.25,
+              0.25,
+              0.25
+            ],
+            "high": {
+              "D": 0.75,
+              "action": 0,
+              "feature": [
+                0.25,
+                0.25,
+                0.25
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.25,
+              "action": 0,
+              "feature": [
+                0.25,
+                0.25,
+                0.25
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.5
+                ]
+              ]
+            }
+          },
+          "max_d_span": 2.0,
+          "oracle_agreement": 0.9964416,
+          "oracle_development_value_recovered": 0.9989844430616055,
+          "ranking_classes": 60978,
+          "ranking_collision_classes": 345,
+          "ranking_counterexample": {
+            "first": {
+              "oracle_action": 2,
+              "world": {
+                "D": 1.0,
+                "action": 0,
+                "feature": [
+                  0.5,
+                  0.5,
+                  0.5
+                ],
+                "learning_scale": 0.5,
+                "state": [
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.5
+                  ]
+                ]
+              }
+            },
+            "second": {
+              "oracle_action": 0,
+              "world": {
+                "D": 1.25,
+                "action": 0,
+                "feature": [
+                  0.5,
+                  0.5,
+                  0.5
+                ],
+                "learning_scale": 2.0,
+                "state": [
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.5,
+                    0.75
+                  ]
+                ]
+              }
+            },
+            "signature": [
+              [
+                0.5,
+                0.5,
+                0.5
+              ],
+              [
+                0.5,
+                0.5,
+                0.5
+              ],
+              [
+                0.125,
+                0.5,
+                0.5
+              ]
+            ]
+          },
+          "regret_mean": 0.0004896,
+          "regret_total": 38.25,
+          "regret_worst": 0.25
+        },
+        "localized_best_advantage": {
+          "action_classes": 2236,
+          "d_collision_classes": 1842,
+          "d_collision_observations": 165147,
+          "d_counterexample": {
+            "D_span": 0.5,
+            "feature": [
+              0.25,
+              0.25,
+              0.25,
+              0.0
+            ],
+            "high": {
+              "D": 0.75,
+              "action": 0,
+              "feature": [
+                0.25,
+                0.25,
+                0.25,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.25,
+              "action": 2,
+              "feature": [
+                0.25,
+                0.25,
+                0.25,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.5,
+                  0.0
+                ]
+              ]
+            }
+          },
+          "max_d_span": 1.0,
+          "oracle_agreement": 0.9990784,
+          "oracle_development_value_recovered": 0.9997610454262601,
+          "ranking_classes": 62066,
+          "ranking_collision_classes": 86,
+          "ranking_counterexample": {
+            "first": {
+              "oracle_action": 0,
+              "world": {
+                "D": 1.125,
+                "action": 0,
+                "feature": [
+                  0.5,
+                  0.5,
+                  0.125,
+                  0.0
+                ],
+                "learning_scale": 0.5,
+                "state": [
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.5,
+                    0.0
+                  ]
+                ]
+              }
+            },
+            "second": {
+              "oracle_action": 2,
+              "world": {
+                "D": 1.125,
+                "action": 0,
+                "feature": [
+                  0.5,
+                  0.5,
+                  0.125,
+                  0.0
+                ],
+                "learning_scale": 2.0,
+                "state": [
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.75,
+                    0.5
+                  ]
+                ]
+              }
+            },
+            "signature": [
+              [
+                0.5,
+                0.5,
+                0.125,
+                0.0
+              ],
+              [
+                0.5,
+                0.5,
+                0.125,
+                0.0
+              ],
+              [
+                0.5,
+                0.5,
+                0.5,
+                0.0
+              ]
+            ]
+          },
+          "regret_mean": 0.0001152,
+          "regret_total": 9.0,
+          "regret_worst": 0.125
+        },
+        "localized_best_second_advantage": {
+          "action_classes": 8676,
+          "d_collision_classes": 5221,
+          "d_collision_observations": 144024,
+          "d_counterexample": {
+            "D_span": 0.5,
+            "feature": [
+              0.25,
+              0.25,
+              0.25,
+              0.0,
+              0.0
+            ],
+            "high": {
+              "D": 0.75,
+              "action": 0,
+              "feature": [
+                0.25,
+                0.25,
+                0.25,
+                0.0,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.25,
+              "action": 2,
+              "feature": [
+                0.25,
+                0.25,
+                0.25,
+                0.0,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.5,
+                  0.0
+                ]
+              ]
+            }
+          },
+          "max_d_span": 1.0,
+          "oracle_agreement": 0.9996544,
+          "oracle_development_value_recovered": 0.9999103920348476,
+          "ranking_classes": 62264,
+          "ranking_collision_classes": 31,
+          "ranking_counterexample": {
+            "first": {
+              "oracle_action": 0,
+              "world": {
+                "D": 1.125,
+                "action": 0,
+                "feature": [
+                  0.5,
+                  0.5,
+                  0.125,
+                  0.0,
+                  0.0
+                ],
+                "learning_scale": 0.5,
+                "state": [
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    0.5,
+                    0.0
+                  ]
+                ]
+              }
+            },
+            "second": {
+              "oracle_action": 2,
+              "world": {
+                "D": 1.125,
+                "action": 0,
+                "feature": [
+                  0.5,
+                  0.5,
+                  0.125,
+                  0.0,
+                  0.0
+                ],
+                "learning_scale": 2.0,
+                "state": [
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.5,
+                    0.5
+                  ],
+                  [
+                    0.75,
+                    0.5
+                  ]
+                ]
+              }
+            },
+            "signature": [
+              [
+                0.5,
+                0.5,
+                0.125,
+                0.0,
+                0.0
+              ],
+              [
+                0.5,
+                0.5,
+                0.125,
+                0.0,
+                0.0
+              ],
+              [
+                0.5,
+                0.5,
+                0.5,
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          "regret_mean": 4.32e-05,
+          "regret_total": 3.375,
+          "regret_worst": 0.125
+        },
+        "localized_own_gap": {
+          "action_classes": 2674,
+          "d_collision_classes": 852,
+          "d_collision_observations": 46134,
+          "d_counterexample": {
+            "D_span": 0.109375,
+            "feature": [
+              0.25,
+              0.25,
+              0.140625,
+              0.5
+            ],
+            "high": {
+              "D": 0.25,
+              "action": 0,
+              "feature": [
+                0.25,
+                0.25,
+                0.140625,
+                0.5
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.25,
+                  0.75
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.140625,
+              "action": 0,
+              "feature": [
+                0.25,
+                0.25,
+                0.140625,
+                0.5
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.5
+                ],
+                [
+                  0.25,
+                  0.0
+                ]
+              ]
+            }
+          },
+          "max_d_span": 0.5,
+          "oracle_agreement": 1.0,
+          "oracle_development_value_recovered": 1.0,
+          "ranking_classes": 62562,
+          "ranking_collision_classes": 0,
+          "ranking_counterexample": null,
+          "regret_mean": 0.0,
+          "regret_total": 0.0,
+          "regret_worst": 0.0
+        },
+        "localized_two_gaps": {
+          "action_classes": 11980,
+          "d_collision_classes": 426,
+          "d_collision_observations": 20085,
+          "d_counterexample": {
+            "D_span": 0.109375,
+            "feature": [
+              0.25,
+              0.25,
+              0.140625,
+              0.5,
+              0.0
+            ],
+            "high": {
+              "D": 0.25,
+              "action": 0,
+              "feature": [
+                0.25,
+                0.25,
+                0.140625,
+                0.5,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.5
+                ],
+                [
+                  0.25,
+                  0.75
+                ]
+              ]
+            },
+            "low": {
+              "D": 0.140625,
+              "action": 0,
+              "feature": [
+                0.25,
+                0.25,
+                0.140625,
+                0.5,
+                0.0
+              ],
+              "learning_scale": 0.25,
+              "state": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.5
+                ],
+                [
+                  0.25,
+                  0.0
+                ]
+              ]
+            }
+          },
+          "max_d_span": 0.5,
+          "oracle_agreement": 1.0,
+          "oracle_development_value_recovered": 1.0,
+          "ranking_classes": 62562,
+          "ranking_collision_classes": 0,
+          "ranking_counterexample": null,
+          "regret_mean": 0.0,
+          "regret_total": 0.0,
+          "regret_worst": 0.0
+        }
+      },
+      "state_values": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "structural_diagnostics": {
+        "any_action_changes_terminal_assignment_worlds": 46800,
+        "f3_shared_B_D_differences": 0,
+        "f3_shared_B_comparisons": 0,
+        "f4_amount_vs_D_reversed_pairs": 75204,
+        "f4_comparable_action_pairs": 131724,
+        "generalist_or_equal_competence_state_worlds": 38125,
+        "pre_assignment_tie_worlds": 15125,
+        "pure_specialist_state_worlds": 17290,
+        "saturation_state_worlds": 57645,
+        "worlds": 78125
+      },
+      "worlds": 78125
+    }
+  },
+  "scope": "finite 5^6 state grid x five learning scales; no general sufficiency claim"
+}

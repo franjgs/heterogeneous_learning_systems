@@ -628,6 +628,16 @@ seek compact estimates of organizational value from action-induced competence
 development, not to claim general scalar sufficiency.  No broader G0
 integration or experimental campaign has begun.
 
+The [G3 organizational-value ground truth](experimental_foundations/HLS_G3_ORGANIZATIONAL_VALUE_GROUND_TRUTH.md)
+is implemented as a fixed 3×2 direct-assignment evaluator with independently
+implemented algebraic identities. Its conceptual, algebraic, documentation,
+implementation, and finite adversarial validation phases are closed with a
+strong reduction to standard assignment sensitivities. The finite audit found
+that the full documented sensitivities reconstruct `D` exactly, while poorer
+signals can preserve action ranking only on its tested grid; it establishes no
+general minimality claim. G3 is an exact analytical reference for
+organizational value of development, not new HLS or assignment theory.
+
 T4--T6 and G2 establish an analytical baseline with deterministic D0/D1/D2
 computational validation.  Any implementation must preserve the declared
 reference-scenario scope and determine:

@@ -1,0 +1,11 @@
+{
+  "audit_sha256": "8a2318572b2e12653b8f703d526055f58cedaf6a130c0fcd02fd281f94d743bd",
+  "command": "python experiments/synthetic/g3/run_information_audit.py",
+  "deterministic": true,
+  "experiment_id": "g3_phase_v_adversarial_information_audit",
+  "ground_truth_sha256": "a94f8cb98dfb10aadabfd1b6583f07778c8ae96a9738aa2741e4a7ae19e419c7",
+  "repository_commit_at_run": "c6c64faa491fca7d08caed0747a1caf389f2d196",
+  "runner_sha256": "5d4027a543983fee84e7ea4542ffa6d84f2c9a9f57985e7b2e5331fed5b7df6f",
+  "summary_sha256": "4842b5c4aba6d3670ec3da222905e95c5f191cb244d369c766cfafb81f4901c7",
+  "working_tree_dirty_at_run": true
+}
