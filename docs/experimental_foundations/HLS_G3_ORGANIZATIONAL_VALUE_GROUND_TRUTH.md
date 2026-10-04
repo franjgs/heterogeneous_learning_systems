@@ -226,3 +226,92 @@ minimality of these sensitivities, HLS architectural superiority, a need for
 approximate dynamic programming, sufficiency outside G3, causal sufficiency
 of slack, or a requirement to approximate `D`. To the contrary, `D` is
 exactly calculable in G3 using standard assignment sensitivities.
+
+## 11. G3-H closure: heterogeneous learning rates and future opportunities
+
+G3-H is exactly G3 with fixed worker-specific learning scales `eta_i` in
+place of G3's common `eta`; the closed case uses G3a. An executed competence
+of worker `i` uses
+
+$$
+\ell_{\eta_i}(s)=\min\{1,\ s+\eta_i(1-s)^2\}.
+$$
+
+There is no new physics: capacity, assignments, reward, the MIS saturating
+learning law, and the G3a terminal operator remain unchanged.  For a state
+`S`, write the local organization-development value as
+
+$$
+M_S(x)=R(S,x)+\beta D(S,x),\qquad
+D(S,x)=V(F(S,x))-V(S),
+$$
+
+and compare the additional organization-development opportunity by the
+standard deterministic dynamic-programming quantity
+
+$$
+Q_S(x)=M_S(x)+\max_y M_{F(S,x)}(y).
+$$
+
+The minimum phenomenon therefore requires that additional
+organization-development opportunity; it is not present in the one-step
+local comparison alone.
+
+With human 1-based worker numbering, let
+
+$$
+S_0=\begin{pmatrix}0.5&0.7\\0.3&0.2\\0.5&0.8\end{pmatrix},\qquad
+\eta=(0.4,0.6,0.4),\qquad \beta=1,
+$$
+
+and compare `x_a=(2,3)` with `x_b=(3,1)`.  Direct evaluation of the G3a
+operator gives the following auditable branches.  The displayed future
+maxima enumerate all six admissible G3a actions.
+
+| Present action | `R(S_0,x)` | `D(S_0,x)` | `M_{S_0}(x)` | `F(S_0,x)` | maximizing future `y` | `max_y M_{F(S_0,x)}(y)` | `Q_{S_0}(x)` |
+| --- | ---: | ---: | ---: | --- | --- | ---: | ---: |
+| `x_a=(2,3)` | 1.100 | 0.110 | 1.210 | `((0.500,0.700),(0.594,0.200),(0.500,0.816))` | `(2,3)` | 1.522444 | 2.732444 |
+| `x_b=(3,1)` | 1.200 | 0.036 | 1.236 | `((0.500,0.736),(0.300,0.200),(0.600,0.800))` | `(3,1)` | 1.4278784 | 2.6638784 |
+
+In the action order `(1,2),(1,3),(2,1),(2,3),(3,1),(3,2)`, the enumerated
+future `M` values are respectively
+
+$$
+(0.706, 1.3355424, 1.3929016, 1.522444, 1.200, 0.700)
+$$
+
+after `x_a`, and
+
+$$
+(0.764, 1.380, 1.094, 1.174, 1.4278784, 0.864)
+$$
+
+after `x_b`.
+
+Thus the local ranking is reversed by the future opportunity:
+
+$$
+M_{S_0}(x_a)<M_{S_0}(x_b),\qquad
+Q_{S_0}(x_a)>Q_{S_0}(x_b).
+$$
+
+The causal ablation is
+
+$$
+Q_{S_0}(x_a)-Q_{S_0}(x_b)
+=\underbrace{(1.210-1.236)}_{-0.026}
++\underbrace{(1.522444-1.4278784)}_{0.0945656}
+=0.0685656.
+$$
+
+**VERDICT: PASS — FUTURE-OPPORTUNITY COMPARISON REQUIRED.**
+
+"In G3-H, local organization-development value can be insufficient because
+present actions can alter the value of future organization-development
+opportunities, and accounting for those opportunities can change the
+present action ranking."
+
+This closed counterexample does not demonstrate irreducibility, constitute
+new dynamic theory, or imply a particular HLS architecture.  It is a
+deterministic dynamic-programming calculation using the existing G3/MIS
+physics, with only `eta -> eta_i`.

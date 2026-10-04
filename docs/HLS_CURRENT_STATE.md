@@ -637,6 +637,11 @@ that the full documented sensitivities reconstruct `D` exactly, while poorer
 signals can preserve action ranking only on its tested grid; it establishes no
 general minimality claim. G3 is an exact analytical reference for
 organizational value of development, not new HLS or assignment theory.
+The closed G3-H entry in that canonical source changes only the fixed learning scale to
+worker-specific `eta_i` and shows that a local organization-development
+ranking can reverse when a further G3 organization-development opportunity is
+included; it is standard deterministic DP, not irreducibility, new dynamic
+theory, or an HLS-architecture claim.
 
 T4--T6 and G2 establish an analytical baseline with deterministic D0/D1/D2
 computational validation.  Any implementation must preserve the declared
