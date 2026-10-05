@@ -10,7 +10,8 @@ INITIALIZED`, rather than inferred from chats or commit metadata.
 | Role | Status | Responsible identifier | Baseline commit | Latest accepted handover | Source of mission / authority |
 | --- | --- | --- | --- | --- | --- |
 | PI | ACTIVE | UNKNOWN / TO BE INITIALIZED | `2912ca3b9a40961d98010a76c87f8464555ed04e` | None — register initialized | PI authority as recorded in [Team Handover Protocol](HLS_TEAM_HANDOVER_PROTOCOL.md) |
-| Chief Engineer | ACTIVE | UNKNOWN / TO BE INITIALIZED | `2912ca3b9a40961d98010a76c87f8464555ed04e` | None — register initialized | [Team Handover Protocol](HLS_TEAM_HANDOVER_PROTOCOL.md) |
+| Chief Engineer — outgoing | OUTGOING | UNKNOWN / TO BE INITIALIZED | `87418dd73e4f7363a139f6f0794f55f2a48c5306` | [2026-10-05 REPLACE CE handover](handovers/2026-10-05_replace_chief_engineer.md) — pending acceptance | [Team Handover Protocol §8](HLS_TEAM_HANDOVER_PROTOCOL.md#8-replace-chief-engineer) |
+| Chief Engineer — incoming | PENDING | UNKNOWN / TO BE INITIALIZED | `87418dd73e4f7363a139f6f0794f55f2a48c5306` | [2026-10-05 REPLACE CE handover](handovers/2026-10-05_replace_chief_engineer.md) — pending acceptance | [Team Handover Protocol §8](HLS_TEAM_HANDOVER_PROTOCOL.md#8-replace-chief-engineer) |
 | Expert / Beam Owner | VACANT | No named role record — TO BE INITIALIZED | `2912ca3b9a40961d98010a76c87f8464555ed04e` | None — register initialized | Scope assigned by PI or CE under the protocol |
 | Handover Steward | ACTIVE | Codex-equivalent operational steward; appointment identity TO BE INITIALIZED | `2912ca3b9a40961d98010a76c87f8464555ed04e` | None — register initialized | [Team Handover Protocol](HLS_TEAM_HANDOVER_PROTOCOL.md) |
 
