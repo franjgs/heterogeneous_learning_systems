@@ -315,3 +315,110 @@ This closed counterexample does not demonstrate irreducibility, constitute
 new dynamic theory, or imply a particular HLS architecture.  It is a
 deterministic dynamic-programming calculation using the existing G3/MIS
 physics, with only `eta -> eta_i`.
+
+## 12. Post-closure C1/C2 audit and boundary
+
+This section records two post-closure audits of the fixed G3-H ground truth.
+They introduce neither new G3-H physics nor a new HLS mechanism.
+
+### C1: development-only future opportunity — FALSIFIED
+
+Retain the local baseline
+
+$$
+M_S(x)=R(S,x)+\beta D(S,x),
+$$
+
+and consider
+
+$$
+H_{C1}(S,x)=M_S(x)+\beta^2\max_y D(F(S,x),y).
+$$
+
+This expression is well defined using the existing G3-H state transition,
+G3a action set, terminal operator, and development value.  It is not
+redundant with `M`: writing `S'=F(S,x)`,
+
+$$
+\max_yD(S',y)=\max_yV(F(S',y))-V(S').
+$$
+
+However, C1 is falsified by the closed counterexample above.  At `beta=1`,
+
+$$
+\max_yD(F(S_0,x_a),y)=0.112444,
+\qquad
+\max_yD(F(S_0,x_b),y)=0.0918784,
+$$
+
+so that
+
+$$
+H_{C1}(x_a)=1.322444 < 1.3278784=H_{C1}(x_b).
+$$
+
+It therefore preserves the incorrect local ranking.  The precise loss is the
+future operational reward `R(S',y)`: `max D` retains a best future development
+increment but discards the joint future `R`--`D` trade-off.
+
+### C2: joint future opportunity — REDUCTION TO LOOK-AHEAD / DP
+
+Consider instead
+
+$$
+H_{C2}(S,x)=M_S(x)+\beta^2\max_yM_{F(S,x)}(y).
+$$
+
+With `S'=F(S,x)`, the exact G3-H definitions give
+
+$$
+\begin{aligned}
+H_{C2}(S,x)
+&=R(S,x)+\beta[V(S')-V(S)]\\
+&\quad+\beta^2\max_y\{R(S',y)+\beta[V(F(S',y))-V(S')]\}\\
+&=R(S,x)-\beta V(S)+\beta(1-\beta^2)V(S')\\
+&\quad+\beta^2\max_y\{R(S',y)+\beta V(F(S',y))\}.
+\end{aligned}
+$$
+
+For `beta=1`, this is exactly the closed G3-H look-ahead
+
+$$
+Q_S(x)=M_S(x)+\max_yM_{F(S,x)}(y).
+$$
+
+For general `beta`, C2 has the same finite-horizon Bellman/look-ahead
+structure with a different temporal weight from the documented `Q`.  It is
+not a new HLS mechanism or a structurally cheaper approximation: it explicitly
+evaluates the future joint opportunity.
+
+### Negative result and scientific boundary
+
+G3-H currently provides no evidence for an exact intermediate representation
+between local organization-development value,
+
+$$
+M=R+\beta D,
+$$
+
+and explicit future joint-opportunity evaluation,
+
+$$
+\max_y\{R+\beta D\}.
+$$
+
+The C1 failure establishes only that `max_yD(S',y)` loses information needed
+in the audited counterexample: it omits future operational reward and the
+joint future `R`--`D` trade-off. No intermediate candidate is inferred from
+this gap.
+
+The resulting boundary is limited and negative:
+
+- a local organization-development valuation can be insufficient;
+- future development opportunity alone can also be insufficient;
+- the joint future organization-development opportunity can matter; and
+- calculating it exactly in G3-H reduces to standard look-ahead/DP.
+
+G3-H is closed as the analytical microscope for this question.  It must not
+be extended by increasing its horizon or excavating further continuation
+structure.

@@ -641,7 +641,14 @@ The closed G3-H entry in that canonical source changes only the fixed learning s
 worker-specific `eta_i` and shows that a local organization-development
 ranking can reverse when a further G3 organization-development opportunity is
 included; it is standard deterministic DP, not irreducibility, new dynamic
-theory, or an HLS-architecture claim.
+theory, or an HLS-architecture claim. Its post-closure C1 audit falsifies the
+specified development-only future-opportunity scalar: it omits future operational reward
+and retains the wrong ranking in the closed counterexample. Its C2 audit
+reduces the joint future opportunity to standard finite-horizon
+look-ahead/DP (exactly the documented look-ahead at `beta=1`). Accordingly,
+G3-H supplies no evidence for an exact intermediate representation between
+local `M=R+beta D` and explicit future joint-opportunity evaluation. It is
+closed as the analytical microscope for this question.
 
 T4--T6 and G2 establish an analytical baseline with deterministic D0/D1/D2
 computational validation.  Any implementation must preserve the declared
