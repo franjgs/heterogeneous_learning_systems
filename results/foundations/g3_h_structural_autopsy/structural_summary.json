@@ -1,0 +1,242 @@
+{
+  "population": [
+    {
+      "condition": "homogeneous",
+      "generated": 16083,
+      "original_regime_counts": {
+        "R0_USE_SUFFICIENT": 15120,
+        "R1_LOCAL_NECESSARY_SUFFICIENT": 250,
+        "R2_LOCAL_INSUFFICIENT": 713
+      },
+      "original_r2_reversion_count": 0,
+      "retained_counts": {
+        "R0_USE_SUFFICIENT": 250,
+        "R1_LOCAL_NECESSARY_SUFFICIENT": 250,
+        "R2_LOCAL_INSUFFICIENT": 250
+      }
+    },
+    {
+      "condition": "heterogeneous",
+      "generated": 2442,
+      "original_regime_counts": {
+        "R0_USE_SUFFICIENT": 1741,
+        "R1_LOCAL_NECESSARY_SUFFICIENT": 451,
+        "R2_LOCAL_INSUFFICIENT": 250
+      },
+      "original_r2_reversion_count": 0,
+      "retained_counts": {
+        "R0_USE_SUFFICIENT": 250,
+        "R1_LOCAL_NECESSARY_SUFFICIENT": 250,
+        "R2_LOCAL_INSUFFICIENT": 250
+      }
+    }
+  ],
+  "algebraic_identities": [
+    "M(S,a)=R(S,a)+D(S,a)",
+    "g(bar,x)=max_a R(S,a)-R(S,x) for bar in A_U*",
+    "m(bar,x)=g(bar,x)-rho(bar,x)=R(F(S,x),bar)-R(F(S,x),x)",
+    "immediate_crossing iff m < -REGIME_TOL"
+  ],
+  "probe": {
+    "homogeneous": {
+      "condition": "homogeneous",
+      "features": [
+        "R_(1,2)",
+        "D_(1,2)",
+        "rho_min_(1,2)",
+        "R_(1,3)",
+        "D_(1,3)",
+        "rho_min_(1,3)",
+        "R_(2,1)",
+        "D_(2,1)",
+        "rho_min_(2,1)",
+        "R_(2,3)",
+        "D_(2,3)",
+        "rho_min_(2,3)",
+        "R_(3,1)",
+        "D_(3,1)",
+        "rho_min_(3,1)",
+        "R_(3,2)",
+        "D_(3,2)",
+        "rho_min_(3,2)"
+      ],
+      "train_size": 525,
+      "test_size": 225,
+      "accuracy": 0.5466666666666666,
+      "balanced_accuracy": 0.5466666666666667,
+      "labels": [
+        "R0_USE_SUFFICIENT",
+        "R1_LOCAL_NECESSARY_SUFFICIENT",
+        "R2_LOCAL_INSUFFICIENT"
+      ],
+      "confusion_matrix": [
+        [
+          54,
+          3,
+          18
+        ],
+        [
+          19,
+          19,
+          37
+        ],
+        [
+          9,
+          16,
+          50
+        ]
+      ],
+      "tree": "|--- D_(3,2) <= 0.15\n|   |--- D_(1,3) <= 0.04\n|   |   |--- D_(2,1) <= 0.03\n|   |   |   |--- class: R0_USE_SUFFICIENT\n|   |   |--- D_(2,1) >  0.03\n|   |   |   |--- class: R0_USE_SUFFICIENT\n|   |--- D_(1,3) >  0.04\n|   |   |--- D_(3,2) <= 0.01\n|   |   |   |--- class: R0_USE_SUFFICIENT\n|   |   |--- D_(3,2) >  0.01\n|   |   |   |--- class: R0_USE_SUFFICIENT\n|--- D_(3,2) >  0.15\n|   |--- D_(2,3) <= 0.40\n|   |   |--- rho_min_(2,3) <= 0.59\n|   |   |   |--- class: R1_LOCAL_NECESSARY_SUFFICIENT\n|   |   |--- rho_min_(2,3) >  0.59\n|   |   |   |--- class: R0_USE_SUFFICIENT\n|   |--- D_(2,3) >  0.40\n|   |   |--- R_(2,3) <= 0.53\n|   |   |   |--- class: R2_LOCAL_INSUFFICIENT\n|   |   |--- R_(2,3) >  0.53\n|   |   |   |--- class: R2_LOCAL_INSUFFICIENT\n",
+      "feature_importances": {
+        "D_(1,3)": 0.04767361191293133,
+        "D_(2,1)": 0.00922355799057758,
+        "R_(2,3)": 0.039676840389898466,
+        "D_(2,3)": 0.13306658895679863,
+        "rho_min_(2,3)": 0.07151824287018616,
+        "D_(3,2)": 0.6988411578796078
+      }
+    },
+    "heterogeneous": {
+      "condition": "heterogeneous",
+      "features": [
+        "R_(1,2)",
+        "D_(1,2)",
+        "rho_min_(1,2)",
+        "R_(1,3)",
+        "D_(1,3)",
+        "rho_min_(1,3)",
+        "R_(2,1)",
+        "D_(2,1)",
+        "rho_min_(2,1)",
+        "R_(2,3)",
+        "D_(2,3)",
+        "rho_min_(2,3)",
+        "R_(3,1)",
+        "D_(3,1)",
+        "rho_min_(3,1)",
+        "R_(3,2)",
+        "D_(3,2)",
+        "rho_min_(3,2)"
+      ],
+      "train_size": 525,
+      "test_size": 225,
+      "accuracy": 0.44,
+      "balanced_accuracy": 0.4400000000000001,
+      "labels": [
+        "R0_USE_SUFFICIENT",
+        "R1_LOCAL_NECESSARY_SUFFICIENT",
+        "R2_LOCAL_INSUFFICIENT"
+      ],
+      "confusion_matrix": [
+        [
+          30,
+          38,
+          7
+        ],
+        [
+          7,
+          60,
+          8
+        ],
+        [
+          14,
+          52,
+          9
+        ]
+      ],
+      "tree": "|--- D_(3,1) <= 0.02\n|   |--- D_(3,2) <= 0.13\n|   |   |--- D_(2,3) <= 0.24\n|   |   |   |--- class: R0_USE_SUFFICIENT\n|   |   |--- D_(2,3) >  0.24\n|   |   |   |--- class: R2_LOCAL_INSUFFICIENT\n|   |--- D_(3,2) >  0.13\n|   |   |--- D_(1,3) <= 0.01\n|   |   |   |--- class: R0_USE_SUFFICIENT\n|   |   |--- D_(1,3) >  0.01\n|   |   |   |--- class: R1_LOCAL_NECESSARY_SUFFICIENT\n|--- D_(3,1) >  0.02\n|   |--- R_(3,2) <= 1.30\n|   |   |--- rho_min_(3,2) <= 0.02\n|   |   |   |--- class: R1_LOCAL_NECESSARY_SUFFICIENT\n|   |   |--- rho_min_(3,2) >  0.02\n|   |   |   |--- class: R1_LOCAL_NECESSARY_SUFFICIENT\n|   |--- R_(3,2) >  1.30\n|   |   |--- D_(2,1) <= 0.02\n|   |   |   |--- class: R0_USE_SUFFICIENT\n|   |   |--- D_(2,1) >  0.02\n|   |   |   |--- class: R2_LOCAL_INSUFFICIENT\n",
+      "feature_importances": {
+        "D_(1,3)": 0.03610940365251881,
+        "D_(2,1)": 0.07776573922617414,
+        "D_(2,3)": 0.08278923573581776,
+        "D_(3,1)": 0.39843662422371195,
+        "R_(3,2)": 0.0873142245237335,
+        "D_(3,2)": 0.24284080469361446,
+        "rho_min_(3,2)": 0.07474396794442938
+      }
+    }
+  },
+  "natural_local_tension": {
+    "quantity": "max_a M(S,a) - max_{a in A_U*(S)} M(S,a)",
+    "interpretation": "canonical local-value improvement available beyond current USE; descriptive only, not a regime rule",
+    "by_condition_and_regime": {
+      "homogeneous": {
+        "R0_USE_SUFFICIENT": {
+          "min": 0.0,
+          "median": 0.0,
+          "max": 0.0
+        },
+        "R1_LOCAL_NECESSARY_SUFFICIENT": {
+          "min": 5.632812742462079e-06,
+          "median": 0.034136842715326465,
+          "max": 0.2595100657578957
+        },
+        "R2_LOCAL_INSUFFICIENT": {
+          "min": 0.0,
+          "median": 0.0,
+          "max": 0.29505768494578355
+        }
+      },
+      "heterogeneous": {
+        "R0_USE_SUFFICIENT": {
+          "min": 0.0,
+          "median": 0.0,
+          "max": 0.0
+        },
+        "R1_LOCAL_NECESSARY_SUFFICIENT": {
+          "min": 3.890844402221205e-08,
+          "median": 0.1376719706883287,
+          "max": 0.7627595562954401
+        },
+        "R2_LOCAL_INSUFFICIENT": {
+          "min": 0.0,
+          "median": 0.0,
+          "max": 0.5314599918745202
+        }
+      }
+    }
+  },
+  "action_autopsy_oracle_labelled": {
+    "homogeneous": {
+      "R0_USE_SUFFICIENT": {
+        "points": 250,
+        "use_local_optimal_overlap": 250,
+        "median_oracle_current_reward_sacrifice": 0.0,
+        "median_oracle_minus_use_development": 0.0
+      },
+      "R1_LOCAL_NECESSARY_SUFFICIENT": {
+        "points": 250,
+        "use_local_optimal_overlap": 0,
+        "median_oracle_current_reward_sacrifice": 0.02717839994107929,
+        "median_oracle_minus_use_development": 0.07895257584273141
+      },
+      "R2_LOCAL_INSUFFICIENT": {
+        "points": 250,
+        "use_local_optimal_overlap": 230,
+        "median_oracle_current_reward_sacrifice": 0.13179595874345296,
+        "median_oracle_minus_use_development": 0.08813553595388446
+      }
+    },
+    "heterogeneous": {
+      "R0_USE_SUFFICIENT": {
+        "points": 250,
+        "use_local_optimal_overlap": 250,
+        "median_oracle_current_reward_sacrifice": 0.0,
+        "median_oracle_minus_use_development": 0.0
+      },
+      "R1_LOCAL_NECESSARY_SUFFICIENT": {
+        "points": 250,
+        "use_local_optimal_overlap": 0,
+        "median_oracle_current_reward_sacrifice": 0.1188967834283503,
+        "median_oracle_minus_use_development": 0.31019479236817793
+      },
+      "R2_LOCAL_INSUFFICIENT": {
+        "points": 250,
+        "use_local_optimal_overlap": 230,
+        "median_oracle_current_reward_sacrifice": 0.2821905749398541,
+        "median_oracle_minus_use_development": 0.21899434822587838
+      }
+    }
+  },
+  "runtime_seconds": 27.676781332993414
+}

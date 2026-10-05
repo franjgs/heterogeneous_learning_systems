@@ -1,0 +1,9 @@
+{
+  "command": "python experiments/synthetic/g3_h/run_cost_development_frontier.py",
+  "git_revision": "89d5a787e6337557af578aa318f781286c7b3850",
+  "source": "results/foundations/g3_h_structural_autopsy/diagnostic_points.csv",
+  "source_sha256": "602953d31eff30e8c164fff5c87f7140616acd1774a6173a418d30a3f4861845",
+  "frontier_module_sha256": "e9f7cc1aa145bb4a5d0ab6e6fc90c1c6554962585bb86c57f4c5099cf406ad0a",
+  "points": 1501,
+  "actions": 9006
+}

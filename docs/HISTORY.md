@@ -188,3 +188,122 @@ be useful, but the repository has established no exact nontrivial local
 certificate of continuation relevance.  Where omitted future opportunities
 change the ranking, the exact correction reintroduces explicit
 continuation/look-ahead, i.e. standard DP machinery.
+
+### 10.4 Matched-`ΔS` proposal: reduction confirmed — stop
+
+**Status: HISTORICAL REDUCTION / FAILED DIRECTION — REDUCTION CONFIRMED —
+STOP.**
+
+The proposed matched-`ΔS` experiment would have held the action-conditioned
+physical competence transformation `ΔS(a)` fixed while changing the
+organizational placement or value of the acquired competence, then compared
+the relative value of JOINT management and strong SEP. Independent adversarial
+reductions from the Beam-1/static and Beam-2/dynamic perspectives agree on
+its status: it could provide cleaner **causal experimental identification**,
+but it does not supply a missing theoretical dependency.
+
+The exact matched-`ΔS` experiment was **not** performed. Related evidence in
+MIS, G3, A1c, and `C(α)` must not be retrospectively relabelled as a
+matched-`ΔS` control. The reason to stop is logical reduction, not prior
+execution of that exact control.
+
+The dependency required for the intended comparison is already represented by
+the established construction:
+
+```text
+placement sensitivity
+  -> G3 / assignment sensitivity
+  -> differences in organizational value and opportunity
+  -> G3-H + standard dynamic optimization
+  -> propagation through future opportunities
+  -> policy-class exploitability
+  -> Pi_SEP subset Pi_HLS and the strong-SEP strictness criterion
+  -> possible differential JOINT-versus-SEP value.
+```
+
+This chain has an important non-implication. A difference in organizational
+value or opportunity between cases does **not** by itself imply a difference
+in `Φ = J_HLS - J_SEP,max`. Nor do G3 and G3-H alone prove a strict
+HLS-versus-SEP advantage. Strict advantage additionally requires that the
+opportunity difference be differentially exploitable under the relevant
+policy-class restriction; that is the required third link supplied by the
+existing strong-SEP strictness result.
+
+#### Connection to the repeated integration dead end
+
+This closure joins, but does not collapse into, the sequence in §§10.1–10.3.
+Several lines of work have repeatedly attempted either:
+
+1. to replace continuation-dependent information with a cheaper local or
+   compressed representation; or
+2. to isolate a further small causal distinction after the main dependency
+   was already represented by established components.
+
+The first pattern includes the local organizational-development value,
+future-opportunity comparison, C1/C2, `(g, rho, m)`, Regime Map, adversarial
+search, structural autopsy, no-immediate-crossing, A/B/C and C-stability, and
+continuation/selective-reasoning proposals. The second includes the
+matched-`ΔS` causal refinement. These are not all mathematically identical;
+the narrower lesson is that a new name, representation, regularity, or
+cleaner control does not establish a new scientific dependency.
+
+#### Permanent reduction gate for Beam 1 × Beam 2 work
+
+Before opening **any** new Beam-1 × Beam-2 integration subproblem, the Chief
+Engineer or responsible expert must answer:
+
+> **What mathematical or causal dependency is missing from the current
+> construction?**
+
+The construction against which a proposal must be reduced includes at least:
+
+- Beam 1: organizational value, assignment structure, and placement
+  sensitivity;
+- Beam 2: endogenous competence evolution `F(S,a)`;
+- standard dynamics: continuation, optimization, control, and DP; and
+- integration: policy-class restrictions and the established strong-SEP
+  strictness results.
+
+The proposer must identify a dependency `X` such that all three conditions
+hold **before implementation**:
+
+1. `X` is required for the scientific claim being pursued;
+2. `X` is not already implied by the construction above; and
+3. the proposed analysis or experiment can falsifiably determine `X`.
+
+If those conditions cannot be stated, **STOP**. The following are not, alone,
+sufficient reasons to open a branch: a control not previously made exact; a
+cleaner figure; a new representation or name; correlation with continuation
+value; separation of synthetic cases; partial avoidance of DP; or a predictor
+of selected observations.
+
+#### Guardrail: do not reopen the local-continuation loop
+
+Do not reopen the generic question “can local/current information determine
+whether exact continuation would change the decision?” unless new assumptions,
+a new information structure, or a theorem-level argument changes the problem.
+Renaming it as a continuation score, future opportunity, stability
+certificate, regime classifier, selective continuation, reasoning escalation,
+metareasoning, value of computation, pruning criterion, continuation
+relevance, or organizational screening is insufficient. If exact validation
+of the proposed rule reconstructs the continuation value, `Q`, or the
+look-ahead it was intended to avoid, classify the proposal as a reduction to
+standard dynamic optimization and do not start a new branch from it.
+
+#### Guardrail: missing identification is not missing science
+
+Once a dependency is already established compositionally, do not create a new
+experiment merely to isolate every link under increasingly strict controls.
+Distinguish **missing experimental identification** from **missing scientific
+dependency**. A cleaner causal control is justified only when it can establish
+or falsify a scientifically necessary statement not already implied by the
+current construction. Otherwise: **REDUCE — DO NOT EXPERIMENT.**
+
+After this stop, the project does not immediately seek another small Beam-1 ×
+Beam-2 gap. The current direction remains **CHARACTERIZATION / ASSEMBLY** as
+recorded in `HLS_CURRENT_STATE.md`: `R0` (USE sufficient), `R1` (DEVELOP
+relevant but separable), and `R2` (joint intertemporal management relevant)
+are current characterization directions, not established boundaries or a new
+theorem. The search for a new HLS-specific integration equation, score,
+certificate, local rule, or dynamic theory is closed unless the PI explicitly
+reopens it on genuinely new evidence or assumptions.

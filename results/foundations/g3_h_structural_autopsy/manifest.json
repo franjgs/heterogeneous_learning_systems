@@ -1,0 +1,23 @@
+{
+  "git_revision": "8972c3cf9ae5656fb40c102bc9ea137fde869090",
+  "seed_homogeneous": 20261005,
+  "seed_heterogeneous": 20261006,
+  "state_sampler": "independent Uniform(1e-6, 1-1e-6) entries",
+  "eta_sampler": "independent Exponential(rate=1); homogeneous profile repeats one draw",
+  "eta_domain": "canonical finite nonnegative domain [0, infinity)",
+  "tolerance": 7.105427357601002e-15,
+  "quota_per_main_regime": 250,
+  "homogeneous_maximum": 30000,
+  "heterogeneous_maximum": 10000,
+  "dynamic_value_role": "oracle label only; excluded from local feature vectors and rule conditions",
+  "fresh_rule_audits": {
+    "homogeneous": {
+      "seed": 20261007,
+      "samples": 10000
+    },
+    "heterogeneous": {
+      "seed": 20261008,
+      "samples": 10000
+    }
+  }
+}

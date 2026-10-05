@@ -1,0 +1,29 @@
+{
+  "best_candidates_sha256": "26d5b16a086e89c33995bce053f32c5c1ccbcab3b4c13c308a4885ae28485b9e",
+  "command": "python experiments/synthetic/g3_h/run_regime_search.py",
+  "counterexample_actions_sha256": "d22500fdec91e9931ca8e5fd6393e7d77c244ea437d3c918280574ff82b34bd8",
+  "experiment_id": "g3_h_adversarial_regime_existence_search",
+  "g3h_evaluator_sha256": "85ceb79635288de3c771598acbc8410d5f8eeaa5a1a4ea3b0ad8f7d6962f984b",
+  "regime_map_sha256": "7b1b36c169620a6053edbc14144dc1978e952b66bd3ffbc6664aed86a0118e8e",
+  "repository_commit_at_run": "8972c3cf9ae5656fb40c102bc9ea137fde869090",
+  "runner_sha256": "7f7d67be56b3752a1195fa20cbb612faf082f4a5fb680e7a01ce40947f83f81a",
+  "search_sha256": "e254f9305f175d52167adfc2cbe9a17b56f5205ab8899c10bcb7b1687c103d35",
+  "seed": 20261005,
+  "stages": [
+    [
+      "smoke",
+      2000
+    ],
+    [
+      "medium",
+      20000
+    ],
+    [
+      "large",
+      50000
+    ]
+  ],
+  "summary_sha256": "b91b4dbbff568ae0e13eca191ba13de219da86c01ede86f8101f77396b7a193a",
+  "tolerance": 7.105427357601002e-15,
+  "working_tree_dirty_at_run": true
+}

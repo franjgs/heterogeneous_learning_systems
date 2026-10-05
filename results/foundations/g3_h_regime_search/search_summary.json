@@ -1,0 +1,107 @@
+{
+  "deterministic": true,
+  "experiment_id": "g3_h_adversarial_regime_existence_search",
+  "objectives": {
+    "heterogeneous": {
+      "max_regret_L": 0.39937236988727154,
+      "max_regret_U": 1.024667393908301
+    },
+    "homogeneous": {
+      "max_regret_L": 0.12402340494017272,
+      "max_regret_U": 0.6234806049357124
+    }
+  },
+  "refinements": [
+    {
+      "best_regret_L": 0.06964313397794042,
+      "best_regret_U": 0.6511496630118501,
+      "condition": "homogeneous",
+      "objective": "regret_U",
+      "positive_regret_L_count": 921,
+      "positive_regret_U_count": 1000,
+      "runtime_seconds": 0.6816310830181465,
+      "samples": 1000,
+      "stage": "smoke"
+    },
+    {
+      "best_regret_L": 0.13920363611997422,
+      "best_regret_U": 0.16883551987141798,
+      "condition": "homogeneous",
+      "objective": "regret_L",
+      "positive_regret_L_count": 674,
+      "positive_regret_U_count": 1000,
+      "runtime_seconds": 0.6862376669887453,
+      "samples": 1000,
+      "stage": "smoke"
+    },
+    {
+      "best_regret_L": 0.0,
+      "best_regret_U": 1.0501916871482089,
+      "condition": "heterogeneous",
+      "objective": "regret_U",
+      "positive_regret_L_count": 0,
+      "positive_regret_U_count": 1000,
+      "runtime_seconds": 0.683384665986523,
+      "samples": 1000,
+      "stage": "smoke"
+    },
+    {
+      "best_regret_L": 0.4215327695990463,
+      "best_regret_U": 0.43586807470633193,
+      "condition": "heterogeneous",
+      "objective": "regret_L",
+      "positive_regret_L_count": 830,
+      "positive_regret_U_count": 1000,
+      "runtime_seconds": 0.6760296249995008,
+      "samples": 1000,
+      "stage": "smoke"
+    }
+  ],
+  "sampler": {
+    "eta": "independent Exponential(rate=1) samples with support [0, infinity)",
+    "prevalence_interpretation": false,
+    "state": "independent uniform interior samples in (1e-6, 1-1e-6)^6"
+  },
+  "seed": 20261005,
+  "stages": {
+    "heterogeneous": [
+      {
+        "eta_observed_range": [
+          6.457917723994644e-05,
+          9.642189389623288
+        ],
+        "max_regret_L": 0.39937236988727154,
+        "max_regret_U": 1.024667393908301,
+        "positive_regret_L_count": 220,
+        "positive_regret_U_count": 581,
+        "runtime_seconds": 1.389110125019215,
+        "samples": 2000,
+        "stage": "smoke",
+        "state_observed_range": [
+          0.00014760326684324225,
+          0.9995182604676204
+        ]
+      }
+    ],
+    "homogeneous": [
+      {
+        "eta_observed_range": [
+          0.00017782556896799593,
+          7.367293408866941
+        ],
+        "max_regret_L": 0.12402340494017272,
+        "max_regret_U": 0.6234806049357124,
+        "positive_regret_L_count": 94,
+        "positive_regret_U_count": 123,
+        "runtime_seconds": 1.3680805840122048,
+        "samples": 2000,
+        "stage": "smoke",
+        "state_observed_range": [
+          3.432528796182527e-05,
+          0.9999117557170508
+        ]
+      }
+    ]
+  },
+  "tolerance": 7.105427357601002e-15
+}

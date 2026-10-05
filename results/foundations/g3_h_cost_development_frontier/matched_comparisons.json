@@ -1,0 +1,42 @@
+{
+  "method": "nearest cross-regret pair matched only on Dmax and eta moments; descriptive, not a causal intervention",
+  "best_pair": {
+    "matching_distance_dmax_eta_moments": 0.004165953861956839,
+    "positive_regret": {
+      "point_id": 359,
+      "source": "structural_autopsy_retained",
+      "condition": "homogeneous",
+      "state": "[[0.4635096512211176, 0.9126858546739095], [0.2674461611005376, 0.46452795912229344], [0.3403615091181193, 0.8358216418353419]]",
+      "eta": "[0.7895281882027977, 0.7895281882027977, 0.7895281882027977]",
+      "eta_mean": 0.7895281882027977,
+      "eta_spread": 0.0,
+      "operational_value": 1.2993312930564596,
+      "d0": 0.2485248625897647,
+      "dmax": 0.3105084555741229,
+      "delta_d": 0.06198359298435818,
+      "c_dmax": 0.11919927728201252,
+      "frontier_size": 3,
+      "regret_use": 0.05569849889764367,
+      "regret_local": 0.0,
+      "old_oracle_label": "R1_LOCAL_NECESSARY_SUFFICIENT"
+    },
+    "zero_regret": {
+      "point_id": 240,
+      "source": "structural_autopsy_retained",
+      "condition": "homogeneous",
+      "state": "[[0.6449446485223777, 0.41004899662591565], [0.8473871256303322, 0.3955077036337736], [0.888622904016394, 0.09993956148542249]]",
+      "eta": "[0.7913569229270871, 0.7913569229270871, 0.7913569229270871]",
+      "eta_mean": 0.7913569229270871,
+      "eta_spread": 0.0,
+      "operational_value": 1.2986719006423098,
+      "d0": 0.28524226353240323,
+      "dmax": 0.3081712364364555,
+      "delta_d": 0.02292897290405227,
+      "c_dmax": 0.351345213526555,
+      "frontier_size": 2,
+      "regret_use": 0.0,
+      "regret_local": 0.0,
+      "old_oracle_label": "R0_USE_SUFFICIENT"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "experiment_id": "g3_h_cost_development_frontier_existing_evidence_audit",
+  "scope": "canonical state plus retained structural-autopsy points; no new sampling",
+  "interpretation_limit": "Q is only an oracle label. Matched contrasts are descriptive coupled comparisons, not Beam-1-only interventions.",
+  "points": 1501,
+  "actions": 9006,
+  "by_condition": {
+    "heterogeneous": {
+      "points": 751,
+      "positive_use_regret": 500,
+      "old_oracle_labels": {
+        "R0_USE_SUFFICIENT": 251,
+        "R1_LOCAL_NECESSARY_SUFFICIENT": 250,
+        "R2_LOCAL_INSUFFICIENT": 250
+      },
+      "d0": {
+        "min": 0.0007275301630631503,
+        "median": 0.11608026755438461,
+        "max": 1.2497896902780607
+      },
+      "dmax": {
+        "min": 0.0009427314081991156,
+        "median": 0.380594417953795,
+        "max": 1.3791871777364237
+      },
+      "delta_d": {
+        "min": 0.0,
+        "median": 0.19623953589798004,
+        "max": 0.8802822293850232
+      },
+      "c_dmax": {
+        "min": 0.0,
+        "median": 0.2531321715302579,
+        "max": 1.5717125754604744
+      },
+      "regret_use": {
+        "min": 0.0,
+        "median": 0.06979841690731448,
+        "max": 0.8944138221706255
+      }
+    },
+    "homogeneous": {
+      "points": 750,
+      "positive_use_regret": 500,
+      "old_oracle_labels": {
+        "R0_USE_SUFFICIENT": 250,
+        "R1_LOCAL_NECESSARY_SUFFICIENT": 250,
+        "R2_LOCAL_INSUFFICIENT": 250
+      },
+      "d0": {
+        "min": 0.00013932493152823966,
+        "median": 0.3004492101066538,
+        "max": 1.4299726334417402
+      },
+      "dmax": {
+        "min": 0.00013932493152823966,
+        "median": 0.4564104524044741,
+        "max": 1.5918007243344454
+      },
+      "delta_d": {
+        "min": 0.0,
+        "median": 0.09880911688070448,
+        "max": 0.44937866412238425
+      },
+      "c_dmax": {
+        "min": 0.0,
+        "median": 0.22696769396502153,
+        "max": 1.625741724017368
+      },
+      "regret_use": {
+        "min": 0.0,
+        "median": 0.01898166237821486,
+        "max": 0.6234806049357124
+      }
+    }
+  }
+}

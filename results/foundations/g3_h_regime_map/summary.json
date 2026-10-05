@@ -1,0 +1,125 @@
+{
+  "action_rows": 35040,
+  "configuration": {
+    "canonical_state_added": [
+      [
+        0.5,
+        0.7
+      ],
+      [
+        0.3,
+        0.2
+      ],
+      [
+        0.5,
+        0.8
+      ]
+    ],
+    "delta": 0.2,
+    "eta": 0.4,
+    "learning_profiles": [
+      [
+        0.2,
+        0.4,
+        0.6000000000000001
+      ],
+      [
+        0.2,
+        0.6000000000000001,
+        0.4
+      ],
+      [
+        0.4,
+        0.2,
+        0.6000000000000001
+      ],
+      [
+        0.4,
+        0.4,
+        0.4
+      ],
+      [
+        0.4,
+        0.6,
+        0.4
+      ],
+      [
+        0.4,
+        0.6000000000000001,
+        0.2
+      ],
+      [
+        0.6000000000000001,
+        0.2,
+        0.4
+      ],
+      [
+        0.6000000000000001,
+        0.4,
+        0.2
+      ]
+    ],
+    "state_grid_values": [
+      0.0,
+      0.5,
+      1.0
+    ],
+    "state_symmetries_quotiented": false,
+    "worker_permutations_included": true
+  },
+  "counts": {
+    "R0_USE_SUFFICIENT": 5840,
+    "R1_LOCAL_NECESSARY_SUFFICIENT": 0,
+    "R2_LOCAL_INSUFFICIENT": 0
+  },
+  "description": "diagnostic USE/local USE-DEVELOP/closed G3-H oracle cartography",
+  "deterministic": true,
+  "experiment_id": "g3_h_regime_map_v0",
+  "points": 5840,
+  "r2_reversion_count": 0,
+  "regrets": {
+    "R0_USE_SUFFICIENT": {
+      "regret_L": {
+        "max": 0.0,
+        "median": 0.0,
+        "min": 0.0
+      },
+      "regret_U": {
+        "max": 0.0,
+        "median": 0.0,
+        "min": 0.0
+      }
+    },
+    "R1_LOCAL_NECESSARY_SUFFICIENT": {
+      "regret_L": {
+        "max": null,
+        "median": null,
+        "min": null
+      },
+      "regret_U": {
+        "max": null,
+        "median": null,
+        "min": null
+      }
+    },
+    "R2_LOCAL_INSUFFICIENT": {
+      "regret_L": {
+        "max": null,
+        "median": null,
+        "min": null
+      },
+      "regret_U": {
+        "max": null,
+        "median": null,
+        "min": null
+      }
+    }
+  },
+  "runtime_seconds": 4.049876666016644,
+  "ties": {
+    "L_points": 1832,
+    "Q_points": 1832,
+    "U_points": 3096
+  },
+  "tolerance": 7.105427357601002e-15
+}

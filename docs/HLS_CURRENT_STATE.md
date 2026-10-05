@@ -64,39 +64,43 @@ Relevance Cascade, and the Minimal Reference Scenario remain foundations for
 understanding structure, interactions, limits, nulls, and results; they need
 not be the principal novelty.
 
-The current scientific question is:
+### Decision: characterization / assembly
 
-> “What is the minimum integration between operational organization and competence evolution that adds value over managing them separately, and under what conditions?”
+**SEARCH FOR A NOVEL BEAM-1 × BEAM-2 INTEGRATION MECHANISM: CLOSED.**
 
-The intended contribution is to identify which mechanisms are worth
-integrating, construct a minimal effective and efficient integration, and
-experimentally characterize when it improves the use and development of
-heterogeneous resources over competitive alternatives.
+Successive internal reductions and audits, together with the external
+placement-value audit, support a conservative conclusion: Beam 1 can use
+existing organization, assignment, and flexibility theory; Beam 2 can use
+existing competence-learning/evolution theory; and their intertemporal
+interaction can be formulated with standard optimization, control, and
+dynamic-programming machinery.  Attempts to obtain a distinct local HLS
+integration mechanism have either reduced to those foundations or restored
+explicit continuation/look-ahead.  No justified irreducible HLS-specific
+integration mechanism has been established.
 
-The provisional experimental ladder is:
+**STRUCTURE SURVIVES.  SPECIFIC HLS INTEGRATION MECHANISM NOT FOUND.**
+
+This changes the level of the contribution, not the HLS problem.  The current
+target is **CHARACTERIZATION / ASSEMBLY**: correctly assemble justified
+existing pieces and characterize the conditions under which the resulting
+system lies in one of these regimes:
 
 ```text
-L1 Operational-only
-L2 Separated/myopic development
-L3 Modular look-ahead
-L4 Minimal joint HLS
-L5 Full DP oracle
+USE only is sufficient
+    -> DEVELOP matters, but separated/sequential treatment is sufficient
+    -> joint intertemporal USE × DEVELOP management is relevant
 ```
 
-L5 is a ceiling/oracle, not an HLS competitor. The critical comparison is
-especially L3 versus L4; surpassing myopic policies is not sufficient. L4
-must begin with the minimum possible joint information, without fixing a
-definitive algorithm yet. If it fails against the oracle, the methodological
-rule is first to identify what information is missing and add only the
-minimum information whose necessity and value can be demonstrated
-experimentally.
+The programme asks which properties of heterogeneity, organization, demand,
+learning, resources, and horizon determine those regimes.  This is not yet a
+theorem, a completed characterization, or an application-first strategy.
+It does not require new mathematics for every component.  The governing
+discipline is: **REDUCE BEFORE INVENTING.  BUY BEFORE REBUILDING.  ASSEMBLE
+BEFORE EXTENDING.**
 
-L4 is not expected to win everywhere. A valid result characterizes regions in
-which operational-only control suffices, the modular solution suffices,
-minimal integration adds value, or more complete dynamic look-ahead is
-required. No expansion to additional workers, tasks, uncertainty, LLMs,
-communication, hierarchies, or other mechanisms is authorized at this stage;
-the next work starts in the already validated minimal environment.
+No expansion to additional workers, tasks, uncertainty, LLMs, communication,
+hierarchies, or other mechanisms is authorized at this stage; the next work
+starts in the already validated minimal environment.
 
 The file `hls_foundations_v02` is frozen for now. It is neither to be modified
 nor incorporated into the paper's official state. This orientation changes the

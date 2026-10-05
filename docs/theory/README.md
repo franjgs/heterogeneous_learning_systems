@@ -24,6 +24,12 @@ doctrine.
     inclusion, global reducibility, local routing-as-teaching, and the
     exact C(alpha) existence construction.
 
+T0--T6 remain the programme's shared structural language, scoped results, and
+boundaries.  They do not entail that Beam 1 × Beam 2 must culminate in a new
+HLS-specific mathematical integration mechanism; the current
+characterization/assembly position is recorded in
+[HLS Current State](../HLS_CURRENT_STATE.md).
+
 ## Supporting formal models
 
 -   [Minimal HLS model](minimal_hls_model.md): scoped dynamic

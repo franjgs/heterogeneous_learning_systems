@@ -1,0 +1,17 @@
+audit_scope,condition,rule,target,support,coverage,correct,violations,finite_audit_correctness,draws,seed
+retained_balanced_diagnostic_set,homogeneous,all_action_transitions_identity,USE sufficient,0,0.0,0,0,,,
+retained_balanced_diagnostic_set,homogeneous,no_immediate_crossing,USE sufficient,101,0.13466666666666666,101,0,1.0,,
+retained_balanced_diagnostic_set,homogeneous,unique_use_and_no_immediate_crossing,USE sufficient,101,0.13466666666666666,101,0,1.0,,
+retained_balanced_diagnostic_set,homogeneous,use_local_optimal_overlap,USE sufficient,480,0.64,250,230,0.5208333333333334,,
+retained_balanced_diagnostic_set,homogeneous,unique_local_and_no_immediate_crossing,LOCAL sufficient,101,0.13466666666666666,101,0,1.0,,
+retained_balanced_diagnostic_set,heterogeneous,all_action_transitions_identity,USE sufficient,0,0.0,0,0,,,
+retained_balanced_diagnostic_set,heterogeneous,no_immediate_crossing,USE sufficient,80,0.10666666666666667,80,0,1.0,,
+retained_balanced_diagnostic_set,heterogeneous,unique_use_and_no_immediate_crossing,USE sufficient,80,0.10666666666666667,80,0,1.0,,
+retained_balanced_diagnostic_set,heterogeneous,use_local_optimal_overlap,USE sufficient,480,0.64,250,230,0.5208333333333334,,
+retained_balanced_diagnostic_set,heterogeneous,unique_local_and_no_immediate_crossing,LOCAL sufficient,80,0.10666666666666667,80,0,1.0,,
+fresh_unretained_adversarial_draws,homogeneous,no_immediate_crossing,USE sufficient,3947,0.3947,3947,0,1.0,10000,20261007
+fresh_unretained_adversarial_draws,homogeneous,unique_use_and_no_immediate_crossing,USE sufficient,3947,0.3947,3947,0,1.0,10000,20261007
+fresh_unretained_adversarial_draws,homogeneous,unique_local_and_no_immediate_crossing,LOCAL sufficient,3947,0.3947,3947,0,1.0,10000,20261007
+fresh_unretained_adversarial_draws,heterogeneous,no_immediate_crossing,USE sufficient,2273,0.2273,2273,0,1.0,10000,20261008
+fresh_unretained_adversarial_draws,heterogeneous,unique_use_and_no_immediate_crossing,USE sufficient,2273,0.2273,2273,0,1.0,10000,20261008
+fresh_unretained_adversarial_draws,heterogeneous,unique_local_and_no_immediate_crossing,LOCAL sufficient,2273,0.2273,2273,0,1.0,10000,20261008

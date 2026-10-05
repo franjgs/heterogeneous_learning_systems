@@ -1,0 +1,13 @@
+{
+  "action_audit_sha256": "35999a1f51ceccf7d44d28d86e1381b18596bd13118bc939d0d99d2c51e33553",
+  "command": "python experiments/synthetic/g3_h/run_regime_map.py",
+  "experiment_id": "g3_h_regime_map_v0",
+  "g3_core_sha256": "a94f8cb98dfb10aadabfd1b6583f07778c8ae96a9738aa2741e4a7ae19e419c7",
+  "g3h_evaluator_sha256": "85ceb79635288de3c771598acbc8410d5f8eeaa5a1a4ea3b0ad8f7d6962f984b",
+  "point_results_sha256": "1464120604619d69c09006abbcca3b92e5a5daa2c1d53dc08b76314af844ebbb",
+  "regime_map_sha256": "7b1b36c169620a6053edbc14144dc1978e952b66bd3ffbc6664aed86a0118e8e",
+  "repository_commit_at_run": "8972c3cf9ae5656fb40c102bc9ea137fde869090",
+  "runner_sha256": "1ef3f36aabd14caab5c5285e81273ed9667a69ddbd847c08b026b840f3a035e6",
+  "summary_sha256": "1deebd2974b347b39aa2573aa8c2613e3def9287b79dc4f6adec2fedfbaadf1e",
+  "working_tree_dirty_at_run": true
+}

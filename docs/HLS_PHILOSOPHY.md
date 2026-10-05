@@ -275,6 +275,15 @@ learning systems.
 More importantly, the existence of both beams does not establish that
 they must be optimized jointly.
 
+HLS does not presume that organization, competence development, or their
+dynamic coordination require new theory.  When existing theory is sufficient,
+the programme adopts it and studies the collective system, including when its
+components can be treated separately and when they require joint
+consideration.  Its discipline is:
+
+> **REDUCE BEFORE INVENTING.  BUY BEFORE REBUILDING.  ASSEMBLE BEFORE
+> EXTENDING.**
+
 It may be possible under some conditions to organize current
 capabilities optimally and develop future capabilities independently
 without any loss. A sufficiently coordinated modular architecture may

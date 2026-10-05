@@ -144,6 +144,15 @@ adapt if necessary
 develop new theory only where required
 ```
 
+This discipline is summarized as:
+
+> **REDUCE BEFORE INVENTING.  BUY BEFORE REBUILDING.  ASSEMBLE BEFORE
+> EXTENDING.**
+
+Import a theory when it correctly resolves an HLS piece; assemble the
+justified pieces before extending them, and extend only when a demonstrated
+scientific need remains.
+
 A reduction of an HLS problem to known theory is not a failure. It may provide
 the correct solution, an equivalence result, a boundary, an efficient method,
 or evidence that no HLS-specific machinery is required under those conditions.

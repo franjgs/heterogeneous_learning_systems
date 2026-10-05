@@ -1,0 +1,11 @@
+{
+  "git_revision": "8972c3cf9ae5656fb40c102bc9ea137fde869090",
+  "seeds": {
+    "homogeneous": 20261009,
+    "heterogeneous": 20261010
+  },
+  "state_sampling": "uniform independently within each declared competence region",
+  "heterogeneous_eta": "scale * 10^Uniform(-1,1)",
+  "tolerance": 7.105427357601002e-15,
+  "purpose": "falsification of C, not prevalence estimation"
+}
