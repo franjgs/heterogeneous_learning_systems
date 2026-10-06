@@ -13,9 +13,12 @@
   ],
   "artifact_files": {
     "ablations": "ablations.csv",
+    "action_information_geometry": "action_information_geometry.csv",
     "actions": "actions.csv",
+    "configuration_information_geometry": "configuration_information_geometry.csv",
     "configurations": "configurations.csv",
     "convergence": "convergence.csv",
+    "pair_diagnostics": "pair_diagnostics.csv",
     "pair_frontier": "pair_frontier.csv"
   },
   "canonical_state_count": 31,

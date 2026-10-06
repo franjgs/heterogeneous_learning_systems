@@ -1,0 +1,94 @@
+{
+  "CD_correlations": {
+    "d_at_immediate_production": {
+      "pearson": -0.6477904131412278,
+      "spearman": -0.7052570367941307
+    },
+    "max_d": {
+      "pearson": -0.6344542807781218,
+      "spearman": -0.5963287795087405
+    },
+    "pareto_unique_point_count": {
+      "pearson": 0.5108728394589499,
+      "spearman": 0.5201249922693042
+    },
+    "unknown_initial_d": {
+      "pearson": -0.4397748796680094,
+      "spearman": -0.3308493388661487
+    },
+    "unknown_initial_production_gap": {
+      "pearson": 0.5639239925852338,
+      "spearman": 0.6835471386818586
+    }
+  },
+  "CD_ranking_descending": [
+    "S009",
+    "S001",
+    "S027",
+    "S003",
+    "S019",
+    "S028",
+    "S011",
+    "S023",
+    "S002",
+    "S005",
+    "S000",
+    "S006",
+    "S004",
+    "S022",
+    "S020",
+    "S010",
+    "S024",
+    "S013",
+    "S017",
+    "S026",
+    "S007",
+    "S012",
+    "S018",
+    "S029",
+    "S015",
+    "S008",
+    "S025",
+    "S014",
+    "S016",
+    "S021",
+    "S030"
+  ],
+  "action_count_per_configuration": 64,
+  "configuration_count": 31,
+  "max_d_ranking_descending": [
+    "S014",
+    "S030",
+    "S007",
+    "S015",
+    "S026",
+    "S029",
+    "S000",
+    "S002",
+    "S004",
+    "S005",
+    "S006",
+    "S008",
+    "S010",
+    "S013",
+    "S016",
+    "S017",
+    "S019",
+    "S021",
+    "S022",
+    "S024",
+    "S025",
+    "S028",
+    "S001",
+    "S003",
+    "S009",
+    "S011",
+    "S012",
+    "S018",
+    "S020",
+    "S023",
+    "S027"
+  ],
+  "pair_count": 465,
+  "scope": "descriptive full-repertoire geometry; correlations are not causal or inferential claims"
+}

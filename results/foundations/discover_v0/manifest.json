@@ -1,15 +1,19 @@
 {
   "artifact_sha256": {
     "ablations": "8ebe47b43549c9d9fe0a1cfecdfb1ae600c8cae8481bc4dbc9644db105b115b7",
+    "action_information_geometry": "fea8f86c275cd79bce83d0ad61ceecef58841d9f1b8d2533a481dce9194e29f6",
     "actions": "6342801f162f6e17398baf60703e4d9c90cbf06a54b699c509dcfc2528aa5ddf",
+    "configuration_information_geometry": "860ed1c13a0a380f37fa859ec6bfd3f8fdf563c1c4e981d5dac66c2115924e43",
     "configurations": "07439467a2e74153e67f36df3fd72558c2573e130d397f3367f6c8785726c605",
     "convergence": "ed5d47ca0e6ba1ac36d265da12963a7db25208e9fa55b58ed85907b6caaef0cf",
+    "information_geometry_summary": "f0160167ff91f1802d0527b0070c595cfbfa4c3658e872d1a8ab0c8cdbb739f5",
+    "pair_diagnostics": "ff9026e773deeade17d15789a04ac196968cfcb24396dd5761246eb0da484a65",
     "pair_frontier": "741d24ce92dfd1369a20eb5fb52939b22869da2517358e2257ddca6c30098d20",
-    "summary": "078b7356c68c9b08668c6fc389915578cb3d24d2fd80e9703bcbc6e413ca35a5"
+    "summary": "0de50f3d59313e9b5058f2aa17b1576f8c1ce8e664982c4ced0c84ffdc2a7b4f"
   },
   "command": "python experiments/synthetic/discover_v0/run_discover_v0.py",
   "module_sha256": "ef1eee85cf7735107e46e285af4ce2734906a55a6741ec09a72a2623c1ab470f",
-  "repository_commit_at_run": "2b21b0d9eefb29d5db0eafa4b1d73cd97372f5f9",
-  "runner_sha256": "68dd800b6e323fb21808f0d5fab97ce04ccf5908258981ee5f08d3eccd93240a",
+  "repository_commit_at_run": "71c278b0045361380fc92e57692bc57be79f62d7",
+  "runner_sha256": "53a50dd74c8bcb855290060f14fce27486f0743f5f222287e499fe5b6f3133ad",
   "working_tree_dirty_at_run": true
 }
