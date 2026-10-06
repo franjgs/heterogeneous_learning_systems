@@ -1,0 +1,80 @@
+{
+  "C_D_range": [
+    0.0,
+    0.30084173265957936
+  ],
+  "V_K_range": [
+    2.9639387691339825,
+    4.417645019878172
+  ],
+  "V_U_range": [
+    2.6751778561721986,
+    4.417645019878173
+  ],
+  "artifact_files": {
+    "ablations": "ablations.csv",
+    "actions": "actions.csv",
+    "configurations": "configurations.csv",
+    "convergence": "convergence.csv",
+    "pair_frontier": "pair_frontier.csv"
+  },
+  "canonical_state_count": 31,
+  "experiment_id": "discover_v0",
+  "labelled_state_count": 141,
+  "max_final_quadrature_change": 0.00013565522639247263,
+  "pair_count": 465,
+  "parameters": {
+    "agents": 3,
+    "budget": 3.0,
+    "capabilities": 2,
+    "competence_grid": [
+      0.0,
+      0.5,
+      1.0
+    ],
+    "convergence_orders": [
+      15,
+      23,
+      31
+    ],
+    "convergence_state_indices": [
+      0,
+      15,
+      30
+    ],
+    "horizon": 3,
+    "individual_actions": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.5,
+        0.5
+      ]
+    ],
+    "joint_action_count": 64,
+    "low_noise_ablation_quadrature_order": 11,
+    "prior_theta1": 0.5,
+    "quadrature_order": 31,
+    "rho": 0.5,
+    "sigma": 0.1,
+    "theta1_alpha": [
+      0.8,
+      0.2
+    ],
+    "theta2_alpha": [
+      0.2,
+      0.8
+    ]
+  },
+  "scope": "fixed-repertoire DISCOVER cost; CES, Bayes, and numerical belief-state DP are purchased standard tools, not HLS mechanisms"
+}
