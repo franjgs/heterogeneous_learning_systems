@@ -155,3 +155,74 @@ identifies which member governs production.  It does not demonstrate adaptive
 reframing.  The specific question isolated here is whether collective
 capability structure conditions what evidence the collective can produce
 through its own actions.
+
+## Sequential DP dissection
+
+The final derived audit reuses the unchanged order-31 Gauss--Hermite
+belief-state DP.  For every visited belief node and every tied optimal action,
+`discover_sequential_decomposition.csv` records
+
+```text
+g          = b mu1 + (1-b) mu2
+g_max      = max_X g(b,X)
+c_exp      = g_max - g
+Q_future   = E[V_(h-1)(b')]
+Q_noinfo   = (h-1) max_X g(b,X)
+VOI        = Q_future - Q_noinfo.
+```
+
+Here *frozen belief* means that the posterior is held at the current `b` for
+all remaining periods while the immediately best production action is used.
+It is a comparison baseline only; the UNKNOWN policy is unchanged.  The full
+audit has 114,874 node--optimal-action rows.  Its maximum absolute Bellman
+residual is `8.88e-16`, and the maximum residual of
+
+```text
+Q(X*) - [g_max + Q_noinfo] = -c_exp + VOI
+```
+
+is `4.44e-16`.
+
+`discover_belief_trajectories.csv` gives, at every decision time, deterministic
+mixture-quadrature expectations and 5/50/95% posterior-belief quantiles.  It
+reports expected belief, entropy, distance from `.5`, action-selection mass
+(splitting exact ties symmetrically), reward, experimentation cost, and local
+VOI.  No representative continuous-observation trajectory is selected.
+
+### Sequential evidence
+
+S001 has expected cumulative experimentation cost `0.014091`, local-VOI sum
+`0.476941`, entropy reduction `0.692975`, and reward recovered after posterior
+updating `0.438904`.  S002 pays zero expected experimentation cost, with
+local-VOI sum `0.394001`, entropy reduction `0.693086`, and recovered reward
+`0.393976`.  Thus both learn rapidly, but S001 has a costly initial compromise
+and a larger continuation opportunity; this is the dynamic route behind their
+different discovery costs, not a new scalar score.
+
+The static counterexamples are also resolved more specifically.  S001 and
+S003 share `max_d=9`, but S003's UNKNOWN policy stays at belief `.5`: its
+entropy reduction, local VOI, and recovered reward are numerically zero,
+despite `C_D=0.218947`.  Its discovery cost is therefore the unrecovered cost
+of acting under a known unresolved model family.  By contrast S001 learns and
+subsequently recovers reward.  Among the `max_d=12` cases, S016/S021 attain
+near-complete posterior concentration but have zero VOI and zero `C_D`: their
+information has no operational value because it does not improve later
+decisions.  S019/S028 instead have local-VOI sum `0.341185`, recovered reward
+`0.340796`, expected experimentation cost `0.042872`, and `C_D=0.214566`.
+
+Across 31 configurations, descriptive Pearson correlations of `C_D` with
+expected cumulative experimentation cost, local-VOI sum, entropy reduction,
+recovered reward, and final expected distance from `.5` are respectively
+`+0.566`, `+0.886`, `-0.151`, `+0.880`, and `-0.153`.  Local VOI terms overlap
+across decision nodes and are diagnostic rather than additive welfare
+components.  These remain descriptive associations without causal or
+inferential claims.
+
+**Final classification: B — MECANISMO PARCIAL.**  The sequential
+belief--action--belief audit explains why static diagnosticity alone fails:
+information must be obtainable at an acceptable immediate cost and must change
+later exploitable action choices.  It improves the account of the observed
+regimes, but a non-learning unresolved-policy regime such as S003 retains a
+substantial discovery cost; the audit does not justify a universal scalar or
+an adaptive-reframing claim.  At `H=1`, operational future VOI is zero.  With
+identical theta types, posterior updating, VOI, and discovery cost vanish.
