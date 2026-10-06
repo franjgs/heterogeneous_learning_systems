@@ -1,0 +1,10 @@
+{
+  "command": "python experiments/synthetic/prototype_v0/run_configuration_environment_policy.py",
+  "management_value_sha256": "b2709279a2a64820be29f80d6d704b304c62bb9eb5b5a5a22c439b667be450fb",
+  "matrix_sha256": "68c6b9ace510ecd9932e17745392e446244ed2295e8e39a89b2f0907c580d6e1",
+  "module_sha256": "1d24e9a1662caebfec6cbb098a2896cf33a5ef1dcc2a1cb1c0ab74754d750dea",
+  "repository_commit_at_run": "3411fa81b119fb21cd4390e8937b13ce7762102e",
+  "runner_sha256": "2bba521f96207bf9c699785737000d0c254b18efca0745614ad746abe29a70b6",
+  "summary_sha256": "361846cba521b12fbcc3a21867ec0e8924cbc8317e23f88b6e71b78bafac2b48",
+  "working_tree_dirty_at_run": true
+}

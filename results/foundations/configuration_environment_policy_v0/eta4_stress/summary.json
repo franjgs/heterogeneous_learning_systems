@@ -1,0 +1,155 @@
+{
+  "budgets": {
+    "DIVERSE": 3.0,
+    "GENERALIST": 3.0,
+    "SPECIALIST": 3.0
+  },
+  "configurations": {
+    "DIVERSE": [
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.2,
+        0.8
+      ],
+      [
+        0.5,
+        0.5
+      ]
+    ],
+    "GENERALIST": [
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.5,
+        0.5
+      ]
+    ],
+    "SPECIALIST": [
+      [
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.5,
+        0.5
+      ]
+    ]
+  },
+  "environments": {
+    "E0_STABLE_BALANCED": [
+      0,
+      1,
+      0,
+      1,
+      0,
+      1
+    ],
+    "E1_STABLE_SKEWED": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      0
+    ],
+    "E2_SHIFT": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1
+    ]
+  },
+  "experiment_id": "configuration_environment_policy_v0",
+  "learning_law": "canonical MIS d_eta(s)=min(eta*(1-s)^2, 1-s)",
+  "learning_scale_enabled": 4.0,
+  "rankings": {
+    "learning_disabled": {
+      "GREEDY_USE": {
+        "E0_STABLE_BALANCED": [
+          "SPECIALIST",
+          "DIVERSE",
+          "GENERALIST"
+        ],
+        "E1_STABLE_SKEWED": [
+          "SPECIALIST",
+          "DIVERSE",
+          "GENERALIST"
+        ],
+        "E2_SHIFT": [
+          "SPECIALIST",
+          "DIVERSE",
+          "GENERALIST"
+        ]
+      },
+      "JOINT_DP": {
+        "E0_STABLE_BALANCED": [
+          "SPECIALIST",
+          "DIVERSE",
+          "GENERALIST"
+        ],
+        "E1_STABLE_SKEWED": [
+          "SPECIALIST",
+          "DIVERSE",
+          "GENERALIST"
+        ],
+        "E2_SHIFT": [
+          "SPECIALIST",
+          "DIVERSE",
+          "GENERALIST"
+        ]
+      }
+    },
+    "learning_enabled": {
+      "GREEDY_USE": {
+        "E0_STABLE_BALANCED": [
+          "SPECIALIST",
+          "DIVERSE",
+          "GENERALIST"
+        ],
+        "E1_STABLE_SKEWED": [
+          "SPECIALIST",
+          "DIVERSE",
+          "GENERALIST"
+        ],
+        "E2_SHIFT": [
+          "SPECIALIST",
+          "DIVERSE",
+          "GENERALIST"
+        ]
+      },
+      "JOINT_DP": {
+        "E0_STABLE_BALANCED": [
+          "SPECIALIST",
+          "DIVERSE",
+          "GENERALIST"
+        ],
+        "E1_STABLE_SKEWED": [
+          "SPECIALIST",
+          "DIVERSE",
+          "GENERALIST"
+        ],
+        "E2_SHIFT": [
+          "SPECIALIST",
+          "DIVERSE",
+          "GENERALIST"
+        ]
+      }
+    }
+  },
+  "scope": "deterministic fully-known 3-agent x 2-capability diagnostic; not a new HLS mechanism"
+}
