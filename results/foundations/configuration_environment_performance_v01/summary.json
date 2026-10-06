@@ -1,0 +1,48 @@
+{
+  "artifact_files": {
+    "interactions": "interactions.csv",
+    "management_maps": "management_maps.csv",
+    "points": "points.csv",
+    "regime_maps": "regime_maps.csv"
+  },
+  "baseline_physics": "prototype-v0 reward and canonical MIS transition",
+  "budgets": {
+    "DIVERSE": 3.0,
+    "GENERALIST": 3.0,
+    "SPECIALIST": 3.0
+  },
+  "configuration_count": 3,
+  "environment_count": 125,
+  "experiment_id": "configuration_environment_performance_v01",
+  "grid": {
+    "chi": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "nu": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "rho": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ]
+  },
+  "horizon": 16,
+  "learning_disabled_scale": 0.0,
+  "learning_scale_enabled": 0.5,
+  "max_abs_interaction": 3.817051953738023,
+  "max_learning_value": 3.817051953738023,
+  "max_management_value": 0.0,
+  "rankings_changed_by_development": 0,
+  "scope": "deterministic fully-known characterization ledger; not an HLS mechanism or theorem"
+}

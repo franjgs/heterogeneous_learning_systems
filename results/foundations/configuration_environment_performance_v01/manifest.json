@@ -1,0 +1,17 @@
+{
+  "artifact_sha256": {
+    "interactions": "80bb13381673c92f54043047c26f97a42151095c6e1ff817a9f64694fbec143e",
+    "management_maps": "ccbc7d9c5456b6e2525de225a1931e36c268f5d1d80dd71f5ef0177e377393f5",
+    "points": "b72a9ba264db5c226023337dc2f041d3e42f172796b1bde436c5920d0ea7da0d",
+    "regime_maps": "9fa0999040264dc3c469bbee577ec7a60fb8eb1d0c0e1b9a59bc52357e8fb954",
+    "summary": "530bfd37fe82700cd30ee5000006358235cc1d2eeff74566b553168479784d28"
+  },
+  "command": "python experiments/synthetic/prototype_v01/run_configuration_environment_sweep.py",
+  "module_sha256": {
+    "configuration_environment_policy_v0.py": "1d24e9a1662caebfec6cbb098a2896cf33a5ef1dcc2a1cb1c0ab74754d750dea",
+    "configuration_environment_policy_v01.py": "780a15d73dd638916a450bdf10728d3712143cc0fbf7cdf8e292b88629e8f450"
+  },
+  "repository_commit_at_run": "08e6f51796fbe88ad758e27ed3e506885d34efde",
+  "runner_sha256": "af4df32f662f833e444e55588ba396b2ebf459701fc8ca1adca85b0b857556e1",
+  "working_tree_dirty_at_run": true
+}
