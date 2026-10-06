@@ -1,0 +1,24 @@
+{
+  "scope": "small controlled functional prototype",
+  "MIS_learning_scale": 1.5,
+  "horizon_per_problem": 3,
+  "problem_count": 3,
+  "configurations": [
+    "S001",
+    "S002",
+    "S003"
+  ],
+  "environments": [
+    "persistent",
+    "change",
+    "alternating"
+  ],
+  "modes": [
+    "discover_develop",
+    "discover_only",
+    "develop_known",
+    "static_known"
+  ],
+  "seed": 20261006,
+  "dynamic_planning": "two-step receding-horizon Bellman look-ahead"
+}
