@@ -53,6 +53,8 @@ classification.
 | [hls_ontology.md](hls_ontology.md) | Semantic infrastructure | CANONICAL | Terms, dimensional consistency, and cross-theory mappings. | A closed universal model or current-results ledger. |
 | [research_questions.md](research_questions.md) | Official question record | CANONICAL | Active RQ0 and its scope. | Historical questions or theory proofs. |
 | [HLS_CURRENT_STATE.md](HLS_CURRENT_STATE.md) | Scientific-status summary | CANONICAL | Established, scoped, open, and deliberately unclaimed results. | Detailed derivations or protocol chronology. |
+| [theory/HLS_FOUNDATION_SPECIFICATION.md](theory/HLS_FOUNDATION_SPECIFICATION.md) | Pre-experiment executable foundation | CANONICAL for its declared laboratory scope | Current CES, finite DISCOVER, MIS-v2, problem geometry, temporal semantics, frozen Small Problem World, status ledger, and non-claims before G00--G08 execution. | A programme-wide replacement for Current State, an experimental protocol, or a frozen-world result. |
+| [paper/PAPER_SOURCE_MAP.md](paper/PAPER_SOURCE_MAP.md) and companion ledgers | Future-publication traceability | CURRENT / SUPPORTING | Map future manuscript content to authoritative sources and prevent claims from outrunning evidence. | A manuscript, completed literature review, or scientific result. |
 | [HISTORY.md](HISTORY.md) | Scientific history | HISTORICAL | Negative results, abandoned branches, and reasons for changes of direction. | Current priority without checking Current State. |
 | [Historical Memory and Novelty Guard](HLS_HISTORICAL_MEMORY_AND_NOVELTY_GUARD.md) | Historical anti-repetition and novelty-review protocol | PROTOCOL / SUPPORTING | Find the closest prior construction, preserve status distinctions, and test whether a proposed direction adds a missing dependency before implementation. | Scientific authority, a replacement for the cited evidence, or an automatic veto of a genuinely new question. |
 | [theory/README.md](theory/README.md) | Theory registry | CURRENT | Locate canonical and supporting theory. | Independent scientific-status authority. |
@@ -173,9 +175,12 @@ For current programme reconstruction, use this order of authority:
 3. [HLS Ontology](hls_ontology.md) for semantic consistency.
 4. [Research Questions](research_questions.md) for official active questions.
 5. [HLS Current State](HLS_CURRENT_STATE.md) for established/open current science.
-6. [Theory registry](theory/README.md) and the individual cited theory for
+6. [Pre-experiment Foundation Specification](theory/HLS_FOUNDATION_SPECIFICATION.md)
+   for the current executable adaptive-team laboratory and its frozen
+   pre-campaign boundary.
+7. [Theory registry](theory/README.md) and the individual cited theory for
    formal, scoped results.
-7. [Experiments registry](experiments/README.md), G0, code, tests, and result
+8. [Experiments registry](experiments/README.md), G0, code, tests, and result
    artifacts for implementation and reproducibility.
 
 ## Historical, supporting, and provenance material

@@ -1,0 +1,169 @@
+{
+  "manifest_id": "hls-pre-experiment-foundation-v1",
+  "status": "frozen foundation before Small Problem World team execution",
+  "source_repository_head": "a315143",
+  "foundation_commits": {
+    "mis_v2_capability_geometry": "b194241",
+    "finite_problem_belief": "116a6f2",
+    "problem_distance": "3e2dbea",
+    "small_problem_world": "a315143"
+  },
+  "model_versions": {
+    "production": "discover-v0 CES",
+    "problem_belief": "finite-problem-belief-v1",
+    "development": "MIS-v2",
+    "dynamic_controller": "two-step receding-horizon MPC",
+    "problem_geometry": "production-surface-distance-v1",
+    "problem_world": "small-problem-world-v1"
+  },
+  "dimensions": {
+    "agents": 3,
+    "capabilities": 2,
+    "capability_bounds": [
+      0.0,
+      1.0
+    ],
+    "joint_actions": 64,
+    "individual_actions": [
+      [0.0, 0.0],
+      [0.0, 1.0],
+      [0.5, 0.5],
+      [1.0, 0.0]
+    ]
+  },
+  "production": {
+    "aggregate_outputs": "Y_k(S,X)=sum_i x_ik s_ik",
+    "reward": "R_z(S,X)=(sum_k z_k Y_k(S,X)^rho)^(1/rho)",
+    "rho": 0.5,
+    "problem_domain": "Delta^1={(p,1-p): 0<=p<=1}",
+    "scored_performance": "sum of true production means mu_true; noisy observations are not summed"
+  },
+  "observation_and_discovery": {
+    "distribution": "r~Normal(mu_true,sigma^2)",
+    "sigma": 0.1,
+    "finite_belief": "b_m=P(z_hat_m|observation history), m=1,...,M",
+    "bayes_update": "b'_m=b_m Normal(r;mu_m,sigma^2)/sum_j b_j Normal(r;mu_j,sigma^2)",
+    "fixed_state_dp_quadrature_order": 31,
+    "dynamic_mpc_quadrature_order": 3
+  },
+  "development": {
+    "version": "MIS-v2",
+    "equation": "s_plus=1-(1-s)exp(-lambda*x)",
+    "eta_parameterization": "eta=1-exp(-lambda); s_plus=s+eta(1-s) for x=1",
+    "eta_calibrated": false,
+    "eta_for_future_campaign": null,
+    "clipping": false
+  },
+  "temporal_semantics": {
+    "horizon_per_problem": 3,
+    "true_problem_fixed_within_problem": true,
+    "state_S_persists_between_problems": true,
+    "belief_resets_between_problems": true,
+    "posterior_carries_between_problems": false,
+    "environmental_transition_model": false,
+    "discount_factor": null
+  },
+  "frozen_agent_representation": {
+    "Z_hat": [
+      [0.8, 0.2],
+      [0.5, 0.5],
+      [0.2, 0.8]
+    ],
+    "prior": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "true_problem_must_be_represented": false
+  },
+  "problem_distance": {
+    "version": "production-surface-distance-v1",
+    "definition": "d_R(p,q)=(1/3)sup_{Y1>=0,Y2>=0,Y1+Y2<=3}|R_p(Y)-R_q(Y)|",
+    "closed_form_at_rho_0_5": "|p-q|[1+|p+q-1|]",
+    "team_independent": true,
+    "policy_independent": true
+  },
+  "world_descriptors": {
+    "C_t": "d_R(z_t,z_(t-1)); C_1=null",
+    "N_t": "min_{j<t} d_R(z_t,z_j); N_1=null",
+    "M_t": "min_{z_hat in Z_hat} d_R(z_t,z_hat)"
+  },
+  "frozen_small_problem_world": {
+    "labels": ["A", "A'", "B", "B'", "C", "A"],
+    "true_problems": [
+      [0.8, 0.2],
+      [0.7, 0.3],
+      [0.3, 0.7],
+      [0.2, 0.8],
+      [0.5, 0.5],
+      [0.8, 0.2]
+    ],
+    "p_sequence": [0.8, 0.7, 0.3, 0.2, 0.5, 0.8],
+    "team_executions": 0,
+    "G00_G08_executed_in_this_world": false
+  },
+  "explicit_absent_mechanisms": [
+    "transactive memory system",
+    "explicit inter-agent communication",
+    "expertise search",
+    "knowledge transfer or spillovers",
+    "REFRAME",
+    "learned environmental transition model",
+    "posterior memory across problems",
+    "forgetting",
+    "continuous Bayesian problem inference",
+    "novelty detector",
+    "misspecification detector"
+  ],
+  "source_artifacts": [
+    {
+      "path": "results/foundations/capability_geometry_gate_mis_v2/manifest.json",
+      "sha256": "148f4b031a96cf2ecdd34809079bbaf93f8dd396227c89495626cde1159b5b92"
+    },
+    {
+      "path": "results/foundations/capability_geometry_gate_mis_v2/regime_map_by_eta.csv",
+      "sha256": "1aa455cc98c595a3d3e41aefe955c2a599b2353459e923b0142a581edf272172"
+    },
+    {
+      "path": "results/foundations/finite_problem_belief_gate/control_summary.json",
+      "sha256": "600c5b3d9c309a8a50f29fa605e3213aa6912a46181df9e81aaf27a051504c49"
+    },
+    {
+      "path": "results/foundations/problem_distance_gate/control_summary.json",
+      "sha256": "5ded5fd5e39fc9cf6b8685d2fefdaa732a67057ceea3863a0954120a67456349"
+    },
+    {
+      "path": "results/foundations/problem_distance_gate/distance_grid.csv",
+      "sha256": "0aa569307525eed3b66c68e53e05f9b87edb8fa30058eef6d3307a9133d78582"
+    },
+    {
+      "path": "results/foundations/small_problem_world_gate/control_summary.json",
+      "sha256": "170857d19eac79781b61e759548d7cdf36a5146e2da638a14eef8162e2c6d449"
+    },
+    {
+      "path": "results/foundations/small_problem_world_gate/world.csv",
+      "sha256": "2a673acbfaa295728370bba0c1b4976ab11de9dbdfbacfe76b8a431b41e75982"
+    },
+    {
+      "path": "results/foundations/small_problem_world_gate/pairwise_distances.csv",
+      "sha256": "198bd98bbdfb066d32b424b1760aa07ed1d7e68bc258308e80544b74de9acc49"
+    }
+  ],
+  "future_protocol_not_frozen": [
+    "eta campaign",
+    "research campaign seeds",
+    "final G00-G08 protocol",
+    "campaign hypotheses",
+    "primary outcome variables",
+    "statistical analysis plan"
+  ],
+  "publication_provenance_chain": [
+    "model/foundation commit",
+    "experimental-protocol commit",
+    "experiment commit and run identifier",
+    "immutable raw result artifacts",
+    "analysis code",
+    "generated figure/table and machine-readable source",
+    "manuscript version"
+  ]
+}

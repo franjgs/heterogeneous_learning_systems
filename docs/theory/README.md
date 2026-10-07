@@ -6,6 +6,12 @@ doctrine.
 
 ## Current canonical theory
 
+-   [Pre-experiment HLS foundation
+    specification](HLS_FOUNDATION_SPECIFICATION.md): consolidated executable
+    specification for the current CES/DISCOVER/MIS-v2/problem-geometry/Small
+    Problem World laboratory before G00--G08 execution. It is authoritative
+    for that declared model scope, not a replacement for programme-level
+    T0--T6 theory or the current-state ledger.
 -   [Static HLS theoretical foundation ---
     T0--T3](HLS_STATIC_THEORY.md): consolidated static scaffold for
     feasible capability, collective expansion, organizational
