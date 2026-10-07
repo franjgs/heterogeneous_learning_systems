@@ -1,0 +1,6 @@
+environment,theta_sequence,problems,horizon_per_problem
+persistent_theta1,theta1|theta1|theta1|theta1,4,3
+persistent_theta2,theta2|theta2|theta2|theta2,4,3
+change_1122,theta1|theta1|theta2|theta2,4,3
+alternating_1212,theta1|theta2|theta1|theta2,4,3
+recurrent_1221,theta1|theta2|theta2|theta1,4,3

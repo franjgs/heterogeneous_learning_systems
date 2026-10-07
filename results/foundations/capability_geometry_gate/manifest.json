@@ -1,0 +1,27 @@
+{
+  "frozen_prototype_head": "7eb7530",
+  "campaign_parent_head": "a352314",
+  "seeds": [
+    20261007,
+    20261008,
+    20261009
+  ],
+  "N": 3,
+  "K": 2,
+  "rho": 0.5,
+  "joint_actions": 64,
+  "B_k": [
+    1.5,
+    1.5
+  ],
+  "configurations": 9,
+  "environments": 5,
+  "main_executions": 135,
+  "control_configurations": [
+    "G00",
+    "G06",
+    "G07",
+    "G08"
+  ],
+  "physics": "unchanged DISCOVER x DEVELOP prototype"
+}
