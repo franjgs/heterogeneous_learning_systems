@@ -49,6 +49,11 @@ primary sources before use in manuscript prose.
 10. **Prior ABMs of teams:** Which models jointly vary team diversity and
     task/environment structure, and what mechanisms do they include that HLS
     omits?
+11. **History, practice order, and policy-mediated exposure:** Which literatures
+    distinguish an intrinsically order-sensitive learning law from order
+    effects generated because intermediate capability changes subsequent task
+    assignment or practice opportunities? This review is required before the
+    post-hoc Campaign 0 interpretation is given broader theoretical meaning.
 
 ## C. Claims requiring external support
 
@@ -59,6 +64,8 @@ primary sources before use in manuscript prose.
 - interpretation of adaptive-team behavior and environmental dynamism;
 - any claim of practical or ecological relevance;
 - comparison to existing team/task ABMs.
+- any empirical interpretation of cumulative exposure or policy-mediated
+  capability path dependence beyond the frozen HLS model.
 
 ## D. HLS assumptions not to attribute falsely to literature
 
@@ -70,6 +77,9 @@ primary sources before use in manuscript prose.
 - reset of belief and persistence of `S` across problems;
 - the six-stage Small Problem World and finite `Z_hat`;
 - the two-step MPC approximation.
+- the cumulative-exposure identity as an algebraic consequence of MIS-v2; it
+  should not be attributed to literature merely because exponential learning
+  curves or learning-by-doing are discussed elsewhere.
 
 No BibTeX entry should be added until its source and metadata have been
 verified under the repository literature policy.

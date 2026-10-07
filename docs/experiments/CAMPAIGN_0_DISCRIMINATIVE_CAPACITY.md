@@ -1,20 +1,45 @@
 # Campaign 0 — frozen discriminative-capacity test
 
-## Status and scope
+## Epistemic status
 
-Campaign 0 is a diagnostic of the frozen HLS laboratory, not the main scientific campaign and not evidence for the future paper's principal hypothesis. The protocol was fixed before execution. No production, DISCOVER, finite-belief, MPC, MIS-v2, problem-world, or temporal physics was changed.
+Campaign 0 is a diagnostic of the frozen HLS laboratory, not the main evidential campaign and not evidence for a general advantage of heterogeneous teams. This record separates: (A) the design fixed before execution, (B) observations produced by that design, (C) a mechanistic interpretation formulated after observing those results, and (D) mathematical consequences of MIS-v2. These categories must not be collapsed in later paper prose.
 
-The initial repository state was clean at foundation commit `20106d3`. The executed mode was `DISCOVER_DEVELOP`, with eta 0.35, horizon 3 per problem, uniform prior over `((.8,.2),(.5,.5),(.2,.8))`, and deterministic seeds 0–9. The same seed was used for every configuration within a history, providing common random numbers.
+## A. Pre-specified before execution
 
-## Frozen design
+### Purpose and frozen model
 
-Teams were G00 (generalist reference), G04 (intermediate/redundant), G05 (strong complementary specialization), and G07 (asymmetric heterogeneous). Every team has per-capability totals `(1.5,1.5)`. G05 and G07 have the same previously defined aggregate geometry descriptors but different interpersonal placement.
+The purpose was to test whether the existing laboratory could discriminate the chain
 
-Histories were H0 `.8,.7,.3,.2,.5,.8`; H1 `.8,.2,.3,.7,.5,.8`; H2 `.8` repeated six times; and H3 `.8,.2,.8,.2,.8,.8`. H0/H1 are the primary content-matched order control.
+```text
+initial capability geometry x problem history
+-> assignment/exposure
+-> capability trajectory
+-> later assignment/performance.
+```
 
-## Configuration × history result matrix
+The initial repository state was clean at foundation commit `20106d3`. Production, finite-belief DISCOVER, MPC, MIS-v2, problem representation, action space, and temporal physics were frozen. Execution used `DISCOVER_DEVELOP`, eta `0.35`, horizon three per problem, uniform prior over `((.8,.2),(.5,.5),(.2,.8))`, deterministic seeds `0,...,9`, and common random numbers across configurations within a history.
 
-Values are means over ten seeds of cumulative true expected production; parentheses give mean final-A production. Rankings refer to cumulative production.
+Teams were fixed from geometry alone: G00 `((.5,.5),(.5,.5),(.5,.5))`; G04 `((.25,.75),(.625,.375),(.625,.375))`; G05 `((0,1),(.5,.5),(1,0))`; and G07 `((0,1),(.5,0),(1,.5))`. Each has per-capability totals `(1.5,1.5)`. G05 and G07 have identical repository aggregate geometry descriptors but different interpersonal placement.
+
+Histories were H0 `.8,.7,.3,.2,.5,.8`; H1 `.8,.2,.3,.7,.5,.8`; H2 `.8,.8,.8,.8,.8,.8`; and H3 `.8,.2,.8,.2,.8,.8`. H0/H1 contain the same problem multiset and were the primary order control.
+
+### Pre-specified outcomes and assessment rule
+
+Recorded outcomes included step-level actions, exposures, capability states, true production, noisy observations, beliefs, cumulative production, problem-level rankings, and final recurrent-A performance. The primary contrast was
+
+```text
+Delta_order(g)=P_g(final A | H0)-P_g(final A | H1).
+```
+
+The frozen assessment was PASS for clear development-mediated path dependence plus some history-dependent ranking change; PARTIAL for path dependence without a meaningful ranking change, or an uninterpretable/non-robust change; and FAIL for essentially invariant rankings, noise-only differences, no interpretable adaptive mechanism, or near-universal domination that prevented discrimination. No threshold for effect size was added.
+
+## B. Observed in Campaign 0
+
+Campaign 0 executed 160 runs and 2,880 within-problem steps and was classified **PASS** under its frozen rule. This is a diagnostic classification, not confirmation of the future paper hypothesis.
+
+### Configuration x history matrix
+
+Entries are mean cumulative true production over ten seeds; parentheses contain mean final-A production. Ordering is cumulative rank.
 
 | History | 1st | 2nd | 3rd | 4th |
 |---|---:|---:|---:|---:|
@@ -23,41 +48,87 @@ Values are means over ten seeds of cumulative true expected production; parenthe
 | H2 | G07 30.8236 (5.3164) | G04 30.1005 (5.3156) | G00 29.5371 (5.5822) | G05 29.5243 (5.2570) |
 | H3 | G07 28.7539 (5.2603) | G04 27.9087 (5.2543) | G05 27.3174 (5.1593) | G00 27.0949 (5.4636) |
 
-G07 leads cumulative performance in all four histories. That is a real dominance warning at the cumulative level, but it does not eliminate the primary order diagnostic because the final-A ranking changes between content-matched histories.
+G07 won cumulative performance in all four histories. Campaign 0 therefore did **not** produce diversity in cumulative winners.
 
-## Primary order control
+### Content-matched H0/H1 order effect
 
-For `Delta_order = final_A(H0) - final_A(H1)`, seed means were G00 `0.395264`, G04 `0.000221`, G05 `0.493247`, and G07 exactly `0`. The mean final-A ranking was:
+Mean `Delta_order` was G00 `0.395264`, G04 `0.000221`, G05 `0.493247`, and G07 exactly `0`. Mean final-A ranking changed from G00 > G07 > G04 > G05 under H0 to G07 > G04 > G00 > G05 under H1. At seed level, the first pattern occurred in 8/10 H0 runs and 2/10 H1 runs; the second occurred in 2/10 H0 and 8/10 H1.
 
-- H0: G00 > G07 > G04 > G05.
-- H1: G07 > G04 > G00 > G05.
+Observed cases include positive order dependence (G00 and G05), a near-null final-A effect (G04), and an exactly null final-A effect across all seeds (G07). Path dependence was configuration-dependent rather than universal.
 
-At seed level, `G00>G07>G04>G05` occurred in 8/10 H0 runs and 2/10 H1 runs; the reverse pattern `G07>G04>G00>G05` occurred in 2/10 H0 and 8/10 H1. Thus the ranking change is not an average generated by one exceptional seed.
+## C. Post-hoc cumulative-exposure mechanism audit
 
-## Causal trajectories
+This explanation was formulated **after** observing Campaign 0. It was not a preregistered Campaign 0 hypothesis. The audit used the existing H0/H1 trajectories only; it did not alter or rerun the experiment.
 
-The machine-readable representative cases use seed 0 uniformly rather than selecting a favorable seed.
+### Exposure and exact reconstruction
 
-1. **G05, H0 versus H1 — clear order divergence.** Both finish the initial A at the same state. In H0, the following `.7` problems repeatedly exercise agent 2's first capability, taking it from `.78875` to `.941985`; later `.3/.2` exercise its second capability. Before final A its row is `(.989644,.962291)`. In H1, early `.2/.3` instead develop the second capability first; before final A the row is `(.962291,.989644)`. The final-A policies consequently allocate agent 2 differently and produce `5.301478` under H0 versus `4.669168` under H1. This is assignment → exposure → MIS-v2 state divergence → later allocation/performance.
+MIS-v2 uses the continuous action entry itself as exposure:
 
-2. **G00, H0 versus H1 — distributed path divergence.** The first A is identical. Reordering `.7/.3/.2` changes which initially identical agents receive mixed versus pure assignments, so their rows cease to be interchangeable. At seed 0, the pre-final-A states differ, including agent 2 `(.989644,.962291)` under H0 versus `(.984068,.975489)` under H1 and agent 3 second capability `.737977` versus `.788750`. Final-A production differs by `0.009019` in this seed; across seeds mean Delta_order is `0.395264`, reflecting belief-conditioned assignment branches.
+```text
+x_ik(t)=X_t[i,k],
+E_ik(t)=sum_(tau<t) X_tau[i,k].
+```
 
-3. **G05 versus G07 — aggregate-descriptor-matched WHO-HAS-WHAT contrast.** On initial A, G05 develops the initially balanced agent 2 from `(.5,.5)` to `(.78875,.675)`, whereas G07 exercises agent 2's first capability from `(.5,0)` to `(.8626875,0)`. Their interpersonal placement therefore directs exposure into different cells despite identical aggregate descriptors. Under H0, mean cumulative production is `26.8677` versus `27.2043` and final-A production `5.0880` versus `5.2611`.
+Campaign 0 actions contain exposures `0`, `.5`, and `1`; exposure is not a binary action count. With `eta=.35` and `lambda=-log(1-eta)`, the independently audited cumulative form is
 
-4. **G07 H0 versus H1 — negative/convergence control.** Ordering changes intermediate assignments and whether agent 3's second capability develops earlier, but both paths reach the same pre-final-A state at seed 0: `((0,1),(.999219,0),(1,.941985))`. They then choose the same final-A actions and produce exactly `5.316426`. Delta_order is exactly zero for all ten seeds.
+```text
+s_ik(t)=1-(1-s_ik(0)) exp(-lambda E_ik(t))
+       =1-(1-s_ik(0)) (1-eta)^(E_ik(t)).
+```
 
-5. **G04 H0 versus H1 — near-convergence control.** Different middle histories develop different cells, yet saturation and later allocations leave final-A means nearly identical: `5.254930` versus `5.254709`, with mean Delta_order `0.000221`. The observed path dependence is therefore configuration-dependent rather than mechanically guaranteed by reordering.
+Across 80 pre-final-A states and 480 capability cells, the maximum absolute discrepancy between this reconstruction and the stored simulator state was `1.1102230246251565e-16`.
 
-## Assessment
+### Team diagnoses
 
-**PASS.** Capability development creates interpretable order dependence, and the final-A team ranking changes under H0/H1 despite identical problem content, common initial/final A, belief reset at every problem, and common random numbers. The mechanism is visible in cell-level assignments, MIS-v2 increments, persistent S, and subsequent production.
+- **G00 — state and behavioral divergence.** H0/H1 produced unequal cumulative exposure in 8/10 seeds. Exposure shifted primarily between the two capabilities of agents 2 and 3, breaking the initial interpersonal symmetry. This changed later state and, conditional on belief/policy branches, final-A behavior and performance.
+- **G04 — state difference with near behavioral convergence.** Exposure/state differed in 7/10 seeds, but the mean final-A effect was only `0.000221`. Important residual differences frequently lay in a capability not exercised by final-A assignments, while relevant first-capability cells were near their ceiling.
+- **G05 — mirrored development and behavioral divergence.** Exposure differed in 8/10 seeds and was concentrated in the initially balanced agent. In representative seed 0 its cumulative exposure was `(9,6)` under H0 and `(6,9)` under H1, producing approximately mirrored states `(.989644,.962291)` and `(.962291,.989644)` and different final-A allocation/performance.
+- **G07 — behavioral convergence does not imply state convergence.** Final-A performance was identical under H0/H1 in all ten seeds, but cumulative exposure and pre-A state were identical in only 5/10. In the other seeds, residual state differences occurred in a capability not used by the final-A policy; exposure directed to an already mastered cell also could not change that cell. The previous representative seed-0 trace showed genuine state convergence, but it must not be generalized to every seed.
 
-The qualification is important: G07 dominates cumulative means in all tested histories, G07 has no final-A order effect, and G04 nearly converges. Campaign 0 establishes discriminative capacity of the laboratory, not a general geometry advantage or the paper's main hypothesis.
+The audit therefore distinguishes:
 
-## Implication for the future main campaign
+1. **state convergence:** equal `S_preA`;
+2. **behavioral convergence:** equal subsequent action/performance despite possibly unequal state;
+3. **behavioral divergence:** state differences affect subsequent policy and/or production.
 
-The frozen laboratory can discriminate history-dependent adaptive trajectories, so a main campaign is technically justified. Its protocol should retain content-matched history permutations, common random numbers, cell-level exposure/state traces, predeclared outcomes separating cumulative from recurrent-problem performance, and negative/convergence cases. Campaign 0 must not be used to retune eta, select only favorable teams/histories, or formulate confirmatory claims after observing these outcomes.
+A capability-state difference is not necessarily a performance-relevant capability-state difference. Performance additionally depends on the next problem, belief, MPC assignment, and CES production.
 
-## Artifacts
+## D. Mathematical consequence of the HLS MIS-v2 formulation
 
-Raw and derived data reside in `results/diagnostics/campaign0_discriminative_capacity/`: `runs.csv`, `trajectories.csv`, `configuration_history_matrix.csv`, `ranking_through_time.csv`, `order_effects.csv`, `representative_trajectories.csv`, four ranking figures, and `manifest.json`.
+For fixed initial capability and exposures,
+
+```text
+F(F(s,x1),x2)=1-(1-s) exp[-lambda(x1+x2)].
+```
+
+Consequently, conditional on `S_0` and cumulative exposure `E`, MIS-v2 produces the same capability state regardless of exposure order. This is an algebraic consequence of the HLS MIS-v2 formulation—not an empirical discovery, an externally established learning theorem, or a claim about real teams.
+
+Under the frozen model, capability-state path dependence is therefore policy-mediated:
+
+```text
+problem history
+-> adaptive assignments
+-> cumulative exposure
+-> persistent capability state
+-> subsequent assignment
+-> performance.
+```
+
+The implementation qualifies this statement only in interpretation: exposure is continuous; exposure differences at `s=1` need not produce state differences; and state differences need not affect performance when the differing cells are not subsequently exercised.
+
+## Limitations and allowed inference
+
+- Campaign 0 establishes no general superiority of heterogeneous teams.
+- No diversity of cumulative winners was observed: G07 led all four histories.
+- Path dependence was configuration-dependent.
+- State difference does not imply behavioral or performance difference.
+- Cumulative exposure explains capability state under MIS-v2, not performance directly.
+- The exposure mechanism interpretation is post hoc.
+- Campaign 0 is diagnostic, not the main evidential campaign.
+- Results are confined to the frozen teams, histories, eta, seeds, controller, and production physics.
+
+No Campaign 1 hypothesis or protocol is defined here. Theory consolidation and targeted literature review must precede any Campaign 1 design.
+
+## Provenance and artifacts
+
+The execution commit is `bdcc8bd`. Raw and derived artifacts are under `results/diagnostics/campaign0_discriminative_capacity/`. The frozen manifest is `manifest.json`; step-level evidence is `trajectories.csv`; summaries are `runs.csv`, `configuration_history_matrix.csv`, `ranking_through_time.csv`, and `order_effects.csv`. Representative cases and figures are descriptive views over those machine-readable records. `closure_provenance.json` records immutable artifact hashes and the epistemic status of this closure.

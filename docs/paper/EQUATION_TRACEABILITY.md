@@ -127,3 +127,29 @@ M_t=min_(z_hat in Z_hat)d_R(z_t,z_hat).
 - Implementation: `problem_geometry.py::representational_mismatches`.
 - Validation: represented/unrepresented and recurrence controls.
 - Assumptions: nonempty finite `Z_hat`.
+
+## E11. MIS-v2 cumulative-exposure identity
+
+```text
+E_ik(t)=sum_(tau<t) X_tau[i,k]
+s_ik(t)=1-(1-s_ik(0))exp(-lambda E_ik(t))
+       =1-(1-s_ik(0))(1-eta)^(E_ik(t)).
+```
+
+- Symbols: `X_tau[i,k]` is the continuous exposure allocated by the executed
+  action (including `.5`, not merely a binary count); `E_ik` is cumulative
+  cell exposure.
+- Status: HLS derived result from the MIS-v2 composition assumption and
+  exponential remaining-gap formulation; not an empirical discovery or a
+  literature-derived theorem.
+- Implementation: `discover_develop_v2.py::capability_after_exposure` and
+  `mis_v2_transition`.
+- Validation: post-Campaign-0 mechanistic reconstruction of 80 H0/H1 pre-A
+  states (480 cells), maximum absolute discrepancy
+  `1.1102230246251565e-16`.
+- Assumptions: fixed `lambda`, no forgetting/transfer, separable cell updates,
+  and the same initial `S_0`.
+- Consequence: for fixed `S_0` and `E`, capability state is invariant to the
+  order of exposures. This does not imply equal policy or performance unless
+  subsequent beliefs, assignments, problems, and production consequences also
+  coincide.

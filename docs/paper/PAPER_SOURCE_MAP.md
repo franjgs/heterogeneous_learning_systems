@@ -13,8 +13,8 @@ claims.
 | Problem space and geometry | `PROBLEM_DISTANCE_GATE.md`; foundation specification | `problem_geometry.py` | problem-distance grid and summary | `Z=Delta^1`, metric and closed form under fixed physics | empirical task-distance validity |
 | Agent representation and DISCOVER | `FINITE_PROBLEM_BELIEF_GATE.md` | `finite_problem_belief.py`; historical `discover_v0.py` | finite-belief summary/trajectories | finite beliefs, world/model separation, M=2 recovery | novelty recognition, continuous inference |
 | Capability development | `HLS_CAPABILITY_DEVELOPMENT.md` | `discover_develop_v2.py` | MIS-v2 gate artifacts | declared exponential gap transition and properties | calibrated learning law |
-| Experimental design | `SMALL_PROBLEM_WORLD_GATE.md`; future preregistration | `small_problem_world.py`; future runner | frozen world artifacts | world/repertoire/descriptors fixed | G00--G08 protocol pending |
-| Results | capability-geometry docs only as prior diagnostic provenance | historical gate runners | MIS-v1/v2 result tables | scoped previous diagnostic findings | frozen-world results do not exist |
+| Experimental design | `SMALL_PROBLEM_WORLD_GATE.md`; `CAMPAIGN_0_DISCRIMINATIVE_CAPACITY.md`; future preregistration | `small_problem_world.py`; Campaign 0 runner; future runner | frozen world and Campaign 0 manifests | world/repertoire fixed; Campaign 0 diagnostic design and epistemic separation | Campaign 1 hypotheses/protocol pending theory and literature review |
+| Results | `CAMPAIGN_0_DISCRIMINATIVE_CAPACITY.md`; capability-geometry docs as prior diagnostic provenance | Campaign 0 and historical gate runners | Campaign 0 raw trajectories/matrix/order effects; MIS-v1/v2 tables | scoped Campaign 0 PASS, order effects, null cases, and G07 cumulative dominance | main evidential results do not exist |
 | Discussion | foundation specification; future results | none | future analysis | limitations and absent mechanisms | conclusions before campaign/review |
 | Limitations | foundation specification; gate documents | source validators/controllers | gate controls | present model boundary | external validity assessment pending |
 | Conclusions | none yet | none | none | no substantive experimental conclusion | entirely pending |
@@ -48,7 +48,9 @@ foundation/model commit
 -> manuscript version.
 ```
 
-`a315143` is the source foundation HEAD, not the future protocol commit.
+`a315143` is the Small Problem World fixture commit, `20106d3` is the
+consolidated pre-experiment foundation, and `bdcc8bd` executed the diagnostic
+Campaign 0. None is a Campaign 1 protocol commit.
 
 ## Paper readiness
 
@@ -56,10 +58,11 @@ foundation/model commit
 |---|---|
 | Model specification | READY FOR FOUNDATION REVIEW |
 | Mathematical derivations | READY FOR FOUNDATION REVIEW |
-| Problem-world specification | READY; NO TEAM EXECUTION |
+| Problem-world specification | READY; DIAGNOSTIC CAMPAIGN 0 EXECUTED |
 | Scientific-status ledger | READY FOR FOUNDATION REVIEW |
 | Literature review | PENDING |
-| Experimental hypotheses | PENDING |
+| Campaign 0 diagnostic | COMPLETE; NOT MAIN EVIDENCE |
+| Experimental hypotheses | PENDING THEORY/LITERATURE REVIEW |
 | Experimental protocol | PENDING |
 | Main campaign | PENDING |
 | Statistical analysis | PENDING |

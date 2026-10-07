@@ -1,0 +1,48 @@
+{
+  "closure_id": "campaign0-discriminative-capacity-closure-v1",
+  "epistemic_status": {
+    "design": "pre-specified before Campaign 0 execution",
+    "campaign_result": "observed diagnostic result: PASS",
+    "mechanism_audit": "post-hoc interpretation using existing Campaign 0 trajectories",
+    "cumulative_exposure_identity": "mathematical consequence of the HLS MIS-v2 formulation"
+  },
+  "commits": {
+    "pre_experiment_foundation": "20106d3",
+    "campaign0_execution": "bdcc8bd"
+  },
+  "protocol": {
+    "teams": ["G00", "G04", "G05", "G07"],
+    "histories": ["H0", "H1", "H2", "H3"],
+    "eta": 0.35,
+    "seeds": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    "runs": 160,
+    "trajectory_rows": 2880
+  },
+  "audit": {
+    "scope": "H0/H1 only; 4 teams x 2 histories x 10 seeds",
+    "pre_final_A_states": 80,
+    "capability_cells_checked": 480,
+    "maximum_absolute_state_reconstruction_error": 1.1102230246251565e-16,
+    "G07_equal_pre_A_state_seed_count": 5,
+    "G07_equal_final_A_performance_seed_count": 10,
+    "verdict": "SUPPORTED within the frozen model",
+    "campaign0_classification_changed": false
+  },
+  "source_artifacts": [
+    {"path": "results/diagnostics/campaign0_discriminative_capacity/manifest.json", "sha256": "1bdde23eecbd675986713ce72888e6c3275a3a80f84fe542decfb9683fc6a579"},
+    {"path": "results/diagnostics/campaign0_discriminative_capacity/runs.csv", "sha256": "3191d4f43f810259d30b90169e105c22048fbf4629ccab9647a5dc2732d6b70d"},
+    {"path": "results/diagnostics/campaign0_discriminative_capacity/trajectories.csv", "sha256": "15628db2854472acb0b6f0366b466859710cce39547170f6f9f15a747cf4d04b"},
+    {"path": "results/diagnostics/campaign0_discriminative_capacity/configuration_history_matrix.csv", "sha256": "7bb5208ff0df7e10f4bdd62afc114f312b5776564ae5cb8689c9887edc5b4d7a"},
+    {"path": "results/diagnostics/campaign0_discriminative_capacity/order_effects.csv", "sha256": "016626f6e9e3e4a0f6694a1683c14147e79661eb0486efe6d3b5ba705a2ed34e"},
+    {"path": "results/diagnostics/campaign0_discriminative_capacity/representative_trajectories.csv", "sha256": "f12f7765e0fefaaed7c9bab8221a6144b53c37ae6712132d231a7dbf31e91428"}
+  ],
+  "limitations": [
+    "Campaign 0 is diagnostic rather than the main evidential campaign",
+    "G07 led cumulative performance in all four tested histories",
+    "path dependence is configuration-dependent",
+    "capability-state difference need not be performance-relevant",
+    "the cumulative-exposure mechanism interpretation was formulated post hoc",
+    "no Campaign 1 hypothesis or protocol is frozen"
+  ],
+  "next_step": "theory consolidation and targeted literature review before Campaign 1 design"
+}
