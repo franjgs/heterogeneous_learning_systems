@@ -1,0 +1,177 @@
+{
+  "analysis": {
+    "classification": "PASS",
+    "classification_basis": "Capability-state path dependence is directly observed; final-A mean ranking differs between content-matched H0/H1, with the dominant per-seed ranking pattern reversing 8/10 versus 2/10.",
+    "final_A_ranking": {
+      "H0": [
+        "G00",
+        "G07",
+        "G04",
+        "G05"
+      ],
+      "H1": [
+        "G07",
+        "G04",
+        "G00",
+        "G05"
+      ]
+    },
+    "final_A_ranking_changes_between_H0_H1": true,
+    "mean_Delta_order": {
+      "G00": 0.39526433625856255,
+      "G04": 0.00022100049700402025,
+      "G05": 0.4932469071993425,
+      "G07": 0.0
+    },
+    "per_seed_ranking_patterns": {
+      "H0": {
+        "G00>G07>G04>G05": 8,
+        "G07>G04>G00>G05": 2
+      },
+      "H1": {
+        "G00>G07>G04>G05": 2,
+        "G07>G04>G00>G05": 8
+      }
+    },
+    "representative_case_policy": "Seed 0 was used uniformly for readable causal traces; cases include divergence, descriptor-matched G05/G07, exact order-null G07, and near-convergent G04."
+  },
+  "common_random_numbers": "same seed for every team within each history",
+  "diagnostic_not_main_campaign": true,
+  "eta": 0.35,
+  "histories_p": {
+    "H0": [
+      0.8,
+      0.7,
+      0.3,
+      0.2,
+      0.5,
+      0.8
+    ],
+    "H1": [
+      0.8,
+      0.2,
+      0.3,
+      0.7,
+      0.5,
+      0.8
+    ],
+    "H2": [
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8
+    ],
+    "H3": [
+      0.8,
+      0.2,
+      0.8,
+      0.2,
+      0.8,
+      0.8
+    ]
+  },
+  "horizon_per_problem": 3,
+  "hypothesis_repertoire": [
+    [
+      0.8,
+      0.2
+    ],
+    [
+      0.5,
+      0.5
+    ],
+    [
+      0.2,
+      0.8
+    ]
+  ],
+  "mode": "discover_develop",
+  "physics_changes": "none",
+  "prior": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+  ],
+  "protocol_sha256": "d8249791ac2895562a6c7d7ff49eca41bd42ad3567d6570cee221548a8672c19",
+  "run_count": 160,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "status": "frozen_before_execution",
+  "team_labels": {
+    "G00": "generalist reference",
+    "G04": "intermediate/redundant",
+    "G05": "strong complementary specialization",
+    "G07": "asymmetric heterogeneous"
+  },
+  "teams": {
+    "G00": [
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.5,
+        0.5
+      ]
+    ],
+    "G04": [
+      [
+        0.25,
+        0.75
+      ],
+      [
+        0.625,
+        0.375
+      ],
+      [
+        0.625,
+        0.375
+      ]
+    ],
+    "G05": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        1.0,
+        0.0
+      ]
+    ],
+    "G07": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.5,
+        0.0
+      ],
+      [
+        1.0,
+        0.5
+      ]
+    ]
+  },
+  "trajectory_row_count": 2880
+}
