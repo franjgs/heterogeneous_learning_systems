@@ -1,0 +1,45 @@
+{
+  "campaign2_recommendation": {
+    "range": [
+      "TR-PR",
+      "TR-PM",
+      "TR-G",
+      "TR-J",
+      "TR-R",
+      "TR-D",
+      "TR-HA",
+      "TR-HB"
+    ],
+    "reason": "Retain all eight as a compact paired range: PR/PM isolate persistence/representation, G/J and HA/HB provide distinct order/familiar-return probes including useful near-null responses, and R/D preserve recurrence/displacement coverage. This recommendation prioritizes structural coverage and negative controls, not effect size or winner selection."
+  },
+  "campaign_id": "campaign1-test-range-characterization-v1",
+  "classification": "PASS",
+  "classification_basis": "The frozen range produces distinct, interpretable persistence/mismatch, temporal-order, recurrence/displacement, and familiar-return trajectories. Control sensitivity and configuration sensitivity vary by scenario, while several paired effects are near-null for some configurations; the range therefore does not reduce to a single change-magnitude ordering.",
+  "negative_and_null_results": [
+    "G07 leads mean FULL cumulative performance in all eight scenarios; this is not the Campaign 1 criterion.",
+    "No scenario has negative mean FULL-minus-NO-DEVELOP for any probe configuration.",
+    "TR-G/TR-J and TR-HA/TR-HB order effects are near-null for G04/G07 under FULL.",
+    "FULL and KNOWN-Z coincide for G04/G07 in TR-PR, TR-PM, and TR-R.",
+    "No development-liability case is identified by the frozen FULL versus NO-DEVELOP control."
+  ],
+  "performance_measure": "mu_true only",
+  "representative_case_policy": "Seed 0 uniformly; one pair per frozen contrast plus an order near-null.",
+  "universal_FULL_cumulative_leader": "G07",
+  "validation": {
+    "eighteen_steps_per_run": true,
+    "exact_conditions": true,
+    "exact_configurations": true,
+    "exact_scenarios": true,
+    "frozen_eta": true,
+    "frozen_horizon": true,
+    "global_crn_alignment": true,
+    "run_count": true,
+    "runs_per_condition": true,
+    "runs_per_configuration": true,
+    "runs_per_scenario_condition": true,
+    "ten_seeds_per_cell": true,
+    "trajectory_count": true,
+    "unique_run_keys": true,
+    "unique_trajectory_keys": true
+  }
+}

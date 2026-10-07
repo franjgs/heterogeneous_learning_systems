@@ -13,6 +13,8 @@ conceptual index; it is not a second results ledger.
 - [Geometry redistribution protocol/outcome](../experimental_foundations/RQ0_GEOMETRY_REDISTRIBUTION_PROTOCOL.md)
 - [Routing--opportunity coupling protocol/outcome](../experimental_foundations/RQ0_ROUTING_OPPORTUNITY_COUPLING_PROTOCOL.md)
 - [Configuration × Environment → Performance v0.1](CONFIGURATION_ENVIRONMENT_PERFORMANCE_V01.md)
+- [Campaign 1 frozen protocol](CAMPAIGN_1_PROTOCOL.md)
+- [Campaign 1 test-range characterisation](CAMPAIGN_1_RESULTS.md)
 - [Synthetic runners](../../experiments/synthetic/)
 
 ## Foundation and empirical evidence

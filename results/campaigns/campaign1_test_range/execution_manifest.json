@@ -1,0 +1,97 @@
+{
+  "analysis_classification": "PASS",
+  "campaign_id": "campaign1-test-range-characterization-v1",
+  "condition_implementation": {
+    "FULL": "run_finite_problem_sequence mode DISCOVER_DEVELOP",
+    "KNOWN-Z": "run_finite_problem_sequence mode DEVELOP_KNOWN",
+    "NO-DEVELOP": "finite_choose_dynamic_action_v2 develop=False; state transition disabled"
+  },
+  "conditions": [
+    "FULL",
+    "NO-DEVELOP",
+    "KNOWN-Z"
+  ],
+  "configuration_ids": [
+    "G00",
+    "G04",
+    "G05",
+    "G07"
+  ],
+  "crn_verified": true,
+  "derived_artifacts": [
+    "scenario_configuration_condition_summary.csv",
+    "controlled_contrasts.csv",
+    "mechanistic_controls.csv",
+    "scenario_characterization.csv",
+    "representative_trajectories.csv",
+    "analysis_summary.json",
+    "full_performance_map.png",
+    "mechanistic_controls.png",
+    "controlled_contrast_trajectories.png"
+  ],
+  "materialized_validation": {
+    "eighteen_steps_per_run": true,
+    "exact_conditions": true,
+    "exact_configurations": true,
+    "exact_scenarios": true,
+    "frozen_eta": true,
+    "frozen_horizon": true,
+    "global_crn_alignment": true,
+    "run_count": true,
+    "runs_per_condition": true,
+    "runs_per_configuration": true,
+    "runs_per_scenario_condition": true,
+    "ten_seeds_per_cell": true,
+    "trajectory_count": true,
+    "unique_run_keys": true,
+    "unique_trajectory_keys": true
+  },
+  "observed_reward_role": "Bayesian observation only; retained but not performance",
+  "parameters": {
+    "K": 2,
+    "N": 3,
+    "eta": 0.35,
+    "horizon_per_problem": 3,
+    "rho": 0.5,
+    "sigma": 0.1
+  },
+  "performance_field": "mu_true",
+  "pre_experiment_protocol_sha256": "fa829cb3fd609df9fa8f1ffd56bc726e398c364a5d844d6f3c7a8d437b1a3816",
+  "pre_results_head": "bcc3ad8",
+  "protocol_id": "campaign1-execution-protocol-v1",
+  "raw_artifact_sha256": {
+    "runs.csv": "7a9812d4f4341735f2715d91e30a24a54205745620dc20767be8151e679e78f5",
+    "trajectories.csv": "20045f0818544d5b7c2a6ac5c37eb1aa34294a7ce96baed9ea0097bf243e1c85"
+  },
+  "run_count": 960,
+  "runs_by_condition": {
+    "FULL": 320,
+    "KNOWN-Z": 320,
+    "NO-DEVELOP": 320
+  },
+  "scenario_ids": [
+    "TR-PR",
+    "TR-PM",
+    "TR-G",
+    "TR-J",
+    "TR-R",
+    "TR-D",
+    "TR-HA",
+    "TR-HB"
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "status": "execution and preregistered test-range characterization complete",
+  "test_range_commit": "05b86cb",
+  "trajectory_rows": 17280
+}
