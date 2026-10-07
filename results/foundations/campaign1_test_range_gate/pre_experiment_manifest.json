@@ -1,0 +1,475 @@
+{
+  "campaign0_closure_commit": "a899c14",
+  "campaign1_performance_artifacts": 0,
+  "candidate_controls_not_executed_or_replication_frozen": [
+    "NO-DEVELOP",
+    "KNOWN-z oracle"
+  ],
+  "contamination_status": {
+    "TR-D": "PRE-PERFORMANCE CAMPAIGN-1 SCENARIO",
+    "TR-G": "PRIOR-DIAGNOSTIC / NOT OUT-OF-SAMPLE: new ordering of Campaign 0 H0/H1 problem multiset",
+    "TR-HA": "PRIOR-DIAGNOSTIC / NOT OUT-OF-SAMPLE: new ordering of Campaign 0 H0/H1 problem multiset",
+    "TR-HB": "PRIOR-DIAGNOSTIC / NOT OUT-OF-SAMPLE: new ordering of Campaign 0 H0/H1 problem multiset",
+    "TR-J": "PRIOR-DIAGNOSTIC / NOT OUT-OF-SAMPLE: new ordering of Campaign 0 H0/H1 problem multiset",
+    "TR-PM": "PRE-PERFORMANCE CAMPAIGN-1 SCENARIO",
+    "TR-PR": "PRIOR-DIAGNOSTIC / NOT OUT-OF-SAMPLE: identical to Campaign 0 H2",
+    "TR-R": "PRIOR-DIAGNOSTIC / NOT OUT-OF-SAMPLE: recurrence analogue of Campaign 0 H3 using U instead of B"
+  },
+  "descriptors": {
+    "TR-D": [
+      {
+        "C_t": null,
+        "M_t": 0.0,
+        "N_t": null,
+        "represented": true
+      },
+      {
+        "C_t": 0.15000000000000013,
+        "M_t": 0.15000000000000013,
+        "N_t": 0.15000000000000013,
+        "represented": false
+      },
+      {
+        "C_t": 0.23999999999999994,
+        "M_t": 0.0,
+        "N_t": 0.23999999999999994,
+        "represented": true
+      },
+      {
+        "C_t": 0.24,
+        "M_t": 0.14999999999999997,
+        "N_t": 0.24,
+        "represented": false
+      },
+      {
+        "C_t": 0.14999999999999997,
+        "M_t": 0.0,
+        "N_t": 0.14999999999999997,
+        "represented": true
+      },
+      {
+        "C_t": 0.0,
+        "M_t": 0.0,
+        "N_t": 0.0,
+        "represented": true
+      }
+    ],
+    "TR-G": [
+      {
+        "C_t": null,
+        "M_t": 0.0,
+        "N_t": null,
+        "represented": true
+      },
+      {
+        "C_t": 0.15000000000000013,
+        "M_t": 0.15000000000000013,
+        "N_t": 0.15000000000000013,
+        "represented": false
+      },
+      {
+        "C_t": 0.23999999999999994,
+        "M_t": 0.0,
+        "N_t": 0.23999999999999994,
+        "represented": true
+      },
+      {
+        "C_t": 0.24,
+        "M_t": 0.14999999999999997,
+        "N_t": 0.24,
+        "represented": false
+      },
+      {
+        "C_t": 0.14999999999999997,
+        "M_t": 0.0,
+        "N_t": 0.14999999999999997,
+        "represented": true
+      },
+      {
+        "C_t": 0.6000000000000001,
+        "M_t": 0.0,
+        "N_t": 0.0,
+        "represented": true
+      }
+    ],
+    "TR-HA": [
+      {
+        "C_t": null,
+        "M_t": 0.0,
+        "N_t": null,
+        "represented": true
+      },
+      {
+        "C_t": 0.15000000000000013,
+        "M_t": 0.15000000000000013,
+        "N_t": 0.15000000000000013,
+        "represented": false
+      },
+      {
+        "C_t": 0.23999999999999994,
+        "M_t": 0.0,
+        "N_t": 0.23999999999999994,
+        "represented": true
+      },
+      {
+        "C_t": 0.39,
+        "M_t": 0.0,
+        "N_t": 0.39,
+        "represented": true
+      },
+      {
+        "C_t": 0.14999999999999997,
+        "M_t": 0.14999999999999997,
+        "N_t": 0.14999999999999997,
+        "represented": false
+      },
+      {
+        "C_t": 0.55,
+        "M_t": 0.0,
+        "N_t": 0.0,
+        "represented": true
+      }
+    ],
+    "TR-HB": [
+      {
+        "C_t": null,
+        "M_t": 0.0,
+        "N_t": null,
+        "represented": true
+      },
+      {
+        "C_t": 0.55,
+        "M_t": 0.14999999999999997,
+        "N_t": 0.55,
+        "represented": false
+      },
+      {
+        "C_t": 0.14999999999999997,
+        "M_t": 0.0,
+        "N_t": 0.14999999999999997,
+        "represented": true
+      },
+      {
+        "C_t": 0.39,
+        "M_t": 0.0,
+        "N_t": 0.24,
+        "represented": true
+      },
+      {
+        "C_t": 0.23999999999999994,
+        "M_t": 0.15000000000000013,
+        "N_t": 0.15000000000000013,
+        "represented": false
+      },
+      {
+        "C_t": 0.15000000000000013,
+        "M_t": 0.0,
+        "N_t": 0.0,
+        "represented": true
+      }
+    ],
+    "TR-J": [
+      {
+        "C_t": null,
+        "M_t": 0.0,
+        "N_t": null,
+        "represented": true
+      },
+      {
+        "C_t": 0.6000000000000001,
+        "M_t": 0.0,
+        "N_t": 0.6000000000000001,
+        "represented": true
+      },
+      {
+        "C_t": 0.14999999999999997,
+        "M_t": 0.14999999999999997,
+        "N_t": 0.14999999999999997,
+        "represented": false
+      },
+      {
+        "C_t": 0.24,
+        "M_t": 0.0,
+        "N_t": 0.24,
+        "represented": true
+      },
+      {
+        "C_t": 0.23999999999999994,
+        "M_t": 0.15000000000000013,
+        "N_t": 0.15000000000000013,
+        "represented": false
+      },
+      {
+        "C_t": 0.15000000000000013,
+        "M_t": 0.0,
+        "N_t": 0.0,
+        "represented": true
+      }
+    ],
+    "TR-PM": [
+      {
+        "C_t": null,
+        "M_t": 0.15000000000000013,
+        "N_t": null,
+        "represented": false
+      },
+      {
+        "C_t": 0.0,
+        "M_t": 0.15000000000000013,
+        "N_t": 0.0,
+        "represented": false
+      },
+      {
+        "C_t": 0.0,
+        "M_t": 0.15000000000000013,
+        "N_t": 0.0,
+        "represented": false
+      },
+      {
+        "C_t": 0.0,
+        "M_t": 0.15000000000000013,
+        "N_t": 0.0,
+        "represented": false
+      },
+      {
+        "C_t": 0.0,
+        "M_t": 0.15000000000000013,
+        "N_t": 0.0,
+        "represented": false
+      },
+      {
+        "C_t": 0.0,
+        "M_t": 0.15000000000000013,
+        "N_t": 0.0,
+        "represented": false
+      }
+    ],
+    "TR-PR": [
+      {
+        "C_t": null,
+        "M_t": 0.0,
+        "N_t": null,
+        "represented": true
+      },
+      {
+        "C_t": 0.0,
+        "M_t": 0.0,
+        "N_t": 0.0,
+        "represented": true
+      },
+      {
+        "C_t": 0.0,
+        "M_t": 0.0,
+        "N_t": 0.0,
+        "represented": true
+      },
+      {
+        "C_t": 0.0,
+        "M_t": 0.0,
+        "N_t": 0.0,
+        "represented": true
+      },
+      {
+        "C_t": 0.0,
+        "M_t": 0.0,
+        "N_t": 0.0,
+        "represented": true
+      },
+      {
+        "C_t": 0.0,
+        "M_t": 0.0,
+        "N_t": 0.0,
+        "represented": true
+      }
+    ],
+    "TR-R": [
+      {
+        "C_t": null,
+        "M_t": 0.0,
+        "N_t": null,
+        "represented": true
+      },
+      {
+        "C_t": 0.15000000000000013,
+        "M_t": 0.15000000000000013,
+        "N_t": 0.15000000000000013,
+        "represented": false
+      },
+      {
+        "C_t": 0.15000000000000013,
+        "M_t": 0.0,
+        "N_t": 0.0,
+        "represented": true
+      },
+      {
+        "C_t": 0.15000000000000013,
+        "M_t": 0.15000000000000013,
+        "N_t": 0.0,
+        "represented": false
+      },
+      {
+        "C_t": 0.15000000000000013,
+        "M_t": 0.0,
+        "N_t": 0.0,
+        "represented": true
+      },
+      {
+        "C_t": 0.0,
+        "M_t": 0.0,
+        "N_t": 0.0,
+        "represented": true
+      }
+    ]
+  },
+  "empirically_unknown": [
+    "value or irrelevance of adaptation",
+    "help or liability from previous development",
+    "configuration sensitivity or insensitivity",
+    "performance ordering",
+    "Campaign 1 PASS/PARTIAL/FAIL"
+  ],
+  "foundation_commit": "20106d3",
+  "future_frozen_parameters": {
+    "eta": 0.35,
+    "horizon": 3,
+    "rho": 0.5,
+    "sigma": 0.1
+  },
+  "future_primary_condition": "DISCOVER_DEVELOP",
+  "future_probe_configurations": [
+    "G00",
+    "G04",
+    "G05",
+    "G07"
+  ],
+  "histories": {
+    "TR-D": [
+      "A",
+      "U",
+      "C",
+      "V",
+      "B",
+      "B"
+    ],
+    "TR-G": [
+      "A",
+      "U",
+      "C",
+      "V",
+      "B",
+      "A"
+    ],
+    "TR-HA": [
+      "A",
+      "U",
+      "C",
+      "B",
+      "V",
+      "A"
+    ],
+    "TR-HB": [
+      "A",
+      "V",
+      "B",
+      "C",
+      "U",
+      "A"
+    ],
+    "TR-J": [
+      "A",
+      "B",
+      "V",
+      "C",
+      "U",
+      "A"
+    ],
+    "TR-PM": [
+      "U",
+      "U",
+      "U",
+      "U",
+      "U",
+      "U"
+    ],
+    "TR-PR": [
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A"
+    ],
+    "TR-R": [
+      "A",
+      "U",
+      "A",
+      "U",
+      "A",
+      "A"
+    ]
+  },
+  "hypothesis_repertoire": [
+    [
+      0.8,
+      0.2
+    ],
+    [
+      0.5,
+      0.5
+    ],
+    [
+      0.2,
+      0.8
+    ]
+  ],
+  "intended_contrasts": {
+    "developmental_history_return": [
+      "TR-HA",
+      "TR-HB"
+    ],
+    "ordered_displacement": [
+      "TR-G",
+      "TR-J"
+    ],
+    "persistence_representation": [
+      "TR-PR",
+      "TR-PM"
+    ],
+    "recurrence_displacement": [
+      "TR-R",
+      "TR-D"
+    ]
+  },
+  "manifest_id": "campaign1-test-range-gate-v1",
+  "problem_points": {
+    "A": [
+      0.8,
+      0.2
+    ],
+    "B": [
+      0.2,
+      0.8
+    ],
+    "C": [
+      0.5,
+      0.5
+    ],
+    "U": [
+      0.7,
+      0.3
+    ],
+    "V": [
+      0.3,
+      0.7
+    ]
+  },
+  "selection_basis": "problem geometry only; no team performance, adaptive trajectory outcome, or seed-dependent result used",
+  "source_head_before_gate": "a899c14",
+  "status": "pre-results geometry fixture; Campaign 1 not executed",
+  "team_executions": 0,
+  "uniform_prior": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+  ]
+}
