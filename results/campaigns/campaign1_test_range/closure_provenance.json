@@ -1,0 +1,90 @@
+{
+  "closure_id": "campaign1-test-range-documentary-closure-v1",
+  "scope": "documentation and provenance only; no new Campaign 1 execution",
+  "commits": {
+    "frozen_test_range": "05b86cb",
+    "frozen_execution_protocol": "bcc3ad8",
+    "campaign1_results": "ac9d421"
+  },
+  "classification": {
+    "status": "PASS",
+    "category": "OBSERVED under the frozen pre-specified assessment rule",
+    "bounded_conclusion": "The small controlled HLS test range generated multiple interpretable adaptive trajectory patterns and degrees of history/configuration sensitivity under one frozen adaptive architecture."
+  },
+  "frozen_test_range_carried_forward": {
+    "scenario_ids": ["TR-PR", "TR-PM", "TR-G", "TR-J", "TR-R", "TR-D", "TR-HA", "TR-HB"],
+    "scope": "small controlled test range; not exhaustive",
+    "selection_basis": "structural coverage and retention of informative positive and negative cases; not effect magnitude or cumulative winners"
+  },
+  "epistemic_status": {
+    "pre_specified": [
+      "eight histories, four probe configurations, three conditions, ten seeds, frozen physics and PASS/PARTIAL/FAIL rule",
+      "performance is mu_true; observed reward drives inference only",
+      "controlled contrasts are questions rather than predictions"
+    ],
+    "observed": [
+      "Campaign 1 passed its frozen range-characterisation rule",
+      "mean FULL cumulative performance by scenario: TR-PR 29.996, TR-PM 27.834, TR-G 26.676, TR-J 26.377, TR-R 29.264, TR-D 26.124, TR-HA 26.671, TR-HB 26.504",
+      "FULL minus NO-DEVELOP is positive in all 32 scenario x configuration means",
+      "FULL and KNOWN-Z coincide for G04/G07 in TR-PR, TR-PM and TR-R"
+    ],
+    "mechanistic_interpretation": [
+      "within the retained trajectories, problem history changes belief/decision, assignment, continuous exposure, capability state, later decision and performance",
+      "these comparisons are diagnostic system-level consequences, not an additive causal decomposition of DISCOVER and DEVELOP"
+    ],
+    "negative_null": [
+      "G07 is the mean cumulative FULL leader in all eight scenarios; no diversity of cumulative-performance winners was observed",
+      "no development liability was observed under FULL versus NO-DEVELOP",
+      "TR-G/TR-J and TR-HA/TR-HB have near-null FULL cumulative responses for G04/G07",
+      "a divergent intermediate trajectory can reconverge to equal final-A action and performance (G07 seed 0 TR-G/TR-J)"
+    ],
+    "limitations_and_unsupported": [
+      "not evidence of universal heterogeneous-team superiority or a generally optimal G07 geometry",
+      "TR-PR/TR-PM does not isolate representational mismatch because true production problem also changes",
+      "TR-R/TR-D does not isolate recurrence because it is not matched in content or total change",
+      "FULL minus KNOWN-Z is not a pure additive cost of DISCOVER",
+      "no universal causal relation between C, N or M and performance is established",
+      "no generalization beyond the frozen CES/Bayes/MPC/MIS-v2 laboratory is established",
+      "Campaign 1 compares no alternative adaptive strategies"
+    ]
+  },
+  "campaign0_provenance": {
+    "TR-PR": "PRIOR-DIAGNOSTIC / NOT OUT-OF-SAMPLE: identical to Campaign 0 H2",
+    "TR-G_TR-J_TR-HA_TR-HB": "known Campaign 0 problem content in new orders",
+    "TR-R": "structurally related to Campaign 0 H3",
+    "TR-PM_TR-D": "pre-performance Campaign 1 scenarios"
+  },
+  "representative_cases_retained_without_new_search": [
+    "G00 seed 0 TR-G/TR-J: final-A mu_true 5.455 versus 4.884 after different assignment/exposure histories",
+    "G07 seed 0 TR-G/TR-J: intermediate divergence with equal final-A action and mu_true 5.316 versus 5.316",
+    "G05 seed 0 TR-HA/TR-HB: different capability-2 exercise and final-A mu_true 5.307 versus 4.669",
+    "G04 TR-R/TR-D: common A->U prefix, then recurrence maintains allocation while C/V/B induces reassignment"
+  ],
+  "transition_status": {
+    "next_scientific_question": "a future stage may compare adaptive strategies on this frozen test range",
+    "campaign2_design": "NOT DESIGNED",
+    "prohibited_by_this_closure": [
+      "strategy-family selection",
+      "new strategy implementation",
+      "Campaign 2 hypothesis or protocol selection",
+      "Campaign 2 execution"
+    ]
+  },
+  "integrity": {
+    "new_campaign1_team_executions": 0,
+    "new_campaign1_simulation_runs": 0,
+    "frozen_results_status": "unchanged from ac9d421 at documentary-closure validation",
+    "frozen_protocol_status": "unchanged from bcc3ad8 at documentary-closure validation",
+    "frozen_test_range_status": "unchanged from 05b86cb at documentary-closure validation"
+  },
+  "source_artifacts": [
+    {"path": "results/campaigns/campaign1_test_range/runs.csv", "sha256": "7a9812d4f4341735f2715d91e30a24a54205745620dc20767be8151e679e78f5"},
+    {"path": "results/campaigns/campaign1_test_range/trajectories.csv", "sha256": "20045f0818544d5b7c2a6ac5c37eb1aa34294a7ce96baed9ea0097bf243e1c85"},
+    {"path": "results/campaigns/campaign1_test_range/execution_manifest.json", "sha256": "1264c9ce29fa98e386df02be0653248254318c652b2bad664b19924a3270c5dc"},
+    {"path": "results/campaigns/campaign1_test_range/analysis_summary.json", "sha256": "cfbeedd1dde1ed1a463512cd90bc3c6c9fe3bc9527c75c710a6f795ca6ff1674"},
+    {"path": "results/campaigns/campaign1_test_range/scenario_configuration_condition_summary.csv", "sha256": "91611bac5436a6a1c8d5c6b8d863b7199e81fddf8e8c6e59832a0564fd99ed16"},
+    {"path": "results/campaigns/campaign1_test_range/controlled_contrasts.csv", "sha256": "5013fe57f468b80febefd85a57c0d5dab7f7a3c29d7b2d9970f5ae7644073db1"},
+    {"path": "results/campaigns/campaign1_test_range/mechanistic_controls.csv", "sha256": "c27da07880478c188b6b422c4ba2697fed481d22962b99978a8b8f69d06bb46c"},
+    {"path": "results/campaigns/campaign1_test_range/representative_trajectories.csv", "sha256": "12bf092ce1e39357f00977490c006ea3187c389e706030bcb0cee49cde3e263a"}
+  ]
+}

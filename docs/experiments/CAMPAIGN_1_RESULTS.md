@@ -106,3 +106,31 @@ Retain all eight histories as the frozen Campaign 2 range unless a later pre-res
 Raw authority is `runs.csv` and `trajectories.csv`; derived tables, five seed-0 representative contrast traces, three compact figures, the execution manifest, and `analysis_summary.json` are colocated in `results/campaigns/campaign1_test_range/`. Seed 0 was used uniformly for readable traces and was not selected by performance.
 
 Campaign 1 characterises this frozen synthetic laboratory only. It does not demonstrate a generally superior team geometry, ecological validity, novelty detection, transfer, REFRAME, or future strategy discrimination. It does not estimate causal effects of C/N/M, and it does not establish additive contributions of DISCOVER and DEVELOP.
+
+## Documentary closure
+
+Campaign 1 is closed as a **test-range characterisation**, not as a comparison
+of adaptive strategies. The bounded supported conclusion is: under the frozen
+HLS laboratory, the pre-specified small controlled range produces multiple
+interpretable adaptive trajectory patterns and different degrees of history
+and configuration sensitivity. That makes it a suitable controlled range for
+a later strategy comparison.
+
+The conclusion does **not** rest on different configurations winning different
+scenarios: G07 is the mean cumulative FULL leader in all eight. It rests on
+observed differences in assignment, continuous exposure, capability state,
+later action, and performance response, including informative reconvergence
+and near-null cases. It does not establish universal team superiority, a
+universal causal relation from C/N/M to performance, a pure mismatch effect
+in PR/PM, a pure recurrence effect in R/D, a development liability, an
+additive DISCOVER/DEVELOP decomposition, or a pure cost of DISCOVER.
+
+All eight histories — TR-PR, TR-PM, TR-G, TR-J, TR-R, TR-D, TR-HA, and TR-HB
+— are carried forward as the current small controlled HLS test range. They are
+retained for structural coverage and for preservation of both positive and
+negative controls, rather than selected by effect magnitude. The range is not
+exhaustive. Campaign 2 has not been designed: no strategy family, comparator,
+hypothesis, or execution protocol is implied by this closure.
+
+`closure_provenance.json` records frozen design/result commits, the status of
+each claim category, and SHA-256 values for authoritative Campaign 1 artifacts.

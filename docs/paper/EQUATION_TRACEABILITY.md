@@ -128,6 +128,15 @@ M_t=min_(z_hat in Z_hat)d_R(z_t,z_hat).
 - Validation: represented/unrepresented and recurrence controls.
 - Assumptions: nonempty finite `Z_hat`.
 
+## Campaign 1 use of E8--E10
+
+Campaign 1 retained `C_t`, `N_t`, and `M_t` as pre-specified structural
+descriptors of its eight frozen histories. It did **not** fit, test, or derive
+an equation claiming that any one descriptor predicts performance, difficulty,
+or strategy value. The Campaign 1 PASS classification rests on the diversity
+of retained adaptive trajectories and controls, not on validation of E8--E10
+as explanatory metrics.
+
 ## E11. MIS-v2 cumulative-exposure identity
 
 ```text

@@ -54,6 +54,10 @@ primary sources before use in manuscript prose.
     effects generated because intermediate capability changes subsequent task
     assignment or practice opportunities? This review is required before the
     post-hoc Campaign 0 interpretation is given broader theoretical meaning.
+12. **Adaptive-strategy comparison on controlled ranges:** Before a future
+    Campaign 2 is designed, which established strategy families and comparison
+    conditions can be represented without overstating what the present
+    finite-belief/MPC laboratory contains? Campaign 1 does not answer this.
 
 ## C. Claims requiring external support
 
@@ -66,6 +70,8 @@ primary sources before use in manuscript prose.
 - comparison to existing team/task ABMs.
 - any empirical interpretation of cumulative exposure or policy-mediated
   capability path dependence beyond the frozen HLS model.
+- any claim that the eight-scenario Campaign 1 range is representative of
+  real task environments or sufficient for broad strategy ranking.
 
 ## D. HLS assumptions not to attribute falsely to literature
 
