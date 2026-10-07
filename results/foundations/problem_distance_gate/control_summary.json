@@ -1,0 +1,54 @@
+{
+  "closed_form": "|p-q|[1+|p+q-1|]",
+  "definition": "(1/3) sup_{Y1>=0,Y2>=0,Y1+Y2<=3} |R_p(Y)-R_q(Y)|",
+  "distance_range_on_validation_grid": [
+    0.0,
+    1.0
+  ],
+  "equal_gap_groups_with_distance_variation": 14,
+  "equal_parameter_gap_diagnostic": [
+    {
+      "absolute_parameter_gap": 0.1,
+      "distance": 0.15000000000000013,
+      "p": 0.8,
+      "q": 0.7
+    },
+    {
+      "absolute_parameter_gap": 0.1,
+      "distance": 0.10999999999999999,
+      "p": 0.5,
+      "q": 0.4
+    }
+  ],
+  "first_descriptor_convention": {
+    "C_1": null,
+    "M_1": "defined from Z_hat",
+    "N_1": null
+  },
+  "hypothesis_repertoire_for_sequence_controls": [
+    [
+      0.8,
+      0.19999999999999996
+    ],
+    [
+      0.5,
+      0.5
+    ],
+    [
+      0.2,
+      0.8
+    ]
+  ],
+  "maximum_analytic_numerical_error": 3.3306690738754696e-16,
+  "maximum_capability_exchange_error": 2.220446049250313e-16,
+  "maximum_triangle_excess": 2.7755575615628914e-16,
+  "maximum_within_equal_gap_distance_spread": 0.23999999999999988,
+  "nonidentical_endpoint_failures": 0,
+  "nonidentical_endpoint_selection_failures": 0,
+  "numerical_method": "full deterministic triangular output lattice",
+  "numerical_resolution": 250,
+  "output_lattice_points_per_pair": 31626,
+  "triangle_grid_points_per_axis": 41,
+  "triangle_triples": 68921,
+  "validation_pairs": 196
+}

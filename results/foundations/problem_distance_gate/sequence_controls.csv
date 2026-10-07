@@ -1,0 +1,11 @@
+control,t,p,problem,change_magnitude_C_t,historical_novelty_N_t,representational_mismatch_M_t
+exact_recurrence,1,0.8,"[0.8,0.19999999999999996]",,,0.0
+exact_recurrence,2,0.2,"[0.2,0.8]",0.6000000000000001,0.6000000000000001,0.0
+exact_recurrence,3,0.8,"[0.8,0.19999999999999996]",0.6000000000000001,0.0,0.0
+novel_exactly_represented,1,0.8,"[0.8,0.19999999999999996]",,,0.0
+novel_exactly_represented,2,0.5,"[0.5,0.5]",0.39000000000000007,0.39000000000000007,0.0
+novel_unrepresented,1,0.8,"[0.8,0.19999999999999996]",,,0.0
+novel_unrepresented,2,0.63,"[0.63,0.37]",0.2431000000000001,0.2431000000000001,0.1469
+recurrent_unrepresented,1,0.63,"[0.63,0.37]",,,0.1469
+recurrent_unrepresented,2,0.8,"[0.8,0.19999999999999996]",0.2431000000000001,0.2431000000000001,0.0
+recurrent_unrepresented,3,0.63,"[0.63,0.37]",0.2431000000000001,0.0,0.1469

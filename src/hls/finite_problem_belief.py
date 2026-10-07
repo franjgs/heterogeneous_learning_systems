@@ -30,22 +30,11 @@ from .discover_v0 import (
     production_inputs,
     validate_state,
 )
+from .problem_geometry import Problem, validate_problem
 
 
-Problem = tuple[float, float]
 HypothesisSet = tuple[Problem, ...]
 BeliefVector = tuple[float, ...]
-
-
-def validate_problem(problem: Problem) -> Problem:
-    """Validate a point of the current problem simplex without normalizing it."""
-    if len(problem) != 2:
-        raise ValueError("a problem must contain exactly two capability weights")
-    if any(not isfinite(value) or value < 0.0 for value in problem):
-        raise ValueError("problem weights must be finite and non-negative")
-    if not isclose(sum(problem), 1.0, rel_tol=0.0, abs_tol=EXACT_TOL):
-        raise ValueError("problem weights must sum to one")
-    return tuple(float(value) for value in problem)  # type: ignore[return-value]
 
 
 def validate_belief(belief: Iterable[float], size: int) -> BeliefVector:
