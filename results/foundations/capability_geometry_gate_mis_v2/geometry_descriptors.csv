@@ -1,0 +1,10 @@
+configuration_id,family,alpha,individual_breadth_mean,individual_breadth_min,individual_breadth_max,collective_breadth,specialization_concentration,within_person_overlap,redundancy,between_agent_heterogeneity,capability_balance,coverage_capability_1,coverage_capability_2,total_capability,initial_V_K
+G00,generalist,0.0,2.0,2,2,2,0.6666666666666667,1.5,6,0.0,0.0,1.5,1.5,3.0,2.96665631459995
+G01,complementary,0.25,2.0,2,2,2,0.7777777777777778,1.0,6,0.25,0.0,1.5,1.5,3.0,3.4195160030897807
+G02,concentrated,0.25,2.0,2,2,2,0.7777777777777778,1.5,6,0.25,0.0,1.5,1.5,3.0,3.0529949748426484
+G03,partial_overlap,0.25,2.0,2,2,2,0.7777777777777777,1.0,6,0.25,0.0,1.5,1.5,3.0,3.3261829471342965
+G04,redundant,0.25,2.0,2,2,2,0.75,1.0,6,0.1875,0.0,1.5,1.5,3.0,3.2959165245236783
+G05,complementary,0.5,1.3333333333333333,1,2,2,1.1111111111111112,0.5,4,1.0,0.0,1.5,1.5,3.0,4.175755076535925
+G06,concentrated,0.5,1.3333333333333333,0,2,2,1.1111111111111112,1.5,4,1.0,0.0,1.5,1.5,3.0,2.96665631459995
+G07,partial_overlap,0.5,1.3333333333333333,1,2,2,1.1111111111111112,0.5,4,1.0,0.0,1.5,1.5,3.0,3.9735697320844925
+G08,redundant,0.5,1.6666666666666667,1,2,2,1.0,0.5,5,0.75,0.0,1.5,1.5,3.0,3.7976355398128527

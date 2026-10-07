@@ -1,0 +1,43 @@
+{
+  "parent_head": "9fc68a5",
+  "mis_v1_results_preserved": true,
+  "eta_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.35,
+    0.5,
+    0.7,
+    0.9
+  ],
+  "seeds": [
+    20261007,
+    20261008,
+    20261009
+  ],
+  "N": 3,
+  "K": 2,
+  "B_k": [
+    1.5,
+    1.5
+  ],
+  "configurations": 9,
+  "environments": 5,
+  "main_executions": 945,
+  "total_run_rows": 2205,
+  "trajectory_rows": 26460,
+  "controls": [
+    "G00",
+    "G06",
+    "G07",
+    "G08"
+  ],
+  "interior_configurations": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04"
+  ],
+  "only_physics_change": "MIS-v1 capability transition -> MIS-v2 exponential capability-gap transition"
+}
