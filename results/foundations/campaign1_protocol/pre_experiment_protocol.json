@@ -1,0 +1,308 @@
+{
+  "assessment_criteria": {
+    "FAIL": "The supposedly different scenarios generate essentially the same adaptive problem, or observed differences are dominated by artifacts of the frozen implementation rather than problem/environment structure. Preserve the negative result and do not modify the model to rescue it.",
+    "PARTIAL": "Meaningful and interpretable variation is present, but important predefined scenario classes collapse onto essentially the same adaptive challenge. Preserve the result and identify what is missing before Campaign 2; do not add physics to rescue it.",
+    "PASS": "The predefined range generates multiple qualitatively different, interpretable adaptive demands that plausibly provide a useful range for later strategy discrimination, without collapsing to a single scalar ordering such as more change equals harder. Coverage is assessed across the range; neither universal cumulative leadership nor multiple scenario winners determines PASS alone."
+  },
+  "campaign0_closure_commit": "a899c14",
+  "campaign0_contamination_provenance": {
+    "TR-D": "PRE-PERFORMANCE CAMPAIGN-1 SCENARIO",
+    "TR-G": "PRIOR-DIAGNOSTIC / NOT OUT-OF-SAMPLE: new ordering of Campaign 0 H0/H1 problem multiset",
+    "TR-HA": "PRIOR-DIAGNOSTIC / NOT OUT-OF-SAMPLE: new ordering of Campaign 0 H0/H1 problem multiset",
+    "TR-HB": "PRIOR-DIAGNOSTIC / NOT OUT-OF-SAMPLE: new ordering of Campaign 0 H0/H1 problem multiset",
+    "TR-J": "PRIOR-DIAGNOSTIC / NOT OUT-OF-SAMPLE: new ordering of Campaign 0 H0/H1 problem multiset",
+    "TR-PM": "PRE-PERFORMANCE CAMPAIGN-1 SCENARIO",
+    "TR-PR": "PRIOR-DIAGNOSTIC / NOT OUT-OF-SAMPLE: identical to Campaign 0 H2",
+    "TR-R": "PRIOR-DIAGNOSTIC / NOT OUT-OF-SAMPLE: recurrence analogue of Campaign 0 H3 using U instead of B"
+  },
+  "campaign1_performance_artifacts": 0,
+  "campaign1_trajectory_artifacts": 0,
+  "common_random_numbers": "Use the same seed for every matched scenario x configuration x condition. The Gaussian standard-normal draw stream is shared by run key; true means may differ, and observations are irrelevant to KNOWN-Z decisions.",
+  "condition_semantics": {
+    "FULL": {
+      "development": true,
+      "existing_control": "DISCOVER_DEVELOP",
+      "problem_knowledge": "finite Bayesian DISCOVER",
+      "selector": "finite_choose_dynamic_action_v2(develop=True)"
+    },
+    "KNOWN-Z": {
+      "development": true,
+      "existing_control": "DEVELOP_KNOWN",
+      "problem_knowledge": "true z supplied directly to the existing known oracle",
+      "selector": "_known_dynamic_action_v2(develop=True)"
+    },
+    "NO-DEVELOP": {
+      "development": false,
+      "existing_control": "existing dynamic-MPC primitive; execution adapter required",
+      "problem_knowledge": "finite Bayesian DISCOVER",
+      "selector": "finite_choose_dynamic_action_v2(develop=False)",
+      "warning": "do not substitute historical DISCOVER_ONLY, which uses the fixed-state DP controller"
+    }
+  },
+  "conditions": [
+    "FULL",
+    "NO-DEVELOP",
+    "KNOWN-Z"
+  ],
+  "configuration_ids": [
+    "G00",
+    "G04",
+    "G05",
+    "G07"
+  ],
+  "configuration_states": {
+    "G00": [
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.5,
+        0.5
+      ]
+    ],
+    "G04": [
+      [
+        0.25,
+        0.75
+      ],
+      [
+        0.625,
+        0.375
+      ],
+      [
+        0.625,
+        0.375
+      ]
+    ],
+    "G05": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        1.0,
+        0.0
+      ]
+    ],
+    "G07": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.5,
+        0.0
+      ],
+      [
+        1.0,
+        0.5
+      ]
+    ]
+  },
+  "controlled_contrasts": {
+    "developmental_history_return": [
+      "TR-HA",
+      "TR-HB"
+    ],
+    "ordered_displacement": [
+      "TR-G",
+      "TR-J"
+    ],
+    "persistence_representation": [
+      "TR-PR",
+      "TR-PM"
+    ],
+    "recurrence_displacement": [
+      "TR-R",
+      "TR-D"
+    ]
+  },
+  "empirically_unknown_before_execution": [
+    "which configuration performs best",
+    "whether rankings change",
+    "whether adaptation is valuable in any particular scenario",
+    "whether adaptation matters little",
+    "whether previous development helps",
+    "whether previous development becomes a liability",
+    "whether a scenario is configuration-sensitive",
+    "whether a scenario is configuration-insensitive",
+    "whether TR-G is harder than TR-J",
+    "whether TR-R is harder than TR-D",
+    "whether TR-HA or TR-HB is preferable",
+    "whether any history produces path dependence",
+    "whether any scenario discriminates future strategies"
+  ],
+  "foundation_commit": "20106d3",
+  "mechanistic_control_interpretation": {
+    "FULL_vs_KNOWN-Z": "diagnostic association with imperfect problem knowledge/DISCOVER; not an additive causal decomposition",
+    "FULL_vs_NO-DEVELOP": "diagnostic association with capability development; not an additive causal decomposition"
+  },
+  "parameters": {
+    "K": 2,
+    "N": 3,
+    "eta": 0.35,
+    "horizon_per_problem": 3,
+    "rho": 0.5,
+    "sigma": 0.1
+  },
+  "performance_definition": "Performance is true expected/latent production mu_true. Observed noisy reward drives Bayesian inference where applicable and is retained, but is not substituted for performance.",
+  "primary_outputs": [
+    "performance trajectory",
+    "cumulative performance",
+    "assignment trajectory",
+    "exposure trajectory",
+    "capability trajectory",
+    "response to recurrence/familiar return",
+    "configuration sensitivity/insensitivity",
+    "FULL versus NO-DEVELOP diagnostic",
+    "FULL versus KNOWN-Z diagnostic"
+  ],
+  "problem_representation": {
+    "Z_hat": [
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.2,
+        0.8
+      ]
+    ],
+    "prior": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ]
+  },
+  "protocol_id": "campaign1-execution-protocol-v1",
+  "provenance_boundary": "everything through this protocol commit is pre-results design",
+  "retained_trajectory_variables": [
+    "true problem z_t",
+    "problem descriptors C_t/N_t/M_t",
+    "belief before/after where applicable",
+    "assignment/action X_t",
+    "cumulative continuous exposure E_t",
+    "capability state S_t before/after",
+    "true expected production mu_true",
+    "observed noisy reward"
+  ],
+  "run_matrix": {
+    "conditions": 3,
+    "configurations": 4,
+    "known_z_no_develop_included": false,
+    "runs_per_condition": 320,
+    "scenarios": 8,
+    "seeds": 10,
+    "total_runs": 960
+  },
+  "scenario_ids": [
+    "TR-PR",
+    "TR-PM",
+    "TR-G",
+    "TR-J",
+    "TR-R",
+    "TR-D",
+    "TR-HA",
+    "TR-HB"
+  ],
+  "scenario_sequences": {
+    "TR-D": [
+      0.8,
+      0.7,
+      0.5,
+      0.3,
+      0.2,
+      0.2
+    ],
+    "TR-G": [
+      0.8,
+      0.7,
+      0.5,
+      0.3,
+      0.2,
+      0.8
+    ],
+    "TR-HA": [
+      0.8,
+      0.7,
+      0.5,
+      0.2,
+      0.3,
+      0.8
+    ],
+    "TR-HB": [
+      0.8,
+      0.3,
+      0.2,
+      0.5,
+      0.7,
+      0.8
+    ],
+    "TR-J": [
+      0.8,
+      0.2,
+      0.3,
+      0.5,
+      0.7,
+      0.8
+    ],
+    "TR-PM": [
+      0.7,
+      0.7,
+      0.7,
+      0.7,
+      0.7,
+      0.7
+    ],
+    "TR-PR": [
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8
+    ],
+    "TR-R": [
+      0.8,
+      0.7,
+      0.8,
+      0.7,
+      0.8,
+      0.8
+    ]
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "selection_uses_performance_or_seed_results": false,
+  "status": "FROZEN PRE-RESULTS; CAMPAIGN 1 NOT EXECUTED",
+  "team_executions": 0,
+  "temporal_semantics": {
+    "belief_resets_between_problems": true,
+    "capability_persists_between_problems": true
+  },
+  "test_range_commit": "05b86cb",
+  "test_range_manifest": "results/foundations/campaign1_test_range_gate/pre_experiment_manifest.json"
+}
