@@ -1,0 +1,5 @@
+environment,theta_sequence
+persistent,theta1|theta1|theta1
+change,theta1|theta1|theta2
+alternating,theta1|theta2|theta1
+mixed,theta2|theta1|theta1

@@ -1,0 +1,23 @@
+{
+  "frozen_head": "7eb7530",
+  "configs": [
+    "S000",
+    "S001",
+    "S002",
+    "S003",
+    "S007",
+    "S014",
+    "S016",
+    "S030"
+  ],
+  "environments": [
+    "persistent",
+    "change",
+    "alternating",
+    "mixed"
+  ],
+  "main_cells": 32,
+  "controls": "S001-S003 x 4 environments x A/B/C/D",
+  "seed": 20261006,
+  "physics": "unchanged DISCOVER x DEVELOP prototype"
+}
