@@ -1,0 +1,115 @@
+{
+  "action_distance": "sum_i,k abs(Xa[i,k]-Xb[i,k]); exact equality also retained",
+  "audit_commit": "7f0df6f",
+  "classification_criteria": {
+    "FAIL": "essential action equivalence, tie/numerical artifacts, or failed operator isolation",
+    "PARTIAL": "genuine but sparse, concentrated, single-pattern-dominated or weak discrimination",
+    "PASS": "non-trivial interpretable nonterminal divergence beyond ties, structural variation, useful nulls; no required performance winner"
+  },
+  "configurations": [
+    "G00",
+    "G04",
+    "G05",
+    "G07"
+  ],
+  "crn": "Random(seed), one gauss(0,1) draw per real step, same stream across all scenarios/configurations/policies",
+  "expected_counts": {
+    "closed_loop_runs": 1280,
+    "paired_state_policy_rows": 23040,
+    "pairwise_state_rows": 34560,
+    "primary_nonterminal_states": 3840,
+    "primary_reference_states": 5760,
+    "real_decisions": 23040
+  },
+  "gate_id": "strategy-discrimination-gate-v1",
+  "initial_head": "3cf4eec8eb291b1f0b4d69dde9b9d520275a9227",
+  "is_campaign2": false,
+  "opportunity_cost": "g(left action)-g(right action) on exactly the same Q11 reference state; raw signed values retained",
+  "output_hashes": {
+    "ablation_patterns.csv": "1735b68d2f487a8cd865f4edc71eb6d7c394ae577eb9715e10f0932bad558a46",
+    "closed_loop_policy_comparisons.csv": "cef0d7b01de2a9eff8ce9c71019afc523eec272d364f4cac353dfa1734b20aa4",
+    "closed_loop_runs.csv": "cc2799285f2d2f91704a835f4f683c473d69a6e0b0d6c28e6cf166dd9494bba3",
+    "closed_loop_trajectories.csv": "b64f31b13ece4d13319d774a67200ed916c623d48861d8ee40aa18d2b968e60b",
+    "divergence_summary.csv": "9d66954e1671a60e02c7a3b1ce9c6c20305c22f8a3b159d2230ba6b0adfe5cb7",
+    "paired_state_comparisons.csv": "8c26f140c325ca954d50eb5d3f6894a6a4aa5ad7c42f36164a9ba0817ccbe930",
+    "paired_state_decisions.csv": "963166d80102927a9cdd72b4a746644f9bce9b5f7404f3f493eba59629004674",
+    "performance_summary.csv": "54f6509d088e9e51239a7fcdddc0b80698662897514ac6d0516a2f671c510167",
+    "representative_decisions.csv": "791c6201ee68a846600c3ec3ecf76e4c6cc949d268ad5fee6243a868fb746a3e"
+  },
+  "parameters": {
+    "K": 2,
+    "N": 3,
+    "eta": 0.35,
+    "horizon_per_problem": 3,
+    "rho": 0.5,
+    "sigma": 0.1
+  },
+  "performance": "sum of mu_true; observed reward used for inference only",
+  "policies": {
+    "Q00": "NONE",
+    "Q01": "DEVELOPMENT_ONLY",
+    "Q10": "INFORMATION_ONLY",
+    "Q11": "INFORMATION_AND_DEVELOPMENT"
+  },
+  "policy_ablation_commit": "3cf4eec",
+  "primary_state_rule": "all real pre-decision states visited by Q11; no outcome selection",
+  "real_transitions": "every policy calls unchanged finite_bayes_update and mis_v2_transition(enabled=True)",
+  "scenario_ids": [
+    "TR-PR",
+    "TR-PM",
+    "TR-G",
+    "TR-J",
+    "TR-R",
+    "TR-D",
+    "TR-HA",
+    "TR-HB"
+  ],
+  "secondary_union_audit": "not run: optional additional all-policy-state evaluation increases cost; primary covers every Q11 state",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "source_hashes": {
+    "results/campaigns/campaign1_test_range/runs.csv": "7a9812d4f4341735f2715d91e30a24a54205745620dc20767be8151e679e78f5",
+    "results/campaigns/campaign1_test_range/trajectories.csv": "20045f0818544d5b7c2a6ac5c37eb1aa34294a7ce96baed9ea0097bf243e1c85",
+    "results/foundations/policy_ablation/pre_experiment_policy_ablation.json": "c0d056d0f1795d03e9eca898ba23cad724b3c1bd697767841d2ea6fbe74f49fe",
+    "src/hls/campaign1_test_range.py": "59dacf06022e48a6775e558be33fd7bca52e691c8e8d0a4cedd99a1ebd00cc8c",
+    "src/hls/discover_develop_v2.py": "06d70479a1f8e5bd7408a3a3c5596de4fca9e139838441f5de7dbb78c32e4e80",
+    "src/hls/discover_v0.py": "ef1eee85cf7735107e46e285af4ce2734906a55a6741ec09a72a2623c1ab470f",
+    "src/hls/finite_problem_belief.py": "4ea7e964bf0e700f98fea700a9541c1ef374ce713338dd1eb78bc5fac8a3b097"
+  },
+  "status": "execution and integrity validation complete",
+  "tie_definition": "mutual tolerance optimality: each chosen action is within EXACT_TOL of the other operator maximum",
+  "tie_tolerance": 1e-10,
+  "validation": {
+    "Q11_historical_json_exact": {
+      "action": true,
+      "belief_after": true,
+      "belief_before": true,
+      "exposure_after": true,
+      "state_after": true,
+      "state_before": true
+    },
+    "Q11_historical_maximum_numeric_errors": {
+      "cumulative_performance": 0.0,
+      "mu_true": 0.0,
+      "observed_reward": 0.0
+    },
+    "counts_pass": true,
+    "crn_exact": true,
+    "frozen_descriptors_match": true,
+    "real_bayes_transition_max_error": 3.497202527569243e-15,
+    "real_state_transition_max_error": 0.0,
+    "reset_and_state_persistence_pass": true,
+    "terminal_divergences": 0,
+    "true_production_max_error": 2.220446049250313e-16
+  }
+}
