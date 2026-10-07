@@ -1,0 +1,66 @@
+{
+  "Z_hat": [
+    [
+      0.8,
+      0.2
+    ],
+    [
+      0.5,
+      0.5
+    ],
+    [
+      0.2,
+      0.8
+    ]
+  ],
+  "belief_resets_each_problem": true,
+  "controls": {
+    "C_mismatch": 0.0,
+    "C_novelty": 0.23999999999999994,
+    "capability_exchange_A_B_prime": true,
+    "capability_exchange_A_prime_B": true,
+    "cross_region_distance_A_prime_B": 0.39999999999999997,
+    "final_A_change": 0.39000000000000007,
+    "final_A_novelty": 0.0,
+    "mismatch_A_prime": 0.15000000000000013,
+    "mismatch_B": 0.14999999999999997,
+    "symmetric_local_distance_A_A_prime": 0.15000000000000013,
+    "symmetric_local_distance_B_B_prime": 0.14999999999999997
+  },
+  "horizon_per_problem": 3,
+  "posterior_carries_between_problems": false,
+  "represented_stages": [
+    "A",
+    "B'",
+    "C",
+    "A"
+  ],
+  "scientific_status": "deliberately constructed experimental fixture; not an empirical problem distribution",
+  "state_persists_between_problems": true,
+  "team_executions": 0,
+  "uniform_prior": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+  ],
+  "unrepresented_stages": [
+    "A'",
+    "B"
+  ],
+  "world_labels": [
+    "A",
+    "A'",
+    "B",
+    "B'",
+    "C",
+    "A"
+  ],
+  "world_p": [
+    0.8,
+    0.7,
+    0.3,
+    0.2,
+    0.5,
+    0.8
+  ]
+}
