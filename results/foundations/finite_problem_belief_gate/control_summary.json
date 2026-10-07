@@ -1,0 +1,118 @@
+{
+  "binary_hypotheses": [
+    [
+      0.8,
+      0.2
+    ],
+    [
+      0.2,
+      0.8
+    ]
+  ],
+  "eta": 0.7,
+  "hypothesis_permutation_invariance": true,
+  "known_modes_exercised": [
+    "static_known",
+    "develop_known"
+  ],
+  "known_outside": {
+    "belief_is_absent": true,
+    "cumulative_reward": 3.1353236746643747,
+    "true_problem": [
+      0.63,
+      0.37
+    ]
+  },
+  "m2_discover_only": {
+    "cumulative_reward_difference": 0.0,
+    "max_belief_probability_difference": 0.0,
+    "new_cumulative_reward": 2.564045046379662,
+    "old_cumulative_reward": 2.564045046379662,
+    "same_actions": true,
+    "same_observations": true,
+    "same_state_trajectory": true
+  },
+  "m2_g00_g06": {
+    "G00": {
+      "cumulative_reward_difference": 0.0,
+      "max_belief_probability_difference": 1.3552527156068805e-20,
+      "new_cumulative_reward": 19.06803330546827,
+      "old_cumulative_reward": 19.06803330546827,
+      "same_actions": true,
+      "same_observations": true,
+      "same_state_trajectory": true
+    },
+    "G06": {
+      "cumulative_reward_difference": 0.0,
+      "max_belief_probability_difference": 6.623324772785268e-46,
+      "new_cumulative_reward": 19.657862442454412,
+      "old_cumulative_reward": 19.657862442454412,
+      "same_actions": true,
+      "same_observations": true,
+      "same_state_trajectory": true
+    }
+  },
+  "m2_policy": {
+    "max_action_value_difference": 0.0,
+    "new_value": 2.6751778561721986,
+    "old_value": 2.6751778561721986,
+    "same_first_actions": true,
+    "value_difference": 0.0
+  },
+  "m3_represented": {
+    "belief_sum": 1.0,
+    "cumulative_reward": 2.861393441555083,
+    "final_belief": [
+      1.9013750014611048e-06,
+      0.31741646932796336,
+      0.6825816292970351
+    ],
+    "true_problem": [
+      0.5,
+      0.5
+    ]
+  },
+  "m3_unrepresented": {
+    "belief_sum": 1.0000000000000002,
+    "cumulative_reward": 2.9975260745191425,
+    "final_belief": [
+      0.9999175631857363,
+      8.243681426378724e-05,
+      1.8198432808178974e-20
+    ],
+    "hypotheses": [
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.2,
+        0.8
+      ]
+    ],
+    "true_problem": [
+      0.63,
+      0.37
+    ]
+  },
+  "seed": 20261007,
+  "ternary_hypotheses": [
+    [
+      0.8,
+      0.2
+    ],
+    [
+      0.5,
+      0.5
+    ],
+    [
+      0.2,
+      0.8
+    ]
+  ],
+  "world_domain": "Delta^1"
+}
