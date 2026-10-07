@@ -1,0 +1,38 @@
+{
+  "manifest_id": "prospective-policy-ablation-freeze-v1",
+  "source_audit_commit": "7f0df6f",
+  "scientific_status": "pre-experiment policy restrictions; no strategy comparison results",
+  "modes": {
+    "NONE": {"notation": "Q00", "anticipate_information": false, "anticipate_development": false, "equation": "g(b,S,X)+G(b,S)"},
+    "INFORMATION_ONLY": {"notation": "Q10", "anticipate_information": true, "anticipate_development": false, "equation": "g(b,S,X)+sum_m b_m sum_j omega_j G(B(b,S,X,r_mj),S)"},
+    "DEVELOPMENT_ONLY": {"notation": "Q01", "anticipate_information": false, "anticipate_development": true, "equation": "g(b,S,X)+G(b,F(S,X))"},
+    "INFORMATION_AND_DEVELOPMENT": {"notation": "Q11", "anticipate_information": true, "anticipate_development": true, "equation": "g(b,S,X)+sum_m b_m sum_j omega_j G(B(b,S,X,r_mj),F(S,X))"}
+  },
+  "symbols": {"g": "sum_m b_m R_z_hat_m(S,X)", "G": "max_U g(b,S,U)", "F": "existing MIS-v2 transition", "B": "existing finite Gaussian Bayesian update using pre-development predictions"},
+  "common_planner": "hls.finite_problem_belief.prospective_action_values / choose_prospective_action",
+  "current_compatibility_entry": "finite_choose_dynamic_action_v2; develop=True maps to Q11, develop=False maps to Q10",
+  "physics": {"N": 3, "K": 2, "rho": 0.5, "sigma": 0.1, "eta": 0.35, "H": 3},
+  "hypotheses": [[0.8, 0.2], [0.5, 0.5], [0.2, 0.8]],
+  "reset_prior": [0.3333333333333333, 0.3333333333333333, 0.3333333333333333],
+  "action_space": {"source": "hls.discover_v0.JOINT_ACTIONS", "individual_actions": [[0, 0], [0, 1], [0.5, 0.5], [1, 0]], "joint_count": 64, "enumeration": "existing Cartesian product order"},
+  "horizon": {"effective": "min(2,remaining) for valid positive remaining", "real_problem": 3, "terminal_value": 0, "discount": 1},
+  "selection": {"tie_tolerance": 1e-10, "rule": "first JOINT_ACTIONS entry within tolerance of numerical maximum", "returned_value": "maximum candidate value"},
+  "quadrature": {"information_enabled": "three-node Gauss-Hermite per positive-prior hypothesis, inherited arithmetic order", "nodes_standard_normal": ["-sqrt(3)", "0", "sqrt(3)"], "weights": ["1/6", "2/3", "1/6"], "information_disabled": "direct constant-belief terminal maximum; quadrature algebraically redundant"},
+  "terminal_collapse": "remaining=1: all modes Q_1=g",
+  "realized_dynamics": {"policy_mode_argument": false, "belief_update": "always real Bayesian update for all four unknown policies", "capability_transition": "always real MIS-v2 development for all four policies", "unchanged_sequence_runner": true, "new_mode_execution_adapter": false},
+  "test_range": {"commit": "05b86cb", "source": "src/hls/campaign1_test_range.py", "scenario_ids": ["TR-PR", "TR-PM", "TR-G", "TR-J", "TR-R", "TR-D", "TR-HA", "TR-HB"]},
+  "unchanged_probe_configurations": ["G00", "G04", "G05", "G07"],
+  "unchanged_seeds": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+  "validation": {"kind": "unit operator restrictions and regression only", "Q11_reference": "literal pre-refactor calculation from 7f0df6f in tests", "Q11_cases": 6, "candidate_values_per_case": 64, "Q11_maximum_absolute_discrepancy": 0, "Q00_equivalence": "mathematical argmax and representative numerical/tie checks; floating-point tolerance-boundary caveat documented"},
+  "new_team_simulations": 0,
+  "new_scientific_simulation_outputs": 0,
+  "strategy_discrimination_gate_run": false,
+  "campaign2_run": false,
+  "source_artifacts": [
+    {"path": "docs/theory/CURRENT_POLICY_FORMAL_AUDIT.md", "sha256": "52c29602ce1082b98881ccb6eea681d0722e82eb471146b3c30c3f754878e4d3"},
+    {"path": "src/hls/discover_develop_v2.py", "sha256": "06d70479a1f8e5bd7408a3a3c5596de4fca9e139838441f5de7dbb78c32e4e80"},
+    {"path": "src/hls/discover_v0.py", "sha256": "ef1eee85cf7735107e46e285af4ce2734906a55a6741ec09a72a2623c1ab470f"},
+    {"path": "src/hls/campaign1_test_range.py", "sha256": "59dacf06022e48a6775e558be33fd7bca52e691c8e8d0a4cedd99a1ebd00cc8c"},
+    {"path": "results/foundations/campaign1_protocol/pre_experiment_protocol.json", "sha256": "fa829cb3fd609df9fa8f1ffd56bc726e398c364a5d844d6f3c7a8d437b1a3816"}
+  ]
+}

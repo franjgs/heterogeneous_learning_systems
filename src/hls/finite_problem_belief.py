@@ -9,6 +9,7 @@ decisions.  Historical binary modules remain unchanged.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from enum import Enum
 from functools import lru_cache
 from math import exp, isclose, isfinite, log
 from random import Random
@@ -191,6 +192,71 @@ def _best_true_immediate(state: State, problem: Problem) -> tuple[JointAction, f
     return next(action for action in JOINT_ACTIONS if abs(values[action] - maximum) <= EXACT_TOL), maximum
 
 
+class ProspectivePolicyMode(Enum):
+    """Restrictions of planning only; never switches for realized dynamics."""
+
+    NONE = (False, False)
+    INFORMATION_ONLY = (True, False)
+    DEVELOPMENT_ONLY = (False, True)
+    INFORMATION_AND_DEVELOPMENT = (True, True)
+
+
+def prospective_action_values(
+    state: State,
+    belief: BeliefVector,
+    hypotheses: HypothesisSet,
+    *,
+    remaining: int,
+    anticipate_information: bool,
+    anticipate_development: bool,
+    eta: float,
+) -> dict[JointAction, float]:
+    """Common two-stage operator; switches affect prospective transitions only."""
+    model, current_belief = canonical_model(hypotheses, belief)
+    values: dict[JointAction, float] = {}
+    for action in JOINT_ACTIONS:
+        predicted = hypothesis_means(state, action, model)
+        immediate = expected_reward(current_belief, predicted)
+        if remaining == 1:
+            values[action] = immediate
+            continue
+        next_state = mis_v2_transition(state, action, enabled=anticipate_development, eta=eta)
+        if not anticipate_information:
+            values[action] = immediate + _best_immediate(next_state, current_belief, model)[1]
+            continue
+        future = 0.0
+        for probability, mean in zip(current_belief, predicted):
+            if probability == 0.0:
+                continue
+            for observation, weight in gaussian_quadrature_nodes(mean, DEFAULT_SIGMA, 3):
+                posterior = finite_bayes_update(current_belief, observation, predicted, DEFAULT_SIGMA)
+                future += probability * weight * _best_immediate(next_state, posterior, model)[1]
+        values[action] = immediate + future
+    return values
+
+
+def choose_prospective_action(
+    state: State,
+    belief: BeliefVector,
+    hypotheses: HypothesisSet,
+    *,
+    remaining: int,
+    policy_mode: ProspectivePolicyMode,
+    eta: float,
+) -> tuple[JointAction, float]:
+    """Select with the audited enumeration and tolerance for every ablation."""
+    if not isinstance(policy_mode, ProspectivePolicyMode):
+        raise ValueError("policy_mode must be a ProspectivePolicyMode")
+    anticipate_information, anticipate_development = policy_mode.value
+    values = prospective_action_values(
+        state, belief, hypotheses, remaining=remaining, eta=eta,
+        anticipate_information=anticipate_information,
+        anticipate_development=anticipate_development,
+    )
+    maximum = max(values.values())
+    return next(action for action in JOINT_ACTIONS if abs(values[action] - maximum) <= EXACT_TOL), maximum
+
+
 def finite_choose_dynamic_action_v2(
     state: State,
     belief: BeliefVector,
@@ -200,26 +266,14 @@ def finite_choose_dynamic_action_v2(
     develop: bool,
     eta: float,
 ) -> tuple[JointAction, float]:
-    """The frozen two-step MPC with only scalar belief generalized to finite M."""
-    model, current_belief = canonical_model(hypotheses, belief)
-    values: dict[JointAction, float] = {}
-    for action in JOINT_ACTIONS:
-        predicted = hypothesis_means(state, action, model)
-        immediate = expected_reward(current_belief, predicted)
-        if remaining == 1:
-            values[action] = immediate
-            continue
-        next_state = mis_v2_transition(state, action, enabled=develop, eta=eta)
-        future = 0.0
-        for probability, mean in zip(current_belief, predicted):
-            if probability == 0.0:
-                continue
-            for observation, weight in gaussian_quadrature_nodes(mean, DEFAULT_SIGMA, 3):
-                posterior = finite_bayes_update(current_belief, observation, predicted, DEFAULT_SIGMA)
-                future += probability * weight * _best_immediate(next_state, posterior, model)[1]
-        values[action] = immediate + future
-    maximum = max(values.values())
-    return next(action for action in JOINT_ACTIONS if abs(values[action] - maximum) <= EXACT_TOL), maximum
+    """Backward-compatible CURRENT entry: always anticipate information."""
+    policy_mode = (
+        ProspectivePolicyMode.INFORMATION_AND_DEVELOPMENT
+        if develop else ProspectivePolicyMode.INFORMATION_ONLY
+    )
+    return choose_prospective_action(
+        state, belief, hypotheses, remaining=remaining, policy_mode=policy_mode, eta=eta,
+    )
 
 
 def _known_dynamic_action_v2(
