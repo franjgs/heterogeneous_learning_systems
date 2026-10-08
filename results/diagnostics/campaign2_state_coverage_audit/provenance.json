@@ -1,0 +1,19 @@
+{
+  "base_commit": "41d918da3d13ea6380064c76166d7248b00935ac",
+  "source_sha256": {
+    "experiments/synthetic/campaign2_state_coverage_audit/run.py": "d58bcf198059b3eb098a7fd4ae7841553532caa17d77dd05112fad93400a9db2",
+    "tests/test_campaign2_state_coverage_audit.py": "56ba94608e1004f476c17ff35b39bfedb12d4882ef2ac59481e9f35f324097c6",
+    "docs/experiments/CAMPAIGN_2_STATE_COVERAGE_AUDIT.md": "74b80e48263e53bba6878e63c42b9100b45ecb39b91cceb0ab9cff0ee2109fe4"
+  },
+  "output_sha256": {
+    "audit_summary.json": "53b7dc4c767eeed2d2b6fb5e95f736d1da54382e9374d1a3e0b3650b11125c15",
+    "execution_manifest.json": "94a2ba6de589aed9bee4b1cf73cfcaf6553aa83c0c443948bd7398f4327b50bd",
+    "marginal_comparisons.csv": "ea7610d8c872f0424fb2dc7667d3f58049ea6f6a9e3e4662810e4d53d16155c7",
+    "state_descriptors.csv.gz": "749802691ecaab781f2a4e48f8fc779722526fbe12ec5174bc3fa5c5983e7e67",
+    "stratified_support.csv": "8980b6e242b7ab7e93096281d1dd77975b1160b978c28370961443bf5a654b50",
+    "support_rows.csv.gz": "b83ddccce8b592b6081112062eba610401f400dac5cd2231849aa9452867f34b",
+    "support_summary.csv": "3a755b929fe632d8ca652c4b1d2678ffe3b7f8688fd77d96aaa0f3f17fbbfc51"
+  },
+  "Campaign2_results_unchanged": true,
+  "Campaign3_executions": 0
+}

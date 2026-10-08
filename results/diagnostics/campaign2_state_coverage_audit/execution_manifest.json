@@ -1,0 +1,191 @@
+{
+  "audit_id": "campaign2-state-coverage-audit-v1",
+  "base_commit": "41d918da3d13ea6380064c76166d7248b00935ac",
+  "purpose": "diagnostic suitability of Q11-only states for future C3 development",
+  "no_new_experiments": true,
+  "no_new_environment_transitions": true,
+  "input_sha256": {
+    "closed_loop_trajectories.csv.gz": "1b131c1b4515e7af66cee0ec7fd5b6a81da3a0407de34347bf318cd51327ce6a",
+    "reference_states.csv": "eeed62d7fcf538fe40b4204c62642caffd233eb569cd8381852ecf5b5f6c1d2c",
+    "validation_summary.json": "a41b9049b075c4fbef78db3057e332211d4cfde1a09772e81bddda4f017d0bfc"
+  },
+  "input_counts": {
+    "all_real_steps": 92160,
+    "nonterminal_states": 61440,
+    "nonterminal_states_per_policy": 15360
+  },
+  "policies": [
+    "Q00",
+    "Q10",
+    "Q01",
+    "Q11"
+  ],
+  "core_features": [
+    "b0",
+    "b1",
+    "b2",
+    "s00",
+    "s01",
+    "s10",
+    "s11",
+    "s20",
+    "s21"
+  ],
+  "descriptor_features": [
+    "b0",
+    "b1",
+    "b2",
+    "s00",
+    "s01",
+    "s10",
+    "s11",
+    "s20",
+    "s21",
+    "H",
+    "D_I",
+    "D_I_norm",
+    "D_I_loss",
+    "H_S",
+    "C",
+    "N",
+    "M",
+    "p"
+  ],
+  "exact_strata": [
+    "scenario",
+    "configuration",
+    "problem_index",
+    "decision"
+  ],
+  "same_seed_q11_neighbour_excluded": true,
+  "distance": "equal-weight RMS over primitive b[3] and S[6], all coordinates in [0,1]",
+  "operational_coverage": "nearest Q11 distance <= maximum Q11 leave-one-seed-out nearest-neighbour distance in the same scenario/configuration/problem/decision stratum",
+  "criterion_status": "diagnostic conservative non-extrapolation convention; not confirmatory threshold",
+  "coordinate_envelope": "reported separately; not used for binary decision",
+  "binary_rule": "SUFFICIENT only if every non-Q11 retained state satisfies the operational spacing criterion",
+  "counts": {
+    "states": 61440,
+    "support": 61440,
+    "marginals": 92,
+    "summary": 12,
+    "strata": 80
+  },
+  "persisted_file_metadata": {
+    "states": {
+      "rows": 61440,
+      "sha256": "749802691ecaab781f2a4e48f8fc779722526fbe12ec5174bc3fa5c5983e7e67",
+      "bytes": 1187239,
+      "fields": [
+        "scenario",
+        "configuration",
+        "seed",
+        "problem_index",
+        "decision",
+        "policy",
+        "C",
+        "N",
+        "M",
+        "represented",
+        "action_id",
+        "p",
+        "H",
+        "D_I",
+        "D_I_norm",
+        "D_I_loss",
+        "H_S",
+        "q11_action_id",
+        "owner_differs_from_q11",
+        "b0",
+        "b1",
+        "b2",
+        "s00",
+        "s01",
+        "s10",
+        "s11",
+        "s20",
+        "s21"
+      ]
+    },
+    "support": {
+      "rows": 61440,
+      "sha256": "b83ddccce8b592b6081112062eba610401f400dac5cd2231849aa9452867f34b",
+      "bytes": 430694,
+      "fields": [
+        "scenario",
+        "configuration",
+        "problem_index",
+        "decision",
+        "seed",
+        "policy",
+        "owner_differs_from_q11",
+        "nearest_q11_seed",
+        "nearest_q11_rms",
+        "q11_self_max_rms",
+        "distance_ratio_to_q11_self_max",
+        "covered_by_q11_spacing",
+        "inside_q11_coordinate_envelope",
+        "outside_coordinate_count"
+      ]
+    },
+    "marginals": {
+      "rows": 92,
+      "sha256": "ea7610d8c872f0424fb2dc7667d3f58049ea6f6a9e3e4662810e4d53d16155c7",
+      "bytes": 15128,
+      "fields": [
+        "policy",
+        "feature",
+        "scale",
+        "n",
+        "missing_rate",
+        "q11_missing_rate",
+        "mean",
+        "q11_mean",
+        "mean_difference",
+        "median",
+        "q11_median",
+        "q05",
+        "q95",
+        "q11_q05",
+        "q11_q95",
+        "ks",
+        "normalized_w1",
+        "categorical_total_variation"
+      ]
+    },
+    "summary": {
+      "rows": 12,
+      "sha256": "3a755b929fe632d8ca652c4b1d2678ffe3b7f8688fd77d96aaa0f3f17fbbfc51",
+      "bytes": 1950,
+      "fields": [
+        "policy",
+        "subset",
+        "n",
+        "action_difference_rate",
+        "spacing_coverage",
+        "coordinate_envelope_coverage",
+        "nearest_rms_mean",
+        "nearest_rms_median",
+        "nearest_rms_q95",
+        "distance_ratio_q95",
+        "uncovered_states"
+      ]
+    },
+    "strata": {
+      "rows": 80,
+      "sha256": "8980b6e242b7ab7e93096281d1dd77975b1160b978c28370961443bf5a654b50",
+      "bytes": 8597,
+      "fields": [
+        "dimension",
+        "level",
+        "policy",
+        "n",
+        "action_difference_rate",
+        "spacing_coverage",
+        "coordinate_envelope_coverage",
+        "nearest_rms_mean",
+        "nearest_rms_q95",
+        "uncovered_states"
+      ]
+    }
+  }
+}

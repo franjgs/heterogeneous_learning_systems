@@ -1,0 +1,122 @@
+{
+  "classification": "INSUFFICIENT COVERAGE",
+  "criterion": "SUFFICIENT only if every non-Q11 retained state satisfies the operational spacing criterion",
+  "non_q11_states": 46080,
+  "uncovered_non_q11_states": 6506,
+  "policy_summary": {
+    "Q00": {
+      "policy": "Q00",
+      "subset": "all",
+      "n": 15360,
+      "action_difference_rate": 0.5776692708333333,
+      "spacing_coverage": 0.7006510416666667,
+      "coordinate_envelope_coverage": 0.6850260416666667,
+      "nearest_rms_mean": 0.05115659744269612,
+      "nearest_rms_median": 0.007481568136716347,
+      "nearest_rms_q95": 0.16791248809072065,
+      "distance_ratio_q95": 2.066496886404138,
+      "uncovered_states": 4598
+    },
+    "Q10": {
+      "policy": "Q10",
+      "subset": "all",
+      "n": 15360,
+      "action_difference_rate": 0.009765625,
+      "spacing_coverage": 0.9977213541666666,
+      "coordinate_envelope_coverage": 0.946484375,
+      "nearest_rms_mean": 0.0076020587439479155,
+      "nearest_rms_median": 9.273454230979273e-05,
+      "nearest_rms_q95": 0.039691796494906256,
+      "distance_ratio_q95": 0.5493673780471934,
+      "uncovered_states": 35
+    },
+    "Q01": {
+      "policy": "Q01",
+      "subset": "all",
+      "n": 15360,
+      "action_difference_rate": 0.237890625,
+      "spacing_coverage": 0.8780598958333333,
+      "coordinate_envelope_coverage": 0.8466145833333333,
+      "nearest_rms_mean": 0.023250549898812083,
+      "nearest_rms_median": 0.0003315061317718962,
+      "nearest_rms_q95": 0.146675941947664,
+      "distance_ratio_q95": 1.6210410491351117,
+      "uncovered_states": 1873
+    },
+    "Q11": {
+      "policy": "Q11",
+      "subset": "all",
+      "n": 15360,
+      "action_difference_rate": 0.0,
+      "spacing_coverage": 1.0,
+      "coordinate_envelope_coverage": 0.9466796875,
+      "nearest_rms_mean": 0.007446570385400553,
+      "nearest_rms_median": 7.854143030796247e-05,
+      "nearest_rms_q95": 0.039387521151069416,
+      "distance_ratio_q95": 0.5494033587816772,
+      "uncovered_states": 0
+    }
+  },
+  "action_disagreement_summary": {
+    "Q00": {
+      "policy": "Q00",
+      "subset": "owner_action_differs_from_q11",
+      "n": 8873,
+      "action_difference_rate": 0.5776692708333333,
+      "spacing_coverage": 0.49678800856531047,
+      "coordinate_envelope_coverage": 0.4938577707652429,
+      "nearest_rms_mean": 0.0830781166081333,
+      "nearest_rms_median": 0.07973210575598404,
+      "nearest_rms_q95": 0.1750557149408489,
+      "distance_ratio_q95": 2.4801933970094963,
+      "uncovered_states": 4465
+    },
+    "Q10": {
+      "policy": "Q10",
+      "subset": "owner_action_differs_from_q11",
+      "n": 150,
+      "action_difference_rate": 0.009765625,
+      "spacing_coverage": 0.9866666666666667,
+      "coordinate_envelope_coverage": 0.9,
+      "nearest_rms_mean": 0.02870068976248713,
+      "nearest_rms_median": 0.021022954319600943,
+      "nearest_rms_q95": 0.08828927521790794,
+      "distance_ratio_q95": 0.9776956633857768,
+      "uncovered_states": 2
+    },
+    "Q01": {
+      "policy": "Q01",
+      "subset": "owner_action_differs_from_q11",
+      "n": 3654,
+      "action_difference_rate": 0.237890625,
+      "spacing_coverage": 0.5626710454296662,
+      "coordinate_envelope_coverage": 0.5478927203065134,
+      "nearest_rms_mean": 0.06831685362410476,
+      "nearest_rms_median": 0.026057957495850975,
+      "nearest_rms_q95": 0.1596229984036231,
+      "distance_ratio_q95": 2.3128243177367738,
+      "uncovered_states": 1598
+    },
+    "Q11": {
+      "policy": "Q11",
+      "subset": "owner_action_differs_from_q11",
+      "n": 0,
+      "action_difference_rate": 0.0,
+      "spacing_coverage": null,
+      "coordinate_envelope_coverage": null,
+      "nearest_rms_mean": null,
+      "nearest_rms_median": null,
+      "nearest_rms_q95": null,
+      "distance_ratio_q95": null,
+      "uncovered_states": 0
+    }
+  },
+  "recommendation": "Use development-state coverage from all four frozen policies, rather than Q11 alone; do not design a new exploration policy from this audit.",
+  "limitations": [
+    "diagnostic empirical support, not population coverage proof",
+    "finite 40-seed frozen test range and four capability configurations",
+    "raw agent/capability coordinates preserve identity and are equally weighted",
+    "derived descriptors are audited marginally but not double-counted in support distance",
+    "no C3 selector or controller is designed or executed"
+  ]
+}
