@@ -1,0 +1,29 @@
+{
+  "agent_or_performance_execution": false,
+  "artifacts_sha256": {
+    "kernel_summary.csv": "2316167b80baa2ebb1b5ba47431434e080eaf5cf95165286f148fae5af4120c9",
+    "move_audit.json": "990083cf819ea3c1b7b2f25f8fbd3ee9ae82f26dd70b96fbe353c5ce96c5275e",
+    "move_bins.csv": "79f73f3fc27d12a05b8f8d02f47507e7a55abc25b1d74f8c8cb52863a3a06d7b",
+    "move_calibration.csv": "e3eaebfa22ceac2873c77753a77296e94b77326fcbca58c826383e5ba05d5c95",
+    "nearest_kernel_pairs.csv": "c5513ef8f29a68b063e13d8e73f6d0a355ec7689d87514a16ddd0d9514e1a8cc",
+    "nominal_kernels.csv": "0ab67b745c204fde4217c685dbd9d32cda3c528ecc4fe5b54175cf3655e818f8",
+    "pre_experiment_protocol.json": "f75398e81c12796e7d61d568aab9453ca848680a2b5789cb5638d2116a9baffd",
+    "raw_generator_histories.npz": "fd0c8cbfa61b673dc1532ae65b30178c4450135f03de2f563a3968ae14ef5050",
+    "simplex_compositions.csv": "f07a9b5a3590850bee7957c29e32422ef0bc3069419fcb231c567baaf74c141c",
+    "structural_duplicate_flags.csv": "60b3c2fdc3db46234f5d84afdedf92061953ea36c3f62378fae5877b5b17a144",
+    "transition_summary.csv": "e10e782cb9b2513bba057d6dc551afb5ee338b0e4e51a9a45719c37b8ccb30fd"
+  },
+  "executable_compositions": 14,
+  "histories_per_kernel": 10000,
+  "mathematical_compositions": 15,
+  "pgcg_histories_eligible_for_future_c3": false,
+  "problems_per_history": 12,
+  "selected_sigmas": [
+    0.01,
+    0.04,
+    0.32
+  ],
+  "status": "PASS",
+  "total_histories": 340000,
+  "unique_executable_kernels": 34
+}

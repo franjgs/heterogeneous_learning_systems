@@ -1,0 +1,49 @@
+{
+  "artifact_type": "PGCG generator_only_protocol",
+  "authoritative_c3_commit": "3c282f4",
+  "scope": "MOVE calibration, nominal kernel construction, and generator-only characterization",
+  "forbidden_dependencies": [
+    "agents",
+    "Q00/Q10/Q01/Q11",
+    "beliefs",
+    "team capabilities",
+    "MIS-v2",
+    "rewards",
+    "agent performance",
+    "selector performance"
+  ],
+  "move_calibration": {
+    "domain": [0.2, 0.8],
+    "sigma_candidates": [0.01, 0.02, 0.04, 0.08, 0.16, 0.32],
+    "n": 100000,
+    "seed": 20261008,
+    "common_random_numbers": true,
+    "primary_descriptor": "median production_distance(p,p_prime)",
+    "selection": "maximize minimum adjacent log-median separation; lexicographic index tie-break"
+  },
+  "design": {
+    "simplex_degree": 4,
+    "mathematical_compositions": 15,
+    "excluded_composition": [0, 0, 1],
+    "exclusion_reason": "pure RETURN is structurally non-initializable from a single initial problem",
+    "executable_compositions": 14,
+    "expected_unique_executable_kernels": 34
+  },
+  "characterization": {
+    "initial_problem": "Uniform(0.2,0.8)",
+    "return_sampling": "uniform over distinct strictly prior values unequal to current p",
+    "histories_per_kernel": 10000,
+    "problems_per_history": 12,
+    "seed": 20261009,
+    "future_c3_sample_size": false
+  },
+  "data_separation": {
+    "pgcg_histories_may_be_reused_for_c3_development": false,
+    "pgcg_histories_may_be_reused_for_c3_confirmation": false,
+    "future_split_rule_status": "pending",
+    "required_generalization_distinction": [
+      "unseen histories from known kernels",
+      "unseen generator regimes"
+    ]
+  }
+}

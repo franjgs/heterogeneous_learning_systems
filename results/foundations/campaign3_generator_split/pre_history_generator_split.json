@@ -1,0 +1,162 @@
+{
+  "agent_or_performance_execution": false,
+  "artifact_type": "pre_history_campaign3_generator_split",
+  "authoritative_c3_commit": "3c282f4",
+  "counts": {
+    "phi_dev": 21,
+    "phi_heldout": 10,
+    "positive_move_compositions": 10
+  },
+  "data_separation": {
+    "fresh_independent_seeds_required": true,
+    "future_histories_generated": false,
+    "pgcg_histories_eligible": false,
+    "split_may_change_from_outcomes": false
+  },
+  "derivation": {
+    "composition_order": "ascending lexicographic (alpha_stay,alpha_move,alpha_return)",
+    "heldout_scale_cycle": [
+      0.01,
+      0.04,
+      0.32,
+      0.01,
+      0.04,
+      0.32,
+      0.01,
+      0.04,
+      0.32,
+      0.01
+    ],
+    "kernel_ids_derived_programmatically": true
+  },
+  "interpretation": {
+    "not_claimed": [
+      "extrapolation",
+      "wholly unseen structural region",
+      "out-of-region generalization"
+    ],
+    "phi_dev": "unseen-history generalization from fresh histories of represented kernels",
+    "phi_heldout": "compositional/interpolative generalization to unseen composition-by-sigma kernels"
+  },
+  "kernel_split_sha256": "b87a8313500b0815dcaa08f653a2cd31a1f749ca14ad06c077a045568fcc51ee",
+  "pgcg_kernel_table": "results/foundations/campaign3_pgcg/nominal_kernels.csv",
+  "pgcg_kernel_table_sha256": "0ab67b745c204fde4217c685dbd9d32cda3c528ecc4fe5b54175cf3655e818f8",
+  "phi_dev": [
+    "K01",
+    "K02",
+    "K03",
+    "K05",
+    "K06",
+    "K07",
+    "K10",
+    "K11",
+    "K13",
+    "K15",
+    "K16",
+    "K17",
+    "K20",
+    "K21",
+    "K23",
+    "K25",
+    "K26",
+    "K27",
+    "K31",
+    "K32",
+    "K33"
+  ],
+  "phi_dev_positive_move": [
+    "K01",
+    "K02",
+    "K03",
+    "K05",
+    "K06",
+    "K07",
+    "K10",
+    "K11",
+    "K13",
+    "K15",
+    "K16",
+    "K17",
+    "K20",
+    "K21",
+    "K23",
+    "K25",
+    "K26",
+    "K27",
+    "K31",
+    "K32"
+  ],
+  "phi_heldout": [
+    "K00",
+    "K04",
+    "K08",
+    "K09",
+    "K14",
+    "K18",
+    "K19",
+    "K24",
+    "K28",
+    "K30"
+  ],
+  "positive_move_compositions": [
+    [
+      0.0,
+      0.25,
+      0.75
+    ],
+    [
+      0.0,
+      0.5,
+      0.5
+    ],
+    [
+      0.0,
+      0.75,
+      0.25
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.25,
+      0.25,
+      0.5
+    ],
+    [
+      0.25,
+      0.5,
+      0.25
+    ],
+    [
+      0.25,
+      0.75,
+      0.0
+    ],
+    [
+      0.5,
+      0.25,
+      0.25
+    ],
+    [
+      0.5,
+      0.5,
+      0.0
+    ],
+    [
+      0.75,
+      0.25,
+      0.0
+    ]
+  ],
+  "static_quotient": {
+    "aliases_are_independent_regimes": false,
+    "aliases_retained_in_pgcg_provenance": [
+      "K12",
+      "K22",
+      "K29"
+    ],
+    "canonical": "K33"
+  }
+}

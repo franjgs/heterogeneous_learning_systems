@@ -1,0 +1,49 @@
+{
+  "median_order_all_candidates": true,
+  "quantile_order_all_candidates": true,
+  "empirical_distribution_order_all_adjacent_candidates": true,
+  "selected_bin_median_order_all_bins": true,
+  "paired_adjacent": [
+    {
+      "sigma_low": 0.01,
+      "sigma_high": 0.02,
+      "fraction_high_gt_low": 0.98988,
+      "fraction_equal": 0.0
+    },
+    {
+      "sigma_low": 0.02,
+      "sigma_high": 0.04,
+      "fraction_high_gt_low": 0.97971,
+      "fraction_equal": 0.0
+    },
+    {
+      "sigma_low": 0.04,
+      "sigma_high": 0.08,
+      "fraction_high_gt_low": 0.96026,
+      "fraction_equal": 0.0
+    },
+    {
+      "sigma_low": 0.08,
+      "sigma_high": 0.16,
+      "fraction_high_gt_low": 0.91842,
+      "fraction_equal": 0.0
+    },
+    {
+      "sigma_low": 0.16,
+      "sigma_high": 0.32,
+      "fraction_high_gt_low": 0.83731,
+      "fraction_equal": 0.0
+    }
+  ],
+  "maximum_reflection_rate": 0.41381,
+  "selected_indices": [
+    0,
+    2,
+    5
+  ],
+  "selected_sigmas": [
+    0.01,
+    0.04,
+    0.32
+  ]
+}

@@ -260,10 +260,12 @@ R_j={p_k:k<j and p_k!=p_j}.
 
 - Status: C3 planned generator definition / HLS modeling assumption.
 - Semantics: RETURN samples from `R_j`; if it is empty, RETURN is unavailable
-  and the available STAY/MOVE probabilities are renormalized. MOVE has no
+  and the available STAY/MOVE probabilities are renormalized. Sampling is
+  uniform over distinct values, not historical occurrences. MOVE has no
   explicit novelty constraint.
 - Formal source: `CAMPAIGN_3_THEORETICAL_SPECIFICATION.md`.
-- Implementation/validation: pending; this is not an empirical result.
+- Implementation/validation: `campaign3_problem_generator.py` and PGCG tests;
+  this remains a modeling definition, not an empirical environmental result.
 
 ## E18. C3 problem-indexed cumulative consequence
 

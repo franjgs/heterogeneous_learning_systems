@@ -1,0 +1,2 @@
+flag,kernel_ids,basis,action
+exact_constant-history_equivalence,K12|K22|K29|K33,alpha_move=0 cannot create a distinct value from one initial p; RETURN remains unavailable,retain all nominal kernels for later scientific review; do not merge
