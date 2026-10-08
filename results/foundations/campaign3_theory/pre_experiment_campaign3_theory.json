@@ -1,0 +1,51 @@
+{
+  "artifact_type": "pre_experiment_conceptual_specification",
+  "campaign": "Campaign 3",
+  "stage": "C3.0",
+  "status": "C3.0 — CONCEPTUALLY CLOSED; NUMERICAL DESIGN PENDING",
+  "authoritative_document": "docs/theory/CAMPAIGN_3_THEORETICAL_SPECIFICATION.md",
+  "authoritative_document_sha256": "82a1498607dae906f9cd28a8c27eddce6a4a091886de587d1825123a47432d59",
+  "provenance": {
+    "campaign2_scientific_closure_commit": "41d918da3d13ea6380064c76166d7248b00935ac",
+    "post_campaign2_state_coverage_audit_commit": "399f45e9f16d50558dc9b43d426e3f062f2f740e",
+    "repository_head_at_integration": "253f90458cf4ce1d8fee2e7dae25c6ba98893a4e"
+  },
+  "frozen_conceptual_definitions": {
+    "physical_problem_domain": "Z_physics={z(p): p in [0,1]}",
+    "initial_c3_generator_domain": "Z_C3={z(p): p in [0.2,0.8]} subset Z_physics",
+    "return_eligible_set": "R_j={p_k: k<j and p_k!=p_j}",
+    "empty_return_rule": "RETURN unavailable; renormalize probabilities over available STAY and MOVE mechanisms",
+    "move_novelty_constraint": null,
+    "horizon_outcome": "G_t(ell)=sum_{tau=t}^{e(j(t)+ell)} mu_true_tau for j(t)+ell<=J",
+    "ell_semantics": "current-problem remainder plus ell complete subsequent problems",
+    "c2_two_reward_endpoint": "retained as a separate diagnostic and not identified with ell=0",
+    "operational_order": [
+      "C3.0 specification",
+      "problem-space numerical design plus team-space numerical design",
+      "12-problem horizon pilot",
+      "G1 continuation sensitivity",
+      "G2 hybrid state coverage",
+      "C3.2 predictability",
+      "freeze selector",
+      "C3.3 on-policy development evaluation",
+      "freeze confirmatory protocol",
+      "C3.4 confirmatory generalization"
+    ]
+  },
+  "pending": [
+    "confirmatory history length",
+    "numerical Phi development/test values",
+    "number and exact selection of new teams",
+    "final operational state-coverage metric",
+    "final feature set",
+    "purchased predictor model",
+    "final selector",
+    "confirmatory statistical protocol"
+  ],
+  "scientific_status": {
+    "new_c3_mechanisms_implemented": false,
+    "campaign3_executed": false,
+    "campaign3_results_exist": false,
+    "hypotheses_are_established_results": false
+  }
+}

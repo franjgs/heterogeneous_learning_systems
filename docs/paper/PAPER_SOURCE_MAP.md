@@ -13,7 +13,7 @@ claims.
 | Problem space and geometry | `PROBLEM_DISTANCE_GATE.md`; foundation specification | `problem_geometry.py` | problem-distance grid and summary | `Z=Delta^1`, metric and closed form under fixed physics | empirical task-distance validity |
 | Agent representation and DISCOVER | `FINITE_PROBLEM_BELIEF_GATE.md` | `finite_problem_belief.py`; historical `discover_v0.py` | finite-belief summary/trajectories | finite beliefs, world/model separation, M=2 recovery | novelty recognition, continuous inference |
 | Capability development | `HLS_CAPABILITY_DEVELOPMENT.md` | `discover_develop_v2.py` | MIS-v2 gate artifacts | declared exponential gap transition and properties | calibrated learning law |
-| Experimental design | `SMALL_PROBLEM_WORLD_GATE.md`; Campaign 0/1 documents; `POLICY_ABLATION_SPECIFICATION.md`; `CAMPAIGN_2_THEORETICAL_SPECIFICATION.md`; `CAMPAIGN_2_PREREGISTRATION.md` | frozen world and Campaign 0–2 runners | frozen world/test-range/protocol/theory manifests | Campaign 2's prospective-policy comparison was preregistered before seeds 10–49 | no Campaign 3 design or broader strategy family |
+| Experimental design | `SMALL_PROBLEM_WORLD_GATE.md`; Campaign 0/1 documents; `POLICY_ABLATION_SPECIFICATION.md`; `CAMPAIGN_2_THEORETICAL_SPECIFICATION.md`; `CAMPAIGN_2_PREREGISTRATION.md`; `CAMPAIGN_3_THEORETICAL_SPECIFICATION.md` | frozen world and Campaign 0–2 runners; no C3 runner | frozen world/test-range/protocol/theory manifests; C3.0 conceptual manifest | Campaign 2's prospective-policy comparison was preregistered before seeds 10–49; C3.0 fixes the conceptual sequence and boundaries for future sequential prospective-adaptation work | C3 numerical design, predictor, selector, preregistration, execution, and results |
 | Results | Campaign 0/1 results; `CAMPAIGN_2_RESULTS.md`; `CAMPAIGN_2_IO_INCIDENT.md` | Campaign 0–2 runners, validators, and analyses | Campaign 2 raw/reference/counterfactual tables, bootstrap outputs, provenance, and retained failure record | Campaign 2 H1/H2/H3 support; robust positive conditional Q10/Q11 benefit; Q01 null; negative returns and secondary G07 replication | no Q11-over-Q10 superiority, universal team/policy ranking, or general causal value claim |
 | Discussion | foundation specification; Campaign 1/2 results and ledgers | none | validated campaign artifacts | bounded interpretation of prospective anticipation, null Q01 utility, and state/reference limitations | external validity and literature synthesis pending |
 | Limitations | foundation specification; gate documents | source validators/controllers | gate controls | present model boundary | external validity assessment pending |
@@ -73,5 +73,6 @@ remain part of the provenance chain rather than being overwritten.
 | Prospective-policy comparison | COMPLETE; CONDITIONAL ON Q11 REFERENCE STATES |
 | Statistical analysis | COMPLETE FOR CAMPAIGN 2 |
 | Figures/tables | CAMPAIGN 2 MACHINE-REGENERABLE OUTPUTS READY |
+| Campaign 3 conceptual specification | CONCEPTUALLY CLOSED; NUMERICAL DESIGN PENDING |
 | Discussion | PENDING |
 | LaTeX manuscript | PENDING |

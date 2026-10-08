@@ -6,6 +6,11 @@ doctrine.
 
 ## Current canonical theory
 
+-   [Campaign 3 theoretical specification](CAMPAIGN_3_THEORETICAL_SPECIFICATION.md):
+    authoritative C3.0 conceptual specification for sequential prospective
+    adaptation, its epistemic boundaries, design gates, and operational order.
+    Status: **C3.0 — CONCEPTUALLY CLOSED; NUMERICAL DESIGN PENDING**. It defines
+    no implemented Campaign 3 mechanism and reports no Campaign 3 result.
 -   [Pre-experiment HLS foundation
     specification](HLS_FOUNDATION_SPECIFICATION.md): consolidated executable
     specification for the current CES/DISCOVER/MIS-v2/problem-geometry/Small
