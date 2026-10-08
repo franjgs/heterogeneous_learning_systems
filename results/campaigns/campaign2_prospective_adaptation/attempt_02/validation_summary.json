@@ -1,0 +1,40 @@
+{
+  "passed": true,
+  "counts": {
+    "runs": 5120,
+    "trajectories": 92160,
+    "reference_states": 23040,
+    "policy_evaluations": 61440,
+    "counterfactuals": 46080,
+    "landscapes": 983040,
+    "branches": 184320
+  },
+  "eligible_reference_states": 15360,
+  "terminal_divergences": 0,
+  "max_null_return_error": 0.0,
+  "max_errors": {
+    "observation": 2.220446049250313e-16,
+    "MIS_composition": 1.1102230246251565e-16,
+    "branch_transition": 0.0,
+    "branch_sum": 0.0,
+    "operator_identity": 2.220446049250313e-16
+  },
+  "Q11_regression": "all Q11 real selected actions match unchanged frozen Q11 candidate operator on every visited state; historical CURRENT candidate regression covered by unchanged unit tests",
+  "null_controls": 38846,
+  "raw_sha256": {
+    "closed_loop_count_validation.json": "7747d628e62f09b816ff80a10e14f77d7d0f9ec382ed80b1de536c9c134875e1",
+    "closed_loop_trajectories.csv.gz": "1b131c1b4515e7af66cee0ec7fd5b6a81da3a0407de34347bf318cd51327ce6a",
+    "opportunity_landscapes.csv.gz": "e24dfe28356f6ee0fe7b4fe43131768ad9b36fd0ec3f83a0b49f5c7a8c6c7520",
+    "execution_manifest.json": "766d856407e32e71118c8b005b8005beee0290d5e5fa650c45656b3f0fb980f5",
+    "policy_evaluations.csv": "938605b6dbeaf6d9f482868008e6b9b8827b026476bf1043a51e2dc2ad982c3c",
+    "counterfactual_results.csv": "c9de27ac399f506ec580689fcdd7b25352357339359025298ebd818f6bbf114f",
+    "counterfactual_branches.csv.gz": "6fc043e9629db801cf4d79be966673bb64652ddf7c70d1074cd16832cdb8ae3e",
+    "reference_states.csv": "eeed62d7fcf538fe40b4204c62642caffd233eb569cd8381852ecf5b5f6c1d2c",
+    "closed_loop_runs.csv": "507aeefe911f326464ea819103513a0321e3cf7405aeaa3a2451ce122aae7ef0",
+    "actions.csv": "3241b70ebace35e7866ee6944ae589adfcb1c9c7ab377aa1bf57e535bfb8d0aa"
+  },
+  "source_hashes_valid": true,
+  "CRN_valid": true,
+  "primary_counterfactual_reward_count": 2,
+  "continuation_policy": "same pi_ab in both branches; authoritative C2.0 primitive unchanged"
+}

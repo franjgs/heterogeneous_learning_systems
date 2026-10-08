@@ -1,0 +1,36 @@
+{
+  "status": "EXECUTION_INTEGRITY_FAILURE",
+  "preregistration_commit": "9cfb6891e73536a63694041711de56cbd147eed1",
+  "C2_commit": "c7071769cc583f3352305363eff2e6ade27de97e",
+  "failed_check": "load and count retained raw tables before scientific interpretation",
+  "exception": "pandas.errors.EmptyDataError: No columns to parse from file",
+  "raw_table_count": 7,
+  "raw_tables_each_bytes": 0,
+  "raw_table_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "computed_in_memory_counts_are_not_validated_retained_counts": true,
+  "Q11_nonterminal_reference_count_verified": false,
+  "confirmatory_seed_range_executed_in_failed_attempt": [10, 49],
+  "numerical_scientific_outcomes_inspected": false,
+  "H1_H2_H3_H4_estimates_generated": false,
+  "bootstrap_executed": false,
+  "scientific_classification": null,
+  "repeat_execution_performed": false,
+  "result_commit_created": false,
+  "tests": {
+    "passed": 133,
+    "skipped": 2,
+    "deselected": 1,
+    "skipped_reason": "validated execution and analysis artifacts unavailable",
+    "deselected_reason": "unchanged historical preregistration-only test requires absence of Campaign 2 output",
+    "passing_unit_tests_do_not_validate_missing_scientific_records": true
+  },
+  "frozen_source_hashes_verified": true,
+  "frozen_model_policies_inference_scenarios_and_historical_results_modified": false,
+  "synthetic_IO_checks": {
+    "plain_and_gzip_serialization": "PASS",
+    "process_pool_on_repository_volume": "PASS",
+    "open_file_inode_probes": "no replacement reproduced"
+  },
+  "cause": "unresolved long-running raw-output persistence failure; not diagnosed as a physics or policy failure",
+  "next_step_requires": "resolve persistence and acknowledge a deterministic reconstruction of the identical frozen design; no outcome-based redesign"
+}

@@ -1,0 +1,182 @@
+{
+  "counts": {
+    "runs": 5120,
+    "trajectories": 92160,
+    "reference_states": 23040,
+    "policy_evaluations": 61440,
+    "landscapes": 983040,
+    "counterfactuals": 46080,
+    "branches": 184320
+  },
+  "persisted_file_metadata": {
+    "runs": {
+      "rows": 5120,
+      "sha256": "507aeefe911f326464ea819103513a0321e3cf7405aeaa3a2451ce122aae7ef0",
+      "bytes": 771787,
+      "fields": [
+        "scenario",
+        "configuration",
+        "seed",
+        "policy",
+        "cumulative_mu_true",
+        "final_S",
+        "final_E"
+      ]
+    },
+    "trajectories": {
+      "rows": 92160,
+      "sha256": "1b131c1b4515e7af66cee0ec7fd5b6a81da3a0407de34347bf318cd51327ce6a",
+      "bytes": 3212841,
+      "fields": [
+        "scenario",
+        "configuration",
+        "seed",
+        "problem_index",
+        "decision",
+        "policy",
+        "true_theta",
+        "C",
+        "N",
+        "M",
+        "represented",
+        "action_id",
+        "S_before",
+        "S_after",
+        "b_before",
+        "b_after",
+        "E_before",
+        "E_after",
+        "epsilon",
+        "mu_true",
+        "observation"
+      ]
+    },
+    "reference_states": {
+      "rows": 23040,
+      "sha256": "eeed62d7fcf538fe40b4204c62642caffd233eb569cd8381852ecf5b5f6c1d2c",
+      "bytes": 8171581,
+      "fields": [
+        "state_id",
+        "scenario",
+        "configuration",
+        "seed",
+        "problem_index",
+        "decision",
+        "remaining",
+        "true_theta",
+        "p",
+        "C",
+        "N",
+        "M",
+        "represented",
+        "S",
+        "b",
+        "epsilon0",
+        "epsilon1",
+        "pattern",
+        "Q00",
+        "Q10",
+        "Q01",
+        "Q11",
+        "H",
+        "D_I",
+        "D_I_norm",
+        "D_I_loss",
+        "H_S",
+        "V0",
+        "immediate_myopic_id",
+        "D_10",
+        "D_01",
+        "D_11",
+        "D_coupled"
+      ]
+    },
+    "policy_evaluations": {
+      "rows": 61440,
+      "sha256": "938605b6dbeaf6d9f482868008e6b9b8827b026476bf1043a51e2dc2ad982c3c",
+      "bytes": 11142628,
+      "fields": [
+        "state_id",
+        "policy",
+        "action_id",
+        "selected_Q",
+        "max_Q",
+        "DeltaQ",
+        "g",
+        "C",
+        "A_I",
+        "A_D",
+        "A_ID",
+        "Gamma",
+        "own_regret_of_Q00",
+        "Q00_regret_of_action",
+        "mutual_tie"
+      ]
+    },
+    "landscapes": {
+      "rows": 983040,
+      "sha256": "e24dfe28356f6ee0fe7b4fe43131768ad9b36fd0ec3f83a0b49f5c7a8c6c7520",
+      "bytes": 56065066,
+      "fields": [
+        "state_id",
+        "action_id",
+        "g",
+        "C",
+        "A_I",
+        "A_D",
+        "A_ID",
+        "Gamma",
+        "Q00",
+        "Q10",
+        "Q01",
+        "Q11"
+      ]
+    },
+    "counterfactuals": {
+      "rows": 46080,
+      "sha256": "c9de27ac399f506ec580689fcdd7b25352357339359025298ebd818f6bbf114f",
+      "bytes": 2712834,
+      "fields": [
+        "state_id",
+        "policy",
+        "divergent",
+        "DeltaG",
+        "G_prospective",
+        "G_baseline"
+      ]
+    },
+    "branches": {
+      "rows": 184320,
+      "sha256": "6fc043e9629db801cf4d79be966673bb64652ddf7c70d1074cd16832cdb8ae3e",
+      "bytes": 3838628,
+      "fields": [
+        "state_id",
+        "policy",
+        "branch",
+        "branch_step",
+        "continuation_policy",
+        "action_id",
+        "S_before",
+        "S_after",
+        "b_before",
+        "b_after",
+        "epsilon",
+        "mu_true",
+        "observation"
+      ]
+    }
+  },
+  "finished_utc": "2026-10-08T06:46:56.124257+00:00",
+  "sha256": {
+    "closed_loop_count_validation.json": "7747d628e62f09b816ff80a10e14f77d7d0f9ec382ed80b1de536c9c134875e1",
+    "closed_loop_trajectories.csv.gz": "1b131c1b4515e7af66cee0ec7fd5b6a81da3a0407de34347bf318cd51327ce6a",
+    "opportunity_landscapes.csv.gz": "e24dfe28356f6ee0fe7b4fe43131768ad9b36fd0ec3f83a0b49f5c7a8c6c7520",
+    "execution_manifest.json": "766d856407e32e71118c8b005b8005beee0290d5e5fa650c45656b3f0fb980f5",
+    "policy_evaluations.csv": "938605b6dbeaf6d9f482868008e6b9b8827b026476bf1043a51e2dc2ad982c3c",
+    "counterfactual_results.csv": "c9de27ac399f506ec580689fcdd7b25352357339359025298ebd818f6bbf114f",
+    "counterfactual_branches.csv.gz": "6fc043e9629db801cf4d79be966673bb64652ddf7c70d1074cd16832cdb8ae3e",
+    "reference_states.csv": "eeed62d7fcf538fe40b4204c62642caffd233eb569cd8381852ecf5b5f6c1d2c",
+    "closed_loop_runs.csv": "507aeefe911f326464ea819103513a0321e3cf7405aeaa3a2451ce122aae7ef0",
+    "actions.csv": "3241b70ebace35e7866ee6944ae589adfcb1c9c7ab377aa1bf57e535bfb8d0aa"
+  }
+}

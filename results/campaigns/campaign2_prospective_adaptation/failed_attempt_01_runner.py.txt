@@ -1,0 +1,247 @@
+"""Execute the preregistered C2 factorial; no alternative physics or policies."""
+from __future__ import annotations
+
+import argparse
+from contextlib import contextmanager, ExitStack
+from concurrent.futures import ProcessPoolExecutor
+from datetime import datetime, timezone
+from functools import lru_cache
+import csv
+import gzip
+import hashlib
+import io
+import json
+from pathlib import Path
+from random import Random
+import subprocess
+import sys
+from unittest.mock import patch
+
+ROOT = Path(__file__).resolve().parents[3]
+sys.path[:0] = [str(ROOT / "src"), str(ROOT)]
+from experiments.synthetic.strategy_discrimination_gate.run import MODE_BY_ID, CONFIG_BY_ID as ALL_CONFIGS, pattern
+from hls import finite_problem_belief as planner, campaign2_theory as theory
+from hls.campaign1_protocol import PARAMETERS
+from hls.campaign1_test_range import HISTORIES, history_steps
+from hls.discover_v0 import JOINT_ACTIONS, EXACT_TOL
+from hls.small_problem_world import HYPOTHESIS_REPERTOIRE, UNIFORM_PRIOR
+
+OUT = ROOT / "results/campaigns/campaign2_prospective_adaptation"
+PREREG = ROOT / "results/foundations/campaign2_preregistration/pre_experiment_campaign2_preregistration.json"
+THEORY = ROOT / "results/foundations/campaign2_theory/pre_experiment_campaign2_theory.json"
+PREREG_COMMIT = "9cfb6891e73536a63694041711de56cbd147eed1"
+ACTION_IDS = {a: i for i, a in enumerate(JOINT_ACTIONS)}
+SEEDS = tuple(range(10, 50))
+CONFIG_BY_ID = {g: ALL_CONFIGS[g] for g in ("G00", "G04", "G05", "G07")}
+
+
+def digest(path):
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def packed(x):
+    return json.dumps(x, separators=(",", ":"))
+
+
+def dump(path, obj):
+    path.write_text(json.dumps(obj, indent=2, allow_nan=False) + "\n")
+
+
+@contextmanager
+def exact_cache():
+    """Scoped pure memoization of the *unchanged* operator; copy outputs.
+
+    Keys contain every original argument, without rounding/coarsening. Both
+    imported entry points use the same cache; original numerical order remains.
+    """
+    original = planner.prospective_action_values
+    @lru_cache(maxsize=4096)
+    def cached(s, b, model, remaining, information, development, eta):
+        return original(s, b, model, remaining=remaining, eta=eta,
+                        anticipate_information=information,
+                        anticipate_development=development)
+    def wrapped(state, belief, hypotheses, *, remaining, anticipate_information,
+                anticipate_development, eta=PARAMETERS["eta"]):
+        return cached(state, belief, hypotheses, remaining, anticipate_information,
+                      anticipate_development, eta).copy()
+    with patch.object(planner, "prospective_action_values", wrapped), patch.object(theory, "prospective_action_values", wrapped):
+        yield
+
+
+def values(s, b, remaining, pid):
+    i, d = MODE_BY_ID[pid].value
+    return planner.prospective_action_values(s, b, HYPOTHESIS_REPERTOIRE,
+        remaining=remaining, eta=PARAMETERS["eta"],
+        anticipate_information=i, anticipate_development=d)
+
+
+def first(q):
+    maximum = max(q.values())
+    return next(a for a in JOINT_ACTIONS if abs(q[a] - maximum) <= EXACT_TOL)
+
+
+def task_data(task):
+    task_id, scenario, configuration, seed = task
+    tables = {k: [] for k in ("runs", "trajectories", "reference_states", "policy_evaluations", "landscapes", "counterfactuals", "branches")}
+    rng = Random(seed)
+    eps = tuple(rng.gauss(0, 1) for _ in range(18))
+    model, prior = planner.canonical_model(HYPOTHESIS_REPERTOIRE, UNIFORM_PRIOR)
+    with exact_cache():
+        for pid, mode in MODE_BY_ID.items():
+            s, exposure, total = CONFIG_BY_ID[configuration], [[0., 0.] for _ in range(3)], 0.
+            for problem_index, (z, desc) in enumerate(zip(HISTORIES[scenario], history_steps(scenario))):
+                b = prior
+                for step in range(3):
+                    k, remaining = 3 * problem_index + step, 3 - step
+                    key = dict(scenario=scenario, configuration=configuration, seed=seed,
+                               problem_index=problem_index, decision=step)
+                    a = first(values(s, b, remaining, pid))
+                    if pid == "Q11":
+                        sid = task_id * 18 + k
+                        q = {p: values(s, b, remaining, p) for p in MODE_BY_ID}
+                        actions = {p: first(v) for p, v in q.items()}
+                        assert actions["Q11"] == a
+                        ref = dict(state_id=sid, **key, remaining=remaining,
+                            true_theta=packed(z), p=z[0], C=desc.change, N=desc.novelty, M=desc.mismatch,
+                            represented=desc.represented, S=packed(s), b=packed(b),
+                            epsilon0=eps[k], epsilon1=eps[k+1] if step < 2 else None,
+                            pattern=pattern(actions), **{p: ACTION_IDS[x] for p, x in actions.items()})
+                        if remaining == 1:
+                            assert len(set(actions.values())) == 1, "terminal collapse"
+                            tables["reference_states"].append(ref)
+                        else:
+                            structural = theory.structural_descriptors(s, b)
+                            landscape = theory.opportunity_landscape(s, b)
+                            ref.update(H=structural.entropy, D_I=structural.disagreement,
+                                D_I_norm=structural.disagreement_normalized, D_I_loss=structural.myopic_regret,
+                                H_S=structural.capability_headroom, V0=landscape.baseline_continuation,
+                                immediate_myopic_id=ACTION_IDS[structural.belief_myopic_action],
+                                **{f"D_{p[1:]}": actions[p] != actions["Q00"] for p in ("Q10", "Q01", "Q11")},
+                                D_coupled=actions["Q11"] not in (actions["Q10"], actions["Q01"]))
+                            tables["reference_states"].append(ref)
+                            by_action = {o.action: o for o in landscape.candidates}
+                            for o in landscape.candidates:
+                                tables["landscapes"].append(dict(state_id=sid, action_id=ACTION_IDS[o.action],
+                                    g=o.immediate, C=o.cost, A_I=o.A_I, A_D=o.A_D, A_ID=o.A_ID,
+                                    Gamma=o.coupling_residual,
+                                    **dict(zip(MODE_BY_ID, o.operator_values))))
+                            for p, x in actions.items():
+                                o = by_action[x]
+                                left_regret = max(q[p].values()) - q[p][actions["Q00"]]
+                                right_regret = max(q["Q00"].values()) - q["Q00"][x]
+                                tables["policy_evaluations"].append(dict(state_id=sid, policy=p,
+                                    action_id=ACTION_IDS[x], selected_Q=q[p][x], max_Q=max(q[p].values()),
+                                    DeltaQ=q[p][x]-q[p][actions["Q00"]], g=o.immediate, C=o.cost,
+                                    A_I=o.A_I, A_D=o.A_D, A_ID=o.A_ID, Gamma=o.coupling_residual,
+                                    own_regret_of_Q00=left_regret, Q00_regret_of_action=right_regret,
+                                    mutual_tie=left_regret <= EXACT_TOL and right_regret <= EXACT_TOL))
+                            for p in ("Q10", "Q01", "Q11"):
+                                cf = theory.two_decision_counterfactual(s, b, z, remaining=remaining,
+                                    policy_mode=MODE_BY_ID[p], innovations=(eps[k], eps[k+1]))
+                                different = actions[p] != actions["Q00"]
+                                if not different:
+                                    assert cf.prospective == cf.baseline and cf.delta_production == 0.
+                                tables["counterfactuals"].append(dict(state_id=sid, policy=p,
+                                    divergent=different, DeltaG=cf.delta_production,
+                                    G_prospective=cf.prospective.production_sum, G_baseline=cf.baseline.production_sum))
+                                for name, branch in (("prospective", cf.prospective), ("baseline", cf.baseline)):
+                                    assert branch.continuation_policy == MODE_BY_ID[p]
+                                    for n, real in enumerate(branch.steps):
+                                        tables["branches"].append(dict(state_id=sid, policy=p, branch=name,
+                                            branch_step=n, continuation_policy=p, action_id=ACTION_IDS[real.action],
+                                            S_before=packed(real.state_before), S_after=packed(real.state_after),
+                                            b_before=packed(real.belief_before), b_after=packed(real.belief_after),
+                                            epsilon=real.epsilon, mu_true=real.mu_true, observation=real.observation))
+                    real = theory._real_decision(s, b, a, z, eps[k], model)
+                    before = packed(exposure)
+                    for i in range(3):
+                        for j in range(2):
+                            exposure[i][j] += a[i][j]
+                    tables["trajectories"].append(dict(**key, policy=pid, true_theta=packed(z),
+                        C=desc.change, N=desc.novelty, M=desc.mismatch, represented=desc.represented,
+                        action_id=ACTION_IDS[a], S_before=packed(s), S_after=packed(real.state_after),
+                        b_before=packed(b), b_after=packed(real.belief_after), E_before=before,
+                        E_after=packed(exposure), epsilon=eps[k], mu_true=real.mu_true, observation=real.observation))
+                    total += real.mu_true
+                    s, b = real.state_after, real.belief_after
+            tables["runs"].append(dict(scenario=scenario, configuration=configuration, seed=seed,
+                policy=pid, cumulative_mu_true=total, final_S=packed(s), final_E=packed(exposure)))
+    return tables
+
+
+FILENAMES = dict(runs="closed_loop_runs.csv", trajectories="closed_loop_trajectories.csv.gz",
+    reference_states="reference_states.csv", policy_evaluations="policy_evaluations.csv",
+    landscapes="opportunity_landscapes.csv.gz", counterfactuals="counterfactual_results.csv",
+    branches="counterfactual_branches.csv.gz")
+
+
+def preflight():
+    subprocess.run(["git", "merge-base", "--is-ancestor", PREREG_COMMIT, "HEAD"], check=True, cwd=ROOT)
+    for path in (PREREG, THEORY):
+        for name, expected in json.loads(path.read_text())["source_hashes"].items():
+            assert digest(ROOT / name) == expected, name
+    return json.loads(PREREG.read_text())
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--workers", type=int, default=8)
+    args = parser.parse_args()
+    prereg = preflight()
+    if OUT.exists():
+        raise SystemExit("Refusing to overwrite Campaign 2 outputs")
+    OUT.mkdir(parents=True)
+    dump(OUT / "execution_manifest.json", dict(
+        preregistration_commit=PREREG_COMMIT, C2_commit=prereg["prerequisite_C2_commit"],
+        code_base_commit=subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+        execution_code_sha256=digest(Path(__file__)),
+        execution_source_qualification="base commit plus exact new runner content hash; single local results commit follows validation",
+        started_utc=datetime.now(timezone.utc).isoformat(), expected_counts=prereg["planned_counts_not_executions"],
+        seeds=SEEDS, policies={p:m.name for p,m in MODE_BY_ID.items()}, parameters=PARAMETERS,
+        scenarios={s:HISTORIES[s] for s in HISTORIES}, configurations=CONFIG_BY_ID,
+        preregistration_sha256=digest(PREREG), theory_sha256=digest(THEORY),
+        source_hashes=prereg["source_hashes"], CRN=prereg["CRN"],
+        performance="mu_true", bootstrap=prereg["bootstrap"],
+        memoization="exact complete-argument cache only, unchanged authoritative primitives; no coarsening",
+        primary_reference="Q11 states only; all nonterminal states; terminals are collapse controls"))
+    tasks = [(i,s,g,seed) for i,(s,g,seed) in enumerate(
+        (s,g,seed) for s in HISTORIES for g in CONFIG_BY_ID for seed in SEEDS)]
+    counts = dict.fromkeys(FILENAMES, 0)
+    with ExitStack() as stack:
+        writers = {}
+        for name, filename in FILENAMES.items():
+            raw = stack.enter_context((OUT / filename).open("wb"))
+            stream = stack.enter_context(gzip.GzipFile(fileobj=raw, mode="wb", mtime=0)) if filename.endswith(".gz") else raw
+            text = stack.enter_context(io.TextIOWrapper(stream, encoding="utf-8", newline=""))
+            writers[name] = (text, None)
+        with ProcessPoolExecutor(max_workers=args.workers) as pool:
+            for completed, data in enumerate(pool.map(task_data, tasks, chunksize=1), 1):
+                for name, rows in data.items():
+                    stream, writer = writers[name]
+                    if writer is None:
+                        # Reference table includes terminal rows missing descriptors.
+                        fields = list(rows[0])
+                        if name == "reference_states":
+                            fields += [f for f in rows[1] if f not in fields]
+                        writer = csv.DictWriter(stream, fieldnames=fields, lineterminator="\n")
+                        writer.writeheader()
+                        writers[name] = (stream, writer)
+                    writer.writerows(rows)
+                    counts[name] += len(rows)
+                if completed % 20 == 0:
+                    print(f"Completed {completed}/{len(tasks)} contexts ({4*completed} runs)", flush=True)
+    with (OUT / "actions.csv").open("w", newline="") as f:
+        writer = csv.writer(f); writer.writerow(("action_id", "X"))
+        writer.writerows((i, packed(a)) for i,a in enumerate(JOINT_ACTIONS))
+    dump(OUT / "raw_completion.json", dict(counts=counts,
+        finished_utc=datetime.now(timezone.utc).isoformat(),
+        sha256={p.name:digest(p) for p in OUT.iterdir() if p.is_file()}))
+    print(json.dumps(counts), flush=True)
+
+
+if __name__ == "__main__":
+    main()

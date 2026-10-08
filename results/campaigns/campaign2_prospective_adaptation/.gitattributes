@@ -1,0 +1,3 @@
+# csv.writer's CRLF terminators are valid; keep archived incident bytes intact.
+actions.csv whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+attempt_02/actions.csv whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

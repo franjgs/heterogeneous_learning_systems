@@ -1,0 +1,625 @@
+{
+  "preregistered": true,
+  "primary_reference": "Q11 only",
+  "independent_unit": "seed",
+  "bootstrap": {
+    "replicates": 10000,
+    "seed": 20261007,
+    "method": "whole-seed percentile 95%; shared resampling indices",
+    "undefined_resamples_reported": true
+  },
+  "estimates": {
+    "D_10_prevalence": {
+      "estimand": "D_10_prevalence",
+      "estimate": 0.19557291666666668,
+      "lower": 0.18736979166666667,
+      "upper": 0.20364583333333333,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "D_01_prevalence": {
+      "estimand": "D_01_prevalence",
+      "estimate": 0.07630208333333334,
+      "lower": 0.07213541666666666,
+      "upper": 0.08046875,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "D_11_prevalence": {
+      "estimand": "D_11_prevalence",
+      "estimate": 0.19908854166666667,
+      "lower": 0.191015625,
+      "upper": 0.2072265625,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "D_coupled_prevalence": {
+      "estimand": "D_coupled_prevalence",
+      "estimate": 0.004622395833333333,
+      "lower": 0.0031901041666666666,
+      "upper": 0.006184895833333333,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "H1_regret_mean_D0": {
+      "estimand": "H1_regret_mean_D0",
+      "estimate": 0.04862253035928295,
+      "lower": 0.04773582286156279,
+      "upper": 0.0495192504236246,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "H1_regret_median_D0": {
+      "estimand": "H1_regret_median_D0",
+      "estimate": 0.029650152102628384,
+      "lower": 0.02631900325352957,
+      "upper": 0.03328697813514813,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "H1_regret_mean_D1": {
+      "estimand": "H1_regret_mean_D1",
+      "estimate": 0.1650615564902458,
+      "lower": 0.16258841797146353,
+      "upper": 0.1675619189566157,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "H1_regret_median_D1": {
+      "estimand": "H1_regret_median_D1",
+      "estimate": 0.1740987832735037,
+      "lower": 0.17394526417269912,
+      "upper": 0.17416035205063346,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "H2_headroom_mean_D0": {
+      "estimand": "H2_headroom_mean_D0",
+      "estimate": 2.0265338749977215,
+      "lower": 2.0204940029001963,
+      "upper": 2.0330170018495535,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "H2_headroom_median_D0": {
+      "estimand": "H2_headroom_median_D0",
+      "estimate": 2.1785062500000003,
+      "lower": 2.1750219453125,
+      "upper": 2.1785062500000003,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "descriptive secondary"
+    },
+    "H2_headroom_mean_D1": {
+      "estimand": "H2_headroom_mean_D1",
+      "estimate": 2.4538463217037187,
+      "lower": 2.4140074310113495,
+      "upper": 2.4951342662776756,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "H2_headroom_median_D1": {
+      "estimand": "H2_headroom_median_D1",
+      "estimate": 3.0,
+      "lower": 3.0,
+      "upper": 3.0,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "descriptive secondary"
+    },
+    "Q10_p_plus": {
+      "estimand": "Q10_p_plus",
+      "estimate": 0.7456724367509987,
+      "lower": 0.7133588997365368,
+      "upper": 0.7781094515032306,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q10_p_zero": {
+      "estimand": "Q10_p_zero",
+      "estimate": 0.0,
+      "lower": 0.0,
+      "upper": 0.0,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q10_p_negative": {
+      "estimand": "Q10_p_negative",
+      "estimate": 0.25432756324900135,
+      "lower": 0.22189054849676934,
+      "upper": 0.2866411002634632,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q10_mean_DeltaG": {
+      "estimand": "Q10_mean_DeltaG",
+      "estimate": 0.16229302857383607,
+      "lower": 0.14757245121793264,
+      "upper": 0.17709646744146754,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q10_mean_negative_DeltaG": {
+      "estimand": "Q10_mean_negative_DeltaG",
+      "estimate": -0.13932698459903498,
+      "lower": -0.1510071559248842,
+      "upper": -0.12743810365484487,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q10_opportunity_cost_positive": {
+      "estimand": "Q10_opportunity_cost_positive",
+      "estimate": 1.0,
+      "lower": 1.0,
+      "upper": 1.0,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q10_mean_opportunity_cost": {
+      "estimand": "Q10_mean_opportunity_cost",
+      "estimate": 0.012978466659303259,
+      "lower": 0.012466105431130881,
+      "upper": 0.013517465737429272,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q10_DeltaQ_DeltaG_Pearson": {
+      "estimand": "Q10_DeltaQ_DeltaG_Pearson",
+      "estimate": 0.22058510673131226,
+      "lower": 0.16743059115366216,
+      "upper": 0.27828944600297045,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "secondary confirmatory"
+    },
+    "Q01_p_plus": {
+      "estimand": "Q01_p_plus",
+      "estimate": 0.4598976109215017,
+      "lower": 0.410465769270922,
+      "upper": 0.505982905982906,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q01_p_zero": {
+      "estimand": "Q01_p_zero",
+      "estimate": 0.0,
+      "lower": 0.0,
+      "upper": 0.0,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q01_p_negative": {
+      "estimand": "Q01_p_negative",
+      "estimate": 0.5401023890784983,
+      "lower": 0.49401709401709404,
+      "upper": 0.589534230729078,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q01_mean_DeltaG": {
+      "estimand": "Q01_mean_DeltaG",
+      "estimate": 0.0014506257003679276,
+      "lower": -0.019392149507311204,
+      "upper": 0.019310935692756086,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q01_mean_negative_DeltaG": {
+      "estimand": "Q01_mean_negative_DeltaG",
+      "estimate": -0.1206887380548292,
+      "lower": -0.13900458088728918,
+      "upper": -0.10399311970263246,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q01_opportunity_cost_positive": {
+      "estimand": "Q01_opportunity_cost_positive",
+      "estimate": 1.0,
+      "lower": 1.0,
+      "upper": 1.0,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q01_mean_opportunity_cost": {
+      "estimand": "Q01_mean_opportunity_cost",
+      "estimate": 0.00899495912062227,
+      "lower": 0.008651987837924901,
+      "upper": 0.009370912687218456,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q01_DeltaQ_DeltaG_Pearson": {
+      "estimand": "Q01_DeltaQ_DeltaG_Pearson",
+      "estimate": 0.05993587757397361,
+      "lower": -0.03677267690892546,
+      "upper": 0.15594326276972623,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "secondary confirmatory"
+    },
+    "Q11_p_plus": {
+      "estimand": "Q11_p_plus",
+      "estimate": 0.7452583387835187,
+      "lower": 0.712935732560003,
+      "upper": 0.7781155531594728,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q11_p_zero": {
+      "estimand": "Q11_p_zero",
+      "estimate": 0.0,
+      "lower": 0.0,
+      "upper": 0.0,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q11_p_negative": {
+      "estimand": "Q11_p_negative",
+      "estimate": 0.25474166121648134,
+      "lower": 0.22188444684052727,
+      "upper": 0.28706426743999697,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q11_mean_DeltaG": {
+      "estimand": "Q11_mean_DeltaG",
+      "estimate": 0.16687367085552576,
+      "lower": 0.15303013884767888,
+      "upper": 0.18032324005638722,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q11_mean_negative_DeltaG": {
+      "estimand": "Q11_mean_negative_DeltaG",
+      "estimate": -0.1452990011038036,
+      "lower": -0.1570543147822094,
+      "upper": -0.13330617110847923,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q11_opportunity_cost_positive": {
+      "estimand": "Q11_opportunity_cost_positive",
+      "estimate": 1.0,
+      "lower": 1.0,
+      "upper": 1.0,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q11_mean_opportunity_cost": {
+      "estimand": "Q11_mean_opportunity_cost",
+      "estimate": 0.013392351134808335,
+      "lower": 0.01286294193128751,
+      "upper": 0.01393409473130104,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "Q11_DeltaQ_DeltaG_Pearson": {
+      "estimand": "Q11_DeltaQ_DeltaG_Pearson",
+      "estimate": 0.19825058945939986,
+      "lower": 0.1499597236714818,
+      "upper": 0.2513838322788794,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "secondary confirmatory"
+    },
+    "Q10_OLS_intercept": {
+      "estimand": "Q10_OLS_intercept",
+      "estimate": 0.039942077948036905,
+      "lower": -0.011844981183580912,
+      "upper": 0.08906251054426684,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "secondary confirmatory"
+    },
+    "Q10_OLS_DeltaQ": {
+      "estimand": "Q10_OLS_DeltaQ",
+      "estimate": 1.1538726992140282,
+      "lower": 0.8452804289147469,
+      "upper": 1.490159716168163,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "secondary confirmatory"
+    },
+    "Q10_OLS_M": {
+      "estimand": "Q10_OLS_M",
+      "estimate": -0.17162959338528244,
+      "lower": -0.5894749834362034,
+      "upper": 0.2568727114733413,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "secondary confirmatory"
+    },
+    "Q10_OLS_DeltaQ_x_M": {
+      "estimand": "Q10_OLS_DeltaQ_x_M",
+      "estimate": -3.0057654719150446,
+      "lower": -5.521977035225024,
+      "upper": -0.5060662330940565,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "secondary confirmatory"
+    },
+    "Q01_OLS_intercept": {
+      "estimand": "Q01_OLS_intercept",
+      "estimate": -0.049552273946138405,
+      "lower": -0.07992944200115175,
+      "upper": -0.01946873824899783,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "secondary confirmatory"
+    },
+    "Q01_OLS_DeltaQ": {
+      "estimand": "Q01_OLS_DeltaQ",
+      "estimate": 1.852595067587491,
+      "lower": -0.6914182181826382,
+      "upper": 4.211120472973957,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "secondary confirmatory"
+    },
+    "Q01_OLS_M": {
+      "estimand": "Q01_OLS_M",
+      "estimate": 0.9290546069331637,
+      "lower": 0.7306879791179425,
+      "upper": 1.129273983625837,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "secondary confirmatory"
+    },
+    "Q01_OLS_DeltaQ_x_M": {
+      "estimand": "Q01_OLS_DeltaQ_x_M",
+      "estimate": -23.095868432946418,
+      "lower": -39.18375481498335,
+      "upper": -6.180161904511181,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "secondary confirmatory"
+    },
+    "Q11_OLS_intercept": {
+      "estimand": "Q11_OLS_intercept",
+      "estimate": 0.04755360485820769,
+      "lower": -0.005914486951476459,
+      "upper": 0.09804006795017771,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "secondary confirmatory"
+    },
+    "Q11_OLS_DeltaQ": {
+      "estimand": "Q11_OLS_DeltaQ",
+      "estimate": 1.139579411590478,
+      "lower": 0.7970387592292042,
+      "upper": 1.5005428375679635,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "secondary confirmatory"
+    },
+    "Q11_OLS_M": {
+      "estimand": "Q11_OLS_M",
+      "estimate": -0.1371047326969125,
+      "lower": -0.628622866661883,
+      "upper": 0.3372445568514246,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "secondary confirmatory"
+    },
+    "Q11_OLS_DeltaQ_x_M": {
+      "estimand": "Q11_OLS_DeltaQ_x_M",
+      "estimate": -3.1111806907332116,
+      "lower": -6.184250778272819,
+      "upper": 0.05068075270593771,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "secondary confirmatory"
+    },
+    "H1_regret_mean_difference": {
+      "estimand": "H1_regret_mean_difference",
+      "estimate": 0.11643902613096284,
+      "lower": 0.1133252555448203,
+      "upper": 0.11950308466764838,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "H1_regret_median_difference": {
+      "estimand": "H1_regret_median_difference",
+      "estimate": 0.1444486311708753,
+      "lower": 0.1407112783170688,
+      "upper": 0.14782817175978513,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "H2_headroom_mean_difference": {
+      "estimand": "H2_headroom_mean_difference",
+      "estimate": 0.4273124467059972,
+      "lower": 0.38480977329991134,
+      "upper": 0.4713919717011953,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "confirmatory"
+    },
+    "H2_headroom_median_difference": {
+      "estimand": "H2_headroom_median_difference",
+      "estimate": 0.8214937499999997,
+      "lower": 0.8214937499999997,
+      "upper": 0.8249780546875001,
+      "undefined_resamples": 0,
+      "undefined_fraction": 0.0,
+      "interval_scope": "all seed resamples",
+      "status": "descriptive secondary"
+    }
+  },
+  "divergent_counts": {
+    "Q10": 3004,
+    "Q01": 1172,
+    "Q11": 3058
+  },
+  "raw_strict_sign_counts": {
+    "Q10": {
+      "positive": 2240,
+      "zero": 0,
+      "negative": 764
+    },
+    "Q01": {
+      "positive": 539,
+      "zero": 0,
+      "negative": 633
+    },
+    "Q11": {
+      "positive": 2279,
+      "zero": 0,
+      "negative": 779
+    }
+  },
+  "raw_strict_positive_cost_counts": {
+    "Q10": 3004,
+    "Q01": 1172,
+    "Q11": 3058
+  },
+  "coupled_count": 71,
+  "null_control_count": 38846,
+  "secondary_OLS_design": {
+    "Q10": {
+      "n": 3004,
+      "rank": 4,
+      "required_rank": 4,
+      "estimable": true,
+      "formula": "DeltaG ~ 1 + DeltaQ + M + DeltaQ:M",
+      "standardized": false
+    },
+    "Q01": {
+      "n": 1172,
+      "rank": 4,
+      "required_rank": 4,
+      "estimable": true,
+      "formula": "DeltaG ~ 1 + DeltaQ + M + DeltaQ:M",
+      "standardized": false
+    },
+    "Q11": {
+      "n": 3058,
+      "rank": 4,
+      "required_rank": 4,
+      "estimable": true,
+      "formula": "DeltaG ~ 1 + DeltaQ + M + DeltaQ:M",
+      "standardized": false
+    }
+  },
+  "immediate_myopic_vs_Q00_action_mismatches": 0,
+  "exact_divergences_mutual_tie": {
+    "Q10": 0,
+    "Q01": 0,
+    "Q11": 0
+  },
+  "registry": {
+    "confirmatory": [
+      "H1",
+      "H2",
+      "H3",
+      "H4",
+      "conditional consequence estimands",
+      "opportunity costs"
+    ],
+    "secondary_confirmatory": [
+      "Pearson DeltaQ/DeltaG",
+      "OLS DeltaG~DeltaQ+M+DeltaQ:M"
+    ],
+    "secondary": [
+      "closed-loop performance",
+      "quantiles",
+      "full distributions"
+    ],
+    "descriptive_exploratory": [
+      "scenario/configuration/position strata",
+      "policy patterns",
+      "opportunity landscape characterization"
+    ],
+    "not_run": [
+      "logistic regression (not frozen in final preregistration)",
+      "new predictors",
+      "problem/history counterfactuals",
+      "nonlinear models"
+    ]
+  },
+  "interpretation": "opportunity landscapes reconstruct operator algebra; moderator associations are not causal"
+}

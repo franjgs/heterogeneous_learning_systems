@@ -1,0 +1,401 @@
+{
+  "preregistration_commit": "9cfb6891e73536a63694041711de56cbd147eed1",
+  "C2_commit": "c7071769cc583f3352305363eff2e6ade27de97e",
+  "code_base_commit": "9cfb6891e73536a63694041711de56cbd147eed1",
+  "execution_code_sha256": "38ed1661c53897308a09bbeb23d1168c1ac7d363cbf7531af29c1f4e3506f645",
+  "reconstruction_of": "../execution_manifest.json; failed attempt remains immutable",
+  "failed_attempt_manifest_sha256": "03ad4287fefc011bfa62c5393b12e0abe4289627ba77632aeccf604cf46bcbef",
+  "validation_failure_sha256": "3dd95eb4a7e6a49b4510d3e14c23745c6a107eee0b95f20c4ecd638318474e19",
+  "forensic_evidence_sha256": "73c3880cb8d2d9e54952835f0ed23cc97773ff2a3f32ae808fc5861a66a79fb8",
+  "persistence": "private staging, close/fsync, row/hash readback, atomic publication, public-path readback",
+  "ordering": "persist and count closed loops/Q11 bank before unchanged counterfactual calculations",
+  "execution_source_qualification": "base commit plus exact new runner content hash; single local results commit follows validation",
+  "started_utc": "2026-10-08T06:02:59.780122+00:00",
+  "expected_counts": {
+    "closed_loop_runs": 5120,
+    "closed_loop_runs_per_policy": 1280,
+    "closed_loop_real_steps": 92160,
+    "Q11_reference_states": 23040,
+    "eligible_nonterminal_reference_states": 15360,
+    "eligible_states_per_seed": 384,
+    "terminal_control_states": 7680,
+    "primary_paired_policy_rows": 61440,
+    "primary_candidate_landscape_rows": 983040,
+    "counterfactual_pairs_including_null_controls": 46080,
+    "counterfactual_branches": 92160,
+    "counterfactual_real_production_steps": 184320,
+    "divergent_consequence_population_sizes": null
+  },
+  "seeds": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49
+  ],
+  "policies": {
+    "Q00": "NONE",
+    "Q10": "INFORMATION_ONLY",
+    "Q01": "DEVELOPMENT_ONLY",
+    "Q11": "INFORMATION_AND_DEVELOPMENT"
+  },
+  "parameters": {
+    "N": 3,
+    "K": 2,
+    "rho": 0.5,
+    "sigma": 0.1,
+    "eta": 0.35,
+    "horizon_per_problem": 3
+  },
+  "scenarios": {
+    "TR-PR": [
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.8,
+        0.2
+      ]
+    ],
+    "TR-PM": [
+      [
+        0.7,
+        0.3
+      ],
+      [
+        0.7,
+        0.3
+      ],
+      [
+        0.7,
+        0.3
+      ],
+      [
+        0.7,
+        0.3
+      ],
+      [
+        0.7,
+        0.3
+      ],
+      [
+        0.7,
+        0.3
+      ]
+    ],
+    "TR-G": [
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.7,
+        0.3
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.3,
+        0.7
+      ],
+      [
+        0.2,
+        0.8
+      ],
+      [
+        0.8,
+        0.2
+      ]
+    ],
+    "TR-J": [
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.2,
+        0.8
+      ],
+      [
+        0.3,
+        0.7
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.7,
+        0.3
+      ],
+      [
+        0.8,
+        0.2
+      ]
+    ],
+    "TR-R": [
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.7,
+        0.3
+      ],
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.7,
+        0.3
+      ],
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.8,
+        0.2
+      ]
+    ],
+    "TR-D": [
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.7,
+        0.3
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.3,
+        0.7
+      ],
+      [
+        0.2,
+        0.8
+      ],
+      [
+        0.2,
+        0.8
+      ]
+    ],
+    "TR-HA": [
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.7,
+        0.3
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.2,
+        0.8
+      ],
+      [
+        0.3,
+        0.7
+      ],
+      [
+        0.8,
+        0.2
+      ]
+    ],
+    "TR-HB": [
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.3,
+        0.7
+      ],
+      [
+        0.2,
+        0.8
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.7,
+        0.3
+      ],
+      [
+        0.8,
+        0.2
+      ]
+    ]
+  },
+  "configurations": {
+    "G00": [
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.5,
+        0.5
+      ]
+    ],
+    "G04": [
+      [
+        0.25,
+        0.75
+      ],
+      [
+        0.625,
+        0.375
+      ],
+      [
+        0.625,
+        0.375
+      ]
+    ],
+    "G05": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        1.0,
+        0.0
+      ]
+    ],
+    "G07": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.5,
+        0.0
+      ],
+      [
+        1.0,
+        0.5
+      ]
+    ]
+  },
+  "preregistration_sha256": "0c11f48b0947d26af84ffdb38626f114c07c827cb59f84d91bae9e005c72387d",
+  "theory_sha256": "0249d0364ed6d94d15d4f1059f003063a6a2b4c48ff552c352c9d1935ccfe97a",
+  "source_hashes": {
+    "docs/experiments/CAMPAIGN_2_PREREGISTRATION.md": "a16a88c41a14904e86de50fba34766ee1c4339cd6a978aa751dc77dd9f97099a",
+    "tests/test_campaign2_preregistration.py": "dd963f41d0e7f5e9e3fdc03e15a24f27bfda4d15a36eb680704a45e16648c830",
+    "results/foundations/campaign2_theory/pre_experiment_campaign2_theory.json": "0249d0364ed6d94d15d4f1059f003063a6a2b4c48ff552c352c9d1935ccfe97a",
+    "docs/theory/CAMPAIGN_2_THEORETICAL_SPECIFICATION.md": "ec6b8f61bdfb92e3eae7bffa26b99ad261fb7a7b6633b7f2f42a7fafb57388a9",
+    "src/hls/campaign2_theory.py": "37638c609f31cc6dd5777def3210857990443d26b507f54273a7a2bdec4eb0ff",
+    "src/hls/finite_problem_belief.py": "4ea7e964bf0e700f98fea700a9541c1ef374ce713338dd1eb78bc5fac8a3b097",
+    "src/hls/discover_v0.py": "ef1eee85cf7735107e46e285af4ce2734906a55a6741ec09a72a2623c1ab470f",
+    "src/hls/discover_develop_v2.py": "06d70479a1f8e5bd7408a3a3c5596de4fca9e139838441f5de7dbb78c32e4e80",
+    "src/hls/campaign1_test_range.py": "59dacf06022e48a6775e558be33fd7bca52e691c8e8d0a4cedd99a1ebd00cc8c",
+    "src/hls/campaign1_protocol.py": "e823ac31345ae8eb2cf9bc5b1950ce5b10da2d0fdda5880f49c29c14c2dc7729",
+    "results/foundations/campaign1_protocol/pre_experiment_protocol.json": "fa829cb3fd609df9fa8f1ffd56bc726e398c364a5d844d6f3c7a8d437b1a3816",
+    "docs/theory/POLICY_ABLATION_SPECIFICATION.md": "7bfd7f4074aa26510d399b8a48623f210bcbe1d326432b5b57540dd750f6d40d"
+  },
+  "CRN": {
+    "simulation_stream": "Random(simulation_seed), one gauss(0,1) innovation per real decision; aligned across policies/configurations/scenarios",
+    "reference_position": "k=3*problem_index+within_problem_decision; zero-based",
+    "counterfactual_innovations": "epsilon[k],epsilon[k+1] from the SAME seed stream for both branches and every ab",
+    "observation": "r_branch=mu_true_branch+sigma*epsilon; never force equal observations",
+    "new_counterfactual_draws": false,
+    "extra_rollout_replications": 0,
+    "future_innovations_or_true_z_supplied_to_unknown_planner": false
+  },
+  "performance": "mu_true",
+  "bootstrap": {
+    "unit": "SEED",
+    "replicates": 10000,
+    "draws_per_replicate": 40,
+    "replace": true,
+    "analysis_seed": 20261007,
+    "RNG": "numpy.random.Generator(numpy.random.PCG64(20261007))",
+    "analysis_seed_is_simulation_seed": false,
+    "cluster_rule": "retain ALL rows of each selected seed with multiplicity; shared index matrix across all estimates",
+    "interval": "percentile 95%",
+    "quantiles": [
+      0.025,
+      0.975
+    ],
+    "quantile_method": "linear",
+    "undefined_resamples": "report counts/fractions; percentiles on defined replicates explicitly conditional on estimability; all undefined => null interval",
+    "full_sample_undefined": "null estimand, not zero",
+    "state_independent_resampling_allowed": false,
+    "draws_executed_during_preregistration": 0
+  },
+  "memoization": "exact complete-argument cache only, unchanged authoritative primitives; no coarsening",
+  "primary_reference": "Q11 states only; all nonterminal states; terminals are collapse controls"
+}

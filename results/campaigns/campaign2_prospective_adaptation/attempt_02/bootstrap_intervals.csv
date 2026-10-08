@@ -1,0 +1,53 @@
+estimand,estimate,lower,upper,undefined_resamples,undefined_fraction,interval_scope,status
+D_10_prevalence,0.19557291666666668,0.18736979166666667,0.20364583333333333,0,0,all seed resamples,confirmatory
+D_01_prevalence,0.07630208333333334,0.07213541666666666,0.080468750000000006,0,0,all seed resamples,confirmatory
+D_11_prevalence,0.19908854166666667,0.19101562499999999,0.20722656249999999,0,0,all seed resamples,confirmatory
+D_coupled_prevalence,0.0046223958333333334,0.0031901041666666666,0.006184895833333333,0,0,all seed resamples,confirmatory
+H1_regret_mean_D0,0.048622530359282948,0.047735822861562791,0.049519250423624601,0,0,all seed resamples,confirmatory
+H1_regret_median_D0,0.029650152102628384,0.026319003253529569,0.033286978135148131,0,0,all seed resamples,confirmatory
+H1_regret_mean_D1,0.16506155649024579,0.16258841797146353,0.16756191895661571,0,0,all seed resamples,confirmatory
+H1_regret_median_D1,0.1740987832735037,0.17394526417269912,0.17416035205063346,0,0,all seed resamples,confirmatory
+H2_headroom_mean_D0,2.0265338749977215,2.0204940029001963,2.0330170018495535,0,0,all seed resamples,confirmatory
+H2_headroom_median_D0,2.1785062500000003,2.1750219453124999,2.1785062500000003,0,0,all seed resamples,descriptive secondary
+H2_headroom_mean_D1,2.4538463217037187,2.4140074310113495,2.4951342662776756,0,0,all seed resamples,confirmatory
+H2_headroom_median_D1,3,3,3,0,0,all seed resamples,descriptive secondary
+Q10_p_plus,0.7456724367509987,0.71335889973653677,0.77810945150323063,0,0,all seed resamples,confirmatory
+Q10_p_zero,0,0,0,0,0,all seed resamples,confirmatory
+Q10_p_negative,0.25432756324900135,0.22189054849676934,0.28664110026346318,0,0,all seed resamples,confirmatory
+Q10_mean_DeltaG,0.16229302857383607,0.14757245121793264,0.17709646744146754,0,0,all seed resamples,confirmatory
+Q10_mean_negative_DeltaG,-0.13932698459903498,-0.1510071559248842,-0.12743810365484487,0,0,all seed resamples,confirmatory
+Q10_opportunity_cost_positive,1,1,1,0,0,all seed resamples,confirmatory
+Q10_mean_opportunity_cost,0.012978466659303259,0.012466105431130881,0.013517465737429272,0,0,all seed resamples,confirmatory
+Q10_DeltaQ_DeltaG_Pearson,0.22058510673131226,0.16743059115366216,0.27828944600297045,0,0,all seed resamples,secondary confirmatory
+Q01_p_plus,0.45989761092150172,0.41046576927092199,0.50598290598290596,0,0,all seed resamples,confirmatory
+Q01_p_zero,0,0,0,0,0,all seed resamples,confirmatory
+Q01_p_negative,0.54010238907849828,0.49401709401709404,0.58953423072907796,0,0,all seed resamples,confirmatory
+Q01_mean_DeltaG,0.0014506257003679276,-0.019392149507311204,0.019310935692756086,0,0,all seed resamples,confirmatory
+Q01_mean_negative_DeltaG,-0.1206887380548292,-0.13900458088728918,-0.10399311970263246,0,0,all seed resamples,confirmatory
+Q01_opportunity_cost_positive,1,1,1,0,0,all seed resamples,confirmatory
+Q01_mean_opportunity_cost,0.0089949591206222694,0.0086519878379249012,0.0093709126872184561,0,0,all seed resamples,confirmatory
+Q01_DeltaQ_DeltaG_Pearson,0.05993587757397361,-0.03677267690892546,0.15594326276972623,0,0,all seed resamples,secondary confirmatory
+Q11_p_plus,0.74525833878351866,0.71293573256000298,0.77811555315947278,0,0,all seed resamples,confirmatory
+Q11_p_zero,0,0,0,0,0,all seed resamples,confirmatory
+Q11_p_negative,0.25474166121648134,0.22188444684052727,0.28706426743999697,0,0,all seed resamples,confirmatory
+Q11_mean_DeltaG,0.16687367085552576,0.15303013884767888,0.18032324005638722,0,0,all seed resamples,confirmatory
+Q11_mean_negative_DeltaG,-0.14529900110380359,-0.15705431478220941,-0.13330617110847923,0,0,all seed resamples,confirmatory
+Q11_opportunity_cost_positive,1,1,1,0,0,all seed resamples,confirmatory
+Q11_mean_opportunity_cost,0.013392351134808335,0.01286294193128751,0.01393409473130104,0,0,all seed resamples,confirmatory
+Q11_DeltaQ_DeltaG_Pearson,0.19825058945939986,0.1499597236714818,0.25138383227887939,0,0,all seed resamples,secondary confirmatory
+Q10_OLS_intercept,0.039942077948036905,-0.011844981183580912,0.089062510544266837,0,0,all seed resamples,secondary confirmatory
+Q10_OLS_DeltaQ,1.1538726992140282,0.84528042891474686,1.490159716168163,0,0,all seed resamples,secondary confirmatory
+Q10_OLS_M,-0.17162959338528244,-0.58947498343620341,0.25687271147334129,0,0,all seed resamples,secondary confirmatory
+Q10_OLS_DeltaQ_x_M,-3.0057654719150446,-5.5219770352250244,-0.50606623309405652,0,0,all seed resamples,secondary confirmatory
+Q01_OLS_intercept,-0.049552273946138405,-0.079929442001151749,-0.019468738248997829,0,0,all seed resamples,secondary confirmatory
+Q01_OLS_DeltaQ,1.8525950675874909,-0.69141821818263816,4.2111204729739571,0,0,all seed resamples,secondary confirmatory
+Q01_OLS_M,0.92905460693316366,0.73068797911794248,1.129273983625837,0,0,all seed resamples,secondary confirmatory
+Q01_OLS_DeltaQ_x_M,-23.095868432946418,-39.183754814983352,-6.1801619045111806,0,0,all seed resamples,secondary confirmatory
+Q11_OLS_intercept,0.047553604858207692,-0.0059144869514764593,0.098040067950177709,0,0,all seed resamples,secondary confirmatory
+Q11_OLS_DeltaQ,1.139579411590478,0.7970387592292042,1.5005428375679635,0,0,all seed resamples,secondary confirmatory
+Q11_OLS_M,-0.13710473269691251,-0.62862286666188305,0.33724455685142463,0,0,all seed resamples,secondary confirmatory
+Q11_OLS_DeltaQ_x_M,-3.1111806907332116,-6.1842507782728191,0.050680752705937707,0,0,all seed resamples,secondary confirmatory
+H1_regret_mean_difference,0.11643902613096284,0.1133252555448203,0.11950308466764838,0,0,all seed resamples,confirmatory
+H1_regret_median_difference,0.14444863117087531,0.14071127831706881,0.14782817175978513,0,0,all seed resamples,confirmatory
+H2_headroom_mean_difference,0.42731244670599722,0.38480977329991134,0.47139197170119529,0,0,all seed resamples,confirmatory
+H2_headroom_median_difference,0.82149374999999969,0.82149374999999969,0.82497805468750007,0,0,all seed resamples,descriptive secondary

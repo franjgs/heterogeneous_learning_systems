@@ -1,0 +1,23 @@
+{
+  "counts": {
+    "runs": 5120,
+    "trajectories": 92160,
+    "reference_states": 23040,
+    "policy_evaluations": 61440,
+    "landscapes": 983040,
+    "counterfactuals": 46080,
+    "branches": 184320
+  },
+  "finished_utc": "2026-10-07T22:32:36.232389+00:00",
+  "sha256": {
+    "closed_loop_trajectories.csv.gz": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "opportunity_landscapes.csv.gz": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "execution_manifest.json": "03ad4287fefc011bfa62c5393b12e0abe4289627ba77632aeccf604cf46bcbef",
+    "policy_evaluations.csv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "counterfactual_results.csv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "counterfactual_branches.csv.gz": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reference_states.csv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "closed_loop_runs.csv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "actions.csv": "3241b70ebace35e7866ee6944ae589adfcb1c9c7ab377aa1bf57e535bfb8d0aa"
+  }
+}

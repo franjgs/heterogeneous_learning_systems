@@ -1,0 +1,49 @@
+{
+  "incident_sha256": "3dd95eb4a7e6a49b4510d3e14c23745c6a107eee0b95f20c4ecd638318474e19",
+  "failed_runner_sha256": "0410c4d82e226d4e7a0a7a2bf44c50e2d2ac114b4ffe566f5d21ca9754898771",
+  "source_archive_sha256": "7075ae99fcfd151f7f0ecb12f3650ec1bfc2ac6e98983e625bc52176e48eae1a",
+  "scope": "local Google Drive structured-log archive, zip3; only incident paths extracted",
+  "records": [
+    {
+      "offset": 186655,
+      "length": 1757,
+      "record_sha256": "37bec9bc8ac42d5ba46bd0b2a7250945375301dadca3970ff5378420517680fc",
+      "timestamp_utc": "2026-10-07T22:05:02.904631+00:00",
+      "event_code": 41,
+      "event_code_semantics": "not assigned without schema",
+      "repository_paths": [
+        "results/campaigns/campaign2_prospective_adaptation/opportunity_landscapes.csv.gz",
+        "results/campaigns/campaign2_prospective_adaptation/policy_evaluations.csv",
+        "results/campaigns/campaign2_prospective_adaptation/counterfactual_results.csv",
+        "results/campaigns/campaign2_prospective_adaptation/closed_loop_runs.csv",
+        "results/campaigns/campaign2_prospective_adaptation/closed_loop_trajectories.csv.gz",
+        "results/campaigns/campaign2_prospective_adaptation/reference_states.csv",
+        "results/campaigns/campaign2_prospective_adaptation/counterfactual_branches.csv.gz"
+      ],
+      "download_temporary_path_count": 7
+    },
+    {
+      "offset": 188416,
+      "length": 1764,
+      "record_sha256": "3e8e3ec9a7a93a8240f5b8525f14c3e8dce5945907b07aa481111a4f59b3e736",
+      "timestamp_utc": "2026-10-07T22:05:02.905118+00:00",
+      "event_code": 42,
+      "event_code_semantics": "not assigned without schema",
+      "repository_paths": [
+        "results/campaigns/campaign2_prospective_adaptation/opportunity_landscapes.csv.gz",
+        "results/campaigns/campaign2_prospective_adaptation/policy_evaluations.csv",
+        "results/campaigns/campaign2_prospective_adaptation/counterfactual_results.csv",
+        "results/campaigns/campaign2_prospective_adaptation/closed_loop_runs.csv",
+        "results/campaigns/campaign2_prospective_adaptation/closed_loop_trajectories.csv.gz",
+        "results/campaigns/campaign2_prospective_adaptation/reference_states.csv",
+        "results/campaigns/campaign2_prospective_adaptation/counterfactual_branches.csv.gz"
+      ],
+      "download_temporary_path_count": 7
+    }
+  ],
+  "analysis_sources_sha256": {
+    "analyze.py": "a50d0e354126baf176aa391684d6c1226daf9f7c7d6fa51fa6de6b12b997b2b8",
+    "validate.py": "589f8327cee7f8f41986d5ed394388596520679a6673ca6b73d45c9e0308d04f",
+    "figures.py": "b184b7e82a51b0109a0bd8a2b07c3e7eb69bd603abd10a82740f3c521164684a"
+  }
+}
