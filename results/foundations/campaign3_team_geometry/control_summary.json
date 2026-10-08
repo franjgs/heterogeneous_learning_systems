@@ -1,0 +1,135 @@
+{
+  "agent_policy_problem_performance_dependencies": false,
+  "anchor_permutation_equivalent_pairs": [],
+  "anchor_source": "experiments/synthetic/campaign0_discriminative_capacity/run.py",
+  "anchor_source_sha256": "85fbe20b529ef4b908268391548f31183031a2c6ef2716a8a71a5c92b68cb0c4",
+  "anchors": {
+    "G00": [
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.5,
+        0.5
+      ]
+    ],
+    "G04": [
+      [
+        0.25,
+        0.75
+      ],
+      [
+        0.625,
+        0.375
+      ],
+      [
+        0.625,
+        0.375
+      ]
+    ],
+    "G05": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        1.0,
+        0.0
+      ]
+    ],
+    "G07": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.5,
+        0.0
+      ],
+      [
+        1.0,
+        0.5
+      ]
+    ]
+  },
+  "artifacts_sha256": {
+    "anchor_distance_matrix.csv": "d0a8f2bf8b65ae9e75af58c7eaed2f67e7f7abc7789eec75b2a7448209f70615",
+    "anchor_geometry.csv": "5fd49d3400136f9c072b2da3d095b9e8b2fca2b5a5aa53f534207da31464f1db",
+    "candidate_pool_primary.csv": "c94fb7c93cf313dc967a217c680281c4e6003fca650ace3e0777b3f36368b87e",
+    "column_sampling_diagnostics.csv": "5217ca3c3793a58a7253d26e64dab5bc98d62b22e79e5ebb404715bfd4195d35",
+    "coverage_curve.csv": "4533be7e9c6b0b339e2d0ef56b0235e4fda427795ca0a408530b5e7a4972f429",
+    "protocol.json": "70fef54de759c2f2aa17427b6ffb7e6d93145614653807d5fc678a3b1e611c58",
+    "selected_sequence.csv": "4b123b8f6203d2a290b7c14b456a68ae7efc9269b2f7cad3e750c5bdbe6f60f1",
+    "validation_pool.npz": "91e611e837a585bd91fa59d24960538752962bb3fdecfdb9672901626ea35fab"
+  },
+  "boundary_clearance_pool_summary": {
+    "max": 0.4397535839151814,
+    "median": 0.08013444329018138,
+    "min": 4.716866068621428e-06,
+    "q05": 0.00657525491805373,
+    "q25": 0.03491950349891659,
+    "q75": 0.14670671236456112,
+    "q95": 0.26344354312051343
+  },
+  "canonicalization": "enumerate six common row permutations; row-major flatten; lexicographic minimum",
+  "distance": "minimum Frobenius distance over six common row permutations; design geometry only",
+  "duplicate_rule": "exact canonical float equality only; no approximate clustering",
+  "final_team_count_or_split_selected": false,
+  "generation": {
+    "method": "4D Halton bases 2,3,5,7 plus seeded Cranley-Patterson shift; exact polygon filtering",
+    "primary_quotient_unique": 11245,
+    "primary_raw": 20000,
+    "primary_seed": 20261010,
+    "primary_valid": 11245,
+    "validation_quotient_unique": 22462,
+    "validation_raw": 40000,
+    "validation_seed": 20261012,
+    "validation_valid": 22462
+  },
+  "pairwise_sample": {
+    "nearest_neighbor_summary": {
+      "max": 0.13906241925939059,
+      "median": 0.06816832445394869,
+      "min": 0.00891575241701844,
+      "q05": 0.034959529047386674,
+      "q25": 0.054436252770507024,
+      "q75": 0.0811177180616532,
+      "q95": 0.10069369857565144
+    },
+    "pair_count": 1999000,
+    "seed": 20261011,
+    "size": 2000,
+    "summary": {
+      "max": 1.2857899009236808,
+      "median": 0.5217113290179545,
+      "min": 0.00891575241701844,
+      "q05": 0.2515742308724456,
+      "q25": 0.4061842482171334,
+      "q75": 0.6346498043651574,
+      "q95": 0.7911498277372802
+    }
+  },
+  "requested_n": [
+    4,
+    6,
+    8,
+    10,
+    12,
+    16,
+    20,
+    24,
+    32,
+    40
+  ],
+  "status": "COMPLETE_GEOMETRY_ONLY",
+  "team_space": "3x2 entries in [0,1], each column sum 1.5, quotient by common row permutation"
+}

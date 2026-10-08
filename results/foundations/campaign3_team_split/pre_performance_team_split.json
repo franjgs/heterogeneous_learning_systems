@@ -1,0 +1,689 @@
+{
+  "agent_policy_problem_history_reward_performance_execution": false,
+  "anchors": [
+    "G00",
+    "G04",
+    "G05",
+    "G07"
+  ],
+  "artifact_type": "pre_performance_campaign3_team_split",
+  "canonicalization": "six common row permutations; row-major flatten; lexicographic minimum",
+  "d_dev_summary": {
+    "max": 0.4059297900237525,
+    "median": 0.3851400585455894,
+    "min": 0.3566343888876598
+  },
+  "development_count": 20,
+  "discretization_caveat": "individual representatives depend on the frozen finite pool; aggregate coverage was numerically robust; all frozen split objects are now immutable",
+  "distance": "d_S(A,B)=min over six common row permutations P of ||A-PB||_F",
+  "generalization_claims_kept_separate": [
+    "unseen histories from development generator kernels",
+    "compositional/interpolative unseen generator kernels",
+    "geometrically separated unseen team geometries"
+  ],
+  "heldout_count": 8,
+  "heldout_diagnostics": [
+    {
+      "d_dev": 0.4059297900237525,
+      "insertion_distance": 0.4059297900237525,
+      "nearest_development_id": "F04",
+      "team_id": "F17"
+    },
+    {
+      "d_dev": 0.40429761011110743,
+      "insertion_distance": 0.40429761011110743,
+      "nearest_development_id": "G04",
+      "team_id": "F18"
+    },
+    {
+      "d_dev": 0.4018028983855947,
+      "insertion_distance": 0.4018028983855947,
+      "nearest_development_id": "F01",
+      "team_id": "F19"
+    },
+    {
+      "d_dev": 0.39969450535765205,
+      "insertion_distance": 0.399694505357652,
+      "nearest_development_id": "F14",
+      "team_id": "F20"
+    },
+    {
+      "d_dev": 0.3705856117335267,
+      "insertion_distance": 0.3705856117335267,
+      "nearest_development_id": "F06",
+      "team_id": "F21"
+    },
+    {
+      "d_dev": 0.3639965240540328,
+      "insertion_distance": 0.3639965240540329,
+      "nearest_development_id": "F08",
+      "team_id": "F22"
+    },
+    {
+      "d_dev": 0.36081849378664305,
+      "insertion_distance": 0.36081849378664305,
+      "nearest_development_id": "F04",
+      "team_id": "F23"
+    },
+    {
+      "d_dev": 0.3566343888876598,
+      "insertion_distance": 0.3565490733634424,
+      "nearest_development_id": "F03",
+      "team_id": "F24"
+    }
+  ],
+  "not_claimed": [
+    "representative random sample",
+    "geometric extrapolation",
+    "out-of-domain teams",
+    "wholly unseen structural region",
+    "new class of team structures"
+  ],
+  "operational_description": "A GEOMETRIC TEAM-SPACE STRESS TEST",
+  "post_performance_modification_prohibited": true,
+  "primary_pool_sha256": "c94fb7c93cf313dc967a217c680281c4e6003fca650ace3e0777b3f36368b87e",
+  "s_dev_ids": [
+    "G00",
+    "G04",
+    "G05",
+    "G07",
+    "F01",
+    "F02",
+    "F03",
+    "F04",
+    "F05",
+    "F06",
+    "F07",
+    "F08",
+    "F09",
+    "F10",
+    "F11",
+    "F12",
+    "F13",
+    "F14",
+    "F15",
+    "F16"
+  ],
+  "s_heldout_ids": [
+    "F17",
+    "F18",
+    "F19",
+    "F20",
+    "F21",
+    "F22",
+    "F23",
+    "F24"
+  ],
+  "scientific_claim": "GENERALIZATION TO GEOMETRICALLY SEPARATED UNSEEN TEAM GEOMETRIES",
+  "selection": "four frozen anchors then deterministic farthest-point over frozen primary pool; exact-distance maximum and lexicographic-coordinate tie-break",
+  "source_artifacts": {
+    "candidate_pool_primary.csv": "c94fb7c93cf313dc967a217c680281c4e6003fca650ace3e0777b3f36368b87e",
+    "control_summary.json": "527ecaeb6b53dfa2368f03fab6733f199727b31d60b4247d34a496cf638bdc31",
+    "protocol.json": "70fef54de759c2f2aa17427b6ffb7e6d93145614653807d5fc678a3b1e611c58",
+    "selected_sequence.csv": "4b123b8f6203d2a290b7c14b456a68ae7efc9269b2f7cad3e750c5bdbe6f60f1"
+  },
+  "team_space": "3x2 [0,1] matrices, each column sum 1.5, quotient by common row permutations",
+  "team_split_csv_sha256": "2fc5eb98a958478e6e9ed60b8d1dd303e96a0bb2e252f034ce7b7e59eaf68d5b",
+  "teams": [
+    {
+      "historical_anchor": true,
+      "matrix": [
+        [
+          0.5,
+          0.5
+        ],
+        [
+          0.5,
+          0.5
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 1,
+      "team_id": "G00"
+    },
+    {
+      "historical_anchor": true,
+      "matrix": [
+        [
+          0.25,
+          0.75
+        ],
+        [
+          0.625,
+          0.375
+        ],
+        [
+          0.625,
+          0.375
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 2,
+      "team_id": "G04"
+    },
+    {
+      "historical_anchor": true,
+      "matrix": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          0.5,
+          0.5
+        ],
+        [
+          1.0,
+          0.0
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 3,
+      "team_id": "G05"
+    },
+    {
+      "historical_anchor": true,
+      "matrix": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          0.5,
+          0.0
+        ],
+        [
+          1.0,
+          0.5
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 4,
+      "team_id": "G07"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.02111344719643138,
+          0.026726642228169117
+        ],
+        [
+          0.49155742124792345,
+          0.48389436596023716
+        ],
+        [
+          0.9873291315556452,
+          0.9893789918115937
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 5,
+      "team_id": "F01"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.07769317774921092,
+          0.46651468178102606
+        ],
+        [
+          0.6467848339151814,
+          0.9946626422281691
+        ],
+        [
+          0.7755219883356077,
+          0.0388226759908048
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 6,
+      "team_id": "F02"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.046643763031799346,
+          0.0451038201162437
+        ],
+        [
+          0.4937051921155193,
+          0.9562975376555871
+        ],
+        [
+          0.9596510448526814,
+          0.4985986422281691
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 7,
+      "team_id": "F03"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.4213007902927923,
+          0.006225619366556079
+        ],
+        [
+          0.4833326854776814,
+          0.701158642228169
+        ],
+        [
+          0.5953665242295263,
+          0.7926157384052749
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 8,
+      "team_id": "F04"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.18592690628510727,
+          0.49589413431174245
+        ],
+        [
+          0.3226271190714314,
+          0.354086642228169
+        ],
+        [
+          0.9914459746434614,
+          0.6500192234600886
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 9,
+      "team_id": "F05"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.2617140331339314,
+          0.6223746422281691
+        ],
+        [
+          0.3126344251087265,
+          0.6644110592427981
+        ],
+        [
+          0.9256515417573421,
+          0.21321429852903284
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 10,
+      "team_id": "F06"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.026713753421963915,
+          0.33742701862026847
+        ],
+        [
+          0.7201185741495564,
+          0.539699442228169
+        ],
+        [
+          0.7531676724284797,
+          0.6228735391515625
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 11,
+      "team_id": "F07"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.4002943553995564,
+          0.28920344222816896
+        ],
+        [
+          0.40232215141293326,
+          0.26008342797351436
+        ],
+        [
+          0.6973834931875104,
+          0.9507131297983168
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 12,
+      "team_id": "F08"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.06597428704018138,
+          0.506022642228169
+        ],
+        [
+          0.4475094656189781,
+          0.031729918289623904
+        ],
+        [
+          0.9865162473408405,
+          0.9622474394822071
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 13,
+      "team_id": "F09"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.29160185420971224,
+          0.9699823118568128
+        ],
+        [
+          0.3283033886026814,
+          0.27421464222816905
+        ],
+        [
+          0.8800947571876063,
+          0.2558030459150181
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 14,
+      "team_id": "F10"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.2865721331306085,
+          0.9883675085010682
+        ],
+        [
+          0.5613940095167101,
+          0.5026338492707628
+        ],
+        [
+          0.6520338573526814,
+          0.00899864222816893
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 15,
+      "team_id": "F11"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.01836686516518138,
+          0.7441026422281691
+        ],
+        [
+          0.7267997407107537,
+          0.6552325052286223
+        ],
+        [
+          0.7548333941240649,
+          0.10066485254320856
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 16,
+      "team_id": "F12"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.012324384696431379,
+          0.742566642228169
+        ],
+        [
+          0.5149783996144071,
+          0.36780447008351924
+        ],
+        [
+          0.9726972156891616,
+          0.3896288876883117
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 17,
+      "team_id": "F13"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.2509576434694796,
+          0.011393628570087078
+        ],
+        [
+          0.2511244335245564,
+          0.7531394422281691
+        ],
+        [
+          0.997917923005964,
+          0.7354669292017438
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 18,
+      "team_id": "F14"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.01635270500893138,
+          0.002150642228168964
+        ],
+        [
+          0.7398058881476283,
+          0.7037837041338404
+        ],
+        [
+          0.7438414068434404,
+          0.7940656536379906
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 19,
+      "team_id": "F15"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.03930291603971786,
+          0.3784430722542664
+        ],
+        [
+          0.47315297270135076,
+          0.8016462855175646
+        ],
+        [
+          0.9875441112589314,
+          0.319910642228169
+        ]
+      ],
+      "partition": "development",
+      "selection_order": 20,
+      "team_id": "F16"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.26829938129017916,
+          0.5395693531917479
+        ],
+        [
+          0.5714880504196395,
+          0.24921120458008295
+        ],
+        [
+          0.6602125682901814,
+          0.7112194422281691
+        ]
+      ],
+      "partition": "heldout",
+      "selection_order": 21,
+      "team_id": "F17"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.013331464774556379,
+          0.972659442228169
+        ],
+        [
+          0.7219224354219258,
+          0.30925421387042973
+        ],
+        [
+          0.7647460998035178,
+          0.21808634390140125
+        ]
+      ],
+      "partition": "heldout",
+      "selection_order": 22,
+      "team_id": "F18"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.09451463022952,
+          0.16829429059028078
+        ],
+        [
+          0.6909820299959236,
+          0.3363262671815501
+        ],
+        [
+          0.7145033397745564,
+          0.9953794422281691
+        ]
+      ],
+      "partition": "heldout",
+      "selection_order": 23,
+      "team_id": "F19"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.2734327831339314,
+          0.238374642228169
+        ],
+        [
+          0.4216289810072176,
+          0.7281278439158512
+        ],
+        [
+          0.804938235858851,
+          0.5334975138559799
+        ]
+      ],
+      "partition": "heldout",
+      "selection_order": 24,
+      "team_id": "F20"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.18764787102455638,
+          0.521459442228169
+        ],
+        [
+          0.32431172373184436,
+          0.9520851777206433
+        ],
+        [
+          0.9880404052435993,
+          0.02645538005118775
+        ]
+      ],
+      "partition": "heldout",
+      "selection_order": 25,
+      "team_id": "F21"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.22988419914955638,
+          0.27928344222816903
+        ],
+        [
+          0.27717315939692966,
+          0.2530276416088719
+        ],
+        [
+          0.992942641453514,
+          0.9676889161629589
+        ]
+      ],
+      "partition": "heldout",
+      "selection_order": 26,
+      "team_id": "F22"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.31453409356965256,
+          0.6406853106856495
+        ],
+        [
+          0.4783278026651814,
+          0.8429826422281691
+        ],
+        [
+          0.7071381037651661,
+          0.01633204708618141
+        ]
+      ],
+      "partition": "heldout",
+      "selection_order": 27,
+      "team_id": "F23"
+    },
+    {
+      "historical_anchor": false,
+      "matrix": [
+        [
+          0.309887415152284,
+          0.018693841416892232
+        ],
+        [
+          0.4658131024950346,
+          0.9878915163549387
+        ],
+        [
+          0.7242994823526814,
+          0.49341464222816905
+        ]
+      ],
+      "partition": "heldout",
+      "selection_order": 28,
+      "team_id": "F24"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "artifact_type": "generator_free_team_geometry_characterization_protocol",
+  "team_space": "3x2 [0,1] matrices with both column sums 1.5, quotient by common row permutations",
+  "canonicalization": "six common row permutations; row-major flattening; lexicographic minimum",
+  "constraint_tolerance": 1e-12,
+  "duplicate_rule": "exact canonical float equality",
+  "distance": "min over common row permutations of Frobenius distance",
+  "anchor_ids": ["G00", "G04", "G05", "G07"],
+  "primary_pool": {"method": "shifted 4D Halton with exact polygon filter", "raw_count": 20000, "seed": 20261010},
+  "validation_pool": {"method": "independent shifted 4D Halton with exact polygon filter", "raw_count": 40000, "seed": 20261012},
+  "pairwise_subsample": {"size": 2000, "seed": 20261011},
+  "requested_design_sizes": [4,6,8,10,12,16,20,24,32,40],
+  "tie_break": "exact maximum distance, then lexicographically least canonical coordinates",
+  "prohibited_inputs": ["agents","policies","problem histories","beliefs","actions","C/N/M","rewards","performance","Campaign 2 outcomes"],
+  "final_team_count_selected": false,
+  "development_heldout_split_selected": false
+}

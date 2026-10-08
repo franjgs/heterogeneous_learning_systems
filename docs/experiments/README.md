@@ -17,6 +17,8 @@ conceptual index; it is not a second results ledger.
 - [Campaign 1 test-range characterisation](CAMPAIGN_1_RESULTS.md)
 - [Campaign 3 Problem-Generator Calibration Gate](CAMPAIGN_3_PGCG.md)
 - [Campaign 3 crossed generator split](CAMPAIGN_3_GENERATOR_SPLIT.md)
+- [Campaign 3 team-space geometry characterization](CAMPAIGN_3_TEAM_GEOMETRY.md)
+- [Campaign 3 frozen team development/held-out split](CAMPAIGN_3_TEAM_SPLIT.md)
 - [Synthetic runners](../../experiments/synthetic/)
 
 ## Foundation and empirical evidence

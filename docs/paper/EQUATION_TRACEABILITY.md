@@ -296,3 +296,33 @@ Y_m^c(h_t,ell)=E[G_t(ell) | do(m_t=m), pi_(t+1:)=Q^c, h_t].
   stated continuation is used thereafter; future-world and CRN details remain
   subject to the prescribed numerical design and preregistration.
 - Implementation/validation: pending C3 G1 and subsequent gates.
+
+## E20. C3 quotient team-design distance
+
+```text
+d_S(S_A,S_B)=min_(P in S_3) ||S_A-P S_B||_F.
+```
+
+- Status: HLS experimental-design geometry using standard permutation-group
+  quotient and Frobenius norm machinery.
+- Implementation: `campaign3_team_geometry.py::team_distance`.
+- Validation: permutation invariance, symmetry, identity and anchor/pool tests;
+  numerical characterization in `CAMPAIGN_3_TEAM_GEOMETRY.md`.
+- Assumptions: 3x2 matrices in `[0,1]`, both column sums 1.5, and a common row
+  permutation applied jointly to both capability columns.
+- Boundary: not cognitive, functional, behavioral, performance, or task
+  distance; it does not determine a final team count or experimental split.
+
+## E21. C3 held-out separation from development teams
+
+```text
+d_dev(H)=min_(S in S_dev) d_S(H,S).
+```
+
+- Status: HLS experimental-design descriptor for the frozen team split.
+- Implementation: `campaign3_team_split/freeze.py`, using E20.
+- Validation: all eight values and nearest development IDs independently
+  recomputed from exact canonical matrices in `test_campaign3_team_split.py`.
+- Boundary: distinct from farthest-point insertion distance, which additionally
+  includes earlier held-out selections; neither quantity predicts behavior or
+  performance.
