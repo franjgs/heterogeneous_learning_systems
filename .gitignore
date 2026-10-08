@@ -240,3 +240,4 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+results/campaigns/campaign2_prospective_adaptation/attempt_02/opportunity_landscapes.csv.gz
