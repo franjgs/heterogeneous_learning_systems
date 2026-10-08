@@ -20,6 +20,7 @@ conceptual index; it is not a second results ledger.
 - [Campaign 3 team-space geometry characterization](CAMPAIGN_3_TEAM_GEOMETRY.md)
 - [Campaign 3 frozen team development/held-out split](CAMPAIGN_3_TEAM_SPLIT.md)
 - [Campaign 3 frozen horizon-pilot protocol](CAMPAIGN_3_HORIZON_PILOT.md)
+- [Campaign 3 initial J=12 horizon-pilot result](CAMPAIGN_3_HORIZON_PILOT_RESULTS.md)
 - [Synthetic runners](../../experiments/synthetic/)
 
 ## Foundation and empirical evidence

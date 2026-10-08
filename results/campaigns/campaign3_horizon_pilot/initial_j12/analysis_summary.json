@@ -1,0 +1,264 @@
+{
+  "artifact_type": "campaign3_horizon_pilot_initial_j12_summary",
+  "bootstrap": {
+    "B": 2000,
+    "cluster": "complete base history/seed",
+    "indices_sha256": "7032d5fe4b92c90bec7374960db92e29c54deee777cc78a44245f31d5f806ca1",
+    "interval": "two-sided 95% percentile",
+    "seed": 20261013
+  },
+  "classification": "PERSISTENT BOUNDARY EVOLUTION",
+  "conceptual_counts": {
+    "factual_decision_states": 30240,
+    "factual_histories": 840,
+    "initial_mode_by_continuation_branch_starts": 241920,
+    "mode_vs_Q00_pair_starts": 181440,
+    "problem_indexed_branch_return_rows": 1572480,
+    "problem_indexed_pair_rows": 1179360
+  },
+  "development_result": {
+    "mode": "Q01",
+    "neutral_summary": "The Q01 contrast continued to accumulate at the L=11 boundary under both continuation probes; accumulation was much larger under Q00 continuation than under Q11 continuation.",
+    "no_mode_or_continuation_ranking_inferred": true
+  },
+  "escalation_histories_generated": 0,
+  "next_step_under_frozen_rule": "J=18",
+  "raw_counts": {
+    "branches": 1572480,
+    "histories": 840,
+    "pairs": 1179360,
+    "states": 30240
+  },
+  "sample_sizes": {
+    "available_state": {
+      "0": {
+        "factual_states": 30240,
+        "histories": 840,
+        "paired_rows_all_six_curves": 181440,
+        "paired_rows_per_curve": 30240,
+        "problem_indices": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      "1": {
+        "factual_states": 27720,
+        "histories": 840,
+        "paired_rows_all_six_curves": 166320,
+        "paired_rows_per_curve": 27720,
+        "problem_indices": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      "10": {
+        "factual_states": 5040,
+        "histories": 840,
+        "paired_rows_all_six_curves": 30240,
+        "paired_rows_per_curve": 5040,
+        "problem_indices": [
+          1,
+          2
+        ]
+      },
+      "11": {
+        "factual_states": 2520,
+        "histories": 840,
+        "paired_rows_all_six_curves": 15120,
+        "paired_rows_per_curve": 2520,
+        "problem_indices": [
+          1
+        ]
+      },
+      "2": {
+        "factual_states": 25200,
+        "histories": 840,
+        "paired_rows_all_six_curves": 151200,
+        "paired_rows_per_curve": 25200,
+        "problem_indices": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      },
+      "3": {
+        "factual_states": 22680,
+        "histories": 840,
+        "paired_rows_all_six_curves": 136080,
+        "paired_rows_per_curve": 22680,
+        "problem_indices": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      "4": {
+        "factual_states": 20160,
+        "histories": 840,
+        "paired_rows_all_six_curves": 120960,
+        "paired_rows_per_curve": 20160,
+        "problem_indices": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      "5": {
+        "factual_states": 17640,
+        "histories": 840,
+        "paired_rows_all_six_curves": 105840,
+        "paired_rows_per_curve": 17640,
+        "problem_indices": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "6": {
+        "factual_states": 15120,
+        "histories": 840,
+        "paired_rows_all_six_curves": 90720,
+        "paired_rows_per_curve": 15120,
+        "problem_indices": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "7": {
+        "factual_states": 12600,
+        "histories": 840,
+        "paired_rows_all_six_curves": 75600,
+        "paired_rows_per_curve": 12600,
+        "problem_indices": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "8": {
+        "factual_states": 10080,
+        "histories": 840,
+        "paired_rows_all_six_curves": 60480,
+        "paired_rows_per_curve": 10080,
+        "problem_indices": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "9": {
+        "factual_states": 7560,
+        "histories": 840,
+        "paired_rows_all_six_curves": 45360,
+        "paired_rows_per_curve": 7560,
+        "problem_indices": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    "common_support": {
+      "L11": {
+        "factual_states": 2520,
+        "histories": 840,
+        "label": "EARLY-STATE DIAGNOSTIC",
+        "paired_rows_all_curves_and_ell": 181440,
+        "paired_rows_per_curve": 2520,
+        "problem_indices": [
+          1
+        ]
+      },
+      "L2": {
+        "factual_states": 25200,
+        "histories": 840,
+        "paired_rows_all_curves_and_ell": 453600,
+        "paired_rows_per_curve": 25200,
+        "problem_indices": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      },
+      "L5": {
+        "factual_states": 17640,
+        "histories": 840,
+        "paired_rows_all_curves_and_ell": 635040,
+        "paired_rows_per_curve": 17640,
+        "problem_indices": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    }
+  },
+  "sha256": {
+    "analysis_manifest.json": "34c83c7a8c7c92577cbe9710658fed3ff6ec5ab931f48f391270b46bba4fba45",
+    "available_state_summary.csv": "4cb7501ca9466e265ffa15d20521b562b4c3193e832106e0aeb23ae810f90a4f",
+    "common_support_summary.csv": "fde49a025e3b7f5c9918a63e5abc48d51d19aaec5056eda82fac4abe9bb18439",
+    "j12_to_j18_decision.json": "3f00225b9697554681b762904f1b805e6444f1afd0f97eb447dd82ed6f2f849f",
+    "pilot_classification.json": "4b89023056ceabbfccbf63483da64fc458c1c98ddd03c83fb19c6da61de97af9",
+    "pre_execution_horizon_pilot.json": "c2b43de3173169bb620ce62b56d0c201e561687429a709518ead1c0166c1b81b",
+    "raw_validation.json": "1ff15a1f87694ed020177760c26968594b5aa84e602c8f43ae1c0b1e2d9526d9"
+  }
+}

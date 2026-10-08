@@ -1,0 +1,55 @@
+{
+  "CRN": {
+    "branch_rule": "clone complete pre-action simulator and exogenous RNG states; restore identical future exogenous states for every initial-mode/continuation branch from the same factual h_t",
+    "endogenous_divergence_preserved": [
+      "actions",
+      "beliefs",
+      "capabilities",
+      "subsequent policy decisions"
+    ],
+    "identifier": "campaign3_horizon_pilot_crn_v1",
+    "shared": [
+      "future physical problems",
+      "future observation-noise innovations",
+      "all other exogenous simulator randomness"
+    ],
+    "stream_mapping": "mode-independent SHA-256 substream seed from base-history simulator seed and stream name",
+    "streams": [
+      "physical_problem",
+      "observation_noise",
+      "other_exogenous"
+    ]
+  },
+  "J": 12,
+  "artifact_type": "campaign3_horizon_pilot_initial_j12_execution",
+  "code_base_commit": "a984893eb2f5c1f863707d43ae911e5a0c29692d",
+  "continuations": [
+    "Q00",
+    "Q11"
+  ],
+  "design": {
+    "cells": 168,
+    "histories_per_cell_initial": 5,
+    "histories_per_cell_reserved_maximum": 10,
+    "initial_base_histories": 840,
+    "kernels": 21,
+    "reserved_maximum_base_histories": 1680,
+    "teams": 8
+  },
+  "escalation_histories": 0,
+  "execution_code_sha256": "d0fa86e55258cdabbeac32344824cd9e9d92f5d3f632d7a37e4d5ff103e9b272",
+  "factual_source": "Q11",
+  "gate_1_analysis": false,
+  "gate_2_analysis": false,
+  "heldout_execution": false,
+  "initial_modes": [
+    "Q00",
+    "Q10",
+    "Q01",
+    "Q11"
+  ],
+  "performance": "mu_true",
+  "pre_execution_manifest_sha256": "c2b43de3173169bb620ce62b56d0c201e561687429a709518ead1c0166c1b81b",
+  "preregistration_commit": "a984893eb2f5c1f863707d43ae911e5a0c29692d",
+  "started_utc": "2026-10-08T20:52:53.380125+00:00"
+}

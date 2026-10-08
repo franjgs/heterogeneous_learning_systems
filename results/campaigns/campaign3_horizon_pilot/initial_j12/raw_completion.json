@@ -1,0 +1,128 @@
+{
+  "counts": {
+    "branches": 1572480,
+    "histories": 840,
+    "pairs": 1179360,
+    "states": 30240
+  },
+  "escalation_histories_generated": 0,
+  "expected_counts": {
+    "branches": 1572480,
+    "histories": 840,
+    "pairs": 1179360,
+    "states": 30240
+  },
+  "finished_utc": "2026-10-08T21:33:47.213465+00:00",
+  "persisted_file_metadata": {
+    "branches": {
+      "bytes": 13166489,
+      "fields": [
+        "state_id",
+        "history_id",
+        "team_id",
+        "kernel_id",
+        "replicate",
+        "problem_index",
+        "decision",
+        "initial_mode",
+        "continuation",
+        "ell",
+        "first_action_id",
+        "G",
+        "first_mu_true",
+        "first_observation",
+        "first_epsilon",
+        "branch_action_sequence_sha256"
+      ],
+      "rows": 1572480,
+      "sha256": "6cc68980cbe1e93136088438a833725be50f2cf365e7b5e4d8e78e9a220f9749"
+    },
+    "histories": {
+      "bytes": 1846702,
+      "fields": [
+        "history_index",
+        "history_id",
+        "team_id",
+        "kernel_id",
+        "replicate",
+        "simulator_seed",
+        "physical_problem_seed",
+        "observation_noise_seed",
+        "other_exogenous_seed",
+        "problems",
+        "mechanisms",
+        "transition_flags",
+        "observation_innovations",
+        "factual_source_policy",
+        "J",
+        "factual_cumulative_mu_true",
+        "final_state"
+      ],
+      "rows": 840,
+      "sha256": "67294f35c27033060accd3036899c7ae315e5edef92d362eea01b7ddb88962b9"
+    },
+    "pairs": {
+      "bytes": 11003659,
+      "fields": [
+        "state_id",
+        "history_id",
+        "team_id",
+        "kernel_id",
+        "replicate",
+        "problem_index",
+        "decision",
+        "mode",
+        "continuation",
+        "ell",
+        "mode_action_id",
+        "reference_action_id",
+        "action_divergent",
+        "G_mode",
+        "G_Q00",
+        "Delta",
+        "delta"
+      ],
+      "rows": 1179360,
+      "sha256": "58aa5ffe4aa93f6e46673a3ee4c67dc8ba0cd4337a7248c9f210ec1464ece57b"
+    },
+    "states": {
+      "bytes": 2984718,
+      "fields": [
+        "state_id",
+        "history_id",
+        "team_id",
+        "kernel_id",
+        "replicate",
+        "simulator_seed",
+        "problem_index",
+        "decision",
+        "remaining",
+        "p",
+        "C",
+        "N",
+        "M",
+        "state_before",
+        "belief_before",
+        "action_Q00",
+        "action_Q10",
+        "action_Q01",
+        "action_Q11",
+        "factual_action_id",
+        "epsilon",
+        "mu_true",
+        "observation",
+        "belief_after",
+        "state_after"
+      ],
+      "rows": 30240,
+      "sha256": "4ab8814f3c1544b872f79b92f48c4efd592fba52d56808a134e2ea7c2d340dee"
+    }
+  },
+  "sha256": {
+    "counterfactual_branch_returns.csv.gz": "6cc68980cbe1e93136088438a833725be50f2cf365e7b5e4d8e78e9a220f9749",
+    "counterfactual_pairs.csv.gz": "58aa5ffe4aa93f6e46673a3ee4c67dc8ba0cd4337a7248c9f210ec1464ece57b",
+    "execution_manifest.json": "547700632ca8ad8afab7b9230f8aae38c6b412063a3322da26781882b3ff3bf3",
+    "factual_histories.csv": "67294f35c27033060accd3036899c7ae315e5edef92d362eea01b7ddb88962b9",
+    "factual_states.csv.gz": "4ab8814f3c1544b872f79b92f48c4efd592fba52d56808a134e2ea7c2d340dee"
+  }
+}

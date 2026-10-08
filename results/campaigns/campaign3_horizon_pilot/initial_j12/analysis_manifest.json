@@ -1,0 +1,33 @@
+{
+  "L11_label": "EARLY-STATE DIAGNOSTIC",
+  "analysis_code_sha256": "c92d235a0a2e11fb0c2d4d75feafcc9fab1a373deefe80970efeda2544ef5a17",
+  "artifact_type": "campaign3_horizon_pilot_initial_j12_preregistered_analysis",
+  "bootstrap": {
+    "B": 2000,
+    "cluster": "complete base history/seed",
+    "indices_sha256": "7032d5fe4b92c90bec7374960db92e29c54deee777cc78a44245f31d5f806ca1",
+    "interval": "two-sided 95% percentile",
+    "seed": 20261013
+  },
+  "counterfactual_pairs_sha256": "58aa5ffe4aa93f6e46673a3ee4c67dc8ba0cd4337a7248c9f210ec1464ece57b",
+  "escalation_histories": 0,
+  "gate_1_analysis": false,
+  "gate_2_analysis": false,
+  "heldout_execution": false,
+  "primary": "three separately reported nested common-support windows",
+  "raw_validation_sha256": "1ff15a1f87694ed020177760c26968594b5aa84e602c8f43ae1c0b1e2d9526d9",
+  "rows": {
+    "available_state_summary": 72,
+    "common_support_summary": 126
+  },
+  "secondary": "SECONDARY AVAILABLE-STATE ANALYSIS",
+  "sha256": {
+    "available_state_summary.csv": "4cb7501ca9466e265ffa15d20521b562b4c3193e832106e0aeb23ae810f90a4f",
+    "common_support_summary.csv": "fde49a025e3b7f5c9918a63e5abc48d51d19aaec5056eda82fac4abe9bb18439"
+  },
+  "windows": [
+    2,
+    5,
+    11
+  ]
+}

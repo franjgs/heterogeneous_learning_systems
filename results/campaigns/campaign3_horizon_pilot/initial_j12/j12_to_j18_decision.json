@@ -1,0 +1,83 @@
+{
+  "J18_histories_generated": 0,
+  "artifact_type": "campaign3_horizon_pilot_pre_extension_decision",
+  "authorization": "J=18",
+  "authorized_histories_per_cell": 5,
+  "authorized_next_J": 18,
+  "classification": "PERSISTENT BOUNDARY EVOLUTION",
+  "created_utc": "2026-10-08T21:36:04.416346+00:00",
+  "current_J": 12,
+  "current_histories_per_cell": 5,
+  "evidence_sha256": {
+    "analysis_manifest.json": "34c83c7a8c7c92577cbe9710658fed3ff6ec5ab931f48f391270b46bba4fba45",
+    "available_state_summary.csv": "4cb7501ca9466e265ffa15d20521b562b4c3193e832106e0aeb23ae810f90a4f",
+    "common_support_summary.csv": "fde49a025e3b7f5c9918a63e5abc48d51d19aaec5056eda82fac4abe9bb18439",
+    "pilot_classification.json": "4b89023056ceabbfccbf63483da64fc458c1c98ddd03c83fb19c6da61de97af9",
+    "pre_execution_horizon_pilot.json": "c2b43de3173169bb620ce62b56d0c201e561687429a709518ead1c0166c1b81b",
+    "raw_validation.json": "1ff15a1f87694ed020177760c26968594b5aa84e602c8f43ae1c0b1e2d9526d9"
+  },
+  "frozen_J18_common_support_windows": [
+    2,
+    5,
+    17
+  ],
+  "future_histories_must_be_fresh_and_independent": true,
+  "gate_1_analysis": false,
+  "gate_2_analysis": false,
+  "heldout_execution": false,
+  "inspected_J12_histories_may_be_extended": false,
+  "replication_5_to_10_authorized": false,
+  "unchanged_design": {
+    "CRN_semantics": "campaign3_horizon_pilot_crn_v1",
+    "continuations": [
+      "Q00",
+      "Q11"
+    ],
+    "factual_state_source": "Q11",
+    "initial_modes": [
+      "Q00",
+      "Q10",
+      "Q01",
+      "Q11"
+    ],
+    "phi_pilot": [
+      "K01",
+      "K02",
+      "K03",
+      "K05",
+      "K06",
+      "K07",
+      "K10",
+      "K11",
+      "K13",
+      "K15",
+      "K16",
+      "K17",
+      "K20",
+      "K21",
+      "K23",
+      "K25",
+      "K26",
+      "K27",
+      "K31",
+      "K32",
+      "K33"
+    ],
+    "s_pilot": [
+      "G00",
+      "G04",
+      "G05",
+      "G07",
+      "F01",
+      "F02",
+      "F03",
+      "F04"
+    ]
+  },
+  "window_derivation": {
+    "full_range_early_state": "J-1=17; first-problem states only",
+    "intermediate": 5,
+    "outcome_dependent_selection": false,
+    "short": 2
+  }
+}

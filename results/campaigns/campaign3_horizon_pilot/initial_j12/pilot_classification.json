@@ -1,0 +1,308 @@
+{
+  "artifact_type": "campaign3_horizon_pilot_initial_j12_classification",
+  "boundary_evidence": [
+    {
+      "continuation": "Q00",
+      "ell": 9,
+      "mean_Delta": 0.16128821953705472,
+      "mean_Delta_ci": [
+        0.11962408659596258,
+        0.20624207369285186
+      ],
+      "mean_delta": 0.016394573839949644,
+      "mean_delta_ci": [
+        0.011536812864254689,
+        0.021226399549975697
+      ],
+      "mode": "Q10"
+    },
+    {
+      "continuation": "Q00",
+      "ell": 10,
+      "mean_Delta": 0.17716238686129454,
+      "mean_Delta_ci": [
+        0.13090841387517846,
+        0.22618289885638476
+      ],
+      "mean_delta": 0.01587416732423983,
+      "mean_delta_ci": [
+        0.011242226530002472,
+        0.020636648489908923
+      ],
+      "mode": "Q10"
+    },
+    {
+      "continuation": "Q00",
+      "ell": 11,
+      "mean_Delta": 0.19256119223879517,
+      "mean_Delta_ci": [
+        0.14268486504095182,
+        0.24562101056941996
+      ],
+      "mean_delta": 0.015398805377500591,
+      "mean_delta_ci": [
+        0.01088025617789731,
+        0.020207188250952492
+      ],
+      "mode": "Q10"
+    },
+    {
+      "continuation": "Q00",
+      "ell": 9,
+      "mean_Delta": 0.20759084236769526,
+      "mean_Delta_ci": [
+        0.16071054539602292,
+        0.2602807165789626
+      ],
+      "mean_delta": 0.02290239014162632,
+      "mean_delta_ci": [
+        0.01757900931944575,
+        0.02847405144740933
+      ],
+      "mode": "Q01"
+    },
+    {
+      "continuation": "Q00",
+      "ell": 10,
+      "mean_Delta": 0.22893998351458414,
+      "mean_Delta_ci": [
+        0.17694850393056688,
+        0.2867061047126504
+      ],
+      "mean_delta": 0.02134914114688891,
+      "mean_delta_ci": [
+        0.01643815883734513,
+        0.026735265679736286
+      ],
+      "mode": "Q01"
+    },
+    {
+      "continuation": "Q00",
+      "ell": 11,
+      "mean_Delta": 0.25066467327714065,
+      "mean_Delta_ci": [
+        0.19396739417610687,
+        0.31313651877759896
+      ],
+      "mean_delta": 0.02172468976255651,
+      "mean_delta_ci": [
+        0.0166328053829358,
+        0.02708721283589402
+      ],
+      "mode": "Q01"
+    },
+    {
+      "continuation": "Q00",
+      "ell": 9,
+      "mean_Delta": 0.1661895086962259,
+      "mean_Delta_ci": [
+        0.12312284138688115,
+        0.2119107525833686
+      ],
+      "mean_delta": 0.0166513404404717,
+      "mean_delta_ci": [
+        0.01180765315852154,
+        0.021472155208514032
+      ],
+      "mode": "Q11"
+    },
+    {
+      "continuation": "Q00",
+      "ell": 10,
+      "mean_Delta": 0.18226409156931464,
+      "mean_Delta_ci": [
+        0.13538624586908649,
+        0.23194951359412472
+      ],
+      "mean_delta": 0.016074582873088737,
+      "mean_delta_ci": [
+        0.011462088274517612,
+        0.020804461214950387
+      ],
+      "mode": "Q11"
+    },
+    {
+      "continuation": "Q00",
+      "ell": 11,
+      "mean_Delta": 0.19826460359630155,
+      "mean_Delta_ci": [
+        0.1474090850991566,
+        0.25153974474062596
+      ],
+      "mean_delta": 0.016000512026986873,
+      "mean_delta_ci": [
+        0.011421920215746098,
+        0.020797615243795187
+      ],
+      "mode": "Q11"
+    },
+    {
+      "continuation": "Q11",
+      "ell": 9,
+      "mean_Delta": -0.0006214242182005581,
+      "mean_Delta_ci": [
+        -0.018438019516169652,
+        0.016500158772384674
+      ],
+      "mean_delta": -0.0025704692734878033,
+      "mean_delta_ci": [
+        -0.005171829549638018,
+        -0.00016397264753807632
+      ],
+      "mode": "Q10"
+    },
+    {
+      "continuation": "Q11",
+      "ell": 10,
+      "mean_Delta": -0.0022178556317188295,
+      "mean_Delta_ci": [
+        -0.021062652871156214,
+        0.015869763850198858
+      ],
+      "mean_delta": -0.0015964314135182708,
+      "mean_delta_ci": [
+        -0.0036469723986244317,
+        0.0004390243820989155
+      ],
+      "mode": "Q10"
+    },
+    {
+      "continuation": "Q11",
+      "ell": 11,
+      "mean_Delta": -0.00390362744429595,
+      "mean_Delta_ci": [
+        -0.023643687399485837,
+        0.015319845058985785
+      ],
+      "mean_delta": -0.0016857718125771204,
+      "mean_delta_ci": [
+        -0.0037689884319958965,
+        0.0003806830255726861
+      ],
+      "mode": "Q10"
+    },
+    {
+      "continuation": "Q11",
+      "ell": 9,
+      "mean_Delta": 0.037682893264724654,
+      "mean_Delta_ci": [
+        0.010416650649093492,
+        0.06643396804665729
+      ],
+      "mean_delta": 0.0023412419951254195,
+      "mean_delta_ci": [
+        -0.001222988121192035,
+        0.00593914864433115
+      ],
+      "mode": "Q01"
+    },
+    {
+      "continuation": "Q11",
+      "ell": 10,
+      "mean_Delta": 0.04069816991766634,
+      "mean_Delta_ci": [
+        0.011567091958792661,
+        0.07229968191394467
+      ],
+      "mean_delta": 0.0030152766529416867,
+      "mean_delta_ci": [
+        -0.00038988191162415845,
+        0.00683549578757264
+      ],
+      "mode": "Q01"
+    },
+    {
+      "continuation": "Q11",
+      "ell": 11,
+      "mean_Delta": 0.04420940346046307,
+      "mean_Delta_ci": [
+        0.013410150328044075,
+        0.07747391986607582
+      ],
+      "mean_delta": 0.0035112335427967428,
+      "mean_delta_ci": [
+        0.00019588603730058066,
+        0.006838317272606683
+      ],
+      "mode": "Q01"
+    },
+    {
+      "continuation": "Q11",
+      "ell": 9,
+      "mean_Delta": 0.004913796991992691,
+      "mean_Delta_ci": [
+        -0.012584545772775,
+        0.023024867281305362
+      ],
+      "mean_delta": -0.002586269596476165,
+      "mean_delta_ci": [
+        -0.0052702146341557605,
+        -3.689303842256637e-05
+      ],
+      "mode": "Q11"
+    },
+    {
+      "continuation": "Q11",
+      "ell": 10,
+      "mean_Delta": 0.003977604234711963,
+      "mean_Delta_ci": [
+        -0.014635271418439334,
+        0.02287377364227283
+      ],
+      "mean_delta": -0.0009361927572807278,
+      "mean_delta_ci": [
+        -0.0032104122865881032,
+        0.0012196841673942558
+      ],
+      "mode": "Q11"
+    },
+    {
+      "continuation": "Q11",
+      "ell": 11,
+      "mean_Delta": 0.0021518907464591177,
+      "mean_Delta_ci": [
+        -0.01734606908403293,
+        0.021901051790678545
+      ],
+      "mean_delta": -0.0018257134882528447,
+      "mean_delta_ci": [
+        -0.0038812762521104665,
+        0.00022098468476113297
+      ],
+      "mode": "Q11"
+    }
+  ],
+  "classification": "PERSISTENT BOUNDARY EVOLUTION",
+  "created_utc": "2026-10-08T21:36:04.416346+00:00",
+  "current_J": 12,
+  "decision": "AUTHORIZE J=18; DO NOT INCREASE REPLICATION",
+  "escalation_histories_generated": 0,
+  "evidence_sha256": {
+    "analysis_manifest.json": "34c83c7a8c7c92577cbe9710658fed3ff6ec5ab931f48f391270b46bba4fba45",
+    "available_state_summary.csv": "4cb7501ca9466e265ffa15d20521b562b4c3193e832106e0aeb23ae810f90a4f",
+    "common_support_summary.csv": "fde49a025e3b7f5c9918a63e5abc48d51d19aaec5056eda82fac4abe9bb18439",
+    "pre_execution_horizon_pilot.json": "c2b43de3173169bb620ce62b56d0c201e561687429a709518ead1c0166c1b81b",
+    "raw_validation.json": "1ff15a1f87694ed020177760c26968594b5aa84e602c8f43ae1c0b1e2d9526d9"
+  },
+  "frozen_rule_applied": true,
+  "histories_per_cell": 5,
+  "not_inferred": [
+    "mode superiority",
+    "continuation superiority",
+    "continuation robustness",
+    "state-space coverage",
+    "Gate 1 conclusions",
+    "Gate 2 conclusions"
+  ],
+  "rationale": [
+    "At the L=11 early-state boundary, multiple consecutive marginal contributions continue coherently rather than appearing as one isolated terminal fluctuation.",
+    "Under Q00 continuation, Q10/Q01/Q11 retain positive boundary accumulation with history-level intervals above zero at ell=9..11.",
+    "Under Q11 continuation, Q01 continues positive accumulation while Q10 and Q11 show coherent late-range decreases; temporal evolution therefore remains present under both probes.",
+    "The evidence is sufficiently precise to distinguish persistent boundary evolution from insufficient temporal precision."
+  ],
+  "windows": [
+    2,
+    5,
+    11
+  ]
+}

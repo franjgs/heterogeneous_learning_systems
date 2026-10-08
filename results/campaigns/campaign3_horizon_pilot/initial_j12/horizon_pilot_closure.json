@@ -1,0 +1,33 @@
+{
+  "artifact_type": "campaign3_horizon_pilot_scientific_closure",
+  "classification_preserved": "PERSISTENT BOUNDARY EVOLUTION",
+  "closed_at_J": 12,
+  "closed_with_histories_per_cell": 5,
+  "ce_decision": "close horizon pilot without J=18 or J=24 execution",
+  "operational_temporal_assessment": {
+    "ell": 11,
+    "endpoint": "from the current eligible decision through the end of problem j(t)+11",
+    "initial_history_length_J": 12,
+    "status": "pragmatic C3 development engineering choice",
+    "not_claimed": [
+      "optimal horizon",
+      "saturation horizon",
+      "true horizon",
+      "temporal stabilization"
+    ]
+  },
+  "prior_J18_authorization_status": "not exercised; superseded for execution by CE pragmatic closure",
+  "J18_histories_generated": 0,
+  "J24_histories_generated": 0,
+  "replicates_5_to_9_generated": 0,
+  "gate_1_may_begin_after_closure_commit": true,
+  "evidence_sha256": {
+    "analysis_summary.json": "f4c2875d47765db2e44dcaea103f2d2b072bb4c718101b6fcbb5878b0c7e5539",
+    "j12_to_j18_decision.json": "3f00225b9697554681b762904f1b805e6444f1afd0f97eb447dd82ed6f2f849f",
+    "pilot_classification.json": "4b89023056ceabbfccbf63483da64fc458c1c98ddd03c83fb19c6da61de97af9",
+    "raw_validation.json": "1ff15a1f87694ed020177760c26968594b5aa84e602c8f43ae1c0b1e2d9526d9"
+  },
+  "heldout_execution": false,
+  "gate_1_execution_in_this_closure": false,
+  "gate_2_execution": false
+}
