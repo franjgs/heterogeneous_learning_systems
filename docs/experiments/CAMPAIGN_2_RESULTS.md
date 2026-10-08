@@ -309,16 +309,37 @@ counterfactual, new state feature, nonlinear model or new threshold is added.
 
 ## Bounded scientific conclusion
 
-Campaign 2 is a completed, integrity-validated **mechanism-characterization
-study**, not a policy-leaderboard success test. H1's structural association and
-H3's coupled-action replication are supported in the specified reference
-population. H2 is supported in the limited sense that headroom is informative
-but insufficient by itself. H4 demonstrates mixed consequences: Q10/Q11 have
-positive conditional means with substantial failures, while development-only
-anticipation has no clear positive average two-reward benefit. No single global
-PASS/PARTIAL/FAIL criterion was preregistered for Campaign 2, so none is invented
-after observing outcomes. This conclusion preserves the weakening evidence
-rather than changing the laboratory or the endpoint.
+**CAMPAIGN 2 — ROBUST POSITIVE WITH IMPORTANT NULL RESULT.** Campaign 2 is a
+completed, integrity-validated mechanism-characterization study, not a policy
+leaderboard. H1 is **SUPPORTED**: hypothesis conflict is associated with Q10
+sensitivity, without constituting information value or a causal rule. Structural
+H2 is **SUPPORTED**: global headroom alone does not characterize prospective-
+development sensitivity. H3 is **SUPPORTED, LOW PREVALENCE**: coupled decisions
+occurred in 71/15,360 states and mean prospective non-separability, not physical
+synergy.
+
+For realized consequences, Q10 and Q11 show **ROBUST POSITIVE conditional
+realized benefit** under their preregistered two-reward contrasts. Q01's
+realized usefulness is **NOT SUPPORTED**: its mean DeltaG is near zero, its
+interval spans both signs, and only 45.99% of divergent decisions have positive
+return. This does not imply that development generally has no value, that real
+MIS-v2 development is harmful, or that information is intrinsically more
+valuable than development. The policies differ only in prospective evaluation
+and all branches retain real Bayes and real development.
+
+Positive internal DeltaQ did not guarantee positive realized DeltaG; the
+implication `DeltaQ>0 => DeltaG>0` is false in these data. Q11 superiority over
+Q10 is **NOT ESTABLISHED**: their aggregates are close and no Q10-versus-Q11
+superiority or equivalence test was preregistered. G07 leading mean cumulative
+Q11 performance in all eight scenarios is a **REPLICATED SECONDARY OBSERVATION**,
+not universal team superiority.
+
+Conceptually: **prospective anticipation can have realized adaptive value, but
+internal prospective preference does not guarantee realized benefit.** Every
+state-conditioned conclusion is limited to the 15,360 Q11-generated reference
+states and the frozen test range and physics. No single global PASS/PARTIAL/FAIL
+criterion was preregistered, so the closure classification summarizes the
+evidence without inventing a new gate or altering any result.
 
 ## Limitations
 

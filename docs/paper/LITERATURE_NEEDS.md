@@ -54,10 +54,13 @@ primary sources before use in manuscript prose.
     effects generated because intermediate capability changes subsequent task
     assignment or practice opportunities? This review is required before the
     post-hoc Campaign 0 interpretation is given broader theoretical meaning.
-12. **Adaptive-strategy comparison on controlled ranges:** Before a future
-    Campaign 2 is designed, which established strategy families and comparison
-    conditions can be represented without overstating what the present
-    finite-belief/MPC laboratory contains? Campaign 1 does not answer this.
+12. **Prospective adaptive decision policies:** Campaign 2 compared frozen
+    prospective restrictions inside one HLS operator. Which established
+    decision-theory, active-learning, adaptive-control, and organizational
+    learning constructs can legitimately contextualize Q10/Q01/Q11 without
+    relabeling internal opportunity terms as causal “values” or strict dual
+    control? The literature review must preserve the observed Q01 null and the
+    failure of internal advantage to guarantee realized benefit.
 
 ## C. Claims requiring external support
 
@@ -72,6 +75,9 @@ primary sources before use in manuscript prose.
   capability path dependence beyond the frozen HLS model.
 - any claim that the eight-scenario Campaign 1 range is representative of
   real task environments or sufficient for broad strategy ranking.
+- any generalization of Campaign 2's conditional Q10/Q11 benefit, Q01 null,
+  low-prevalence coupling, or G07 secondary dominance beyond the 15,360
+  Q11-reference states and frozen test-range physics.
 
 ## D. HLS assumptions not to attribute falsely to literature
 
@@ -83,6 +89,8 @@ primary sources before use in manuscript prose.
 - reset of belief and persistence of `S` across problems;
 - the six-stage Small Problem World and finite `Z_hat`;
 - the two-step MPC approximation.
+- the Q00/Q10/Q01/Q11 prospective ablation taxonomy, its opportunity
+  decomposition, and the two-reward counterfactual endpoint.
 - the cumulative-exposure identity as an algebraic consequence of MIS-v2; it
   should not be attributed to literature merely because exponential learning
   curves or learning-by-doing are discussed elsewhere.

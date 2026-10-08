@@ -1,0 +1,91 @@
+{
+  "artifact_id": "campaign2-scientific-closure-v1",
+  "results_commit": "dabf6babf3d7d99105e3faad785313b0c3d641c3",
+  "preregistration_commit": "9cfb6891e73536a63694041711de56cbd147eed1",
+  "theory_commit": "c7071769cc583f3352305363eff2e6ade27de97e",
+  "classification": "CAMPAIGN 2 — ROBUST POSITIVE WITH IMPORTANT NULL RESULT",
+  "scope": {
+    "reference_policy": "Q11",
+    "eligible_reference_states": 15360,
+    "test_range": "eight frozen Campaign 1 scenarios",
+    "configurations": ["G00", "G04", "G05", "G07"],
+    "physics": "frozen CES/Bayes/MPC/MIS-v2 laboratory"
+  },
+  "claims": {
+    "H1": {
+      "status": "SUPPORTED",
+      "qualification": "hypothesis conflict is associated with Q10 sensitivity; not value of information or a causal rule"
+    },
+    "H2_structural": {
+      "status": "SUPPORTED",
+      "qualification": "global headroom alone does not characterize prospective-development sensitivity"
+    },
+    "Q01_realized_utility": {
+      "status": "NOT SUPPORTED",
+      "divergence_prevalence": 0.07630208333333334,
+      "positive_return_prevalence": 0.4598976109215017,
+      "mean_DeltaG": 0.0014506257003679276,
+      "mean_DeltaG_percentile_95_interval": [-0.019392149507311204, 0.019310935692756086],
+      "qualification": "does not imply that development is generally useless or harmful"
+    },
+    "H3": {
+      "status": "SUPPORTED, LOW PREVALENCE",
+      "coupled_states": 71,
+      "eligible_states": 15360,
+      "prevalence": 0.004622395833333333,
+      "qualification": "prospective non-separability, not physical synergy"
+    },
+    "Q10_realized_utility": {
+      "status": "ROBUST POSITIVE CONDITIONAL REALIZED BENEFIT",
+      "divergence_prevalence": 0.19557291666666668,
+      "positive_return_prevalence": 0.7456724367509987,
+      "mean_DeltaG": 0.16229302857383607,
+      "mean_DeltaG_percentile_95_interval": [0.14757245121793264, 0.17709646744146754]
+    },
+    "Q11_realized_utility": {
+      "status": "ROBUST POSITIVE CONDITIONAL REALIZED BENEFIT",
+      "divergence_prevalence": 0.19908854166666667,
+      "positive_return_prevalence": 0.7452583387835187,
+      "mean_DeltaG": 0.16687367085552576,
+      "mean_DeltaG_percentile_95_interval": [0.15303013884767888, 0.18032324005638722]
+    },
+    "internal_preference_guarantee": {
+      "status": "FALSE IN FROZEN DATA",
+      "statement": "DeltaQ > 0 does not guarantee DeltaG > 0"
+    },
+    "Q11_over_Q10": {
+      "status": "NOT ESTABLISHED",
+      "qualification": "no preregistered Q10-versus-Q11 superiority or equivalence test"
+    },
+    "G07_Q11_leadership": {
+      "status": "REPLICATED SECONDARY OBSERVATION",
+      "qualification": "mean cumulative Q11 leader in all eight frozen scenarios; not universal superiority"
+    }
+  },
+  "conceptual_conclusion": "Prospective anticipation can have realized adaptive value, but internal prospective preference does not guarantee realized benefit.",
+  "mandatory_limit": "State-conditioned conclusions apply only to the 15,360 Q11-generated reference states and the frozen test range and physics.",
+  "scientific_mutations": {
+    "new_experiments": 0,
+    "new_analyses": 0,
+    "data_changes": 0,
+    "physics_changes": 0,
+    "policy_changes": 0,
+    "preregistration_changes": 0,
+    "Campaign3_executions": 0
+  },
+  "sha256": {
+    "docs/experiments/CAMPAIGN_2_RESULTS.md": "087715559c43d262bc7fcd5267c0f0a8ebfcfd8e441bf54ff239f272b589c361",
+    "docs/experiments/CAMPAIGN_2_IO_INCIDENT.md": "367a6cd9f3e4a871ed980ddca6bcb5ac1eef5ebf2ebc906f72e396ae28a59839",
+    "docs/paper/CLAIM_EVIDENCE_LEDGER.md": "3bb0abe3ef708b8b228ebcf3dd475e67d0e5e665ffc66bfdc1c90d2fee8337e6",
+    "docs/paper/EQUATION_TRACEABILITY.md": "8e023e9720899aa2925214d5b98c8109771298f38f3226330f4d5a99b2a62318",
+    "docs/paper/PAPER_SOURCE_MAP.md": "31cb6676d8aaedba0157e7c479598cca5790252e920fa7faaa49cf5a94a7fdeb",
+    "docs/paper/LITERATURE_NEEDS.md": "cc510b1a657797f6c901e7d52f36cc68eb425144f42fb06bf9bd3f3acdf9faa2",
+    "attempt_02/analysis_summary.json": "cc1fc8e631dbb8762040e374cee5ee3896642a103d17e819c3eee0b1456047e1",
+    "attempt_02/bootstrap_intervals.csv": "0b59e38c76d3fce825baf395f6801c1771d4882eccbfa1fd0a4a8e60952cc606",
+    "attempt_02/validation_summary.json": "a41b9049b075c4fbef78db3057e332211d4cfde1a09772e81bddda4f017d0bfc",
+    "attempt_02/provenance.json": "7378f0059029e5e376d5c1041bd62c6a069494de131e82ee432924bab2eb025c",
+    "validation_failure.json": "3dd95eb4a7e6a49b4510d3e14c23745c6a107eee0b95f20c4ecd638318474e19"
+  },
+  "io_incident_retained": true,
+  "Campaign3_status": "NOT STARTED"
+}
