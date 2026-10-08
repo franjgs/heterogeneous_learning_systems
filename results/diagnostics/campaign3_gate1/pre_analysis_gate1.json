@@ -1,0 +1,124 @@
+{
+  "advantages": "A_m^c=Y_m^c-Y_Q00^c for m in Q10,Q01,Q11",
+  "artifact_type": "campaign3_gate1_pre_analysis_freeze",
+  "conditional_scope": "h ~ d_Q11",
+  "continuation_interpretation": "contrasting probes; not bounds, extrema, envelope, or approximation to all continuations",
+  "continuation_probes": [
+    "Q00",
+    "Q11"
+  ],
+  "eligible_problem_indices": [
+    1
+  ],
+  "eligible_state_rule": "j(t)+11<=12",
+  "eligible_states": 2520,
+  "firewalls": {
+    "gate_2": false,
+    "heldout_execution": false,
+    "horizon_reopened": false,
+    "metacontroller_training": false,
+    "predictor_training": false,
+    "true_world_explanatory_variables": false
+  },
+  "histories": 840,
+  "initial_modes": [
+    "Q00",
+    "Q10",
+    "Q01",
+    "Q11"
+  ],
+  "kernel_ids": [
+    "K01",
+    "K02",
+    "K03",
+    "K05",
+    "K06",
+    "K07",
+    "K10",
+    "K11",
+    "K13",
+    "K15",
+    "K16",
+    "K17",
+    "K20",
+    "K21",
+    "K23",
+    "K25",
+    "K26",
+    "K27",
+    "K31",
+    "K32",
+    "K33"
+  ],
+  "minimum_analysis": [
+    "best-mode/ranking stability",
+    "sign stability",
+    "absolute regret distributions",
+    "tau dependence"
+  ],
+  "mode_tie_break": {
+    "mode_order": [
+      "Q00",
+      "Q10",
+      "Q01",
+      "Q11"
+    ],
+    "rule": "first mode in frozen order within tolerance of maximum realized Y",
+    "tolerance": 1e-10
+  },
+  "operational_ell": 11,
+  "prerequisite_horizon_closure_commit": "b485b1b91b4531d84eb121b1e20c6cf8baf20db8",
+  "purpose": "continuation sensitivity of local mode value",
+  "ranking": {
+    "deterministic_order": "descending Y; values tied within 1e-10 use frozen mode order",
+    "stability": "exact deterministic rank agreement plus six pairwise sign/tie comparisons"
+  },
+  "regrets": {
+    "R_00_to_11": "Y_best11^11-Y_best00^11",
+    "R_11_to_00": "Y_best00^00-Y_best11^00",
+    "materiality_threshold": null,
+    "normalized_R_over_D": false,
+    "units": "absolute natural mu_true performance units"
+  },
+  "source_sha256": {
+    "bootstrap_history_indices.npy": "7032d5fe4b92c90bec7374960db92e29c54deee777cc78a44245f31d5f806ca1",
+    "counterfactual_branch_returns.csv.gz": "6cc68980cbe1e93136088438a833725be50f2cf365e7b5e4d8e78e9a220f9749",
+    "factual_states.csv.gz": "4ab8814f3c1544b872f79b92f48c4efd592fba52d56808a134e2ea7c2d340dee",
+    "horizon_pilot_closure.json": "974c2042102ddae5ee203507aceffedc05d82722dea6ea5f54acfe9f7ef9726f",
+    "raw_validation.json": "1ff15a1f87694ed020177760c26968594b5aa84e602c8f43ae1c0b1e2d9526d9"
+  },
+  "state_source": "Q11 factual states from the frozen development-only initial J=12 horizon pilot",
+  "tau": {
+    "definition": "number of real mu_true rewards from the current decision through e(j(t)+11), inclusive",
+    "formula": "tau=3*(ell+1)-(decision-1), with ell=11",
+    "inputs": [
+      "known problem index",
+      "known within-problem decision",
+      "frozen ell",
+      "three decisions per problem"
+    ],
+    "privileged_future_information": false,
+    "values": [
+      36,
+      35,
+      34
+    ]
+  },
+  "team_ids": [
+    "G00",
+    "G04",
+    "G05",
+    "G07",
+    "F01",
+    "F02",
+    "F03",
+    "F04"
+  ],
+  "uncertainty": {
+    "B": 2000,
+    "bootstrap_indices": "campaign3_horizon_pilot/initial_j12/bootstrap_history_indices.npy",
+    "cluster_unit": "complete base history/seed",
+    "seed": 20261013,
+    "significance_tests": false
+  }
+}

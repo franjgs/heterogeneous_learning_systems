@@ -21,6 +21,8 @@ conceptual index; it is not a second results ledger.
 - [Campaign 3 frozen team development/held-out split](CAMPAIGN_3_TEAM_SPLIT.md)
 - [Campaign 3 frozen horizon-pilot protocol](CAMPAIGN_3_HORIZON_PILOT.md)
 - [Campaign 3 initial J=12 horizon-pilot result](CAMPAIGN_3_HORIZON_PILOT_RESULTS.md)
+- [Campaign 3 Gate 1](CAMPAIGN_3_GATE1.md): development-only continuation
+  sensitivity; **PARTIAL LOCAL STRUCTURE**, conditional on `h ~ d_Q11`
 - [Synthetic runners](../../experiments/synthetic/)
 
 ## Foundation and empirical evidence

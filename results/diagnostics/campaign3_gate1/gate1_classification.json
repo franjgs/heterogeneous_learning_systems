@@ -1,0 +1,25 @@
+{
+  "artifact_type": "campaign3_gate1_classification",
+  "classification": "PARTIAL LOCAL STRUCTURE",
+  "decision": "GO CONDITIONED TO C3.2",
+  "eligible_states": 2520,
+  "evidence_basis": {
+    "best_mode_agreement_overall": 0.9587301587301588,
+    "best_mode_agreement_tau_34": 1.0,
+    "best_mode_agreement_tau_35": 0.9761904761904762,
+    "best_mode_agreement_tau_36": 0.9,
+    "regret_00_to_11_max": 4.094953286790592,
+    "regret_11_to_00_max": 10.745211038619203,
+    "regret_q95_overall_both_directions": 0.0
+  },
+  "firewalls": {
+    "gate_2_executed": false,
+    "heldout_execution": false,
+    "metacontroller_training": false,
+    "predictor_training": false
+  },
+  "judgment": "Robust and continuation-sensitive regions coexist: agreement is high overall and exact at tau=34, while tau=36 contains reproducible ranking/sign disagreement and nontrivial absolute-regret tails.",
+  "normalized_regret_metric_used": false,
+  "numerical_materiality_threshold_used": false,
+  "scope": "conditional on h ~ d_Q11 in the frozen development-only Gate 1 design"
+}

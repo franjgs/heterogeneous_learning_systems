@@ -1,0 +1,5 @@
+scope,tau,states,best_mode_agreement_count,best_mode_agreement_rate,deterministic_ranking_agreement_count,deterministic_ranking_agreement_rate,mean_pairwise_relation_agreement
+overall,all,2520,2416,0.9587301587301588,2402,0.9531746031746032,0.9779761904761904
+tau,36,840,756,0.9,744,0.8857142857142857,0.9476190476190476
+tau,35,840,820,0.9761904761904762,818,0.9738095238095238,0.9863095238095239
+tau,34,840,840,1.0,840,1.0,1.0

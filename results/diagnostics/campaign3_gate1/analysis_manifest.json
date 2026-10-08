@@ -1,0 +1,29 @@
+{
+  "artifact_type": "campaign3_gate1_minimum_analysis",
+  "branch_rows_used": 20160,
+  "eligible_states": 2520,
+  "gate_2": false,
+  "heldout_execution": false,
+  "materiality_threshold": null,
+  "normalized_regret_metric": false,
+  "operational_ell": 11,
+  "pre_analysis_freeze_sha256": "fdb8a2e57589bff95929ca95fbc06d9b232f92f44458f8ef5a418d47d8f7419d",
+  "predictor_or_metacontroller_training": false,
+  "sha256": {
+    "best_mode_contingency.csv": "b41e5fcba30dbe7158b1a42f9c0cc342cc475ec97e579efbc5f5620771c7e725",
+    "best_mode_ranking_summary.csv": "ba490010edb0804e92a5195ee589c497a21590de65aa8b92ab963d02feae6b1e",
+    "cross_continuation_regrets.csv": "0d62b8c886a523b4fdd2b43d39f55f3c1ab16aec5c4c210f4512d565fee9be45",
+    "gate1_state_diagnostics.csv": "61181b46c1dbccfdb30f4a6c1c564dbc7448d727da6be68b2a881459d21d2d52",
+    "history_bootstrap_summary.csv": "6bb176d8e8ba902c2ab955bc725abe61a80df8f584e0d4daaa41f7b5ad6a9d64",
+    "regret_summary.csv": "b3b0bc008f118a17ecc9b9794f17fb996878c2ffe15436305b2a73844c7c6b43",
+    "sign_stability_summary.csv": "d3242d289e3cfae4b530ee5921be245a1565a7f41e7374f55cd665ad865ac5cd"
+  },
+  "significance_tests": false,
+  "source_branch_sha256": "6cc68980cbe1e93136088438a833725be50f2cf365e7b5e4d8e78e9a220f9749",
+  "state_source": "h ~ d_Q11",
+  "tau_values": [
+    36,
+    35,
+    34
+  ]
+}
