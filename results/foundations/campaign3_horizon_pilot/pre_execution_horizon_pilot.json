@@ -1,0 +1,230 @@
+{
+  "artifact_type": "pre_execution_campaign3_horizon_pilot",
+  "creation_provenance": {
+    "freeze_code_sha256": {
+      "docs/experiments/CAMPAIGN_3_HORIZON_PILOT.md": "6be838df4856f3abfc92138554d6aa45952ebdf98db2baeea3c41d4f76c55429",
+      "experiments/synthetic/campaign3_horizon_pilot/freeze.py": "0f8c7a853458596c7346b1b65e0ea5195cd74f8d0ff4d3d4a62e54645f7ff389",
+      "src/hls/campaign3_horizon_pilot.py": "b291b56011dfbea1c69c1d5c77f015bcac459420db952cade669c9eab4dbed69"
+    },
+    "generator_split_commit": "ed07fde",
+    "source_artifact_sha256": {
+      "results/foundations/campaign3_generator_split/kernel_split.csv": "b87a8313500b0815dcaa08f653a2cd31a1f749ca14ad06c077a045568fcc51ee",
+      "results/foundations/campaign3_generator_split/pre_history_generator_split.json": "5b2f69dcf024f995061e8017d5eeddf601a4218d5bec83d5df75ed554c2767f6",
+      "results/foundations/campaign3_team_split/pre_performance_team_split.json": "680dae20f54232b18a5de187a36c6081afb630cb7c52e99ca28fe199e1c725f5",
+      "results/foundations/campaign3_team_split/team_split.csv": "2fc5eb98a958478e6e9ed60b8d1dd303e96a0bb2e252f034ce7b7e59eaf68d5b"
+    },
+    "team_split_commit": "6eab252661081cd0fa727dd4b2233171e6d63787"
+  },
+  "crn_semantics": {
+    "branch_rule": "clone complete pre-action simulator and exogenous RNG states; restore identical future exogenous states for every initial-mode/continuation branch from the same factual h_t",
+    "endogenous_divergence_preserved": [
+      "actions",
+      "beliefs",
+      "capabilities",
+      "subsequent policy decisions"
+    ],
+    "identifier": "campaign3_horizon_pilot_crn_v1",
+    "shared": [
+      "future physical problems",
+      "future observation-noise innovations",
+      "all other exogenous simulator randomness"
+    ],
+    "stream_mapping": "mode-independent SHA-256 substream seed from base-history simulator seed and stream name",
+    "streams": [
+      "physical_problem",
+      "observation_noise",
+      "other_exogenous"
+    ]
+  },
+  "decision_procedure": {
+    "classifications": [
+      "STABILIZATION",
+      "INSUFFICIENT TEMPORAL PRECISION",
+      "PERSISTENT BOUNDARY EVOLUTION",
+      "HORIZON UNRESOLVED"
+    ],
+    "extension_rule": "fresh independent histories only; pre-extension artifact and outcome-independent windows required before J=18 or J=24",
+    "maximum_J": 24,
+    "replication_escalation": "only global 5->10 for INSUFFICIENT TEMPORAL PRECISION; decision artifact required first; >10 prohibited",
+    "temporal_extension_sequence": [
+      12,
+      18,
+      24
+    ],
+    "terminal_outcome": "HORIZON UNRESOLVED"
+  },
+  "execution_status": {
+    "gate_1_started": false,
+    "gate_2_started": false,
+    "heldout_performance_information_accessed": 0,
+    "pilot_histories_generated": 0,
+    "pilot_rewards_or_outcomes_inspected": 0,
+    "scientific_agents_executed": 0
+  },
+  "firewalls": {
+    "gate_1": "no continuation superiority, invariance, regret, or ranking inference",
+    "gate_2": "no state/action/outcome coverage claim and no additional factual state-source policies",
+    "heldout": "held-out IDs read only for disjointness; no held-out execution, debugging, stopping, interpretation, or horizon choice"
+  },
+  "generated_artifact_sha256": {
+    "results/foundations/campaign3_horizon_pilot/pilot_design.csv": "3c616d3595500bf31c076a055698781e376f77220616fd48c490ca645bfda72b",
+    "results/foundations/campaign3_horizon_pilot/seed_allocation.csv": "6c3f3443a38d2f99945f11e5147685c7c273f3421818523105c46a22e83f67c4"
+  },
+  "generator_design": {
+    "disjoint_phi_heldout": true,
+    "equals_phi_dev": true,
+    "kernel_source": "results/foundations/campaign3_generator_split/kernel_split.csv",
+    "phi_pilot_ids": [
+      "K01",
+      "K02",
+      "K03",
+      "K05",
+      "K06",
+      "K07",
+      "K10",
+      "K11",
+      "K13",
+      "K15",
+      "K16",
+      "K17",
+      "K20",
+      "K21",
+      "K23",
+      "K25",
+      "K26",
+      "K27",
+      "K31",
+      "K32",
+      "K33"
+    ]
+  },
+  "policy_semantics": {
+    "continuation_probes": [
+      "Q00",
+      "Q11"
+    ],
+    "eight_combinations_are_not_permanent_strategies": true,
+    "factual_state_source": "Q11",
+    "intervene_at": "all temporally eligible factual decision states",
+    "intervention_modes": [
+      "Q00",
+      "Q10",
+      "Q01",
+      "Q11"
+    ],
+    "single_current_decision_intervention": true
+  },
+  "protocol_id": "campaign3_horizon_pilot_v1",
+  "purpose": "development-only temporal diagnostic",
+  "seed_allocation": {
+    "identity_inputs": [
+      "protocol_id",
+      "team_id",
+      "kernel_id",
+      "replicate"
+    ],
+    "initial_replicate_indices": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "known_prior_c3_seeds_excluded": [
+      20261008,
+      20261009,
+      20261010,
+      20261011,
+      20261012
+    ],
+    "mapping": "first 32 big-endian bits of SHA-256 over canonical JSON tuple",
+    "namespace": "campaign3_horizon_pilot_v1",
+    "reserved_replicate_indices": [
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "seed_domain": "uint32"
+  },
+  "size": {
+    "cells": 168,
+    "histories_per_cell_initial": 5,
+    "histories_per_cell_reserved_maximum": 10,
+    "initial_base_histories": 840,
+    "kernels": 21,
+    "reserved_maximum_base_histories": 1680,
+    "teams": 8
+  },
+  "status": "FROZEN LOCALLY; NOT EXECUTED",
+  "team_design": {
+    "disjoint_s_heldout": true,
+    "matrix_source": "results/foundations/campaign3_team_split/team_split.csv",
+    "s_pilot_ids": [
+      "G00",
+      "G04",
+      "G05",
+      "G07",
+      "F01",
+      "F02",
+      "F03",
+      "F04"
+    ],
+    "subset_of_s_dev": true
+  },
+  "temporal_design": {
+    "J_pilot": 12,
+    "campaign2_two_reward_endpoint_is_distinct": true,
+    "censoring": "eligible iff j(t)+ell<=J; unavailable future rewards are never imputed as zero",
+    "ell_definition": "future problems included after the current-problem remainder",
+    "nested_common_support_windows": [
+      2,
+      5,
+      11
+    ],
+    "nested_window_problem_indices": {
+      "11": [
+        1
+      ],
+      "2": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "5": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "outcome": "G_t(ell)=sum mu_true from current decision through end of problem j(t)+ell",
+    "secondary_analysis": "SECONDARY AVAILABLE-STATE ANALYSIS; support may change with ell"
+  },
+  "uncertainty": {
+    "B": 2000,
+    "bootstrap": "nonparametric clustered bootstrap; retain all observations from each resampled history",
+    "bootstrap_seed": 20261013,
+    "cluster_unit": "complete base history/seed",
+    "interval": "two-sided 95% percentile descriptive interval",
+    "required_summaries": [
+      "mean Delta + bootstrap interval",
+      "mean delta + bootstrap interval",
+      "median Delta",
+      "distribution quantiles",
+      "history count",
+      "state count"
+    ]
+  }
+}

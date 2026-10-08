@@ -326,3 +326,21 @@ d_dev(H)=min_(S in S_dev) d_S(H,S).
 - Boundary: distinct from farthest-point insertion distance, which additionally
   includes earlier held-out selections; neither quantity predicts behavior or
   performance.
+
+## E22. C3 horizon-pilot paired contrasts and marginal contributions
+
+```text
+Delta_m^c(h_t,ell)=G_m^c(h_t,ell)-G_00^c(h_t,ell),
+delta_m^c(h_t,ell)=Delta_m^c(h_t,ell)-Delta_m^c(h_t,ell-1), ell>=1.
+```
+
+- Status: frozen planned diagnostic quantities; no pilot values exist.
+- Formal source: `CAMPAIGN_3_HORIZON_PILOT.md`, building on E18–E19.
+- Assumptions: one current-decision intervention, continuation `c` thereafter,
+  `mu_true` accumulation, CRN-paired exogenous futures, and censoring whenever
+  `j(t)+ell>J` rather than zero imputation.
+- Frozen support: separate nested windows `L=2,5,11` at initial `J=12`, plus a
+  secondary changing-support analysis explicitly labelled available-state.
+- Boundary: stochastic branch realizations do not equal exact conditional
+  expectations; these quantities do not rank permanent policies or identify an
+  optimal/true horizon.
