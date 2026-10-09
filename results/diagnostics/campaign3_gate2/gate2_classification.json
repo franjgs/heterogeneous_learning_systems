@@ -1,0 +1,17 @@
+{
+  "artifact_type": "campaign3_gate2_classification",
+  "classification": "SUFFICIENT DEVELOPMENT DIVERSITY",
+  "decision": "CLOSE GATE 2 AND PROCEED IMMEDIATELY TO C3.2 DATASET CONSTRUCTION",
+  "evidence": {
+    "beta_increment_b_nonzero_rate": 0.25466931216931216,
+    "beta_increment_s_nonzero_rate": 0.3400793650793651,
+    "fixed_sources_beyond_d11_b_nonzero_rate": 0.5036640211640212,
+    "fixed_sources_beyond_d11_s_nonzero_rate": 0.724457671957672,
+    "overall_kx_greater_than_one_rate": 0.2587142857142857
+  },
+  "interpretation": "Mode-to-action diversity and separate capability/belief trajectory diversity extend materially beyond paired D11 states; beta_U contributes additional observable states beyond paired fixed sources.",
+  "scope": "frozen development space only; not exhaustive continuous-state coverage",
+  "c3_2_started": false,
+  "heldout_execution": false,
+  "predictor_or_metacontroller_training": false
+}

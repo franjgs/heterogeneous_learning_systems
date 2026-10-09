@@ -1,0 +1,41 @@
+{
+  "CRN": "problem/noise/other seeds identical across behavior policies within team/kernel/replicate; beta mode seed is separate",
+  "artifact_type": "campaign3_gate2_minimal_hybrid_state_coverage",
+  "counterfactual_value_targets": 0,
+  "design": {
+    "J": 12,
+    "behaviors": [
+      "D00",
+      "D10",
+      "D01",
+      "D11",
+      "DbetaU"
+    ],
+    "histories": 10500,
+    "kernels": 21,
+    "replicates": 5,
+    "states": 378000,
+    "teams": 20
+  },
+  "diagnostic_modes": [
+    "Q00",
+    "Q10",
+    "Q01",
+    "Q11"
+  ],
+  "gate_2_only": true,
+  "heldout_execution": false,
+  "predictor_or_metacontroller_training": false,
+  "prerequisite_gate1_commit": "f336be8c55a5abffc96d6f16d88a17e5596b4884",
+  "seed_namespace": "campaign3_gate2_v1/team_id/kernel_id/replicate/stream",
+  "selector_observable": [
+    "S",
+    "b",
+    "tau"
+  ],
+  "source_sha256": {
+    "kernel_split.csv": "b87a8313500b0815dcaa08f653a2cd31a1f749ca14ad06c077a045568fcc51ee",
+    "team_split.csv": "2fc5eb98a958478e6e9ed60b8d1dd303e96a0bb2e252f034ce7b7e59eaf68d5b"
+  },
+  "started_utc": "2026-10-09T06:01:41.004822+00:00"
+}

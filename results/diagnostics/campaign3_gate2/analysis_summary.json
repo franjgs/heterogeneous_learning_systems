@@ -1,0 +1,45 @@
+{
+  "artifact_type": "campaign3_gate2_minimum_analysis",
+  "beta_increment_beyond_paired_fixed_union": {
+    "S_nonzero_rate": 0.3400793650793651,
+    "b_nonzero_rate": 0.25466931216931216
+  },
+  "counterfactual_value_targets": 0,
+  "counts": {
+    "histories": 10500,
+    "states": 378000,
+    "states_per_source": 75600
+  },
+  "distances": {
+    "S": "frozen quotient Frobenius d_S",
+    "b": "L1 distance on probability vectors",
+    "combined": null
+  },
+  "fixed_sources_beyond_D11": {
+    "S_nonzero_rate": 0.724457671957672,
+    "b_nonzero_rate": 0.5036640211640212
+  },
+  "forbidden_selector_dimensions": [
+    "true_p_or_z",
+    "C",
+    "N",
+    "M",
+    "phi",
+    "true_reward",
+    "future_information"
+  ],
+  "heldout_execution": false,
+  "numerical_equality_tolerance": 1e-12,
+  "predictor_or_metacontroller_training": false,
+  "selector_observable": [
+    "S",
+    "b",
+    "tau"
+  ],
+  "sha256": {
+    "action_diversity_KX.csv": "455918460ce9c9f32967cc3b1d237093479c5647128594f65cc05e50653d6942",
+    "observable_support_summary.csv": "3bc27863d7a190dab8310af3b16c95079dfbcaddaf236c91ff471165a5a23554",
+    "pairwise_action_divergence.csv": "ee7464daded0c5428432f97010be0326e5cdbe1483bb5b52782598773a91e5d2",
+    "trajectory_diversity_by_clock.csv": "797f9289a7eeb8a71bea232b96bf7a9bdc7704b972979eb7e8a79c48d7da9bbe"
+  }
+}

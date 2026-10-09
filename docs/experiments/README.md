@@ -23,6 +23,8 @@ conceptual index; it is not a second results ledger.
 - [Campaign 3 initial J=12 horizon-pilot result](CAMPAIGN_3_HORIZON_PILOT_RESULTS.md)
 - [Campaign 3 Gate 1](CAMPAIGN_3_GATE1.md): development-only continuation
   sensitivity; **PARTIAL LOCAL STRUCTURE**, conditional on `h ~ d_Q11`
+- [Campaign 3 Gate 2](CAMPAIGN_3_GATE2.md): minimal hybrid development-state
+  coverage audit; **SUFFICIENT DEVELOPMENT DIVERSITY**
 - [Synthetic runners](../../experiments/synthetic/)
 
 ## Foundation and empirical evidence

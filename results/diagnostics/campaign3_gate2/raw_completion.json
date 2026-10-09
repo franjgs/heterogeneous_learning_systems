@@ -1,0 +1,65 @@
+{
+  "counterfactual_value_targets": 0,
+  "counts": {
+    "histories": 10500,
+    "states": 378000
+  },
+  "finished_utc": "2026-10-09T08:50:02.493098+00:00",
+  "heldout_execution": false,
+  "persisted_file_metadata": {
+    "histories": {
+      "bytes": 459216,
+      "fields": [
+        "history_index",
+        "history_id",
+        "team_id",
+        "kernel_id",
+        "replicate",
+        "behavior",
+        "problem_seed",
+        "noise_seed",
+        "other_seed",
+        "beta_mode_seed",
+        "problem_stream_sha256",
+        "noise_stream_sha256",
+        "selected_modes",
+        "J",
+        "state_count"
+      ],
+      "rows": 10500,
+      "sha256": "5758392930e527ada5c36683a50939ce872dbd36a2b30b1387bc045051ccf119"
+    },
+    "states": {
+      "bytes": 16305276,
+      "fields": [
+        "state_id",
+        "history_id",
+        "team_id",
+        "kernel_id",
+        "replicate",
+        "behavior",
+        "problem_index",
+        "decision",
+        "clock",
+        "tau",
+        "state_before",
+        "belief_before",
+        "action_Q00",
+        "action_Q10",
+        "action_Q01",
+        "action_Q11",
+        "K_X",
+        "factual_mode",
+        "factual_action_id",
+        "state_after",
+        "belief_after"
+      ],
+      "rows": 378000,
+      "sha256": "bad2f41ab5bed56949227e28ee17ffdf837399223c8ff64c3cb8a6612a1d816c"
+    }
+  },
+  "sha256": {
+    "factual_histories.csv.gz": "5758392930e527ada5c36683a50939ce872dbd36a2b30b1387bc045051ccf119",
+    "factual_states.csv.gz": "bad2f41ab5bed56949227e28ee17ffdf837399223c8ff64c3cb8a6612a1d816c"
+  }
+}
