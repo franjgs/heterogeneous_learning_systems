@@ -25,6 +25,8 @@ conceptual index; it is not a second results ledger.
   sensitivity; **PARTIAL LOCAL STRUCTURE**, conditional on `h ~ d_Q11`
 - [Campaign 3 Gate 2](CAMPAIGN_3_GATE2.md): minimal hybrid development-state
   coverage audit; **SUFFICIENT DEVELOPMENT DIVERSITY**
+- [Campaign 3 C3.2-DATA](CAMPAIGN_3_C32_DATA.md): frozen allocation and raw
+  counterfactual target-generation protocol; no predictor training
 - [Synthetic runners](../../experiments/synthetic/)
 
 ## Foundation and empirical evidence

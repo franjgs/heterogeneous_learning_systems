@@ -1,0 +1,88 @@
+{
+  "allocation_sha256": "3fbb198c20da035d2b9417487f5e0320ec8395fb204eb7329815878beaa6e1d7",
+  "artifact_type": "campaign3_c32_data_allocation_clock_association_diagnostic",
+  "description": "Descriptive residual clock associations induced by deterministic identifier-only hash allocation; no target data used and no allocation modified.",
+  "diagnostics": {
+    "behavior": {
+      "DEVELOPMENT_TEST": {
+        "categories": 5,
+        "per_category_clock_max": 21,
+        "per_category_clock_min": 4,
+        "zero_category_clock_cells": 0
+      },
+      "TRAIN": {
+        "categories": 5,
+        "per_category_clock_max": 52,
+        "per_category_clock_min": 23,
+        "zero_category_clock_cells": 0
+      },
+      "VALIDATION": {
+        "categories": 5,
+        "per_category_clock_max": 22,
+        "per_category_clock_min": 5,
+        "zero_category_clock_cells": 0
+      }
+    },
+    "kernel_id": {
+      "DEVELOPMENT_TEST": {
+        "categories": 21,
+        "per_category_clock_max": 9,
+        "per_category_clock_min": 0,
+        "zero_category_clock_cells": 41
+      },
+      "TRAIN": {
+        "categories": 21,
+        "per_category_clock_max": 19,
+        "per_category_clock_min": 1,
+        "zero_category_clock_cells": 0
+      },
+      "VALIDATION": {
+        "categories": 21,
+        "per_category_clock_max": 11,
+        "per_category_clock_min": 0,
+        "zero_category_clock_cells": 44
+      }
+    },
+    "replicate": {
+      "DEVELOPMENT_TEST": {
+        "categories": 1,
+        "per_category_clock_max": 59,
+        "per_category_clock_min": 58,
+        "zero_category_clock_cells": 0
+      },
+      "TRAIN": {
+        "categories": 3,
+        "per_category_clock_max": 75,
+        "per_category_clock_min": 47,
+        "zero_category_clock_cells": 0
+      },
+      "VALIDATION": {
+        "categories": 1,
+        "per_category_clock_max": 59,
+        "per_category_clock_min": 58,
+        "zero_category_clock_cells": 0
+      }
+    },
+    "team_id": {
+      "DEVELOPMENT_TEST": {
+        "categories": 20,
+        "per_category_clock_max": 10,
+        "per_category_clock_min": 0,
+        "zero_category_clock_cells": 32
+      },
+      "TRAIN": {
+        "categories": 20,
+        "per_category_clock_max": 19,
+        "per_category_clock_min": 1,
+        "zero_category_clock_cells": 0
+      },
+      "VALIDATION": {
+        "categories": 20,
+        "per_category_clock_max": 9,
+        "per_category_clock_min": 0,
+        "zero_category_clock_cells": 28
+      }
+    }
+  },
+  "partition_replicate_confounding": "intentional: replicate identifiers define partitions, so replicate has one category per partition."
+}

@@ -1,0 +1,13 @@
+{
+  "CRN": "identical future problem sequence and observation innovations for all modes/continuations within selected state",
+  "actual_rollouts": 6,
+  "allocation_sha256": "3fbb198c20da035d2b9417487f5e0320ec8395fb204eb7329815878beaa6e1d7",
+  "artifact_type": "campaign3_c32_data_raw_mc_target_generation",
+  "conceptual_labels": 16,
+  "ell": 11,
+  "future_draw": "fresh conditional generator continuation given realized physical prefix",
+  "selected_states": 2,
+  "smoke": true,
+  "target_interpretation": "single raw Monte-Carlo realization; not exact conditional expectation",
+  "targets_sha256": "2649c3c9ca55e35032a949e3e0d60850912b83f5605e633bafde97f51ba54b2c"
+}
