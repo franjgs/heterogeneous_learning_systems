@@ -1,0 +1,68 @@
+{
+  "alpha_candidates": [
+    0.001,
+    0.01,
+    0.1,
+    1.0,
+    10.0
+  ],
+  "c32_allocation_hash": "3fbb198c20da035d2b9417487f5e0320ec8395fb204eb7329815878beaa6e1d7",
+  "c32_development_test_hash": "4a29834948123269926b4bf137f59ecbd34a2d82d91dab754a6c27156a894cbc",
+  "c32_training_hash": "1891e5c7f32b70ff5628a5dd1055aca751e30363b5a783593ff07238daf287c9",
+  "c32_validation_hash": "64a1743c27e92cdd82a559a14512e84dc8e1d7c2469e3321a3d9c6ca354b652f",
+  "continuation_choice_rationale": "fixed before fitting: Q11 is the continuation proxy for a selector intended to persist; Q00 continuation data are preserved but not averaged or used to select the target continuation",
+  "continuation_target": "Q11",
+  "development_test_once": {
+    "mean_policy_regret": 0.028904088865325517,
+    "mse": 0.18655512094010604,
+    "n": 2100,
+    "sign_accuracy": 0.8723809523809524
+  },
+  "development_test_rows": 2100,
+  "method": "standardized linear Ridge regression predicting Q11-continuation raw Monte Carlo advantage Y_Q11^Q11 - Y_Q00^Q11; META selects Q11 for prediction >= 0, otherwise Q00",
+  "model_sha256": "1874b1f06a7122361677f5bb617132bd2eff3976fd1aa890d7152436fb59ba1d",
+  "predictor_features": [
+    "s11",
+    "s12",
+    "s21",
+    "s22",
+    "s31",
+    "s32",
+    "b0",
+    "b1",
+    "b2",
+    "tau"
+  ],
+  "selected_alpha": 10.0,
+  "training_rows": 6300,
+  "validation_candidate_metrics": [
+    {
+      "alpha": 10.0,
+      "mean_policy_regret": 0.021346036914619716,
+      "mse": 0.06873689510889866
+    },
+    {
+      "alpha": 1.0,
+      "mean_policy_regret": 0.021346036914619716,
+      "mse": 0.06873758571002545
+    },
+    {
+      "alpha": 0.1,
+      "mean_policy_regret": 0.021346036914619716,
+      "mse": 0.06873765581449323
+    },
+    {
+      "alpha": 0.01,
+      "mean_policy_regret": 0.021346036914619716,
+      "mse": 0.06873766283548383
+    },
+    {
+      "alpha": 0.001,
+      "mean_policy_regret": 0.021346036914619716,
+      "mse": 0.06873766353768843
+    }
+  ],
+  "validation_mean_policy_regret": 0.021346036914619716,
+  "validation_mse": 0.06873689510889866,
+  "validation_rows": 2100
+}

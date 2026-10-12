@@ -1,0 +1,44 @@
+{
+  "actual_rollouts": 5316,
+  "batch_count": 21,
+  "batch_target_sha256": [
+    "bfc9079bcae0ecec0fa23b0840f8354f6148418964bcd50c7fc542e1f3069d5b",
+    "56f0727999eed90ce66ffc63372365eb042b76c23f91caa0fda8c52984c8b018",
+    "a18db3f2ece61655c69364ec419000179973ecf55fe601bc15d4228633567026",
+    "c2ea8aa7f1785722eeac5da0d3caecf554edfb8e26efe0d2c337ef0a94cc2441",
+    "476896b26eed8cb2845adb2dc998a31c62a70e001c09b43916f92a523ffaf90f",
+    "aef74d030f980bfabe32e964dbc509b6fd25ed59c4a4bafee967150424a076df",
+    "63613d34c02b6e045d336aeb224e691173a0725a4dc9229e24610209a8d1404f",
+    "205fb54c5befd5e5be4f8d75f6c23c6a22fa492aaf53f80735f7204689febf61",
+    "721aa2ba61a8f649a0833b3297eefff8991a66af6fdf6ecf379908e46efc3b74",
+    "a9395bee24b5d55ddcb1e341147c1d709818358192c1d54924716755beb27f1e",
+    "7a268be63e48016e4a59c747d7196b76c6a2ee03f875bb8b47d31875e2745b79",
+    "ba213907c400cc97da90c2de9e4e1c0adf3d9be06dde4183c38907e912c3f6c8",
+    "2b819e1381178961fe3fd0b29fc961e4798f01a52bce51c6b01f4c75c504681b",
+    "f5497b22e152850df87b385d922302c24072855579d2c8744cb352711e7f9572",
+    "024f595e6434ffa111b25074e82e84b04ef66fe7baee52d0ada84d467190abae",
+    "4383f47309f191f73d12a2d314dd0638249e14049e569b8fbf7ce3451c39432e",
+    "2cb1df8ed493f27add0629af4c213c5dd2559385ba96eb1dd8ced8f9cc1b249f",
+    "cc4738e26a5b792959208189419aeebfabc9230228c5c6f8e914f4b34b04c135",
+    "e6eb26fff04e4dfeadd1a548b3431c54f3eecb27629df16b2b875ae52959c120",
+    "4cae59952ba70ac4882d02b41cc7c771a35d11f41224f754551db5b7f179dc75",
+    "b0709484ed9972b3896a1dc942c683cd5ebff871025f11a0a2d15cb2aaaf7e83"
+  ],
+  "conceptual_labels": 16800,
+  "partition": "DEVELOPMENT_TEST",
+  "run_provenance": {
+    "allocation_sha256": "3fbb198c20da035d2b9417487f5e0320ec8395fb204eb7329815878beaa6e1d7",
+    "ell": 11,
+    "numpy": "1.26.4",
+    "pandas": "2.2.3",
+    "python": "3.11.9",
+    "scientific_source_sha256": {
+      "experiments/synthetic/campaign3_c32_data/targets.py": "ebccceb2de3795a51f8224dc402667b09067d8f82e196d3999ee81bad3e8211d",
+      "experiments/synthetic/campaign3_gate2/run.py": "f6316ed845c1b418d5e5b6fe9206153838a839872f1082a837fbca188c9b2604",
+      "experiments/synthetic/campaign3_horizon_pilot/run.py": "d0fa86e55258cdabbeac32344824cd9e9d92f5d3f632d7a37e4d5ff103e9b272",
+      "src/hls/campaign3_problem_generator.py": "4bfc16c1f57df71fc097f2876d1f1074cae024f1308e2d0130ddd07a534eb797"
+    }
+  },
+  "selected_states": 2100,
+  "targets_sha256": "4a29834948123269926b4bf137f59ecbd34a2d82d91dab754a6c27156a894cbc"
+}

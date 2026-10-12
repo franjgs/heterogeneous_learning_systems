@@ -1,0 +1,20 @@
+{
+  "artifact_type": "campaign3_c33_sequential_comparison",
+  "bootstrap_B": 2000,
+  "bootstrap_seed": null,
+  "decision_states_per_policy": 108,
+  "development_only": true,
+  "elapsed_seconds": 15.084439124912024,
+  "heldout_used": false,
+  "histories": 3,
+  "mean_decision_wall_ms": 46.501639530864196,
+  "paired_exogenous_streams": true,
+  "paired_performance": {},
+  "policy_decision_rows": 324,
+  "policy_runs": 9,
+  "runs_sha256": "7cf0c433c9e7ae1043776f2dd45fd0994b1da090a945a8e5d457bec9cf611d08",
+  "scope": "bounded diagnostic only; not scientific evaluation",
+  "seconds_per_base_history_three_policies": 5.0281463749706745,
+  "training_model_sha256": "1874b1f06a7122361677f5bb617132bd2eff3976fd1aa890d7152436fb59ba1d",
+  "trajectories_sha256": "f800806a266c0e903538fadf1d1142f14d8d36d6328f1a41ed3d493cf11181ce"
+}

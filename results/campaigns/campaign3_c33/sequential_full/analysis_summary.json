@@ -1,0 +1,81 @@
+{
+  "artifact_type": "campaign3_c33_postrun_summary",
+  "bootstrap_B": 2000,
+  "bootstrap_seed": 20261011,
+  "histories": 2100,
+  "isolated_decision_cost": {
+    "cache": "bypassed; no policy result reused",
+    "mean_ms": {
+      "META": 3.783203703125,
+      "Q00": 0.74345184375,
+      "Q11": 3.756570984375
+    },
+    "median_ms": {
+      "META": 0.3795415,
+      "Q00": 0.3740625,
+      "Q11": 0.373042
+    },
+    "q90_ms": {
+      "META": 0.41585830000000007,
+      "Q00": 0.39462929999999996,
+      "Q11": 0.39923379999999997
+    },
+    "sampled_existing_predecision_states": 64,
+    "timing_scope": "decision operator only; hardware/runtime dependent; not a deliberation-performance scalarization"
+  },
+  "mean_cumulative_mu_true": {
+    "META": 54.69219523430877,
+    "Q00": 53.305649078527395,
+    "Q11": 54.696947707498865
+  },
+  "paired_differences": {
+    "META-Q00": {
+      "bootstrap_unit": "replicate history, resampled within team/kernel cell",
+      "mean": 1.38654615578137,
+      "median": 0.20344810142031378,
+      "negative_fraction": 0.24904761904761905,
+      "paired_histories": 2100,
+      "positive_fraction": 0.569047619047619,
+      "q025": 1.2905692678014364,
+      "q05": -0.9304482234948128,
+      "q95": 7.375389895261666,
+      "q975": 1.4790197448208569,
+      "zero_fraction": 0.1819047619047619
+    },
+    "META-Q11": {
+      "bootstrap_unit": "replicate history, resampled within team/kernel cell",
+      "mean": -0.004752473190100612,
+      "median": 0.0,
+      "negative_fraction": 0.023333333333333334,
+      "paired_histories": 2100,
+      "positive_fraction": 0.017142857142857144,
+      "q025": -0.007342334042097997,
+      "q05": 0.0,
+      "q95": 0.0,
+      "q975": -0.002238773273052085,
+      "zero_fraction": 0.9595238095238096
+    },
+    "Q11-Q00": {
+      "bootstrap_unit": "replicate history, resampled within team/kernel cell",
+      "mean": 1.3912986289714708,
+      "median": 0.21385768834948138,
+      "negative_fraction": 0.2509523809523809,
+      "paired_histories": 2100,
+      "positive_fraction": 0.5719047619047619,
+      "q025": 1.2985461679700487,
+      "q05": -0.9304482234948128,
+      "q95": 7.375389895261666,
+      "q975": 1.4873782692691275,
+      "zero_fraction": 0.17714285714285713
+    }
+  },
+  "policy_decision_rows": 226800,
+  "policy_runs": 6300,
+  "raw_runs_sha256": "7d1ad5ad96340953fd7f2d53c2d9d75d39b55b734ce20b6aec38fafdacfeb2c1",
+  "raw_trajectories_sha256": "61bf32345d10c932a3ce03c1ddef8b2d229997536f93e7c99b33f37097109ad6",
+  "sd_cumulative_mu_true": {
+    "META": 3.313615511017657,
+    "Q00": 2.8339689775426886,
+    "Q11": 3.3146545015652658
+  }
+}
