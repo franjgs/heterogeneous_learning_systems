@@ -1,0 +1,55 @@
+{
+  "bootstrap": {
+    "interval": "percentile 95%",
+    "resamples": 2000,
+    "seed": 20261016,
+    "stratified_by_domain": true,
+    "unit": "complete matched history"
+  },
+  "confirmatory_primary_selected_after_development_review": true,
+  "dependencies": {
+    "matplotlib": "3.9.2",
+    "numpy": "1.26.4",
+    "pandas": "2.2.3",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.11.9 (main, Apr 19 2024, 11:43:47) [Clang 14.0.6 ]"
+  },
+  "equal_domain_weight": 0.25,
+  "n_histories_by_domain": {
+    "G1": 420,
+    "G2": 200,
+    "G3": 168,
+    "G4": 80
+  },
+  "primary": [
+    {
+      "baseline": "RANDOM_50",
+      "ci95_high": 0.2013491819085739,
+      "ci95_low": 0.031025612589790648,
+      "domain": "GLOBAL_EQUAL_G",
+      "mean_difference": 0.11671160541640421,
+      "median_difference": NaN,
+      "metric": "cumulative_mu_true",
+      "n_histories": 868,
+      "point": 50,
+      "treatment": "META_VOC_50"
+    },
+    {
+      "baseline": "RANDOM_50",
+      "ci95_high": -0.022839583500547614,
+      "ci95_low": -0.35393189803692854,
+      "domain": "GLOBAL_EQUAL_G",
+      "mean_difference": -0.1924334539172024,
+      "median_difference": NaN,
+      "metric": "decision_compute_seconds",
+      "n_histories": 868,
+      "point": 50,
+      "treatment": "META_VOC_50"
+    }
+  ],
+  "protocol": "C3-META-VOC-CONF-v1",
+  "raw_progress_sha256": "845a4b1359731c30e04b55d1c762241e3d888ee1f828a367be6fc03dd982598e",
+  "timing": "uncached perf_counter_ns around chosen solver and META selector; within-process measured duration under parallel execution",
+  "verdict": "CONFIRMATORY EVIDENCE FAVORABLE",
+  "verdict_basis": "paired performance CI is positive and paired measured-computation CI is non-positive"
+}

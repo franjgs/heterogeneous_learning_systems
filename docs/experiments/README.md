@@ -27,6 +27,19 @@ conceptual index; it is not a second results ledger.
   coverage audit; **SUFFICIENT DEVELOPMENT DIVERSITY**
 - [Campaign 3 C3.2-DATA](CAMPAIGN_3_C32_DATA.md): frozen allocation and raw
   counterfactual target-generation protocol; no predictor training
+- [Campaign 3 C3.3](CAMPAIGN_3_C33.md): first Q00/Q11 supervised selector and
+  matched development-only sequential comparison
+- [Campaign 3 C3.3 results](CAMPAIGN_3_C33_RESULTS.md): development
+  comparison, paired performance and computational-cost diagnostics
+- [Campaign 3 FAST/DEEP/META](CAMPAIGN_3_FAST_DEEP_META.md): conditional
+  deliberation prototype using the closed C3.3 selector
+- [Campaign 3 META-VOC](CAMPAIGN_3_META_VOC.md): benefit-per-computation
+  routing versus frequency-matched RANDOM on fresh development histories
+- [Campaign 3 META-VOC confirmatory protocol](CAMPAIGN_3_META_VOC_CONFIRMATORY_PROTOCOL.md):
+  frozen four-domain design and independent nominal-probability RANDOM baseline
+- [Campaign 3 META-VOC confirmatory results](CAMPAIGN_3_META_VOC_CONFIRMATORY_RESULTS.md):
+  paired performance–computation evidence; 50% primary point designated after
+  development review
 - [Synthetic runners](../../experiments/synthetic/)
 
 ## Foundation and empirical evidence
