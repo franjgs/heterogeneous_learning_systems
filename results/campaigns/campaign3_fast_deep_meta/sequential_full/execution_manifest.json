@@ -1,0 +1,3383 @@
+{
+  "CRN": "same 12 generated problem values and 36 normal observation innovations for FAST/DEEP/META in each base history",
+  "analysis_summary_sha256": "99939edeb56b31bdf930d38786a390dfd5a4644854f271ab200a9ffb6b65ee8d",
+  "artifact_type": "campaign3_fast_deep_meta_sequential",
+  "base_histories": 420,
+  "c32_c33_artifacts_modified": false,
+  "elapsed_wall_seconds": null,
+  "elapsed_wall_time_note": "not recoverable after post-run manifest exception; summed decision computation time is retained in analysis summary",
+  "execution_failure_sha256": "54d292760d8b54de7c183855a29c8baa8de6b3ca1a88ea938a547776979d3882",
+  "fresh_seed_namespace": "campaign3_fast_deep_meta_v1/team/kernel/replicate/stream",
+  "heldout_teams_or_kernels_used": false,
+  "policy_decision_rows": 45360,
+  "policy_runs": 1260,
+  "raw_tables_unchanged_on_summary_refresh": true,
+  "recovered_without_simulation": true,
+  "replicates_per_team_kernel_cell": 1,
+  "runs_sha256": "04fde5950292d2f0e7ccaa3ea8015648b128de43d4f105a9b47cdd71bc0db951",
+  "seed_design": [
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 9131841432106714320,
+      "problem_seed": 9060938686031142957,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 8491682396257926230,
+      "problem_seed": 7926694395907243035,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 5147192979860113882,
+      "problem_seed": 7980259118562989359,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 3877887566646729565,
+      "problem_seed": 314563688242757976,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 4473936477847003593,
+      "problem_seed": 115657545112447634,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 2707417306791970133,
+      "problem_seed": 7698076714707664716,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 1078163130680295367,
+      "problem_seed": 3699786550609290516,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 2094244228433845741,
+      "problem_seed": 5624525626194621901,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 8523748427279393,
+      "problem_seed": 7327886313773782911,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 1819046574642291483,
+      "problem_seed": 8314981483618998486,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 127389569999244312,
+      "problem_seed": 9187309658334559496,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 5081686764295761582,
+      "problem_seed": 1580424782680750171,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 43563235753907428,
+      "problem_seed": 4125980908347367174,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 982382171659659833,
+      "problem_seed": 5745353269333390311,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 3803598318749249819,
+      "problem_seed": 3045757203810115713,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 503116926547190152,
+      "problem_seed": 4448328710977198696,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 6275005689909418322,
+      "problem_seed": 1663978907089554622,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 3330058368765563970,
+      "problem_seed": 4413147096889821938,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 6896581858436628133,
+      "problem_seed": 3614583368141143063,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 2466889990925674651,
+      "problem_seed": 1586413681699976323,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G00:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 5401053413176942706,
+      "problem_seed": 39958130945158455,
+      "replicate": 0,
+      "team_id": "G00"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 7636529551314637712,
+      "problem_seed": 6578071015232000294,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 4671507765504942914,
+      "problem_seed": 8108828560150671482,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 8287921371200711125,
+      "problem_seed": 5492579176694088233,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 434772193310876692,
+      "problem_seed": 3893183861822970851,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 2640642241600413873,
+      "problem_seed": 513848105971607321,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 6322823596020252355,
+      "problem_seed": 6747976034540189751,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 7680318288247314600,
+      "problem_seed": 1073223703102306554,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 1168556410365328902,
+      "problem_seed": 8245210224458303106,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 5645205603144333091,
+      "problem_seed": 2205360103999587050,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 6504642491136849438,
+      "problem_seed": 8444773521129560734,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 1176405759665585211,
+      "problem_seed": 4183154145829956622,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 3872443355584994926,
+      "problem_seed": 3504010860973864200,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 8903946987704425056,
+      "problem_seed": 3914670994518304664,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 9032852673900995472,
+      "problem_seed": 8811852194679920107,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 5945884494759159597,
+      "problem_seed": 588869127488427376,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 2993105647909815467,
+      "problem_seed": 8484580749345882859,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 170163194214426677,
+      "problem_seed": 946586756120580697,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 6501753894215523796,
+      "problem_seed": 8973459295797068575,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 6474266762976066990,
+      "problem_seed": 5086910632147138007,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 6542331609815246452,
+      "problem_seed": 4956802537340337274,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G04:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 7046399085447639878,
+      "problem_seed": 7521689954122091759,
+      "replicate": 0,
+      "team_id": "G04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 2873781645843450447,
+      "problem_seed": 3999623485825482048,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 8386837431248226629,
+      "problem_seed": 7431484845376466024,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 5652820287021918357,
+      "problem_seed": 4449840353860085463,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 8653012743625951599,
+      "problem_seed": 1318026480060011176,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 6075808084305654299,
+      "problem_seed": 201443703100621462,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 1904369121604936562,
+      "problem_seed": 2234002584312716502,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 3332918370024390845,
+      "problem_seed": 7825918508741826009,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 5274621711631838312,
+      "problem_seed": 2193904204512442023,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 2654406409332724003,
+      "problem_seed": 6301557383329352962,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 1656093929957588867,
+      "problem_seed": 6684305708850164347,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 4847467605210866557,
+      "problem_seed": 2169759374462353684,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 4663025676052994990,
+      "problem_seed": 9195605437720448035,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 2250780532285393399,
+      "problem_seed": 3158351308121277934,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 2764453218319525507,
+      "problem_seed": 3979255950184469528,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 485066777244694144,
+      "problem_seed": 3398819220064181582,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 6036279347044683176,
+      "problem_seed": 4997223398413877004,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 5793659859109947637,
+      "problem_seed": 3318970646860419210,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 3384056674886778523,
+      "problem_seed": 3549180782267742943,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 3961362612936789026,
+      "problem_seed": 4702055613707030501,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 4219076085422224070,
+      "problem_seed": 9036268851204892986,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G05:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 5333015222973128713,
+      "problem_seed": 8828494315217933887,
+      "replicate": 0,
+      "team_id": "G05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 151451805331872410,
+      "problem_seed": 9030904357732775273,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 2299240347255773481,
+      "problem_seed": 156308559800137269,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 3600884471422250232,
+      "problem_seed": 3878600892725015280,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 3223928208262448108,
+      "problem_seed": 8209115670234822171,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 4678347414953016688,
+      "problem_seed": 5354533277120850567,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 1489399743191097959,
+      "problem_seed": 2792662427813853819,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 1128812885399372561,
+      "problem_seed": 7994187696494516840,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 5942634499527698917,
+      "problem_seed": 1678064456007715292,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 9094242514252951640,
+      "problem_seed": 2494517054099404770,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 8496319557791157040,
+      "problem_seed": 7287329644033235432,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 5222033481023746484,
+      "problem_seed": 6727964105113316243,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 6143376627215326162,
+      "problem_seed": 5609744774971880273,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 1753491055533728032,
+      "problem_seed": 2759303139891342916,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 6766849454619417708,
+      "problem_seed": 4908366580191543130,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 1901012046462029765,
+      "problem_seed": 5695195097911013335,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 8720833662569726833,
+      "problem_seed": 6641353995996706250,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 6078044169315464397,
+      "problem_seed": 7227175545788133482,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 732570543672334761,
+      "problem_seed": 3831945170109141861,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 6941197303811859749,
+      "problem_seed": 8805016822581600609,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 4636655385213063250,
+      "problem_seed": 6919598336568736626,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:G07:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 3901738103462767928,
+      "problem_seed": 3025196211347764969,
+      "replicate": 0,
+      "team_id": "G07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 2745371956603345778,
+      "problem_seed": 2182402343704215006,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 2826363908189303431,
+      "problem_seed": 3857356453104808426,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 4614835308109861962,
+      "problem_seed": 744015581556910147,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 3432328760508429751,
+      "problem_seed": 2436343958610675255,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 4247021848706390231,
+      "problem_seed": 1240160928286217106,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 2993761285077689559,
+      "problem_seed": 9062235777843766645,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 8671239471578587514,
+      "problem_seed": 5999329213519468533,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 3141906438565909577,
+      "problem_seed": 493026015471427670,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 2173095151395955378,
+      "problem_seed": 1913340681232103979,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 413338355504072924,
+      "problem_seed": 6562298753193123056,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 225929843646790799,
+      "problem_seed": 107517809753604574,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 5966776216882335652,
+      "problem_seed": 8908087956750203006,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 5636753244422246080,
+      "problem_seed": 762250582026853232,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 2928610787901712507,
+      "problem_seed": 1773662227626925771,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 3145146249794708176,
+      "problem_seed": 9219893900523930280,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 2092788766710755934,
+      "problem_seed": 4712561744541412651,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 3700498409783533453,
+      "problem_seed": 6584556408560261997,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 3069603302165182940,
+      "problem_seed": 2375306527105015045,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 8202168336357466673,
+      "problem_seed": 5621505012847418065,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 7332532318813235152,
+      "problem_seed": 3762198249555154477,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F01:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 4482055144815193196,
+      "problem_seed": 7360882581931832974,
+      "replicate": 0,
+      "team_id": "F01"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 9092041298925402845,
+      "problem_seed": 8495166502584425164,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 956589133860122614,
+      "problem_seed": 8901499727373373132,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 1127627519872637191,
+      "problem_seed": 8517182087408272384,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 5414416021886036905,
+      "problem_seed": 6259576011453919106,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 2409459162786790057,
+      "problem_seed": 7569782222301035148,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 4778285331341922654,
+      "problem_seed": 1480937326889662978,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 4231328177712106862,
+      "problem_seed": 5328057113356582295,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 13853845892846617,
+      "problem_seed": 7842859380966330903,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 6203246989386682664,
+      "problem_seed": 469111777951548601,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 2274613440119576642,
+      "problem_seed": 5351335856700905171,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 6959470355055965689,
+      "problem_seed": 5718824077117907363,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 514088190503363369,
+      "problem_seed": 2117975585287654637,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 1620021294009304743,
+      "problem_seed": 6279034768156043035,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 542720021661520472,
+      "problem_seed": 9198270628504870035,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 2045632041166396050,
+      "problem_seed": 1633464879828399028,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 17428241527678527,
+      "problem_seed": 5787665585622403064,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 7406489162309113355,
+      "problem_seed": 4499039348711164662,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 3745705362858165963,
+      "problem_seed": 6687515686798947334,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 4696157960606161399,
+      "problem_seed": 6204389901699751038,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 1517859680366484484,
+      "problem_seed": 3532287250562801338,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F02:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 7492074010437168033,
+      "problem_seed": 8606999115065432875,
+      "replicate": 0,
+      "team_id": "F02"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 2075323206277446852,
+      "problem_seed": 6519534903229714313,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 5718100164331577188,
+      "problem_seed": 8698083165323413865,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 3657415337391109939,
+      "problem_seed": 2116738379027687721,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 2192027288304509559,
+      "problem_seed": 1749016491251136304,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 6519057313696437524,
+      "problem_seed": 6216409847821200950,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 8997322008344597903,
+      "problem_seed": 5531997222965947330,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 8586870551196244644,
+      "problem_seed": 8791961003427720067,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 3616824977508858499,
+      "problem_seed": 8074701318770559437,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 7113011296626201415,
+      "problem_seed": 8743165420050336532,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 4158195172568661680,
+      "problem_seed": 1492398176210644408,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 4573372815909350118,
+      "problem_seed": 809261319175788155,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 8228442784559195782,
+      "problem_seed": 1896535856290511386,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 95429019321365333,
+      "problem_seed": 1057663627191778686,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 1774442696006781251,
+      "problem_seed": 8108682874071912069,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 6361737436674891216,
+      "problem_seed": 1907352476000837793,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 8950135190579431450,
+      "problem_seed": 4374176994894335150,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 3469632191392529448,
+      "problem_seed": 3076427702929576389,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 6753101967406679629,
+      "problem_seed": 392574245641944549,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 4913256188914016229,
+      "problem_seed": 2215173001641402950,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 8125321125431848014,
+      "problem_seed": 1125887529250510881,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F03:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 12928202867582767,
+      "problem_seed": 1698558100314059305,
+      "replicate": 0,
+      "team_id": "F03"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 2940044503617651642,
+      "problem_seed": 6489220415722931060,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 5107384338932367695,
+      "problem_seed": 796332664653396345,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 8736592577035434332,
+      "problem_seed": 4559956798147249776,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 220037157458263467,
+      "problem_seed": 2119257267016968334,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 3625955582145545640,
+      "problem_seed": 6039799007000661507,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 8677061285394702928,
+      "problem_seed": 222496076097907886,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 9065454693273663144,
+      "problem_seed": 3946009241857524770,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 2819757807896595768,
+      "problem_seed": 220837781993060287,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 3390688245619328959,
+      "problem_seed": 3300832644709763255,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 3976386849821640798,
+      "problem_seed": 2729199232874077855,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 2168377481749166284,
+      "problem_seed": 3787617787543107881,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 2650837842711768467,
+      "problem_seed": 7518495765842608348,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 1844579513180532843,
+      "problem_seed": 1614558849002877099,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 1123780874790935459,
+      "problem_seed": 3507618902684484322,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 2694264099305741533,
+      "problem_seed": 788320536620905026,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 6881436158323258215,
+      "problem_seed": 5027770929092685186,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 2343508538881422844,
+      "problem_seed": 8239348483167969794,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 3598366317245947774,
+      "problem_seed": 3776847647639442268,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 5235083568265150730,
+      "problem_seed": 1219631432111879625,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 4230670033229267890,
+      "problem_seed": 4197559087837808738,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F04:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 314010661132859996,
+      "problem_seed": 8405135713204317428,
+      "replicate": 0,
+      "team_id": "F04"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 5058789869347725406,
+      "problem_seed": 3421828478391247023,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 6900978398518741586,
+      "problem_seed": 6467451103960330508,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 7022293648258527462,
+      "problem_seed": 8428820473598089849,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 3427421096588485571,
+      "problem_seed": 1653871419516617449,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 3124054107373872427,
+      "problem_seed": 7544163250848493408,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 7037527662276275694,
+      "problem_seed": 3494599591967994884,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 6275230761398382068,
+      "problem_seed": 6739473311920539601,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 2160455279410689308,
+      "problem_seed": 4526999667802513484,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 3501954308591110960,
+      "problem_seed": 2780934205391609992,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 9069338015471479920,
+      "problem_seed": 1010954579298671912,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 80557670987721069,
+      "problem_seed": 2627433904261765379,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 4447598413793584029,
+      "problem_seed": 1461615341024778811,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 2507793153030054039,
+      "problem_seed": 7359118023621450402,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 1989434746421232827,
+      "problem_seed": 6163678572114876857,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 7229692701445194443,
+      "problem_seed": 1911508223299795939,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 932328810449639886,
+      "problem_seed": 4373688712639774146,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 9128252165883652919,
+      "problem_seed": 5326742476438411024,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 2706760975909157054,
+      "problem_seed": 8520185441025636381,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 5654916706959046592,
+      "problem_seed": 3047621019779274645,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 3906067104688649584,
+      "problem_seed": 7836887060627326537,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F05:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 4154065430355865287,
+      "problem_seed": 7743908540966490014,
+      "replicate": 0,
+      "team_id": "F05"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 5976598059919887149,
+      "problem_seed": 1617459538935388043,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 4442749431420780593,
+      "problem_seed": 5474311860372408602,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 6847244049912921215,
+      "problem_seed": 3578713042280330259,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 8165449347849020565,
+      "problem_seed": 5318187973396350298,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 750957965204155584,
+      "problem_seed": 4505666585041473941,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 6150843444801239763,
+      "problem_seed": 7238006792052920933,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 2692168079028647555,
+      "problem_seed": 76395879899147549,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 3878211865393212290,
+      "problem_seed": 1414076230531695977,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 4670663456782540351,
+      "problem_seed": 4782926572451548985,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 8044797024365270382,
+      "problem_seed": 6821876334950638884,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 4917636575690285212,
+      "problem_seed": 3704986773072900377,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 2157678036209461891,
+      "problem_seed": 8860821596032684666,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 164600036363457822,
+      "problem_seed": 286827651512839260,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 297930029628403873,
+      "problem_seed": 3493608216025635773,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 5399897698779972632,
+      "problem_seed": 1873699915332804102,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 3080970523855967242,
+      "problem_seed": 2845676551001703721,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 4532456096474410167,
+      "problem_seed": 4532615221054135593,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 1515028980374578387,
+      "problem_seed": 2215751497793350583,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 3780189900974969275,
+      "problem_seed": 8560791622599176379,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 7445107037921337976,
+      "problem_seed": 2241541373574668243,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F06:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 6402965812206668104,
+      "problem_seed": 4127191085650713888,
+      "replicate": 0,
+      "team_id": "F06"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 4760611569765531714,
+      "problem_seed": 4785043294037631368,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 4050432950005361736,
+      "problem_seed": 6945695067211999262,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 8940415900743521784,
+      "problem_seed": 1210062825391645820,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 420342875697483548,
+      "problem_seed": 1677905826855289348,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 954737581426464401,
+      "problem_seed": 4327474700210784025,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 2489075374745906655,
+      "problem_seed": 3518261444971957842,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 1108231339496439588,
+      "problem_seed": 8080431366557717922,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 7870283883367655375,
+      "problem_seed": 5900058256979419789,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 3756787918109715005,
+      "problem_seed": 3622038547216685463,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 4438711802180855708,
+      "problem_seed": 4884702258285896194,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 8727245429102095471,
+      "problem_seed": 8723495514842648679,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 2191103214528317494,
+      "problem_seed": 358005349928364059,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 6657969910172061642,
+      "problem_seed": 6967966855933367719,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 7475180559396155560,
+      "problem_seed": 3645844993762088914,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 6222416783558542267,
+      "problem_seed": 809661790937332722,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 5749772933730599575,
+      "problem_seed": 7660703019825967216,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 4972151713142747860,
+      "problem_seed": 6172312334471517027,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 8892166118441992821,
+      "problem_seed": 51763824450763188,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 4901450358839960920,
+      "problem_seed": 6945853251291895912,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 61111711259118446,
+      "problem_seed": 1710622687024478484,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F07:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 8951757664842668018,
+      "problem_seed": 5731465171399310022,
+      "replicate": 0,
+      "team_id": "F07"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 1918953376575836151,
+      "problem_seed": 695168368503807928,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 7747054278602609006,
+      "problem_seed": 4373723165157213394,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 4288182775818991632,
+      "problem_seed": 9025453284640409282,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 6177535188217961467,
+      "problem_seed": 2997867051348986358,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 1261139875696705052,
+      "problem_seed": 2350430947906852224,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 585961142530204365,
+      "problem_seed": 8429273657835318040,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 2622994270290245490,
+      "problem_seed": 6682156721679499588,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 8121363422426683920,
+      "problem_seed": 2510533944502151797,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 3036378061875666757,
+      "problem_seed": 3933493568390543196,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 6351006349434640183,
+      "problem_seed": 2027985703930734230,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 5981100225118523335,
+      "problem_seed": 3429925873869213169,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 5186696061956908481,
+      "problem_seed": 8921374333493721374,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 5685861976906537670,
+      "problem_seed": 6010594858198104789,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 5221874473114077518,
+      "problem_seed": 8542456911709875923,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 1013339987741337708,
+      "problem_seed": 3666056203791156920,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 1707149369863036827,
+      "problem_seed": 2040120992270989182,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 2765647743439271197,
+      "problem_seed": 4691670433828400707,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 1470910657940557174,
+      "problem_seed": 2800138271098981095,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 6306124367748475267,
+      "problem_seed": 1869034873636119909,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 6425056699944807163,
+      "problem_seed": 8887553312779205924,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F08:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 5602627022638434894,
+      "problem_seed": 6462148228942150910,
+      "replicate": 0,
+      "team_id": "F08"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 6891233268643513972,
+      "problem_seed": 6713975690324547641,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 6391565313191599517,
+      "problem_seed": 137193750323353326,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 5868648785892073906,
+      "problem_seed": 3016717511982640678,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 7942386134732955108,
+      "problem_seed": 7825285207644747413,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 2157183106023352546,
+      "problem_seed": 3608398823476811056,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 256647475805105136,
+      "problem_seed": 3666816167196250393,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 2831970186067715816,
+      "problem_seed": 3846838343613750861,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 515298079430303374,
+      "problem_seed": 9217234125059731804,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 8385153576699090219,
+      "problem_seed": 3563529144515244830,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 3692894481175511435,
+      "problem_seed": 56272454690685619,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 2476316853767501275,
+      "problem_seed": 2145506366914066646,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 3474305032059682419,
+      "problem_seed": 7565214235050372106,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 4788430049127222711,
+      "problem_seed": 5304090776019322957,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 4415303471530156558,
+      "problem_seed": 7950783363137228902,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 69552802311626222,
+      "problem_seed": 7058899867186397461,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 2587793130241506158,
+      "problem_seed": 6183361666615858928,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 2188652283314327410,
+      "problem_seed": 6331397209476858885,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 3935593698153761471,
+      "problem_seed": 6908075204741754472,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 6577170722376057976,
+      "problem_seed": 2035898576817228895,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 5884627539547490518,
+      "problem_seed": 3048669424469393566,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F09:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 2606730861725812172,
+      "problem_seed": 7945892155962292485,
+      "replicate": 0,
+      "team_id": "F09"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 4079569792400514725,
+      "problem_seed": 8198590141694864514,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 354976234281836228,
+      "problem_seed": 2125136184943644460,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 7856405133988002966,
+      "problem_seed": 7848645232735540695,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 6219397620244797151,
+      "problem_seed": 6982290230937894470,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 3735624882819910436,
+      "problem_seed": 9146761487779357116,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 6291856828198810628,
+      "problem_seed": 1116779726928172311,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 964013124745779128,
+      "problem_seed": 4370932287995600703,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 6067951066845886131,
+      "problem_seed": 4653149593040898553,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 6057671348658505311,
+      "problem_seed": 2825814673332807612,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 3250059835558157186,
+      "problem_seed": 4357704775663858661,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 1172867323924355809,
+      "problem_seed": 8253667666130733576,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 2179203471966999378,
+      "problem_seed": 4855537570378907847,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 5108196033390599642,
+      "problem_seed": 5385863120419273002,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 6237384250478914639,
+      "problem_seed": 497334641874459650,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 9207397301265528107,
+      "problem_seed": 112847378441032745,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 5857088354696569024,
+      "problem_seed": 3097155574404891481,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 7733888233062139086,
+      "problem_seed": 3467762966092455661,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 8908122095135345283,
+      "problem_seed": 1155514821016354304,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 4790727041314439726,
+      "problem_seed": 2966157208214678930,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 7663345363627848932,
+      "problem_seed": 6315710165579833367,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F10:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 5448013071749483374,
+      "problem_seed": 3617792619313899460,
+      "replicate": 0,
+      "team_id": "F10"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 2757014863968045671,
+      "problem_seed": 5898605574093467641,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 7685307173433390348,
+      "problem_seed": 1272532826066087024,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 192221939681992667,
+      "problem_seed": 2134613020767056777,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 5414474735810556196,
+      "problem_seed": 984437161190357296,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 1266764273644647897,
+      "problem_seed": 6120630501298169130,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 1500754073450682134,
+      "problem_seed": 7566805952234712669,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 1784200366343576154,
+      "problem_seed": 3458812850589763961,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 6032615255305806941,
+      "problem_seed": 9007730192763453134,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 5243198822336974661,
+      "problem_seed": 6077826886425289057,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 5867822924023869182,
+      "problem_seed": 2263094378382737770,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 7032510053109558959,
+      "problem_seed": 302882504776511916,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 65727482480047033,
+      "problem_seed": 9107228537700227081,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 6840225671133717196,
+      "problem_seed": 7398494675807226797,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 6217426362129182877,
+      "problem_seed": 1418914680956631600,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 5412388361041106093,
+      "problem_seed": 2350832875623235124,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 3929403419753610884,
+      "problem_seed": 7778102689774706752,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 3764849107585003747,
+      "problem_seed": 8180028764382245746,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 2461150920319567838,
+      "problem_seed": 3105807852928817591,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 1796337463110512056,
+      "problem_seed": 4323866272353781223,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 961698727761902492,
+      "problem_seed": 4327821498970282794,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F11:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 2754314378233972534,
+      "problem_seed": 8413451227678215811,
+      "replicate": 0,
+      "team_id": "F11"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 4472193686321228776,
+      "problem_seed": 6906153081326310883,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 8577826457162646658,
+      "problem_seed": 8519282924664294675,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 3251257873576303797,
+      "problem_seed": 5742996157551853610,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 6601232822908472062,
+      "problem_seed": 7153475712608724300,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 2785120889958658009,
+      "problem_seed": 8243330153930520017,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 3403794803723816192,
+      "problem_seed": 335648229411746975,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 286537558235836836,
+      "problem_seed": 14362529178164842,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 3646174804886841187,
+      "problem_seed": 4279128110806805538,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 1056828695170868149,
+      "problem_seed": 7548545356257957810,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 300397447485592765,
+      "problem_seed": 6496931902557967461,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 7306162196740867512,
+      "problem_seed": 547601778875051528,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 2462715307673443800,
+      "problem_seed": 927611239011875588,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 1721343751988112550,
+      "problem_seed": 6784812606950952087,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 2673819398793077010,
+      "problem_seed": 244445608827115859,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 229834355130803033,
+      "problem_seed": 2035673983710926983,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 3887313699368564293,
+      "problem_seed": 1319807631813710925,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 3986789233883580520,
+      "problem_seed": 2464588391121730497,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 6116827970121631172,
+      "problem_seed": 1476453732785816818,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 3404560789452707265,
+      "problem_seed": 686620286398605890,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 537357336622954053,
+      "problem_seed": 4516138975191233151,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F12:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 4221658599046572003,
+      "problem_seed": 5562714732372921364,
+      "replicate": 0,
+      "team_id": "F12"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 3944221429431681179,
+      "problem_seed": 2952344591440470560,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 8666259152433353840,
+      "problem_seed": 4652613076441384547,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 1875964441146062324,
+      "problem_seed": 5085630670752715327,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 5669080230978906923,
+      "problem_seed": 7454316720446366340,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 6285625732229247187,
+      "problem_seed": 4314185116263515606,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 1425480542319690868,
+      "problem_seed": 2492594356980795347,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 133638656768182480,
+      "problem_seed": 6694055962521811275,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 466498582736197436,
+      "problem_seed": 7691684292189922491,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 6686496497354213708,
+      "problem_seed": 8730701718969230329,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 3266057025017009906,
+      "problem_seed": 1456471265253568507,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 9139091020881045874,
+      "problem_seed": 4904952961773741367,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 5276914529641927762,
+      "problem_seed": 5953488343905497863,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 7365962076577129431,
+      "problem_seed": 8376647817241964253,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 4312461428988303619,
+      "problem_seed": 3891694926612745556,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 2721201962210184233,
+      "problem_seed": 7130770694676865681,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 1880105918851510935,
+      "problem_seed": 7040721417624329785,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 3574144802214246406,
+      "problem_seed": 5835602267799124609,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 2420167904907396034,
+      "problem_seed": 6069551416877199216,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 2416608052938922024,
+      "problem_seed": 5990584457426790694,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 806056698174944550,
+      "problem_seed": 3115733537958260496,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F13:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 6901759307383679751,
+      "problem_seed": 187842076310403026,
+      "replicate": 0,
+      "team_id": "F13"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 4700894844027480148,
+      "problem_seed": 814617017751831603,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 4710769052296886780,
+      "problem_seed": 880368260195146031,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 6403845681991502076,
+      "problem_seed": 693299181986928368,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 121147835261158140,
+      "problem_seed": 689706815129259973,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 1768634904121777448,
+      "problem_seed": 9110819275276120422,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 655521047698967466,
+      "problem_seed": 855533126798593450,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 8457022665068429322,
+      "problem_seed": 1694374919419665683,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 8675149743128945470,
+      "problem_seed": 3258431623169489901,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 7817074779900959426,
+      "problem_seed": 5998473235322492001,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 2978616661396086302,
+      "problem_seed": 2810197749146261150,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 5605447728650460795,
+      "problem_seed": 6640000691350694524,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 355434555803689037,
+      "problem_seed": 3509467934327760528,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 8012506404758856776,
+      "problem_seed": 1362604470731443568,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 8434097113681371796,
+      "problem_seed": 3741086914638241642,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 5159751110715823248,
+      "problem_seed": 2247344637114095263,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 835945735923007258,
+      "problem_seed": 6619819708319114716,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 3579883566350084155,
+      "problem_seed": 401380108334229067,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 372559097914188923,
+      "problem_seed": 5424380498064253830,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 4620675736551633898,
+      "problem_seed": 960684299334121007,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 5055265685336807165,
+      "problem_seed": 3389077041432568806,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F14:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 5481090992095275924,
+      "problem_seed": 3272426248160328700,
+      "replicate": 0,
+      "team_id": "F14"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 7749739615490616108,
+      "problem_seed": 7290111729151640039,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 6830626580526141837,
+      "problem_seed": 1379806878085925722,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 1300245408885518231,
+      "problem_seed": 1626193182381533755,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 5141064389866473506,
+      "problem_seed": 1397928172285850159,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 4214567325463121536,
+      "problem_seed": 4665443842747164348,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 4813950336809458514,
+      "problem_seed": 6070917741322583413,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 6551931182926386838,
+      "problem_seed": 6406779240539696060,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 1494956868811916529,
+      "problem_seed": 1660876649551558087,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 1435512306162044260,
+      "problem_seed": 4466680400406456908,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 2675972461851231229,
+      "problem_seed": 3842119292959133335,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 8706546701647557208,
+      "problem_seed": 8264107603127304491,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 3678795761618534544,
+      "problem_seed": 8064820674769141920,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 6818081356455248100,
+      "problem_seed": 7777512675292946582,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 855268445204210906,
+      "problem_seed": 3811569776366727588,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 6943937910250192172,
+      "problem_seed": 3559209213079480454,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 4861479337336878000,
+      "problem_seed": 2665411160668480014,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 7979901436907512508,
+      "problem_seed": 5769554402403474016,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 3814842440893191720,
+      "problem_seed": 4245395259194667012,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 5736972642311503359,
+      "problem_seed": 3337129596601017834,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 215847951747458675,
+      "problem_seed": 7788920879230216741,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F15:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 7355205310202063452,
+      "problem_seed": 5407566236773985341,
+      "replicate": 0,
+      "team_id": "F15"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K01:0",
+      "kernel_id": "K01",
+      "noise_seed": 449437783208233140,
+      "problem_seed": 3016818687538767119,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K02:0",
+      "kernel_id": "K02",
+      "noise_seed": 5947094413081377415,
+      "problem_seed": 1996992813807420798,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K03:0",
+      "kernel_id": "K03",
+      "noise_seed": 1382773301490555010,
+      "problem_seed": 2151587731971307595,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K05:0",
+      "kernel_id": "K05",
+      "noise_seed": 5429805106330356464,
+      "problem_seed": 637362190194845715,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K06:0",
+      "kernel_id": "K06",
+      "noise_seed": 6853501410171061445,
+      "problem_seed": 1652702795910745133,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K07:0",
+      "kernel_id": "K07",
+      "noise_seed": 5994434513922216452,
+      "problem_seed": 4469116150362272799,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K10:0",
+      "kernel_id": "K10",
+      "noise_seed": 5792230182789292716,
+      "problem_seed": 1136215099638934403,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K11:0",
+      "kernel_id": "K11",
+      "noise_seed": 2636243641375850720,
+      "problem_seed": 985932548276908624,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K13:0",
+      "kernel_id": "K13",
+      "noise_seed": 1080075358381327012,
+      "problem_seed": 3510026973230664124,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K15:0",
+      "kernel_id": "K15",
+      "noise_seed": 5054854134009379918,
+      "problem_seed": 7202058956893219281,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K16:0",
+      "kernel_id": "K16",
+      "noise_seed": 7384053664649806215,
+      "problem_seed": 3334715352000961234,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K17:0",
+      "kernel_id": "K17",
+      "noise_seed": 14627516707540700,
+      "problem_seed": 1999588216429167855,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K20:0",
+      "kernel_id": "K20",
+      "noise_seed": 7071380928789193282,
+      "problem_seed": 3279025587073130239,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K21:0",
+      "kernel_id": "K21",
+      "noise_seed": 4646628104679737334,
+      "problem_seed": 5160755505713944266,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K23:0",
+      "kernel_id": "K23",
+      "noise_seed": 1507751615108560216,
+      "problem_seed": 5288620332594147325,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K25:0",
+      "kernel_id": "K25",
+      "noise_seed": 917065410806023894,
+      "problem_seed": 59873370102392653,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K26:0",
+      "kernel_id": "K26",
+      "noise_seed": 6484678994418655334,
+      "problem_seed": 3383606091596708243,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K27:0",
+      "kernel_id": "K27",
+      "noise_seed": 8627373959148149759,
+      "problem_seed": 1187982332586527929,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K31:0",
+      "kernel_id": "K31",
+      "noise_seed": 8564293995491826545,
+      "problem_seed": 8491326996231679271,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K32:0",
+      "kernel_id": "K32",
+      "noise_seed": 6766658311509676766,
+      "problem_seed": 7869829547148511048,
+      "replicate": 0,
+      "team_id": "F16"
+    },
+    {
+      "history_id": "campaign3_fast_deep_meta_v1:F16:K33:0",
+      "kernel_id": "K33",
+      "noise_seed": 948655104040990026,
+      "problem_seed": 2523951941871500671,
+      "replicate": 0,
+      "team_id": "F16"
+    }
+  ],
+  "selector_model_sha256": "1874b1f06a7122361677f5bb617132bd2eff3976fd1aa890d7152436fb59ba1d",
+  "status": "full development comparison",
+  "trajectories_sha256": "a846b05ad81f87a0dbef4735726a088c03c2345626c1f39a8495ae897b8499a2"
+}

@@ -1,0 +1,8 @@
+{
+  "cause": "seed-design serialization indexed (task, model) payload tuples as dictionaries",
+  "event": "post-simulation manifest serialization failure",
+  "raw_runs_sha256": "04fde5950292d2f0e7ccaa3ea8015648b128de43d4f105a9b47cdd71bc0db951",
+  "raw_trajectories_sha256": "a846b05ad81f87a0dbef4735726a088c03c2345626c1f39a8495ae897b8499a2",
+  "recovery": "counts, CRN, summary, compute diagnostics, and manifest reconstructed from persisted tables; no simulation rerun",
+  "scientific_data_status": "complete raw runs.csv and trajectories.csv.gz were persisted before the exception"
+}

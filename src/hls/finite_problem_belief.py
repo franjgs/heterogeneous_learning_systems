@@ -186,6 +186,31 @@ def _best_immediate(state: State, belief: BeliefVector, hypotheses: HypothesisSe
     return next(action for action in JOINT_ACTIONS if abs(values[action] - maximum) <= EXACT_TOL), maximum
 
 
+def choose_fast_action(
+    state: State,
+    belief: BeliefVector,
+    hypotheses: Iterable[Problem],
+) -> tuple[JointAction, float]:
+    """Choose the exact belief-myopic action without prospective lookahead.
+
+    FAST maximizes expected immediate latent production over the frozen action
+    enumeration. It performs no capability transition, observation update,
+    quadrature, or future-action search. Tie selection follows JOINT_ACTIONS
+    enumeration and EXACT_TOL, matching the myopic-equivalent Q00 action.
+    """
+    model, canonical_belief = canonical_model(hypotheses, belief)
+    values = {
+        action: expected_reward(canonical_belief, hypothesis_means(state, action, model))
+        for action in JOINT_ACTIONS
+    }
+    maximum = max(values.values())
+    action = next(
+        candidate for candidate in JOINT_ACTIONS
+        if abs(values[candidate] - maximum) <= EXACT_TOL
+    )
+    return action, values[action]
+
+
 def _best_true_immediate(state: State, problem: Problem) -> tuple[JointAction, float]:
     values = {action: ces_reward(production_inputs(state, action), problem) for action in JOINT_ACTIONS}
     maximum = max(values.values())
