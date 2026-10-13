@@ -53,6 +53,14 @@ classification.
 | [hls_ontology.md](hls_ontology.md) | Semantic infrastructure | CANONICAL | Terms, dimensional consistency, and cross-theory mappings. | A closed universal model or current-results ledger. |
 | [research_questions.md](research_questions.md) | Official question record | CANONICAL | Active RQ0 and its scope. | Historical questions or theory proofs. |
 | [HLS_CURRENT_STATE.md](HLS_CURRENT_STATE.md) | Scientific-status summary | CANONICAL | Established, scoped, open, and deliberately unclaimed results. | Detailed derivations or protocol chronology. |
+| [CAMPAIGN_2_RESULTS.md](experiments/CAMPAIGN_2_RESULTS.md) | Campaign result record | CANONICAL for frozen C2 outcomes | Preregistered H1–H4, consequence results, nulls, and scope limits. | General HLS policy value or outcomes outside the Q11-reference/frozen test range. |
+| [CAMPAIGN_2_STATE_COVERAGE_AUDIT.md](experiments/CAMPAIGN_2_STATE_COVERAGE_AUDIT.md) | Post-C2 support diagnostic | CANONICAL for its diagnostic | Why Q11-only state sourcing is insufficient for a future C3 development bank under its operational support criterion. | Reopening C2 H1–H4 or exhaustive continuous-state coverage. |
+| [CAMPAIGN_3_THEORETICAL_SPECIFICATION.md](theory/CAMPAIGN_3_THEORETICAL_SPECIFICATION.md) | Frozen C3 theoretical/mechanistic layer | FROZEN for C3.0 | Frozen finite-problem physics, operator terms, and causal/epistemic distinctions. | A result report or C3.2/C4 outcome authority. |
+| [CAMPAIGN_3_META_VOC_CONFIRMATORY_RESULTS.md](experiments/CAMPAIGN_3_META_VOC_CONFIRMATORY_RESULTS.md) | C3 confirmatory result record | CANONICAL for the frozen confirmatory comparison | META-VOC-50 vs nominal-probability RANDOM-50 across G1–G4, with post-development primary designation and domain limits. | Exact invocation-budget equivalence, universal efficiency, or statewise Ridge validity. |
+| [CAMPAIGN_3_C32_DATA.md](experiments/CAMPAIGN_3_C32_DATA.md) | C3.2 allocation/label protocol | FROZEN PROTOCOL | Replicate partitions, feature firewall, and original `ell=11` raw Monte Carlo counterfactual target semantics. | A two-decision outcome or exact conditional expectation. |
+| [META_VOC_PREDICTOR_VALIDITY_REPORT.md](experiments/META_VOC_PREDICTOR_VALIDITY_REPORT.md) | Bounded C3.2-matched Ridge/router audit | WORKING TREE / UNCOMMITTED as of 2026-10-13 | 800-state audit results, history-cluster/nested-MC uncertainty, and I/O incident provenance. | An integrated/committed release or validation of C4 H0/H1/H2 and sequential value-of-computation. |
+| [CAMPAIGN_4_COUNTERFACTUAL_PROTOCOL.md](experiments/CAMPAIGN_4_COUNTERFACTUAL_PROTOCOL.md) | C4 preparation/protocol record | WORKING TREE; locally edited | Intended C4 estimands and preparation plan; H0/H1/H2 must remain distinct. | Authorization to execute C4 or equivalence to C3.2 labels. |
+| [CAMPAIGN_4_ENGINE_VERIFICATION.md](experiments/CAMPAIGN_4_ENGINE_VERIFICATION.md) | Bounded C4 engineering verification | WORKING TREE / UNCOMMITTED | Frozen replay checks, H0/C3.2 mismatch, tests, and NO-GO recommendation for N=800 pending resolution. | Scientific C4 outcomes; no N=800 evaluation was run. |
 | [theory/HLS_FOUNDATION_SPECIFICATION.md](theory/HLS_FOUNDATION_SPECIFICATION.md) | Pre-experiment executable foundation | CANONICAL for its declared laboratory scope | Current CES, finite DISCOVER, MIS-v2, problem geometry, temporal semantics, frozen Small Problem World, status ledger, and non-claims before G00--G08 execution. | A programme-wide replacement for Current State, an experimental protocol, or a frozen-world result. |
 | [paper/PAPER_SOURCE_MAP.md](paper/PAPER_SOURCE_MAP.md) and companion ledgers | Future-publication traceability | CURRENT / SUPPORTING | Map future manuscript content to authoritative sources and prevent claims from outrunning evidence. | A manuscript, completed literature review, or scientific result. |
 | [HISTORY.md](HISTORY.md) | Scientific history | HISTORICAL | Negative results, abandoned branches, and reasons for changes of direction. | Current priority without checking Current State. |
@@ -183,6 +191,14 @@ For current programme reconstruction, use this order of authority:
 8. [Experiments registry](experiments/README.md), G0, code, tests, and result
    artifacts for implementation and reproducibility.
 
+For the newer bounded Campaign 2/3/4 lines, use the campaign-specific
+protocol/result links in the authority table above. In particular, the C3.2
+target is defined by executable `campaign3_c32_data/targets.py` and its frozen
+protocol (`ell=11`); do not treat C4 H0's two-decision endpoint as equivalent.
+The current local predictor-validity report is a separate C3.2-matched audit,
+not an update to C3 confirmatory outcomes. Campaign 4 remains unexecuted and
+its engineering NO-GO is not an experiment result.
+
 ## Historical, supporting, and provenance material
 
 [History](HISTORY.md), frozen reference records, campaign ledgers, protocols,
@@ -206,6 +222,8 @@ protocol, pilot, or historical section of
 | B23 names `results/pilots/b22_opportunity_value/b22_diagnostic.md` and `.../portfolio_bridge/portfolio_bridge.md`, which are absent. | Dead-end reproduction/navigation references. | Do not infer missing contents; use retained B22/B23 material. | Unresolved documentation debt. |
 | [experiments/README.md](experiments/README.md) does not index G1. | Static ground-truth evidence is harder to discover from the experiment registry. | Navigate through [theory/README.md](theory/README.md) and G1's theory document. | Documentation debt. |
 | [HLS Static Theory](theory/HLS_STATIC_THEORY.md) contains raw `{=tex}` rendering artifacts. | Display degradation may obscure notation. | Use source text and linked ground-truth documentation. | Documentation debt. |
+| C4 protocol, engine, and bounded verification are present only in the local worktree and remain uncommitted. | Local implementation can be mistaken for completed/authorized experimental work. | The protocol's dated status and [C4 engine verification](experiments/CAMPAIGN_4_ENGINE_VERIFICATION.md) agree that N=800 remains NO-GO pending PI/CE resolution, and no scientific C4 outcomes exist. | Integration/authorization pending; do not execute from the presence of local files. |
+| The independent reviewer's written report is not stored as a standalone repository artifact. | Reviewer conclusions cannot be fully traced to a citable internal document. | The manuscript-facing [META-VOC scientific record](paper/META_VOC_SCIENTIFIC_RECORD.md) states conservative claim boundaries; the C3.2-matched local [predictor audit](experiments/META_VOC_PREDICTOR_VALIDITY_REPORT.md) provides separate evidence, not reviewer testimony. | Missing provenance document; do not attribute undocumented conclusions to the reviewer. |
 
 ## Recommended reading path
 

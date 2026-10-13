@@ -10,6 +10,105 @@ remain authoritative for their own scope; this file does not replace them.
 The programme-level philosophy is defined in [HLS_PHILOSOPHY.md](HLS_PHILOSOPHY.md),
 and the common semantic contract is defined in [the HLS ontology](hls_ontology.md).
 
+## Current empirical status — 13 October 2026
+
+This dated status block supplements the broader programme and foundational
+discussion below. Campaign 3 is a completed, scoped finite-problem study; it
+does **not** replace the programme-level HLS reference-problem agenda or
+establish a universal account of organization and competence development.
+
+- **Campaign 2 — closed:** its recorded classification is **ROBUST POSITIVE
+  WITH IMPORTANT NULL RESULT**. In the frozen Q11-reference population, H1
+  (information-conflict descriptors associated with Q10 sensitivity) and H2
+  (headroom alone insufficient to characterize development sensitivity) were
+  supported; H3 coupling was supported at low prevalence (71/15,360, about
+  0.46%). Conditional two-real-reward returns were robustly positive for Q10
+  and Q11, while Q01 realized utility was **not supported** (mean return
+  0.0015; 95% interval [−0.0194, 0.0193]). The result is not “development is
+  useless”; nor does it establish Q11 superiority to Q10, an additive causal
+  decomposition, or value beyond the frozen physics and state population.
+  G07's Q11 lead in all eight scenarios is secondary, not universal
+  superiority. See [Campaign 2 results](experiments/CAMPAIGN_2_RESULTS.md)
+  and the separate [state-coverage audit](experiments/CAMPAIGN_2_STATE_COVERAGE_AUDIT.md).
+- **Campaign 3 design/gates — closed:** the frozen generator and team-space
+  partitions define 21 development generator regimes plus a 10-kernel
+  compositional/interpolative holdout, and 20 development team geometries plus
+  eight geometrically separated held-out geometries. The pilot was classified
+  **PERSISTENT BOUNDARY EVOLUTION** at J=12; the CE pragmatically closed it
+  without J=18/J=24 and adopted `ell=11` as a development assessment range,
+  not an optimal or saturation horizon. Gate 1 was **PARTIAL LOCAL STRUCTURE**
+  (**GO CONDITIONED TO C3.2**); Gate 2 was **SUFFICIENT DEVELOPMENT
+  DIVERSITY** and closed. These are development-scope decisions, not
+  confirmatory findings.
+- **Campaign 3.2/3.3 and confirmatory META-VOC — completed:** C3.2 labels are
+  single Monte Carlo realizations of Q11-versus-Q00 initial intervention with
+  Q11 continuation, over the current-problem remainder plus eleven subsequent
+  problems. C3.3's first selector and later META-VOC development are not
+  themselves confirmatory. In the frozen confirmatory comparison, the
+  equal-domain META-VOC-50 minus RANDOM-50 cumulative `mu_true` difference was
+  +0.1167 per history [95% interval +0.0310,+0.2013], with measured decision
+  computation −0.1924 seconds [−0.3539,−0.0228]. The primary 50% point was
+  designated after inspecting development results, and realized invocation
+  frequencies were not exactly equal. Production differences were positive
+  in G1/G2 and not demonstrated in G3/G4. This is evidence for the joint
+  frozen-rule contrast in this laboratory, not universal superiority,
+  exactly budget-matched efficiency, or a novel selector algorithm. See the
+  [confirmatory report](experiments/CAMPAIGN_3_META_VOC_CONFIRMATORY_RESULTS.md)
+  and [scientific record](paper/META_VOC_SCIENTIFIC_RECORD.md).
+- **Predictor validity — bounded audit completed in the current worktree,
+  not yet committed:** 800 outcome-blind sampled states were evaluated with 32
+  independent paired Monte Carlo continuations per state under the exact
+  C3.2 horizon/generation and Q11 continuation. Ridge showed limited/modest
+  rank discrimination (equal-domain AUC 0.624 [0.572,0.667], Pearson 0.076),
+  high error, and only 4.6% specificity at raw predicted advantage zero.
+  META-VOC-50's DEEP-routed versus FAST-routed mean C3.2-matched advantage
+  contrast was +0.0104 [−0.0200,+0.0431]. Thus reliable opportunity
+  identification is **not established**; 71.6% of statewise Monte Carlo
+  intervals spanned zero. This narrows the proposed mechanism behind the
+  sequential result but does not alter that result. The audit's report,
+  code, tests, and outputs remain local uncommitted artifacts; see
+  [validity report](experiments/META_VOC_PREDICTOR_VALIDITY_REPORT.md) and
+  `results/diagnostics/meta_voc_predictor_validity/`.
+- **Campaign 4 — HOLD / NO-GO for full N=800 execution:** preparation and
+  bounded engineering verification exist, but no C4 scientific counterfactual
+  evaluation was run. Engineering verification found that C4 H0's two-decision
+  horizon is not C3.2-label-equivalent; C4 H2 also uses a different horizon
+  and physical-stream convention. The bounded predictor-validity audit above
+  reproduces C3.2 semantics but does not execute or validate the broader C4
+  estimands. The engine report recommends no N=800 execution until the
+  scientific status of H0 as a separate diagnostic and remaining precision /
+  feasibility issues are explicitly accepted. See [C4 engineering
+  verification](experiments/CAMPAIGN_4_ENGINE_VERIFICATION.md). C4 code and
+  protocol edits are currently uncommitted; no further gate or campaign is
+  authorized by this status entry.
+
+### Consolidated open questions
+
+1. **FAST/DEEP complementarity:** selected actions differ in a minority of
+   frozen states (for example, Q00/Q11 diverged on 25.13% of Gate-2 states),
+   while many statewise two-policy Monte Carlo values remain sign-uncertain.
+   This establishes neither a general complementarity law nor reliable
+   statewise routing. The sequential benefit of META-VOC versus RANDOM in
+   G1/G2 and the weak C3.2-target prediction audit answer different questions.
+2. **Environment-change representation:** C3 represents the latent physical
+   world through a generated scalar problem coordinate `p` and a finite
+   subjective belief repertoire; generator identity, true problem labels,
+   and privileged descriptors are excluded from META-VOC inputs. Whether
+   `(S,b,tau)` adequately represents decision-relevant environmental change,
+   and how this representation relates to the `C/N/M` experimenter
+   descriptors, remains unresolved. The confirmatory domain contrasts do not
+   identify causal effects of team geometry, generator dynamics, or visited
+   state distributions.
+3. **Novelty/publication boundary:** no novelty is claimed for choosing
+   between shallow/deep computation, conditional computation allocation,
+   supervised selector fitting, benefit estimation, cost use, or a
+   benefit-per-cost score. The defensible current description is a bounded
+   experimental characterization in a sequential adaptive-capability
+   laboratory. There is no recorded comparison against informed alternative
+   selectors, and the independent-reviewer publication assessment is not
+   stored as a repository source; claims attributed specifically to that
+   review must therefore remain traceable to its external review record.
+
 ## 1. Programme-level scientific objective
 
 The HLS programme studies how a collective of heterogeneous, limited, and
@@ -619,6 +718,13 @@ organization/development.
 
 ## 13. Current implementation boundary
 
+**Scope note (13 October 2026):** this section records the separate
+programme-level minimal-reference-system track. It is not a status inventory
+of all later campaign-specific laboratories. Campaign 2/3 finite-problem
+experiments and Campaign 4 preparation are summarized in the dated status
+block above and do not, by themselves, close the general HLS reference-system
+requirements in this section.
+
 The next work is **not** another parameter sweep or an extension of the
 existing RQ0 synthetic campaign.  The minimum reference scenario has been
 documented and has a deterministic reference evaluator.  Its closed
@@ -673,15 +779,21 @@ reference-scenario scope and determine:
 12. the first non-trivial theoretical questions that the resulting reference
     problem can answer.
 
-Only after this specification is stable should the new reference environment
-be implemented.
+The general reference environment described by this checklist remains an
+open foundational object; the later finite-problem campaign laboratory is a
+distinct scoped instrument and must not be silently equated with it.
 
 ## 14. Current research position
 
-The HLS programme is in **foundational consolidation**: T0--T3 and the scoped
-T4--T6/G2 analytical baseline are in place, while broader reference-problem
-operationalization and validation beyond D0/D1/D2 remain bounded by the stated
-scope.
+At programme level HLS remains in **foundational consolidation and
+characterization / assembly**: T0--T3 and the scoped T4--T6/G2 analytical
+baseline are in place, while broader reference-problem operationalization and
+validation beyond D0/D1/D2 remain open. In parallel, the later Campaign 2 and
+Campaign 3 finite-problem studies have completed their explicitly frozen
+scopes; they are not evidence that the broader foundational object is closed.
+For the current empirical findings and C4 stop status, the dated status block
+at the beginning of this file and its linked primary reports take precedence
+over the historical sequencing language below.
 
 The previous RQ0 phase has established a useful exact result:
 
@@ -701,11 +813,12 @@ empirical relevance:         NOT ESTABLISHED
 
 Those results are retained.
 
-The immediate programme-level priority is now broader: operationalize and
-validate the documented minimal HLS reference scenario with explicit
+The outstanding broader programme-level priority remains to operationalize
+and validate the documented minimal HLS reference scenario with explicit
 organization, limitations, constraints, performance, experience, learning,
 and competence evolution, grounded in the T0--T6 baseline, existing theory,
-and the HLS ontology.
+and the HLS ontology. This is an open programme direction, not an
+authorization for a new experiment in the current task.
 
 This is not a rejection of RQ0 or of the existing synthetic work. It is a
 change in scientific hierarchy:

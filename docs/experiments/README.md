@@ -40,6 +40,13 @@ conceptual index; it is not a second results ledger.
 - [Campaign 3 META-VOC confirmatory results](CAMPAIGN_3_META_VOC_CONFIRMATORY_RESULTS.md):
   paired performance–computation evidence; 50% primary point designated after
   development review
+- [META-VOC predictor-validity audit](META_VOC_PREDICTOR_VALIDITY_REPORT.md):
+  bounded C3.2-matched counterfactual audit of the frozen Ridge/router;
+  local uncommitted evidence, not a change to C3 confirmatory outcomes
+- [Campaign 4 counterfactual protocol](CAMPAIGN_4_COUNTERFACTUAL_PROTOCOL.md)
+  and [engineering verification](CAMPAIGN_4_ENGINE_VERIFICATION.md):
+  preparation only; H0 is not the C3.2 `ell=11` target and full C4 execution
+  remains NO-GO pending scientific/design resolution
 - [Synthetic runners](../../experiments/synthetic/)
 
 ## Foundation and empirical evidence

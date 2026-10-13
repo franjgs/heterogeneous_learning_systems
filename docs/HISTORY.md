@@ -307,3 +307,150 @@ are current characterization directions, not established boundaries or a new
 theorem. The search for a new HLS-specific integration equation, score,
 certificate, local rule, or dynamic theory is closed unless the PI explicitly
 reopens it on genuinely new evidence or assumptions.
+
+## 11. Campaigns 2 and 3; conditional deliberation
+
+This section preserves the results and boundaries of the later finite-problem
+campaigns. Their findings are scoped to their frozen simulator, samples,
+policies, and endpoints; they do not replace the programme-level theory or
+claim a general HLS architecture result.
+
+### 11.1 Campaign 2: policy discrimination and realized consequence
+
+The separate HLS strategy-discrimination gate first established that the
+frozen test range changed actions under prospective policy restrictions; it
+was not a policy leaderboard. Campaign 2 then evaluated eight fixed
+scenarios, four probe configurations, four policy modes, and seeds 10–49. The
+Q11-reference bank contained 15,360 eligible nonterminal states. Historical
+Q11 regression passed, terminal decisions collapsed as expected, and the
+report retained separate paired-state and closed-loop analyses.
+
+The final classification is **CAMPAIGN 2 — ROBUST POSITIVE WITH IMPORTANT
+NULL RESULT**. H1 was supported: hypothesis conflict was associated with
+Q10 sensitivity, without a causal rule or a claim of value of information.
+H2's structural conclusion was supported: global capability headroom alone
+did not characterize development sensitivity. H3 was supported at low
+prevalence: 71/15,360 coupled states (about 0.46%), interpreted as
+non-separability in the prospective continuation landscape, not physical
+synergy.
+
+For the preregistered two-real-reward conditional consequence endpoint, Q10
+had 19.56% divergence, 74.57% positive return, and mean `DeltaG=0.1623`
+[0.1476, 0.1771]; Q11 had 19.91% divergence, 74.53% positive return, and
+mean `DeltaG=0.1669` [0.1530, 0.1803]. Q01 diverged in 7.63%; positive return
+was 45.99%, and mean `DeltaG=0.0015` [−0.0194, 0.0193]. Its realized utility
+was **NOT SUPPORTED** in this estimand. This does not mean development is
+generally useless. `DeltaQ>0` did not guarantee positive realized `DeltaG`.
+Q11 superiority to Q10 was not established; G07 leading Q11 cumulative
+performance in all eight scenarios was a secondary observation, not universal
+team superiority. Every state-conditioned conclusion remains conditional on
+the Q11-generated reference states and frozen range/physics.
+
+The post-C2 support audit separately found **INSUFFICIENT COVERAGE** for using
+Q11 alone as the sole future selector-development source: it missed 14.12%
+of non-Q11 states under the preregistered diagnostic, especially Q00/Q01
+action-different regions. This did not reopen H1–H4; it was a representation
+coverage finding. The Campaign 2 I/O failure was retained as provenance and
+the eventual valid rerun was separately committed; the incident is not to be
+removed or retroactively obscured.
+
+Sources: [strategy-discrimination gate](experiments/STRATEGY_DISCRIMINATION_GATE.md),
+[Campaign 2 preregistration](experiments/CAMPAIGN_2_PREREGISTRATION.md),
+[Campaign 2 results](experiments/CAMPAIGN_2_RESULTS.md),
+[post-C2 coverage audit](experiments/CAMPAIGN_2_STATE_COVERAGE_AUDIT.md), and
+[I/O incident record](experiments/CAMPAIGN_2_IO_INCIDENT.md).
+
+### 11.2 Campaign 3: fixed generator/team families and deliberation
+
+Campaign 3 froze a generator-only calibration and crossed generator split,
+and a quotient team-geometry design with development and geometrically
+separated held-out team sets. These are design choices inside the same
+declared domain, not evidence that held-out teams are random representatives
+or outside-domain structures. PGCG characterization histories were kept
+separate from subsequent experimental histories.
+
+The J=12 horizon pilot found **PERSISTENT BOUNDARY EVOLUTION**. The CE chose
+not to execute J=18/J=24 and pragmatically set `ell=11` for subsequent
+development assessment. This is not an optimal, true, or saturation horizon.
+Gate 1 classified **PARTIAL LOCAL STRUCTURE — GO CONDITIONED TO C3.2** from
+Q11-sourced development states; Q00 and Q11 were contrasting continuation
+probes, not bounds. Gate 2 found **SUFFICIENT DEVELOPMENT DIVERSITY** across
+the prescribed behavior sources and closed without creating value targets.
+
+C3.2 froze 10,500 factual-state allocations and labels from development
+histories, with TRAIN/VALIDATION/DEVELOPMENT_TEST split by replicate. The
+target used by the C3.3 Ridge model is a noisy single Monte Carlo realization
+of Q11-versus-Q00 forced initial action with Q11 continuation, accumulating
+`mu_true` over the current problem remainder plus eleven subsequent physical
+problems. Future physical problems are freshly generated conditional on the
+realized prefix; branch-shared innovations are standard normals, while
+observations, beliefs, and capabilities evolve separately. Beliefs reset at
+problem boundaries; capabilities persist. It is not a two-decision target and
+not an exact adaptive value-of-computation label.
+
+C3.3 development compared Q00, Q11, and META on 2,100 matched development
+histories; the later FAST/DEEP/META and META-VOC development experiments are
+also development evidence, not confirmatory generalization. In the frozen
+META-VOC confirmatory study, the equal-domain META-VOC-50 minus RANDOM-50
+contrast was +0.1167 cumulative `mu_true` per history [0.0310, 0.2013] and
+−0.1924 measured seconds [−0.3539, −0.0228]. This joint contrast met the
+prespecified rule, but the primary 50% point was selected after reviewing
+development results, realized call frequencies differed, G1/G2 showed
+positive production intervals while G3/G4 did not demonstrate an advantage,
+and the result is not universal efficiency or exact budget equivalence.
+
+The separately authorized local predictor-validity audit now records weak to
+limited statewise prediction of the C3.2-matched advantage: pooled equal-domain
+AUC 0.624 [0.572,0.667], near-universal positive raw predictions with low
+specificity, and a META-VOC-routed versus FAST-routed mean target contrast of
+0.0104 [−0.0200,0.0431]. Most statewise Monte Carlo intervals spanned zero.
+The audit therefore does not establish reliable identification of useful
+DEEP opportunities or cost-adjusted optimality. It does not invalidate the
+separate confirmatory sequential policy contrast. This audit report and
+artifacts currently reside in the uncommitted worktree and should be treated
+as local evidence until integrated.
+
+The paper-facing record and review instructions reject algorithmic novelty
+claims for FAST/DEEP choice, conditional computation allocation, supervised
+selector learning, benefit prediction, cost use, or benefit-per-cost routing.
+The defensible framing is an experimental characterization of conditional
+deliberation in a sequential system with endogenous capability change and a
+policy-induced state distribution. No informed alternative-selector
+comparison is recorded. A standalone written Independent Scientific Reviewer
+report is not present in the repository, so reviewer-specific conclusions
+remain externally sourced rather than independently traceable here.
+
+Sources: [C3 theory](theory/CAMPAIGN_3_THEORETICAL_SPECIFICATION.md),
+[generator split](experiments/CAMPAIGN_3_GENERATOR_SPLIT.md),
+[team split](experiments/CAMPAIGN_3_TEAM_SPLIT.md),
+[horizon result](experiments/CAMPAIGN_3_HORIZON_PILOT_RESULTS.md),
+[Gate 1](experiments/CAMPAIGN_3_GATE1.md),
+[Gate 2](experiments/CAMPAIGN_3_GATE2.md),
+[C3.2 protocol](experiments/CAMPAIGN_3_C32_DATA.md),
+[META-VOC confirmatory results](experiments/CAMPAIGN_3_META_VOC_CONFIRMATORY_RESULTS.md),
+[scientific record](paper/META_VOC_SCIENTIFIC_RECORD.md), and local
+[predictor validity report](experiments/META_VOC_PREDICTOR_VALIDITY_REPORT.md).
+
+### 11.3 Campaign 4 preparation and current stop
+
+Campaign 4 remains in preparation. Bounded reconstruction tests verified
+frozen C3 streams and real-decision replay, as well as FAST/Q00 and
+DEEP/Q11 action equivalence on the tested states. The audit found a material
+estimand distinction: C4 H0 is exactly two real decisions, while the C3.2
+supervised target uses the longer `ell=11` horizon and fresh conditional
+future problems. C4 H2 also follows a different clock/history convention.
+The C3.2-matched predictor-validity audit does not turn H0/H1/H2 into the
+same estimand, nor does it complete Campaign 4's broader opportunity or
+development analysis.
+
+The engineering report's decision is **NO-GO for the planned N=800 C4
+execution until the PI/CE accept the estimand distinction and resolve the
+remaining design/precision questions**. No C4 scientific counterfactual
+outcomes were generated. The protocol's dated status has been corrected in
+the local worktree to reflect the present engine/preflight and bounded audit
+while preserving the no-execution decision. The protocol, engine and report
+remain uncommitted local material; the bounded verification is engineering
+evidence, not a scientific C4 result.
+
+Source: [C4 engineering verification](experiments/CAMPAIGN_4_ENGINE_VERIFICATION.md)
+and the current local [C4 protocol](experiments/CAMPAIGN_4_COUNTERFACTUAL_PROTOCOL.md).
