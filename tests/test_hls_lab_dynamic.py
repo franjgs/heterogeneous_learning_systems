@@ -1,5 +1,7 @@
 """Focused tests for the additive nonstationary HLS v1 extension."""
 
+from math import exp
+
 import pytest
 
 from hls.discover_develop_v2 import capability_after_exposure, eta_to_lambda
@@ -16,6 +18,7 @@ from hls.hls_lab_dynamic import (
     generate_problems,
     generate_uncertain_problems,
     initialize_competence_estimator,
+    predict_skill_posterior_after_mis,
     update_skill_posterior,
     make_dynamic_team,
     run_belief_sequence,
@@ -240,6 +243,32 @@ def test_individual_skill_observation_bayes_update_zero_effort_and_bounds():
     noisy = update_skill_posterior(prior, 0.7, 1000.0, 0.01)
     assert 0.0 <= noisy.mean <= 1.0
     assert 0.0 <= noisy.variance <= 0.25
+
+
+def test_mis_prediction_transforms_support_mean_and_variance_coherently():
+    posterior = initialize_competence_estimator(((0.4, 0.6),) * 3, 0.04)[0][0]
+    effort, eta = 0.35, 0.2
+    rate = eta_to_lambda(eta)
+    beta = exp(-rate * effort)
+    predicted = predict_skill_posterior_after_mis(posterior, effort, eta)
+    expected_mean = capability_after_exposure(posterior.mean, effort, rate=rate)
+    assert predicted.support == pytest.approx(tuple(
+        capability_after_exposure(x, effort, rate=rate) for x in posterior.support
+    ))
+    assert predicted.mean == pytest.approx(expected_mean)
+    assert predicted.variance == pytest.approx(beta**2 * posterior.variance)
+    assert all(0.0 <= x <= 1.0 for x in predicted.support)
+
+
+def test_three_point_support_can_become_overconfident_when_truth_is_omitted():
+    posterior = initialize_competence_estimator(((0.4, 0.4),) * 3, 0.04)[0][0]
+    # Truth 0.72 is not in {0, 0.4, 1}; repeated noisy-model observations
+    # whose realized innovations are zero concentrate on the nearest support.
+    for _ in range(60):
+        posterior = update_skill_posterior(posterior, 1.0, 0.72, 0.10)
+    assert posterior.mean == pytest.approx(1.0)
+    assert posterior.variance < 1e-10
+    assert abs(posterior.mean - 0.72) == pytest.approx(0.28)
 
 
 def test_partial_learning_updates_only_from_individual_observations_and_tracks_uncertainty():
