@@ -6,6 +6,8 @@ conceptual index; it is not a second results ledger.
 
 ## Current synthetic framework
 
+- [HLS Laboratory v1 implementation and limitations](HLS_LAB_V1.md)
+- [HLS Laboratory v1 scientific contracts (CE-22 reference)](HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md)
 - [G0 current instrument](G0.md)
 - [G2 D0/D1/D2 dynamic ground truth runner](../../experiments/synthetic/g2/)
 - [A1 reference specification](../experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md)
