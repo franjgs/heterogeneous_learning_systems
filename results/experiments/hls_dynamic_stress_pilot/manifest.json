@@ -1,0 +1,131 @@
+{
+  "artifact_sha256": {
+    "decision_traces.csv": "4d435272efa90c3bfa46db4c886619fe6fc19f9a64eb1dd810259c28f67a48bd",
+    "paired_contrasts.csv": "224f579c09b9a6e638ce5ccec35b8c72a9b1c7b7fbbac90f8bd73733e9360f5a",
+    "run_summary.csv": "9a9119df3c87baf1d00258638b622b8ba21ebc4aaaf2d45ad38403511ee21247"
+  },
+  "base_head": "527e06a16651ca5446140ca26a9ae63a31078c04",
+  "bootstrap": {
+    "B": 5000,
+    "seed": 20261016,
+    "unit": "paired history seed"
+  },
+  "created_unix": 1791989490.622934,
+  "decisions": 7104,
+  "definitions": {
+    "H": [
+      1,
+      3
+    ],
+    "N_problems": 8,
+    "aggregate_sigma": 0.08,
+    "balanced_near_frontier": [
+      0.62,
+      0.62
+    ],
+    "complementary": [
+      0.9,
+      0.9
+    ],
+    "eta_fast": [
+      [
+        0.25,
+        0.25
+      ],
+      [
+        0.25,
+        0.25
+      ],
+      [
+        0.25,
+        0.25
+      ]
+    ],
+    "eta_slow": [
+      [
+        0.03,
+        0.03
+      ],
+      [
+        0.03,
+        0.03
+      ],
+      [
+        0.03,
+        0.03
+      ]
+    ],
+    "full_catalog_budget": 3.0,
+    "heterogeneous": [
+      [
+        0.82,
+        0.18
+      ],
+      [
+        0.18,
+        0.82
+      ],
+      [
+        0.5,
+        0.5
+      ]
+    ],
+    "individual_sigma": 0.06,
+    "prior": 0.5,
+    "similar": [
+      [
+        0.55,
+        0.45
+      ],
+      [
+        0.55,
+        0.45
+      ],
+      [
+        0.55,
+        0.45
+      ]
+    ],
+    "switching": [
+      [
+        1.2,
+        0.25
+      ],
+      [
+        0.25,
+        1.2
+      ]
+    ],
+    "tight_budget": 1.5,
+    "tight_requirements": [
+      0.21,
+      0.21
+    ]
+  },
+  "frontier_checks": {
+    "discover_excluded_from_tight_budget_reason": "frozen DISCOVER adapter requires all 64 JOINT_ACTIONS feasible",
+    "heterogeneous_max_balanced": 1.0699999999999998,
+    "similar_max_balanced": 0.675,
+    "tight_feasible_action_count": 10
+  },
+  "no_policy_or_physics_changes": true,
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "protocol": "hls-dynamic-stress-pilot-v1",
+  "python": "3.11.9 (main, Apr 19 2024, 11:43:47) [Clang 14.0.6 ]",
+  "runs": 448,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "source_sha256": {
+    "experiments/synthetic/hls_lab_dynamic/stress_pilot.py": "13a8b6a091e4e890389f470ee72a7de8024e9c69d0420d35be05e4440bf56aab",
+    "src/hls/hls_lab_dynamic.py": "d6cbb568a9624884da7eeb7da080ffca737326d72359c087ebdc374e76449c70",
+    "src/hls/hls_lab_v1.py": "c8dc4cb387cc5c47eb19c9af44c40e43772aeb755b4149bf99d3eb586e11aa6f"
+  }
+}
