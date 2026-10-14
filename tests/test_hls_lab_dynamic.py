@@ -5,6 +5,7 @@ import pytest
 from hls.discover_develop_v2 import capability_after_exposure, eta_to_lambda
 from hls.discover_v0 import JOINT_ACTIONS
 from hls.hls_lab_dynamic import (
+    CompetenceInformationMode,
     DemandRegime,
     DiscoverBeliefPolicy,
     LearningProfile,
@@ -13,6 +14,7 @@ from hls.hls_lab_dynamic import (
     compare_belief_policies,
     compare_organizations,
     generate_problems,
+    make_dynamic_team,
     run_belief_sequence,
     run_dynamic_sequence,
 )
@@ -137,6 +139,7 @@ def test_real_and_estimated_competencies_remain_separate_and_h1_is_compatible():
     new_run = run_belief_sequence(
         initial, hidden, policy, learning=RATES, decision_horizon=1,
         individual_learning=True, noise_seed=9, seed=9,
+        information_mode=CompetenceInformationMode.PARTIAL,
     )
     old_step, new_step = old_run.records[0], new_run.records[0].episode
     assert new_step.action == old_step.action
@@ -144,6 +147,85 @@ def test_real_and_estimated_competencies_remain_separate_and_h1_is_compatible():
     assert new_step.competence_before == real
     assert new_step.estimated_before == estimate
     assert new_step.competence_after != new_step.estimated_after
+
+
+def test_oracle_and_partial_team_construction_are_explicit_and_separate():
+    real = ((0.8, 0.2), (0.2, 0.8), (0.4, 0.4))
+    estimate = ((0.3, 0.7), (0.7, 0.3), (0.5, 0.5))
+    oracle = make_dynamic_team(
+        real, information_mode=CompetenceInformationMode.ORACLE
+    )
+    partial = make_dynamic_team(
+        real, information_mode=CompetenceInformationMode.PARTIAL,
+        estimated_competencies=estimate,
+    )
+    assert oracle.real_matrix == oracle.estimated_matrix == real
+    assert partial.real_matrix == real
+    assert partial.estimated_matrix == estimate
+    with pytest.raises(ValueError, match="explicit initial estimate"):
+        make_dynamic_team(real, information_mode=CompetenceInformationMode.PARTIAL)
+
+
+def test_partial_information_policy_receives_no_real_competencies_and_does_not_fake_update():
+    real = ((0.8, 0.2), (0.2, 0.8), (0.4, 0.4))
+    estimate = ((0.3, 0.7), (0.7, 0.3), (0.5, 0.5))
+    initial = make_dynamic_team(
+        real, information_mode=CompetenceInformationMode.PARTIAL,
+        estimated_competencies=estimate,
+    )
+
+    class InspectingPolicy:
+        name = "inspect_estimate_only"
+
+        def choose(self, view, state):
+            assert view.estimated_competencies == estimate
+            assert not hasattr(view, "competence_real")
+            assert not hasattr(view, "true_environment_type")
+            return view.feasible_actions[-1]
+
+    item = UncertainProblem(ProblemSpec("partial", (0.2, 0.0), 3.0), THETA_1)
+    run = run_belief_sequence(
+        initial, (item,), InspectingPolicy(), learning=RATES,
+        decision_horizon=1, individual_learning=True,
+        noise_seed=20, information_mode=CompetenceInformationMode.PARTIAL,
+    )
+    assert run.information_mode == "PARTIAL"
+    assert run.final_team.real_matrix != real
+    assert run.final_team.estimated_matrix == estimate
+    assert run.records[0].episode.estimated_before == estimate
+    assert run.records[0].episode.competence_before == real
+
+
+def test_action_choices_change_observed_reward_information_under_shared_streams():
+    real = ((0.85, 0.2), (0.2, 0.8), (0.4, 0.35))
+    estimate = ((0.3, 0.7), (0.7, 0.3), (0.5, 0.5))
+    initial = make_dynamic_team(
+        real, information_mode=CompetenceInformationMode.PARTIAL,
+        estimated_competencies=estimate,
+    )
+    items = tuple(
+        UncertainProblem(ProblemSpec("same", (0.2, 0.2), 3.0), theta)
+        for theta in (THETA_1, THETA_2, THETA_1)
+    )
+    runs = compare_belief_policies(
+        initial, items,
+        (GreedyAdaptive(), DiscoverBeliefPolicy(sigma=0.03, quadrature_order=3)),
+        learning=LearningProfile(((0.2, 0.2), (0.2, 0.2), (0.2, 0.2))),
+        decision_horizon=2, sigma=0.03, noise_seed=44, seed=2,
+        information_mode=CompetenceInformationMode.PARTIAL,
+    )
+    greedy, discover = runs
+    assert [r.observation_noise for r in greedy.records] == [
+        r.observation_noise for r in discover.records
+    ]
+    assert [r.episode.action for r in greedy.records] != [
+        r.episode.action for r in discover.records
+    ]
+    assert [r.belief_after for r in greedy.records] != [
+        r.belief_after for r in discover.records
+    ]
+    assert greedy.final_team.real_matrix != discover.final_team.real_matrix
+    assert greedy.final_team.estimated_matrix == discover.final_team.estimated_matrix == estimate
 
 
 def test_paired_discover_policies_share_problem_and_noise_streams():

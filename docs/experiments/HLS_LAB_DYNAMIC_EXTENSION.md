@@ -78,3 +78,54 @@ updates and resets, H=1 compatibility, and distinct real/estimated states.
 These are implementation checks only, not a scientific campaign or evidence
 that any organization is generally superior. The source ZIP's `__pycache__`
 files are intentionally not installed.
+
+## Individual competence information audit
+
+The laboratory stores `competence_real` and `competence_estimated` separately
+in each `ExpertState`. The decision interface, `DecisionView`, exposes only
+`estimated_competencies`; it has no real-skill, latent-environment, or outcome
+field. The simulator uses real competencies to produce output and `mu_true`.
+The organization receives the noisy scalar CES observation and maintains the
+existing DISCOVER belief over the two CES environment types. That posterior is
+not an estimate of any expert's individual capabilities.
+
+No existing repository component estimates the six individual capability
+values from observations. In particular, `finite_problem_belief.py` and the
+DISCOVER Bayesian updates infer the latent reward/environment type, not
+individual skills. A noisy team-level CES observation combines multiple
+capabilities and action assignments, so it does not by itself identify each
+expert's skills. The functional success observer is also aggregate and binary.
+Treating either as an individual skill observation would add an unsupported
+measurement model. Therefore this change deliberately does **not** implement
+or claim a competence estimator.
+
+`CompetenceInformationMode.ORACLE` is the explicit perfect-information
+control: construction copies real capabilities into the decision estimate and
+the runner rejects mismatched matrices. `PARTIAL` requires a separately
+supplied estimate. During its run, real capabilities still evolve through the
+unchanged MIS-v2 transition, but the supplied estimate is held fixed because
+no identifiable skill observation is available to update it. This makes
+misspecification visible instead of projecting the simulator's private
+competence transition into organizational knowledge. Existing legacy and
+ORACLE runs retain their earlier estimate-transition behavior.
+
+Organizations can affect both performance and *environmental* information:
+actions change production and thus the noisy CES observation, which is passed
+through the existing `bayes_update`. They cannot thereby be said to acquire
+individual skill information. The bounded reproducible check in
+`experiments/synthetic/hls_lab_dynamic/competence_information_smoke.py` uses
+initially incorrect estimates, shared task/type/noise streams, and existing
+`GreedyAdaptive` and DISCOVER policies. Its outputs are engineering
+diagnostics, not comparative scientific evidence.
+
+Focused verification:
+
+```bash
+PYTHONPATH=src:. pytest -q tests/test_hls_lab_dynamic.py
+PYTHONPATH=src:. python experiments/synthetic/hls_lab_dynamic/competence_information_smoke.py
+```
+
+The remaining scientific limitation is explicit: competence estimates cannot
+currently improve from experience under partial information. Doing so requires
+an authorized, observable individual-level signal and validated measurement
+semantics; aggregate rewards are insufficient grounds to invent one.

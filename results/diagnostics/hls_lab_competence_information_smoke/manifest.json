@@ -1,0 +1,117 @@
+{
+  "classification": "bounded engineering smoke; not scientific evidence",
+  "decisions_per_problem": 2,
+  "environment_seed": 3108,
+  "files": {
+    "trace.csv": "209c896f558d68d095f26f37325ec76beb126aa0365c74f83cb8009d85961c6b"
+  },
+  "information_mode": "PARTIAL",
+  "initial_estimated_competencies": [
+    [
+      0.3,
+      0.7
+    ],
+    [
+      0.7,
+      0.3
+    ],
+    [
+      0.5,
+      0.5
+    ]
+  ],
+  "initial_real_competencies": [
+    [
+      0.85,
+      0.2
+    ],
+    [
+      0.2,
+      0.8
+    ],
+    [
+      0.4,
+      0.35
+    ]
+  ],
+  "noise_seed": 3110,
+  "policies": [
+    "adaptive_greedy",
+    "discover_unknown_policy"
+  ],
+  "problem_seed": 3107,
+  "problems": 6,
+  "results": [
+    {
+      "cumulative_true_expected_reward": 15.484354559999998,
+      "final_belief": 0.0,
+      "final_estimated_competencies": [
+        [
+          0.3,
+          0.7
+        ],
+        [
+          0.7,
+          0.3
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "final_real_competencies": [
+        [
+          0.9606784,
+          0.7902847999999999
+        ],
+        [
+          0.7902847999999999,
+          0.9475712
+        ],
+        [
+          0.8427136,
+          0.8296064
+        ]
+      ],
+      "policy": "adaptive_greedy"
+    },
+    {
+      "cumulative_true_expected_reward": 14.270937078697857,
+      "final_belief": 0.0,
+      "final_estimated_competencies": [
+        [
+          0.3,
+          0.7
+        ],
+        [
+          0.7,
+          0.3
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "final_real_competencies": [
+        [
+          0.8926687370800102,
+          0.9231692893200443
+        ],
+        [
+          0.9231692893200443,
+          0.8568916494400135
+        ],
+        [
+          0.6928,
+          0.9127584768
+        ]
+      ],
+      "policy": "discover_unknown_policy"
+    }
+  ],
+  "run_seed": 3109,
+  "source_sha256": {
+    "competence_information_smoke.py": "c1103c301cd747eb32c0cee01a249c49c7a315250b4db9dcf4f69359f08260b8",
+    "hls_lab_dynamic.py": "ba5bca6004c443bad9260795aa7bd094b5d6775c53d07437335912a2fa1c8a37"
+  }
+}

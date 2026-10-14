@@ -8,6 +8,7 @@ DISCOVER.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from enum import Enum
 from math import isfinite
 from random import Random
 from typing import Sequence
@@ -24,6 +25,8 @@ from .discover_v0 import (
     means,
     production_inputs,
     unknown_policy_value,
+    State,
+    validate_state,
 )
 from .hls_lab_v1 import (
     EpisodeRecord,
@@ -38,6 +41,45 @@ from .hls_lab_v1 import (
     evaluate_problem,
     feasible_actions,
 )
+
+
+class CompetenceInformationMode(str, Enum):
+    """Initial skill information available to a dynamic-run policy."""
+
+    ORACLE = "ORACLE"
+    PARTIAL = "PARTIAL"
+
+
+def make_dynamic_team(
+    real_competencies: State,
+    *,
+    information_mode: CompetenceInformationMode,
+    estimated_competencies: State | None = None,
+    expert_ids: tuple[str, str, str] = ("E0", "E1", "E2"),
+) -> TeamState:
+    """Construct real and informational skill states without implicit leakage.
+
+    PARTIAL requires an explicit estimate supplied independently by the
+    caller. ORACLE copies the real state and rejects a competing estimate.
+    """
+    validate_state(real_competencies)
+    if information_mode == CompetenceInformationMode.ORACLE:
+        if estimated_competencies is not None:
+            raise ValueError("ORACLE mode derives its estimate from real competence")
+        estimate = real_competencies
+    elif information_mode == CompetenceInformationMode.PARTIAL:
+        if estimated_competencies is None:
+            raise ValueError("PARTIAL mode requires an explicit initial estimate")
+        validate_state(estimated_competencies)
+        estimate = estimated_competencies
+    else:
+        raise ValueError("unknown competence information mode")
+    if len(expert_ids) != 3 or len(set(expert_ids)) != 3:
+        raise ValueError("exactly three distinct expert IDs are required")
+    return TeamState(tuple(
+        ExpertState(expert_id, real_competencies[i], estimate[i])
+        for i, expert_id in enumerate(expert_ids)
+    ))
 
 
 @dataclass(frozen=True)
@@ -102,9 +144,16 @@ def generate_problems(
 
 
 def advance_team(
-    team: TeamState, action, profile: LearningProfile, *, enabled: bool
+    team: TeamState, action, profile: LearningProfile, *, enabled: bool,
+    update_estimated: bool = True,
 ) -> TeamState:
-    """Apply the frozen MIS-v2 exponential gap law with cell-specific rates."""
+    """Apply MIS-v2 to real skills and, optionally, the model's skill estimate.
+
+    ``update_estimated=False`` is the honest partial-information control:
+    without an identifiable skill observation, it does not pretend that the
+    organization can update its skill estimate from the simulator's private
+    transition.
+    """
     experts = []
     for expert_index, expert in enumerate(team.experts):
         competence_real = tuple(
@@ -122,7 +171,7 @@ def advance_team(
                 action[expert_index][skill],
                 rate=eta_to_lambda(profile.eta[expert_index][skill]),
             )
-            if enabled else expert.competence_estimated[skill]
+            if enabled and update_estimated else expert.competence_estimated[skill]
             for skill in range(2)
         )
         experience = tuple(
@@ -292,6 +341,7 @@ class BeliefEpisodeRecord:
 class BeliefRunResult:
     policy: str
     seed: int
+    information_mode: str
     decision_horizon: int
     records: tuple[BeliefEpisodeRecord, ...]
     final_team: TeamState
@@ -366,6 +416,7 @@ def run_belief_sequence(
     noise_seed: int = 0,
     seed: int = 0,
     initial_organization_state: OrganizationState | None = None,
+    information_mode: CompetenceInformationMode = CompetenceInformationMode.ORACLE,
 ) -> BeliefRunResult:
     """Run H decisions per task with latent types, observations, and MIS-v2.
 
@@ -383,6 +434,13 @@ def run_belief_sequence(
         raise ValueError("prior must lie in [0, 1]")
     if not isfinite(sigma) or sigma <= 0:
         raise ValueError("sigma must be finite and positive")
+    if information_mode not in (
+        CompetenceInformationMode.ORACLE, CompetenceInformationMode.PARTIAL
+    ):
+        raise ValueError("unknown competence information mode")
+    if (information_mode == CompetenceInformationMode.ORACLE
+            and initial_team.real_matrix != initial_team.estimated_matrix):
+        raise ValueError("ORACLE mode requires real and estimated competence to match")
     if organizational_learning and not callable(getattr(organization, "observe", None)):
         raise ValueError("organizational learning requires an organization observe method")
 
@@ -444,7 +502,10 @@ def run_belief_sequence(
             )
             effort = sum(sum(row) for row in action)
             cost = effort * problem.resource_cost_per_unit
-            team = advance_team(team, action, learning, enabled=individual_learning)
+            team = advance_team(
+                team, action, learning, enabled=individual_learning,
+                update_estimated=(information_mode == CompetenceInformationMode.ORACLE),
+            )
             functional_reward = float(functional.success)
             if organizational_learning:
                 org = organization.observe(
@@ -509,6 +570,7 @@ def run_belief_sequence(
     return BeliefRunResult(
         policy=getattr(organization, "name", type(organization).__name__),
         seed=seed,
+        information_mode=information_mode.value,
         decision_horizon=decision_horizon,
         records=tuple(records),
         final_team=team,
@@ -528,6 +590,7 @@ def compare_belief_policies(
     sigma: float = DEFAULT_SIGMA,
     noise_seed: int,
     seed: int = 0,
+    information_mode: CompetenceInformationMode = CompetenceInformationMode.ORACLE,
 ) -> tuple[BeliefRunResult, ...]:
     """Pair policies on identical latent problems and Gaussian innovations."""
     return tuple(
@@ -535,6 +598,7 @@ def compare_belief_policies(
             initial_team, problems, organization, learning=learning,
             decision_horizon=decision_horizon, prior=prior, sigma=sigma,
             noise_seed=noise_seed, seed=seed,
+            information_mode=information_mode,
         )
         for organization in organizations
     )
