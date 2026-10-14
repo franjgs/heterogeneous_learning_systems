@@ -6,12 +6,25 @@ from hls.discover_develop_v2 import capability_after_exposure, eta_to_lambda
 from hls.discover_v0 import JOINT_ACTIONS
 from hls.hls_lab_dynamic import (
     DemandRegime,
+    DiscoverBeliefPolicy,
     LearningProfile,
+    UncertainProblem,
     advance_team,
+    compare_belief_policies,
     compare_organizations,
     generate_problems,
+    run_belief_sequence,
+    run_dynamic_sequence,
 )
-from hls.hls_lab_v1 import ExploreThenGreedy, GreedyAdaptive, make_team
+from hls.hls_lab_v1 import (
+    ExploreThenGreedy,
+    ExpertState,
+    GreedyAdaptive,
+    ProblemSpec,
+    TeamState,
+    make_team,
+)
+from hls.discover_v0 import THETA_1, THETA_2
 
 
 TEAM = ((0.82, 0.12), (0.18, 0.76), (0.35, 0.28))
@@ -79,3 +92,72 @@ def test_learning_profile_requires_three_by_two_eta_values():
         LearningProfile(((0.2, 0.3), (0.2, 0.3)))  # type: ignore[arg-type]
     with pytest.raises(ValueError):
         LearningProfile(((0.2, 0.3), (0.2, 0.3), (0.2, 1.0)))
+
+
+def test_belief_execution_reuses_discover_and_resets_at_problem_boundaries():
+    initial = make_team(TEAM)
+    problems = (
+        UncertainProblem(ProblemSpec("A", (0.35, 0.0), 3.0), THETA_1),
+        UncertainProblem(ProblemSpec("B", (0.0, 0.35), 3.0), THETA_2),
+    )
+    policy = DiscoverBeliefPolicy(sigma=0.03, quadrature_order=3)
+    run = run_belief_sequence(
+        initial, problems, policy, learning=RATES,
+        decision_horizon=2, individual_learning=True,
+        prior=0.5, sigma=0.03, noise_seed=12,
+    )
+
+    assert len(run.records) == 4
+    assert [r.decision_in_problem for r in run.records] == [0, 1, 0, 1]
+    assert run.records[0].belief_before == pytest.approx(0.5)
+    assert run.records[0].belief_after != pytest.approx(0.5)
+    assert run.records[0].belief_after == pytest.approx(run.records[1].belief_before)
+    assert run.records[2].belief_before == pytest.approx(0.5)
+    assert run.records[2].belief_after == pytest.approx(run.records[3].belief_before)
+    assert run.records[0].true_environment_type == "theta1"
+    assert run.records[2].true_environment_type == "theta2"
+    assert run.records[0].episode.competence_after == run.records[1].episode.competence_before
+    assert run.records[1].episode.competence_after == run.records[2].episode.competence_before
+    assert not hasattr(run.records[0].episode, "theta")
+
+
+def test_real_and_estimated_competencies_remain_separate_and_h1_is_compatible():
+    real = ((0.7, 0.2), (0.2, 0.7), (0.3, 0.3))
+    estimate = ((0.6, 0.25), (0.25, 0.65), (0.35, 0.25))
+    initial = TeamState(tuple(
+        ExpertState(f"E{i}", real[i], estimate[i]) for i in range(3)
+    ))
+    problem = ProblemSpec("known-task", (0.25, 0.0), 3.0)
+    policy = GreedyAdaptive()
+    old_run = run_dynamic_sequence(
+        initial, (problem,), policy, learning=RATES,
+        individual_learning=True, seed=9,
+    )
+    hidden = (UncertainProblem(problem, THETA_1),)
+    new_run = run_belief_sequence(
+        initial, hidden, policy, learning=RATES, decision_horizon=1,
+        individual_learning=True, noise_seed=9, seed=9,
+    )
+    old_step, new_step = old_run.records[0], new_run.records[0].episode
+    assert new_step.action == old_step.action
+    assert new_step.outputs == old_step.outputs
+    assert new_step.competence_before == real
+    assert new_step.estimated_before == estimate
+    assert new_step.competence_after != new_step.estimated_after
+
+
+def test_paired_discover_policies_share_problem_and_noise_streams():
+    problem = UncertainProblem(ProblemSpec("paired", (0.3, 0.0), 3.0), THETA_2)
+    runs = compare_belief_policies(
+        make_team(TEAM), (problem,),
+        (DiscoverBeliefPolicy(quadrature_order=3), GreedyAdaptive()),
+        learning=RATES, decision_horizon=2, sigma=0.1,
+        noise_seed=85, seed=3,
+    )
+    assert len(runs) == 2
+    assert [r.observation_noise for r in runs[0].records] == [
+        r.observation_noise for r in runs[1].records
+    ]
+    assert all(r.problem_episode == 0 for result in runs for r in result.records)
+    assert all(r.episode.problem_id == "paired" for result in runs for r in result.records)
+    assert all(r.episode.action in JOINT_ACTIONS for result in runs for r in result.records)
