@@ -9,6 +9,7 @@ conceptual index; it is not a second results ledger.
 - [HLS Laboratory v1 implementation and limitations](HLS_LAB_V1.md)
 - [HLS Laboratory v1 scientific contracts (CE-22 reference)](HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md)
 - [HLS Laboratory v1 CE-24 deterministic train/evaluate validation](HLS_LAB_CE24.md): local organizational-learning effect, order sensitivity, and HOLD on general claims
+- [HLS Laboratory v1 CE-25 mechanism decomposition](HLS_LAB_CE25.md): paired reward-blind exploration versus reward-informed learning, memory controls, and deterministic order/horizon checks
 - [G0 current instrument](G0.md)
 - [G2 D0/D1/D2 dynamic ground truth runner](../../experiments/synthetic/g2/)
 - [A1 reference specification](../experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md)

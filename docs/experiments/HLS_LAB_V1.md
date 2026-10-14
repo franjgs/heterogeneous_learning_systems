@@ -1,6 +1,6 @@
 # HLS Laboratory v1
 
-**Estado: PARTIAL — vertical slice y microexperimento CE-24 determinista implementados; esto no es evidencia poblacional ni validación en equipos reales.** Esta guía describe el alcance mínimo de CE-23/24 y no sustituye al contrato de referencia, que se conserva en [HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md](HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md).
+**Estado: PARTIAL — vertical slice y microexperimentos deterministas CE-24/25 implementados; esto no es evidencia poblacional ni validación en equipos reales.** Esta guía describe CE-23–25 y no sustituye al contrato de referencia, que se conserva en [HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md](HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md).
 
 ## Fundamento y objetivo
 
@@ -52,6 +52,7 @@ La actualización organizativa usa el éxito binario observado después de la ac
 - `src/hls/discover_develop_v2.py`: transición MIS-v2 reutilizada; no se modifica.
 - `experiments/synthetic/hls_lab_v1/demo.py`: demostración pequeña fija y determinista; no ejecuta factoriales.
 - `experiments/synthetic/hls_lab_v1/ce24.py`: microexperimento TRAIN/EVAL finito, export create-only y comparación de orden predefinida.
+- `experiments/synthetic/hls_lab_v1/ce25.py`: experimento mecanístico CE-25 con TRAIN/EVAL emparejado, controles de memoria/feedback, catálogo completo filtrado, horizontes y órdenes predefinidos; resultados en `results/experiments/hls_lab_ce25/`.
 - `tests/test_hls_lab_v1.py`: fixtures analíticos P1–P9.
 - `tests/test_hls_lab_v1_ce24.py`: validación de dominio, persistencia, congelación, baselines, integridad/reproducibilidad de export.
 
@@ -89,7 +90,7 @@ SHA-256 del documento de contrato descargado al incorporar CE-23: `2ac24be1bd19f
 
 ## Limitaciones y trabajo pendiente
 
-- Es una vertical slice más un ejecutor finito CE-24; no hay un framework general de campañas/factoriales ni dominio de problemas calibrado empíricamente.
+- Es una vertical slice más ejecutores finitos CE-24/25; no hay un framework general de campañas ni dominio de problemas calibrado empíricamente.
 - Una decisión por problema limita preguntas temporales dentro del episodio; solo hay aprendizaje entre problemas.
 - Competencia estimada igual a real elimina incertidumbre de competencia; no hay creencias ni estado informativo imperfecto.
 - Producción aditiva y catálogo discreto reutilizado no representan sinergias/interdependencias más ricas.
@@ -99,4 +100,6 @@ SHA-256 del documento de contrato descargado al incorporar CE-23: `2ac24be1bd19f
 - El coste monetario/computacional es solo un campo explícito; la demo usa coste por unidad cero. No existe modelo de coste estimado.
 - Antes de cualquier factorial: congelar protocolo/dominio/seeds, definir cómo se comparan learning on/off bajo no estacionariedad y revisar que el muestreo no esté saturado. No ejecutar esa fase como parte de CE-23.
 
-La clase de entrega es **PARTIAL**, no COMPLETE: el ensamblaje, demo y pruebas contractuales existen; una evaluación científica factorial queda expresamente fuera de alcance.
+CE-25 valida de forma acotada que la experiencia exploratoria emparejada puede ser usada para cambiar decisiones, y que la memoria no consultada no altera el comportamiento; véase [el informe CE-25](HLS_LAB_CE25.md). No demuestra generalización ni una ventaja poblacional.
+
+La clase de entrega sigue siendo **PARTIAL**, no COMPLETE: el ensamblaje, demo, pruebas contractuales y validaciones mecanísticas finitas existen; una evaluación científica amplia queda fuera de alcance.
