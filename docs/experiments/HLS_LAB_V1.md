@@ -1,6 +1,6 @@
 # HLS Laboratory v1
 
-**Estado: PARTIAL — vertical slice implementada y pruebas P1–P9 ejecutadas; no es una campaña ni evidencia científica sobre equipos reales.** Esta guía describe el alcance mínimo de CE-23 y no sustituye al contrato de referencia, que se conserva en [HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md](HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md).
+**Estado: PARTIAL — vertical slice y microexperimento CE-24 determinista implementados; esto no es evidencia poblacional ni validación en equipos reales.** Esta guía describe el alcance mínimo de CE-23/24 y no sustituye al contrato de referencia, que se conserva en [HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md](HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md).
 
 ## Fundamento y objetivo
 
@@ -47,11 +47,13 @@ La actualización organizativa usa el éxito binario observado después de la ac
 
 ## Arquitectura y reutilización
 
-- `src/hls/hls_lab_v1.py`: ensamblaje v1 nuevo: contratos, filtrado de acciones por recursos, evaluación funcional, clasificadores de factibilidad, organizaciones, motor de secuencia, trazas y serialización determinista JSON.
+- `src/hls/hls_lab_v1.py`: ensamblaje v1 nuevo: contratos, filtrado de acciones por recursos, evaluación funcional, clasificadores de factibilidad, organizaciones, motor de secuencia, trazas, serialización determinista JSON y entrada explícita `initial_organization_state` para congelar/reutilizar θ entre TRAIN/EVAL.
 - `src/hls/discover_v0.py`: fuente de `JOINT_ACTIONS`, validación de estado/acción y producción lineal `production_inputs`; no se modifica.
 - `src/hls/discover_develop_v2.py`: transición MIS-v2 reutilizada; no se modifica.
 - `experiments/synthetic/hls_lab_v1/demo.py`: demostración pequeña fija y determinista; no ejecuta factoriales.
+- `experiments/synthetic/hls_lab_v1/ce24.py`: microexperimento TRAIN/EVAL finito, export create-only y comparación de orden predefinida.
 - `tests/test_hls_lab_v1.py`: fixtures analíticos P1–P9.
+- `tests/test_hls_lab_v1_ce24.py`: validación de dominio, persistencia, congelación, baselines, integridad/reproducibilidad de export.
 
 Small Problem World / `functional_problem.py` no se altera: su observador histórico exige requisitos estrictamente positivos y sus secuencias tienen otro contrato temporal, por lo que esta capa v1 admite cero en una dimensión y exactamente una decisión por problema sin modificar su API. `finite_problem_belief.py` queda fuera: sus creencias sobre identidad de problema no son el contrato de estimación de competencia de esta v1. G3/G3-H aportan precedentes de asignación, pero no se copian sus reglas/objetivos; G0/C1 y Configuration × Environment v0/v0.1 permanecen intactos. CE-16 inspira trazabilidad por decisión, no transfiere sus definiciones de cumplimiento ni sus resultados. No se cambia documentación de resultados históricos.
 
@@ -75,9 +77,9 @@ La demo imprime un resumen determinista, no crea artefactos de resultados y no s
 
 ## Pruebas de aceptación y resultado
 
-Las nueve pruebas están en `tests/test_hls_lab_v1.py` y corresponden a P1–P9 del contrato: independencia orientación/exigencia y recompensa; complementariedad `team_only` con control individual; no etiquetar falsamente complementariedad; aislamiento de MIS-v2; actualización organizativa tabular que altera una decisión posterior; adaptación sin cambio de `θ`; firewall y controles LI/LO; dominio factible/no factible; repetibilidad y serialización determinista.
+Las primeras nueve pruebas de `tests/test_hls_lab_v1.py` corresponden a P1–P9 del contrato; se añadieron tres pruebas de persistencia TRAIN/EVAL, inmutabilidad de θ con LO=OFF y semilla como metadato. `tests/test_hls_lab_v1_ce24.py` valida dominio, acciones exhaustivas, evaluación congelada, referencias y export.
 
-Resultado registrado en esta entrega: `PYTHONPATH=src:. pytest -q tests/test_hls_lab_v1.py` — **9 passed**. La demo determinista se ejecuta además como comprobación funcional. Esto valida contratos de software en microfixtures, no afirma que se hayan completado barridos o experimentos de desempeño. Los resultados de tests deben volver a ejecutarse en el commit/PR final.
+La ejecución de regresión previa a CE-24 registró 91 pruebas superadas; esta iteración ampliada y repetida se informa en el reporte [CE-24](HLS_LAB_CE24.md). Son verificaciones de software más un microexperimento determinista; no validan prevalencias, efectos poblacionales ni desempeño en equipos reales.
 
 ## Trazabilidad CE-01–CE-21
 
@@ -87,7 +89,7 @@ SHA-256 del documento de contrato descargado al incorporar CE-23: `2ac24be1bd19f
 
 ## Limitaciones y trabajo pendiente
 
-- Es una vertical slice, no el factorial v1 ni un laboratorio completo: no hay un conjunto de problemas/calibración registrado, campañas, CLI de barrido, persistencia de resultados o manifiestos de ejecución.
+- Es una vertical slice más un ejecutor finito CE-24; no hay un framework general de campañas/factoriales ni dominio de problemas calibrado empíricamente.
 - Una decisión por problema limita preguntas temporales dentro del episodio; solo hay aprendizaje entre problemas.
 - Competencia estimada igual a real elimina incertidumbre de competencia; no hay creencias ni estado informativo imperfecto.
 - Producción aditiva y catálogo discreto reutilizado no representan sinergias/interdependencias más ricas.

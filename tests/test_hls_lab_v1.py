@@ -168,3 +168,43 @@ def test_p9_seed_and_configuration_serialize_deterministically():
     assert serialized_a == serialized_b
     assert '"organization_theta_after"' in serialized_a
     assert '"action_id"' in serialized_a
+
+
+def test_organization_state_can_be_frozen_and_reused_across_train_eval():
+    learner = ExploreThenGreedy()
+    candidates = (RIGHT, LEFT)
+    p = ProblemSpec("A", (0.8, 0.0), 1.0, allowed_actions=candidates)
+    initial = make_team(S_COMP)
+    trained = run_sequence(initial, (p, p), learner, eta=ETA,
+                           individual_learning=False, organizational_learning=True)
+    assert trained.final_organization.update_count == 2
+    evaluated = run_sequence(initial, (p,), learner, eta=ETA,
+                             individual_learning=False, organizational_learning=False,
+                             initial_organization_state=trained.final_organization)
+    assert evaluated.records[0].organization_theta_before == trained.final_organization.values
+    assert evaluated.records[0].organization_theta_after == trained.final_organization.values
+    assert not evaluated.records[0].organization_updated
+    assert evaluated.final_organization == trained.final_organization
+    assert evaluated.final_team.real_matrix == initial.real_matrix
+
+
+def test_organizational_learning_off_control_does_not_mutate_state():
+    learner = ExploreThenGreedy()
+    seeded = OrganizationState(((('A', tuple((float(x), float(y)) for x, y in LEFT)), 2, 0.5),), 2)
+    p = ProblemSpec("A", (0.8, 0.0), 1.0, allowed_actions=(LEFT, RIGHT))
+    run = run_sequence(make_team(S_COMP), (p, p), learner, eta=ETA,
+                       individual_learning=False, organizational_learning=False,
+                       initial_organization_state=seeded)
+    assert all(row.organization_theta_before == seeded.values for row in run.records)
+    assert all(row.organization_theta_after == seeded.values for row in run.records)
+    assert not any(row.organization_updated for row in run.records)
+
+
+def test_seed_is_trace_metadata_not_a_random_stream_in_v1():
+    p = ProblemSpec("deterministic", (0.8, 0.0), 1.0, allowed_actions=(LEFT,))
+    a = run_sequence(make_team(S_COMP), (p, p), FixedRouting({"deterministic": LEFT}),
+                     eta=ETA, individual_learning=True, seed=1)
+    b = run_sequence(make_team(S_COMP), (p, p), FixedRouting({"deterministic": LEFT}),
+                     eta=ETA, individual_learning=True, seed=999)
+    assert [replace(row, seed=0) for row in a.records] == [replace(row, seed=0) for row in b.records]
+    assert a.final_team == b.final_team

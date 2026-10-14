@@ -1,0 +1,131 @@
+{
+  "code_provenance": {
+    "commit": "624e24925d3430f1c6b34f257e3c8d1825feb773",
+    "source_sha256": {
+      "experiments/synthetic/hls_lab_v1/ce24.py": "ac3144d3bb7c5a1fcc57c41dad8a7975820f9f20f9abd46bdd6ef039a7461d09",
+      "src/hls/hls_lab_v1.py": "c8dc4cb387cc5c47eb19c9af44c40e43772aeb755b4149bf99d3eb586e11aa6f",
+      "tests/test_hls_lab_v1_ce24.py": "e67ceb22fec8acd0adb7e262923b53b0ff2f6ea6959650ebfa7c1a2c216ec120"
+    }
+  },
+  "created_utc": "2026-10-14T08:48:23.548014+00:00",
+  "domain_audit": {
+    "A": {
+      "budget": 1.0,
+      "complementarity_class": "single_sufficient",
+      "feasible_action_count": 10,
+      "requirements": [
+        0.8,
+        0.0
+      ],
+      "successful_action_ids": [
+        48
+      ]
+    },
+    "B": {
+      "budget": 1.0,
+      "complementarity_class": "single_sufficient",
+      "feasible_action_count": 10,
+      "requirements": [
+        0.0,
+        0.8
+      ],
+      "successful_action_ids": [
+        4
+      ]
+    },
+    "C": {
+      "budget": 2.0,
+      "complementarity_class": "team_only",
+      "feasible_action_count": 37,
+      "requirements": [
+        0.8,
+        0.8
+      ],
+      "successful_action_ids": [
+        52
+      ]
+    },
+    "D": {
+      "budget": 1.0,
+      "complementarity_class": "none_feasible",
+      "feasible_action_count": 10,
+      "requirements": [
+        0.95,
+        0.95
+      ],
+      "successful_action_ids": []
+    }
+  },
+  "episode_records": 240,
+  "eta_from_campaign0_reference": 0.35,
+  "evaluation_contains_untrained_controls": [
+    "C",
+    "D"
+  ],
+  "evaluation_cycles_per_known_context": 4,
+  "evaluation_sequence": [
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "exact_context_oracle_action_ids": {
+    "A": 48,
+    "B": 4,
+    "C": 52,
+    "D": 4
+  },
+  "full_joint_action_catalog_count": 64,
+  "groups": 18,
+  "initial_team": [
+    [
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0
+    ],
+    [
+      0.0,
+      0.0
+    ]
+  ],
+  "metric_note": "No statistical intervals: simulator and design are deterministic; seeds do not alter trajectories.",
+  "output_sha256": {
+    "episodes.jsonl": "653990789acb9e4c73d1de27ce00a76495d2e8a45fbcbe93218e38a952489469",
+    "problem_metrics.csv": "0eef37ffe9601827720be8b52305e62a55c66cfd32bc3ebdb76119c7574477b0",
+    "summary.csv": "50573ba88c6989e1134af0b02fed17c47cf3506588e050a1024ced95441ff1fa"
+  },
+  "protocol": "HLS-LAB-CE24-v1",
+  "seed_recorded_only_not_consumed": 20261014,
+  "training_cycles_per_context": 10,
+  "training_sequence": [
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B"
+  ]
+}

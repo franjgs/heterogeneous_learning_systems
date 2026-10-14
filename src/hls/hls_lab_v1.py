@@ -374,15 +374,23 @@ def run_sequence(
     individual_learning: bool = True,
     organizational_learning: bool = False,
     seed: int = 0,
+    initial_organization_state: OrganizationState | None = None,
 ) -> RunResult:
-    """Execute one decision per problem, independently controlling LI and LO."""
+    """Execute one decision per problem, independently controlling LI and LO.
+
+    Supplying ``initial_organization_state`` supports explicit train/evaluate
+    phases.  Evaluation can then reuse learned θ while setting organizational
+    learning off to freeze it.  The default remains a fresh empty state for
+    backwards compatibility.
+    """
     if not problems:
         raise ValueError("problem sequence must be non-empty")
     if not isfinite(eta) or not 0 < eta < 1:
         raise ValueError("eta must lie strictly inside (0,1)")
     if organizational_learning and not isinstance(organization, ExploreThenGreedy):
         raise ValueError("organizational learning is implemented only for ExploreThenGreedy")
-    team, org = initial_team, OrganizationState()
+    team = initial_team
+    org = initial_organization_state or OrganizationState()
     previous_action = None
     records = []
     cumulative_successes = 0
