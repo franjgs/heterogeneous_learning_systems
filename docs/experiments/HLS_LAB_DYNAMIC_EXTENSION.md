@@ -16,10 +16,11 @@ experiences and trajectories may differ endogenously.
 capability. The implementation converts each eta with the existing
 `eta_to_lambda` and applies `capability_after_exposure`; the transition law is
 unchanged. Real and estimated capability matrices are evolved separately
-using the same exposure law; the default team still starts with perfect
-estimates, but callers can supply a distinct estimate. LI can be disabled
-independently. Organizational updates are performed only when requested and
-supported by the organization interface.
+as specified by MIS-v2; estimate handling depends on the explicit information
+mode documented below. The default team still starts with perfect estimates,
+but callers can supply distinct estimates. LI can be disabled independently.
+Organizational updates are performed only when requested and supported by the
+organization interface.
 
 The additive `UncertainProblem` / `run_belief_sequence` path composes
 functional requirements with DISCOVER's existing two-type CES environment,
@@ -89,43 +90,71 @@ The organization receives the noisy scalar CES observation and maintains the
 existing DISCOVER belief over the two CES environment types. That posterior is
 not an estimate of any expert's individual capabilities.
 
-No existing repository component estimates the six individual capability
-values from observations. In particular, `finite_problem_belief.py` and the
-DISCOVER Bayesian updates infer the latent reward/environment type, not
-individual skills. A noisy team-level CES observation combines multiple
-capabilities and action assignments, so it does not by itself identify each
-expert's skills. The functional success observer is also aggregate and binary.
-Treating either as an individual skill observation would add an unsupported
-measurement model. Therefore this change deliberately does **not** implement
-or claim a competence estimator.
+No previous component estimated the six individual capability values.
+`finite_problem_belief.py` and DISCOVER's Bayesian updates infer latent
+reward/environment type, not individual skills. The new individual signal
+therefore has explicit semantics tied to the already recorded per-agent
+production:
 
-`CompetenceInformationMode.ORACLE` is the explicit perfect-information
-control: construction copies real capabilities into the decision estimate and
-the runner rejects mismatched matrices. `PARTIAL` requires a separately
-supplied estimate. During its run, real capabilities still evolve through the
-unchanged MIS-v2 transition, but the supplied estimate is held fixed because
-no identifiable skill observation is available to update it. This makes
-misspecification visible instead of projecting the simulator's private
-competence transition into organizational knowledge. Existing legacy and
-ORACLE runs retain their earlier estimate-transition behavior.
+\[
+y_{ikt}=a_{ikt}c_{ikt}+\epsilon_{ikt},\qquad
+\epsilon_{ikt}\sim\mathcal N(0,\sigma_{obs}^2).
+\]
 
-Organizations can affect both performance and *environmental* information:
-actions change production and thus the noisy CES observation, which is passed
-through the existing `bayes_update`. They cannot thereby be said to acquire
-individual skill information. The bounded reproducible check in
-`experiments/synthetic/hls_lab_dynamic/competence_information_smoke.py` uses
-initially incorrect estimates, shared task/type/noise streams, and existing
-`GreedyAdaptive` and DISCOVER policies. Its outputs are engineering
-diagnostics, not comparative scientific evidence.
+It is a separate sensor channel, not a change to production or aggregate CES
+reward. The simulator creates each reading from the pre-MIS real skill; the
+organization receives only the reading and assigned effort. If effort is
+zero, the estimator does not update. Sensor innovations are SHA-256 keyed by
+seed/problem/decision/expert/capability, so a policy's actions cannot shift
+other exogenous draws.
+
+The minimal competence estimator is a bounded, three-support Bayesian model
+per scalar skill. For prior mean \(m\) and variance \(v\), support is
+\(\{0,m,1\}\), with endpoint mass \(q=v/[m(1-m)]\), weights
+\((q(1-m),1-q,qm)\). This gives exactly the configured prior moments and
+respects [0,1]. Given positive effort \(a\) and observation \(y\), posterior
+weights are proportional to prior weight times
+\(\exp[-(y-ac)^2/(2\sigma_{obs}^2)]\). Zero-noise positive-effort observations
+collapse to \(y/a\), clipped only to the physical skill domain. Posterior
+variance is recorded as the uncertainty summary.
+
+Skills change between observations. In PARTIAL_LEARNING, posterior support
+points are advanced using the public `LearningProfile.eta` and assigned effort
+through the existing MIS-v2 law
+\(f(c,a)=1-(1-c)e^{-\lambda a}\), with
+\(\lambda=-\log(1-\eta)\). This is a prediction from declared public
+parameters and the estimate—not access to the simulator's private transition.
+The posterior variance is pushed through the same deterministic affine map.
+If individual learning is disabled, no prediction occurs.
+
+The three modes are `ORACLE` (exact competence known), `PARTIAL_STATIC`
+(initial estimates and uncertainty never update), and `PARTIAL_LEARNING`
+(individual observations update the estimate). Legacy `PARTIAL` remains an
+alias for the earlier static control. The existing DISCOVER belief over CES
+environment type remains separate and is updated from noisy aggregate CES
+reward; it is not used as the skill posterior.
+
+`experiments/synthetic/hls_lab_dynamic/competence_learning_smoke.py` is a
+bounded engineering check using three heterogeneous experts, changing demand,
+H=3, unequal MIS-v2 rates and shared exogenous streams. It logs true and
+estimated skills, posterior variances, efforts, individual observations,
+collective reward and environmental beliefs. In its fixed fixture,
+PARTIAL_LEARNING changes some decisions relative to PARTIAL_STATIC. The
+resulting performance difference is not evidence that learning generally
+improves performance.
 
 Focused verification:
 
 ```bash
 PYTHONPATH=src:. pytest -q tests/test_hls_lab_dynamic.py
 PYTHONPATH=src:. python experiments/synthetic/hls_lab_dynamic/competence_information_smoke.py
+PYTHONPATH=src:. python experiments/synthetic/hls_lab_dynamic/competence_learning_smoke.py
 ```
 
-The remaining scientific limitation is explicit: competence estimates cannot
-currently improve from experience under partial information. Doing so requires
-an authorized, observable individual-level signal and validated measurement
-semantics; aggregate rewards are insufficient grounds to invent one.
+The individual-production observation is an explicit additional measurement
+assumption. Its noise distribution and three-point prior are engineering
+choices requiring calibration before scientific use. The posterior is exact
+for its discrete prior/likelihood, not for an unknown continuous skill prior.
+The public-MIS prediction assumes the configured learning rate is known to the
+organization. Aggregate CES observations remain non-identifying for individual
+skills and are deliberately not fed to this estimator.

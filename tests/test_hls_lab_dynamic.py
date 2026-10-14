@@ -14,6 +14,9 @@ from hls.hls_lab_dynamic import (
     compare_belief_policies,
     compare_organizations,
     generate_problems,
+    generate_uncertain_problems,
+    initialize_competence_estimator,
+    update_skill_posterior,
     make_dynamic_team,
     run_belief_sequence,
     run_dynamic_sequence,
@@ -226,6 +229,139 @@ def test_action_choices_change_observed_reward_information_under_shared_streams(
     ]
     assert greedy.final_team.real_matrix != discover.final_team.real_matrix
     assert greedy.final_team.estimated_matrix == discover.final_team.estimated_matrix == estimate
+
+
+def test_individual_skill_observation_bayes_update_zero_effort_and_bounds():
+    prior = initialize_competence_estimator(((0.4, 0.6),) * 3)[0][0]
+    assert update_skill_posterior(prior, 0.0, 100.0, 0.05) == prior
+    exact = update_skill_posterior(prior, 0.5, 0.8 * 0.5, 0.0)
+    assert exact.mean == pytest.approx(0.8)
+    assert exact.variance == 0.0
+    noisy = update_skill_posterior(prior, 0.7, 1000.0, 0.01)
+    assert 0.0 <= noisy.mean <= 1.0
+    assert 0.0 <= noisy.variance <= 0.25
+
+
+def test_partial_learning_updates_only_from_individual_observations_and_tracks_uncertainty():
+    real = ((0.82, 0.22), (0.24, 0.78), (0.44, 0.36))
+    estimate = ((0.35, 0.65), (0.65, 0.35), (0.5, 0.5))
+    initial = make_dynamic_team(
+        real, information_mode=CompetenceInformationMode.PARTIAL_LEARNING,
+        estimated_competencies=estimate,
+    )
+
+    class FixedEffort:
+        name = "fixed_effort"
+
+        def choose(self, view, state):
+            return view.feasible_actions[-1]
+
+    item = UncertainProblem(ProblemSpec("learn-skills", (0.2, 0.2), 3.0), THETA_1)
+    run = run_belief_sequence(
+        initial, (item,), FixedEffort(), learning=RATES,
+        decision_horizon=3, individual_learning=True, sigma=0.1,
+        noise_seed=51, competence_observation_sigma=0.02,
+        competence_noise_seed=52,
+        information_mode=CompetenceInformationMode.PARTIAL_LEARNING,
+    )
+    assert run.records[0].competence_variance_after != run.records[0].competence_variance_before
+    assert run.records[-1].competence_variance_after[0][0] < run.records[0].competence_variance_before[0][0]
+    assert run.final_team.estimated_matrix != estimate
+    assert run.final_team.real_matrix != run.final_team.estimated_matrix
+    for record in run.records:
+        for i in range(3):
+            for k in range(2):
+                expected_real = capability_after_exposure(
+                    record.episode.competence_before[i][k],
+                    record.episode.action[i][k],
+                    rate=eta_to_lambda(RATES.eta[i][k]),
+                )
+                assert record.episode.competence_after[i][k] == pytest.approx(expected_real)
+                assert 0.0 <= record.episode.estimated_before[i][k] <= 1.0
+                assert 0.0 <= record.episode.estimated_after[i][k] <= 1.0
+                assert 0.0 <= record.competence_variance_after[i][k] <= 0.25
+
+
+def test_partial_modes_share_coordinate_keyed_observation_innovations_and_oracle_stays_exact():
+    real = ((0.82, 0.22), (0.24, 0.78), (0.44, 0.36))
+    estimate = ((0.35, 0.65), (0.65, 0.35), (0.5, 0.5))
+    problem = UncertainProblem(ProblemSpec("crn-skills", (0.2, 0.0), 3.0), THETA_2)
+    policy = GreedyAdaptive()
+    learning = LearningProfile(((0.1, 0.2), (0.3, 0.4), (0.5, 0.6)))
+    oracle_team = make_dynamic_team(real, information_mode=CompetenceInformationMode.ORACLE)
+    static_team = make_dynamic_team(
+        real, information_mode=CompetenceInformationMode.PARTIAL_STATIC,
+        estimated_competencies=estimate,
+    )
+    learning_team = make_dynamic_team(
+        real, information_mode=CompetenceInformationMode.PARTIAL_LEARNING,
+        estimated_competencies=estimate,
+    )
+    kwargs = dict(
+        learning=learning, decision_horizon=2, sigma=0.1, noise_seed=71,
+        competence_observation_sigma=0.03, competence_noise_seed=72,
+    )
+    oracle = run_belief_sequence(oracle_team, (problem,), policy, **kwargs)
+    static = run_belief_sequence(
+        static_team, (problem,), policy,
+        information_mode=CompetenceInformationMode.PARTIAL_STATIC, **kwargs,
+    )
+    learned = run_belief_sequence(
+        learning_team, (problem,), policy,
+        information_mode=CompetenceInformationMode.PARTIAL_LEARNING, **kwargs,
+    )
+    assert oracle.final_team.estimated_matrix == oracle.final_team.real_matrix
+    assert static.final_team.estimated_matrix == estimate
+    assert [r.observation_noise for r in oracle.records] == [r.observation_noise for r in static.records]
+    def innovations(result):
+        return [
+            (record.individual_observations[i][k]
+             - record.episode.action[i][k] * record.episode.competence_before[i][k]) / 0.03
+            for record in result.records for i in range(3) for k in range(2)
+        ]
+
+    assert innovations(oracle) == pytest.approx(innovations(static))
+    assert innovations(oracle) == pytest.approx(innovations(learned))
+    learned_repeat = run_belief_sequence(
+        learning_team, (problem,), policy,
+        information_mode=CompetenceInformationMode.PARTIAL_LEARNING, **kwargs,
+    )
+    assert learned_repeat.records == learned.records
+    assert learned_repeat.final_team == learned.final_team
+
+
+def test_observation_updated_competence_can_change_existing_discover_decisions():
+    real = ((0.84, 0.18), (0.22, 0.79), (0.43, 0.34))
+    estimate = ((0.30, 0.70), (0.70, 0.30), (0.50, 0.50))
+    east = DemandRegime("east", ((0.2, 0.0), (0.0, 0.2)), (0.8, 0.2))
+    west = DemandRegime("west", ((0.2, 0.0), (0.0, 0.2)), (0.2, 0.8))
+    problems = generate_uncertain_problems(
+        ((east, 3), (west, 3)), problem_seed=4107,
+        environment_seed=4108, prior=1.0, budget=3.0,
+    )
+    learning = LearningProfile(((0.08, 0.21), (0.42, 0.13), (0.27, 0.56)))
+    def evaluate(mode):
+        team = make_dynamic_team(
+            real, information_mode=mode,
+            estimated_competencies=None if mode == CompetenceInformationMode.ORACLE else estimate,
+        )
+        return run_belief_sequence(
+            team, problems, DiscoverBeliefPolicy(sigma=0.04, quadrature_order=3),
+            learning=learning, decision_horizon=3, prior=1.0, sigma=0.04,
+            noise_seed=4110, seed=4109, information_mode=mode,
+            competence_observation_sigma=0.035, competence_noise_seed=4111,
+            competence_prior_variance=0.035,
+        )
+
+    static = evaluate(CompetenceInformationMode.PARTIAL_STATIC)
+    learned = evaluate(CompetenceInformationMode.PARTIAL_LEARNING)
+    assert [r.observation_noise for r in static.records] == [
+        r.observation_noise for r in learned.records
+    ]
+    assert [r.episode.action_id for r in static.records] != [
+        r.episode.action_id for r in learned.records
+    ]
+    # No performance direction is imposed: only information-sensitive routing.
 
 
 def test_paired_discover_policies_share_problem_and_noise_streams():

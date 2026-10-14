@@ -9,7 +9,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-from math import isfinite
+from hashlib import sha256
+from math import exp, isfinite, log
 from random import Random
 from typing import Sequence
 
@@ -44,10 +45,147 @@ from .hls_lab_v1 import (
 
 
 class CompetenceInformationMode(str, Enum):
-    """Initial skill information available to a dynamic-run policy."""
+    """Skill-information contract used by a dynamic run."""
 
     ORACLE = "ORACLE"
+    PARTIAL_STATIC = "PARTIAL_STATIC"
+    PARTIAL_LEARNING = "PARTIAL_LEARNING"
+    # Backward-compatible name from the first partial-information control.
     PARTIAL = "PARTIAL"
+
+
+@dataclass(frozen=True)
+class SkillPosterior:
+    """Three-point bounded posterior for one scalar competence."""
+
+    support: tuple[float, float, float]
+    weights: tuple[float, float, float]
+
+    def __post_init__(self) -> None:
+        if any(not isfinite(x) or not 0.0 <= x <= 1.0 for x in self.support):
+            raise ValueError("skill posterior support must lie in [0, 1]")
+        if any(not isfinite(w) or w < 0.0 for w in self.weights):
+            raise ValueError("skill posterior weights must be finite and non-negative")
+        if abs(sum(self.weights) - 1.0) > 1e-10:
+            raise ValueError("skill posterior weights must sum to one")
+
+    @property
+    def mean(self) -> float:
+        return sum(x * w for x, w in zip(self.support, self.weights))
+
+    @property
+    def variance(self) -> float:
+        mean = self.mean
+        return sum(w * (x - mean) ** 2 for x, w in zip(self.support, self.weights))
+
+
+CompetenceEstimatorState = tuple[
+    tuple[SkillPosterior, SkillPosterior],
+    tuple[SkillPosterior, SkillPosterior],
+    tuple[SkillPosterior, SkillPosterior],
+]
+
+
+def _cell_value(value: float | State, expert: int, skill: int) -> float:
+    return value if isinstance(value, (int, float)) else value[expert][skill]
+
+
+def initialize_competence_estimator(
+    means_by_cell: State, prior_variance: float | State | None = None
+) -> CompetenceEstimatorState:
+    """Create bounded three-point priors with the requested mean and variance.
+
+    For 0 < m < 1, support is {0,m,1}; endpoint mass is chosen so that the
+    discrete prior has exactly mean m and variance v. This is a deliberately
+    small, explicit prior, not a claim that the prior is empirically fitted.
+    """
+    validate_state(means_by_cell)
+    cells = []
+    for i in range(3):
+        row = []
+        for k in range(2):
+            mean = means_by_cell[i][k]
+            variance = (
+                min(0.04, 0.25 * mean * (1.0 - mean))
+                if prior_variance is None else _cell_value(prior_variance, i, k)
+            )
+            maximum = mean * (1.0 - mean)
+            if not isfinite(variance) or variance < 0.0 or variance > maximum + 1e-12:
+                raise ValueError("prior variance must be in [0, mean*(1-mean)]")
+            if maximum <= 1e-15:
+                row.append(SkillPosterior((mean, mean, mean), (1.0, 0.0, 0.0)))
+            else:
+                endpoint_mass = min(1.0, max(0.0, variance / maximum))
+                row.append(SkillPosterior(
+                    (0.0, mean, 1.0),
+                    (endpoint_mass * (1.0 - mean), 1.0 - endpoint_mass,
+                     endpoint_mass * mean),
+                ))
+        cells.append(tuple(row))
+    return tuple(cells)  # type: ignore[return-value]
+
+
+def competence_estimate_matrix(
+    posterior: CompetenceEstimatorState,
+) -> State:
+    return tuple(tuple(cell.mean for cell in row) for row in posterior)  # type: ignore[return-value]
+
+
+def competence_variance_matrix(
+    posterior: CompetenceEstimatorState,
+) -> State:
+    return tuple(tuple(cell.variance for cell in row) for row in posterior)  # type: ignore[return-value]
+
+
+def update_skill_posterior(
+    posterior: SkillPosterior, effort: float, observation: float, noise_sd: float
+) -> SkillPosterior:
+    """Bayes-update bounded skill particles from y=a*c+Normal(0,sigma²).
+
+    Zero effort is non-informative and leaves both mean and uncertainty intact.
+    With zero observation noise, a positive-effort observation identifies c.
+    """
+    if not isfinite(effort) or effort < 0.0:
+        raise ValueError("effort must be finite and non-negative")
+    if not isfinite(observation) or not isfinite(noise_sd) or noise_sd < 0.0:
+        raise ValueError("observation and non-negative noise_sd must be finite")
+    if effort == 0.0:
+        return posterior
+    if noise_sd == 0.0:
+        value = min(1.0, max(0.0, observation / effort))
+        return SkillPosterior((value, value, value), (1.0, 0.0, 0.0))
+    log_weights = tuple(
+        (-float("inf") if weight == 0.0 else
+         log(weight)
+         - 0.5 * ((observation - effort * skill) / noise_sd) ** 2)
+        for skill, weight in zip(posterior.support, posterior.weights)
+    )
+    maximum = max(log_weights)
+    weights = tuple(0.0 if value == -float("inf") else exp(value - maximum)
+                    for value in log_weights)
+    total = sum(weights)
+    return SkillPosterior(posterior.support, tuple(w / total for w in weights))  # type: ignore[arg-type]
+
+
+def predict_skill_posterior_after_mis(
+    posterior: SkillPosterior, effort: float, eta: float
+) -> SkillPosterior:
+    """Push posterior particles through public MIS-v2 parameters only."""
+    rate = eta_to_lambda(eta)
+    support = tuple(
+        capability_after_exposure(skill, effort, rate=rate)
+        for skill in posterior.support
+    )
+    return SkillPosterior(support, posterior.weights)  # type: ignore[arg-type]
+
+
+def indexed_normal_innovation(
+    seed: int, problem_episode: int, decision_index: int, expert: int, skill: int
+) -> float:
+    """Stable exogenous N(0,1) innovation keyed by coordinates, not call order."""
+    payload = f"hls-dynamic-individual-noise-v1|{seed}|{problem_episode}|{decision_index}|{expert}|{skill}"
+    keyed_seed = int.from_bytes(sha256(payload.encode("ascii")).digest()[:8], "big")
+    return Random(keyed_seed).gauss(0.0, 1.0)
 
 
 def make_dynamic_team(
@@ -59,15 +197,20 @@ def make_dynamic_team(
 ) -> TeamState:
     """Construct real and informational skill states without implicit leakage.
 
-    PARTIAL requires an explicit estimate supplied independently by the
-    caller. ORACLE copies the real state and rejects a competing estimate.
+    Every partial mode requires an explicit estimate supplied independently
+    by the caller. ORACLE copies the real state and rejects a competing
+    estimate.
     """
     validate_state(real_competencies)
     if information_mode == CompetenceInformationMode.ORACLE:
         if estimated_competencies is not None:
             raise ValueError("ORACLE mode derives its estimate from real competence")
         estimate = real_competencies
-    elif information_mode == CompetenceInformationMode.PARTIAL:
+    elif information_mode in (
+        CompetenceInformationMode.PARTIAL,
+        CompetenceInformationMode.PARTIAL_STATIC,
+        CompetenceInformationMode.PARTIAL_LEARNING,
+    ):
         if estimated_competencies is None:
             raise ValueError("PARTIAL mode requires an explicit initial estimate")
         validate_state(estimated_competencies)
@@ -333,6 +476,9 @@ class BeliefEpisodeRecord:
     belief_after: float
     observation: float
     observation_noise: float
+    individual_observations: State
+    competence_variance_before: State
+    competence_variance_after: State
     true_expected_reward: float
     episode: EpisodeRecord
 
@@ -417,6 +563,9 @@ def run_belief_sequence(
     seed: int = 0,
     initial_organization_state: OrganizationState | None = None,
     information_mode: CompetenceInformationMode = CompetenceInformationMode.ORACLE,
+    competence_observation_sigma: float = 0.05,
+    competence_noise_seed: int = 0,
+    competence_prior_variance: float | State | None = None,
 ) -> BeliefRunResult:
     """Run H decisions per task with latent types, observations, and MIS-v2.
 
@@ -425,6 +574,10 @@ def run_belief_sequence(
     actions, every task must admit that full catalog. The solver plans over
     fixed capabilities as in DISCOVER-v0; actual MIS-v2 development occurs
     between decisions but is not forecast inside its Bellman recursion.
+    PARTIAL_LEARNING updates bounded skill posteriors from individual
+    production readings, then predicts their deterministic MIS-v2 movement
+    using the declared learning profile. PARTIAL_STATIC retains the initial
+    estimate and uncertainty; legacy PARTIAL aliases PARTIAL_STATIC.
     """
     if not problems:
         raise ValueError("empty problems")
@@ -434,13 +587,14 @@ def run_belief_sequence(
         raise ValueError("prior must lie in [0, 1]")
     if not isfinite(sigma) or sigma <= 0:
         raise ValueError("sigma must be finite and positive")
-    if information_mode not in (
-        CompetenceInformationMode.ORACLE, CompetenceInformationMode.PARTIAL
-    ):
+    if information_mode not in tuple(CompetenceInformationMode):
         raise ValueError("unknown competence information mode")
     if (information_mode == CompetenceInformationMode.ORACLE
             and initial_team.real_matrix != initial_team.estimated_matrix):
         raise ValueError("ORACLE mode requires real and estimated competence to match")
+    if (not isfinite(competence_observation_sigma)
+            or competence_observation_sigma < 0.0):
+        raise ValueError("competence observation sigma must be finite and non-negative")
     if organizational_learning and not callable(getattr(organization, "observe", None)):
         raise ValueError("organizational learning requires an organization observe method")
 
@@ -453,6 +607,12 @@ def run_belief_sequence(
             )
 
     team = initial_team
+    is_partial = information_mode != CompetenceInformationMode.ORACLE
+    is_learning_estimator = information_mode == CompetenceInformationMode.PARTIAL_LEARNING
+    estimator = (
+        initialize_competence_estimator(team.estimated_matrix, competence_prior_variance)
+        if is_partial else None
+    )
     org = initial_organization_state or OrganizationState()
     noise_rng = Random(noise_seed)
     records = []
@@ -487,6 +647,24 @@ def run_belief_sequence(
             innovation = noise_rng.gauss(0.0, 1.0)
             observation = mu_true + sigma * innovation
 
+            # Individual production observations are a separate channel from
+            # the aggregate noisy CES reward. Innovations are coordinate-keyed
+            # so policy action choices cannot shift any other noise draw.
+            competence_variance_before = (
+                competence_variance_matrix(estimator) if estimator is not None
+                else ((0.0, 0.0),) * 3
+            )
+            individual_noise = tuple(tuple(
+                competence_observation_sigma * indexed_normal_innovation(
+                    competence_noise_seed, problem_episode, decision_index, i, k
+                )
+                for k in range(2)
+            ) for i in range(3))
+            individual_observations = tuple(tuple(
+                action[i][k] * competence_before[i][k] + individual_noise[i][k]
+                for k in range(2)
+            ) for i in range(3))
+
             # Likelihood means are computed from the information available to
             # the organization; the generated observation uses physical truth.
             mu_1, mu_2 = means(
@@ -504,7 +682,38 @@ def run_belief_sequence(
             cost = effort * problem.resource_cost_per_unit
             team = advance_team(
                 team, action, learning, enabled=individual_learning,
-                update_estimated=(information_mode == CompetenceInformationMode.ORACLE),
+                update_estimated=(not is_partial),
+            )
+            if is_learning_estimator:
+                assert estimator is not None
+                posterior_rows = []
+                for i in range(3):
+                    posterior_row = []
+                    for k in range(2):
+                        posterior = update_skill_posterior(
+                            estimator[i][k], action[i][k],
+                            individual_observations[i][k],
+                            competence_observation_sigma,
+                        )
+                        if individual_learning:
+                            posterior = predict_skill_posterior_after_mis(
+                                posterior, action[i][k], learning.eta[i][k]
+                            )
+                        posterior_row.append(posterior)
+                    posterior_rows.append(tuple(posterior_row))
+                estimator = tuple(posterior_rows)  # type: ignore[assignment]
+                predicted_estimates = competence_estimate_matrix(estimator)
+                team = TeamState(tuple(
+                    ExpertState(
+                        expert.expert_id, expert.competence_real,
+                        predicted_estimates[i],
+                        expert.experience, expert.performance,
+                    )
+                    for i, expert in enumerate(team.experts)
+                ))
+            competence_variance_after = (
+                competence_variance_matrix(estimator) if estimator is not None
+                else ((0.0, 0.0),) * 3
             )
             functional_reward = float(functional.success)
             if organizational_learning:
@@ -561,6 +770,9 @@ def run_belief_sequence(
                 belief_after=next_belief,
                 observation=observation,
                 observation_noise=innovation,
+                individual_observations=individual_observations,
+                competence_variance_before=competence_variance_before,
+                competence_variance_after=competence_variance_after,
                 true_expected_reward=mu_true,
                 episode=step,
             ))
@@ -591,6 +803,9 @@ def compare_belief_policies(
     noise_seed: int,
     seed: int = 0,
     information_mode: CompetenceInformationMode = CompetenceInformationMode.ORACLE,
+    competence_observation_sigma: float = 0.05,
+    competence_noise_seed: int = 0,
+    competence_prior_variance: float | State | None = None,
 ) -> tuple[BeliefRunResult, ...]:
     """Pair policies on identical latent problems and Gaussian innovations."""
     return tuple(
@@ -599,6 +814,9 @@ def compare_belief_policies(
             decision_horizon=decision_horizon, prior=prior, sigma=sigma,
             noise_seed=noise_seed, seed=seed,
             information_mode=information_mode,
+            competence_observation_sigma=competence_observation_sigma,
+            competence_noise_seed=competence_noise_seed,
+            competence_prior_variance=competence_prior_variance,
         )
         for organization in organizations
     )

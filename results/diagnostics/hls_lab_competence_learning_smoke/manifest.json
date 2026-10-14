@@ -1,0 +1,224 @@
+{
+  "classification": "bounded engineering verification; not scientific evidence",
+  "competence_observation_model": "y[i,k]=effort[i,k]*competence_real_before[i,k]+Normal(0,0.035^2)",
+  "decision_records_per_mode": 18,
+  "decisions_per_problem": 3,
+  "environment_noise_seed": 4110,
+  "environment_noise_stream_shared": true,
+  "environment_seed": 4108,
+  "eta_by_expert_and_capability": [
+    [
+      0.08,
+      0.21
+    ],
+    [
+      0.42,
+      0.13
+    ],
+    [
+      0.27,
+      0.56
+    ]
+  ],
+  "external_problem_stream_shared": true,
+  "individual_observation_innovations_coordinate_keyed": true,
+  "individual_observation_noise_seed": 4111,
+  "initial_partial_estimate": [
+    [
+      0.3,
+      0.7
+    ],
+    [
+      0.7,
+      0.3
+    ],
+    [
+      0.5,
+      0.5
+    ]
+  ],
+  "initial_real_competencies": [
+    [
+      0.84,
+      0.18
+    ],
+    [
+      0.22,
+      0.79
+    ],
+    [
+      0.43,
+      0.34
+    ]
+  ],
+  "prior_variance": 0.035,
+  "problem_seed": 4107,
+  "problems": 6,
+  "results": [
+    {
+      "action_ids": [
+        55,
+        55,
+        55,
+        55,
+        55,
+        55,
+        55,
+        55,
+        55,
+        55,
+        55,
+        55,
+        55,
+        55,
+        55,
+        55,
+        55,
+        55
+      ],
+      "cumulative_mu_true": 28.75288432354226,
+      "final_environment_belief": 1.0,
+      "final_estimated_competencies": [
+        [
+          0.9643301835231007,
+          0.18
+        ],
+        [
+          0.22,
+          0.982877552555303
+        ],
+        [
+          0.998024457678717,
+          0.34
+        ]
+      ],
+      "final_real_competencies": [
+        [
+          0.9643301835231007,
+          0.18
+        ],
+        [
+          0.22,
+          0.982877552555303
+        ],
+        [
+          0.998024457678717,
+          0.34
+        ]
+      ],
+      "mode": "ORACLE"
+    },
+    {
+      "action_ids": [
+        47,
+        47,
+        47,
+        47,
+        47,
+        47,
+        47,
+        47,
+        47,
+        47,
+        47,
+        47,
+        47,
+        47,
+        47,
+        47,
+        47,
+        47
+      ],
+      "cumulative_mu_true": 30.660588234527644,
+      "final_environment_belief": 1.0,
+      "final_estimated_competencies": [
+        [
+          0.3,
+          0.7
+        ],
+        [
+          0.7,
+          0.3
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "final_real_competencies": [
+        [
+          0.9244541818741508,
+          0.9017216912942528
+        ],
+        [
+          0.999956967310805,
+          0.79
+        ],
+        [
+          0.998024457678717,
+          0.34
+        ]
+      ],
+      "mode": "PARTIAL_STATIC"
+    },
+    {
+      "action_ids": [
+        47,
+        59,
+        59,
+        59,
+        59,
+        59,
+        59,
+        59,
+        59,
+        59,
+        59,
+        59,
+        59,
+        59,
+        59,
+        59,
+        59,
+        59
+      ],
+      "cumulative_mu_true": 31.181849664681582,
+      "final_environment_belief": 1.0,
+      "final_estimated_competencies": [
+        [
+          1.0,
+          0.11118056280676993
+        ],
+        [
+          0.9943432636331078,
+          1.0
+        ],
+        [
+          0.9982670681392254,
+          0.5
+        ]
+      ],
+      "final_real_competencies": [
+        [
+          0.9628116455889799,
+          0.27116805778012165
+        ],
+        [
+          0.995587745633824,
+          0.9357115519271424
+        ],
+        [
+          0.998024457678717,
+          0.34
+        ]
+      ],
+      "mode": "PARTIAL_LEARNING"
+    }
+  ],
+  "run_seed": 4109,
+  "sha256": {
+    "competence_learning_smoke.py": "417e38a88906266df34d92ff4b6b12512861d3a7797f79285f8a1255abcc39a5",
+    "decision_trace.csv": "d87c86e43922c1cfa67dfe4e0d022206af24020eb346b8c219ebd901742ec9dc",
+    "hls_lab_dynamic.py": "8328daacb5c174ffb3709cd12acb8d0886f819f33c3956e6d3fc607974194dd4"
+  }
+}
