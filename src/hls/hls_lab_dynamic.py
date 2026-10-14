@@ -56,16 +56,18 @@ class CompetenceInformationMode(str, Enum):
 
 @dataclass(frozen=True)
 class SkillPosterior:
-    """Three-point bounded posterior for one scalar competence."""
+    """Finite-support bounded posterior for one scalar competence."""
 
-    support: tuple[float, float, float]
-    weights: tuple[float, float, float]
+    support: tuple[float, ...]
+    weights: tuple[float, ...]
 
     def __post_init__(self) -> None:
         if any(not isfinite(x) or not 0.0 <= x <= 1.0 for x in self.support):
             raise ValueError("skill posterior support must lie in [0, 1]")
         if any(not isfinite(w) or w < 0.0 for w in self.weights):
             raise ValueError("skill posterior weights must be finite and non-negative")
+        if len(self.support) != len(self.weights) or not self.support:
+            raise ValueError("skill posterior support and weights must have equal nonzero length")
         if abs(sum(self.weights) - 1.0) > 1e-10:
             raise ValueError("skill posterior weights must sum to one")
 
@@ -91,15 +93,51 @@ def _cell_value(value: float | State, expert: int, skill: int) -> float:
 
 
 def initialize_competence_estimator(
-    means_by_cell: State, prior_variance: float | State | None = None
+    means_by_cell: State, prior_variance: float | State | None = None,
+    *, estimator: str = "three_point", grid_points: int = 101,
 ) -> CompetenceEstimatorState:
-    """Create bounded three-point priors with the requested mean and variance.
+    """Create a bounded finite-support prior for every skill cell.
 
-    For 0 < m < 1, support is {0,m,1}; endpoint mass is chosen so that the
-    discrete prior has exactly mean m and variance v. This is a deliberately
-    small, explicit prior, not a claim that the prior is empirically fitted.
+    ``three_point`` preserves the historical {0,m,1} prior exactly.
+    ``grid`` projects that same prior onto a uniform grid by linear
+    interpolation, preserving its mean while approximating its variance.
+    The requested mean and variance are a declared prior, not empirically
+    fitted quantities.
     """
     validate_state(means_by_cell)
+    if estimator not in {"three_point", "grid"}:
+        raise ValueError("estimator must be 'three_point' or 'grid'")
+    if estimator == "grid" and (not isinstance(grid_points, int) or grid_points < 3):
+        raise ValueError("grid_points must be an integer >= 3")
+    grid = tuple(i / (grid_points - 1) for i in range(grid_points)) if estimator == "grid" else ()
+
+    def make_prior(mean: float, variance: float) -> SkillPosterior:
+        maximum = mean * (1.0 - mean)
+        if not isfinite(variance) or variance < 0.0 or variance > maximum + 1e-12:
+            raise ValueError("prior variance must be in [0, mean*(1-mean)]")
+        endpoint_mass = 0.0 if maximum <= 1e-15 else min(1.0, max(0.0, variance / maximum))
+        atoms = ((0.0, endpoint_mass * (1.0 - mean)),
+                 (mean, 1.0 - endpoint_mass),
+                 (1.0, endpoint_mass * mean))
+        if estimator == "three_point":
+            return SkillPosterior((0.0, mean, 1.0), tuple(w for _, w in atoms))
+        weights = [0.0] * grid_points
+        for value, mass in atoms:
+            position = value * (grid_points - 1)
+            lower = int(position)
+            upper = min(grid_points - 1, lower + 1)
+            fraction = position - lower
+            weights[lower] += mass * (1.0 - fraction)
+            weights[upper] += mass * fraction
+        # A grid prior must leave every mesh point in its support; otherwise
+        # Bayesian reweighting can never recover a truth outside the three
+        # projected prior atoms. A tiny declared uniform contamination keeps
+        # the requested prior moments unchanged to <1e-12 while avoiding that
+        # structural zero-probability failure.
+        floor_mass = 1e-12
+        weights = [(1.0 - floor_mass) * w + floor_mass / grid_points for w in weights]
+        return SkillPosterior(grid, tuple(weights))
+
     cells = []
     for i in range(3):
         row = []
@@ -109,18 +147,7 @@ def initialize_competence_estimator(
                 min(0.04, 0.25 * mean * (1.0 - mean))
                 if prior_variance is None else _cell_value(prior_variance, i, k)
             )
-            maximum = mean * (1.0 - mean)
-            if not isfinite(variance) or variance < 0.0 or variance > maximum + 1e-12:
-                raise ValueError("prior variance must be in [0, mean*(1-mean)]")
-            if maximum <= 1e-15:
-                row.append(SkillPosterior((mean, mean, mean), (1.0, 0.0, 0.0)))
-            else:
-                endpoint_mass = min(1.0, max(0.0, variance / maximum))
-                row.append(SkillPosterior(
-                    (0.0, mean, 1.0),
-                    (endpoint_mass * (1.0 - mean), 1.0 - endpoint_mass,
-                     endpoint_mass * mean),
-                ))
+            row.append(make_prior(mean, variance))
         cells.append(tuple(row))
     return tuple(cells)  # type: ignore[return-value]
 
@@ -566,6 +593,8 @@ def run_belief_sequence(
     competence_observation_sigma: float = 0.05,
     competence_noise_seed: int = 0,
     competence_prior_variance: float | State | None = None,
+    competence_estimator: str = "three_point",
+    competence_grid_points: int = 101,
 ) -> BeliefRunResult:
     """Run H decisions per task with latent types, observations, and MIS-v2.
 
@@ -610,7 +639,10 @@ def run_belief_sequence(
     is_partial = information_mode != CompetenceInformationMode.ORACLE
     is_learning_estimator = information_mode == CompetenceInformationMode.PARTIAL_LEARNING
     estimator = (
-        initialize_competence_estimator(team.estimated_matrix, competence_prior_variance)
+        initialize_competence_estimator(
+            team.estimated_matrix, competence_prior_variance,
+            estimator=competence_estimator, grid_points=competence_grid_points,
+        )
         if is_partial else None
     )
     org = initial_organization_state or OrganizationState()

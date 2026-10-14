@@ -271,6 +271,69 @@ def test_three_point_support_can_become_overconfident_when_truth_is_omitted():
     assert abs(posterior.mean - 0.72) == pytest.approx(0.28)
 
 
+def test_grid_prior_represents_continuous_truth_and_preserves_prior_mean():
+    matrix = ((0.417, 0.6),) * 3
+    posterior = initialize_competence_estimator(
+        matrix, 0.04, estimator="grid", grid_points=101,
+    )[0][0]
+    assert len(posterior.support) == 101
+    assert posterior.mean == pytest.approx(0.417)
+    assert posterior.variance == pytest.approx(0.04, abs=1e-4)
+    assert all(weight > 0.0 for weight in posterior.weights)
+    assert all(x == pytest.approx(i / 100) for i, x in enumerate(posterior.support))
+
+
+def test_grid_estimator_integrates_with_partial_learning_without_private_access():
+    real = ((0.417, 0.22), (0.24, 0.78), (0.44, 0.36))
+    estimate = ((0.30, 0.65), (0.65, 0.35), (0.5, 0.5))
+    team = make_dynamic_team(
+        real, information_mode=CompetenceInformationMode.PARTIAL_LEARNING,
+        estimated_competencies=estimate,
+    )
+    problem = UncertainProblem(ProblemSpec("grid-smoke", (0.2, 0.0), 3.0), THETA_2)
+    result = run_belief_sequence(
+        team, (problem,), GreedyAdaptive(), learning=RATES,
+        decision_horizon=2, sigma=0.1, noise_seed=19,
+        information_mode=CompetenceInformationMode.PARTIAL_LEARNING,
+        competence_observation_sigma=0.04, competence_noise_seed=20,
+        competence_estimator="grid", competence_grid_points=101,
+    )
+    assert len(result.records) == 2
+    assert result.final_team.real_matrix != real  # real evolution remains MIS-v2
+    assert result.final_team.estimated_matrix != estimate
+    assert all(0.0 <= x <= 1.0 for row in result.final_team.estimated_matrix for x in row)
+    assert all(0.0 <= x <= 0.25 for record in result.records
+               for row in record.competence_variance_after for x in row)
+
+
+def test_grid_partial_learning_dynamic_smoke_with_heterogeneous_mis_rates():
+    real = ((0.76, 0.18), (0.20, 0.81), (0.43, 0.37))
+    estimate = ((0.34, 0.63), (0.68, 0.31), (0.49, 0.52))
+    east = DemandRegime("east-grid", ((0.2, 0.0), (0.0, 0.2)), (0.8, 0.2))
+    west = DemandRegime("west-grid", ((0.2, 0.0), (0.0, 0.2)), (0.2, 0.8))
+    problems = generate_uncertain_problems(
+        ((east, 2), (west, 2)), problem_seed=621, environment_seed=622,
+        prior=0.5, budget=3.0,
+    )
+    learning = LearningProfile(((0.08, 0.21), (0.42, 0.13), (0.27, 0.56)))
+    initial = make_dynamic_team(
+        real, information_mode=CompetenceInformationMode.PARTIAL_LEARNING,
+        estimated_competencies=estimate,
+    )
+    result = run_belief_sequence(
+        initial, problems, GreedyAdaptive(), learning=learning,
+        decision_horizon=2, prior=0.5, sigma=0.04, noise_seed=623,
+        information_mode=CompetenceInformationMode.PARTIAL_LEARNING,
+        competence_observation_sigma=0.035, competence_noise_seed=624,
+        competence_estimator="grid", competence_grid_points=101,
+    )
+    assert len(result.records) == 8
+    assert len({record.episode.problem_id for record in result.records}) == 2
+    assert result.final_team.real_matrix != real
+    assert result.final_team.estimated_matrix != estimate
+    assert len({record.belief_after for record in result.records}) > 1
+
+
 def test_partial_learning_updates_only_from_individual_observations_and_tracks_uncertainty():
     real = ((0.82, 0.22), (0.24, 0.78), (0.44, 0.36))
     estimate = ((0.35, 0.65), (0.65, 0.35), (0.5, 0.5))

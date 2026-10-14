@@ -129,3 +129,74 @@ effort weakens information. Unknown eta, stochastic competence transitions,
 sensor bias, and interval calibration were not evaluated. The discrete prior
 must not be treated as validated for scientific inference without further
 authorization and calibration.
+
+## Three-point versus configurable grid estimator
+
+The historical `three_point` implementation remains the default. An explicit
+`competence_estimator="grid"` option in `run_belief_sequence` uses a uniform
+mesh (default 101 points) and the same Gaussian likelihood and MIS-v2 push-
+forward. The prior's three masses are linearly projected onto adjacent mesh
+points; this preserves its mean and approximates its variance. A uniform mass
+of $10^{-12}$ is mixed in so every mesh point has positive prior probability.
+This avoids structural exclusion of an interior truth while changing prior
+moments by less than $10^{-12}$. This tiny floor is not protection against a
+severely misspecified/narrow prior.
+
+Reproduce the paired-seed A–F comparison:
+
+```bash
+PYTHONPATH=src:. python experiments/synthetic/hls_lab_dynamic/compare_competence_estimators.py
+PYTHONPATH=src:. pytest -q tests/test_hls_lab_dynamic.py
+```
+
+The comparison writes a new, non-overwriting artifact to
+`results/diagnostics/hls_competence_estimator_grid_comparison/comparison.json`.
+Both estimators receive identical scenarios and Gaussian innovations. The
+90% intervals are equal-tailed discrete posterior intervals; coverage is
+empirical over the fixed scenario replicates, not a population confidence
+statement. Timings are single-process wall-clock diagnostics, not a benchmark.
+
+| Case | Estimator | MAE | Bias | RMSE | Posterior variance | 90% coverage | Time (s) |
+|---|---|---:|---:|---:|---:|---:|---:|
+| A | Three-point | 0.0000 | 0.0000 | 0.0000 | 0.000000 | 1.000 | 0.00003 |
+| A | Grid-101 | 0.0000 | 0.0000 | 0.0000 | 0.000000 | 1.000 | 0.00011 |
+| B | Three-point | 0.2812 | +0.2613 | 0.2812 | 0.000056 | 0.000 | 0.028 |
+| B | Grid-101 | 0.0098 | +0.0004 | 0.0123 | 0.000167 | 0.961 | 0.304 |
+| C | Three-point | 0.0102 | +0.0091 | 0.0103 | 0.000008 | 0.055 | 0.017 |
+| C | Grid-101 | 0.0102 | +0.0091 | 0.0103 | 0.000008 | 0.055 | 0.217 |
+| D | Three-point | <1e-15 | <1e-15 | <1e-15 | 0.015086 | 1.000 | 0.00006 |
+| D | Grid-101 | <1e-12 | <1e-12 | <1e-12 | 0.015086 | 1.000 | 0.00068 |
+| E | Three-point | 0.0500 | +0.0500 | 0.0500 | 0.000000 | 0.000 | 0.008 |
+| E | Grid-101 | 0.0498 | +0.0498 | 0.0498 | 0.000014 | 0.023 | 0.085 |
+| F | Three-point | 0.2533 | −0.1361 | 0.2650 | 0.024856 | 0.445 | 0.017 |
+| F | Grid-101 | 0.2533 | −0.1361 | 0.2650 | 0.024856 | 0.445 | 0.215 |
+
+The grid resolves the specific support misspecification in B: truth .72 is
+represented, and both error and interval coverage improve substantially. It
+does not improve cases whose data are weak relative to the prior (F), where
+the posterior remains near its prior. In E, the highly concentrated prior
+near .05 assigns only the tiny floor to .95; 20 observations do not overcome
+the resulting prior odds, and the posterior remains overconfident. In C,
+frequent updating under the same deterministic transition law has very low
+fixed-truth interval coverage; this shows that correct mean tracking in one
+scenario does not establish calibrated uncertainty. The grid costs roughly
+7–13× more in these small runs and is not uniformly superior. Unknown
+transition rates, process noise, and prior-model calibration remain unresolved.
+
+## Full-suite failures observed during follow-up
+
+`PYTHONPATH=src:. pytest -q` produced 1163 passes and 13 failures in 314.33 s.
+These failures are outside the dynamic-estimator integration and must not be
+masked by refreshing frozen hashes:
+
+| Tests | Classification | Evidence |
+|---|---|---|
+| `test_every_foundation_result_has_consistent_manifest` | Stale inventory expectation / extra existing result artifact | The test expects 11 `metrics.json` directories; 12 exist, including `b2_5_gutjahr_switching`. |
+| B3, B4, B5 provenance tests; RQ0's two provenance tests | Stale parent hash/manifest | All fail at B2.3 `protocol_sha256` comparison between the frozen run header and current protocol source. |
+| Campaign2 execution, preregistration source, theory source, C3 confirmatory integrity, strategy-discrimination source tests | Pre-existing worktree source-hash drift | Each reports `src/hls/finite_problem_belief.py`; it was locally modified before this task and was not changed here. |
+| Campaign2 preregistration contamination test | Existing artifact contamination | The guard expects no campaign2 result files beyond preregistration, but the completed Campaign2 result tree is present. |
+| Campaign2 state-coverage audit | Stale closure provenance | Frozen closure hashes for Campaign 2 documents/source no longer match the present files; the mismatch is not from this estimator change. |
+
+No runner in this task writes to those historical result locations. The two
+estimator-validation runners use separate diagnostic output directories and
+refuse to overwrite them.
