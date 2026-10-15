@@ -8,6 +8,7 @@ dynamic skill-posterior/demand utilities. It does not modify their semantics.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from copy import deepcopy
 from hashlib import sha256
 from math import isfinite
 from random import Random
@@ -16,6 +17,7 @@ from typing import Protocol, Sequence
 from .discover_v0 import JointAction, State, ces_reward, production_inputs
 from .hls_lab_dynamic import (
     LearningProfile,
+    CompetenceEstimatorState,
     SkillPosterior,
     advance_team,
     competence_estimate_matrix,
@@ -374,6 +376,21 @@ class IntegratedRunResult:
     records: tuple[IntegratedEpisodeRecord, ...]
     final_team: TeamState
     final_organization: OrganizationMemory
+    snapshots: tuple["OrganizationSnapshot", ...] = ()
+
+
+@dataclass(frozen=True)
+class OrganizationSnapshot:
+    """Complete decision-relevant organization state at a period boundary.
+
+    The posterior is part of the organization's information state; it is not
+    reconstructed from private competence truth when resuming a run.
+    """
+
+    team: TeamState
+    competence_posterior: CompetenceEstimatorState
+    organization_memory: OrganizationMemory
+    next_period: int
 
 
 def _rate(profile: LearningProfile, expert: int, skill: int) -> float:
@@ -392,6 +409,9 @@ def run_integrated_sequence(
     organizational_learning: bool = True,
     seed: int = 0,
     organization_memory: OrganizationMemory | None = None,
+    initial_snapshot: OrganizationSnapshot | None = None,
+    period_offset: int = 0,
+    first_action_override: IntegratedAction | None = None,
 ) -> IntegratedRunResult:
     """Run one organization; all external sequences/noise are index-coupled.
 
@@ -403,20 +423,33 @@ def run_integrated_sequence(
         raise ValueError("problem sequence must be non-empty")
     if not isinstance(seed, int):
         raise ValueError("seed must be an integer")
+    if period_offset < 0:
+        raise ValueError("period_offset must be non-negative")
+    if initial_snapshot is not None and (organization_memory is not None or period_offset):
+        raise ValueError("snapshot cannot be combined with separate memory or period_offset")
     team = initial_team
     memory = organization_memory or OrganizationMemory()
-    prior_variance: State = tuple(tuple(
-        min(parameters.competence_prior_variance, value * (1.0 - value))
-        for value in row) for row in team.estimated_matrix)  # type: ignore[assignment]
-    posterior = initialize_competence_estimator(
-        team.estimated_matrix, prior_variance,
-        estimator="grid", grid_points=parameters.competence_grid_points,
-    )
+    if initial_snapshot is None:
+        prior_variance: State = tuple(tuple(
+            min(parameters.competence_prior_variance, value * (1.0 - value))
+            for value in row) for row in team.estimated_matrix)  # type: ignore[assignment]
+        posterior = initialize_competence_estimator(
+            team.estimated_matrix, prior_variance,
+            estimator="grid", grid_points=parameters.competence_grid_points,
+        )
+    else:
+        team = deepcopy(initial_snapshot.team)
+        memory = deepcopy(initial_snapshot.organization_memory)
+        posterior = deepcopy(initial_snapshot.competence_posterior)
+        period_offset = initial_snapshot.next_period
+    snapshots = [OrganizationSnapshot(deepcopy(team), deepcopy(posterior),
+                                      deepcopy(memory), period_offset)]
     rows: list[IntegratedEpisodeRecord] = []
     cumulative_reward = cumulative_deficit = 0.0
     cumulative_successes = 0
 
-    for period, item in enumerate(problems):
+    for local_period, item in enumerate(problems):
+        period = period_offset + local_period
         problem = item.problem
         feasible = enumerate_feasible_integrated_actions(problem, teaching_effort=parameters.effort)
         view = IntegratedDecisionView(
@@ -432,7 +465,8 @@ def run_integrated_sequence(
             efficacy_estimates=memory.efficacy,
             feasible_actions=feasible,
         )
-        action = policy.choose(view, memory, parameters)
+        action = (first_action_override if local_period == 0 and first_action_override is not None
+                  else policy.choose(view, memory, parameters))
         if action not in feasible:
             raise ValueError("policy returned an infeasible integrated action")
 
@@ -544,8 +578,11 @@ def run_integrated_sequence(
             cumulative_ces_reward=cumulative_reward, cumulative_successes=cumulative_successes,
             cumulative_normalized_deficit=cumulative_deficit,
         ))
+        snapshots.append(OrganizationSnapshot(deepcopy(team), deepcopy(posterior),
+                                              deepcopy(memory), period + 1))
 
-    return IntegratedRunResult(policy.name, seed, tuple(rows), team, memory)
+    return IntegratedRunResult(policy.name, seed, tuple(rows), team, memory,
+                               tuple(snapshots))
 
 
 def compare_integrated_policies(

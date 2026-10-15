@@ -17,6 +17,7 @@ undated where the source material does not establish a defensible event date.
 | --- | --- | --- | --- |
 | PI / CE decision to prioritize integrated HLS Laboratory v1 and approve milestone `HLS-LAB-V1-INTEGRATED` | **2026-10-15, date verified; exact time unknown**, from the dated PI/CE instruction. | Documented 2026-10-15 08:40 +02:00, Europe/Madrid, in this entry and the linked current-state/lab documents. | Operational-priority change; it does not change the research questions or retrospectively alter prior decisions. |
 | Scientific Campaign 1 pilot: exploitation versus capability development | **2026-10-15 10:22:04 +02:00, verified** by the final output manifest. | Recorded 2026-10-15 10:22 +02:00, Europe/Madrid; source baseline `a179041a1617e250e3fe83065db7dbc8402b0d62`. | 16 configurations × 10 paired seeds × four policies × LI ON/OFF = 1,280 runs, 20,480 episode records. Pilot observations only; no population-level inference. Three earlier designs were excluded: latent-label exposure, oracle skill initialization, and zero-production teaching periods from budget/action granularity. Formatting reruns reused the same seeds and did not add replicates. |
+| Campaign 1 conditional counterfactual teaching-value diagnostic | **2026-10-15 15:34:12 +02:00, verified** by the derived-result manifest. | Recorded 2026-10-15 15:34 +02:00 (Europe/Madrid), from published pilot seed `2026101511`; outputs under `results/diagnostics/hls_campaign1_counterfactual_teaching_value/`. | 32 preselected states × two existing directed relations = 64 paired remaining-horizon interventions. Descriptive conditional results only; not a global teaching-policy value or population estimate. |
 | Additive B1–B6 integrated teaching-cycle implementation and acceptance run | **2026-10-15, implementation date verified; exact start time unknown.** | Documented 2026-10-15 09:08 +02:00, Europe/Madrid, with implementation and test paths in the scope note. | Focused laboratory tests passed; full suite had 1181 passes and 13 failures on pre-existing local integrity/provenance conditions. Milestone remains PARTIAL; engineering verification is not scientific evidence. |
 | Additive exogenous environment/problem trajectory interface and regression run | **2026-10-15, implementation date verified; exact start time unknown.** | Documented 2026-10-15 09:45 +02:00, Europe/Madrid. | Reuses C5 demand processes and dynamic-lab emission; 17 focused tests passed; full suite 1189 passed/13 failed, same 13 named failures as the prior run. Milestone remains PARTIAL. |
 | HLS Laboratory v1 candidate-set consolidation and final validation | **2026-10-15 09:57 +02:00, verified execution time.** | Recorded 2026-10-15 09:57 +02:00, Europe/Madrid. | Ten scoped files imported and ran; focused tests 17/17; full suite 1189/13, same pre-existing failures. Milestone remains PARTIAL. |
@@ -258,6 +259,56 @@ as comparative estimates of teaching efficacy. Focused diagnostics, campaign
 regressions, and integrated/environment regressions passed 62 tests; no full
 repository suite was run. `git diff --cached --check` passed for the scoped
 staged changes.
+
+### 2026-10-15 — Campaign 1 counterfactual teaching value
+
+**Event:** bounded paired intervention execution completed 2026-10-15
+15:34:12 +02:00. **Recorded:** 2026-10-15 15:34 +02:00 (Europe/Madrid).
+**Authority:** CE Campaign 1 counterfactual-teaching instruction. **Type:**
+state-conditional counterfactual diagnostic; no adaptive policy was added.
+
+The state-selection rule used all 32 combinations of the published pilot's
+long-horizon cells (stationary/changing demand, low/high initial deficit,
+0.10/0.85 teaching efficacy, MIS OFF/ON, period 2/16), fixed at the first
+published seed `2026101511`. At every selected state, the two already-defined
+directed relations `(2,1,1)` and `(0,1,0)` were evaluated: 64 paired branches.
+The intervention was either P0's production-only action or a teaching action
+for the specified relation with the best feasible production allocation
+under the current observable score. Thereafter both branches followed the
+same P2 rule, with separately evolving branch states and memories.
+
+The published pilot CSV did not retain the full competence posterior needed
+to continue faithfully. The runner was extended additively with a
+period-boundary `OrganizationSnapshot` containing true team state, complete
+skill posterior, public organization memory, and next period. Deterministic
+prefix replays were checked against the pilot before snapshots were used;
+the counterfactual branches deep-copy those snapshots and share the same
+exogenous problem suffix and coordinate-indexed innovation scheme.
+
+Initial teaching used 0.5 effort, displaced 1.0 production effort, and left
+0.5 budget unused in every pair under the fixed discrete action catalog.
+Immediate CES difference averaged −0.142 (SD 0.103). Remaining-horizon
+`DeltaV_H` averaged −0.074 (SD 0.181; range −0.370 to +0.565), with 19
+positive and 45 negative contrasts. The early group (22 decisions remaining)
+averaged +0.033 (SD 0.186; 19 positive/13 negative); the late group (8
+remaining) averaged −0.181 (SD 0.093; 0 positive/32 negative).
+
+P2 chose no teaching in 22 of 32 selected states and relation `(0,1,0)` in
+the other 10. Against only the tested conditional candidate values, 17 states
+were correct no-teaching choices, 5 missed a positive candidate, 4 selected
+a positive candidate, and 6 selected a candidate with negative conditional
+value. These classifications do not establish global policy regret. The
+sample has one fixed seed per stratum and supports no population inference;
+the estimand is conditional on each state/event/P2 continuation/exogenous
+suffix/coupling, not globally optimal teaching value.
+
+Artifacts and SHA-256 manifest are in
+`results/diagnostics/hls_campaign1_counterfactual_teaching_value/`; runner:
+`experiments/synthetic/hls_campaign1/counterfactual_teaching.py`; tests:
+`tests/test_hls_campaign1_counterfactual_teaching.py`. The focused validation
+passed 23 tests across the integrated laboratory, published pilot,
+mechanism-diagnostic and new snapshot/counterfactual suites. The full suite
+was not run. This diagnostic does not close `HLS-LAB-V1-INTEGRATED`.
 
 ## 1. Initial portfolio and routing framing
 

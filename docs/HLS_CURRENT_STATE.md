@@ -173,6 +173,47 @@ selection and state trajectory, and are not comparable efficacy estimates.
 The reproducible command is
 `PYTHONPATH=.:src python experiments/synthetic/hls_campaign1/analyze_mechanisms.py`.
 
+### Campaign 1 counterfactual teaching value — 15 October 2026
+
+At 2026-10-15 15:34:12 +02:00, a bounded, state-conditional intervention
+analysis completed from the published pilot. Its prespecified sample is the
+full long-horizon grid of demand (stationary/changing), initial deficit
+(low/high), efficacy (0.10/0.85), MIS (OFF/ON), and intervention timing
+(period 2/16), with the first published seed `2026101511`: 32 states. Each
+state compared the existing directed relations `(2,1,1)` and `(0,1,0)`, for
+64 paired remaining-horizon branches. States were not outcome-selected.
+
+The continuation rule was the same existing P2 in both branches. The
+no-teaching intervention used P0's observable, production-only action; the
+teaching intervention used the best feasible production allocation for the
+specified relation under the same observable decision score. Thus this is a
+conditional intervention contrast, not an optimal policy comparison. In all
+64 initial pairs, the lesson used 0.5 effort, displaced 1.0 productive effort,
+and left 0.5 of the shared budget unused under the frozen action granularity.
+Immediate CES difference averaged −0.142 (SD 0.103). Remaining-horizon
+`DeltaV_H` averaged −0.074 (SD 0.181; range −0.370 to +0.565): 19 positive
+and 45 negative cases. Early interventions (22 decisions remaining) averaged
++0.033 (SD 0.186; 19 positive, 13 negative); late interventions (8 remaining)
+averaged −0.181 (SD 0.093; all 32 negative). These are one-seed-per-stratum
+descriptive simulator outcomes, not population estimates.
+
+At selected states, P2 chose no teaching in 22/32 and the `(0,1,0)` relation
+in 10/32. Against the tested candidate-specific counterfactual values, its
+choices classified as 17 no-teaching decisions with no positive tested
+candidate, 5 missed positive opportunities, 4 selected positive teaching
+cases, and 6 harmful selected teaching cases. These labels are conditional
+diagnostics, not policy regret against an oracle. The full posterior was not
+saved in the pilot CSV; deterministic prefix replay reconstructed it and
+matched the frozen pilot trace before branching. Results and hashes are in
+`results/diagnostics/hls_campaign1_counterfactual_teaching_value/`; code and
+focused tests are `experiments/synthetic/hls_campaign1/counterfactual_teaching.py`
+and `tests/test_hls_campaign1_counterfactual_teaching.py`. The test command
+is `PYTHONPATH=src:. pytest -q tests/test_hls_lab_v1_integrated.py tests/test_hls_campaign1_pilot.py tests/test_hls_campaign1_mechanism_diagnostics.py tests/test_hls_campaign1_counterfactual_teaching.py`;
+the trace manifest records the run command and hashes. This estimate is
+conditional on the selected state, specified event, P2 continuation, frozen
+exogenous suffix, and common indexed innovations; it is not globally optimal
+teaching value.
+
 ## Current empirical status — 13 October 2026
 
 This dated status block supplements the broader programme and foundational
