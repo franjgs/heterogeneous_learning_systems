@@ -10,6 +10,61 @@ remain authoritative for their own scope; this file does not replace them.
 The programme-level philosophy is defined in [HLS_PHILOSOPHY.md](HLS_PHILOSOPHY.md),
 and the common semantic contract is defined in [the HLS ontology](hls_ontology.md).
 
+## Current operational direction — 15 October 2026
+
+**Decision event:** 2026-10-15; exact decision time was not supplied.
+**Documented:** 2026-10-15 09:45 +02:00 (Europe/Madrid). See the dated entry
+in the [canonical project history](HISTORY.md).
+
+The PI and Chief Engineer approved prioritizing completion of **HLS Laboratory
+v1 as integrated experimental infrastructure**. The active milestone is
+**HLS-LAB-V1-INTEGRATED — APPROVED / IMPLEMENTATION PARTIAL**. An additive
+integrated teaching runner, P0/P1/P2 policies, a policy-independent exogenous
+problem-trajectory generator and focused acceptance tests now exist. The
+generator composes C5 demand processes with the existing dynamic problem
+emitter; problem trajectories are frozen before policy evaluation. Focused
+tests pass, while the full repository suite retains the same 13 integrity and
+provenance failures seen in the preceding runs (1189 passed, 13 failed in the
+latest run). The acceptance gate is therefore not closed. See the implementation record in
+[HLS Laboratory v1](experiments/HLS_LAB_V1.md). This changes the
+operational priority, not HLS's research questions or general scientific
+doctrine: HLS continues to ask **WHO SHOULD DO WHAT?** and **WHO SHOULD LEARN
+WHAT, HOW, AND FROM WHOM?** HLS concerns dynamic management of heterogeneous
+capabilities; it is not exclusively a worker-training simulator, and teaching
+is one possible competence-development action.
+
+Work is separated into two levels. **Infrastructure (first):** functional
+completeness, coherent states/transitions, shared-resource constraints,
+real/observed-state separation, reproducibility, policy comparability, and
+replaceable mechanisms. **Scientific research (subsequently):** theory,
+literature review, hypotheses, baselines, experiments, statistical analysis,
+and publishable claims. Simple infrastructure mechanisms need not be optimal
+or empirically definitive, but must remain causally coherent, reproducible,
+and verifiable; this priority does not relax scientific rigor.
+
+The approved implementation is one milestone, organized as B1 joint actions
+and shared resources; B2 teaching transition; B3 observations and elementary
+estimation; B4 minimal adaptive policy; B5 integrated multi-period execution;
+and B6 tests and reproducible demonstration. Teaching must consume resources
+that could otherwise support production; individual learning and teaching
+remain distinct; policies must not receive private simulator state; teaching
+may help or hurt and may be declined; and disabling new mechanisms must
+preserve historical behavior under an explicit compatibility contract.
+Small collectives, two competence dimensions, short horizons, fixed but
+heterogeneous teaching efficacy, configurable observation noise, elementary
+estimators, and heuristic policies are permitted as explicit replaceable
+simplifications—not as empirically validated models.
+
+The active next action is to resolve or formally disposition the unrelated
+full-suite integrity failures and close remaining acceptance gaps against
+[HLS Laboratory v1](experiments/HLS_LAB_V1.md). Until this milestone is
+verified, development is limited to its acceptance needs; no
+separate audit phase or new status/roadmap document is authorized. Previous
+recommendations to prioritize a narrower research line are historical and
+superseded as the immediate operational priority, not erased as evidence of
+the project's evolution. The dated history is the chronology authority; this
+file records the current status rather than duplicating that chronology.
+
 ## Current empirical status — 13 October 2026
 
 This dated status block supplements the broader programme and foundational
@@ -718,12 +773,14 @@ organization/development.
 
 ## 13. Current implementation boundary
 
-**Scope note (13 October 2026):** this section records the separate
-programme-level minimal-reference-system track. It is not a status inventory
+**Historical scope note (13 October 2026; priority superseded 15 October
+2026):** this section records the separate programme-level
+minimal-reference-system track as it stood then. It is not a status inventory
 of all later campaign-specific laboratories. Campaign 2/3 finite-problem
-experiments and Campaign 4 preparation are summarized in the dated status
-block above and do not, by themselves, close the general HLS reference-system
-requirements in this section.
+experiments and Campaign 4 preparation did not, by themselves, close the
+general HLS reference-system requirements. The active operational response is
+now the approved HLS-LAB-V1-INTEGRATED milestone above; this does not
+retroactively change the historical scope or evidence below.
 
 The next work is **not** another parameter sweep or an extension of the
 existing RQ0 synthetic campaign.  The minimum reference scenario has been
@@ -813,12 +870,17 @@ empirical relevance:         NOT ESTABLISHED
 
 Those results are retained.
 
-The outstanding broader programme-level priority remains to operationalize
-and validate the documented minimal HLS reference scenario with explicit
-organization, limitations, constraints, performance, experience, learning,
-and competence evolution, grounded in the T0--T6 baseline, existing theory,
-and the HLS ontology. This is an open programme direction, not an
-authorization for a new experiment in the current task.
+The following records the priority as stated in the 13 October 2026 status
+snapshot; it is **historical and superseded as the immediate operational
+priority** by the 15 October approval to complete HLS Laboratory v1. Its
+scientific motivation remains relevant, but implementation now follows the
+bounded B1–B6 scope in [the v1 reference](experiments/HLS_LAB_V1.md).
+
+The then-outstanding direction was to operationalize and validate the
+documented minimal HLS reference scenario with explicit organization,
+limitations, constraints, performance, experience, learning, and competence
+evolution, grounded in the T0--T6 baseline, existing theory, and the HLS
+ontology. That dated text was not authorization for an experiment.
 
 This is not a rejection of RQ0 or of the existing synthetic work. It is a
 change in scientific hierarchy:

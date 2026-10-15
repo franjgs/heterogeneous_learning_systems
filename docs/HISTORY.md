@@ -4,6 +4,122 @@ This is a compact record of the reasoning that matters for interpreting the
 current programme. It is not a replacement for frozen protocols or result
 artifacts, and it is not an exhaustive transcript of earlier documents.
 
+## Chronology and date confidence
+
+This file is the canonical chronology for significant project decisions and
+milestones. For new entries, event time and documentation time are separate.
+Times use Europe/Madrid and the form `YYYY-MM-DD HH:MM ±HH:MM`. A Git
+timestamp verifies when a repository record was made; it does not by itself
+date the decision that motivated it. Earlier narrative sections below remain
+undated where the source material does not establish a defensible event date.
+
+| Event / record | Event date and confidence | Record date and evidence | Scope note |
+| --- | --- | --- | --- |
+| PI / CE decision to prioritize integrated HLS Laboratory v1 and approve milestone `HLS-LAB-V1-INTEGRATED` | **2026-10-15, date verified; exact time unknown**, from the dated PI/CE instruction. | Documented 2026-10-15 08:40 +02:00, Europe/Madrid, in this entry and the linked current-state/lab documents. | Operational-priority change; it does not change the research questions or retrospectively alter prior decisions. |
+| Additive B1–B6 integrated teaching-cycle implementation and acceptance run | **2026-10-15, implementation date verified; exact start time unknown.** | Documented 2026-10-15 09:08 +02:00, Europe/Madrid, with implementation and test paths in the scope note. | Focused laboratory tests passed; full suite had 1181 passes and 13 failures on pre-existing local integrity/provenance conditions. Milestone remains PARTIAL; engineering verification is not scientific evidence. |
+| Additive exogenous environment/problem trajectory interface and regression run | **2026-10-15, implementation date verified; exact start time unknown.** | Documented 2026-10-15 09:45 +02:00, Europe/Madrid. | Reuses C5 demand processes and dynamic-lab emission; 17 focused tests passed; full suite 1189 passed/13 failed, same 13 named failures as the prior run. Milestone remains PARTIAL. |
+| HLS Laboratory v1 candidate-set consolidation and final pre-publication validation | **2026-10-15 09:57 +02:00, verified execution time.** | Recorded 2026-10-15 09:57 +02:00, Europe/Madrid. | The ten explicitly scoped implementation/test/demo/operations files imported and ran; focal tests 17/17; full suite 1189/13 with same pre-existing failures. Publication status is recorded separately after remote verification; milestone remains PARTIAL. |
+| HLS Laboratory v1 vertical-slice implementation recorded | Decision/event date **unknown**; repository record timestamp verified. | 2026-10-14 10:32 +02:00; commit `624e249` (full hash in Git). | Commit date establishes when the implementation was recorded, not when CE-23 was authorized. |
+| CE-24 validated output manifest created | **2026-10-14 10:50 +02:00, verified** by `created_utc` in `results/experiments/hls_lab_ce24_validated/manifest.json`; exact simulation start/end times are not recorded. | Manifest records `2026-10-14T08:50:09.236416+00:00`; result report was committed at 10:55 +02:00 (`ae78cda`). | Timestamp verifies the manifest/output record, not exact execution duration. The deterministic run is not population-level evidence. |
+| CE-24 validation record committed | Decision/event date **unknown**; repository record timestamp verified. | 2026-10-14 10:55 +02:00; commit `ae78cda`. | Commit date records report/code publication in Git, not decision authorization. |
+| CE-25 mechanism-decomposition experiment and report | **2026-10-14, approximate only**: the report identifies `ae78cda` as the source-code baseline and is recorded in the same-day `aeea566` commit; no run timestamp appears in its manifest. | Repository report commit 2026-10-14 11:20 +02:00 (`aeea566`); its manifest has no execution timestamp. | Do not infer an exact execution time. Finite deterministic mechanism validation; its FAST/DEEP next-step recommendation is superseded operationally by the 15 October decision, while findings remain historical. |
+| C2/C3 results and C4 status documentation consolidation committed | Decision dates **not inferred from commit time**; repository record timestamp verified. | 2026-10-13 08:15 +02:00; commit `931c560`. | The status recorded there is preserved in its scoped sources; it is not the current HLS Laboratory v1 priority. |
+| G1 static and G2 dynamic ground-truth consolidations | Original experiment/decision dates **unknown** from the reviewed chronology. | Repository records: G1 consolidation 2026-10-01 07:59 +02:00 (`f8897e7`); G2 validation 2026-10-01 10:57 +02:00 (`5c55a59`). | These are verified artifact-record dates, not dates of the original G1/G2 work or decisions. |
+| G0/reference-scenario and G3/G3-H repository milestones | Original event/decision dates **unknown**; repository record timestamps verified. | Relevant records include minimal reference scenario 2026-10-01 18:45 +02:00 (`b4551b7`), G3 ground truth 2026-10-02 13:01 +02:00 (`a3f2a85`), G3-H future-opportunity closure 2026-10-04 22:16 +02:00 (`2eca948`), and C1/C2 boundary closure 2026-10-05 18:03 +02:00 (`8972c3c`). | These dates establish when Git recorded the artifacts, not the underlying decision dates. |
+| Initial portfolio framing; H1/M0/CIV; vehicle search; transition to G0; A1; C1–C5/RQ0 narrative (sections 1–9 below) | **DATE UNKNOWN** for the events as described; no direct event timestamps were found in this history entry. | Individual source documents/commits exist, but their record dates are not asserted here as event dates. | Preserve the ordering and conclusions; do not invent dates or infer them from unrelated commit timestamps. |
+
+Dates marked “unknown” are intentionally not reconstructed from commit time.
+Dates for which only a bounded period is supported should remain approximate
+in future entries rather than being assigned invented day/time precision.
+
+### 2026-10-15 — operational priority change
+
+**Event:** 2026-10-15, exact time not documented. **Recorded:** 2026-10-15
+08:40 +02:00 (Europe/Madrid). **Authority:** PI / Chief Engineer. **Type:**
+operational-priority decision. **Decision:** prioritize completing HLS
+Laboratory v1 as integrated experimental infrastructure, under milestone
+`HLS-LAB-V1-INTEGRATED`, status **APPROVED — IMPLEMENTATION PENDING**.
+
+HLS's two research questions and general scientific doctrine are unchanged.
+Infrastructure completion comes first; scientific investigations follow on a
+causally coherent, reproducible, and verifiable integrated laboratory. The
+approved implementation is one milestone with blocks B1–B6: joint actions and
+shared resources; teaching transition; observations and elementary
+organizational estimation; a minimal adaptive policy; integrated multiperiod
+execution; and tests plus reproducible demonstration. Extensive campaigns and
+component sophistication are deferred. See [current state](HLS_CURRENT_STATE.md)
+and the [v1 implementation reference](experiments/HLS_LAB_V1.md).
+
+**Operational consequence:** development stays focused on meeting the
+HLS-LAB-V1-INTEGRATED acceptance criteria; no intermediate audit phases or new
+status/roadmap documents are opened. The previous narrower next-step
+recommendations (including CE-25's FAST/DEEP recommendation) are superseded as
+the immediate priority, not erased or reinterpreted as historical findings.
+
+### 2026-10-15 — integrated teaching-cycle implementation (partial)
+
+**Event:** 2026-10-15, implementation performed during this work session;
+exact start time not recorded. **Recorded:** 2026-10-15 09:08 +02:00
+(Europe/Madrid). **Authority:** implementation under the PI/CE-approved
+HLS-LAB-V1-INTEGRATED decision. **Type:** engineering implementation and
+verification.
+
+An additive execution layer, `src/hls/hls_lab_v1_integrated.py`, composes
+existing DISCOVER-v0 production actions, MIS-v2 individual learning, existing
+competence-posterior helpers, and a bounded directed teaching event. It adds
+shared feasibility checks, private heterogeneous teaching efficacy, noisy
+public observations, elementary efficacy memory, P0/P1/P2, multiperiod traces,
+and deterministic coordinate-indexed innovations. The reproducible demo is
+`experiments/synthetic/hls_lab_v1/integrated_demo.py`; focused tests are in
+`tests/test_hls_lab_v1_integrated.py`.
+
+The deterministic engineering fixture produced both outcomes: for recurrent
+demand, P2 obtained cumulative CES 6.4564 versus P0 5.0728 (33 versus 2
+successful periods); for short mismatched demand, P1 obtained 1.5763 versus
+P0 2.1997 and P2 declined to teach, matching P0 at 2.1997. These are fixture
+outputs, not scientific effect estimates. Focused tests across the integrated
+layer and its CE-23/24/25, dynamic, DISCOVER, MIS-v2 and Small Problem World
+dependencies passed (87). The complete suite reported 1181 passed, 13 failed;
+the reported failures concern local frozen-source hashes, additional local
+artifacts, and Campaign 2/B2.3/RQ0 provenance checks outside files changed for
+this integration. No historical hashes or results were edited.
+
+**Status:** `HLS-LAB-V1-INTEGRATED` remains **PARTIAL**. The new layer, demo and
+scoped tests pass, but the full-suite gate is not clean. Existing discrete
+production-action granularity can also leave residual participant effort
+unusable during teaching. No campaign or scientific inference was performed.
+See [the implementation record](experiments/HLS_LAB_V1.md) and
+[current state](HLS_CURRENT_STATE.md).
+
+### 2026-10-15 — exogenous environment/organization boundary (partial)
+
+**Event:** 2026-10-15, implementation and test run; exact start time unknown.
+**Recorded:** 2026-10-15 09:45 +02:00 (Europe/Madrid). **Authority:**
+PI/CE focalized GO instruction. **Type:** additive engineering integration.
+
+Added `src/hls/hls_lab_v1_environment.py` to compose C5's stationary,
+nonstationary, or Markov task process with the existing
+`DemandRegime`/`generate_problems` emitter. It produces a frozen exogenous
+problem trajectory before any policy is run; environment and emission random
+streams are separate, while policies receive only the emitted problems and
+not latent environment states. Structural tests cover specialization,
+complementarity, recurrence, novelty, regime change, matched policy inputs,
+and reproducibility. A small executable regime-switching demo compares P0,
+P1, and P2 on a shared trajectory. This is engineering verification, not a
+scientific campaign or evidence of policy superiority.
+
+Focused environment plus integrated tests: 17 passed. Full suite:
+1189 passed, 13 failed in 314.78 seconds. The same 13 test identities from the
+preceding full run failed again: a local foundation-result inventory mismatch,
+B2.3/RQ0 protocol-provenance mismatches, and frozen Campaign 2/3/Gate hash or
+artifact checks. No frozen hashes were refreshed. Source hashes for
+`hls_lab_v1.py`, `hls_lab_dynamic.py`, `synthetic/c5.py`, and
+`finite_problem_belief.py` were unchanged across this intervention. Milestone
+remains **PARTIAL**. No commit or push was made: the required integrated layer,
+demo, and tests are untracked and absent from branch HEAD; committing this
+environment adapter alone would leave the branch nonfunctional, while adding
+those prior-work files would exceed this correction's scoped change set.
+
 ## 1. Initial portfolio and routing framing
 
 The programme began from heterogeneous agents with changing task allocation,

@@ -18,13 +18,17 @@ The principal documents have distinct jobs:
 | [HLS Ontology](hls_ontology.md) | Canonical semantic and mapping layer. |
 | [Research Questions](research_questions.md) | Official research-question authority. |
 | [HLS Current State](HLS_CURRENT_STATE.md) | Canonical current scientific-state authority. |
-| [History](HISTORY.md) | Scientific history and durable lessons from prior work. |
+| [History](HISTORY.md) | Canonical dated chronology of significant decisions and milestones; preserves durable scientific lessons and provenance. |
 | **This guide** | Repository authority, provenance, and implementation map. |
 
 If this guide conflicts with a canonical scientific source, the scientific
 source prevails. In particular, consult **HLS Current State** for current
 scientific status, **Research Questions** for official questions, and the
 identified theory/evidence source for formal claims and numerical results.
+For the active implementation milestone, [HLS Laboratory v1](experiments/HLS_LAB_V1.md)
+defines the approved scope and acceptance criteria; [History](HISTORY.md) is
+the dated chronology, while [HLS Current State](HLS_CURRENT_STATE.md) gives
+the present status. These roles are complementary, not competing roadmaps.
 
 ## Status vocabulary
 
@@ -53,6 +57,8 @@ classification.
 | [hls_ontology.md](hls_ontology.md) | Semantic infrastructure | CANONICAL | Terms, dimensional consistency, and cross-theory mappings. | A closed universal model or current-results ledger. |
 | [research_questions.md](research_questions.md) | Official question record | CANONICAL | Active RQ0 and its scope. | Historical questions or theory proofs. |
 | [HLS_CURRENT_STATE.md](HLS_CURRENT_STATE.md) | Scientific-status summary | CANONICAL | Established, scoped, open, and deliberately unclaimed results. | Detailed derivations or protocol chronology. |
+| [HISTORY.md](HISTORY.md) | Dated project chronology | CANONICAL chronology | Timestamped significant decisions, milestones, outcomes, and their evidence/date confidence. | Current status or a task backlog. |
+| [experiments/HLS_LAB_V1.md](experiments/HLS_LAB_V1.md) | HLS Laboratory v1 integration reference | ACTIVE MILESTONE: HLS-LAB-V1-INTEGRATED — APPROVED / IMPLEMENTATION PENDING | B1–B6 implementation scope, constraints, invariants, and acceptance criteria. | General HLS doctrine, completed implementation, or scientific evidence beyond CE-23–25. |
 | [CAMPAIGN_2_RESULTS.md](experiments/CAMPAIGN_2_RESULTS.md) | Campaign result record | CANONICAL for frozen C2 outcomes | Preregistered H1–H4, consequence results, nulls, and scope limits. | General HLS policy value or outcomes outside the Q11-reference/frozen test range. |
 | [CAMPAIGN_2_STATE_COVERAGE_AUDIT.md](experiments/CAMPAIGN_2_STATE_COVERAGE_AUDIT.md) | Post-C2 support diagnostic | CANONICAL for its diagnostic | Why Q11-only state sourcing is insufficient for a future C3 development bank under its operational support criterion. | Reopening C2 H1–H4 or exhaustive continuous-state coverage. |
 | [CAMPAIGN_3_THEORETICAL_SPECIFICATION.md](theory/CAMPAIGN_3_THEORETICAL_SPECIFICATION.md) | Frozen C3 theoretical/mechanistic layer | FROZEN for C3.0 | Frozen finite-problem physics, operator terms, and causal/epistemic distinctions. | A result report or C3.2/C4 outcome authority. |
@@ -182,13 +188,18 @@ For current programme reconstruction, use this order of authority:
 2. [Research Doctrine](../RESEARCH_DOCTRINE.md) for methodological discipline.
 3. [HLS Ontology](hls_ontology.md) for semantic consistency.
 4. [Research Questions](research_questions.md) for official active questions.
-5. [HLS Current State](HLS_CURRENT_STATE.md) for established/open current science.
-6. [Pre-experiment Foundation Specification](theory/HLS_FOUNDATION_SPECIFICATION.md)
+5. [HLS Current State](HLS_CURRENT_STATE.md) for current scientific and
+   operational status.
+6. [HLS Laboratory v1](experiments/HLS_LAB_V1.md) for the active
+   HLS-LAB-V1-INTEGRATED scope and acceptance criteria.
+7. [History](HISTORY.md) for dated decisions and milestone chronology; event
+   dates and repository/documentation dates are distinguished.
+8. [Pre-experiment Foundation Specification](theory/HLS_FOUNDATION_SPECIFICATION.md)
    for the current executable adaptive-team laboratory and its frozen
    pre-campaign boundary.
-7. [Theory registry](theory/README.md) and the individual cited theory for
+9. [Theory registry](theory/README.md) and the individual cited theory for
    formal, scoped results.
-8. [Experiments registry](experiments/README.md), G0, code, tests, and result
+10. [Experiments registry](experiments/README.md), G0, code, tests, and result
    artifacts for implementation and reproducibility.
 
 For the newer bounded Campaign 2/3/4 lines, use the campaign-specific
@@ -230,12 +241,16 @@ protocol, pilot, or historical section of
 ### Core
 
 1. [README](../README.md) — entry point and navigation.
-2. [HLS Philosophy](HLS_PHILOSOPHY.md) — programme compass and two beams.
-3. [Research Doctrine](../RESEARCH_DOCTRINE.md) — claim discipline and method.
-4. [HLS Ontology](hls_ontology.md) — semantic mapping discipline.
-5. [Research Questions](research_questions.md) — official active question.
-6. [HLS Current State](HLS_CURRENT_STATE.md) — established and open science.
-7. This guide — locate formal, executable, and evidentiary material.
+2. [HLS Current State](HLS_CURRENT_STATE.md) — current status and priority.
+3. [HLS Laboratory v1](experiments/HLS_LAB_V1.md) — active milestone and
+   implementation acceptance criteria.
+4. This guide — resolve document authority and provenance as needed.
+5. [HLS Philosophy](HLS_PHILOSOPHY.md) — programme compass and two beams.
+6. [Research Doctrine](../RESEARCH_DOCTRINE.md) — claim discipline and method.
+7. [HLS Ontology](hls_ontology.md) — semantic mapping discipline.
+8. [Research Questions](research_questions.md) — official active question.
+9. [History](HISTORY.md) — dated decision chronology; consult for provenance,
+   not as the current task list.
 
 ### Static HLS
 

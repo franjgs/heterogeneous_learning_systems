@@ -1,6 +1,144 @@
 # HLS Laboratory v1
 
-**Estado: PARTIAL — vertical slice y microexperimentos deterministas CE-24/25 implementados; esto no es evidencia poblacional ni validación en equipos reales.** Esta guía describe CE-23–25 y no sustituye al contrato de referencia, que se conserva en [HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md](HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md).
+**Estado del hito: APPROVED — IMPLEMENTATION PARTIAL (decisión 2026-10-15; última actualización documental 2026-10-15 09:45 +02:00, Europe/Madrid).** La capa integrada B1–B6 coexiste ahora con una interfaz aditiva de entorno exógeno y pasa pruebas focalizadas. La suite completa sigue teniendo 13 fallos de integridad/procedencia, reproducidos con las mismas identidades que en la corrida anterior; la aceptación final permanece abierta. El hito activo es **HLS-LAB-V1-INTEGRATED**. Esta guía es la referencia técnica de implementación, enlaza la [decisión operativa vigente](../HLS_CURRENT_STATE.md) y no sustituye los [contratos científicos de referencia](HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md).
+
+## Hito activo: HLS-LAB-V1-INTEGRATED
+
+El objetivo aprobado es un ejecutor integrado y reproducible de episodios
+multiperiodo donde agentes heterogéneos producen, aprenden por experiencia,
+enseñan a otros agentes y adaptan decisiones a partir de observaciones. La
+completitud funcional precede al perfeccionamiento de mecanismos individuales;
+los modelos iniciales pueden ser sencillos, pero han de ser coherentes,
+verificables y sustituibles. HLS no se reduce a formación de trabajadores:
+la enseñanza es una de varias acciones posibles de desarrollo de capacidades.
+
+La implementación de este único hito se verifica en seis bloques:
+
+| Bloque | Contenido que debe integrarse |
+| --- | --- |
+| B1 | Acción conjunta y recursos compartidos entre producción y enseñanza. |
+| B2 | Transición formativa explícita con participación de instructor y aprendiz. |
+| B3 | Observaciones formativas configurables y estimación organizativa elemental. |
+| B4 | Política adaptativa mínima que pueda usar lo observado y decidir no enseñar. |
+| B5 | Ejecución integrada multiperiodo con capacidades persistentes y consecuencias futuras. |
+| B6 | Pruebas de invariantes y demostración reproducible de extremo a extremo. |
+
+**Aceptación del hito:** ejecutor reproducible; contrato común de acciones y
+presupuesto compartido operativo; aprendizaje individual y transición de
+enseñanza funcionales y distinguibles; separación del estado real y observado;
+actualización organizativa elemental; al menos una política adaptativa, una
+referencia sin enseñanza y una política con enseñanza; comparaciones bajo
+condiciones reproducibles; pruebas automáticas de los invariantes; y una demo
+que muestre condiciones donde enseñar conviene y donde no conviene, sin forzar
+la superioridad de una estrategia. El hito no se marcará DONE hasta verificar
+todos estos criterios.
+
+**Invariantes:** enseñar consume recursos que podrían producir; instructor y
+aprendiz participan realmente; enseñar puede cambiar competencias futuras,
+pero no garantiza mejor rendimiento; producción y mecanismos formativos
+compiten por recursos; políticas no acceden a estado privado; las
+observaciones pueden afectar decisiones posteriores; la evaluación funcional
+no otorga recompensas arbitrarias por enseñar; y desactivar los mecanismos
+nuevos preserva el comportamiento histórico bajo un contrato explícito de
+compatibilidad. Los modelos G1, G2, MIS, G3-H, RQ0 y resultados congelados no
+se alteran.
+
+Se permiten como simplificaciones explícitas y sustituibles: dos dimensiones
+de competencia, colectivos pequeños, generadores existentes, MIS-v2,
+máximo un evento de enseñanza por periodo, eficacia docente fija y
+heterogénea, transiciones formativas simples, ruido configurable, estimadores
+elementales, heurísticas y horizontes cortos. No se describen como
+empíricamente validadas sin evidencia.
+
+**Fuera de alcance de este hito:** optimizadores generales, POMDP completos,
+RL profundo, FAST/DEEP, META-VOC, redes complejas de cooperación, modelos
+avanzados de enseñanza, estimadores sofisticados, campañas extensas, revisión
+nueva de novedad, rediseño de MIS-v2 o reescritura del laboratorio. El trabajo
+de desarrollo se concentra en B1–B6; bloqueos estructurales se registran en
+los documentos operativos existentes y se elevan al CE. No se abrirán fases
+intermedias de auditoría ni nuevos documentos de estado/roadmap sin necesidad
+justificada y autorización.
+
+**Próxima acción:** cerrar la verificación integral y resolver/disponer los
+fallos de integridad preexistentes antes de considerar completado B1–B6; no
+iniciar una campaña científica en esta etapa de infraestructura. La
+recomendación CE-25 de priorizar FAST/DEEP es una recomendación histórica,
+superada como siguiente prioridad por la decisión del 15 de octubre; el
+resultado y su interpretación original se conservan en [CE-25](HLS_LAB_CE25.md).
+
+## Registro de integración B1–B6 — 15 octubre 2026
+
+Implementación aditiva en `src/hls/hls_lab_v1_integrated.py`; no se modifican
+`hls_lab_v1.py`, DISCOVER-v0, MIS-v2 ni los ejecutores/resultados históricos.
+El contrato heredado de decisión productiva `H=1` por problema se conserva;
+el ejecutor integrado encadena problemas como periodos, por lo que permite
+consecuencias entre periodos sin introducir decisiones internas adicionales.
+
+- **B1, acción y recursos:** `IntegratedAction` combina una acción del catálogo
+  productivo congelado con cero o una `TeachingEvent(instructor, learner,
+  capability, effort)`. El instructor y aprendiz deben ser distintos. La
+  factibilidad exige simultáneamente `production effort + 2 × teaching effort
+  ≤ resource_budget` y, para cada persona, su esfuerzo productivo más su
+  participación formativa `≤ max_effort_per_expert`. No se añade penalización
+  por enseñar: se registra `resource_cost = total_resource_used ×
+  resource_cost_per_unit`. La granularidad discreta de `JOINT_ACTIONS` puede
+  dejar parte de la capacidad residual inutilizable durante la enseñanza; se
+  conserva deliberadamente el catálogo existente.
+- **B2, transición:** después de la producción y MIS-v2, solo el aprendiz
+  recibe `c' = min(1, c + transfer_rate × teaching_effort × efficacy[i,j,k]
+  × (1-c))`. La eficacia es fija, privada y heterogénea por relación dirigida
+  y competencia. Es una simplificación de infraestructura, no una ley docente
+  validada empíricamente.
+- **B3, observación:** las lecturas productivas son `y_ik = x_ik c_ik +
+  Normal(0, σ_prod²)` con innovaciones indexadas por semilla/periodo/agente/
+  competencia. Una posterior de malla reutiliza las utilidades de
+  `hls_lab_dynamic.py` y predice MIS-v2 con parámetros públicos. El resultado
+  formativo observado es el incremento del aprendiz más ruido independiente;
+  la organización actualiza una media recursiva de eficacia tras normalizar
+  esa señal usando su competencia estimada. El incremento real se conserva
+  solo como diagnóstico de la traza y nunca se entrega a la política.
+- **B4, políticas comunes:** P0 maximiza el criterio funcional entre acciones
+  sin enseñanza; P1 intenta una relación instructor-aprendiz-competencia
+  preespecificada y recurre a P0 si no es factible; P2 explora una vez cada
+  relación configurada que resulte elegible, en orden predefinido, después usa
+  la eficacia observada, su umbral y una competencia objetivo. P2 no enseña si
+  la mejor acción productiva ya satisface el problema. Son reglas heurísticas deterministas,
+  no optimizadores.
+- **B5, ejecución:** `run_integrated_sequence` usa el orden producción →
+  observación productiva → MIS-v2 individual → enseñanza → observación
+  formativa/actualización organizativa → traza. Los estados reales,
+  posteriores de competencia y memoria de eficacia evolucionan por ejecución;
+  `compare_integrated_policies` vuelve a inicializar cada organización desde
+  el mismo equipo y conserva idéntica secuencia e innovaciones indexadas.
+  `serialize_integrated_result` genera JSON estable.
+- **B6, evidencia de ingeniería:** `tests/test_hls_lab_v1_integrated.py`
+  cubre presupuesto y esfuerzo compartidos, desplazamiento productivo,
+  transición docente separada de MIS, uso de observaciones por P2, opción de
+  no enseñar, ausencia de acceso de política al estado privado, CRN por
+  coordenadas, evolución independiente de los estados y reproducibilidad.
+  Los tests integrados con CE-23/24/25, dinámica, DISCOVER-v0, MIS-v2 y Small
+  Problem World: **87 passed**. La suite completa: **1181 passed, 13 failed**.
+  Los fallos corresponden a hashes de fuentes ya modificadas localmente antes
+  de esta intervención, artefactos preexistentes adicionales y procedencia
+  congelada de Campaign 2/B2.3/RQ0; no modificamos esos paths ni actualizamos
+  sus hashes. Por este motivo el hito queda **PARTIAL**, no DONE.
+
+La demostración reproducible se ejecuta con:
+
+```bash
+PYTHONPATH=src:. python experiments/synthetic/hls_lab_v1/integrated_demo.py
+PYTHONPATH=src:. pytest -q tests/test_hls_lab_v1_integrated.py
+```
+
+Es un fixture de ingeniería determinista, no un experimento científico. En
+`A_LONG_RECURRENT_DEMAND` (34 periodos), P0 obtuvo recompensa CES acumulada
+5.0728 y 2 éxitos funcionales; P2 obtuvo 6.4564 y 33 éxitos, con una lección.
+P1 obtuvo 10.8367 y 33 éxitos, pero enseñó en los 34 periodos y no es una
+política adaptativa. En `B_SHORT_MISMATCHED_DEMAND` (4 periodos), P0 obtuvo
+2.1997 y 4 éxitos; P1 obtuvo 1.5763 y 0 éxitos al enseñar persistentemente
+una relación irrelevante; P2 obtuvo 2.1997 y 4 éxitos, eligiendo no enseñar.
+Las cifras ilustran que la regla puede producir ambos signos y declinar la
+enseñanza bajo el fixture; no estiman efectos generales.
 
 ## Fundamento y objetivo
 
@@ -90,6 +228,12 @@ SHA-256 del documento de contrato descargado al incorporar CE-23: `2ac24be1bd19f
 
 ## Limitaciones y trabajo pendiente
 
+Las limitaciones históricas siguientes describen el alcance de CE-23–25; la
+prioridad para resolver las carencias necesarias para completar la integración
+queda ordenada por el hito activo anterior. En particular, las antiguas
+recomendaciones de congelar un factorial o avanzar a FAST/DEEP no gobiernan el
+orden operativo actual.
+
 - Es una vertical slice más ejecutores finitos CE-24/25; no hay un framework general de campañas ni dominio de problemas calibrado empíricamente.
 - Una decisión por problema limita preguntas temporales dentro del episodio; solo hay aprendizaje entre problemas.
 - Competencia estimada igual a real elimina incertidumbre de competencia; no hay creencias ni estado informativo imperfecto.
@@ -103,3 +247,15 @@ SHA-256 del documento de contrato descargado al incorporar CE-23: `2ac24be1bd19f
 CE-25 valida de forma acotada que la experiencia exploratoria emparejada puede ser usada para cambiar decisiones, y que la memoria no consultada no altera el comportamiento; véase [el informe CE-25](HLS_LAB_CE25.md). No demuestra generalización ni una ventaja poblacional.
 
 La clase de entrega sigue siendo **PARTIAL**, no COMPLETE: el ensamblaje, demo, pruebas contractuales y validaciones mecanísticas finitas existen; una evaluación científica amplia queda fuera de alcance.
+
+## Entorno exógeno y trayectoria congelada
+
+La corrección de organización/entorno añade `src/hls/hls_lab_v1_environment.py` sin reemplazar los mecanismos integrados. `ExogenousEnvironmentConfig` fija un proceso de demanda C5, una distribución emisora `DemandRegime` por estado, horizonte y presupuesto. `generate_environment_trajectory(config, seed=...)` genera primero una secuencia inmutable de `IntegratedProblem`; esa misma tupla se entrega después a P0/P1/P2. El generador no recibe equipo, competencias, política, acciones, recompensas ni estado organizativo. La trayectoria guarda los estados latentes solo para diagnóstico experimental; estos no aparecen en `IntegratedDecisionView`.
+
+La implementación reutiliza los procesos `StationaryTaskDemand`, `NonStationaryTaskDemand` y `MarkovTaskDemand` de `src/hls/synthetic/c5.py`, más `DemandRegime`/`generate_problems` de `src/hls/hls_lab_dynamic.py`. Los flujos aleatorios de la dinámica y de la emisión están separados; la emisión se deriva de semilla y periodo, no del consumo de aleatoriedad de las políticas. El estado latente no se pasa a la política, aunque el problema emitido puede revelar información sobre él a través de sus requisitos observados. No se cambian `finite_problem_belief.py`, DISCOVER ni los contratos históricos.
+
+Las familias se definen estructuralmente, no por etiquetas: especialización usa requisitos dominantes en una dimensión; complementariedad usa requisitos positivos simultáneos que no satisface una producción individual aislada, aunque sí una asignación colectiva; recurrencia se representa por transiciones de demanda que retienen tipos; novedad por la primera aparición de un vector de requisitos ausente del prefijo; y cambio de régimen por una transición latente cuya distribución emisora cambia los requisitos. Son capacidades de configuración y prueba del entorno, no afirmaciones sobre distribuciones reales.
+
+Demo reproducible: `python experiments/synthetic/hls_lab_v1/environment_demo.py`. Genera un cambio determinista de demanda especializada a complementaria y compara P0/P1/P2 sobre la misma trayectoria. En la ejecución verificada, P0 obtuvo 12/12 éxitos y CES acumulado 11.14847; P1, que enseñó en 12 periodos, obtuvo 1/12 y CES 3.42640; P2 decidió no enseñar, obtuvo 12/12 y 11.14847. Es un resultado de una fixture determinista: comprueba que se representa una decisión formativa perjudicial y una política puede abstenerse, no es evidencia general sobre políticas. El JSON se imprime en stdout; no crea ni sobrescribe resultados. Pruebas: `PYTHONPATH=.:src pytest -q tests/test_hls_lab_v1_environment.py tests/test_hls_lab_v1_integrated.py`.
+
+**Verificación de esta corrección (2026-10-15 09:45 +02:00):** 17 pruebas focalizadas superadas. La suite completa: 1189 passed, 13 failed en 314.78 s. Los 13 fallos coinciden por nombre y familia con la corrida anterior: 1 inventario local de resultados de fundamentos; 5 validaciones de procedencia B2.3/RQ0; 7 verificaciones de hashes/artefactos congelados de Campaign 2/3 y Gate. No se actualizaron hashes ni se tocaron las fuentes congeladas durante esta intervención. La limitación de publicación es independiente: la capa integrada requerida y sus demo/tests existen sin seguimiento en el worktree y no están en el HEAD de la rama; por ello no se publicó un commit parcial que dependiera de archivos ausentes.
