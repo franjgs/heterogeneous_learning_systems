@@ -198,6 +198,67 @@ integrity/provenance failures remain unresolved. This campaign neither closes
 the laboratory integration milestone nor establishes a general scientific
 conclusion.
 
+### 2026-10-15 — Campaign 1 mechanism diagnostics
+
+**Event:** existing-pilot analysis and deterministic targeted teaching-gain
+replays completed 2026-10-15 14:28:17 +02:00. **Recorded:** 2026-10-15
+14:28 +02:00 (Europe/Madrid). **Authority:** CE mechanism-diagnostics
+instruction. **Type:** post-pilot diagnostic; no new policy comparison
+campaign.
+
+The published pilot's 20,480 episode records and 1,280 seed summaries were
+hash-verified and reused. The P2−P0 CES contrast averaged −0.241 (SD 0.181)
+for MIS-v2 ON and −0.126 (SD 0.246) for MIS-v2 OFF across 160 paired
+configuration-seed units per condition. Their difference-in-differences was
+−0.115 (SD 0.196; 28 positive, 112 negative, 20 ties). This is descriptive
+factorial interaction within the frozen simulated design, not an estimate of
+population effects or independent mechanism shares.
+
+For 320 P2−P0 cumulative episode trajectories, 278 runs with teaching had a
+negative cumulative path at some point; 39 later crossed back to nonnegative
+(30 LI-OFF, 9 LI-ON), while 239 never crossed back. P2 finished ahead in 37,
+behind in 241, tied in 42; 42 runs had no P2 teaching and tied throughout. In
+the high-deficit/high-efficacy/long-horizon cells, the first teaching episode
+had lower same-period CES in all 20 runs. With LI OFF, all 20 subsequently
+crossed and finished ahead (mean break-even period 8.2 for changing and 17.3
+for stationary demand). With LI ON, only 4/20 crossed after the teaching
+episode's negative path; 3/20 finished ahead.
+
+The frozen CSV directly supports nominal teaching effort, production effort,
+resource use, residual capacity, CES, and real competence before/after each
+period. It omits the record's exact `teaching_gain_real` field. A targeted
+replay recovered that field from 876 teaching-containing policy/seed blocks
+(7,422 events); every replay matched published actions, CES, resources, and
+real-competence states. Each lesson used 0.5 participant-effort units and was
+paired with 1.0 production effort versus P0's 2.0, leaving 0.5 budget unused
+under the discrete catalogue. Exact realized skill gain by teaching was
+available from the targeted replay, but LI-ON net competence change in the
+published CSV cannot separate teaching from MIS-v2 without it.
+
+P2 versus P0 estimates only the total policy-package contrast under paired
+external conditions. The MIS ON/OFF difference-in-differences is interpretable
+as the controlled interaction of that toggle and the policy contrast inside
+this model. P2 versus scheduled-no-feedback does not isolate organizational
+information because policies differ in teaching choices and exposure. Costs
+are reported in resource units, not converted into an arbitrary CES utility.
+No inferential tests or population confidence intervals were calculated.
+
+Reproducible analysis code is
+`experiments/synthetic/hls_campaign1/analyze_mechanisms.py`; summaries,
+event-level targeted-replay records, temporal trajectories, SVG figure, and
+hash manifest are in `results/diagnostics/hls_campaign1_mechanism_diagnostics/`.
+The diagnostic work did not rerun the full 1,280-run pilot or change its
+frozen artifacts.
+
+Exact direct gains averaged 0.0352 (high efficacy) and 0.0103 (low) across
+P1's teaching events. P2's event-selected means were 0.1031/0.0131 with LI
+OFF and 0.1014/0.0128 with LI ON (high/low efficacy). These means condition
+on distinct event-selection and competence-state paths and must not be read
+as comparative estimates of teaching efficacy. Focused diagnostics, campaign
+regressions, and integrated/environment regressions passed 62 tests; no full
+repository suite was run. `git diff --cached --check` passed for the scoped
+staged changes.
+
 ## 1. Initial portfolio and routing framing
 
 The programme began from heterogeneous agents with changing task allocation,
