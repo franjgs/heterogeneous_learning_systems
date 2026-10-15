@@ -15,6 +15,7 @@ undated where the source material does not establish a defensible event date.
 
 | Event / record | Event date and confidence | Record date and evidence | Scope note |
 | --- | --- | --- | --- |
+| HLS Laboratory behavioral plausibility validation | **2026-10-15 17:42:56 +02:00, verified** by the final result manifest. | Recorded 2026-10-15 17:43 +02:00, Europe/Madrid, with test and artifact hashes. | Six deterministic paired intervention fixtures plus mechanism invariants; confirms conditional response only. No core physics changes; milestone remains PARTIAL. |
 | PI / CE decision to prioritize integrated HLS Laboratory v1 and approve milestone `HLS-LAB-V1-INTEGRATED` | **2026-10-15, date verified; exact time unknown**, from the dated PI/CE instruction. | Documented 2026-10-15 08:40 +02:00, Europe/Madrid, in this entry and the linked current-state/lab documents. | Operational-priority change; it does not change the research questions or retrospectively alter prior decisions. |
 | Scientific Campaign 1 pilot: exploitation versus capability development | **2026-10-15 10:22:04 +02:00, verified** by the final output manifest. | Recorded 2026-10-15 10:22 +02:00, Europe/Madrid; source baseline `a179041a1617e250e3fe83065db7dbc8402b0d62`. | 16 configurations × 10 paired seeds × four policies × LI ON/OFF = 1,280 runs, 20,480 episode records. Pilot observations only; no population-level inference. Three earlier designs were excluded: latent-label exposure, oracle skill initialization, and zero-production teaching periods from budget/action granularity. Formatting reruns reused the same seeds and did not add replicates. |
 | Campaign 1 conditional counterfactual teaching-value diagnostic | **2026-10-15 15:34:12 +02:00, verified** by the derived-result manifest. | Recorded 2026-10-15 15:34 +02:00 (Europe/Madrid), from published pilot seed `2026101511`; outputs under `results/diagnostics/hls_campaign1_counterfactual_teaching_value/`. | 32 preselected states × two existing directed relations = 64 paired remaining-horizon interventions. Descriptive conditional results only; not a global teaching-policy value or population estimate. |
@@ -760,3 +761,50 @@ evidence, not a scientific C4 result.
 
 Source: [C4 engineering verification](experiments/CAMPAIGN_4_ENGINE_VERIFICATION.md)
 and the current local [C4 protocol](experiments/CAMPAIGN_4_COUNTERFACTUAL_PROTOCOL.md).
+
+### 2026-10-15 17:42 +02:00 — behavioral plausibility validation
+
+**Event time:** 2026-10-15 17:42:56 +02:00, verified by
+`results/diagnostics/hls_behavioral_plausibility/manifest.json`.
+**Recorded:** 2026-10-15 17:43 +02:00 (Europe/Madrid). **Authority:** CE-ordered
+engineering/scientific-model validation. **Status:** completed bounded
+validation; no implementation defect demonstrated; HLS Laboratory v1 remains
+PARTIAL.
+
+The deterministic fixture verified monotone additive production, task-relevant
+specialization, requirement-based functional complementarity, resource
+accounting, MIS-v2 exposure/saturation/bounds, directed teaching efficacy and
+targeting, teaching/MIS separation, P2 abstention when requirements are met,
+and exogenous environment contracts. With P0 as common continuation, selected
+teaching interventions had both signs: persistent deficit/high efficacy and
+long horizon `DeltaCES_H=+0.8825` (break-even period 12); short horizon
+`−0.3575`; weak efficacy `−0.9000`; and after regime change `−0.0475`.
+Learning-by-doing ON produced `+2.4445` in that fixture, so the hypothesized
+reduction of teaching's marginal value was not observed in this configuration.
+These are conditional deterministic checks, not policy-ranking or population
+claims.
+
+The frozen discrete action catalogue explains the exact budget-2 resource
+example: teaching consumes 0.5, permits 1.0 productive effort, and leaves 0.5
+unusable; compared with the no-teaching maximum of 2.0, 1.0 productive effort
+is displaced. This is an existing granularity assumption, not an accidental
+resource-accounting defect. The initial diagnostic threshold 1.8 was above
+the selected team's 1.15 frontier and was rejected before the recorded run;
+the final 1.0 threshold was fixed from the frontier calculation, not selected
+by policy outcome. Specialized fixture CES weights were aligned to the active
+skill so an inactive dimension could not zero the reward.
+
+Tests executed: 54 focused integrated/environment/CE-23–25 checks passed; 56
+DISCOVER-v0, MIS-v2, dynamic-lab and Campaign 1 regression checks passed (110
+total). The full suite was not rerun; the previously recorded 13 provenance
+failures remain unresolved and hashes were not changed. `LearningProfile`
+inherits MIS-v2's `0<eta<1` contract, so zero MIS learning is represented by
+the existing disabled flag; an exact per-competence eta=0 rate is unsupported.
+
+Artifacts: runner
+`experiments/synthetic/hls_lab_v1/behavioral_plausibility.py`, tests
+`tests/test_hls_behavioral_plausibility.py`, and machine-readable
+`scenario_summary.csv`, `scenario_trajectory.csv`, `manifest.json` under
+`results/diagnostics/hls_behavioral_plausibility/`. The manifest records seed,
+parameters and source/output SHA-256 values. No frozen result or source was
+modified.

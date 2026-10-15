@@ -1,0 +1,45 @@
+{
+  "adequate_p2_teaches": false,
+  "base_commit": "1f3407913b6af87b8d022fe2575bdae10926022c",
+  "command": "python experiments/synthetic/hls_lab_v1/behavioral_plausibility.py",
+  "output_sha256": {
+    "scenario_summary.csv": "1a76009a7d8aa57a3a8a23ce7e0c2f7eb4cb8094607e663f792c3789499b8c4d",
+    "scenario_trajectory.csv": "cfdf5f6251d7241d579c3fd72ed33213ec5e3e49bc51e5834b4bdd2a9761f46d"
+  },
+  "parameters": {
+    "continuation": "P0 production-only",
+    "efficacy_cases": [
+      0.85,
+      0.1
+    ],
+    "horizons": [
+      8,
+      24
+    ],
+    "noise_sd": 0.0,
+    "organizational_learning": true,
+    "per_expert_effort_cap": 1.0,
+    "requirement_level": 1.0,
+    "resource_budget": 2.0,
+    "teaching_effort_per_participant": 0.25,
+    "transfer_rate": 0.75
+  },
+  "recorded_at": "2026-10-15T17:42:56+02:00",
+  "scenarios": [
+    "S1_adequate",
+    "S2_persistent_deficit_early_effective",
+    "S3_short_horizon",
+    "S4_weak_teaching",
+    "S5_learning_by_doing_on",
+    "S6_demand_regime_change"
+  ],
+  "seed": 2501,
+  "source_sha256": {
+    "experiments/synthetic/hls_lab_v1/behavioral_plausibility.py": "e1da30bd01dea7ca7199c7483743d5cdd5923e91a83c061a574865a63b24a03f",
+    "src/hls/discover_develop_v2.py": "06d70479a1f8e5bd7408a3a3c5596de4fca9e139838441f5de7dbb78c32e4e80",
+    "src/hls/discover_v0.py": "ef1eee85cf7735107e46e285af4ce2734906a55a6741ec09a72a2623c1ab470f",
+    "src/hls/hls_lab_v1.py": "c8dc4cb387cc5c47eb19c9af44c40e43772aeb755b4149bf99d3eb586e11aa6f",
+    "src/hls/hls_lab_v1_environment.py": "a59ca1ef5f8a7248cece1a2acb7900d9b0a37dc72896464a0c59d74b33f170b7",
+    "src/hls/hls_lab_v1_integrated.py": "9a3006dbbe8d82e213ff6cf3abc24f3f623a82d39892000cbb883a19a48b8c76"
+  }
+}

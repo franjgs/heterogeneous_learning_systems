@@ -216,6 +216,48 @@ teaching value.
 
 ## Current empirical status — 13 October 2026
 
+### Behavioral plausibility validation — 15 October 2026
+
+Validation run: **2026-10-15 17:42:56 +02:00** (final reproducible artifact
+generation); status recorded at **17:43 +02:00** (Europe/Madrid).
+
+Small deterministic checks were added in `tests/test_hls_behavioral_plausibility.py`
+and run with `experiments/synthetic/hls_lab_v1/behavioral_plausibility.py`.
+They exercise existing production, resource, MIS-v2, teaching and exogenous
+environment mechanisms; they do not modify their physics or constitute a
+campaign. Production is additive (`Y_k=Σ_i x_ik s_ik`), so specialization and
+multidisciplinary complementarity here mean relevance to explicit functional
+requirements, not superadditive agent interaction. The discrete production
+catalogue intentionally permits total production effort only in integer
+steps. In the reproduced budget-2 teaching example, a 0.5 participant-effort
+lesson leaves 1.5 budget, but the catalogue allows only 1.0 productive effort;
+the residual 0.5 is stranded and 1.0 productive effort is displaced versus
+the no-teaching maximum. No global divisible-allocation control was added.
+
+The deterministic paired intervention fixtures use a fixed requirement of
+1.0 on the active skill (the deficit team's two-unit skill-0 frontier is 1.15),
+the same P0 continuation, and organizational updates from observations. Their
+remaining-horizon CES differences were: adequate team −0.4002 (24 periods;
+P2 independently declined teaching); persistent deficit/effective early
+teaching +0.8825 (24); short horizon −0.3575 (8); weak efficacy −0.9000 (24);
+learning-by-doing ON +2.4445 (24); regime change −0.0475 (24). The positive
+long-horizon result crosses cumulative break-even at period 12; the learning-
+by-doing case crosses at period 10. These are conditional deterministic
+mechanism checks, not estimates of policy superiority. In this fixture,
+learning-by-doing increased rather than reduced the intervention's measured
+increment; no universal marginal-substitution claim follows. The full result
+and source/output hashes are in
+`results/diagnostics/hls_behavioral_plausibility/`.
+
+Focused plausibility plus v1/CE-24/CE-25 tests: **54 passed**; DISCOVER-v0,
+MIS-v2, dynamic laboratory and published Campaign 1 regression tests:
+**56 passed**. The full repository suite was not rerun; its last recorded
+result remains 1,189 passed / 13 provenance-integrity failures. No historical
+hashes or results were changed. MIS-v2's existing eta domain excludes eta=0;
+the zero-learning control is its supported `enabled=False` condition, not a
+new per-cell zero-rate parameter. The HLS Laboratory milestone remains
+**PARTIAL** pending its previously recorded full-suite provenance disposition.
+
 This dated status block supplements the broader programme and foundational
 discussion below. Campaign 3 is a completed, scoped finite-problem study; it
 does **not** replace the programme-level HLS reference-problem agenda or

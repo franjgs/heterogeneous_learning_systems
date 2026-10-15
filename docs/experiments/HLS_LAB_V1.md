@@ -259,3 +259,55 @@ Las familias se definen estructuralmente, no por etiquetas: especialización usa
 Demo reproducible: `python experiments/synthetic/hls_lab_v1/environment_demo.py`. Genera un cambio determinista de demanda especializada a complementaria y compara P0/P1/P2 sobre la misma trayectoria. En la ejecución verificada, P0 obtuvo 12/12 éxitos y CES acumulado 11.14847; P1, que enseñó en 12 periodos, obtuvo 1/12 y CES 3.42640; P2 decidió no enseñar, obtuvo 12/12 y 11.14847. Es un resultado de una fixture determinista: comprueba que se representa una decisión formativa perjudicial y una política puede abstenerse, no es evidencia general sobre políticas. El JSON se imprime en stdout; no crea ni sobrescribe resultados. Pruebas: `PYTHONPATH=.:src pytest -q tests/test_hls_lab_v1_environment.py tests/test_hls_lab_v1_integrated.py`.
 
 **Verificación de esta corrección (2026-10-15 09:57 +02:00):** 17 pruebas focalizadas superadas. La suite completa: 1189 passed, 13 failed en 314.78 s. Los 13 fallos coinciden por nombre y familia con las corridas anteriores: 1 inventario local de resultados de fundamentos; 5 validaciones de procedencia B2.3/RQ0; 7 verificaciones de hashes/artefactos congelados de Campaign 2/3 y Gate. No se actualizaron hashes ni se tocaron las fuentes congeladas durante esta intervención. **Publicación:** commit `37a011804f9ea013fc3a5436c00a72eb0b8280da`, push verificado en `origin/feature/hls-laboratory-v1` a las 09:58 +02:00. **Cierre:** el hito sigue PARTIAL, no DONE; la publicación no resuelve los 13 fallos de procedencia/integridad.
+
+## Validación de plausibilidad conductual — 15 octubre 2026
+
+Ejecución registrada por el manifiesto: **2026-10-15 17:42:56 +02:00**;
+documentación actualizada a las **17:43 +02:00** (Europe/Madrid).
+
+**Alcance:** comprobaciones matemáticas y seis fixtures deterministas; no se
+añadieron políticas ni se cambió la física. Ejecución:
+`python experiments/synthetic/hls_lab_v1/behavioral_plausibility.py`.
+Resultados reproducibles y manifiesto con hashes en
+`results/diagnostics/hls_behavioral_plausibility/`.
+
+| Propiedad | Comportamiento esperado | Observación | Clasificación | Evidencia |
+| --- | --- | --- | --- | --- |
+| P1–P2, producción y especialización | Más competencia relevante no reduce `Y_k`; problema especializado favorece esa competencia | Confirmado por producción `Σ x_ik s_ik` y enumeración de las acciones factibles | Invariante matemática | `tests/test_hls_behavioral_plausibility.py` |
+| P3–P4, complementariedad/requisito esencial | Una tarea con dos requisitos puede exigir aportes de más de un experto; omitir dimensión esencial impide éxito | Equipo complementario cumple `(0.8,0.8)` con acción conjunta; ninguna contribución unidimensional basta | Condicional al umbral y catálogo, no sinergia productiva | Test nuevo y `tests/test_hls_lab_v1_environment.py` |
+| P5, ampliar recursos | No reduce el mejor valor alcanzable si se conserva el catálogo original | Verificado como inclusión de conjuntos factibles | Invariante matemática | Test nuevo |
+| Contabilidad de recursos | Presupuesto común = producción + dos participaciones de enseñanza; informar residuo | Con `B=2`, enseñanza `.5`, producción `1`, residual `.5`; máximo productivo sin enseñar `2`, desplazamiento `1` | Catálogo discreto intencional; limitación de granularidad, no defecto | Test nuevo; `enumerate_feasible_integrated_actions` |
+| L1–L5, MIS-v2 | Exposición mejora la celda ejercitada con rendimientos decrecientes y cotas; sin aprendizaje no cambia | Ecuación reproducida (`.4→.52→.616`, `eta=.2`); otras celdas intactas y límites respetados | Invariante del modelo MIS-v2 | Test nuevo; `mis_v2_transition` |
+| T1–T7, enseñanza | Efecto dirigido y dependiente de relación, monótono en eficacia, nulo con eficacia cero, acotado; consume esfuerzo y distinguible de MIS | Todas las condiciones ejecutadas; el efecto directo se separa del cambio MIS del agente productivo | Invariante condicional a la transición codificada | Test nuevo; transición en `run_integrated_sequence` |
+| E1–E6, entorno | Orientación especializada, emisión complementaria, recurrencia, novedad, cambio de régimen y exogeneidad | Verificado por la suite de entorno; se añadió control de novedad con suma de requisitos constante | Contrato de generador | `tests/test_hls_lab_v1_environment.py` y test nuevo |
+| S1, equipo suficiente | Enseñar añade poco valor; política puede abstenerse | P2 elige no enseñar; intervención forzada `ΔCES_H=−0.4002` (H=24) | Resultado de fixture | CSV de resumen y trayectoria |
+| S2, déficit persistente/enseñanza eficaz | Puede haber coste inicial y retorno posterior | `ΔCES_0=−0.9000`, ganancia directa `0.1275`; cruza break-even en periodo 12; `ΔCES_H=+0.8825` (H=24) | Expectativa condicional observada | CSV de trayectoria |
+| S3–S4, horizonte corto/eficacia débil | Coste docente puede no amortizarse | `ΔCES_H=−0.3575` (H=8) y `−0.9000` (H=24), respectivamente | Expectativa condicional observada | CSV de resumen |
+| S5–S6, MIS y cambio de régimen | El aprendizaje individual y la demanda pueden cambiar valor relativo de la enseñanza | MIS ON: `ΔCES_H=+2.4445`, break-even periodo 10; al cambiar demanda: `−0.0475`, frente a `+0.8825` sin cambio | Interacciones del fixture; no descomposición causal general | CSV de resumen/trayectoria |
+
+Los umbrales de problema son `1.0` en la dimensión activa: la frontera
+productiva inicial del equipo con déficit es `1.15` con dos esfuerzos unitarios.
+Los problemas de prueba usan pesos CES `(1,0)` o `(0,1)` para que la recompensa
+corresponda a la dimensión activa; no se alteró la función CES. Los escenarios
+son deliberadamente diagnósticos: un solo par de ramas por caso, P0 como
+continuación común, aprendizaje organizativo a partir de observaciones,
+ruido cero y semilla `2501`. No hay inferencia poblacional. MIS-v2 no permite
+`eta=0` por contrato (`0<eta<1`); el control sin MIS usa el interruptor de
+desactivación. La especialización y complementariedad son funcionales a los
+requisitos, pues la producción sigue siendo aditiva.
+
+La política productiva maximiza el orden funcional (éxito, déficit, margen y
+esfuerzo), no CES. El precio de recurso `.2` queda registrado como coste, pero
+no se resta de CES ni define una tasa de intercambio; las diferencias
+reportadas son recompensa productiva bruta, no valor económico neto.
+
+No se encontró defecto de implementación que justificara modificar el motor,
+la producción, MIS-v2, la transición docente o el generador. Durante la
+preparación se descartó un umbral inicial `1.8`, que excedía la frontera del
+equipo y hacía el fixture no informativo; se sustituyó antes de fijar la
+ejecución por el nivel estructuralmente factible `1.0`. Este fue un defecto
+del fixture diagnóstico, no del laboratorio. El catálogo discreto deja
+residuo presupuestario en ciertos estados y no se añadió un control de
+producción divisible para preservar el contrato histórico. La suite completa
+no se repitió; el último resultado registrado es 1,189 passed / 13 fallos de
+integridad/procedencia, que siguen visibles y sin alterar sus hashes.
