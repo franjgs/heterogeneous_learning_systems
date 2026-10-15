@@ -116,6 +116,14 @@ acceptance status, or resolve the previously recorded 13 full-suite
 integrity/provenance failures. See the dated [history entry](HISTORY.md) and
 the manifest for protocol, source, seed, and artifact hashes.
 
+The consolidated evidence across the pilot, mechanism diagnostics,
+counterfactual teaching analysis, and behavioral-plausibility checks is in
+[HLS Campaign 1 findings](experiments/HLS_CAMPAIGN1_FINDINGS.md). It preserves
+the conditional positive and negative cases, the resource/action-granularity
+limitation, and the distinction between verified behavior and the open
+teaching × learning-by-doing hypothesis. No new campaign was run for that
+synthesis; the laboratory remains **PARTIAL**.
+
 ### Campaign 1 mechanism diagnostics — 15 October 2026
 
 Diagnostic analysis timestamp: 2026-10-15 14:28:17 +02:00 (Europe/Madrid).

@@ -1,6 +1,12 @@
 # HLS Laboratory v1
 
-**Estado del hito: APPROVED — IMPLEMENTATION PARTIAL (decisión 2026-10-15; última actualización documental 2026-10-15 09:58 +02:00, Europe/Madrid).** La capa integrada B1–B6 y el entorno exógeno están publicados en `37a011804f9ea013fc3a5436c00a72eb0b8280da`. Las pruebas focalizadas pasan; la suite completa conserva 13 fallos de integridad/procedencia preexistentes, por lo que la aceptación final permanece abierta. El hito activo es **HLS-LAB-V1-INTEGRATED**. Esta guía es la referencia técnica de implementación, enlaza la [decisión operativa vigente](../HLS_CURRENT_STATE.md) y no sustituye los [contratos científicos de referencia](HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md).
+**Estado del hito: APPROVED — IMPLEMENTATION PARTIAL (decisión 2026-10-15; última actualización documental 2026-10-15 20:31 +02:00, Europe/Madrid).** La capa integrada B1–B6 y el entorno exógeno están publicados en `37a011804f9ea013fc3a5436c00a72eb0b8280da`. Las pruebas focalizadas pasan; la suite completa conserva 13 fallos de integridad/procedencia preexistentes, por lo que la aceptación final permanece abierta. El hito activo es **HLS-LAB-V1-INTEGRATED**. Esta guía es la referencia técnica de implementación, enlaza la [decisión operativa vigente](../HLS_CURRENT_STATE.md) y no sustituye los [contratos científicos de referencia](HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md).
+
+La evidencia científica posterior de Campaign 1 y de plausibilidad conductual
+está consolidada en [HLS_CAMPAIGN1_FINDINGS.md](HLS_CAMPAIGN1_FINDINGS.md).
+Ese informe documenta los resultados publicados sin cambiar la física ni
+cerrar el estado **PARTIAL** del hito; sus hipótesis no deben confundirse con
+hallazgos verificados.
 
 ## Hito activo: HLS-LAB-V1-INTEGRATED
 
