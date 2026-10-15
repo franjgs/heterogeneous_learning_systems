@@ -67,6 +67,55 @@ superseded as the immediate operational priority, not erased as evidence of
 the project's evolution. The dated history is the chronology authority; this
 file records the current status rather than duplicating that chronology.
 
+### Authorized scientific pilot — 15 October 2026
+
+The CE authorized and completed a bounded **Scientific Campaign 1 pilot** on
+exploitation versus teaching/capability development. The protocol covers 16
+predeclared demand × initial-deficit × teaching-effectiveness × horizon cells,
+10 paired seeds per cell, four policy conditions, and a matched individual
+MIS-v2 learning ON/OFF block (1,280 policy runs). Results and machine-readable
+traces are in `results/experiments/hls_campaign1_pilot/`; the runner is
+`experiments/synthetic/hls_campaign1/run.py`.
+
+The validated run completed 2026-10-15 10:22:04 +02:00 (Europe/Madrid), using
+10 non-overlapping seeds (`2026101511`–`2026101520`) per cell, a common
+PARTIAL_STATIC prior (0.40 for each skill), and a shared budget of 2.0. P0
+production-only had higher CES than P1 in 320/320 paired comparisons. Against
+P2, P0 was higher in 241/320, lower in 37/320, and tied in 42/320; against
+the scheduled no-feedback control it was higher in 258/320, lower in 20/320,
+and tied in 42/320. P2 nevertheless outperformed P0 on both CES and success
+in high-deficit/high-efficacy/long-horizon cells with individual learning
+OFF: ΔCES +0.313 (SD 0.194) and
+Δsuccess +0.483 (SD 0.074) under stationary demand; ΔCES +0.380 (SD 0.107)
+and Δsuccess +0.537 (SD 0.105) under changing demand. These advantages did
+not appear with individual learning ON. P2 outperformed the no-feedback
+teaching schedule in some matched cells, while P1 fixed teaching was
+consistently harmful. P2 declined to teach in 4,497/5,120 episodes. These are
+bounded pilot observations, with ten-seed descriptive variability only—not
+population inference or a general claim that teaching is beneficial.
+
+Three earlier executions were excluded and retained as invalid-attempt
+manifests: one exposed an experimenter-only regime label; one initialized
+estimated skills from private truth; and one used budget 1.0, which made all
+teaching-period production zero because the frozen action catalogue's
+minimum positive productive allocation costs 1.0 and a lesson consumes 0.5.
+The final budget 2.0 was selected by that action-granularity check, not by
+policy outcomes, and a fresh seed namespace was used. The final policy input
+contains only the generic observed label and a shared PARTIAL_STATIC estimate.
+Non-applicable CSV metrics are explicitly encoded as `NA`.
+
+One remaining resource limitation is that frozen production actions have
+integer total effort: a teaching period consumes 0.5 units and leaves 1.5
+available, but at most one full productive unit can be assigned; without
+teaching, two units can be productive. Thus the realized production
+opportunity cost is shaped by the existing action granularity, not just the
+0.5 teaching charge.
+
+This scientific pilot does not close `HLS-LAB-V1-INTEGRATED`, change its
+acceptance status, or resolve the previously recorded 13 full-suite
+integrity/provenance failures. See the dated [history entry](HISTORY.md) and
+the manifest for protocol, source, seed, and artifact hashes.
+
 ## Current empirical status — 13 October 2026
 
 This dated status block supplements the broader programme and foundational

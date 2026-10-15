@@ -389,6 +389,7 @@ def run_integrated_sequence(
     teaching_efficacy: TeachingEfficacy,
     parameters: TeachingParameters = TeachingParameters(),
     individual_learning: bool = True,
+    organizational_learning: bool = True,
     seed: int = 0,
     organization_memory: OrganizationMemory | None = None,
 ) -> IntegratedRunResult:
@@ -499,15 +500,16 @@ def run_integrated_sequence(
             normalized_signal = (parameters.efficacy_prior_mean if denominator <= TOL
                                 else training_observation / denominator)
             # The running-mean efficacy estimator uses only this noisy signal.
-            memory = memory.update(event.relation, normalized_signal)
-            updated = True
-            efficacy_estimate = memory.estimate(event.relation, parameters.efficacy_prior_mean)
-            posterior_rows = [list(row) for row in posterior]
-            posterior_rows[event.learner][event.capability] = _push_posterior(
-                posterior_rows[event.learner][event.capability], efficacy_estimate,
-                parameters.transfer_rate, event.effort,
-            )
-            posterior = tuple(tuple(row) for row in posterior_rows)  # type: ignore[assignment]
+            if organizational_learning:
+                memory = memory.update(event.relation, normalized_signal)
+                updated = True
+                efficacy_estimate = memory.estimate(event.relation, parameters.efficacy_prior_mean)
+                posterior_rows = [list(row) for row in posterior]
+                posterior_rows[event.learner][event.capability] = _push_posterior(
+                    posterior_rows[event.learner][event.capability], efficacy_estimate,
+                    parameters.transfer_rate, event.effort,
+                )
+                posterior = tuple(tuple(row) for row in posterior_rows)  # type: ignore[assignment]
             updated_estimate = competence_estimate_matrix(posterior)
             team = TeamState(tuple(
                 type(expert)(expert.expert_id, expert.competence_real,
@@ -555,13 +557,15 @@ def compare_integrated_policies(
     teaching_efficacy: TeachingEfficacy,
     parameters: TeachingParameters = TeachingParameters(),
     individual_learning: bool = True,
+    organizational_learning: bool = True,
     seed: int = 0,
 ) -> tuple[IntegratedRunResult, ...]:
     """Matched comparison: same start, public problem stream, and indexed shocks."""
     return tuple(run_integrated_sequence(
         initial_team, problems, policy, learning=learning,
         teaching_efficacy=teaching_efficacy, parameters=parameters,
-        individual_learning=individual_learning, seed=seed,
+        individual_learning=individual_learning,
+        organizational_learning=organizational_learning, seed=seed,
     ) for policy in policies)
 
 

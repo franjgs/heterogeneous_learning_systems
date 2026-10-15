@@ -1,0 +1,40 @@
+{
+  "artifacts_sha256": {
+    "aggregate_summary.csv": "5d056968c35f6b42f5b086cd41c8888c6b9061f46aa5afd4035434a9db4de16a",
+    "episodes.csv": "6f7fedab4fac3da5c220bc15cf0f46f1b6984d8e0d95c209d42455228fc03923",
+    "paired_aggregate.csv": "54537c86c191f2922252bfc1f3ef898c6806e82cfbb4dff5354cbd8d34a2962d",
+    "paired_differences.csv": "4e995bb99dfae75b79a82651c14a7ad6f8f152246b63dfd1ec9c41ecdba10327",
+    "protocol.json": "7e0b958e9580d3789f83b2d7b10a6717ab5cb5865ab34d2f4d6c84faa48ad66b",
+    "seed_summaries.csv": "a2cd567384a95e0e5be91335f9859af129978aadfc6ea190e7383660e71807e7"
+  },
+  "campaign": "HLS-SCIENTIFIC-CAMPAIGN-1-PILOT",
+  "counts": {
+    "episode_records": 20480,
+    "factor_configurations": 16,
+    "individual_learning_conditions": 2,
+    "policies": 4,
+    "policy_runs": 1280,
+    "seeds_per_configuration": 10
+  },
+  "environment": {
+    "numpy": "1.26.4",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "pytest": "8.4.2",
+    "python": "3.11.9 (main, Apr 19 2024, 11:43:47) [Clang 14.0.6 ]"
+  },
+  "execution_timestamp_europe_madrid": "2026-10-15T10:06:35+02:00",
+  "protocol_sha256": "7e0b958e9580d3789f83b2d7b10a6717ab5cb5865ab34d2f4d6c84faa48ad66b",
+  "repository_head_before_run": "a179041a1617e250e3fe83065db7dbc8402b0d62",
+  "source_sha256": {
+    "experiments/synthetic/hls_campaign1/run.py": "9749bee991f6bd40f047645586d3229fb967a12a3dfd4a0861bed317d1f72254",
+    "src/hls/discover_develop_v2.py": "06d70479a1f8e5bd7408a3a3c5596de4fca9e139838441f5de7dbb78c32e4e80",
+    "src/hls/discover_v0.py": "ef1eee85cf7735107e46e285af4ce2734906a55a6741ec09a72a2623c1ab470f",
+    "src/hls/hls_lab_dynamic.py": "d6cbb568a9624884da7eeb7da080ffca737326d72359c087ebdc374e76449c70",
+    "src/hls/hls_lab_v1.py": "c8dc4cb387cc5c47eb19c9af44c40e43772aeb755b4149bf99d3eb586e11aa6f",
+    "src/hls/hls_lab_v1_environment.py": "a59ca1ef5f8a7248cece1a2acb7900d9b0a37dc72896464a0c59d74b33f170b7",
+    "src/hls/hls_lab_v1_integrated.py": "b482098c0ab6e02f7867e24bdc1a30599201c421286006f5415b51a3459d7238",
+    "src/hls/synthetic/c5.py": "9a264bd5121b51ef5cb285b19dd766f79f88b18a3c01f0231fb16c8cc8c6dbf8"
+  },
+  "status": "INVALID_FOR_PARTIAL_INFORMATION",
+  "validation_note": "The run used make_team, which initializes competence estimates equal to private real competencies. This violated the pilot's partial-information requirement. Outputs are archived for traceability and are not analyzed. The validated run uses make_dynamic_team with PARTIAL_STATIC and a common prior independent of real skills."
+}

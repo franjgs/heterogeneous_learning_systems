@@ -16,6 +16,7 @@ undated where the source material does not establish a defensible event date.
 | Event / record | Event date and confidence | Record date and evidence | Scope note |
 | --- | --- | --- | --- |
 | PI / CE decision to prioritize integrated HLS Laboratory v1 and approve milestone `HLS-LAB-V1-INTEGRATED` | **2026-10-15, date verified; exact time unknown**, from the dated PI/CE instruction. | Documented 2026-10-15 08:40 +02:00, Europe/Madrid, in this entry and the linked current-state/lab documents. | Operational-priority change; it does not change the research questions or retrospectively alter prior decisions. |
+| Scientific Campaign 1 pilot: exploitation versus capability development | **2026-10-15 10:22:04 +02:00, verified** by the final output manifest. | Recorded 2026-10-15 10:22 +02:00, Europe/Madrid; source baseline `a179041a1617e250e3fe83065db7dbc8402b0d62`. | 16 configurations × 10 paired seeds × four policies × LI ON/OFF = 1,280 runs, 20,480 episode records. Pilot observations only; no population-level inference. Three earlier designs were excluded: latent-label exposure, oracle skill initialization, and zero-production teaching periods from budget/action granularity. Formatting reruns reused the same seeds and did not add replicates. |
 | Additive B1–B6 integrated teaching-cycle implementation and acceptance run | **2026-10-15, implementation date verified; exact start time unknown.** | Documented 2026-10-15 09:08 +02:00, Europe/Madrid, with implementation and test paths in the scope note. | Focused laboratory tests passed; full suite had 1181 passes and 13 failures on pre-existing local integrity/provenance conditions. Milestone remains PARTIAL; engineering verification is not scientific evidence. |
 | Additive exogenous environment/problem trajectory interface and regression run | **2026-10-15, implementation date verified; exact start time unknown.** | Documented 2026-10-15 09:45 +02:00, Europe/Madrid. | Reuses C5 demand processes and dynamic-lab emission; 17 focused tests passed; full suite 1189 passed/13 failed, same 13 named failures as the prior run. Milestone remains PARTIAL. |
 | HLS Laboratory v1 candidate-set consolidation and final validation | **2026-10-15 09:57 +02:00, verified execution time.** | Recorded 2026-10-15 09:57 +02:00, Europe/Madrid. | Ten scoped files imported and ran; focused tests 17/17; full suite 1189/13, same pre-existing failures. Milestone remains PARTIAL. |
@@ -124,6 +125,78 @@ was verified to match. Only the ten named package files were committed; other
 pre-existing worktree changes were preserved. **Milestone closure:** not
 declared; `HLS-LAB-V1-INTEGRATED` remains **PARTIAL** because the full-suite
 integrity/provenance failures remain unresolved.
+
+### 2026-10-15 — Scientific Campaign 1 pilot: exploitation vs capability development
+
+**Event:** validated pilot execution completed 2026-10-15 10:22:04 +02:00.
+**Recorded:** 2026-10-15 10:22 +02:00 (Europe/Madrid). **Authority:** CE
+campaign instruction. **Type:** bounded scientific pilot.
+
+The protocol varied demand (stationary/changing), initial competence deficit
+(low/high), teaching effectiveness (0.10/0.85), and horizon (8/24) in 16
+predeclared cells, with 10 seeds (`2026101511`–`2026101520`) per cell. It
+compared P0 production-only, P1 fixed relation `(2,1,1)`, P2 adaptive teaching
+over relations `(2,1,1)` and `(0,1,0)`, and a deterministic
+scheduled-teaching/no-feedback control. Each ran with individual MIS-v2
+learning OFF and ON. The OFF/ON block is a mechanism control, not an
+additional environmental factor. Demand sequences and coordinate-indexed
+observation innovations were paired by seed; policies did not receive the
+experimenter-only latent regime. Every condition used a shared budget of 2.0,
+which permits at least one unit of production alongside a lesson. Requirements
+were 0.80/0.90 by competence axis; the common prior predicts at most 0.80
+under the frozen catalogue/budget, while low- and high-deficit teams have
+different analytical initial frontiers. These choices were fixed by the
+catalogue and team geometry, not policy outcomes.
+
+The discrete action catalogue means the teaching opportunity cost is not
+only the explicit 0.5 participant-effort charge: with a 2.0 budget, a lesson
+leaves 1.5 units, but only one full production unit is assignable, whereas
+two units can be productive without a lesson. Residual effort granularity
+therefore shapes the results and is a stated limitation.
+
+**Observed results:** relative to P0, P1 had lower CES in 320/320 paired
+comparisons. For P2, P0 had higher CES in 241/320, P2 higher in 37/320, and
+42 tied; for the scheduled/no-feedback control, P0 was higher in 258/320,
+that control higher in 20/320, and 42 tied. In high-deficit/high-efficacy/
+long-horizon cells with individual learning OFF, P2 improved both outcomes:
+stationary demand ΔCES +0.313 (between-seed SD 0.194), Δsuccess +0.483
+(SD 0.074); changing demand ΔCES +0.380 (SD 0.107), Δsuccess +0.537
+(SD 0.105). These CES and success gains were not present in the corresponding
+LI-ON cells. P2 declined to teach in 4,497 of 5,120 episodes; P1 taught in
+every episode. The common partial prior also prompted some unnecessary
+teaching in low-deficit cases, demonstrating an information-cost limitation.
+
+This bounded pilot contains conditions where investment in capability
+development improved both measured CES and success, and conditions where
+fixed or scheduled teaching was harmful. It does not establish a general
+teaching advantage: the episode-level policy score is functional success,
+deficit, margin, and effort—not the reported CES outcome. Means and
+between-seed standard deviations are descriptive; no inferential tests or
+population confidence intervals were calculated.
+
+**Validation incidents:** three preceding executions were excluded. The first
+exposed the latent regime through `demand_label`; the second initialized
+estimated skills from private truth via `make_team`; the third used budget
+1.0, under which teaching's 0.5 resource charge left no feasible positive
+production action. Their manifests are retained as
+`attempt_1_invalid_latent_label.json`,
+`attempt_2_invalid_oracle_initialization.json`, and
+`attempt_3_invalid_resource_granularity.json`. The validated run passes only
+the generic label `observed-demand` and uses `make_dynamic_team` in
+PARTIAL_STATIC mode with common initial estimates `((0.40,0.40),)*3`. The
+final output uses `NA` for non-applicable CSV metrics. Its manifest is in
+`results/experiments/hls_campaign1_pilot/manifest.json`; protocol and paired
+machine-readable results are stored beside it. A pre-encoding manifest is
+retained as `prior_complete_manifest_pre_na_encoding.json`; its rerun used
+the same seeds and was only to make missing-value serialization explicit,
+not an additional replicate set.
+
+**Engineering validation:** the focused campaign/laboratory/environment
+selection passed 71 tests (including 24 directly scoped campaign/integration
+tests). The full repository suite was not run; its previously documented 13
+integrity/provenance failures remain unresolved. This campaign neither closes
+the laboratory integration milestone nor establishes a general scientific
+conclusion.
 
 ## 1. Initial portfolio and routing framing
 

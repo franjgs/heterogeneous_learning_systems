@@ -1,0 +1,270 @@
+{
+  "adaptive_relations": [
+    [
+      2,
+      1,
+      1
+    ],
+    [
+      0,
+      1,
+      0
+    ]
+  ],
+  "campaign": "HLS-SCIENTIFIC-CAMPAIGN-1-PILOT",
+  "ces_weights": [
+    0.5,
+    0.5
+  ],
+  "common_decision_score": "(functional_success, -normalized_deficit, functional_margin, -production_effort); the reported CES is an outcome metric, not the policy objective.",
+  "competence_information_mode": "PARTIAL_STATIC; common prior independent of private real skills",
+  "demand_definition": {
+    "changing": "first floor(H/2) periods draw (0.80,0)/(0.90,0); remaining periods draw (0,0.80)/(0,0.90), each within-regime equiprobably.",
+    "stationary": "IID equiprobable requirement vectors (0.80,0),(0.90,0),(0,0.80),(0,0.90) each period."
+  },
+  "demand_levels": {
+    "high": 0.9,
+    "low": 0.8
+  },
+  "factors": [
+    {
+      "demand": "stationary",
+      "horizon": "short",
+      "initial_deficit": "low",
+      "n_periods": 8,
+      "teaching_effectiveness": "low"
+    },
+    {
+      "demand": "stationary",
+      "horizon": "long",
+      "initial_deficit": "low",
+      "n_periods": 24,
+      "teaching_effectiveness": "low"
+    },
+    {
+      "demand": "stationary",
+      "horizon": "short",
+      "initial_deficit": "low",
+      "n_periods": 8,
+      "teaching_effectiveness": "high"
+    },
+    {
+      "demand": "stationary",
+      "horizon": "long",
+      "initial_deficit": "low",
+      "n_periods": 24,
+      "teaching_effectiveness": "high"
+    },
+    {
+      "demand": "stationary",
+      "horizon": "short",
+      "initial_deficit": "high",
+      "n_periods": 8,
+      "teaching_effectiveness": "low"
+    },
+    {
+      "demand": "stationary",
+      "horizon": "long",
+      "initial_deficit": "high",
+      "n_periods": 24,
+      "teaching_effectiveness": "low"
+    },
+    {
+      "demand": "stationary",
+      "horizon": "short",
+      "initial_deficit": "high",
+      "n_periods": 8,
+      "teaching_effectiveness": "high"
+    },
+    {
+      "demand": "stationary",
+      "horizon": "long",
+      "initial_deficit": "high",
+      "n_periods": 24,
+      "teaching_effectiveness": "high"
+    },
+    {
+      "demand": "changing",
+      "horizon": "short",
+      "initial_deficit": "low",
+      "n_periods": 8,
+      "teaching_effectiveness": "low"
+    },
+    {
+      "demand": "changing",
+      "horizon": "long",
+      "initial_deficit": "low",
+      "n_periods": 24,
+      "teaching_effectiveness": "low"
+    },
+    {
+      "demand": "changing",
+      "horizon": "short",
+      "initial_deficit": "low",
+      "n_periods": 8,
+      "teaching_effectiveness": "high"
+    },
+    {
+      "demand": "changing",
+      "horizon": "long",
+      "initial_deficit": "low",
+      "n_periods": 24,
+      "teaching_effectiveness": "high"
+    },
+    {
+      "demand": "changing",
+      "horizon": "short",
+      "initial_deficit": "high",
+      "n_periods": 8,
+      "teaching_effectiveness": "low"
+    },
+    {
+      "demand": "changing",
+      "horizon": "long",
+      "initial_deficit": "high",
+      "n_periods": 24,
+      "teaching_effectiveness": "low"
+    },
+    {
+      "demand": "changing",
+      "horizon": "short",
+      "initial_deficit": "high",
+      "n_periods": 8,
+      "teaching_effectiveness": "high"
+    },
+    {
+      "demand": "changing",
+      "horizon": "long",
+      "initial_deficit": "high",
+      "n_periods": 24,
+      "teaching_effectiveness": "high"
+    }
+  ],
+  "fixed_teaching_relation": [
+    2,
+    1,
+    1
+  ],
+  "individual_learning_control": [
+    false,
+    true
+  ],
+  "inference_note": "10 predetermined stochastic seed streams per configuration; report descriptive between-seed mean/SD, no significance tests or population-level claims.",
+  "initial_estimates_all_conditions": [
+    [
+      0.4,
+      0.4
+    ],
+    [
+      0.4,
+      0.4
+    ],
+    [
+      0.4,
+      0.4
+    ]
+  ],
+  "initial_teams": {
+    "high": [
+      [
+        0.55,
+        0.15
+      ],
+      [
+        0.2,
+        0.25
+      ],
+      [
+        0.15,
+        0.55
+      ]
+    ],
+    "low": [
+      [
+        0.8,
+        0.25
+      ],
+      [
+        0.45,
+        0.45
+      ],
+      [
+        0.25,
+        0.8
+      ]
+    ]
+  },
+  "learning_eta": [
+    [
+      0.06,
+      0.03
+    ],
+    [
+      0.04,
+      0.08
+    ],
+    [
+      0.02,
+      0.05
+    ]
+  ],
+  "max_effort_per_expert": 1.0,
+  "metric_definitions": {
+    "ces_reward_sum": "Sum of existing DISCOVER CES reward per episode; weights are CES_WEIGHTS.",
+    "competence": "Real competence is logged to the experimenter only; policy views receive posterior means updated only from public observations and declared MIS-v2 parameters.",
+    "normalized_deficit_mean": "Mean existing normalized functional deficit.",
+    "pre_post": "For changing demand only, means over periods [0,floor(H/2)) and [floor(H/2),H); stationary demand is summarized over the full horizon.",
+    "resource_cost_sum": "Sum of used resource units times resource cost per unit; reported separately, not subtracted from CES.",
+    "resource_utilization": "Sum of production effort plus instructor and learner effort divided by horizon times the shared per-period budget.",
+    "success_rate": "Mean binary FunctionalResult.success per episode.",
+    "teaching_effort_sum": "Sum of both participants' effort per lesson (2 \u00d7 event effort)."
+  },
+  "metric_note": "CES and resource cost are reported separately; no arbitrary net utility.",
+  "missing_value_encoding": "NA denotes a metric not applicable to that row, including pre/post-change summaries for stationary demand.",
+  "paired_outcomes": "Each non-P0 run is differenced against P0 at the same factor cell, LI condition, and seed.",
+  "policies": [
+    "P0_PRODUCTION_ONLY",
+    "P1_FIXED_TEACHING",
+    "P2_ADAPTIVE_TEACHING",
+    "P2_SCHEDULED_NO_FEEDBACK"
+  ],
+  "policy_definitions": {
+    "P0_PRODUCTION_ONLY": "Existing P0; choose feasible no-teaching action by lexicographic functional score (success, negative normalized deficit, margin, negative effort).",
+    "P1_FIXED_TEACHING": "Existing P1; choose highest functional-score action among feasible lessons for fixed relation (2, 1, 1), otherwise choose P0 action.",
+    "P2_ADAPTIVE_TEACHING": "Existing P2; do not teach if best production-only action is predicted successful; otherwise test unseen configured relations in order, then choose the highest observed efficacy if it meets threshold, else produce. Organizational observations update efficacy memory and competence posterior.",
+    "P2_SCHEDULED_NO_FEEDBACK": "Campaign control; same no-teaching success gate and candidate relations; cycle over currently eligible relations using public period, ignore efficacy observations, and run with organizational_learning=False. This is a deterministic schedule, not a learned policy."
+  },
+  "protocol_version": "1.0",
+  "randomness_coupling": "One exogenous trajectory is generated per factor-cell/seed and reused for all policies and LI conditions. Production noise is indexed by seed/period/decision/expert/skill; teaching noise by seed/period/instructor/learner/skill.",
+  "requirement_level_rationale": "The common prior 0.40 can produce at most 0.80 in one dimension under the shared budget and per-expert cap. The low-deficit team's initial per-skill top-two competence sums are 1.25; the high-deficit team's are 0.75 (skill 0) and 0.80 (skill 1). Requirements 0.80/0.90 are therefore fixed at the prior frontier and immediately beyond it; both are feasible for the low-deficit team's initial state, while 0.90 exceeds the high-deficit team's initial frontier. Values are based on action enumeration and initial states, not policy outcomes.",
+  "resource_budget": 2.0,
+  "resource_budget_rationale": "The existing 64-action catalogue has minimum positive production effort 1.0; a lesson consumes 2*0.25=0.5. Budget 2.0 permits a lesson plus one minimum productive action and permits up to two production effort units without teaching. This was selected from action/resource granularity, not policy outcomes.",
+  "resource_cost_per_unit": 0.2,
+  "seeds": [
+    2026101511,
+    2026101512,
+    2026101513,
+    2026101514,
+    2026101515,
+    2026101516,
+    2026101517,
+    2026101518,
+    2026101519,
+    2026101520
+  ],
+  "teaching_efficacy": {
+    "high": 0.85,
+    "low": 0.1
+  },
+  "teaching_parameters": {
+    "competence_grid_points": 101,
+    "competence_prior_variance": 0.04,
+    "efficacy_prior_mean": 0.5,
+    "efficacy_threshold": 0.35,
+    "effort": 0.25,
+    "outcome_noise_sd": 0.02,
+    "production_observation_noise_sd": 0.02,
+    "target_competence": 0.95,
+    "transfer_rate": 0.75
+  }
+}
