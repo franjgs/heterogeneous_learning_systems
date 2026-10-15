@@ -25,7 +25,9 @@ generator composes C5 demand processes with the existing dynamic problem
 emitter; problem trajectories are frozen before policy evaluation. Focused
 tests pass, while the full repository suite retains the same 13 integrity and
 provenance failures seen in the preceding runs (1189 passed, 13 failed in the
-latest run). The acceptance gate is therefore not closed. See the implementation record in
+latest run). The ten-file minimum reproducible package is published on
+`feature/hls-laboratory-v1` at `37a011804f9ea013fc3a5436c00a72eb0b8280da`.
+The acceptance gate is therefore not closed. See the implementation record in
 [HLS Laboratory v1](experiments/HLS_LAB_V1.md). This changes the
 operational priority, not HLS's research questions or general scientific
 doctrine: HLS continues to ask **WHO SHOULD DO WHAT?** and **WHO SHOULD LEARN

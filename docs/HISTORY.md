@@ -18,7 +18,8 @@ undated where the source material does not establish a defensible event date.
 | PI / CE decision to prioritize integrated HLS Laboratory v1 and approve milestone `HLS-LAB-V1-INTEGRATED` | **2026-10-15, date verified; exact time unknown**, from the dated PI/CE instruction. | Documented 2026-10-15 08:40 +02:00, Europe/Madrid, in this entry and the linked current-state/lab documents. | Operational-priority change; it does not change the research questions or retrospectively alter prior decisions. |
 | Additive B1–B6 integrated teaching-cycle implementation and acceptance run | **2026-10-15, implementation date verified; exact start time unknown.** | Documented 2026-10-15 09:08 +02:00, Europe/Madrid, with implementation and test paths in the scope note. | Focused laboratory tests passed; full suite had 1181 passes and 13 failures on pre-existing local integrity/provenance conditions. Milestone remains PARTIAL; engineering verification is not scientific evidence. |
 | Additive exogenous environment/problem trajectory interface and regression run | **2026-10-15, implementation date verified; exact start time unknown.** | Documented 2026-10-15 09:45 +02:00, Europe/Madrid. | Reuses C5 demand processes and dynamic-lab emission; 17 focused tests passed; full suite 1189 passed/13 failed, same 13 named failures as the prior run. Milestone remains PARTIAL. |
-| HLS Laboratory v1 candidate-set consolidation and final pre-publication validation | **2026-10-15 09:57 +02:00, verified execution time.** | Recorded 2026-10-15 09:57 +02:00, Europe/Madrid. | The ten explicitly scoped implementation/test/demo/operations files imported and ran; focal tests 17/17; full suite 1189/13 with same pre-existing failures. Publication status is recorded separately after remote verification; milestone remains PARTIAL. |
+| HLS Laboratory v1 candidate-set consolidation and final validation | **2026-10-15 09:57 +02:00, verified execution time.** | Recorded 2026-10-15 09:57 +02:00, Europe/Madrid. | Ten scoped files imported and ran; focused tests 17/17; full suite 1189/13, same pre-existing failures. Milestone remains PARTIAL. |
+| HLS Laboratory v1 minimum package published | **2026-10-15 09:58 +02:00, verified push/remote-ref check.** | Recorded 2026-10-15 09:58 +02:00, Europe/Madrid; commit `37a011804f9ea013fc3a5436c00a72eb0b8280da`. | Pushed to `origin/feature/hls-laboratory-v1`; remote ref matches commit. Publication does not close the milestone; 13 full-suite failures remain. |
 | HLS Laboratory v1 vertical-slice implementation recorded | Decision/event date **unknown**; repository record timestamp verified. | 2026-10-14 10:32 +02:00; commit `624e249` (full hash in Git). | Commit date establishes when the implementation was recorded, not when CE-23 was authorized. |
 | CE-24 validated output manifest created | **2026-10-14 10:50 +02:00, verified** by `created_utc` in `results/experiments/hls_lab_ce24_validated/manifest.json`; exact simulation start/end times are not recorded. | Manifest records `2026-10-14T08:50:09.236416+00:00`; result report was committed at 10:55 +02:00 (`ae78cda`). | Timestamp verifies the manifest/output record, not exact execution duration. The deterministic run is not population-level evidence. |
 | CE-24 validation record committed | Decision/event date **unknown**; repository record timestamp verified. | 2026-10-14 10:55 +02:00; commit `ae78cda`. | Commit date records report/code publication in Git, not decision authorization. |
@@ -108,17 +109,21 @@ and reproducibility. A small executable regime-switching demo compares P0,
 P1, and P2 on a shared trajectory. This is engineering verification, not a
 scientific campaign or evidence of policy superiority.
 
-Focused environment plus integrated tests: 17 passed. Full suite:
-1189 passed, 13 failed in 314.78 seconds. The same 13 test identities from the
+**Implementation:** the integrated organization layer and exogenous environment
+adapter, their tests, and demos are included in the minimum package.
+**Validation:** focused environment plus integrated tests: 17 passed. Full
+suite: 1189 passed, 13 failed in 314.78 seconds. The same 13 test identities from the
 preceding full run failed again: a local foundation-result inventory mismatch,
 B2.3/RQ0 protocol-provenance mismatches, and frozen Campaign 2/3/Gate hash or
 artifact checks. No frozen hashes were refreshed. Source hashes for
 `hls_lab_v1.py`, `hls_lab_dynamic.py`, `synthetic/c5.py`, and
-`finite_problem_belief.py` were unchanged across this intervention. Milestone
-remains **PARTIAL**. No commit or push was made: the required integrated layer,
-demo, and tests are untracked and absent from branch HEAD; committing this
-environment adapter alone would leave the branch nonfunctional, while adding
-those prior-work files would exceed this correction's scoped change set.
+`finite_problem_belief.py` were unchanged across this intervention.
+**Publication:** commit `37a011804f9ea013fc3a5436c00a72eb0b8280da` was pushed at
+2026-10-15 09:58 +02:00 to `origin/feature/hls-laboratory-v1`; the remote ref
+was verified to match. Only the ten named package files were committed; other
+pre-existing worktree changes were preserved. **Milestone closure:** not
+declared; `HLS-LAB-V1-INTEGRATED` remains **PARTIAL** because the full-suite
+integrity/provenance failures remain unresolved.
 
 ## 1. Initial portfolio and routing framing
 
