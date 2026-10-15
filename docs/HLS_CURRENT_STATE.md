@@ -222,6 +222,35 @@ conditional on the selected state, specified event, P2 continuation, frozen
 exogenous suffix, and common indexed innovations; it is not globally optimal
 teaching value.
 
+### Campaign 2: teaching × MIS × work assignment — 15 October 2026
+
+The CE-authorized bounded experiment completed at **2026-10-15 20:39:04 +02:00**,
+with this record updated **2026-10-15 20:44 +02:00** (Europe/Madrid).
+Three prespecified scenarios each used one deterministic and ten noisy
+matched teaching ON/OFF × MIS ON/OFF quadruples, plus a zero-efficacy control:
+34 quadruples, 136 runs, 3,264 decisions. All branches used the same P0
+production-only continuation after one forced period-0 lesson.
+
+The CES interaction `(R11−R01)−(R10−R00)` was −1.092473 when the learner
+already participated, +1.561953 when teaching changed its preferred
+productive assignment, and +0.339151 after an exogenous demand switch.
+The latter two scenarios opened respectively 23 and 11 subsequent learner
+target-skill exposures; the first left subsequent assignments unchanged.
+These are conditional model results, not identified causal mediation.
+No-teaching functional success was 24/24; teaching was 23/24 even where
+cumulative CES improved. All ten noise seeds per scenario had the same CES
+totals despite distinct estimates and some different equally productive
+assignments; collapsed bootstrap intervals do not establish zero uncertainty.
+
+See [Campaign 2 findings](experiments/HLS_CAMPAIGN2_FINDINGS.md) for the
+registered rationale, four-condition outcomes, direct/MIS gains, negative
+controls, full traces, source hashes and reproduction commands. Results are
+isolated in `results/experiments/hls_campaign2_teaching_mis_assignment/`.
+Sixteen new tests plus 107 relevant regressions passed. The full suite was
+not rerun; the 13 historical provenance/integrity failures remain and
+`HLS-LAB-V1-INTEGRATED` stays **PARTIAL**. No laboratory physics or policy
+was changed; Campaign 1 findings remain intact.
+
 ## Current empirical status — 13 October 2026
 
 ### Behavioral plausibility validation — 15 October 2026
