@@ -22,15 +22,16 @@ v1 as integrated experimental infrastructure**. The active milestone is
 integrated teaching runner, P0/P1/P2 policies, a policy-independent exogenous
 problem-trajectory generator and focused acceptance tests now exist. The
 generator composes C5 demand processes with the existing dynamic problem
-emitter; problem trajectories are frozen before policy evaluation. Focused
-tests pass, while the full repository suite retains 13 integrity and
-provenance failures (1237 passed, 13 failed in the 2026-10-16 audit run; the
-earlier HLS integration run was 1189 passed, 13 failed). A bounded diagnosis
-reproduced all 13 and identified six underlying failure families; two
-historical snapshots (B13 manifest and a frozen source version) need explicit
-provenance disposition, while four Campaign 2 closure-document snapshots are
-also unavailable and several other failures are stale or commit-insensitive
-validators. See the [provenance diagnosis](engineering/HLS_PROVENANCE_FAILURE_DIAGNOSIS.md).
+emitter; problem trajectories are frozen before policy evaluation. Two
+authorized provenance validators were corrected: B2.3 now verifies the
+protocol blob at the run's recorded Git revision, and Campaign 2 preregistration
+checks source/artifact scope against its immutable freeze snapshot. The latest
+full suite reports 1253 passed and 5 failed (2026-10-16); those remaining
+failures concern the foundation inventory/B13 manifest, unavailable
+`finite_problem_belief.py` source evidence, and Campaign 2 closure-document
+hashes. Provenance is not fully restored. See the
+[provenance diagnosis](engineering/HLS_PROVENANCE_FAILURE_DIAGNOSIS.md) and
+the dated [history entry](HISTORY.md).
 The minimum N×K extension is designed but not implemented; see the [N×K technical design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md).
 The ten-file minimum reproducible package is published on
 `feature/hls-laboratory-v1` at `37a011804f9ea013fc3a5436c00a72eb0b8280da`.
