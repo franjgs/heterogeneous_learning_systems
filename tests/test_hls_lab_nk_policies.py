@@ -12,12 +12,12 @@ from hls.hls_lab_nk_policies import (
     EfficacyEstimateNK,
     NKDecisionView,
     OrganizationMemoryNK,
+    P0ProductionOnlyPolicyNK,
     P1FixedTeachingNK,
     P2AdaptiveTeachingNK,
     TeachingPolicyParametersNK,
     enumerate_feasible_joint_actions_nk,
 )
-from hls.hls_lab_nk_production import P0ProductionOnlyNK
 from hls.hls_lab_nk_teaching import (
     JointActionNK,
     TeachingActionNK,
@@ -170,9 +170,9 @@ def test_policies_execute_nk_geometries_and_keep_p0_production_only(n, k):
     efficacy = _efficacy(org)
     p0 = run_nk_production_sequence(
         org, (problem,), max_candidates=max_candidates, per_agent_effort_choices=choices,
-        teaching_enabled=True, teaching_efficacy=efficacy, policy=P0ProductionOnlyNK(),
+        teaching_enabled=True, teaching_efficacy=efficacy, policy=P0ProductionOnlyPolicyNK(),
     )
-    assert p0.records[0].policy_name == "P0_PRODUCTION_ONLY_NK"
+    assert p0.records[0].policy_name == "P0_PRODUCTION_ONLY"
     assert p0.records[0].teaching_action is None
     assert p0.records[0].total_resource_used == p0.records[0].productive_effort_used
     if n > 1:
@@ -219,7 +219,7 @@ def test_p2_rule_success_unseen_threshold_tie_and_disabled_teaching_fallback():
         policy=p2,
     )
     p0 = run_nk_production_sequence(org, (problem,), max_candidates=64,
-                                    policy=P0ProductionOnlyNK())
+                                    policy=P0ProductionOnlyPolicyNK())
     assert disabled.records[0].teaching_action is None
     assert disabled.records[0].production.allocation == p0.records[0].production.allocation
 

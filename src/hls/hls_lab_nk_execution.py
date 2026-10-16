@@ -39,6 +39,7 @@ from .hls_lab_nk_policies import (
     OrganizationMemoryNK,
     P1FixedTeachingNK,
     P2AdaptiveTeachingNK,
+    P0ProductionOnlyPolicyNK,
     TeachingPolicyParametersNK,
     enumerate_feasible_joint_actions_nk,
     formative_efficacy_signal_nk,
@@ -130,7 +131,7 @@ def run_nk_production_sequence(
     teaching_efficacy: TeachingEfficacyNK | None = None,
     teaching_parameters: TeachingParametersNK = TeachingParametersNK(),
     explicit_actions: tuple[JointActionNK, ...] | None = None,
-    policy: P0ProductionOnlyNK | P1FixedTeachingNK | P2AdaptiveTeachingNK | None = None,
+    policy: P0ProductionOnlyPolicyNK | P1FixedTeachingNK | P2AdaptiveTeachingNK | None = None,
     policy_parameters: TeachingPolicyParametersNK = TeachingPolicyParametersNK(),
     initial_policy_memory: OrganizationMemoryNK | None = None,
 ) -> NKProductionRunResult | NKLearningRunResult | NKTeachingRunResult:
@@ -254,7 +255,7 @@ def run_nk_production_sequence(
 def _run_nk_policy_sequence(
     organization: OrganizationConfigNK,
     problems: tuple[ProblemSpecNK, ...],
-    policy: P0ProductionOnlyNK | P1FixedTeachingNK | P2AdaptiveTeachingNK,
+    policy: P0ProductionOnlyPolicyNK | P1FixedTeachingNK | P2AdaptiveTeachingNK,
     *,
     max_candidates: int,
     per_agent_effort_choices: tuple[tuple[tuple[float, ...], ...], ...] | None,
@@ -273,7 +274,7 @@ def _run_nk_policy_sequence(
     if learning_profile is not None:
         learning_profile.validate_dimensions(initial.n_agents, initial.n_skills)
     # P0 remains production-only even when the teaching mechanism is available.
-    policies_can_teach = not isinstance(policy, P0ProductionOnlyNK)
+    policies_can_teach = not isinstance(policy, P0ProductionOnlyPolicyNK)
     available_teaching = teaching_enabled and policies_can_teach
     if available_teaching:
         if teaching_efficacy is None:
@@ -304,16 +305,7 @@ def _run_nk_policy_sequence(
             estimated_competencies=state.competence_estimated,
             feasible_actions=actions,
         )
-        if isinstance(policy, P0ProductionOnlyNK):
-            selected_production_id, selected_allocation = policy.choose(
-                tuple(action.production for action in actions),
-                state.competence_estimated, problem,
-            )
-            selected = next(action for action in actions
-                            if action.production == selected_allocation and action.teaching is None)
-            del selected_production_id
-        else:
-            selected = policy.choose(view, memory, policy_parameters)
+        selected = policy.choose(view, memory, policy_parameters)
         if selected not in actions:
             raise ValueError("policy returned an infeasible joint action")
         joint_id = actions.index(selected)

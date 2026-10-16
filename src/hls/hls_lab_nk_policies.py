@@ -127,6 +127,17 @@ class NKCoordinationPolicy(Protocol):
     ) -> JointActionNK: ...
 
 
+@dataclass(frozen=True)
+class P0ProductionOnlyPolicyNK:
+    """Common-interface adapter for legacy P0's production-only ranking."""
+
+    name: str = "P0_PRODUCTION_ONLY"
+
+    def choose(self, view, memory, parameters) -> JointActionNK:
+        del memory, parameters
+        return _best(view)
+
+
 def _production_rank(view: NKDecisionView, action: JointActionNK):
     return p0_rank_nk(action.production, view.estimated_competencies,
                       ProblemSpecNK(view.problem_id, view.requirements, 0.0))
