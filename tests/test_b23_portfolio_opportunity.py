@@ -1,6 +1,8 @@
 import importlib.util
+import hashlib
 import json
 import random
+import subprocess
 import sys
 from pathlib import Path
 
@@ -384,6 +386,7 @@ def test_final_summary_has_scientific_counts(tmp_path):
 def test_complete_synthetic_genealogy_passes_compatibility_audit(tmp_path):
     header = {
         "protocol_id": b23.PROTOCOL_ID, "device": "cpu", "test_used": False, "deterministic_algorithms": True,
+        "git_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "protocol_sha256": b23.sha256_file(b23.PROTOCOL_PATH), "config_sha256": b23.sha256_file(b23.CONFIG_PATH),
         "implementation_sha256": b23.SCIENTIFIC_IMPLEMENTATION_SHA256, "analysis_sha256": b23.SCIENTIFIC_ANALYSIS_SHA256,
         "b20_runner_sha256": b23.SCIENTIFIC_B20_RUNNER_SHA256, "split_library_sha256": b23.sha256_file(b23.B20_LIBRARY_PATH),
@@ -502,3 +505,64 @@ def test_complete_synthetic_genealogy_passes_compatibility_audit(tmp_path):
     assert (tmp_path / "base_states.jsonl").is_file()
     assert (tmp_path / "opportunities.jsonl").is_file()
     assert (tmp_path / "development_states.jsonl").is_file()
+
+
+def _temporary_git_repo(tmp_path, protocol_text="protocol v1\n", include_protocol=True):
+    repo = tmp_path / "historical-repo"
+    repo.mkdir()
+    subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+    subprocess.run(["git", "config", "user.email", "test@example.invalid"], cwd=repo, check=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=repo, check=True)
+    if include_protocol:
+        protocol = repo / "docs/experimental_foundations/B23_PROTOCOL.md"
+        protocol.parent.mkdir(parents=True)
+        protocol.write_text(protocol_text)
+    else:
+        (repo / "README.md").write_text("no protocol in this snapshot\n")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True)
+    subprocess.run(["git", "commit", "-qm", "historical snapshot"], cwd=repo, check=True)
+    return repo, subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
+
+
+def test_historical_protocol_digest_authenticates_recorded_revision(tmp_path):
+    repo, commit = _temporary_git_repo(tmp_path)
+    expected = hashlib.sha256(b"protocol v1\n").hexdigest()
+    assert analysis._verify_historical_protocol(commit, expected, repo) == expected
+
+
+def test_modified_historical_protocol_fails_recorded_digest(tmp_path):
+    repo, original_commit = _temporary_git_repo(tmp_path)
+    expected = hashlib.sha256(b"protocol v1\n").hexdigest()
+    protocol = repo / "docs/experimental_foundations/B23_PROTOCOL.md"
+    protocol.write_text("protocol altered\n")
+    subprocess.run(["git", "add", str(protocol)], cwd=repo, check=True)
+    subprocess.run(["git", "commit", "-qm", "alter protocol"], cwd=repo, check=True)
+    altered_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
+    assert analysis._verify_historical_protocol(original_commit, expected, repo) == expected
+    with pytest.raises(RuntimeError, match="protocol_sha256"):
+        analysis._verify_historical_protocol(altered_commit, expected, repo)
+
+
+def test_incorrect_digest_and_missing_historical_commit_fail(tmp_path):
+    repo, commit = _temporary_git_repo(tmp_path)
+    with pytest.raises(RuntimeError, match="protocol_sha256"):
+        analysis._verify_historical_protocol(commit, "0" * 64, repo)
+    with pytest.raises(RuntimeError, match="missing or invalid Git commit"):
+        analysis._verify_historical_protocol(None, "0" * 64, repo)
+    with pytest.raises(RuntimeError, match="cannot recover"):
+        analysis._verify_historical_protocol("f" * 40, "0" * 64, repo)
+
+
+def test_missing_historical_protocol_fails_explicitly(tmp_path):
+    repo, commit = _temporary_git_repo(tmp_path, include_protocol=False)
+    with pytest.raises(RuntimeError, match="cannot recover"):
+        analysis._verify_historical_protocol(commit, "0" * 64, repo)
+
+
+def test_current_protocol_changes_do_not_change_historical_digest(tmp_path, monkeypatch):
+    repo, commit = _temporary_git_repo(tmp_path)
+    expected = hashlib.sha256(b"protocol v1\n").hexdigest()
+    current = tmp_path / "current_protocol.md"
+    current.write_text("current protocol changed\n")
+    monkeypatch.setattr(b23, "PROTOCOL_PATH", current)
+    assert analysis._verify_historical_protocol(commit, expected, repo) == expected
