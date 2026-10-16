@@ -34,6 +34,15 @@ from .hls_lab_nk_teaching import (
     teaching_transition_nk,
     validate_joint_action_resources_nk,
 )
+from .hls_lab_nk_policies import (
+    NKDecisionView,
+    OrganizationMemoryNK,
+    P1FixedTeachingNK,
+    P2AdaptiveTeachingNK,
+    TeachingPolicyParametersNK,
+    enumerate_feasible_joint_actions_nk,
+    formative_efficacy_signal_nk,
+)
 
 TOL = 1e-12
 
@@ -83,6 +92,8 @@ class NKLearningRunResult:
 
 @dataclass(frozen=True)
 class NKTeachingEpisodeRecord:
+    policy_name: str
+    joint_action_id: int | None
     production: NKProductionEpisodeRecord
     teaching_action: TeachingActionNK | None
     productive_effort_used: float
@@ -94,6 +105,10 @@ class NKTeachingEpisodeRecord:
     mis_increment: tuple[tuple[float, ...], ...]
     competence_increment_from_teaching: tuple[tuple[float, ...], ...]
     teaching_efficacy: float | None
+    formative_efficacy_observation: float | None
+    efficacy_memory_before: tuple
+    efficacy_memory_after: tuple
+    organization_updated: bool
 
 
 @dataclass(frozen=True)
@@ -109,11 +124,15 @@ def run_nk_production_sequence(
     max_candidates: int,
     per_agent_effort_choices: tuple[tuple[tuple[float, ...], ...], ...] | None = None,
     individual_learning: bool = False,
+    organizational_learning: bool = True,
     learning_profile: LearningProfileNK | None = None,
     teaching_enabled: bool = False,
     teaching_efficacy: TeachingEfficacyNK | None = None,
     teaching_parameters: TeachingParametersNK = TeachingParametersNK(),
     explicit_actions: tuple[JointActionNK, ...] | None = None,
+    policy: P0ProductionOnlyNK | P1FixedTeachingNK | P2AdaptiveTeachingNK | None = None,
+    policy_parameters: TeachingPolicyParametersNK = TeachingPolicyParametersNK(),
+    initial_policy_memory: OrganizationMemoryNK | None = None,
 ) -> NKProductionRunResult | NKLearningRunResult | NKTeachingRunResult:
     """Run deterministic P0 episodes over a caller-frozen exogenous sequence.
 
@@ -122,17 +141,37 @@ def run_nk_production_sequence(
     frozen-competence path and retains its result/serialization contract.
     Setting ``individual_learning=True`` requires an N×K MIS-v2 profile and
     returns a learning trace with post-production competence transitions.
-    Supplying ``explicit_actions`` opts into the N×K joint-action validation
-    path. Teaching is never selected implicitly: each period explicitly names
-    its productive allocation and optional directed teaching event. The joint
-    path applies output, MIS-v2, then teaching, matching the legacy order.
-    Neither path generates environment draws or observation updates.
+    Supplying ``explicit_actions`` retains the N×K controlled-action path.
+    Supplying a legacy P0/P1/P2 policy opts into automatic feasible joint
+    action generation; P0 remains production-only. Policy execution uses
+    perfect competence information and the deterministic zero-noise case of
+    the existing formative efficacy observation. Production, MIS-v2, teaching
+    and efficacy-memory update order match the legacy runner. No environment
+    draws or competence-estimation updates are generated.
     """
     if not problems:
         raise ValueError("problem sequence must be non-empty")
     initial = organization.initial_state()
     if learning_profile is not None:
         learning_profile.validate_dimensions(initial.n_agents, initial.n_skills)
+    if policy is not None and explicit_actions is not None:
+        raise ValueError("policy selection and explicit_actions are mutually exclusive")
+    if policy is not None:
+        return _run_nk_policy_sequence(
+            organization, problems, policy,
+            max_candidates=max_candidates,
+            per_agent_effort_choices=per_agent_effort_choices,
+            individual_learning=individual_learning,
+            organizational_learning=organizational_learning,
+            learning_profile=learning_profile,
+            teaching_enabled=teaching_enabled,
+            teaching_efficacy=teaching_efficacy,
+            teaching_parameters=teaching_parameters,
+            policy_parameters=policy_parameters,
+            initial_policy_memory=initial_policy_memory,
+        )
+    if initial_policy_memory is not None:
+        raise ValueError("initial_policy_memory requires a coordination policy")
     if teaching_enabled and explicit_actions is None:
         raise ValueError("teaching-enabled execution requires explicit complete actions")
     if explicit_actions is not None:
@@ -210,6 +249,164 @@ def run_nk_production_sequence(
             unused_collective_capacity=max(0.0, effective_budget - effort_used),
         ))
     return NKProductionRunResult(tuple(records), state)
+
+
+def _run_nk_policy_sequence(
+    organization: OrganizationConfigNK,
+    problems: tuple[ProblemSpecNK, ...],
+    policy: P0ProductionOnlyNK | P1FixedTeachingNK | P2AdaptiveTeachingNK,
+    *,
+    max_candidates: int,
+    per_agent_effort_choices: tuple[tuple[tuple[float, ...], ...], ...] | None,
+    individual_learning: bool,
+    organizational_learning: bool,
+    learning_profile: LearningProfileNK | None,
+    teaching_enabled: bool,
+    teaching_efficacy: TeachingEfficacyNK | None,
+    teaching_parameters: TeachingParametersNK,
+    policy_parameters: TeachingPolicyParametersNK,
+    initial_policy_memory: OrganizationMemoryNK | None,
+) -> NKTeachingRunResult:
+    initial = organization.initial_state()
+    if individual_learning and learning_profile is None:
+        raise ValueError("MIS-v2 ON requires a LearningProfileNK")
+    if learning_profile is not None:
+        learning_profile.validate_dimensions(initial.n_agents, initial.n_skills)
+    # P0 remains production-only even when the teaching mechanism is available.
+    policies_can_teach = not isinstance(policy, P0ProductionOnlyNK)
+    available_teaching = teaching_enabled and policies_can_teach
+    if available_teaching:
+        if teaching_efficacy is None:
+            raise ValueError("teaching-enabled P1/P2 execution requires teaching_efficacy")
+        teaching_efficacy.validate_identifiers(initial.agent_ids, initial.skill_ids)
+    state = OrganizationStateNK(initial.agent_ids, initial.skill_ids,
+                                initial.competence_real, initial.competence_real)
+    memory = initial_policy_memory or OrganizationMemoryNK()
+    records: list[NKTeachingEpisodeRecord] = []
+    for period, problem in enumerate(problems):
+        if len(problem.requirements) != state.n_skills:
+            raise ValueError(f"problem {problem.problem_id} does not match organization K")
+        production_entries = enumerate_productive_action_entries_nk(
+            organization, problem, max_candidates=max_candidates,
+            per_agent_effort_choices=per_agent_effort_choices,
+        )
+        actions = enumerate_feasible_joint_actions_nk(
+            organization, problem, max_candidates=max_candidates,
+            teaching_enabled=available_teaching,
+            teaching_efficacy=teaching_efficacy if available_teaching else None,
+            teaching_effort=policy_parameters.effort,
+            per_agent_effort_choices=per_agent_effort_choices,
+        )
+        view = NKDecisionView(
+            period=period, periods_remaining=len(problems) - period,
+            problem_id=problem.problem_id, agent_ids=state.agent_ids,
+            skill_ids=state.skill_ids, requirements=problem.requirements,
+            estimated_competencies=state.competence_estimated,
+            feasible_actions=actions,
+        )
+        if isinstance(policy, P0ProductionOnlyNK):
+            selected_production_id, selected_allocation = policy.choose(
+                tuple(action.production for action in actions),
+                state.competence_estimated, problem,
+            )
+            selected = next(action for action in actions
+                            if action.production == selected_allocation and action.teaching is None)
+            del selected_production_id
+        else:
+            selected = policy.choose(view, memory, policy_parameters)
+        if selected not in actions:
+            raise ValueError("policy returned an infeasible joint action")
+        joint_id = actions.index(selected)
+        try:
+            action_id = next(identifier for identifier, allocation in production_entries
+                             if allocation == selected.production)
+        except StopIteration as exc:
+            raise AssertionError("selected production action is absent from its catalog") from exc
+
+        allocation = selected.production
+        effective_budget = min(organization.collective_effort_budget, problem.resource_budget)
+        individual_used, total_used, unused = validate_joint_action_resources_nk(
+            allocation, selected.teaching,
+            agent_ids=state.agent_ids, collective_budget=effective_budget,
+            individual_limits=organization.effort_limits,
+            efficacy=teaching_efficacy if selected.teaching is not None else None,
+        )
+        before = state.competence_real
+        outputs = productive_outputs_nk(before, allocation)
+        individual_outputs = tuple(tuple(
+            allocation[i][skill] * before[i][skill] for skill in range(state.n_skills)
+        ) for i in range(state.n_agents))
+        functional = evaluate_problem_nk(outputs, problem.requirements)
+        reward = ces_reward_nk(outputs, problem.ces_weights)  # type: ignore[arg-type]
+        post_mis = before
+        mis_increment = tuple(tuple(0.0 for _ in range(state.n_skills))
+                              for _ in range(state.n_agents))
+        if individual_learning:
+            assert learning_profile is not None
+            post_mis = mis_v2_transition_nk(before, allocation, learning_profile, enabled=True)
+            mis_increment = tuple(tuple(post_mis[i][k] - before[i][k]
+                                        for k in range(state.n_skills))
+                                  for i in range(state.n_agents))
+        after = post_mis
+        teaching_increment = tuple(tuple(0.0 for _ in range(state.n_skills))
+                                   for _ in range(state.n_agents))
+        resolved_efficacy = formative_observation = None
+        memory_before = memory.efficacy
+        if selected.teaching is not None:
+            assert teaching_efficacy is not None
+            transition = teaching_transition_nk(
+                post_mis, selected.teaching, teaching_efficacy, teaching_parameters,
+            )
+            after = transition.competence_after
+            teaching_increment = transition.competence_increment
+            resolved_efficacy = transition.efficacy
+            # The legacy teaching observation defaults to zero added noise.
+            # Its normalized signal is a relation-specific observation, not a
+            # direct policy read of the private efficacy tensor.
+            learner, skill = transition.learner_index, transition.skill_index
+            formative_observation = formative_efficacy_signal_nk(
+                competence_after_mis=post_mis[learner][skill],
+                observed_teaching_gain=transition.competence_gain,
+                transfer_rate=teaching_parameters.transfer_rate,
+                effort=selected.teaching.effort,
+                prior_mean=policy_parameters.efficacy_prior_mean,
+            )
+            relation = (selected.teaching.teacher_id, selected.teaching.learner_id,
+                        selected.teaching.skill_id)
+            if organizational_learning:
+                memory = memory.update(relation, formative_observation)
+        organization_updated = organizational_learning and selected.teaching is not None
+
+        production = NKProductionEpisodeRecord(
+            period=period, problem_id=problem.problem_id, requirements=problem.requirements,
+            competence_before=before, competence_after=after,
+            action_id=action_id, allocation=allocation, individual_outputs=individual_outputs,
+            outputs=outputs, functional_result=functional, ces_reward=reward,
+            organization_effort_budget=organization.collective_effort_budget,
+            problem_effort_budget=problem.resource_budget,
+            effective_collective_budget=effective_budget,
+            individual_effort_limits=organization.effort_limits,
+            individual_effort_used=tuple(sum(row) for row in allocation),
+            productive_effort_used=sum(sum(row) for row in allocation),
+            unused_collective_capacity=unused,
+        )
+        teaching_resource = 0.0 if selected.teaching is None else 2.0 * selected.teaching.effort
+        records.append(NKTeachingEpisodeRecord(
+            policy_name=policy.name, joint_action_id=joint_id,
+            production=production, teaching_action=selected.teaching,
+            productive_effort_used=production.productive_effort_used,
+            teaching_resource_used=teaching_resource, total_resource_used=total_used,
+            individual_resource_used=individual_used,
+            unused_collective_capacity=unused, competence_after_mis=post_mis,
+            mis_increment=mis_increment,
+            competence_increment_from_teaching=teaching_increment,
+            teaching_efficacy=resolved_efficacy,
+            formative_efficacy_observation=formative_observation,
+            efficacy_memory_before=memory_before, efficacy_memory_after=memory.efficacy,
+            organization_updated=organization_updated,
+        ))
+        state = OrganizationStateNK(state.agent_ids, state.skill_ids, after, after)
+    return NKTeachingRunResult(tuple(records), state)
 
 
 def _run_nk_explicit_sequence(
@@ -304,6 +501,7 @@ def _run_nk_explicit_sequence(
         )
         teaching_resource = 0.0 if joint.teaching is None else 2.0 * joint.teaching.effort
         records.append(NKTeachingEpisodeRecord(
+            policy_name="EXPLICIT_ACTION", joint_action_id=None,
             production=production, teaching_action=joint.teaching,
             productive_effort_used=production.productive_effort_used,
             teaching_resource_used=teaching_resource, total_resource_used=total_used,
@@ -312,6 +510,9 @@ def _run_nk_explicit_sequence(
             competence_after_mis=post_mis, mis_increment=mis_increment,
             competence_increment_from_teaching=teaching_increment,
             teaching_efficacy=resolved_efficacy,
+            formative_efficacy_observation=None,
+            efficacy_memory_before=(), efficacy_memory_after=(),
+            organization_updated=False,
         ))
         state = OrganizationStateNK(state.agent_ids, state.skill_ids, after, after)
     return NKTeachingRunResult(tuple(records), state)
