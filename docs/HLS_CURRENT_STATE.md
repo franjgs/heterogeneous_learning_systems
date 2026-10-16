@@ -1194,3 +1194,21 @@ them to define HLS itself.
   [RQ0_ROUTING_OPPORTUNITY_COUPLING_PROTOCOL.md](experimental_foundations/RQ0_ROUTING_OPPORTUNITY_COUPLING_PROTOCOL.md)
 - Executable synthetic gates:
   [experiments/synthetic](../experiments/synthetic/)
+
+### Experimental-validity diagnostics — 16 October 2026
+
+Recorded at **2026-10-16 10:15 +02:00** (Europe/Madrid). A predeclared,
+deterministic instrument suite passed eight checks covering equivalence,
+competence response, the enumerated 1.15 feasibility frontier, assignment
+sensitivity, isolated MIS-v2, resource accounting, zero teaching efficacy,
+and matched P0/P1/P2 inputs. Focused integrated/environment/plausibility
+tests passed (26). Results and hashes are in
+[the validity assessment](experiments/HLS_LABORATORY_VALIDITY_ASSESSMENT.md)
+and `results/diagnostics/hls_laboratory_validity_assessment/`.
+
+This verifies internal behaviors only. P0/P1/P2 remain bundled strategy
+comparisons; CES is gross, costs are separate, and equal budgets do not ensure
+equal use. The laboratory still lacks an agreed comparison estimand and
+external calibration for broad architecture or policy superiority claims.
+No campaign was run; the integrated laboratory remains **PARTIAL** and new
+scientific campaigns remain on hold pending the outcome-contract decision.

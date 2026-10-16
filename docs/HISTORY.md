@@ -812,3 +812,33 @@ Artifacts: runner
 `results/diagnostics/hls_behavioral_plausibility/`. The manifest records seed,
 parameters and source/output SHA-256 values. No frozen result or source was
 modified.
+
+### 2026-10-16 — HLS laboratory experimental-validity assessment
+
+**Event:** deterministic diagnostic run completed 2026-10-16 10:14:59 +02:00;
+**recorded:** 2026-10-16 10:15 +02:00 (Europe/Madrid). **Authority:** PI
+priority decision (laboratory consolidation GO; experimental validity priority
+1; new scientific campaign HOLD). **Type:** instrument validation and
+documentation; no simulator physics, historical result, or policy was changed.
+
+Eight predeclared fixture checks passed: equivalence across seeds under zero
+noise; a competence-sensitive output/CES change (`.5→.6`); functional success
+below and failure above the enumerated output frontier `1.15`; allocation
+sensitivity (`.8` vs `.2` output); isolated MIS-v2 (`.4→.85` skill and `.4→.7`
+second-period output with LI ON); budget-2 resource accounting (lesson `.5`,
+production 1.0, residual `.5`); zero-efficacy teaching (no direct gain but
+resources charged); and common generated demand for P0/P1/P2. Two runs yielded
+identical diagnostic JSON SHA-256
+`b3778c626f7fad6800fc74d88922f0feb8324858d37da7d8893d08a42fc7bb58`.
+Focused tests passed: 26.
+
+The assessment concludes that conditional internal mechanism and matched-path
+checks are possible, but ordinary P0/P1/P2 comparisons bundle policy,
+teaching and information differences. Gross CES, separately reported cost,
+and functional success do not yet define a single net comparison objective;
+equal budgets need not mean equal consumption. No external calibration or new
+campaign was performed. The full suite was not rerun; the previously reported
+13 integrity/provenance failures remain an open repository-level validation
+issue. HLS Laboratory v1 remains **PARTIAL**. See
+[the assessment](experiments/HLS_LABORATORY_VALIDITY_ASSESSMENT.md) and its
+reproducible artifacts in `results/diagnostics/hls_laboratory_validity_assessment/`.
