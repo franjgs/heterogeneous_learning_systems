@@ -1,0 +1,20 @@
+{
+  "outputs_sha256": {
+    "demand_paths.json": "afeea507dd66e3a018d70c103ae56c421315ec3a2d7cbbf5806d45d04e7ae14c",
+    "equivalence_control.json": "8299ff0f626e18851f0208078017335f89f5e41a853f03014882298cf45f16d5",
+    "preregistration.json": "45cbdd4254ea6353d6ef3dc1a66b8f9c5b900b1ff2fc4a602b7fe00db81e804f",
+    "summary.json": "2bcabc28a1c256cd4e684e91e48494d35be251e739daca5ee304e3193c603321",
+    "trajectory_summary.csv": "b05a1f0891a96f26250fd2dd9ac0946284d57c9f83f514e3ac6b1f35d0c3fc45"
+  },
+  "protocol": "HLS-Q1-PREFLIGHT-v1",
+  "registered_document_sha256": "7fcfb9a900e522356531d02ef1fa65bc619643e798c3373a7031b39bdc4572ce",
+  "registered_protocol_sha256": "45cbdd4254ea6353d6ef3dc1a66b8f9c5b900b1ff2fc4a602b7fe00db81e804f",
+  "runner_sha256": "e03cf2ba0ef94dc3bf6fd5e37d5dbb1261c19e0a9ae9b5cda725c830caf8f55a",
+  "source_sha256": {
+    "src/hls/discover_v0.py": "ef1eee85cf7735107e46e285af4ce2734906a55a6741ec09a72a2623c1ab470f",
+    "src/hls/hls_lab_dynamic.py": "d6cbb568a9624884da7eeb7da080ffca737326d72359c087ebdc374e76449c70",
+    "src/hls/hls_lab_v1_environment.py": "a59ca1ef5f8a7248cece1a2acb7900d9b0a37dc72896464a0c59d74b33f170b7",
+    "src/hls/hls_lab_v1_integrated.py": "9a3006dbbe8d82e213ff6cf3abc24f3f623a82d39892000cbb883a19a48b8c76",
+    "src/hls/synthetic/c5.py": "9a264bd5121b51ef5cb285b19dd766f79f88b18a3c01f0231fb16c8cc8c6dbf8"
+  }
+}

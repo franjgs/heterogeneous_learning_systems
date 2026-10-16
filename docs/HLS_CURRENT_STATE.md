@@ -1225,3 +1225,23 @@ proposal is **GO for preflight/registration, HOLD for execution** pending
 preflight, an approved minimum meaningful CES effect (or estimation-only
 decision), and a novelty check. See
 [HLS first scientific campaign design](experiments/HLS_FIRST_SCIENTIFIC_CAMPAIGN_DESIGN.md).
+
+### Q1 campaign preflight — 16 October 2026
+
+Recorded at **2026-10-16 10:45 +02:00** (Europe/Madrid). The registered
+architecture match, C5 IID/Markov process, frontier controls, outcome/resource
+instrumentation, MIS-v2 toggles and reproducibility checks passed. However,
+the preregistered primary estimand (architecture effect under Markov minus
+architecture effect under IID, near-boundary, MIS OFF) was structurally
+insensitive to temporal persistence: the matched architecture effect was
+`+2.4` cumulative gross CES in every diagnostic path, and the one-period
+effect was `+.1` for each of the three task types. With common stationary task
+marginals and no material state transition in that block, the expected
+moderation is zero. Therefore the 960-run campaign is **NO-GO as registered**;
+the registered MIS-ON secondary is not promoted after observing results. No
+main campaign was run. The diagnostic runner, preregistration hashes and
+machine-readable evidence are in
+[HLS Q1 preflight](experiments/HLS_Q1_PREFLIGHT.md) and
+`results/diagnostics/hls_q1_preflight/`. The laboratory remains **PARTIAL**;
+the 13 known repository integrity/provenance failures were not rerun or
+modified. Chronology: [HISTORY.md](HISTORY.md).

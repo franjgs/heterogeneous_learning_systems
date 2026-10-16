@@ -871,3 +871,42 @@ preflight and protocol registration; HOLD execution** pending frontier and
 equivalence acceptance, CE selection of a minimum meaningful CES difference
 or estimation-only objective, and a novelty review. No new policy or
 simulator generalization is currently required. Details: [campaign design](experiments/HLS_FIRST_SCIENTIFIC_CAMPAIGN_DESIGN.md).
+
+### 2026-10-16 — Q1 scientific campaign preflight
+
+**Event/recorded:** 2026-10-16 10:45 +02:00 (Europe/Madrid). **Authority:**
+CE authorization for preflight only; main campaign remained on HOLD. **Type:**
+preregistered instrument and identifiability diagnostic. The preflight protocol
+was registered before samples were generated (document SHA-256
+`7fcfb9a900e522356531d02ef1fa65bc619643e798c3373a7031b39bdc4572ce`; JSON
+SHA-256 `45cbdd4254ea6353d6ef3dc1a66b8f9c5b900b1ff2fc4a602b7fe00db81e804f`).
+
+Architecture matching, equal-marginal demand specification, IID/Markov
+persistence, exact feasibility frontiers, MIS-v2/no-teaching controls,
+resource accounting and equivalence controls passed. Demand diagnostics used
+200 paths per process; outcome checks used 12 independent paths per process,
+288 matched organization trajectories and four equivalence-control runs. The
+frontier controls produced both easy shared-feasible tasks, a near-boundary
+architecture success contrast, and initially infeasible but MIS-witness-
+reachable tasks.
+
+The preregistered primary interaction was structurally null in this design:
+with MIS OFF, matched P0 architecture effects were `+2.4` CES over 24 periods
+for every paired path; direct one-period checks gave `+.1` for each task type.
+IID and Markov have the same stationary task marginals, and the primary block
+has no material competence/state transition, so temporal ordering cannot
+change the expected mean architecture contrast. The seed-cluster bootstrap
+estimate was approximately zero (`−1.33×10⁻¹⁵`, 95% percentile interval
+`[−4.00×10⁻¹⁵, 4.44×10⁻¹⁶]`). This is a structural limitation of the
+registered estimand, not evidence against the simulator or a scientific
+discovery. MIS-ON remained secondary and was not promoted after observing
+results.
+
+**Decision:** **NO-GO** for the 960-run campaign as registered; require a
+CE-approved redesign and new registration before any campaign execution. The
+main campaign was not run. Focused regression tests passed (24), and two
+independent output-directory executions were byte-identical. The full suite
+was not rerun; the 13 previously documented integrity/provenance failures
+remain unresolved and untouched. HLS Laboratory remains **PARTIAL**. Evidence,
+runner, tests, results and hashes: [Q1 preflight](experiments/HLS_Q1_PREFLIGHT.md)
+and `results/diagnostics/hls_q1_preflight/`.
