@@ -347,3 +347,87 @@ organizational estimation/partial-information policies, P1/P2, latent-state
 environment generation, and stochastic production. The integrated historical
 3×2 simulator continues to provide those mechanisms only in its original
 geometry. HLS Laboratory remains **PARTIAL**.
+
+## 11. Phase 3A — N×K MIS-v2 learning-by-doing
+
+**Recorded:** 2026-10-16 15:40 +02:00 (Europe/Madrid). **Status:** implemented
+additively; no historical module, fixture, result, manifest or expected hash
+was changed. The statements above document the Phase 2 state and are
+superseded for the specific N×K MIS-v2 capability by this Phase 3A record.
+
+### Authoritative transition and dimensional mapping
+
+The transition reuses `discover_develop_v2.capability_after_exposure` and
+`eta_to_lambda`; the scalar scientific model was not copied or changed. For
+agent `i` and competence `k`, given competence `c[i,k]`, productive effort
+`e[i,k]`, and the existing one-unit gap-closure parameter `eta[i,k]`:
+
+```text
+lambda[i,k] = -ln(1 - eta[i,k])
+c_next[i,k] = 1 - (1 - c[i,k]) * exp(-lambda[i,k] * e[i,k])
+```
+
+`eta` remains strictly inside `(0,1)`; zero learning is represented by
+disabling MIS-v2, not by inventing `eta=0`. The transition is cellwise, has no
+cross-agent/skill transfer or stochastic term, is the identity at zero effort,
+and retains the original asymptotic competence saturation without clipping.
+Its N×K parameter profile is one eta per agent × competence cell, exactly the
+structure implied by legacy `LearningProfile.eta` (3×2). The legacy profile
+and transition modules remain unchanged.
+
+### Timing, information and runner contract
+
+`run_nk_production_sequence` keeps its default MIS-OFF path and
+`NKProductionRunResult` serialization unchanged. `individual_learning=True`
+requires `LearningProfileNK` of matching shape and returns an
+`NKLearningRunResult`. Each period uses current competence as the perfect-
+information P0 estimate, then computes additive outputs, functional success,
+gross CES and resource use from the pre-learning state. MIS-v2 is applied
+after those outcomes to the selected productive allocation; the resulting
+state is used by the next period. Learning does not consume extra effort and
+does not retroactively affect same-period production. The trace nests the
+Phase 2 production record and adds cellwise competence increments and eta.
+
+This is explicitly a perfect-information condition, not a general HLS
+assumption. Teaching, P1/P2, partial-information estimation, experience and
+performance ledgers, and demand generation remain unsupported in the N×K
+runner. MIS-OFF and MIS-ON on the same frozen sequence are a mechanism control,
+not evidence of comparative scientific superiority.
+
+### Validation and local engineering performance
+
+At the implementation check, 87 focused tests passed, including Phase 1
+geometry, Phase 2 production, dynamic/integrated regressions, legacy teaching
+and MIS-v2 tests, and new N×K transition/runner tests. Direct 3×2 transition
+outputs agree exactly with legacy `advance_team`; a one-period P0/MIS-ON run
+matches legacy action, production, success, CES, effort and competence update.
+MIS-OFF result equality and serialized output are tested against the Phase 2
+call contract. The full suite result and identities of the five pre-existing
+provenance failures are recorded in `HISTORY.md`; those failures are outside
+this change.
+
+Non-scientific local timings (Python 3.11, 20 periods, 100 episodes per size;
+3,000 standalone transition repetitions per size) used, for each agent, a
+small explicit catalogue containing zero effort plus one 0.25 effort vector
+per skill. Candidate counts are the resulting full Cartesian catalogs before
+feasibility filtering; they are not the canonical 3×2 64-action catalogue.
+Measurements were:
+
+| N×K | Enumerated catalog candidates | MIS transition / call (ms) | Episode / 20 periods (ms) | Traced peak memory (bytes) | Serialized trace (bytes) |
+|---|---:|---:|---:|---:|---:|
+| 1×1 | 2 | 0.003588 | 0.8209 | 27,512 | 14,424 |
+| 2×2 | 9 | 0.007593 | 1.6784 | 43,288 | 19,384 |
+| 3×2 | 27 | 0.005082 | 4.4684 | 65,568 | 22,932 |
+| 4×3 | 256 | 0.007717 | 49.7467 | 244,544 | 31,232 |
+
+These are local microbenchmarks, not portable performance guarantees. Episode
+time includes full action enumeration and P0 ranking. The 4×3 increase is
+consistent with the existing exhaustive catalog growth; no truncation or
+optimizer was introduced.
+
+**Supported after Phase 3A:** deterministic N×K production-only episodes
+under P0 with MIS-v2 explicitly ON or OFF, positive N/K, and fully enumerated
+catalogs within the declared candidate bound. K≠2 still needs explicit effort
+vectors; all runs use perfect information. Legacy 3×2 P0/P1/P2, teaching,
+estimation, and historical serialization remain on their original code path.
+HLS Laboratory remains **PARTIAL**.

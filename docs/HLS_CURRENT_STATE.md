@@ -47,6 +47,21 @@ remain unsupported; the full legacy 3×2 simulator remains operational. Phase
 full suite 1288 passed / 5 failed) are retained in `HISTORY.md`. The five
 known failures are unchanged repository provenance/integrity issues; no frozen
 expected hash or historical artifact was changed.
+
+**Current N×K status — 2026-10-16 15:40 +02:00 (Europe/Madrid):** Phase 3A
+adds MIS-v2 learning-by-doing to the N×K P0 episode runner. It reuses the
+unchanged scalar DISCOVER-v2 law, applies cell-specific eta values to the
+effort assigned in each period, and records output/reward from pre-learning
+competence before applying the transition for the next decision. Both MIS-OFF
+(Phase 2 contract) and MIS-ON are available. N×K episodes remain perfect
+information; teaching, estimation, P1/P2 and environment generation are not
+generalized. Validation: 87 focused tests passed; full suite 1303 passed and
+the same five historical provenance/integrity tests failed. Engineering timing
+and trace-memory measurements and the exact transition contract are in the
+[N×K geometry technical design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md).
+HLS Laboratory remains **PARTIAL**; this is a mechanism validation, not a
+scientific campaign.
+
 The ten-file minimum reproducible package is published on
 `feature/hls-laboratory-v1` at `37a011804f9ea013fc3a5436c00a72eb0b8280da`.
 The acceptance gate is therefore not closed. See the implementation record in
