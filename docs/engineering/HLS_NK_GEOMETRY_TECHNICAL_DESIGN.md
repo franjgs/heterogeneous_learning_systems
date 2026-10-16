@@ -433,3 +433,125 @@ catalogs within the declared candidate bound. K≠2 still needs explicit effort
 vectors; all runs use perfect information. Legacy 3×2 P0/P1/P2, teaching,
 estimation, and historical serialization remain on their original code path.
 HLS Laboratory remains **PARTIAL**.
+
+## 12. Phase 3B — N×K directed teaching
+
+**Recorded:** 2026-10-16 16:04 +02:00 (Europe/Madrid). **Status:** additive
+N×K teaching transition and explicit joint-action episode path implemented;
+P1/P2, teacher selection, estimation and campaigns remain on HOLD. Historical
+modules and frozen results were not edited.
+
+### Authoritative legacy teaching contract
+
+The source of truth is `run_integrated_sequence` in
+`src/hls/hls_lab_v1_integrated.py`. A `TeachingEvent` is directed
+`(instructor, learner, capability, effort)`, indices are zero-based, agents
+must differ, and event effort is finite and positive. The private efficacy
+tensor is indexed instructor × learner × capability, lies in `[0,1]`, and
+has a zero diagonal. `TeachingParameters.transfer_rate` lies in `(0,1]`.
+The gain equation is:
+
+```text
+g[j,k] = transfer_rate * effort * T[i,j,k] * (1 - c_after_MIS[j,k])
+c_after_teaching[j,k] = min(1, c_after_MIS[j,k] + g[j,k])
+```
+
+Only the learner's targeted cell changes; the teacher's competence is not
+depleted. Importantly, current teacher competence is **not a direct factor**
+in this historical equation. Instructor heterogeneity enters through the
+relation-specific `T[i,j,k]`; adding a competence multiplier would change the
+scientific model and was not done. Teaching can therefore increase learner
+competence even when the teacher's current value for that skill is low, if the
+configured relation efficacy is positive. This is a limitation of the
+existing model's interpretation, not a new assumption introduced by the N×K
+adapter.
+
+Each participant is charged `effort` individually and the collective charge
+is `2*effort`. The existing v1 contract permits the participants to retain
+other productive effort within their remaining individual caps. Production
+and reward use pre-transition competence; update order is production/outcome,
+MIS-v2, then teaching. Thus teaching uses the post-MIS learner competence and
+the two increments are sequentially composed, not added as independent
+increments. The production function and MIS-v2 law are unchanged.
+
+### N×K action, efficacy and runner contract
+
+`src/hls/hls_lab_nk_teaching.py` adds `TeachingActionNK` (stable teacher,
+learner and skill identifiers plus event effort), `TeachingEfficacyNK` with
+shape `N×N×K`, and scalar `TeachingParametersNK.transfer_rate`. Efficacy
+remains relation-specific and bounded `[0,1]`; diagonal entries must be zero,
+so `N=1` has zero valid directed teaching actions. The number of possible
+directed relations is `N(N−1)K`: 0, 4, 12 and 36 for 1×1, 2×2, 3×2 and 4×3.
+The shape-general transition updates only the learner/skill cell and preserves
+the equation above, including zero-efficacy and competence-one saturation.
+
+`JointActionNK` supplies a complete productive allocation and optional
+teaching action. When teaching is enabled, the caller must supply one complete
+action per period and the efficacy tensor; no policy selects a teacher,
+learner, skill, or whether to teach. A teaching event while the mechanism is
+disabled is rejected. The supplied production allocation must be a member of
+the declared feasible catalog; the runner never edits a P0 choice to make
+space. Joint feasibility enforces:
+
+```text
+sum(production) + 2*teaching_effort <= min(organization budget, task budget)
+agent production load + its teaching participation load <= individual limit
+```
+
+The episode runner reuses N×K production, evaluation and MIS-v2 modules.
+Current-period output/success/CES use competence before updates; then the
+optional MIS-v2 transition runs, followed by the optional teaching transition.
+The trace separately stores productive effort, teaching resource, total
+resource, individual loads, unused capacity, competence after MIS, MIS cell
+increments, teaching cell increments and resolved private efficacy. The N×K
+runner remains perfect-information; no estimation or observation process is
+added. The previous default MIS-OFF path and MIS-only return/serialization
+contracts remain unchanged when no explicit joint actions are supplied.
+
+### Verification and local engineering timing
+
+Focused verification: 95 tests passed across the new teaching tests plus Phase
+1 geometry, Phase 2 production, Phase 3A MIS and historical 3×2 integrated
+regressions. A forced 3×2 joint action was executed through both the generic
+runner and historical integrated simulator; production output, functional
+success, CES, post-MIS state, final competence, teaching effort and total
+resources agreed. Existing historical tests continue to pin the 64-action
+production catalog, 508-action integrated catalog and P0/P1/P2/serialized
+trace behavior. The test also confirms that teacher competence is not part of
+the legacy teaching equation.
+
+Non-scientific local measurements used a 20-period explicit-action episode,
+zero productive allocation for timing the episode runner, and per-agent
+catalogs containing zero plus one 0.5 effort vector per skill. Catalog count
+is `(K+1)^N` before feasibility filtering. Transition time is a 10,000-call
+mean where a valid directed relation exists; 1×1 has no transition/action.
+Enumeration and episode time are single local observations; serialized JSON
+bytes report retained trace scale, while `tracemalloc` peak is a single-run
+Python allocation observation. Environment: Python 3.11.9, macOS arm64.
+
+| N×K | Valid directed relations | Candidates | Enumeration ms | Teaching transition ms/call | 20-period episode ms | Trace peak bytes | JSON bytes |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 1×1 | 0 | 2 | 0.015 | N/A | 0.585 | 54,240 | 16,754 |
+| 2×2 | 4 | 9 | 0.030 | 0.003703 | 1.075 | 133,560 | 21,586 |
+| 3×2 | 12 | 27 | 0.096 | 0.004979 | 2.425 | 147,608 | 23,251 |
+| 4×3 | 36 | 256 | 2.943 | 0.007208 | 57.106 | 413,824 | 27,433 |
+
+These are local implementation checks, not performance guarantees. Episode
+time includes repeated feasible-catalog enumeration. Exact action generation
+remains exponential in the configured per-agent choices and guarded by
+`max_candidates`; no truncation/optimizer was introduced.
+
+The complete repository suite after Phase 3B completed with **1320 passed and
+5 failed in 479.80 s**. The failures are the known historical provenance /
+integrity cases enumerated in `docs/HISTORY.md`; no new functional regression
+was observed. `git diff --check` was also run after documentation updates.
+
+**Supported after Phase 3B:** explicit-action N×K production episodes with
+MIS-v2 OFF/ON and teaching OFF/ON in all four combinations; directed relation
+tensor and one event maximum per period; positive N/K and complete catalogs
+within `max_candidates`; perfect-information P0 remains only the policy for
+non-explicit episodes, while explicit-action execution follows supplied
+actions. **Still unsupported:** generalized P1/P2, automatic teaching action
+selection, competence estimation/partial information, environment emission,
+multi-recipient lessons, simultaneous lessons, and mechanisms beyond the
+historical equations. HLS Laboratory remains **PARTIAL**.

@@ -64,6 +64,22 @@ and trace-memory measurements and the exact transition contract are in the
 HLS Laboratory remains **PARTIAL**; this is a mechanism validation, not a
 scientific campaign.
 
+**Current N×K status — 2026-10-16 16:22 +02:00 (Europe/Madrid):** Phase 3B
+adds a dimension-independent directed teaching transition and explicit joint
+actions to the N×K episode runner. Teaching efficacy is an `N×N×K` relation
+tensor; teaching charges both participants and competes with production for
+the same collective budget. The explicit action path supports MIS OFF/ON ×
+teaching OFF/ON, preserving production → MIS-v2 → teaching order. It does not
+select teaching actions automatically and does not generalize P1/P2 or
+competence estimation. Historical 3×2 transition and episode checks match;
+the old paths remain untouched. Focused validation: 95 passed. Full suite:
+1320 passed, 5 failed in 479.80s; all five match the documented provenance
+baseline (foundation inventory count, Campaign 2 closure/source hashes,
+Campaign 3 frozen source hash, and strategy-gate source hash); no functional
+regressions appeared. Performance and equation details are recorded in the
+[N×K technical design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md).
+HLS Laboratory remains **PARTIAL**; no campaign was run.
+
 The ten-file minimum reproducible package is published on
 `feature/hls-laboratory-v1` at `37a011804f9ea013fc3a5436c00a72eb0b8280da`.
 The acceptance gate is therefore not closed. See the implementation record in

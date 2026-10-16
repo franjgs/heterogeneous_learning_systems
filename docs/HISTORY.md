@@ -15,6 +15,7 @@ undated where the source material does not establish a defensible event date.
 
 | Event / record | Event date and confidence | Record date and evidence | Scope note |
 | --- | --- | --- | --- |
+| N×K directed teaching Phase 3B | **2026-10-16 16:22 +02:00, verified final validation time.** | Recorded 2026-10-16 16:22 +02:00 (Europe/Madrid), based on the system clock and final test output; implementation commit `551a661`. | Added an N×N×K relation-efficacy adapter and explicit joint-action runner path. Preserves the legacy equation, two-party effort charge, and production → MIS-v2 → teaching ordering; no teaching-selection policy is included. Historical 3×2 episode outputs and transition matched. Focused validation 95 passed; full suite 1320 passed, 5 failed in 479.80s, the same five provenance/integrity failures as the documented baseline. No historical artifacts or hashes changed. HLS remains PARTIAL. |
 | N×K MIS-v2 learning-by-doing Phase 3A | **2026-10-16 15:50 +02:00, verified final validation time.** | Recorded 2026-10-16 15:50 +02:00 (Europe/Madrid); commits `c9ccbca`, `5b8e9f7`, paired-control test `4f7a310`, and this scoped documentation update. | Added a dimension-generic adapter over the unchanged DISCOVER-v2 scalar transition and an optional P0 learning episode mode. MIS is applied after production/reward and affects the next period; MIS-OFF retains Phase 2 result and serialization. N×K P1/P2, teaching, estimation and environment emission remain unsupported. 87 focused tests passed. Full suite: 1303 passed, 5 failed; all five match the pre-existing provenance/integrity baseline. No historical artifacts or hashes changed; HLS remains PARTIAL. |
 | N×K productive execution Phase 2: additive production and P0 episodes | **2026-10-16 14:55 +02:00, verified implementation/final validation time.** | Recorded 2026-10-16 14:56 +02:00 (Europe/Madrid); implementation commits `7e29376` and `ef6ca3c`; this record contains acceptance tests/docs. | Added dimension-generic additive production, the exact legacy P0 ranking, K-dimensional CES weights and deterministic production-only sequence runner, using Phase 1 geometry. N×K learning, teaching, P1/P2, estimation and environment generation remain unsupported. Focused tests 99/99; full suite 1288 passed/5 failed, exactly the five known provenance/integrity failures. Direct 3×2 decisions and metrics match legacy P0; historical 64/508 catalog and trace-hash assertions remain passing. No frozen artifacts or expected hashes changed. Laboratory remains PARTIAL. |
 | N×K geometry Phase 1 implementation and validation | **2026-10-16 14:22 +02:00, verified implementation/validation completion time.** | Recorded 2026-10-16 14:22 +02:00 (Europe/Madrid); code commit `671df10583f02e9bc323360e2e821f695926ceb8`; scoped tests and documentation changes follow in the task's second commit. | Added N×K organization/state/problem contracts and guarded Cartesian productive-allocation enumeration in a separate module. Pinned pre-change 3×2 action and serialization traces. Focused tests 50/50; full suite 1274 passed/5 failed, exactly the five previously documented provenance/integrity failures. Legacy source modules and frozen artifacts/hashes remain unchanged. HLS Laboratory remains PARTIAL. |
@@ -1076,3 +1077,40 @@ bounded agent/skill/action-geometry generalization with an exact 3×2
 compatibility gate; resolution of existing provenance failures remains a
 validation prerequisite. No code or campaign was executed. HLS Laboratory
 remains **PARTIAL** and historical registrations/results are unchanged.
+
+### 2026-10-16 — N×K directed teaching Phase 3B
+
+**Implementation event:** 2026-10-16; exact start time not recorded.
+**Final validation/record:** 2026-10-16 16:22 +02:00 (Europe/Madrid).
+**Authority:** CE authorization for N×K teaching transitions, explicit
+teaching actions, and integration with productive episodes only. **Type:**
+additive engineering implementation; no campaign was run.
+
+The N×K adapter preserves the legacy directed teaching formula
+`gain = transfer_rate × teaching_effort × T[teacher, learner, skill] ×
+(1 − learner_competence_after_MIS)`, saturating the learner's targeted cell
+at one. The historical formula does not directly use teacher competence;
+relation-specific efficacy is the teacher-indexed representation. Teacher
+and learner each consume event effort, so collective teaching consumption is
+`2 × effort`. The explicit runner composes production/outcome, MIS-v2, then
+teaching. Four ON/OFF mechanism combinations are expressible, while no
+automatic teaching-selection policy is added. The default Phase 2 and Phase
+3A paths and all legacy source modules remain unchanged.
+
+The focused suite passed 95 tests, including tensor/transition boundaries,
+resource constraints, deterministic replay, zero-efficacy resource charging,
+MIS/teaching isolation, and direct 3×2 comparison against the historical
+integrated runner. `PYTHONPATH=.:src pytest -q` completed in 479.80 seconds:
+1320 passed and these five previously documented provenance/integrity tests
+failed, with no new functional failures:
+
+- `tests/foundations/test_result_manifests.py::test_every_foundation_result_has_consistent_manifest`
+- `tests/test_campaign2_state_coverage_audit.py::test_frozen_inputs_and_completed_artifacts`
+- `tests/test_campaign2_theory.py::test_preexperiment_manifest_and_contamination_boundary`
+- `tests/test_campaign3_meta_voc_confirmatory.py::test_pre_execution_manifest_and_raw_integrity_when_present`
+- `tests/test_strategy_discrimination_gate.py::test_source_hashes_and_raw_output_hashes`
+
+No historical result, manifest, fixture, or expected hash was modified. Local
+microbenchmarks are engineering diagnostics only. N×K generalized P1/P2,
+teaching selection, competence estimation, and environment emission remain
+unsupported; the HLS Laboratory milestone remains **PARTIAL**.
