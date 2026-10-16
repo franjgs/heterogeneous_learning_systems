@@ -842,3 +842,32 @@ campaign was performed. The full suite was not rerun; the previously reported
 issue. HLS Laboratory v1 remains **PARTIAL**. See
 [the assessment](experiments/HLS_LABORATORY_VALIDITY_ASSESSMENT.md) and its
 reproducible artifacts in `results/diagnostics/hls_laboratory_validity_assessment/`.
+
+### 2026-10-16 — first scientific campaign design (execution on hold)
+
+**Event/recorded:** 2026-10-16 10:29 +02:00 (Europe/Madrid). **Authority:**
+PI/CE request to design, but not execute, the first scientifically
+interpretable HLS campaign. **Type:** protocol design only; no simulation,
+code or historical result changed.
+
+The recommended primary question is whether redistributing a fixed aggregate
+three-agent/two-skill competence endowment changes collective gross
+performance under IID versus persistent demand with the same task marginals,
+and whether the contrast changes when the same MIS-v2 learning mechanism is
+enabled. The proposed experiment holds P0, information, action catalogue,
+resources and horizon common; teaching is excluded to avoid mixing the
+architecture question with a mechanism already examined in Campaigns 1–2.
+The proposal uses frontier-based difficulty strata, matched demand paths,
+40 independent demand trajectories per demand process, and an explicit
+equivalence control. It estimates 964 organization-trajectories if all
+preflight strata pass; it is not a power-certified sample.
+
+Q1 was selected over Q2 (substantial overlap with G2/G3-H and no existing
+matched developmental-assignment policy contrast) and Q3 (directly overlaps
+Campaigns 1–2 and is one mechanism rather than the general architecture
+question). Novelty for Q1 remains unverified because G1/G2 and workforce
+allocation literature cover adjacent territory. Recommendation is **GO for
+preflight and protocol registration; HOLD execution** pending frontier and
+equivalence acceptance, CE selection of a minimum meaningful CES difference
+or estimation-only objective, and a novelty review. No new policy or
+simulator generalization is currently required. Details: [campaign design](experiments/HLS_FIRST_SCIENTIFIC_CAMPAIGN_DESIGN.md).

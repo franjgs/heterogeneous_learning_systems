@@ -1212,3 +1212,16 @@ equal use. The laboratory still lacks an agreed comparison estimand and
 external calibration for broad architecture or policy superiority claims.
 No campaign was run; the integrated laboratory remains **PARTIAL** and new
 scientific campaigns remain on hold pending the outcome-contract decision.
+
+### First scientific campaign design — 16 October 2026
+
+Recorded at **2026-10-16 10:29 +02:00** (Europe/Madrid). The proposed first
+scientific question is the interaction between matched aggregate competence
+distribution and temporal demand structure, with the existing P0 policy held
+fixed and MIS-v2 as a matched ON/OFF mechanism block. The design reuses the
+three-agent/two-skill model, C5 IID/Markov demand and frontier-enumerated
+scenarios; no simulator changes or campaign execution are authorized. The
+proposal is **GO for preflight/registration, HOLD for execution** pending
+preflight, an approved minimum meaningful CES effect (or estimation-only
+decision), and a novelty check. See
+[HLS first scientific campaign design](experiments/HLS_FIRST_SCIENTIFIC_CAMPAIGN_DESIGN.md).
