@@ -104,6 +104,22 @@ campaign was run. Phase 3C focused validation passed 93 tests; the final full
 suite passed 1,337 in 475.44 seconds and retained the same five documented historical provenance /
 integrity failures. HLS Laboratory remains **PARTIAL**.
 
+**Current N×K status — 2026-10-16 19:06 +02:00 (Europe/Madrid):** Phase 3D
+adds explicit perfect- and imperfect-information execution modes. Imperfect
+mode reuses the historical finite-grid competence posterior, per-cell noisy
+production observations, MIS-v2 posterior prediction, and noisy formative
+efficacy observation; actual competence remains the production/transition
+state, estimates drive only policy views, and observation/latent diagnostics
+are not exposed to policies. The established runner remains unchanged when
+the new `information_mode` argument is omitted. Focused validation covered
+N×K dimensions and matched legacy 3×2 trajectories for P1/P2, MIS, teaching,
+both observation streams, posterior updates and efficacy memory; 86 focused /
+regression tests passed. The full suite had 1,357 passed and the same five
+documented provenance/integrity failures, with no new functional regression.
+Measurements and failure names are in the [N×K technical design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md)
+and dated [history](HISTORY.md). No campaign was run; HLS Laboratory remains
+**PARTIAL**.
+
 The ten-file minimum reproducible package is published on
 `feature/hls-laboratory-v1` at `37a011804f9ea013fc3a5436c00a72eb0b8280da`.
 The acceptance gate is therefore not closed. See the implementation record in

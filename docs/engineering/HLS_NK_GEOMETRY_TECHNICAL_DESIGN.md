@@ -434,6 +434,121 @@ vectors; all runs use perfect information. Legacy 3×2 P0/P1/P2, teaching,
 estimation, and historical serialization remain on their original code path.
 HLS Laboratory remains **PARTIAL**.
 
+## Phase 3D — competence estimation and imperfect observation (current addendum)
+
+**Recorded:** 2026-10-16 19:06 +02:00 (Europe/Madrid). This is an additive
+N×K execution mode; historical 3×2 source, fixtures, manifests, hashes and
+default runner serialization are unchanged.
+
+### Reused estimator and observation rules
+
+`src/hls/hls_lab_nk_estimation.py` wraps the existing `SkillPosterior`,
+`update_skill_posterior`, and `predict_skill_posterior_after_mis` from
+`hls_lab_dynamic.py`. It changes only the container from the fixed 3×2 shape
+to N×K. For each cell the prior is the historical 101-point grid projection
+of the three-point distribution on `{0, m, 1}`; its declared variance is
+`min(v_prior, m(1−m))`, with the same `1e-12` support floor. Production
+observations use `o_ik = e_ik c_ik + Normal(0, σ_prod²)` and the same keyed
+normal innovation `(seed, period, component=0, agent-index, skill-index)`.
+The scalar likelihood is proportional to
+`prior(c) exp(−(o−e c)²/(2 σ_prod²))`; zero effort leaves the posterior
+unchanged, and zero noise uses the existing clipped `o/e` identification
+rule for positive effort.
+
+After production assimilation, each posterior support value is propagated
+through the existing scalar MIS-v2 capability law using the cell's eta when
+MIS is enabled. The private competence transition is separately calculated
+from actual state. Actual MIS increments are never copied into the estimate.
+This preserves the historical order: production/evaluation and noisy
+individual observations → actual MIS-v2 plus posterior MIS prediction →
+actual directed teaching → noisy formative efficacy observation and running
+efficacy-memory update → competence-posterior teaching prediction when
+organizational learning is enabled.
+
+The teaching observation remains the legacy direct gain plus keyed normal
+noise. Its normalized signal uses the organization’s estimated post-MIS
+learner competence, the legacy denominator `r e (1−ĉ)`, and the efficacy
+prior when that denominator is at most `1e-12`. The running-mean efficacy
+memory is not conflated with the competence posterior. When
+`organizational_learning=False`, actual teaching still occurs but neither the
+efficacy memory nor the estimated competence posterior is advanced for that
+teaching event, matching the historical toggle.
+
+### Information modes and trace boundary
+
+The established Phase 1–3C runner path remains the default
+(`information_mode=None`) and its previous record/serialization contracts
+remain unchanged. Explicit `information_mode="perfect"` uses actual
+competence as the policy estimate at every decision and after MIS/teaching;
+it does not construct or update a competence posterior. Explicit
+`information_mode="imperfect"` initializes the N×K grid posterior around
+`OrganizationConfigNK.competence_estimated_initial` (or the existing default
+estimate), then uses its means for policy decisions. Both modes preserve
+production from actual competence. Imperfect mode never puts actual
+competence, observation residuals, true teaching efficacy, or realized
+competence increments into `NKDecisionView`; the additional diagnostic truth
+and observation fields exist only in the returned episode trace.
+
+Observations and traces are reproducible under `information_seed`, using the
+legacy coordinate-keyed streams. Zero observation noise is not synonymous
+with perfect information: it only identifies a competence cell after
+positive effort and the historical likelihood update. Perfect information
+is a separate reference mode. `P0`, `P1`, and `P2` use their existing rules;
+P0 remains production-only, and P1/P2 keep the independent formative efficacy
+memory.
+
+### Verification status and limits
+
+Focused Phase 3D tests cover 1×1, 2×2, 3×2, 4×3, replay, imperfect initial
+estimates, zero-effort/nonzero-prior-uncertainty, authorized decision views,
+production from actual state, and matched 3×2 trajectories against the
+authoritative legacy runner for noisy production observations, MIS-v2,
+directed teaching, P1/P2 choices, formative observation noise, estimator
+updates, and efficacy memory. The final focused/regression selection passed
+**86 tests**. Full suite: **1,357 passed, 5 failed** in 483.40 seconds. The five
+failures exactly match the established worktree provenance baseline:
+foundation result inventory count; Campaign 2 closure document digest;
+Campaign 2 theory source digest; Campaign 3 frozen
+`finite_problem_belief.py` digest; and strategy-discrimination source digest.
+No new functional regression appeared. No campaign was run.
+
+This phase still uses the existing perfect-information state for the old
+default runner. Imperfect mode is opt-in and operates on frozen caller-supplied
+problem sequences. It does not generalize environmental generation, add an
+estimator, change P0/P1/P2, or infer unknown competence-transition parameters.
+Exact enumeration cost remains dominated by the existing action catalog;
+posterior storage is O(NK G) for G grid points. HLS Laboratory remains
+**PARTIAL**.
+
+Engineering microbenchmarks ran on Python 3.11.9 / macOS 27.0.1 / arm64 with
+three-period, P0, production-only imperfect-information episodes, 101
+posterior support points, production observation SD .02, and complete action
+catalogues. K=2 uses the legacy catalog; other K uses zero plus one unit
+effort vector per skill. Observation generation and posterior-update times
+are per call averaged over 100 and 50 calls; P0 selection is per call averaged
+over 100 selections from a fixed view. Episode, memory and trace measurements
+are local diagnostics, not performance guarantees.
+
+| N×K | Candidates | Observation ms | Estimator update ms | P0 select ms | Episode ms | Peak traced bytes | Trace bytes |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 1×1 | 2 | 0.0087 | 0.0826 | 0.0113 | 3.349 | 32,072 | 6,456 |
+| 2×2 | 16 | 0.0327 | 0.0733 | 0.1538 | 10.196 | 52,120 | 16,820 |
+| 3×2 | 64 | 0.0493 | 0.1027 | 0.4187 | 29.599 | 166,040 | 23,850 |
+| 4×3 | 256 | 0.0843 | 0.1391 | 1.9170 | 106.304 | 478,960 | 42,393 |
+
+Policy-only selection timings were also measured separately with teaching
+enabled, default teaching effort 0.25, all off-diagonal efficacies 0.5,
+competence .4, requirements .8, per-agent limit 1, collective/problem budget
+N, and complete feasible joint catalogues. Each timing is the mean of 10
+`choose` calls on one fixed view. N=1 has no valid P1/P2 relation.
+
+| N×K | Feasible joint actions | P0 select ms | P1 select ms | P2 select ms |
+|---|---:|---:|---:|---:|
+| 1×1 | 2 | 0.0147 | N/A | N/A |
+| 2×2 | 20 | 0.1021 | 0.0080 | 0.1466 |
+| 3×2 | 112 | 0.7789 | 0.0894 | 0.8202 |
+| 4×3 | 832 | 3.4573 | 0.1624 | 2.9663 |
+
 ## 12. Phase 3B — N×K directed teaching
 
 **Recorded:** 2026-10-16 16:04 +02:00 (Europe/Madrid). **Status:** additive
