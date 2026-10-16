@@ -26,26 +26,27 @@ emitter; problem trajectories are frozen before policy evaluation. Two
 authorized provenance validators were corrected: B2.3 now verifies the
 protocol blob at the run's recorded Git revision, and Campaign 2 preregistration
 checks source/artifact scope against its immutable freeze snapshot. The latest
-full suite reports 1274 passed and 5 failed (2026-10-16); those remaining
+full suite reports 1288 passed and 5 failed (2026-10-16); those remaining
 failures concern the foundation inventory/B13 manifest, unavailable
 `finite_problem_belief.py` source evidence, and Campaign 2 closure-document
 hashes. Provenance is not fully restored. See the
 [provenance diagnosis](engineering/HLS_PROVENANCE_FAILURE_DIAGNOSIS.md) and
 the dated [history entry](HISTORY.md).
-An additive Phase 1 N×K geometry is now implemented: validated organization
-configuration/state and K-dimensional problem requirements support arbitrary
-positive N/K, with exact finite productive-allocation enumeration from
-declared effort choices. The default 3×2 catalog and serialized P0/P1/P2
-reference traces are pinned against pre-change hashes. This does **not** mean
-end-to-end N×K execution is supported: policies, MIS-v2, teaching, estimators,
-environment emission and integrated episode execution remain 3×2; the N×K
-types are not accepted by those legacy APIs. See the [N×K technical design and Phase 1 record](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md).
-The N×K API is isolated in `src/hls/hls_lab_nk_geometry.py` so the frozen
-3×2 source modules remain byte-identical to the baseline. Validation on
-2026-10-16: 50 focused laboratory tests passed; full suite 1274 passed and
-the same five previously documented provenance/integrity tests failed. The
-failure identities and final artifact hashes are recorded in `HISTORY.md`;
-no frozen expected hash was changed.
+As of **2026-10-16 14:56 +02:00** (Europe/Madrid), the additive N×K path
+supports deterministic production-only episodes with dimension-independent
+P0 under frozen competencies and perfect information. It reuses Phase 1's
+validated geometry/catalogue, supports K-dimensional requirements and CES
+weights, and records production, functional outcomes and resource use without
+modifying the legacy simulator. Direct 3×2 comparisons match legacy P0
+decisions and episode metrics; the existing 64-production / 508-integrated
+catalogue and serialized P0/P1/P2 hash regressions remain covered. See the
+[N×K technical design and Phase 1–2 record](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md).
+N×K MIS-v2, learning, teaching, estimation, P1/P2 and environment emission
+remain unsupported; the full legacy 3×2 simulator remains operational. Phase
+1's 50-test validation and current Phase 2 validation (99 focused passes;
+full suite 1288 passed / 5 failed) are retained in `HISTORY.md`. The five
+known failures are unchanged repository provenance/integrity issues; no frozen
+expected hash or historical artifact was changed.
 The ten-file minimum reproducible package is published on
 `feature/hls-laboratory-v1` at `37a011804f9ea013fc3a5436c00a72eb0b8280da`.
 The acceptance gate is therefore not closed. See the implementation record in

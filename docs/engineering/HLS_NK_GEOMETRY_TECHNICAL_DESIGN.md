@@ -265,7 +265,85 @@ and for arbitrary K when an explicit effort catalog is supplied. This is not
 a claim of end-to-end N×K simulation. No arbitrary maximum N or K is imposed;
 the explicit candidate guard lets callers fail before exponential enumeration.
 
-**Next authorized increment:** none in this task. Learning transition and
-policy generalization remain on hold pending separate authorization; this
-implementation does not itself close `HLS-LAB-V1-INTEGRATED`, which remains
-**PARTIAL**.
+**Phase 1 status at that record:** N×K episode execution was unsupported.
+The later Phase 2 authorization and implementation are recorded below.
+
+## 10. Phase 2 — production-only execution and dimension-independent P0
+
+**Implementation/final validation:** 2026-10-16, recorded at 14:55 +02:00
+(Europe/Madrid). **Scope:** frozen-competence N×K execution on an explicitly
+supplied problem sequence, with perfect-information P0. MIS-v2, learning,
+teaching, P1/P2, competence estimation and environment generation remain
+unsupported for N×K.
+
+Implemented additively in `src/hls/hls_lab_nk_production.py` and
+`src/hls/hls_lab_nk_execution.py`; Phase 1
+`OrganizationConfigNK`, `OrganizationStateNK`, `ProblemSpecNK`, validation
+and enumeration remain the common geometry contracts. `ProblemSpecNK` now
+also carries K normalized CES weights (uniform weights by default, preserving
+the legacy 3×2 default). Stable catalog IDs are the indices in the full
+unfiltered declared catalogue, including when a problem budget filters
+candidates.
+
+- Production is exactly additive: `y[k] = Σ_i allocation[i][k] ×
+  competence[i][k]`. No synergy, stochasticity or resource conversion was
+  added.
+- `P0ProductionOnlyNK` uses the legacy lexicographic score
+  `(success, −normalized_deficit, margin, −effort)` and first-in-catalog tie
+  resolution. It does not rank by CES. In this Phase 2 path the estimate is
+  explicitly set equal to the fixed real competence matrix, matching the
+  legacy perfect-information control; configured alternative estimates are
+  not consulted.
+- The runner consumes a pre-generated ordered tuple of `ProblemSpecNK`; it
+  makes no environment draws. Competencies and estimates stay fixed, and no
+  learning/teaching/observation updates occur.
+- Every period records gross CES, functional result, outputs, chosen
+  allocation and stable action ID, per-agent effort, effective collective
+  budget `min(organization budget, problem budget)`, unused collective
+  capacity, limits, and equal before/after competence matrices. No net utility
+  is formed.
+- CES is the dimension-generic DISCOVER-v0 formula
+  `(Σ_k weight[k] × output[k]^0.5)^2`; tests establish exact equality with the
+  legacy two-skill function on representative values.
+- The stable JSON serializer supports byte-identical replay for the same
+  configuration and sequence. Legacy 3×2 serializer and source modules were
+  not modified.
+
+### Phase 2 compatibility and tests
+
+The N×K runner was directly compared with legacy P0 on matched 3×2 states,
+budgets and problems: selected catalog action, additive output, functional
+success, normalized deficit, margin, CES, and productive effort matched
+exactly. The pre-existing integrated regression continues to assert the
+historical 64-production-action catalogue, 508-action integrated catalogue,
+P0/P1/P2 decisions and serialized trace SHA-256 values. Focused laboratory
+and CE-24/25 regressions passed **99 tests**; a broader run including DISCOVER
+and RQ0 regressions passed **143 tests** before the final source-module
+separation. After that separation, the focused suite passed **99 tests** and
+the full suite passed 1,288 with the same five known provenance failures; see
+`HISTORY.md` for their identities.
+
+### Enumeration performance observation
+
+On Python 3.11.9, macOS 27.0.1 arm64, one local non-scientific engineering
+measurement used 1,000 timing repetitions per geometry and a separate
+`tracemalloc` peak-allocation pass. The action catalogs were 2, 16, 64 and
+256 candidates respectively. Average enumeration / P0 scoring time per run
+was approximately 0.0054/0.0069 ms (1×1), 0.0509/0.0920 ms (2×2),
+0.2011/0.2334 ms (3×2), and 1.0144/1.1329 ms (4×3); peak traced temporary
+allocation was 2,344 / 6,312 / 21,640 / 89,672 bytes. These are local
+implementation timings, not portable performance claims. Exhaustive work
+remains O(NK × ∏M_i) for `M_i` configured per-agent effort choices; explicit
+`max_candidates` rejects oversized catalogs before enumeration without
+truncation.
+
+**Supported now:** production-only N×K episodes and P0 for every positive N/K
+whose complete declared action catalog fits `max_candidates`; K≠2 requires
+explicit effort vectors per agent. The default K=2 choices and 3×2 catalog
+ordering remain the Phase 1 DISCOVER contract.
+
+**Still unsupported:** N×K MIS-v2 or any competence changes, teaching,
+organizational estimation/partial-information policies, P1/P2, latent-state
+environment generation, and stochastic production. The integrated historical
+3×2 simulator continues to provide those mechanisms only in its original
+geometry. HLS Laboratory remains **PARTIAL**.

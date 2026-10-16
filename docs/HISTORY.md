@@ -15,6 +15,7 @@ undated where the source material does not establish a defensible event date.
 
 | Event / record | Event date and confidence | Record date and evidence | Scope note |
 | --- | --- | --- | --- |
+| N×K productive execution Phase 2: additive production and P0 episodes | **2026-10-16 14:55 +02:00, verified implementation/final validation time.** | Recorded 2026-10-16 14:56 +02:00 (Europe/Madrid); implementation commits `7e29376` and `ef6ca3c`; this record contains acceptance tests/docs. | Added dimension-generic additive production, the exact legacy P0 ranking, K-dimensional CES weights and deterministic production-only sequence runner, using Phase 1 geometry. N×K learning, teaching, P1/P2, estimation and environment generation remain unsupported. Focused tests 99/99; full suite 1288 passed/5 failed, exactly the five known provenance/integrity failures. Direct 3×2 decisions and metrics match legacy P0; historical 64/508 catalog and trace-hash assertions remain passing. No frozen artifacts or expected hashes changed. Laboratory remains PARTIAL. |
 | N×K geometry Phase 1 implementation and validation | **2026-10-16 14:22 +02:00, verified implementation/validation completion time.** | Recorded 2026-10-16 14:22 +02:00 (Europe/Madrid); code commit `671df10583f02e9bc323360e2e821f695926ceb8`; scoped tests and documentation changes follow in the task's second commit. | Added N×K organization/state/problem contracts and guarded Cartesian productive-allocation enumeration in a separate module. Pinned pre-change 3×2 action and serialization traces. Focused tests 50/50; full suite 1274 passed/5 failed, exactly the five previously documented provenance/integrity failures. Legacy source modules and frozen artifacts/hashes remain unchanged. HLS Laboratory remains PARTIAL. |
 | B2.3 and Campaign 2 preregistration provenance-validator corrections | **2026-10-16 13:50 +02:00, verified correction/validation completion time.** | Recorded 2026-10-16 13:50 +02:00 (Europe/Madrid); commits `80a01b6936fed4cfebe03478f9bfb5222dce2238` and `5e60e283bfff17d4448b9732c6a866c95c5c616e`. | B2.3 protocol SHA is now resolved at the run header's `git_commit`, with fail-closed handling for missing revision/blob/digest. Preregistration temporal validation uses frozen commit `9cfb6891e73536a63694041711de56cbd147eed` and its immutable results-tree inventory; later Campaign 2 artifacts no longer contaminate the freeze-time audit. The execution preflight also authenticates preregistered source bytes at that commit and checks current manifest files against their frozen copies. Full suite: 1253 passed, 5 failed; remaining gaps (foundation inventory/B13 manifest, frozen `finite_problem_belief.py` source, Campaign 2 closure document hashes) remain unmodified. No historical output, manifest, expected hash, or campaign configuration changed. Laboratory remains PARTIAL. |
 | Provenance diagnosis and N×K geometry technical design | **2026-10-16 11:26 +02:00, verified audit/design start.** | Recorded 2026-10-16 11:37 +02:00 (Europe/Madrid); [provenance diagnosis](engineering/HLS_PROVENANCE_FAILURE_DIAGNOSIS.md), [N×K design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md); baseline `4940d4b22d7ea67e49b0f55f9e8afac37c4850da`. | Full suite reproduced 1237 passed/13 failed. Identified six root-cause families, including B2.3 commit-insensitive validation, missing frozen source/B13 provenance, later campaign outputs rejected by a freeze-time contamination test, and closure-document hash gaps. Designed an additive N×K path with exact 3×2 preservation; no code, manifests, results, hashes, or campaigns changed. Laboratory remains PARTIAL. |
@@ -86,6 +87,54 @@ original file-level design suggestion and avoids touching historical evidence.
 Code commit: `671df10583f02e9bc323360e2e821f695926ceb8`. The follow-up test and
 documentation commit records the final published state. No campaign ran;
 `HLS-LAB-V1-INTEGRATED` remains **PARTIAL**.
+
+### 2026-10-16 — N×K production-only execution Phase 2 (partial)
+
+**Event and final validation completed:** 2026-10-16 14:55 +02:00. **Recorded:**
+2026-10-16 14:56 +02:00 (Europe/Madrid). **Authority:** CE authorization for
+N×K production-only execution and dimension-independent P0; learning, teaching,
+new policies and scientific campaigns remain held. **Type:** additive
+engineering implementation and regression validation.
+
+Added `src/hls/hls_lab_nk_production.py` for the dimension-generic additive
+production equation, v1 functional success/deficit/margin observer, generalized
+DISCOVER-v0 CES, and P0's exact lexicographic objective. Added
+`src/hls/hls_lab_nk_execution.py` for deterministic production-only episodes
+over an already generated ordered problem sequence. Extended
+`ProblemSpecNK` only to carry normalized K-dimensional CES weights. The runner
+sets the organizational estimate equal to true competence as an explicit
+perfect-information control, freezes both matrices, and records effort limits,
+effective/shared budgets, consumed effort and unused capacity separately.
+No net utility, environmental randomness, MIS-v2, teaching, estimator update,
+P1 or P2 was added.
+
+The 3×2 path was compared directly with legacy P0 for matched states, action
+budgets and problems: selected action ID, output vector, functional result,
+gross CES and productive effort matched exactly. Existing regression checks
+still pin the 64-action production catalogue, 508-action integrated catalogue,
+and byte-stable legacy P0/P1/P2 serialized traces. The focused laboratory and
+historical regression set passed **99 tests**. The full command
+`PYTHONPATH=src:. pytest -q` completed with **1288 passed and 5 failed**; the
+failures are the same known historical integrity/provenance cases:
+`test_every_foundation_result_has_consistent_manifest`,
+`test_frozen_inputs_and_completed_artifacts`,
+`test_preexperiment_manifest_and_contamination_boundary`,
+`test_pre_execution_manifest_and_raw_integrity_when_present`, and
+`test_source_hashes_and_raw_output_hashes`. No historical source, result,
+manifest, or expected hash was edited. `git diff --check` passed.
+
+One local non-scientific timing check (Python 3.11.9, macOS 27.0.1 arm64;
+1,000 repetitions, separate `tracemalloc` pass) enumerated 2/16/64/256
+candidates for 1×1/2×2/3×2/4×3. Mean enumeration / P0 evaluation time was
+0.0054/0.0069, 0.0509/0.0920, 0.2011/0.2334 and 1.0144/1.1329 ms, with peak
+traced allocation 2,344/6,312/21,640/89,672 bytes. These are local engineering
+measurements, not portable speed claims. The explicit `max_candidates` guard
+continues to fail closed rather than truncate the exhaustive catalog.
+
+Implementation commits: `7e29376` (production/P0) and `ef6ca3c` (episode
+runner); this scoped record contains the acceptance tests and documentation.
+No scientific campaign ran. `HLS-LAB-V1-INTEGRATED` remains
+**PARTIAL**.
 
 ### 2026-10-15 — operational priority change
 
