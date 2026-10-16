@@ -1159,3 +1159,21 @@ outside this phase. HLS Laboratory remains **PARTIAL**.
 Implementation commit: `5418d6e` (`feat(hls): generalize NK coordination policies`).
 Regression commit: `277cb28c85f1ef2727b1d5ec1a2ddff71729f775`
 (`test(hls): verify NK P0 P1 P2 coordination`).
+
+## 2026-10-16 18:23 +02:00 — Shared N×K policy interface and final regression
+
+**Type:** implementation consistency correction and final validation. The P0
+adapter was aligned with the same `choose(view, memory, parameters)` contract
+as P1/P2; it still receives only production actions and selects no teaching
+event. The small addition is commit `160037e945105910d569cd56f3ee6d7de5884449`
+(`fix(hls): unify NK coordination policy interface`). The 1×1 P0-path
+microbenchmark row was refreshed in the engineering design.
+
+After this final code change, focused Phase 1–3B/3C regressions again passed
+**93 tests**. The second complete suite passed **1,337 tests, 5 failed** in
+**475.44 s**; it reproduced exactly the same five historical
+provenance/integrity failures listed in the preceding entry, with no added
+functional regression. `git diff --check` passed. The only remaining worktree
+changes outside this intervention are unrelated and were not staged. No
+historical artifacts or expected hashes changed. HLS Laboratory remains
+**PARTIAL**.

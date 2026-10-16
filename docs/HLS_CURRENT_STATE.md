@@ -26,7 +26,7 @@ emitter; problem trajectories are frozen before policy evaluation. Two
 authorized provenance validators were corrected: B2.3 now verifies the
 protocol blob at the run's recorded Git revision, and Campaign 2 preregistration
 checks source/artifact scope against its immutable freeze snapshot. The latest
-full suite (2026-10-16 18:12 +02:00) reports 1,337 passed and the same 5
+full suite (2026-10-16 18:23 +02:00) reports 1,337 passed and the same 5
 historical provenance/integrity failures: foundation inventory/B13 manifest,
 unavailable `finite_problem_belief.py` source evidence, and Campaign 2
 closure-document hashes. Provenance is not fully restored. See the
@@ -80,8 +80,9 @@ regressions appeared. Performance and equation details are recorded in the
 [N×K technical design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md).
 HLS Laboratory remains **PARTIAL**; no campaign was run.
 
-**Current N×K status — 2026-10-16 18:13 +02:00 (Europe/Madrid):** Phase 3C adds
-dimension-independent P1/P2 coordination and automatic joint production /
+**Current N×K status — 2026-10-16 18:23 +02:00 (Europe/Madrid):** Phase 3C adds
+dimension-independent P0/P1/P2 coordination with one shared decision-view,
+memory and policy-parameter interface, and automatic joint production /
 teaching action selection to the N×K runner. P0 remains production-only. The
 historical lexicographic production ranking, P1 fixed directed relation, P2
 success-first/unseen-relation/efficacy-threshold rules, catalogue tie order,
@@ -99,8 +100,8 @@ therefore cannot be instantiated for N=1. Competence estimation, imperfect
 information and noisy formative observations remain unsupported. Focused
 validation and engineering measurements are recorded in the [N×K technical
 design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md). No scientific
-campaign was run. Phase 3C focused validation passed 93 tests; the full suite
-passed 1,337 and retained the same five documented historical provenance /
+campaign was run. Phase 3C focused validation passed 93 tests; the final full
+suite passed 1,337 in 475.44 seconds and retained the same five documented historical provenance /
 integrity failures. HLS Laboratory remains **PARTIAL**.
 
 The ten-file minimum reproducible package is published on

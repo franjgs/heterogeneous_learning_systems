@@ -562,6 +562,10 @@ The Phase 3C adapter is in `src/hls/hls_lab_nk_policies.py`; policy execution
 is additive in `src/hls/hls_lab_nk_execution.py`. The original 3×2 module and
 its frozen serialized traces remain unchanged.
 
+P0/P1/P2 expose one `choose(view, memory, parameters)` contract through
+`NKCoordinationPolicy`; the existing low-level P0 action selector remains
+available for the Phase 2 production-only API.
+
 ### Historical policy definitions retained
 
 All three policies rank production using the legacy lexicographic tuple
@@ -645,13 +649,14 @@ performance guarantees.
 
 | N×K | Joint upper bound / feasible | Enumeration ms | P1 select ms | P2 select ms | 3-period episode ms | Peak traced bytes | Serialized trace bytes |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| 1×1 | 2 / 2 | 0.021 | N/A | N/A | 2.293 | 16,800 | 3,256 |
+| 1×1 | 2 / 2 | 0.021 | N/A | N/A | 2.301 | 16,880 | 3,247 |
 | 2×2 | 45 / 45 | 0.174 | 0.0799 | 0.1196 | 15.289 | 28,056 | 4,518 |
 | 3×2 | 832 / 508 | 3.113 | 0.3989 | 1.0671 | 95.621 | 169,272 | 5,288 |
 | 4×3 | 9,472 / 9,472 | 37.222 | 2.247 | 4.2286 | 1,064.505 | 2,453,208 | 6,538 |
 
 The Phase 3C focused suite passed 93 tests, including all Phase 1–3B checks
-and the historical integrated-policy suite. The complete suite passed 1,337
+and the historical integrated-policy suite. After finalizing the common P0/P1/P2
+policy interface, the complete suite passed 1,337
 tests and retained the same five documented provenance/integrity failures;
 the names are recorded in `HISTORY.md`.
 Competence estimation, imperfect information, environment generation and
