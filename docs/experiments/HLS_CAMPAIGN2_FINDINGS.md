@@ -96,3 +96,5 @@ PYTHONPATH=src:. pytest -q tests/test_hls_campaign2_teaching_mis_assignment.py
 ```
 
 The analysis command reads the selected output directory and regenerates derived summaries; it does not execute organizations. Omit `--output` to analyze the published default artifacts. All intervention and continuation behavior comes from the existing integrated laboratory. No laboratory physics, estimator, policy or historical artifact was changed.
+
+The subsequent read-only [Campaign 2 experimental sensitivity audit](HLS_EXPERIMENTAL_SENSITIVITY_AUDIT.md) explains replicate-level CES degeneracy from source dependencies, P0 score boundaries, reward/success sensitivity, and effective-path counts. It uses these published outputs without rewriting this findings record or changing its numerical results.

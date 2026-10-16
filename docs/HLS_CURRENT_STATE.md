@@ -67,6 +67,22 @@ superseded as the immediate operational priority, not erased as evidence of
 the project's evolution. The dated history is the chronology authority; this
 file records the current status rather than duplicating that chronology.
 
+### Campaign 2 sensitivity audit — 16 October 2026
+
+The read-only [experimental sensitivity audit](experiments/HLS_EXPERIMENTAL_SENSITIVITY_AUDIT.md)
+verified why Campaign 2's ten noisy replicates per scenario have identical
+CES: indexed noise changes observations and estimates, but not outcome-relevant
+P0 choices in A/B; the action-path changes in C are output-equivalent ties.
+All scenario/condition cells have one demand path, one true-competence path,
+one CES trajectory and one success trajectory. P0's score boundaries,
+success saturation, capability frontiers, source-to-outcome dependency map,
+and causal-identifiability limits are documented against the published traces
+and code. The audit reran 16 focused Campaign 2 tests successfully and
+verified all eight source and six frozen output hashes. It did not rerun the full repository
+suite; the known 13 provenance/integrity failures remain unresolved. This
+diagnostic does not change the laboratory's **PARTIAL** status or authorize a
+new campaign.
+
 ### Authorized scientific pilot — 15 October 2026
 
 The CE authorized and completed a bounded **Scientific Campaign 1 pilot** on
