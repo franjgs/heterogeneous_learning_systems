@@ -1438,3 +1438,17 @@ checks: 161 passed. Final full suite on the current worktree: 1,397 passed,
 checks (foundation result inventory, Campaign 2 closure/source digests, and
 Campaign 3 / strategy-gate frozen source digests). No failure implicates the
 scientific mechanisms audited here. HLS Laboratory remains **PARTIAL**.
+
+### G3 / MIS-v2 learning-law reconciliation — 16 October 2026
+
+Recorded at **2026-10-16 21:09 +02:00** (Europe/Madrid). The former open
+lineage question in the Phase 5A dossier is resolved: the historical quadratic
+law `min(1, c + α·e·(1−c)²)` and exponential MIS-v2 law
+`1 − (1−c)(1−η)^e` are distinct models, with no fixed parameter conversion
+valid across states and effort. MIS-v2 remains the N×K laboratory reference;
+the quadratic formulation remains in the original MIS scenario,
+DISCOVER-v0, G3 and G3-H. The dossier now specifies that every experimental
+configuration identify the law, equation, exposure convention and parameters.
+This addendum clarifies the 20:59 Phase 5A record without rewriting it or the
+historical G3 ground truth. No code, equation, parameter or result changed;
+HLS Laboratory remains **PARTIAL**.

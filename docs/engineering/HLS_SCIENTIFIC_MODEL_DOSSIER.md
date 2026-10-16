@@ -11,7 +11,7 @@ The current laboratory is a deterministic, finite-horizon simulator of organizat
 
 Its physical production is additive. Multidimensional functional requirements can make capabilities complementary for task feasibility, but no production synergy is present. CES is gross output aggregation, not net utility. P0/P1/P2 are specific deterministic heuristics, not optimizers of cumulative CES or globally optimal organization policies. The model supports controlled conditional comparisons inside its declared action catalog and transition rules; it does not alone validate the constructs against real organizations.
 
-One semantic distinction needs expert attention: the historical G3/G3-H record calls its one-unit law `s + η(1-s)^2` the MIS diminishing law, whereas the current DISCOVER-v2 MIS-v2 law at unit effort is `s + η(1-s)`. The equations and code are explicit; this dossier preserves both rather than treating them as interchangeable. G3/G3-H are separate analytical scenarios, not the current N×K transition.
+The G3/MIS historical quadratic law and the current MIS-v2 exponential law are distinct learning models, not alternative parameterizations of one transition. The approved terminology and experimental identification requirements are recorded in §4. G3/G3-H remain historical analytical scenarios; N×K laboratory execution uses MIS-v2.
 
 ## 2. Scope, evidence labels, and notation
 
@@ -116,11 +116,31 @@ Parameters are per agent–competence in the N×K adapter. The mechanism is cell
 
 The original scalar functions are `eta_to_lambda` and `capability_after_exposure`; the N×K adapter applies them cellwise. See [`discover_develop_v2.py`, lines 33–71](../../src/hls/discover_develop_v2.py), [`hls_lab_nk_learning.py`, `LearningProfileNK` and `mis_v2_transition_nk`, lines 16–91](../../src/hls/hls_lab_nk_learning.py), and runner ordering in [`hls_lab_nk_execution.py`, lines 502–584](../../src/hls/hls_lab_nk_execution.py). Independent transition tests: [`test_hls_lab_nk_learning_transition.py`](../../tests/test_hls_lab_nk_learning_transition.py).
 
-### Historical-law discrepancy: MIS/G3 versus current MIS-v2
+### Approved reconciliation: historical quadratic law and MIS-v2
 
-The G3/G3-H source uses `min(1,s+η(1−s)^2)` per exposed cell at its unit/binary assignment, and the minimal reference scenario calls this a diminishing rule. The DISCOVER-v2 law above at effort `e=1` is `s+η(1−s)` (algebraically below 1). These are not the same transition. G3 documentation states that it retains the MIS saturating law; G3’s own source and equation are reproducible, but the documentation does not explain the equation change relative to DISCOVER-v2. **This is an unresolved cross-model naming/lineage discrepancy, not silently treated as a current N×K defect.** A reviewer should decide whether “MIS” denotes a family of historical laws or whether the G3 equivalence statement needs a separately authorized correction.
+**DECISION:** These are distinct scientific model formulations. MIS-v2 is the reference learning law for the current N×K laboratory. The quadratic formulation is retained unchanged in the original Minimal Reference Scenario, DISCOVER-v0, G3 and G3-H. This resolves the terminology/lineage question without revising either model or any historical result.
 
-References: [`discover_develop_v0.py`, `mis_v0_transition`, lines 14–35](../../src/hls/discover_develop_v0.py); [`discover_develop_v2.py`, lines 33–71](../../src/hls/discover_develop_v2.py); [`g3_organizational_value.py`, `learning_increment`, lines 52–66](../../src/hls/g3_organizational_value.py); [G3/G3-H ground truth, §§2, 11](../experimental_foundations/HLS_G3_ORGANIZATIONAL_VALUE_GROUND_TRUTH.md); [minimal reference scenario, §§1, 4–6](../experimental_foundations/HLS_MINIMAL_REFERENCE_SCENARIO.md).
+For the historical quadratic formulation, let `α≥0` be its direct learning scale and `e≥0` be exposure. The transition is
+
+\[
+c'=\min\{1,\ c+\alpha e(1-c)^2\}.
+\]
+
+G3 and G3-H use unit/binary exposure for each assigned competence cell (`e=1`), with a shared `α` in G3 and worker-specific scales in G3-H. The Minimal Reference Scenario's canonical configuration uses `α=1.5`. DISCOVER-v0 uses fractional productive effort as `e` and its fixed scale `α=1.5`.
+
+MIS-v2 instead uses `η∈(0,1)` as one-unit remaining-gap closure, `λ(η)=-\ln(1-η)`, and
+
+\[
+c'=1-(1-c)\exp[-\lambda(\eta)e]=1-(1-c)(1-\eta)^e.
+\]
+
+There is no fixed parameter conversion making these equations equal for every competence and effort: away from the quadratic cap and for `c<1`, equality requires `1-(1-η)^e=αe(1-c)`, whose two sides depend differently on effort and initial competence. For example, at `c=0`, `e=1`, quadratic `α=1.5` gives `c'=1`; MIS-v2 `η=0.35` gives `c'=0.35`. Replacing one law with the other would therefore change historical trajectories and invalidate direct numerical comparability; historical outputs and hashes remain frozen.
+
+**Implementation map:** `discover_develop_v0.mis_transition`, `g3_organizational_value.learning_increment`, `g3_h_organizational_value.transition_g3h`, and `minimal_reference_scenario.MinimalReferenceScenario.transition` use the quadratic law. `discover_develop_v2` and the N×K learning/episode path use MIS-v2. The earlier G3 phrase “retains exactly the MIS … law” is preserved as historical wording about its predecessor model; it must not be read as claiming equivalence with current MIS-v2.
+
+**Experimental specification rule:** every experimental configuration that enables learning must identify (1) the learning-law name/version, (2) its exact equation, (3) the exposure convention (including what counts as one unit and how fractional effort enters), and (4) all parameters and their indexing. A label such as “MIS” alone is insufficient to establish model equivalence.
+
+References: [`discover_develop_v0.py`, `mis_transition`](../../src/hls/discover_develop_v0.py); [`discover_develop_v2.py`, `eta_to_lambda` and `capability_after_exposure`](../../src/hls/discover_develop_v2.py); [`g3_organizational_value.py`, `learning_increment`](../../src/hls/g3_organizational_value.py); [`g3_h_organizational_value.py`, `transition_g3h`](../../src/hls/g3_h_organizational_value.py); [`minimal_reference_scenario.py`, `transition` and `reference_configurations`](../../src/hls/minimal_reference_scenario.py); [G3/G3-H ground truth, §§2, 11](../experimental_foundations/HLS_G3_ORGANIZATIONAL_VALUE_GROUND_TRUTH.md); [MIS reference scenario, §§1, 4–6](../experimental_foundations/HLS_MINIMAL_REFERENCE_SCENARIO.md). The historical G3 document is not rewritten.
 
 ## 5. Directed teaching
 
@@ -268,7 +288,7 @@ Please evaluate:
 
 1. Is additive output plus CES a coherent operationalization for the intended problem domain?
 2. Is “functional complementarity” appropriately distinguished from productive synergy?
-3. Is current MIS-v2 a defensible learning-by-doing law, and how should its relation to the earlier quadratic-gap MIS/G3 law be described?
+3. Are the distinct quadratic historical and exponential MIS-v2 laws defensible for their declared modeling purposes, and what external evidence would be needed to assess their domain of applicability?
 4. What does the teaching-efficacy tensor represent scientifically?
 5. Is teacher-competence independence appropriate, or should efficacy be constrained/calibrated by expertise in a future authorized model?
 6. How much do P0/P1/P2 comparisons confound coordination rules with teaching exposure, information and memory?
