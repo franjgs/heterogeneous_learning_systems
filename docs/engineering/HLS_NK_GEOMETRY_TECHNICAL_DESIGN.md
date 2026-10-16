@@ -434,6 +434,123 @@ vectors; all runs use perfect information. Legacy 3×2 P0/P1/P2, teaching,
 estimation, and historical serialization remain on their original code path.
 HLS Laboratory remains **PARTIAL**.
 
+## Phase 4 — N×K environment and demand generation
+
+**Status:** implemented additively; scientific campaigns remain held.
+
+### Existing process contract retained
+
+The authoritative environment is the C5 task-demand layer in
+`src/hls/synthetic/c5.py`:
+
+* `StationaryTaskDemand` samples IID task labels from its one validated
+  distribution. “Stationary” is a process property, not a second generator.
+* `NonStationaryTaskDemand` samples from the distribution indexed by the
+  current integer period. It has no separate change-point estimator or
+  endogenous trigger.
+* `MarkovTaskDemand` samples the initial task from `initial_distribution`, then
+  uses the row keyed by the previously realized task. It is first-order and
+  its state depends only on the task history passed by the environment.
+* The existing fixed-sequence path is an already-materialized sequence passed
+  directly to the episode runner; it is not another stochastic process.
+
+Every C5 process receives a seeded `random.Random` source from the v1
+environment. Its `WorldState` argument is a constant environmental placeholder
+and is independent of organizational competence, outcomes and policy. The C5
+history contains only previous latent task identifiers. The old v1 emitter
+uses `DemandRegime` with a finite distribution over 2-D requirement vectors,
+and generates each emission with the coordinate-derived seed
+`SHA256("hls-lab-v1-emission-v1|seed|period")[:8]`; problem IDs are stable
+requirement-vector keys. The environment maps each latent task to an emission
+regime. It does not define a second stationarity or Markov process.
+
+### N×K emission and replay
+
+`src/hls/hls_lab_nk_environment.py` adds `DemandRegimeNK`, a finite catalogue
+of existing `ProblemSpecNK` contracts with a categorical emission
+distribution, plus `ExogenousEnvironmentConfigNK` and immutable
+`EnvironmentTrajectoryNK`. Catalogue size is independent of K. The process
+classes, their probability semantics, transition rules, first-state rule and
+time indexing are reused unchanged. The N×K layer validates a common K across
+emissions and maps each sampled latent task to a regime and then a K-vector
+problem. The config stores the process, full emission catalogue, horizon and
+effective problem resource budget; the trajectory stores its seed, generated
+problem IDs/requirements/CES weights/budgets, sampled latent task states and
+emission regime labels. The sampled initial environment state is `latent_states[0]`;
+the process configuration separately records its initial distribution.
+
+For equal-weight 3×2 emission the old `generate_problems` routine is invoked
+directly, preserving the historical emission draw, requirement-derived ID,
+equal CES weights and budget. For other K (or an explicitly non-equal weight
+catalogue), the same categorical inverse-CDF convention is applied with the
+same coordinate-derived per-period seed. Fixed problem sequences continue to
+work through the pre-existing runner contract.
+
+The runner in `hls_lab_nk_execution.py` accepts either `problems=(...)` as
+before or `environment=config, environment_seed=...`. The generated path is
+fully frozen before execution and then passed to the same explicit-sequence
+path. `NKEnvironmentRunResult` returns the frozen `trajectory` alongside the
+ordinary run result. Latent states/regime labels are held in that wrapper and
+never added to `NKDecisionView`; policy and observation random draws cannot
+consume environment randomness. Replaying one trajectory object across
+organizations, P0/P1/P2, MIS/teaching switches, or perfect/imperfect
+information preserves all problem IDs, vectors, weights and ordering.
+Different organizational observations and competence paths are not expected
+to match.
+
+### Scope and validation
+
+The following are supported: explicit fixed sequences; C5 IID/stationary
+demand; C5 time-indexed nonstationary demand; C5 first-order Markov demand;
+K-dimensional finite problem catalogues; optional generation within the N×K
+runner; and environment-state/regime metadata separate from policy traces.
+No demand adaptation, new process family, requirement mutation within a type,
+multi-task arrivals, or environmental response to organizational performance
+was added. Environment and organization still run one problem per period.
+
+`tests/test_hls_lab_nk_environment.py` verifies dimensions 1×1, 2×2, 3×2 and
+4×3, catalogue size independent of K, process replay, deterministic Markov
+state transitions, time-indexed regime change, configuration errors,
+historical 3×2 equivalence, and generated-demand replay across P0/P1/P2 × MIS
+ON/OFF × teaching ON/OFF × perfect/imperfect information. It also checks that
+the generated path returned by the runner corresponds exactly to its episode
+problem IDs. The targeted environment/C5/dynamic/Phase 1–3D selection passed
+154 tests. `PYTHONPATH=src:. python -m pytest -q` completed with 1,390 passed
+and five failed in 515.55 s. The five are the documented provenance/integrity
+failures: foundation result inventory count; Campaign 2 state-coverage closure
+digest; Campaign 2 theory source digest; Campaign 3 frozen
+`finite_problem_belief.py` digest; and strategy-discrimination source digest.
+The full-suite command ran before the final test-only seed-variation case; the
+updated environment test module then passed 34/34. No new functional regression
+was observed. These repository-level failures and pre-existing unrelated
+worktree changes were not repaired or staged. Detailed names and reproduction
+context are in the Phase 4 history entry.
+
+Local microbenchmark: macOS 27.0.1 arm64, Python 3.11.9; 3-period stationary
+sequence, three problem types, P0, no learning/teaching, identical small
+competence profiles. K=2 used the default legacy effort catalogue; K=1/3 used
+explicit zero plus one 0.5 single-skill effort vector per agent. Times are
+single local observations, not performance guarantees. Candidate count is the
+feasible P0 catalogue for the first problem; trace bytes are JSON `asdict`
+serialization of the three production records, and memory is peak `tracemalloc`
+for execution.
+
+| N×K | Environment init ms | Demand generation ms | Feasible P0 candidates | Episode ms | Peak traced bytes | 3-period trace bytes |
+|---|---:|---:|---:|---:|---:|---:|
+| 1×1 | 0.0199 | 0.1046 | 2 | 1.028 | 9,392 | 1,927 |
+| 2×2 | 0.0077 | 0.1202 | 16 | 3.209 | 35,744 | 2,103 |
+| 3×2 | 0.0051 | 0.0624 | 37 | 8.217 | 100,840 | 2,275 |
+| 4×3 | 0.0057 | 0.0533 | 256 | 47.159 | 291,688 | 3,008 |
+
+These figures reflect the selected P0 configurations; the more expensive
+P1/P2 joint-action catalogue and imperfect-information estimator are measured
+in their respective phase records. No action catalogues are truncated; the
+existing `max_candidates` guard remains authoritative.
+
+N×K production, learning, teaching, estimation and P0/P1/P2 remain as
+implemented in Phases 2–3D. HLS Laboratory remains **PARTIAL**. The environment
+addition is functional infrastructure validation and not a scientific result.
+
 ## Phase 3D — competence estimation and imperfect observation (current addendum)
 
 **Recorded:** 2026-10-16 19:10 +02:00 (Europe/Madrid). This is an additive

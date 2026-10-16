@@ -120,6 +120,28 @@ Measurements and failure names are in the [N×K technical design](engineering/HL
 and dated [history](HISTORY.md). No campaign was run; HLS Laboratory remains
 **PARTIAL**.
 
+**Current N×K status — 2026-10-16 20:07 +02:00 (Europe/Madrid):** Phase 4
+adds K-dimensional demand emission using the existing C5 stationary (IID),
+time-indexed nonstationary and first-order Markov task processes. Each
+environment maps its latent task state to an independent finite catalogue of
+`ProblemSpecNK` types; problem-type count is not tied to K. Generated paths
+record the seed, configuration, sampled environment states/regime labels and
+emitted problem specifications. Environmental randomness is completed before
+organization execution and is separated from Phase 3D observation randomness.
+The N×K runner now accepts either its existing explicit problem sequence or an
+environment configuration plus seed; the generated path is then passed through
+the same runner. Fixed sequences therefore remain a supported experimental
+input, while stationarity remains a process property rather than a generator
+class. The existing 3×2 environment was matched on demand states, problem IDs,
+requirements, equal CES weights and budget. Focused environment and Phase 1–3D
+regressions passed 154 tests. Full suite: 1,390 passed and the same five
+documented provenance/integrity failures in 515.55 seconds; this full-suite run
+preceded one final seed-variation test, which then passed in the complete
+154-test focused environment/C5/dynamic/Phase 1–3D selection. HLS Laboratory remains **PARTIAL**; this is
+infrastructure validation, not a scientific campaign. Details and local
+microbenchmarks are in the [N×K technical design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md)
+and [history](HISTORY.md).
+
 The ten-file minimum reproducible package is published on
 `feature/hls-laboratory-v1` at `37a011804f9ea013fc3a5436c00a72eb0b8280da`.
 The acceptance gate is therefore not closed. See the implementation record in
