@@ -16,6 +16,53 @@ from hls.small_problem_world import HYPOTHESIS_REPERTOIRE, UNIFORM_PRIOR
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "results/foundations/campaign2_preregistration/pre_experiment_campaign2_preregistration.json"
 PREREQUISITE = "c7071769cc583f3352305363eff2e6ade27de97e"
+FREEZE_COMMIT = "9cfb6891e73536a63694041711de56cbd147eed1"
+FROZEN_MANIFEST_SHA256 = "0c11f48b0947d26af84ffdb38626f114c07c827cb59f84d91bae9e005c72387d"
+FROZEN_CAMPAIGN2_INVENTORY_SHA256 = "d357edfb5dcf59451f2e0d304f368f5a6540c64e315ee48619381e37504488a5"
+FROZEN_CAMPAIGN2_PATHS = (
+    "results/foundations/campaign2_preregistration/pre_experiment_campaign2_preregistration.json",
+    "results/foundations/campaign2_theory/pre_experiment_campaign2_theory.json",
+)
+
+
+def _git_bytes(commit, path):
+    if not isinstance(commit, str) or len(commit) != 40 or any(c not in "0123456789abcdef" for c in commit):
+        raise RuntimeError("frozen preregistration snapshot is unverifiable: missing or invalid freeze commit")
+    try:
+        return subprocess.run(["git", "show", f"{commit}:{path}"], cwd=ROOT, check=True,
+                              stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise RuntimeError(f"frozen preregistration snapshot is unverifiable: cannot recover {path} at {commit}") from exc
+
+
+def _campaign2_paths_at(commit):
+    if not isinstance(commit, str) or len(commit) != 40 or any(c not in "0123456789abcdef" for c in commit):
+        raise RuntimeError("frozen preregistration snapshot is unverifiable: missing or invalid freeze commit")
+    try:
+        output = subprocess.run(["git", "ls-tree", "-r", "--name-only", commit, "--", "results"],
+                                cwd=ROOT, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise RuntimeError(f"frozen preregistration snapshot is unverifiable: cannot inspect tree {commit}") from exc
+    return tuple(sorted(path for path in output.decode().splitlines() if "campaign2" in path.lower()))
+
+
+def _verify_frozen_inventory(paths, expected_sha256=FROZEN_CAMPAIGN2_INVENTORY_SHA256):
+    observed = hashlib.sha256("\n".join(sorted(paths)).encode()).hexdigest()
+    if observed != expected_sha256:
+        raise RuntimeError("frozen preregistration inventory mismatch")
+    return tuple(sorted(paths))
+
+
+def _verify_frozen_snapshot(commit=FREEZE_COMMIT):
+    manifest_bytes = _git_bytes(commit, str(MANIFEST.relative_to(ROOT)))
+    if hashlib.sha256(manifest_bytes).hexdigest() != FROZEN_MANIFEST_SHA256:
+        raise RuntimeError("frozen preregistration manifest mismatch")
+    if hashlib.sha256(MANIFEST.read_bytes()).hexdigest() != FROZEN_MANIFEST_SHA256:
+        raise RuntimeError("current preregistration differs from its frozen snapshot")
+    paths = _verify_frozen_inventory(_campaign2_paths_at(commit))
+    if paths != FROZEN_CAMPAIGN2_PATHS:
+        raise RuntimeError("frozen preregistration inventory contains unexpected artifacts")
+    return paths
 
 
 @pytest.fixture(scope="module")
@@ -27,10 +74,11 @@ def test_prerequisite_and_source_hashes_are_frozen(prereg):
     assert prereg["prerequisite_C2_commit"] == PREREQUISITE
     subprocess.run(["git","merge-base","--is-ancestor",PREREQUISITE,"HEAD"],cwd=ROOT,check=True)
     for path,digest in prereg["source_hashes"].items():
-        assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest()==digest,path
-    theory=json.loads((ROOT/"results/foundations/campaign2_theory/pre_experiment_campaign2_theory.json").read_text())
+        assert hashlib.sha256(_git_bytes(FREEZE_COMMIT, path)).hexdigest()==digest,path
+    theory=json.loads(_git_bytes(FREEZE_COMMIT,"results/foundations/campaign2_theory/pre_experiment_campaign2_theory.json"))
     for path,digest in theory["source_hashes"].items():
-        assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest()==digest,path
+        assert hashlib.sha256(_git_bytes(FREEZE_COMMIT, path)).hexdigest()==digest,path
+    _verify_frozen_snapshot()
 
 
 def test_exact_design_and_disjoint_seed_reservation(prereg):
@@ -184,18 +232,34 @@ def test_falsification_rules_and_postexecution_adaptation_prohibition(prereg):
 def test_no_confirmatory_execution_result_artifacts_or_frozen_file_changes(prereg):
     audit=prereg["preregistration_contamination_audit"]
     assert all(value==0 or value is False for value in audit.values())
-    allowed_results={
-        "results/foundations/campaign2_theory/pre_experiment_campaign2_theory.json",
-        "results/foundations/campaign2_preregistration/pre_experiment_campaign2_preregistration.json",
-    }
-    # Existence/name inspection ONLY: never open a possible confirmatory output.
-    for directory in (ROOT/"results").glob("**/*campaign2*"):
-        if directory.is_dir():
-            assert all(str(p.relative_to(ROOT)) in allowed_results for p in directory.rglob("*") if p.is_file())
+    assert _verify_frozen_snapshot() == FROZEN_CAMPAIGN2_PATHS
     allowed_changes={str(MANIFEST.relative_to(ROOT)),
         "docs/experiments/CAMPAIGN_2_PREREGISTRATION.md","tests/test_campaign2_preregistration.py"}
-    changed=subprocess.check_output(["git","diff","--name-only",PREREQUISITE,"--"],cwd=ROOT,text=True).splitlines()
+    changed=subprocess.check_output(["git","diff","--name-only",PREREQUISITE,FREEZE_COMMIT,"--"],cwd=ROOT,text=True).splitlines()
     assert set(changed)<=allowed_changes
+
+
+def test_contaminated_or_modified_frozen_inventory_fails():
+    contaminated=FROZEN_CAMPAIGN2_PATHS+(
+        "results/campaigns/campaign2_later_run/trajectory.csv",
+    )
+    with pytest.raises(RuntimeError,match="inventory mismatch"):
+        _verify_frozen_inventory(contaminated)
+    with pytest.raises(RuntimeError,match="inventory mismatch"):
+        _verify_frozen_inventory(FROZEN_CAMPAIGN2_PATHS[:-1])
+
+
+def test_missing_freeze_metadata_fails_explicitly():
+    with pytest.raises(RuntimeError,match="missing or invalid freeze commit"):
+        _verify_frozen_snapshot(None)
+
+
+def test_current_later_artifacts_do_not_change_frozen_snapshot():
+    frozen=_verify_frozen_snapshot()
+    current=subprocess.check_output(["git","ls-files","--cached","--others","--exclude-standard","results"],
+                                    cwd=ROOT,text=True).splitlines()
+    assert any("campaign2" in path.lower() and path not in frozen for path in current)
+    assert _verify_frozen_snapshot() == frozen
 
 
 def test_document_manifest_surface_matches_without_execution(prereg):

@@ -208,12 +208,33 @@ FILENAMES = dict(runs="closed_loop_runs.csv", trajectories="closed_loop_trajecto
     branches="counterfactual_branches.csv.gz")
 
 
+def _frozen_git_bytes(relative_path):
+    """Read preregistered evidence from its immutable commit, not the worktree."""
+    path = Path(relative_path)
+    if path.is_absolute() or ".." in path.parts:
+        raise RuntimeError(f"invalid frozen provenance path: {relative_path}")
+    try:
+        return subprocess.run(["git", "show", f"{PREREG_COMMIT}:{path.as_posix()}"], cwd=ROOT,
+                              check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise RuntimeError(f"cannot recover frozen provenance file {relative_path} at {PREREG_COMMIT}") from exc
+
+
+def _frozen_json(path):
+    relative = Path(path).relative_to(ROOT).as_posix()
+    frozen = _frozen_git_bytes(relative)
+    if digest(path) != hashlib.sha256(frozen).hexdigest():
+        raise RuntimeError(f"frozen manifest differs from registration snapshot: {relative}")
+    return json.loads(frozen)
+
+
 def preflight():
     subprocess.run(["git", "merge-base", "--is-ancestor", PREREG_COMMIT, "HEAD"], check=True, cwd=ROOT)
     for path in (PREREG, THEORY):
-        for name, expected in json.loads(path.read_text())["source_hashes"].items():
-            assert digest(ROOT / name) == expected, name
-    return json.loads(PREREG.read_text())
+        for name, expected in _frozen_json(path)["source_hashes"].items():
+            if hashlib.sha256(_frozen_git_bytes(name)).hexdigest() != expected:
+                raise RuntimeError(f"frozen source hash mismatch at registration commit: {name}")
+    return _frozen_json(PREREG)
 
 
 def main():
