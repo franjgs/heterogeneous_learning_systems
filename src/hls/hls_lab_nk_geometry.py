@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from itertools import product
-from math import isfinite, prod
+from math import isclose, isfinite, prod
 
 from .discover_v0 import INDIVIDUAL_ACTIONS, JOINT_ACTIONS
 
@@ -128,11 +128,12 @@ class OrganizationConfigNK:
 
 @dataclass(frozen=True)
 class ProblemSpecNK:
-    """K-dimensional requirements and problem-specific shared effort cap."""
+    """K-dimensional requirements, CES weights and shared effort cap."""
 
     problem_id: str
     requirements: tuple[float, ...]
     resource_budget: float
+    ces_weights: tuple[float, ...] | None = None
 
     def __post_init__(self) -> None:
         if not isinstance(self.problem_id, str) or not self.problem_id.strip():
@@ -150,8 +151,18 @@ class ProblemSpecNK:
             raise ValueError("resource_budget must be finite and non-negative") from exc
         if not isfinite(budget) or budget < 0:
             raise ValueError("resource_budget must be finite and non-negative")
+        try:
+            weights = ((1.0 / len(requirements),) * len(requirements)
+                       if self.ces_weights is None else tuple(float(value) for value in self.ces_weights))
+        except (TypeError, ValueError) as exc:
+            raise ValueError("ces_weights must be a numeric K-vector") from exc
+        if (len(weights) != len(requirements)
+                or any(not isfinite(value) or value < 0 for value in weights)
+                or not isclose(sum(weights), 1.0, rel_tol=0.0, abs_tol=1e-10)):
+            raise ValueError("ces_weights must be a K-vector of finite non-negative values summing to one")
         object.__setattr__(self, "requirements", requirements)
         object.__setattr__(self, "resource_budget", budget)
+        object.__setattr__(self, "ces_weights", weights)
 
 
 def validate_productive_allocation_nk(
@@ -180,13 +191,27 @@ def enumerate_productive_allocations_nk(
     max_candidates: int,
     per_agent_effort_choices: tuple[tuple[tuple[float, ...], ...], ...] | None = None,
 ) -> tuple[ProductiveAllocationNK, ...]:
-    """Enumerate the declared Cartesian action catalog without truncation.
+    """Enumerate feasible actions in declared catalog order, without truncation."""
+    return tuple(action for _, action in enumerate_productive_action_entries_nk(
+        organization, problem, max_candidates=max_candidates,
+        per_agent_effort_choices=per_agent_effort_choices,
+    ))
+
+
+def enumerate_productive_action_entries_nk(
+    organization: OrganizationConfigNK,
+    problem: ProblemSpecNK,
+    *,
+    max_candidates: int,
+    per_agent_effort_choices: tuple[tuple[tuple[float, ...], ...], ...] | None = None,
+) -> tuple[tuple[int, ProductiveAllocationNK], ...]:
+    """Return ``(catalog_id, allocation)`` for each feasible candidate.
 
     For K=2 the legacy DISCOVER individual choices are the default. For other
     K the caller must supply one ordered vector catalog per agent. The return
-    index is the action identifier; ordering is catalog order then Cartesian
-    product order. ``max_candidates`` is a caller-declared guard on the full
-    pre-filter catalog, not a silent action limit.
+    identifier is the index in the full unfiltered catalog; ordering is
+    catalog order then Cartesian product order. ``max_candidates`` is a
+    caller-declared guard on that full catalog, not a silent action limit.
     """
     if not isinstance(max_candidates, int) or isinstance(max_candidates, bool) or max_candidates < 1:
         raise ValueError("max_candidates must be a positive integer")
@@ -222,8 +247,9 @@ def enumerate_productive_allocations_nk(
         candidates = JOINT_ACTIONS
     else:
         candidates = product(*choices)
-    result = tuple(tuple(tuple(float(value) for value in row) for row in allocation)
-                   for allocation in candidates
+    result = tuple((candidate_id,
+                    tuple(tuple(float(value) for value in row) for row in allocation))
+                   for candidate_id, allocation in enumerate(candidates)
                    if validate_productive_allocation_nk(allocation, organization, problem))
     if not result:
         raise ValueError(f"problem {problem.problem_id} has no feasible N×K productive allocation")
