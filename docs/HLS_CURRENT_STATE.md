@@ -23,9 +23,16 @@ integrated teaching runner, P0/P1/P2 policies, a policy-independent exogenous
 problem-trajectory generator and focused acceptance tests now exist. The
 generator composes C5 demand processes with the existing dynamic problem
 emitter; problem trajectories are frozen before policy evaluation. Focused
-tests pass, while the full repository suite retains the same 13 integrity and
-provenance failures seen in the preceding runs (1189 passed, 13 failed in the
-latest run). The ten-file minimum reproducible package is published on
+tests pass, while the full repository suite retains 13 integrity and
+provenance failures (1237 passed, 13 failed in the 2026-10-16 audit run; the
+earlier HLS integration run was 1189 passed, 13 failed). A bounded diagnosis
+reproduced all 13 and identified six underlying failure families; two
+historical snapshots (B13 manifest and a frozen source version) need explicit
+provenance disposition, while four Campaign 2 closure-document snapshots are
+also unavailable and several other failures are stale or commit-insensitive
+validators. See the [provenance diagnosis](engineering/HLS_PROVENANCE_FAILURE_DIAGNOSIS.md).
+The minimum N×K extension is designed but not implemented; see the [N×K technical design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md).
+The ten-file minimum reproducible package is published on
 `feature/hls-laboratory-v1` at `37a011804f9ea013fc3a5436c00a72eb0b8280da`.
 The acceptance gate is therefore not closed. See the implementation record in
 [HLS Laboratory v1](experiments/HLS_LAB_V1.md). This changes the
