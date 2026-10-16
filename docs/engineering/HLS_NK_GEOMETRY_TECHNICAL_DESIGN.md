@@ -350,7 +350,7 @@ geometry. HLS Laboratory remains **PARTIAL**.
 
 ## 11. Phase 3A — N×K MIS-v2 learning-by-doing
 
-**Recorded:** 2026-10-16 15:40 +02:00 (Europe/Madrid). **Status:** implemented
+**Recorded:** 2026-10-16 15:50 +02:00 (Europe/Madrid). **Status:** implemented
 additively; no historical module, fixture, result, manifest or expected hash
 was changed. The statements above document the Phase 2 state and are
 superseded for the specific N×K MIS-v2 capability by this Phase 3A record.
@@ -396,13 +396,15 @@ not evidence of comparative scientific superiority.
 
 ### Validation and local engineering performance
 
-At the implementation check, 87 focused tests passed, including Phase 1
+At the final implementation check, 87 focused tests passed, including Phase 1
 geometry, Phase 2 production, dynamic/integrated regressions, legacy teaching
 and MIS-v2 tests, and new N×K transition/runner tests. Direct 3×2 transition
 outputs agree exactly with legacy `advance_team`; a one-period P0/MIS-ON run
 matches legacy action, production, success, CES, effort and competence update.
 MIS-OFF result equality and serialized output are tested against the Phase 2
-call contract. The full suite result and identities of the five pre-existing
+call contract. A paired OFF/ON regression also verifies a shared initial state
+and sequence, identical first decision/outcome, and only subsequent divergence
+after learning. The full suite result and identities of the five pre-existing
 provenance failures are recorded in `HISTORY.md`; those failures are outside
 this change.
 
