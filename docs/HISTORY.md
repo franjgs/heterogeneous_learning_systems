@@ -949,3 +949,33 @@ the executable enumeration is `tests/test_hls_q1r_analytical.py`. Focused
 validation passed (2 tests). The Q1 preflight's 24-period MIS-OFF primary
 remains **NO-GO as registered**; no campaign was redesigned or run. The
 laboratory remains **PARTIAL**.
+
+### 2026-10-16 — HLS laboratory research framework consolidation
+
+**Event/recorded:** 2026-10-16 11:15:38 +02:00 (Europe/Madrid). **Authority:**
+PI/CE decision to treat the research laboratory, its conceptual framework,
+methodology, and ability to compare organizations as central research outputs;
+no scientific novelty assessment was requested. **Type:** code/documentation
+audit and framework consolidation only; no simulator code, campaign, or
+historical artifact changed.
+
+The [HLS Laboratory Research Framework](HLS_LABORATORY_RESEARCH_FRAMEWORK.md)
+defines organization, decision policies, learning mechanisms, environment,
+and evaluation as distinct components, maps actual executable boundaries,
+classifies current experiment capabilities, records a five-question research
+portfolio, and proposes a bounded development sequence. The audit confirms
+that C5 demand, frozen environment paths, matched policy runs, MIS-v2,
+directed teaching, resource accounting, outcome traces, and study-specific
+controls already exist. It also confirms fixed 3-agent × 2-skill shapes, a
+single task/decision per period, one additive production kernel, runner-coupled
+mechanism composition, no integrated latent-demand inference, and a discrete
+catalogue that can strand capacity. Campaign 2 and Q1 preflight demonstrate
+that seeds or noisy estimates alone do not ensure outcome sensitivity; Q1-R
+proves only that a nonzero MIS interaction is expressible in a separate exact
+fixture.
+
+The recommended first implementation, requiring separate authorization, is
+bounded agent/skill/action-geometry generalization with an exact 3×2
+compatibility gate; resolution of existing provenance failures remains a
+validation prerequisite. No code or campaign was executed. HLS Laboratory
+remains **PARTIAL** and historical registrations/results are unchanged.

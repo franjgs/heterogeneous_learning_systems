@@ -1264,3 +1264,21 @@ existence result, not evidence of general advantage. The registered Q1
 campaign design/execution remain on HOLD. Details and exact reproducible
 checks: [Q1-R analytical verification](theory/HLS_Q1R_ANALYTICAL_VERIFICATION.md)
 and `tests/test_hls_q1r_analytical.py`. HLS Laboratory remains **PARTIAL**.
+
+### Research laboratory framework — 16 October 2026
+
+Recorded at **2026-10-16 11:15:38 +02:00** (Europe/Madrid). The new
+[HLS Laboratory Research Framework](HLS_LABORATORY_RESEARCH_FRAMEWORK.md)
+consolidates five separable components—organization, decision policies,
+learning mechanisms, exogenous environment, and evaluation—and maps them to
+the executable code and bounded campaign evidence. Current experimental
+support is strongest for paired exogenous paths, deterministic mechanism
+controls and the fixed 3-agent × 2-skill model; architecture/policy/mechanism
+comparisons remain partial where their factors are bundled or interfaces are
+hard-coded. The primary structural ceiling is fixed agent/skill/action
+geometry; concurrent-task coordination and latent-demand inference are not
+implemented. The proposed first implementation, subject to separate
+authorization, is bounded n-agent/k-skill state/action generalization with
+an exact 3×2 compatibility gate. No code or scientific campaign was run for
+this framework. Historical registrations and results remain unchanged; the
+laboratory remains **PARTIAL**.
