@@ -1,9 +1,11 @@
-"""N×K production and MIS-v2 execution using Phase 1 geometry contracts.
+"""N×K production, mechanism and optional environment execution.
 
 The default path remains byte-schema compatible with Phase 2 production-only
 P0 episodes. An explicitly enabled additive branch applies MIS-v2 after each
-period's production and outcome evaluation. Teaching, P1/P2, competence
-estimation, and environment generation remain unsupported here.
+period's production and outcome evaluation. Existing Phase 1–3D execution
+contracts are retained. Optional environment generation freezes a trajectory
+first and then invokes the same sequence runner; explicit-sequence callers
+remain supported unchanged.
 """
 
 from __future__ import annotations
@@ -52,6 +54,11 @@ from .hls_lab_nk_policies import (
     TeachingPolicyParametersNK,
     enumerate_feasible_joint_actions_nk,
     formative_efficacy_signal_nk,
+)
+from .hls_lab_nk_environment import (
+    EnvironmentTrajectoryNK,
+    ExogenousEnvironmentConfigNK,
+    generate_environment_trajectory_nk,
 )
 from .hls_lab_dynamic import indexed_normal_innovation
 from .hls_lab_v1_integrated import _push_posterior, _training_noise
@@ -169,11 +176,26 @@ class NKInformationRunResult:
     final_policy_memory: OrganizationMemoryNK
 
 
+@dataclass(frozen=True)
+class NKEnvironmentRunResult:
+    """Generated exogenous path and the unchanged sequence-runner result.
+
+    Environment latent states and regime labels are experimenter-facing
+    metadata in ``trajectory``.  They are generated before the policy runner
+    starts and are never part of its decision view.
+    """
+
+    trajectory: EnvironmentTrajectoryNK
+    execution: NKProductionRunResult | NKLearningRunResult | NKTeachingRunResult | NKInformationRunResult
+
+
 def run_nk_production_sequence(
     organization: OrganizationConfigNK,
-    problems: tuple[ProblemSpecNK, ...],
+    problems: tuple[ProblemSpecNK, ...] | None = None,
     *,
     max_candidates: int,
+    environment: ExogenousEnvironmentConfigNK | None = None,
+    environment_seed: int | None = None,
     per_agent_effort_choices: tuple[tuple[tuple[float, ...], ...], ...] | None = None,
     individual_learning: bool = False,
     organizational_learning: bool = True,
@@ -188,8 +210,8 @@ def run_nk_production_sequence(
     information_mode: str | None = None,
     observation_parameters: CompetenceObservationParametersNK = CompetenceObservationParametersNK(),
     information_seed: int = 0,
-) -> NKProductionRunResult | NKLearningRunResult | NKTeachingRunResult | NKInformationRunResult:
-    """Run deterministic P0 episodes over a caller-frozen exogenous sequence.
+) -> NKProductionRunResult | NKLearningRunResult | NKTeachingRunResult | NKInformationRunResult | NKEnvironmentRunResult:
+    """Run episodes over either a frozen sequence or generated environment.
 
     P0 receives actual competence as its estimate at each decision (the
     perfect-information condition). By default, this remains the Phase 2
@@ -202,8 +224,37 @@ def run_nk_production_sequence(
     ``information_mode=None`` keeps the Phase 1–3C result contracts. Explicit
     ``perfect`` or ``imperfect`` modes use the information-aware trace and the
     existing scalar estimator, observation distributions, indexed random
-    streams, and transition timing. No environment draws are generated.
+    streams, and transition timing. The explicit-sequence path generates no
+    environmental random draws.
+    Generated demand is frozen first and then passed through exactly this
+    explicit-sequence path. Existing callers need not adopt an environment.
     """
+    if environment is not None:
+        if problems is not None:
+            raise ValueError("supply either problems or environment, not both")
+        if environment_seed is None:
+            raise ValueError("environment_seed is required with an environment")
+        trajectory = generate_environment_trajectory_nk(environment, seed=environment_seed)
+        execution = run_nk_production_sequence(
+            organization, trajectory.problems, max_candidates=max_candidates,
+            per_agent_effort_choices=per_agent_effort_choices,
+            individual_learning=individual_learning,
+            organizational_learning=organizational_learning,
+            learning_profile=learning_profile,
+            teaching_enabled=teaching_enabled,
+            teaching_efficacy=teaching_efficacy,
+            teaching_parameters=teaching_parameters,
+            explicit_actions=explicit_actions,
+            policy=policy,
+            policy_parameters=policy_parameters,
+            initial_policy_memory=initial_policy_memory,
+            information_mode=information_mode,
+            observation_parameters=observation_parameters,
+            information_seed=information_seed,
+        )
+        return NKEnvironmentRunResult(trajectory, execution)
+    if environment_seed is not None:
+        raise ValueError("environment_seed requires an environment")
     if not problems:
         raise ValueError("problem sequence must be non-empty")
     initial = organization.initial_state()
