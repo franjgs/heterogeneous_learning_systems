@@ -15,6 +15,7 @@ undated where the source material does not establish a defensible event date.
 
 | Event / record | Event date and confidence | Record date and evidence | Scope note |
 | --- | --- | --- | --- |
+| HLS Laboratory Phase 5 research-readiness validation | **2026-10-16 20:22 +02:00, verified validation record.** | Recorded 2026-10-16 20:22 +02:00 (Europe/Madrid); report `docs/engineering/HLS_RESEARCH_READINESS_REVIEW.md`; baseline `8804daf6303a5db134098ea87ac5c8ff2469a3b8`. | Added independent integrated invariants across 1×1, 2×2, 3×2, 4×3. Focused N×K/HLS regressions: 172 passed; full suite: 1,396 passed and the same five historical provenance/integrity failures. Fresh-process serialized replay matched. Conditional readiness only; no simulator physics, historical evidence or campaign changed. HLS remains PARTIAL pending PI review. |
 | N×K environment and demand generation, Phase 4 | **2026-10-16 20:08 +02:00, verified final validation record.** | Recorded 2026-10-16 20:08 +02:00 (Europe/Madrid); code in `src/hls/hls_lab_nk_environment.py`, integration in `src/hls/hls_lab_nk_execution.py`, tests in `tests/test_hls_lab_nk_environment.py`. | Generalized N×K emission over existing C5 IID/stationary, time-indexed nonstationary and first-order Markov task processes. Frozen paths retain configuration, seed, latent states/regime labels and `ProblemSpecNK` outputs. Optional runner generation reuses the explicit-sequence path. Historical 3×2 emissions matched. Combined focused environment/C5/dynamic/Phase 1–3D selection: 155 passed. Full suite: 1,390 passed, 5 failed in 515.55s; the five failures are the previously documented provenance/integrity failures. No physics, historical artifacts or campaigns changed; HLS remains PARTIAL. |
 | N×K competence estimation and imperfect observation, Phase 3D | **2026-10-16 19:06 +02:00, verified implementation/final-validation completion.** | Recorded 2026-10-16 19:10 +02:00 (Europe/Madrid); current code/tests in `src/hls/hls_lab_nk_estimation.py`, `src/hls/hls_lab_nk_execution.py`, and `tests/test_hls_lab_nk_estimation.py`. | Added explicit perfect/imperfect information execution using the unchanged scalar historical posterior, production-observation likelihood, indexed noise streams, MIS posterior prediction and formative teaching observation. N×K actual state remains the physical state; the policy view receives estimates only. Exact noisy 3×2 comparisons matched legacy P1/P2 decisions, observations, estimates, transitions and efficacy memory; perfect mode matches actual competence and the default runner contracts remain unchanged. Focused/regression selection: 86 passed. Full suite: 1,357 passed, 5 failed in 483.40s; exactly the known foundation inventory, Campaign 2 closure/theory digest, Campaign 3 frozen source, and strategy-gate integrity failures. Engineering timings recorded in the N×K design. No scientific campaign or frozen artifact modification; HLS Laboratory remains PARTIAL. |
 | N×K directed teaching Phase 3B | **2026-10-16 16:22 +02:00, verified final validation time.** | Recorded 2026-10-16 16:22 +02:00 (Europe/Madrid), based on the system clock and final test output; implementation commit `551a661`. | Added an N×N×K relation-efficacy adapter and explicit joint-action runner path. Preserves the legacy equation, two-party effort charge, and production → MIS-v2 → teaching ordering; no teaching-selection policy is included. Historical 3×2 episode outputs and transition matched. Focused validation 95 passed; full suite 1320 passed, 5 failed in 479.80s, the same five provenance/integrity failures as the documented baseline. No historical artifacts or hashes changed. HLS remains PARTIAL. |
@@ -1221,3 +1222,37 @@ The full-suite run preceded those two final test-only controls; the updated
 full focused selection passed 155/155 afterward. Publication state is
 recorded in the final handoff; no scientific campaign ran and the laboratory
 remains PARTIAL.
+
+### 2026-10-16 20:22 +02:00 — Phase 5 integrated validation and readiness review
+
+**Record time:** 2026-10-16 20:22 +02:00 (Europe/Madrid), from the system
+clock. **Authority:** Phase 5 CE authorization. **Validated code baseline:**
+`8804daf6303a5db134098ea87ac5c8ff2469a3b8`.
+
+Added `tests/test_hls_research_readiness.py` with an integrated deterministic
+regime-switch fixture for 1×1, 2×2, 3×2 and 4×3. Across valid policy,
+MIS-v2, teaching and information-mode combinations, the tests independently
+check production, CES, functional success, resource balances, competence
+bounds and the MIS-v2 → teaching transitions. Focused N×K/HLS regressions
+passed 172 tests. Two fresh processes produced the same serialized-run SHA-256
+(`0a5710ce5f7b40e58b2760d53f2f916c544098c1e28d13870634c405eac90985`).
+Microbenchmarks locate exhaustive joint-action enumeration as the main
+measured bottleneck at 4×3; exact settings and stage timings are in the
+[readiness review](engineering/HLS_RESEARCH_READINESS_REVIEW.md).
+
+The final full suite completed in 503.84 seconds: **1,396 passed, 5 failed**.
+The five failures are the same baseline provenance/integrity cases: foundation
+inventory (12 current result directories vs frozen 11), Campaign 2 closure
+digest mismatches in four frozen documents, and a `finite_problem_belief.py`
+source digest mismatch in the Campaign 2, Campaign 3 and strategy-gate freezes.
+They were neither altered nor suppressed. No new functional regression was
+found; `git diff --check` passed. No simulator equations, historical artifacts
+or campaigns changed.
+
+Readiness recommendation: **CONDITIONALLY READY** for bounded preregistered
+research inside the validated model, provided the study archives a complete
+configuration/seed/software manifest and frozen demand trajectory and checks
+its exact action-catalog size. Repository-wide provenance is not clean, so
+claims relying on the five affected evidence checks require their resolution.
+This is not an authorization to execute a campaign; HLS Laboratory remains
+**PARTIAL** pending PI review.

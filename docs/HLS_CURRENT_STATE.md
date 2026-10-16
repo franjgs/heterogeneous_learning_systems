@@ -143,6 +143,20 @@ infrastructure validation, not a scientific campaign. Details and local
 microbenchmarks are in the [N×K technical design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md)
 and [history](HISTORY.md).
 
+**Current validation — 2026-10-16 20:22 +02:00 (Europe/Madrid):** Phase 5
+cross-validated complete generated-demand episodes across 1×1, 2×2, 3×2 and
+4×3, with all valid P0/P1/P2 × MIS × teaching × perfect/imperfect-information
+combinations. Independent trace checks cover production, CES, success,
+resources and ordered competence transitions. Fresh-process serialization
+matched. The focused HLS/Phase 1–4 regression selection passed 172 tests; the
+final full suite passed 1,396 and retained the same five provenance/integrity
+failures. Stage-level measurements identify exhaustive joint-action enumeration
+as the principal 4×3 bottleneck. No equations, historical results or campaigns
+changed. Recommendation: **CONDITIONALLY READY** for a bounded, preregistered
+study only if its harness archives a full run manifest, frozen demand and
+source/runtime metadata. See the [Phase 5 research-readiness review](engineering/HLS_RESEARCH_READINESS_REVIEW.md).
+HLS Laboratory remains **PARTIAL**, pending PI review.
+
 The ten-file minimum reproducible package is published on
 `feature/hls-laboratory-v1` at `37a011804f9ea013fc3a5436c00a72eb0b8280da`.
 The acceptance gate is therefore not closed. See the implementation record in
