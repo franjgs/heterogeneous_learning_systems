@@ -26,6 +26,15 @@ from .hls_lab_nk_production import (
     productive_outputs_nk,
 )
 from .hls_lab_nk_learning import LearningProfileNK, mis_v2_transition_nk
+from .hls_lab_nk_estimation import (
+    CompetenceObservationParametersNK,
+    CompetencePosteriorNK,
+    assimilate_production_observations_nk,
+    initialize_competence_posterior_nk,
+    posterior_mean_matrix_nk,
+    posterior_variance_matrix_nk,
+    predict_mis_v2_nk,
+)
 from .hls_lab_nk_teaching import (
     JointActionNK,
     TeachingActionNK,
@@ -44,6 +53,8 @@ from .hls_lab_nk_policies import (
     enumerate_feasible_joint_actions_nk,
     formative_efficacy_signal_nk,
 )
+from .hls_lab_dynamic import indexed_normal_innovation
+from .hls_lab_v1_integrated import _push_posterior, _training_noise
 
 TOL = 1e-12
 
@@ -118,6 +129,46 @@ class NKTeachingRunResult:
     final_state: OrganizationStateNK
 
 
+@dataclass(frozen=True)
+class NKInformationEpisodeRecord:
+    """Trace with actual, estimated and observed competence kept distinct."""
+
+    period: int
+    policy_name: str
+    action_id: int | None
+    joint_action_id: int | None
+    action: JointActionNK
+    competence_actual_before: tuple[tuple[float, ...], ...]
+    competence_estimated_before: tuple[tuple[float, ...], ...]
+    competence_variance_before: tuple[tuple[float, ...], ...] | None
+    production_observations: tuple[tuple[float, ...], ...]
+    production: NKProductionEpisodeRecord
+    teaching_observation: float | None
+    mis_increment: tuple[tuple[float, ...], ...]
+    competence_after_mis: tuple[tuple[float, ...], ...]
+    teaching_increment: tuple[tuple[float, ...], ...]
+    competence_actual_after: tuple[tuple[float, ...], ...]
+    competence_estimated_after: tuple[tuple[float, ...], ...]
+    competence_variance_after: tuple[tuple[float, ...], ...] | None
+    estimation_error: tuple[tuple[float, ...], ...]
+    efficacy_memory_before: tuple
+    efficacy_memory_after: tuple
+    organization_updated: bool
+    productive_effort_used: float
+    teaching_resource_used: float
+    total_resource_used: float
+    unused_collective_capacity: float
+
+
+@dataclass(frozen=True)
+class NKInformationRunResult:
+    information_mode: str
+    records: tuple[NKInformationEpisodeRecord, ...]
+    final_state: OrganizationStateNK
+    final_posterior: CompetencePosteriorNK | None
+    final_policy_memory: OrganizationMemoryNK
+
+
 def run_nk_production_sequence(
     organization: OrganizationConfigNK,
     problems: tuple[ProblemSpecNK, ...],
@@ -134,7 +185,10 @@ def run_nk_production_sequence(
     policy: P0ProductionOnlyPolicyNK | P1FixedTeachingNK | P2AdaptiveTeachingNK | None = None,
     policy_parameters: TeachingPolicyParametersNK = TeachingPolicyParametersNK(),
     initial_policy_memory: OrganizationMemoryNK | None = None,
-) -> NKProductionRunResult | NKLearningRunResult | NKTeachingRunResult:
+    information_mode: str | None = None,
+    observation_parameters: CompetenceObservationParametersNK = CompetenceObservationParametersNK(),
+    information_seed: int = 0,
+) -> NKProductionRunResult | NKLearningRunResult | NKTeachingRunResult | NKInformationRunResult:
     """Run deterministic P0 episodes over a caller-frozen exogenous sequence.
 
     P0 receives actual competence as its estimate at each decision (the
@@ -144,15 +198,39 @@ def run_nk_production_sequence(
     returns a learning trace with post-production competence transitions.
     Supplying ``explicit_actions`` retains the N×K controlled-action path.
     Supplying a legacy P0/P1/P2 policy opts into automatic feasible joint
-    action generation; P0 remains production-only. Policy execution uses
-    perfect competence information and the deterministic zero-noise case of
-    the existing formative efficacy observation. Production, MIS-v2, teaching
-    and efficacy-memory update order match the legacy runner. No environment
-    draws or competence-estimation updates are generated.
+    action generation; P0 remains production-only. The historical default
+    ``information_mode=None`` keeps the Phase 1–3C result contracts. Explicit
+    ``perfect`` or ``imperfect`` modes use the information-aware trace and the
+    existing scalar estimator, observation distributions, indexed random
+    streams, and transition timing. No environment draws are generated.
     """
     if not problems:
         raise ValueError("problem sequence must be non-empty")
     initial = organization.initial_state()
+    if information_mode is not None:
+        if information_mode not in {"perfect", "imperfect"}:
+            raise ValueError("information_mode must be 'perfect' or 'imperfect'")
+        if not isinstance(information_seed, int):
+            raise ValueError("information_seed must be an integer")
+        if policy is not None and explicit_actions is not None:
+            raise ValueError("policy selection and explicit_actions are mutually exclusive")
+        return _run_nk_information_sequence(
+            organization, problems, max_candidates=max_candidates,
+            per_agent_effort_choices=per_agent_effort_choices,
+            individual_learning=individual_learning,
+            organizational_learning=organizational_learning,
+            learning_profile=learning_profile,
+            teaching_enabled=teaching_enabled,
+            teaching_efficacy=teaching_efficacy,
+            teaching_parameters=teaching_parameters,
+            explicit_actions=explicit_actions,
+            policy=policy,
+            policy_parameters=policy_parameters,
+            initial_policy_memory=initial_policy_memory,
+            information_mode=information_mode,
+            observation_parameters=observation_parameters,
+            seed=information_seed,
+        )
     if learning_profile is not None:
         learning_profile.validate_dimensions(initial.n_agents, initial.n_skills)
     if policy is not None and explicit_actions is not None:
@@ -250,6 +328,247 @@ def run_nk_production_sequence(
             unused_collective_capacity=max(0.0, effective_budget - effort_used),
         ))
     return NKProductionRunResult(tuple(records), state)
+
+
+def _run_nk_information_sequence(
+    organization: OrganizationConfigNK,
+    problems: tuple[ProblemSpecNK, ...],
+    *,
+    max_candidates: int,
+    per_agent_effort_choices,
+    individual_learning: bool,
+    organizational_learning: bool,
+    learning_profile: LearningProfileNK | None,
+    teaching_enabled: bool,
+    teaching_efficacy: TeachingEfficacyNK | None,
+    teaching_parameters: TeachingParametersNK,
+    explicit_actions: tuple[JointActionNK, ...] | None,
+    policy: P0ProductionOnlyPolicyNK | P1FixedTeachingNK | P2AdaptiveTeachingNK | None,
+    policy_parameters: TeachingPolicyParametersNK,
+    initial_policy_memory: OrganizationMemoryNK | None,
+    information_mode: str,
+    observation_parameters: CompetenceObservationParametersNK,
+    seed: int,
+) -> NKInformationRunResult:
+    """Information-aware extension; the legacy default runner is untouched."""
+    initial = organization.initial_state()
+    n, k = initial.n_agents, initial.n_skills
+    if any(len(problem.requirements) != k for problem in problems):
+        raise ValueError("every problem must match organization K")
+    if individual_learning:
+        if learning_profile is None:
+            raise ValueError("MIS-v2 ON requires a LearningProfileNK")
+        learning_profile.validate_dimensions(n, k)
+    if learning_profile is not None:
+        learning_profile.validate_dimensions(n, k)
+    if explicit_actions is not None and len(explicit_actions) != len(problems):
+        raise ValueError("explicit_actions must contain one complete action per problem")
+    if explicit_actions is not None and any(
+        action.teaching is not None and not teaching_enabled for action in explicit_actions
+    ):
+        raise ValueError("teaching actions require teaching_enabled=True")
+
+    selected_policy = policy or P0ProductionOnlyPolicyNK()
+    policy_can_teach = not isinstance(selected_policy, P0ProductionOnlyPolicyNK)
+    available_teaching = teaching_enabled and policy_can_teach
+    if explicit_actions is not None:
+        available_teaching = teaching_enabled
+    if available_teaching:
+        if teaching_efficacy is None:
+            raise ValueError("teaching-enabled execution requires teaching_efficacy")
+        teaching_efficacy.validate_identifiers(initial.agent_ids, initial.skill_ids)
+    elif any(action.teaching is not None for action in explicit_actions or ()):
+        if teaching_efficacy is None:
+            raise ValueError("teaching actions require teaching_efficacy")
+        teaching_efficacy.validate_identifiers(initial.agent_ids, initial.skill_ids)
+    if initial_policy_memory is not None and policy is None:
+        raise ValueError("initial_policy_memory requires a coordination policy")
+
+    if information_mode == "perfect":
+        actual = initial.competence_real
+        posterior = None
+    else:
+        actual = initial.competence_real
+        posterior = initialize_competence_posterior_nk(
+            initial.competence_estimated, observation_parameters,
+        )
+    estimate = actual if posterior is None else posterior_mean_matrix_nk(posterior)
+    state = OrganizationStateNK(initial.agent_ids, initial.skill_ids, actual, estimate)
+    memory = initial_policy_memory or OrganizationMemoryNK()
+    records: list[NKInformationEpisodeRecord] = []
+
+    for period, problem in enumerate(problems):
+        supplied_action = None if explicit_actions is None else explicit_actions[period]
+        catalog_teaching_effort = (
+            policy_parameters.effort if supplied_action is None or supplied_action.teaching is None
+            else supplied_action.teaching.effort
+        )
+        production_entries = enumerate_productive_action_entries_nk(
+            organization, problem, max_candidates=max_candidates,
+            per_agent_effort_choices=per_agent_effort_choices,
+        )
+        actions = enumerate_feasible_joint_actions_nk(
+            organization, problem, max_candidates=max_candidates,
+            teaching_enabled=available_teaching,
+            teaching_efficacy=teaching_efficacy if available_teaching else None,
+            teaching_effort=catalog_teaching_effort,
+            per_agent_effort_choices=per_agent_effort_choices,
+        )
+        if explicit_actions is None:
+            view = NKDecisionView(
+                period=period, periods_remaining=len(problems) - period,
+                problem_id=problem.problem_id, agent_ids=state.agent_ids,
+                skill_ids=state.skill_ids, requirements=problem.requirements,
+                estimated_competencies=state.competence_estimated,
+                feasible_actions=actions,
+            )
+            action = selected_policy.choose(view, memory, policy_parameters)
+            if action not in actions:
+                raise ValueError("policy returned an infeasible joint action")
+            joint_action_id = actions.index(action)
+        else:
+            action = supplied_action
+            if action not in actions:
+                raise ValueError("explicit joint action is not feasible in this information-mode run")
+            joint_action_id = None
+        try:
+            action_id = next(identifier for identifier, allocation in production_entries
+                             if allocation == action.production)
+        except StopIteration as exc:
+            raise ValueError("selected production allocation is not in the feasible catalogue") from exc
+
+        allocation = action.production
+        effective_budget = min(organization.collective_effort_budget, problem.resource_budget)
+        individual_used, total_used, unused = validate_joint_action_resources_nk(
+            allocation, action.teaching, agent_ids=state.agent_ids,
+            collective_budget=effective_budget, individual_limits=organization.effort_limits,
+            efficacy=teaching_efficacy if action.teaching is not None else None,
+        )
+        actual_before = state.competence_real
+        estimated_before = state.competence_estimated
+        variance_before = None if posterior is None else posterior_variance_matrix_nk(posterior)
+
+        # Production and outcomes always use actual pre-transition competence.
+        outputs = productive_outputs_nk(actual_before, allocation)
+        individual_outputs = tuple(tuple(
+            allocation[i][skill] * actual_before[i][skill] for skill in range(k)
+        ) for i in range(n))
+        functional = evaluate_problem_nk(outputs, problem.requirements)
+        reward = ces_reward_nk(outputs, problem.ces_weights)  # type: ignore[arg-type]
+        production_effort = sum(sum(row) for row in allocation)
+        teaching_effort = 0.0 if action.teaching is None else 2.0 * action.teaching.effort
+
+        observations = tuple(tuple(
+            allocation[i][skill] * actual_before[i][skill]
+            + observation_parameters.production_observation_noise_sd
+            * indexed_normal_innovation(seed, period, 0, i, skill)
+            for skill in range(k)
+        ) for i in range(n))
+
+        post_mis = actual_before
+        mis_increment = tuple(tuple(0.0 for _ in range(k)) for _ in range(n))
+        if individual_learning:
+            assert learning_profile is not None
+            post_mis = mis_v2_transition_nk(actual_before, allocation, learning_profile)
+            mis_increment = tuple(tuple(post_mis[i][skill] - actual_before[i][skill]
+                                        for skill in range(k)) for i in range(n))
+        if posterior is not None:
+            posterior = assimilate_production_observations_nk(
+                posterior, allocation, observations,
+                observation_parameters.production_observation_noise_sd,
+            )
+            if individual_learning:
+                assert learning_profile is not None
+                posterior = predict_mis_v2_nk(posterior, allocation, learning_profile.eta)
+
+        teaching_observation = None
+        teaching_increment = tuple(tuple(0.0 for _ in range(k)) for _ in range(n))
+        memory_before = memory.efficacy
+        actual_after = post_mis
+        organization_updated = False
+        if action.teaching is not None:
+            assert teaching_efficacy is not None
+            transition = teaching_transition_nk(
+                post_mis, action.teaching, teaching_efficacy, teaching_parameters,
+            )
+            actual_after = transition.competence_after
+            teaching_increment = transition.competence_increment
+            learner, skill = transition.learner_index, transition.skill_index
+            teaching_observation = (
+                transition.competence_gain
+                + observation_parameters.outcome_noise_sd
+                * _training_noise(seed, period, transition.teacher_index, learner, skill)
+            )
+            estimate_after_mis = (post_mis if posterior is None
+                                  else posterior_mean_matrix_nk(posterior))
+            signal = formative_efficacy_signal_nk(
+                competence_after_mis=estimate_after_mis[learner][skill],
+                observed_teaching_gain=teaching_observation,
+                transfer_rate=teaching_parameters.transfer_rate,
+                effort=action.teaching.effort,
+                prior_mean=policy_parameters.efficacy_prior_mean,
+            )
+            if organizational_learning:
+                relation = (action.teaching.teacher_id, action.teaching.learner_id,
+                            action.teaching.skill_id)
+                memory = memory.update(relation, signal)
+                organization_updated = True
+                if posterior is not None:
+                    efficacy_estimate = memory.estimate(
+                        relation, policy_parameters.efficacy_prior_mean,
+                    )
+                    posterior_rows = [list(row) for row in posterior]
+                    posterior_rows[learner][skill] = _push_posterior(
+                        posterior_rows[learner][skill], efficacy_estimate,
+                        teaching_parameters.transfer_rate, action.teaching.effort,
+                    )
+                    posterior = tuple(tuple(row) for row in posterior_rows)
+
+        estimate_after = (actual_after if posterior is None
+                          else posterior_mean_matrix_nk(posterior))
+        variance_after = None if posterior is None else posterior_variance_matrix_nk(posterior)
+        error = tuple(tuple(estimate_after[i][skill] - actual_after[i][skill]
+                            for skill in range(k)) for i in range(n))
+        state = OrganizationStateNK(state.agent_ids, state.skill_ids,
+                                    actual_after, estimate_after)
+        individual_used_period = tuple(sum(row) for row in allocation)
+        production_record = NKProductionEpisodeRecord(
+            period=period, problem_id=problem.problem_id,
+            requirements=problem.requirements, competence_before=actual_before,
+            competence_after=actual_after, action_id=action_id,
+            allocation=allocation, individual_outputs=individual_outputs,
+            outputs=outputs, functional_result=functional, ces_reward=reward,
+            organization_effort_budget=organization.collective_effort_budget,
+            problem_effort_budget=problem.resource_budget,
+            effective_collective_budget=effective_budget,
+            individual_effort_limits=organization.effort_limits,
+            individual_effort_used=individual_used_period,
+            productive_effort_used=production_effort,
+            unused_collective_capacity=unused,
+        )
+        records.append(NKInformationEpisodeRecord(
+            period=period, policy_name=selected_policy.name if explicit_actions is None else "EXPLICIT_ACTION",
+            action_id=action_id, joint_action_id=joint_action_id, action=action,
+            competence_actual_before=actual_before,
+            competence_estimated_before=estimated_before,
+            competence_variance_before=variance_before,
+            production_observations=observations, production=production_record,
+            teaching_observation=teaching_observation, mis_increment=mis_increment,
+            competence_after_mis=post_mis, teaching_increment=teaching_increment,
+            competence_actual_after=actual_after,
+            competence_estimated_after=estimate_after,
+            competence_variance_after=variance_after,
+            estimation_error=error, efficacy_memory_before=memory_before,
+            efficacy_memory_after=memory.efficacy,
+            organization_updated=organization_updated,
+            productive_effort_used=production_effort,
+            teaching_resource_used=teaching_effort,
+            total_resource_used=total_used,
+            unused_collective_capacity=unused,
+        ))
+    return NKInformationRunResult(
+        information_mode, tuple(records), state, posterior, memory,
+    )
 
 
 def _run_nk_policy_sequence(
@@ -595,4 +914,9 @@ def serialize_nk_learning_result(result: NKLearningRunResult) -> str:
 
 def serialize_nk_teaching_result(result: NKTeachingRunResult) -> str:
     """Stable JSON serialization for explicit N×K joint-action trajectories."""
+    return json.dumps(asdict(result), sort_keys=True, separators=(",", ":"), allow_nan=False)
+
+
+def serialize_nk_information_result(result: NKInformationRunResult) -> str:
+    """Stable JSON serialization for explicit perfect/imperfect-information runs."""
     return json.dumps(asdict(result), sort_keys=True, separators=(",", ":"), allow_nan=False)
