@@ -83,6 +83,20 @@ suite; the known 13 provenance/integrity failures remain unresolved. This
 diagnostic does not change the laboratory's **PARTIAL** status or authorize a
 new campaign.
 
+### Minimal theoretical model — 16 October 2026
+
+The domain-independent [minimal HLS theoretical model](theory/HLS_MINIMAL_THEORETICAL_MODEL.md)
+now states the common finite-horizon, partially observed assignment and
+development problem, including multiple pending tasks and shared resources.
+It derives conditional comparisons for current-best versus learning-oriented
+assignment, teaching versus learning-by-doing, same-skill substitution versus
+assignment-mediated complementarity, and a narrow greedy concentration case.
+These are model-scoped results, not novelty claims or empirical findings. The
+document maps each quantity to the existing simulator and records gaps,
+including the absence of general multi-task queueing and of an objective that
+values CES and resource use in a common unit. No code or experiment changed;
+the lab remains **PARTIAL**.
+
 ### Authorized scientific pilot — 15 October 2026
 
 The CE authorized and completed a bounded **Scientific Campaign 1 pilot** on
