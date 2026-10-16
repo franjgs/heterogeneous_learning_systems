@@ -1,8 +1,9 @@
 # HLS Laboratory configurable N×K geometry — technical design
 
 **Design started:** 2026-10-16 11:26 +02:00. **Recorded:** 2026-10-16 11:37 +02:00 (Europe/Madrid).
-**Repository baseline:** `feature/hls-laboratory-v1`, `4940d4b22d7ea67e49b0f55f9e8afac37c4850da`.
-**Status:** design only; implementation is held.
+**Design repository baseline:** `feature/hls-laboratory-v1`, `4940d4b22d7ea67e49b0f55f9e8afac37c4850da`.
+**Phase 1 implementation baseline:** `feature/hls-laboratory-v1`, `bca73727e8719e2ec27d180dfa9ecbaf6cd5b9cd`.
+**Status:** Phase 1 implemented additively; execution/generalized learning and policies remain held.
 
 ## 1. Decision summary
 
@@ -13,14 +14,13 @@ legacy `N=3, K=2` route delegates to the existing catalog, production,
 evaluation, MIS-v2, estimator, tie-breaking, and serialization behavior. Do
 not modify frozen DISCOVER-v0 / MIS-v2 contracts to make them generic.
 
-**Recommendation:** GO for a narrowly scoped N×K implementation after separate
-implementation authorization; **NO-GO for implementation in this task**. No
-scientific campaign or simulator edit is authorized here. The complete suite
-currently fails 13 integrity/provenance checks; those failures are a separate
-validation debt, not a mathematical prerequisite for dimension-generic data
-structures. The missing source snapshot must, however, be preserved and
-resolved before claiming exact historical compatibility for any affected
-experiment.
+**Implementation outcome:** dimension-independent organization/configuration
+and problem contracts plus explicit productive-allocation enumeration are
+implemented in Phase 1. The 3×2 route remains delegated to DISCOVER-v0 and the
+existing integrated runner. N×K execution, policies, MIS-v2/teaching
+transitions, estimation and environment emission are not generalized. The
+pre-existing full-suite provenance failures remain separate; no historical
+artifact or expected hash was modified.
 
 ## 2. Current assumptions found in code
 
@@ -195,9 +195,11 @@ no alternative relation/transfer semantics is proposed.
 - **Physical scope:** the extension retains additive output and the existing
   discrete effort semantics; it does not add synergy, task queues, or a new
   objective.
-- **Provenance:** the 13 current test failures include a missing frozen source
-  snapshot. Preserve dirty source changes, and do not claim historical
-  compatibility for records whose source cannot be recovered.
+- **Provenance (design-time status):** the earlier audit reproduced 13
+  failures. Two authorized validator fixes reduced that baseline to five; the
+  Phase 1 final suite still has those same five (B13 inventory, pre-existing
+  `finite_problem_belief.py` hash differences and Campaign 2 closure-document
+  hashes). No such evidence was edited for N×K work.
 - **Data format:** existing result rows are a historical contract. Avoid
   unconditional metadata/schema changes for the legacy path.
 
@@ -205,3 +207,65 @@ No maximum N/K is scientifically justified here. Practical applicability is
 bounded by exact catalog enumeration, not by a hidden agent/skill restriction.
 Any runtime/catalog guard should be based on the computed number of actions
 and fail transparently; it must not silently reduce the feasible set.
+
+## 9. Phase 1 implementation record
+
+**Implementation date:** 2026-10-16; the verified completion timestamp and
+validation are recorded in `HISTORY.md`. **Scope:** dimensioned state,
+problem, resource configuration and productive action geometry only.
+
+Implemented additively in `src/hls/hls_lab_nk_geometry.py`. This is a
+documented deviation from the initial file-level suggestion: historical
+Campaign 1 and diagnostics manifests hash `hls_lab_v1.py` and
+`hls_lab_v1_integrated.py`; editing either module creates unrelated integrity
+failures even if runtime behavior is unchanged. The separate module preserves
+both source files byte-for-byte and keeps the Phase 1 boundary explicit.
+
+- `OrganizationConfigNK`, `OrganizationStateNK`, and `ProblemSpecNK` validate
+  non-empty unique ordered identifiers, N×K competence/estimate shapes,
+  competence bounds `[0,1]`, K-dimensional non-negative requirements,
+  per-agent limits, and non-negative shared budgets.
+- Real competence and organizational estimates are stored separately. If an
+  estimate is omitted, it follows the existing v1 perfect-information
+  convention; no N×K policy currently consumes this state.
+- `enumerate_productive_allocations_nk` enumerates a caller-declared ordered
+  per-agent effort catalog, filters by each actor's effort limit and the
+  minimum of organization/problem shared budgets, and returns catalog order
+  (tuple index is the action identifier). K=2 defaults to DISCOVER-v0's
+  individual action choices; other K requires an explicit catalog. The 3×2
+  default path reads `JOINT_ACTIONS` directly.
+- The caller must set `max_candidates`. The complete Cartesian size is
+  calculated before enumeration; if it exceeds the guard, enumeration raises
+  an explicit `ValueError` with the candidate count and does not truncate.
+  Complexity is `M_1 × … × M_N` candidates and O(NK) feasibility work per
+  candidate; worst-case time O(NK·∏M_i), with only feasible actions returned.
+
+The new N×K types are separate from the 3×2 runner contracts and are not
+accepted by `run_sequence` or `run_integrated_sequence`. Those runner modules
+remain byte-for-byte unchanged. Existing `TeamState`, P0/P1/P2,
+production/evaluation execution, MIS-v2, teaching, posterior updates, demand
+emission and serialization remain 3×2; no transition equations or historical
+contracts changed. N×K episode execution is unsupported in this phase and
+must not be inferred from the geometry API.
+
+**Compatibility evidence:** before editing, the frozen 64-action catalog,
+the first-problem 508-action integrated catalog and deterministic three-step
+P0/P1/P2 serialized traces were hashed and then pinned in
+`tests/test_hls_lab_v1_integrated.py`. Their catalog hashes are
+`b219314c…f2f5381` and `9ebc8196…b957e277d`; the trace SHA-256 values and
+selected action IDs, teaching decisions, success, CES and resource totals are
+asserted by the test. The full serialized bytes match those pre-change hashes.
+Focused N×K geometry plus HLS v1/CE-23/24/25/environment tests passed 50/50
+after implementation. Full-suite results are recorded in the dated history
+entry and final validation record.
+
+**Supported Phase 1 geometries:** any positive N and K for state/configuration
+contracts; exact action enumeration for K=2 using the legacy effort choices,
+and for arbitrary K when an explicit effort catalog is supplied. This is not
+a claim of end-to-end N×K simulation. No arbitrary maximum N or K is imposed;
+the explicit candidate guard lets callers fail before exponential enumeration.
+
+**Next authorized increment:** none in this task. Learning transition and
+policy generalization remain on hold pending separate authorization; this
+implementation does not itself close `HLS-LAB-V1-INTEGRATED`, which remains
+**PARTIAL**.

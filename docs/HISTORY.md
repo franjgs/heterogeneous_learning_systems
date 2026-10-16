@@ -15,6 +15,7 @@ undated where the source material does not establish a defensible event date.
 
 | Event / record | Event date and confidence | Record date and evidence | Scope note |
 | --- | --- | --- | --- |
+| N×K geometry Phase 1 implementation and validation | **2026-10-16 14:22 +02:00, verified implementation/validation completion time.** | Recorded 2026-10-16 14:22 +02:00 (Europe/Madrid); code commit `671df10583f02e9bc323360e2e821f695926ceb8`; scoped tests and documentation changes follow in the task's second commit. | Added N×K organization/state/problem contracts and guarded Cartesian productive-allocation enumeration in a separate module. Pinned pre-change 3×2 action and serialization traces. Focused tests 50/50; full suite 1274 passed/5 failed, exactly the five previously documented provenance/integrity failures. Legacy source modules and frozen artifacts/hashes remain unchanged. HLS Laboratory remains PARTIAL. |
 | B2.3 and Campaign 2 preregistration provenance-validator corrections | **2026-10-16 13:50 +02:00, verified correction/validation completion time.** | Recorded 2026-10-16 13:50 +02:00 (Europe/Madrid); commits `80a01b6936fed4cfebe03478f9bfb5222dce2238` and `5e60e283bfff17d4448b9732c6a866c95c5c616e`. | B2.3 protocol SHA is now resolved at the run header's `git_commit`, with fail-closed handling for missing revision/blob/digest. Preregistration temporal validation uses frozen commit `9cfb6891e73536a63694041711de56cbd147eed` and its immutable results-tree inventory; later Campaign 2 artifacts no longer contaminate the freeze-time audit. The execution preflight also authenticates preregistered source bytes at that commit and checks current manifest files against their frozen copies. Full suite: 1253 passed, 5 failed; remaining gaps (foundation inventory/B13 manifest, frozen `finite_problem_belief.py` source, Campaign 2 closure document hashes) remain unmodified. No historical output, manifest, expected hash, or campaign configuration changed. Laboratory remains PARTIAL. |
 | Provenance diagnosis and N×K geometry technical design | **2026-10-16 11:26 +02:00, verified audit/design start.** | Recorded 2026-10-16 11:37 +02:00 (Europe/Madrid); [provenance diagnosis](engineering/HLS_PROVENANCE_FAILURE_DIAGNOSIS.md), [N×K design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md); baseline `4940d4b22d7ea67e49b0f55f9e8afac37c4850da`. | Full suite reproduced 1237 passed/13 failed. Identified six root-cause families, including B2.3 commit-insensitive validation, missing frozen source/B13 provenance, later campaign outputs rejected by a freeze-time contamination test, and closure-document hash gaps. Designed an additive N×K path with exact 3×2 preservation; no code, manifests, results, hashes, or campaigns changed. Laboratory remains PARTIAL. |
 | HLS minimal theoretical model documented | **2026-10-16, documentation event; exact start time not recorded.** | Recorded 2026-10-16 09:56 +02:00 (Europe/Madrid), as stated by the system clock; [model](theory/HLS_MINIMAL_THEORETICAL_MODEL.md). | Domain-independent finite-horizon model and conditional derivations mapped to existing HLS. No code, simulator physics, campaigns, or historical results changed. It makes no novelty claim; multi-task scheduling, externally grounded objective units, and empirical relevance remain open. |
@@ -41,6 +42,50 @@ undated where the source material does not establish a defensible event date.
 Dates marked “unknown” are intentionally not reconstructed from commit time.
 Dates for which only a bounded period is supported should remain approximate
 in future entries rather than being assigned invented day/time precision.
+
+### 2026-10-16 — N×K geometry Phase 1 (partial)
+
+**Event:** implementation and final validation completed 2026-10-16 14:22 +02:00.
+**Recorded:** 2026-10-16 14:22 +02:00 (Europe/Madrid). **Authority:** CE
+authorization for N×K state/action geometry only. **Type:** additive
+engineering implementation and regression validation.
+
+Added `src/hls/hls_lab_nk_geometry.py` with immutable validated
+`OrganizationConfigNK`, `OrganizationStateNK`, and `ProblemSpecNK` contracts;
+real and estimated competence matrices remain separate. The allocation
+enumerator uses an ordered per-agent catalog and exact Cartesian enumeration,
+filters individual and shared budget limits, and requires an explicit
+`max_candidates` guard. The legacy 3×2 default uses the original 64-entry
+`JOINT_ACTIONS`; non-2-skill configurations require an explicit effort
+catalog. N×K episode execution, policies, MIS-v2, teaching, estimators and
+environment emission remain unsupported.
+
+Before implementation, the action catalog and deterministic 3-episode P0,
+P1 and P2 traces were recorded as SHA-256 values and asserted by
+`tests/test_hls_lab_v1_integrated.py`; the test also checks selected action
+IDs, teaching choices, CES, functional success and resource use. Focused
+HLS-v1, CE-23/24/25, environment and N×K tests passed (50). Full
+`PYTHONPATH=src:. pytest -q` completed with 1274 passed and 5 failed. The
+remaining failures are the known foundation inventory/B13 discrepancy;
+Campaign 2 closure hashes for four documents; and historical hash checks that
+observe the pre-existing modified `src/hls/finite_problem_belief.py`. The
+identities are `test_every_foundation_result_has_consistent_manifest`,
+`test_frozen_inputs_and_completed_artifacts`,
+`test_preexperiment_manifest_and_contamination_boundary`,
+`test_pre_execution_manifest_and_raw_integrity_when_present`, and
+`test_source_hashes_and_raw_output_hashes`. No expected hash or frozen result
+was changed.
+
+An initial in-place implementation in the two historical runner modules
+caused two additional frozen-source hash failures. It was moved into the new
+geometry module; SHA-256 checks then matched the branch baseline exactly for
+`hls_lab_v1.py` (`c8dc4cb3…e11aa6f`) and
+`hls_lab_v1_integrated.py` (`9a3006db…a48b8c76`), and the full suite returned
+to the same five known failures. This is the documented deviation from the
+original file-level design suggestion and avoids touching historical evidence.
+Code commit: `671df10583f02e9bc323360e2e821f695926ceb8`. The follow-up test and
+documentation commit records the final published state. No campaign ran;
+`HLS-LAB-V1-INTEGRATED` remains **PARTIAL**.
 
 ### 2026-10-15 — operational priority change
 

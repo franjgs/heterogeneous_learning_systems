@@ -1,5 +1,8 @@
 """Engineering acceptance tests for the additive HLS v1 teaching cycle."""
 
+import hashlib
+import json
+
 import pytest
 
 from experiments.synthetic.hls_lab_v1.integrated_demo import (
@@ -25,6 +28,72 @@ def _efficacy(value: float) -> TeachingEfficacy:
 
 def _long_problem(problem_id="x", requirements=(0.0, 0.5), budget=2.0):
     return _problem(problem_id, requirements, "test")
+
+
+def test_historical_3x2_reference_trace_bytes_and_catalog_order():
+    """Pin pre-NxK 3x2 catalog, decisions, outcomes and serialized traces."""
+    assert len(JOINT_ACTIONS) == 64
+    catalog_digest = hashlib.sha256(
+        json.dumps(JOINT_ACTIONS, separators=(",", ":")).encode()
+    ).hexdigest()
+    assert catalog_digest == "b219314cb6a27267c81ec5a4213630ee888cc7bb0d771ce6c7aa2b2f8f2f5381"
+    assert JOINT_ACTIONS[0] == ((0.0, 0.0),) * 3
+    assert JOINT_ACTIONS[-1] == ((1.0, 0.0),) * 3
+
+    problems = tuple(
+        [_problem("baseline-skill1", (0.0, 0.6), "baseline") for _ in range(2)]
+        + [_problem("baseline-skill0", (0.75, 0.0), "baseline")]
+    )
+    feasible = enumerate_feasible_integrated_actions(
+        problems[0].problem, teaching_effort=PARAMETERS.effort
+    )
+    feasible_digest = hashlib.sha256(json.dumps(
+        feasible, default=lambda value: value.__dict__, sort_keys=True,
+        separators=(",", ":"),
+    ).encode()).hexdigest()
+    assert len(feasible) == 508
+    assert feasible_digest == "9ebc8196031c3cc49513d3367525b4bfbbdaba34ff1594a861877ffb957e277d"
+    runs = compare_integrated_policies(
+        INITIAL_A,
+        problems,
+        (P0ProductionOnly(), P1FixedTeaching((0, 1, 1)),
+         P2AdaptiveTeaching(((0, 1, 1),))),
+        learning=LEARNING,
+        teaching_efficacy=EFFICACY,
+        parameters=PARAMETERS,
+        seed=20261016,
+    )
+    expected = {
+        "P0_PRODUCTION_ONLY": (
+            "96948a980759a77de84e1595a5627ebe8cdcfadcbcbce3111ed4e3d97c262e0b",
+            (21, 21, 63), (False, False, True), (3.0, 3.0, 3.0),
+            (0.1375, 0.13756125, 0.31250000000000006),
+        ),
+        "P1_FIXED_TEACHING": (
+            "eb8d310fe7115bfcbf18d31f719f4500ded142e85424e4d7034dd677a9d2db0c",
+            (17, 20, 51), (False, True, True), (2.5, 2.5, 2.5),
+            (0.12500000000000003, 0.15764, 0.28750000000000003),
+        ),
+        "P2_ADAPTIVE_TEACHING": (
+            "cbf7603f39cd436214cfd300760ca86cb9441f30c35fa5e3cd0771824bf34b4b",
+            (17, 21, 63), (False, True, True), (2.5, 3.0, 3.0),
+            (0.12500000000000003, 0.18266250000000003, 0.31250000000000006),
+        ),
+    }
+    assert {run.policy for run in runs} == set(expected)
+    for run in runs:
+        digest, action_ids, success, resources, rewards = expected[run.policy]
+        assert hashlib.sha256(serialize_integrated_result(run).encode()).hexdigest() == digest
+        assert tuple(JOINT_ACTIONS.index(row.action.production) for row in run.records) == action_ids
+        expected_teaching = {
+            "P0_PRODUCTION_ONLY": (False, False, False),
+            "P1_FIXED_TEACHING": (True, True, True),
+            "P2_ADAPTIVE_TEACHING": (True, False, False),
+        }[run.policy]
+        assert tuple(row.action.teaching is not None for row in run.records) == expected_teaching
+        assert tuple(row.functional_result.success for row in run.records) == success
+        assert tuple(row.total_resource_used for row in run.records) == resources
+        assert tuple(row.ces_reward for row in run.records) == pytest.approx(rewards)
 
 
 def test_joint_action_enforces_shared_and_individual_resources():
