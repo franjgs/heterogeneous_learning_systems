@@ -1114,3 +1114,48 @@ No historical result, manifest, fixture, or expected hash was modified. Local
 microbenchmarks are engineering diagnostics only. N×K generalized P1/P2,
 teaching selection, competence estimation, and environment emission remain
 unsupported; the HLS Laboratory milestone remains **PARTIAL**.
+
+## 2026-10-16 18:14 +02:00 — N×K coordination policies (Phase 3C)
+
+**Type:** authorized engineering implementation and regression validation.
+**Authority:** CE Phase 3C authorization. **Scope:** generalize the existing
+P0/P1/P2 decision rules and connect them to N×K production/teaching episodes;
+no new policy, production equation, MIS-v2 law, teaching equation, campaign,
+or historical artifact was introduced or changed.
+
+The N×K policy adapter preserves P0's lexicographic success/deficit/margin/
+effort ranking and production-only behavior; P1's single configured directed
+teaching relation and production-only fallback; and P2's production-success
+check, configured relation exploration order, efficacy running-mean ranking,
+threshold and numeric-index tie-break. It enumerates complete feasible
+production/one-lesson actions, charges both teaching participants, and fails
+if the declared candidate bound is exceeded. The N×K decision view exposes
+perfectly observed competence and public efficacy memory but not private
+efficacy or the organization configuration. P2's formative memory uses the
+existing deterministic zero-noise outcome observation; the existing
+organizational-learning toggle controls whether that memory updates.
+
+The original 3×2 policy tests were run against generalized choices and
+outcomes with matched perfect information and zero observation noise. The
+ordered 64-action production and 508-action integrated catalogues remain
+unchanged. Focused Phase 1–3B plus Phase 3C validation passed **93 tests**.
+The full suite completed in **490.82 s**: **1,337 passed, 5 failed**. The
+five failures are unchanged provenance/integrity cases:
+
+- `tests/foundations/test_result_manifests.py::test_every_foundation_result_has_consistent_manifest`
+- `tests/test_campaign2_state_coverage_audit.py::test_frozen_inputs_and_completed_artifacts`
+- `tests/test_campaign2_theory.py::test_preexperiment_manifest_and_contamination_boundary`
+- `tests/test_campaign3_meta_voc_confirmatory.py::test_pre_execution_manifest_and_raw_integrity_when_present`
+- `tests/test_strategy_discrimination_gate.py::test_source_hashes_and_raw_output_hashes`
+
+Engineering microbenchmarks cover 1×1, 2×2, 3×2 and 4×3 joint catalogues and
+short episodes; exact configurations and measurements are in the
+[N×K technical design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md).
+N=1 supports P0 only because no valid directed teaching relation exists;
+P1/P2 require a non-empty valid relation. Competence estimation, imperfect
+information/noisy efficacy observations and scientific campaigns remain
+outside this phase. HLS Laboratory remains **PARTIAL**.
+
+Implementation commit: `5418d6e` (`feat(hls): generalize NK coordination policies`).
+Regression commit: `277cb28c85f1ef2727b1d5ec1a2ddff71729f775`
+(`test(hls): verify NK P0 P1 P2 coordination`).

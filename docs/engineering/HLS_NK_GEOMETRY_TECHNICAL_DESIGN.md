@@ -555,3 +555,105 @@ actions. **Still unsupported:** generalized P1/P2, automatic teaching action
 selection, competence estimation/partial information, environment emission,
 multi-recipient lessons, simultaneous lessons, and mechanisms beyond the
 historical equations. HLS Laboratory remains **PARTIAL**.
+
+## 13. Phase 3C — N×K P0/P1/P2 coordination
+
+The Phase 3C adapter is in `src/hls/hls_lab_nk_policies.py`; policy execution
+is additive in `src/hls/hls_lab_nk_execution.py`. The original 3×2 module and
+its frozen serialized traces remain unchanged.
+
+### Historical policy definitions retained
+
+All three policies rank production using the legacy lexicographic tuple
+`(functional_success, -normalized_deficit, productive_margin, -productive_effort)`;
+gross CES is measured but is not substituted into this ranking. Ties select
+the first action in catalogue order.
+
+* **P0** selects the first best-ranked production-only allocation and never
+  teaches, even when teaching is available.
+* **P1** has one configured directed `(teacher, learner, skill)` relation. It
+  chooses the best-ranked feasible joint action with that exact lesson; if no
+  such action is feasible or teaching is disabled, it falls back to its best
+  production-only action. P1 does not inspect requirements, efficacy or memory
+  to decide whether to try that relation.
+* **P2** first returns the best production-only action if it already succeeds.
+  Otherwise it retains configured relations whose skill is required and
+  whose learner's estimated competence is below the configured target. It
+  selects the first eligible relation with no formative observation yet; once
+  all eligible relations have observations, it selects the highest running
+  mean efficacy estimate, breaking ties by the smallest legacy numeric
+  `(teacher_index, learner_index, skill_index)`. It teaches only when that
+  estimate is at least the configured efficacy threshold. If teaching is
+  unavailable or the chosen lesson is infeasible, it falls back to P0.
+  P2 is not a return optimizer and uses no future state.
+
+The N×K action uses stable IDs, while tie-breaking and candidate order use the
+organization's declared index order. The generalized joint catalogue loops
+through production actions in their existing order, appends the no-lesson
+action first, and then visits teacher, learner (skipping self), and skill in
+ascending index order. This reproduces the historical 3×2 508-action order.
+At most one lesson is possible in a period. For `M` raw production candidates,
+the guarded joint search space is `M × (1 + N(N−1)K)` when teaching is enabled;
+the implementation fails explicitly if that bound exceeds `max_candidates`
+and never truncates. The production-only path keeps its original `M` bound.
+
+### Information, memory and transition timing
+
+As required for this phase, the policy decision view uses perfect competence
+information (`estimated = actual` at each period). It contains no private
+efficacy tensor or organization configuration. P2's efficacy memory contains
+only a running mean of the existing formative response signal. With the
+current N×K runner's deterministic, zero-observation-noise condition, the
+legacy normalization is
+`signal = observed_gain / (transfer_rate × effort × (1 − competence_after_MIS))`;
+when the denominator is at most `1e-12`, the legacy efficacy prior is used.
+Signals are clipped to `[0,1]` in the existing running-mean update. Setting
+`organizational_learning=False` preserves the legacy no-memory-update mode.
+No competence estimator or observation noise is added.
+
+Each period remains production and CES from pre-transition competence, then
+MIS-v2 if enabled, then directed teaching if selected, then the efficacy-memory
+update if organizational learning is enabled. Teaching and production are
+jointly validated against both participants' effort limits and the shared
+effective budget. The runner does not revise the policy's productive
+allocation to make room for a lesson. When teaching is disabled, P1/P2's
+available catalog has no lesson actions and the historical fallback applies.
+For `N=1`, P0 remains usable; P1/P2 cannot be configured with a valid relation
+because self-teaching is prohibited and the historical P2 requires a
+non-empty relation list.
+
+### Verification and engineering timing
+
+`tests/test_hls_lab_nk_policies.py` checks the P0/P1/P2 rules independently,
+the 64-production/508-integrated 3×2 catalogs and their ordering, deterministic
+zero-noise 3×2 decisions/outcomes against the legacy policies with MIS OFF/ON,
+relation-order ties, policy information boundaries, teaching-off fallbacks,
+N×K dimensions, and resource feasibility. Existing Phase 1–3B regressions
+remain in force. The measured 3×2 policy comparisons are exact under matched
+initial competencies, deterministic zero-noise observations, matching policy
+parameters and the perfect-information condition; they do not claim equivalence
+to legacy Bayesian competence estimates under noisy observations.
+
+The following local measurements used a three-period episode, a 3×2 default
+production catalog, and for other dimensions per-agent catalogs containing
+zero plus one 0.5-effort vector per skill. Each timing row is the mean of three
+joint-enumeration runs; P1/P2 selection is the mean of 100 calls on one fixed
+view; episode and `tracemalloc` peak are single local runs. Candidate count is
+the raw joint upper bound / resulting feasible joint count. Environment was
+Python 3.11.9 on macOS arm64. These are engineering microbenchmarks, not
+performance guarantees.
+
+| N×K | Joint upper bound / feasible | Enumeration ms | P1 select ms | P2 select ms | 3-period episode ms | Peak traced bytes | Serialized trace bytes |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 1×1 | 2 / 2 | 0.021 | N/A | N/A | 2.293 | 16,800 | 3,256 |
+| 2×2 | 45 / 45 | 0.174 | 0.0799 | 0.1196 | 15.289 | 28,056 | 4,518 |
+| 3×2 | 832 / 508 | 3.113 | 0.3989 | 1.0671 | 95.621 | 169,272 | 5,288 |
+| 4×3 | 9,472 / 9,472 | 37.222 | 2.247 | 4.2286 | 1,064.505 | 2,453,208 | 6,538 |
+
+The Phase 3C focused suite passed 93 tests, including all Phase 1–3B checks
+and the historical integrated-policy suite. The complete suite passed 1,337
+tests and retained the same five documented provenance/integrity failures;
+the names are recorded in `HISTORY.md`.
+Competence estimation, imperfect information, environment generation and
+scientific campaigns remain unsupported/in scope-HOLD. HLS Laboratory remains
+**PARTIAL**.

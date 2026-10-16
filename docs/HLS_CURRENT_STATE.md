@@ -26,10 +26,10 @@ emitter; problem trajectories are frozen before policy evaluation. Two
 authorized provenance validators were corrected: B2.3 now verifies the
 protocol blob at the run's recorded Git revision, and Campaign 2 preregistration
 checks source/artifact scope against its immutable freeze snapshot. The latest
-full suite reports 1288 passed and 5 failed (2026-10-16); those remaining
-failures concern the foundation inventory/B13 manifest, unavailable
-`finite_problem_belief.py` source evidence, and Campaign 2 closure-document
-hashes. Provenance is not fully restored. See the
+full suite (2026-10-16 18:12 +02:00) reports 1,337 passed and the same 5
+historical provenance/integrity failures: foundation inventory/B13 manifest,
+unavailable `finite_problem_belief.py` source evidence, and Campaign 2
+closure-document hashes. Provenance is not fully restored. See the
 [provenance diagnosis](engineering/HLS_PROVENANCE_FAILURE_DIAGNOSIS.md) and
 the dated [history entry](HISTORY.md).
 As of **2026-10-16 14:56 +02:00** (Europe/Madrid), the additive N×K path
@@ -79,6 +79,29 @@ Campaign 3 frozen source hash, and strategy-gate source hash); no functional
 regressions appeared. Performance and equation details are recorded in the
 [N×K technical design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md).
 HLS Laboratory remains **PARTIAL**; no campaign was run.
+
+**Current N×K status — 2026-10-16 18:13 +02:00 (Europe/Madrid):** Phase 3C adds
+dimension-independent P1/P2 coordination and automatic joint production /
+teaching action selection to the N×K runner. P0 remains production-only. The
+historical lexicographic production ranking, P1 fixed directed relation, P2
+success-first/unseen-relation/efficacy-threshold rules, catalogue tie order,
+and production → MIS-v2 → teaching timing are retained. Joint actions enforce
+individual participant loads and the shared budget, with explicit
+`max_candidates` failure rather than truncation. Policy views contain problem
+requirements, current estimated competence (the required perfect-information
+condition), allowed feasible actions and observed efficacy memory, but no
+private efficacy tensor or organization configuration. P2's formative update
+uses the existing deterministic zero-noise observation case. Direct 3×2
+decision and outcome checks match the legacy policies under matched perfect
+information; the 64-production/508-integrated catalogues remain pinned. N=1
+supports P0; P1/P2 require a valid distinct-agent teaching relation and
+therefore cannot be instantiated for N=1. Competence estimation, imperfect
+information and noisy formative observations remain unsupported. Focused
+validation and engineering measurements are recorded in the [N×K technical
+design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md). No scientific
+campaign was run. Phase 3C focused validation passed 93 tests; the full suite
+passed 1,337 and retained the same five documented historical provenance /
+integrity failures. HLS Laboratory remains **PARTIAL**.
 
 The ten-file minimum reproducible package is published on
 `feature/hls-laboratory-v1` at `37a011804f9ea013fc3a5436c00a72eb0b8280da`.
