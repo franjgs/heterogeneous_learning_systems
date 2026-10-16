@@ -514,15 +514,16 @@ state transitions, time-indexed regime change, configuration errors,
 historical 3×2 equivalence, and generated-demand replay across P0/P1/P2 × MIS
 ON/OFF × teaching ON/OFF × perfect/imperfect information. It also checks that
 the generated path returned by the runner corresponds exactly to its episode
-problem IDs. The targeted environment/C5/dynamic/Phase 1–3D selection passed
-154 tests. `PYTHONPATH=src:. python -m pytest -q` completed with 1,390 passed
+problem IDs and reuse of the same frozen path by different N-agent teams. The
+targeted environment/C5/dynamic/Phase 1–3D selection passed 155 tests.
+`PYTHONPATH=src:. python -m pytest -q` completed with 1,390 passed
 and five failed in 515.55 s. The five are the documented provenance/integrity
 failures: foundation result inventory count; Campaign 2 state-coverage closure
 digest; Campaign 2 theory source digest; Campaign 3 frozen
 `finite_problem_belief.py` digest; and strategy-discrimination source digest.
-The full-suite command ran before the final test-only seed-variation case; the
-updated environment test module then passed 34/34. No new functional regression
-was observed. These repository-level failures and pre-existing unrelated
+The full-suite command ran before the final test-only seed-variation and
+cross-organization replay controls; the updated environment test module then
+passed 35/35. No new functional regression was observed. These repository-level failures and pre-existing unrelated
 worktree changes were not repaired or staged. Detailed names and reproduction
 context are in the Phase 4 history entry.
 

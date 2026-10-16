@@ -15,7 +15,7 @@ undated where the source material does not establish a defensible event date.
 
 | Event / record | Event date and confidence | Record date and evidence | Scope note |
 | --- | --- | --- | --- |
-| N×K environment and demand generation, Phase 4 | **2026-10-16 20:07 +02:00, verified final validation record.** | Recorded 2026-10-16 20:07 +02:00 (Europe/Madrid); code in `src/hls/hls_lab_nk_environment.py`, integration in `src/hls/hls_lab_nk_execution.py`, tests in `tests/test_hls_lab_nk_environment.py`. | Generalized N×K emission over existing C5 IID/stationary, time-indexed nonstationary and first-order Markov task processes. Frozen paths retain configuration, seed, latent states/regime labels and `ProblemSpecNK` outputs. Optional runner generation reuses the explicit-sequence path. Historical 3×2 emissions matched. Combined focused environment/C5/dynamic/Phase 1–3D selection: 154 passed. Full suite: 1,390 passed, 5 failed in 515.55s; the five failures are the previously documented provenance/integrity failures. No physics, historical artifacts or campaigns changed; HLS remains PARTIAL. |
+| N×K environment and demand generation, Phase 4 | **2026-10-16 20:08 +02:00, verified final validation record.** | Recorded 2026-10-16 20:08 +02:00 (Europe/Madrid); code in `src/hls/hls_lab_nk_environment.py`, integration in `src/hls/hls_lab_nk_execution.py`, tests in `tests/test_hls_lab_nk_environment.py`. | Generalized N×K emission over existing C5 IID/stationary, time-indexed nonstationary and first-order Markov task processes. Frozen paths retain configuration, seed, latent states/regime labels and `ProblemSpecNK` outputs. Optional runner generation reuses the explicit-sequence path. Historical 3×2 emissions matched. Combined focused environment/C5/dynamic/Phase 1–3D selection: 155 passed. Full suite: 1,390 passed, 5 failed in 515.55s; the five failures are the previously documented provenance/integrity failures. No physics, historical artifacts or campaigns changed; HLS remains PARTIAL. |
 | N×K competence estimation and imperfect observation, Phase 3D | **2026-10-16 19:06 +02:00, verified implementation/final-validation completion.** | Recorded 2026-10-16 19:10 +02:00 (Europe/Madrid); current code/tests in `src/hls/hls_lab_nk_estimation.py`, `src/hls/hls_lab_nk_execution.py`, and `tests/test_hls_lab_nk_estimation.py`. | Added explicit perfect/imperfect information execution using the unchanged scalar historical posterior, production-observation likelihood, indexed noise streams, MIS posterior prediction and formative teaching observation. N×K actual state remains the physical state; the policy view receives estimates only. Exact noisy 3×2 comparisons matched legacy P1/P2 decisions, observations, estimates, transitions and efficacy memory; perfect mode matches actual competence and the default runner contracts remain unchanged. Focused/regression selection: 86 passed. Full suite: 1,357 passed, 5 failed in 483.40s; exactly the known foundation inventory, Campaign 2 closure/theory digest, Campaign 3 frozen source, and strategy-gate integrity failures. Engineering timings recorded in the N×K design. No scientific campaign or frozen artifact modification; HLS Laboratory remains PARTIAL. |
 | N×K directed teaching Phase 3B | **2026-10-16 16:22 +02:00, verified final validation time.** | Recorded 2026-10-16 16:22 +02:00 (Europe/Madrid), based on the system clock and final test output; implementation commit `551a661`. | Added an N×N×K relation-efficacy adapter and explicit joint-action runner path. Preserves the legacy equation, two-party effort charge, and production → MIS-v2 → teaching ordering; no teaching-selection policy is included. Historical 3×2 episode outputs and transition matched. Focused validation 95 passed; full suite 1320 passed, 5 failed in 479.80s, the same five provenance/integrity failures as the documented baseline. No historical artifacts or hashes changed. HLS remains PARTIAL. |
 | N×K MIS-v2 learning-by-doing Phase 3A | **2026-10-16 15:50 +02:00, verified final validation time.** | Recorded 2026-10-16 15:50 +02:00 (Europe/Madrid); commits `c9ccbca`, `5b8e9f7`, paired-control test `4f7a310`, and this scoped documentation update. | Added a dimension-generic adapter over the unchanged DISCOVER-v2 scalar transition and an optional P0 learning episode mode. MIS is applied after production/reward and affects the next period; MIS-OFF retains Phase 2 result and serialization. N×K P1/P2, teaching, estimation and environment emission remain unsupported. 87 focused tests passed. Full suite: 1303 passed, 5 failed; all five match the pre-existing provenance/integrity baseline. No historical artifacts or hashes changed; HLS remains PARTIAL. |
@@ -1182,7 +1182,7 @@ historical artifacts or expected hashes changed. HLS Laboratory remains
 
 ### 2026-10-16 — N×K environment and demand generation, Phase 4
 
-**Event and record:** 2026-10-16 20:07 +02:00 (Europe/Madrid), verified by the
+**Event and record:** 2026-10-16 20:08 +02:00 (Europe/Madrid), verified by the
 system clock. **Authority:** Phase 4 CE authorization. **Type:** additive
 environment generalization and focused validation.
 
@@ -1205,8 +1205,9 @@ scientific equation or historical module was changed.
 replay, stationary/IID, Markov transitions, indexed nonstationarity, invalid
 catalogue/configuration, exact historical 3×2 emission, and integrated replay
 across P0/P1/P2 × MIS × teaching × perfect/imperfect information. The focused
-environment, C5, dynamic laboratory and Phase 1–3D regressions passed 154
-tests after adding the final different-seed control. The complete
+environment, C5, dynamic laboratory and Phase 1–3D regressions passed 155
+tests after adding controls for different seeds and reuse across organizations.
+The complete
 `PYTHONPATH=src:. python -m pytest -q` run passed 1,390 tests and failed the
 same five documented provenance/integrity checks in 515.55s:
 `test_every_foundation_result_has_consistent_manifest` (current inventory is
@@ -1216,7 +1217,7 @@ same five documented provenance/integrity checks in 515.55s:
 `test_source_hashes_and_raw_output_hashes`. The latter four concern existing
 frozen artifact/source mismatches, including the already-modified
 `finite_problem_belief.py`; they are outside Phase 4 and were not changed.
-The full-suite run preceded the final test-only seed-control addition; the
-updated full focused selection passed 154/154 afterward. Publication state is
+The full-suite run preceded those two final test-only controls; the updated
+full focused selection passed 155/155 afterward. Publication state is
 recorded in the final handoff; no scientific campaign ran and the laboratory
 remains PARTIAL.

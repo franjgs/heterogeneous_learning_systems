@@ -138,6 +138,25 @@ def test_legacy_3x2_environment_emission_equivalence():
     assert legacy.latent_states == nk.latent_states
 
 
+def test_one_frozen_path_is_reusable_across_organizations_with_same_k():
+    config = ExogenousEnvironmentConfigNK(
+        StationaryTaskDemand({"r": 1.0}),
+        {"r": _regime("r", (_problem("a", (0.7, 0.2)), _problem("b", (0.2, 0.7))), (0.5, 0.5))},
+        2, 2.0,
+    )
+    trajectory = generate_environment_trajectory_nk(config, seed=88)
+    records = []
+    for n in (2, 4):
+        organization = _org(n, 2)
+        result = run_nk_production_sequence(
+            organization, trajectory.problems, max_candidates=1000,
+            policy=P0ProductionOnlyPolicyNK(),
+        )
+        records.append(tuple((row.production.problem_id, row.production.requirements)
+                             for row in result.records))
+    assert records[0] == records[1]
+
+
 @pytest.mark.parametrize("policy_kind", ("P0", "P1", "P2"))
 @pytest.mark.parametrize("information_mode", ("perfect", "imperfect"))
 @pytest.mark.parametrize("mis_enabled", (False, True))
