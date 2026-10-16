@@ -98,6 +98,23 @@ def test_mis_off_preserves_phase2_record_and_serialization_contract():
     assert all(row.competence_before == row.competence_after for row in explicit_off.records)
     assert explicit_off.final_state.competence_real == config.competence_initial
 
+    eta = LearningProfileNK(((0.2, 0.3), (0.1, 0.4)))
+    on = run_nk_production_sequence(
+        config, problems, individual_learning=True, learning_profile=eta, **kwargs,
+    )
+    assert isinstance(on, NKLearningRunResult)
+    assert tuple(row.problem_id for row in explicit_off.records) == tuple(
+        row.production.problem_id for row in on.records
+    )
+    # The first decision/outcome is matched because both modes start from the
+    # same competence matrix; only post-production MIS-v2 can then diverge.
+    assert on.records[0].production.competence_before == explicit_off.records[0].competence_before
+    assert on.records[0].production.action_id == explicit_off.records[0].action_id
+    assert on.records[0].production.allocation == explicit_off.records[0].allocation
+    assert on.records[0].production.outputs == explicit_off.records[0].outputs
+    assert on.records[0].production.competence_after != on.records[0].production.competence_before
+    assert explicit_off.final_state.competence_real == config.competence_initial
+
 
 def test_mis_on_requires_profile_and_applies_only_after_current_production():
     config = _config(1, 1, competence=((0.2,),), limits=(1.0,), budget=1.0)
