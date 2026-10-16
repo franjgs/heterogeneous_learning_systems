@@ -436,7 +436,7 @@ HLS Laboratory remains **PARTIAL**.
 
 ## Phase 3D — competence estimation and imperfect observation (current addendum)
 
-**Recorded:** 2026-10-16 19:06 +02:00 (Europe/Madrid). This is an additive
+**Recorded:** 2026-10-16 19:10 +02:00 (Europe/Madrid). This is an additive
 N×K execution mode; historical 3×2 source, fixtures, manifests, hashes and
 default runner serialization are unchanged.
 

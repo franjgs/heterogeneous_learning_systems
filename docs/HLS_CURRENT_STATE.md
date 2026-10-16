@@ -104,7 +104,7 @@ campaign was run. Phase 3C focused validation passed 93 tests; the final full
 suite passed 1,337 in 475.44 seconds and retained the same five documented historical provenance /
 integrity failures. HLS Laboratory remains **PARTIAL**.
 
-**Current N×K status — 2026-10-16 19:06 +02:00 (Europe/Madrid):** Phase 3D
+**Current N×K status — 2026-10-16 19:10 +02:00 (Europe/Madrid):** Phase 3D
 adds explicit perfect- and imperfect-information execution modes. Imperfect
 mode reuses the historical finite-grid competence posterior, per-cell noisy
 production observations, MIS-v2 posterior prediction, and noisy formative
