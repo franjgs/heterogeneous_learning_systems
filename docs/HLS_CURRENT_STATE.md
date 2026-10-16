@@ -1414,3 +1414,27 @@ authorization, is bounded n-agent/k-skill state/action generalization with
 an exact 3×2 compatibility gate. No code or scientific campaign was run for
 this framework. Historical registrations and results remain unchanged; the
 laboratory remains **PARTIAL**.
+
+### Phase 5A scientific model dossier — 16 October 2026
+
+Recorded at **2026-10-16 20:59 +02:00** (Europe/Madrid), against audited
+source commit `e8e115030e064df23f07f1b5824264f97513099a`. The
+[scientific model dossier](engineering/HLS_SCIENTIFIC_MODEL_DOSSIER.md)
+extracts production/CES, MIS-v2, teaching, policy, observation/estimation,
+resource and demand equations; maps constructs and mathematical properties;
+and links historical G1/G2/MIS/G3-H/RQ0 and Campaign 1–2 evidence. A four-period
+diagnostic reference trace (script and JSON) was replayed exactly and exercises
+production, MIS-v2, P2-directed teaching, imperfect observations, competence
+posterior updates, efficacy memory and resource accounting. This validates
+trace reproducibility, not empirical validity. The dossier records an
+unresolved equation-lineage distinction: the G3/MIS reference's
+`s + eta*(1-s)^2` law is not identical to current DISCOVER-v2 MIS-v2 at unit
+effort, `s + eta*(1-s)`. It also identifies that the 11:14 research framework
+describes the pre-Phase-1 fixed 3×2 implementation; later N×K addenda and
+current code supersede that dated capability map. No scientific source,
+historical artifact, or expected hash was changed. Focused HLS/Phase 1–5
+checks: 161 passed. Final full suite on the current worktree: 1,397 passed,
+5 failed in 634.58s; the five failures are the same known provenance/integrity
+checks (foundation result inventory, Campaign 2 closure/source digests, and
+Campaign 3 / strategy-gate frozen source digests). No failure implicates the
+scientific mechanisms audited here. HLS Laboratory remains **PARTIAL**.
