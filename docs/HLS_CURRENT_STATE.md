@@ -1245,3 +1245,22 @@ machine-readable evidence are in
 `results/diagnostics/hls_q1_preflight/`. The laboratory remains **PARTIAL**;
 the 13 known repository integrity/provenance failures were not rerun or
 modified. Chronology: [HISTORY.md](HISTORY.md).
+
+### Q1-R analytical verification — 16 October 2026
+
+Recorded at **2026-10-16 11:05:36 +02:00** (Europe/Madrid). An exact
+two-period enumeration through the current P0/MIS-v2 integrated runner
+established a conditional stationary-marginal result: with fixed competence,
+memoryless task-specific decisions, per-period reset resources, and stationary
+initialization, IID and Markov demand have equal expected cumulative CES, so
+the architecture × persistence interaction is zero. A minimal current-HLS
+construction with the registered matched competence matrices, two equally
+likely skill-specific demands, budget 2, cap 1, and η=.10 gives
+Θ(MIS OFF)=0 and Θ(MIS ON)=−.003 CES over two periods. The negative
+interaction arises because persistent repetition reuses an already exposed
+skill with architecture-dependent remaining MIS headroom; it is a model-bound
+existence result, not evidence of general advantage. The registered Q1
+24-period MIS-OFF primary remains structurally null and **NO-GO as registered**;
+campaign design/execution remain on HOLD. Details and exact reproducible
+checks: [Q1-R analytical verification](theory/HLS_Q1R_ANALYTICAL_VERIFICATION.md)
+and `tests/test_hls_q1r_analytical.py`. HLS Laboratory remains **PARTIAL**.

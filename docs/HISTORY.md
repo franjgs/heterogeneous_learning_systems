@@ -910,3 +910,42 @@ was not rerun; the 13 previously documented integrity/provenance failures
 remain unresolved and untouched. HLS Laboratory remains **PARTIAL**. Evidence,
 runner, tests, results and hashes: [Q1 preflight](experiments/HLS_Q1_PREFLIGHT.md)
 and `results/diagnostics/hls_q1_preflight/`.
+
+### 2026-10-16 — Q1-R analytical verification
+
+**Event/recorded:** 2026-10-16 11:05:36 +02:00 (Europe/Madrid). **Authority:**
+CE authorization for analytical verification; campaign design and execution
+remain on HOLD. **Type:** exact finite-state mathematical/computational check;
+no simulator physics, registered Q1 protocol, or historical campaign artifact
+was changed.
+
+Under fixed competence, stationary initialization with common demand marginal,
+memoryless task-specific P0 decisions, time-invariant actions/constraints,
+and per-period resource reset, the expected cumulative reward is
+`T * sum_d pi[d] * u_A(d)` for either IID or Markov demand. Hence the
+architecture × persistence interaction is zero for MIS OFF under those
+conditions, though the realized path distributions need not be equal. The
+current runner's competence posterior can update even with MIS OFF; the result
+requires that this update not change P0's decision mapping, as in the registered
+full-information, zero-observation-noise contract. No universal claim that
+Theta(0) must vanish under partial/noisy estimates is made.
+
+An exhaustive two-period enumeration over all four demand paths using the
+existing P0/MIS-v2 runner produced `Theta(0)=0` and `Theta(1)=-0.003` gross
+CES for matched homogeneous and tilted architectures, with `pi=(.5,.5)`,
+Markov persistence `.8`, `B=2`, cap `1`, and `eta=.10`. Architecture effects
+were `.200` under MIS OFF for both processes, `.195` under IID/MIS ON, and
+`.192` under Markov/MIS ON. This is a negative, design-conditional existence
+result: repeated exposure reduces the tilted architecture's relative
+remaining-gap learning increment. It demonstrates current-model
+expressibility, not general superiority, external validity, or a novel
+scientific result. The accounting identity for the factorial interaction
+holds; it does not causally separate MIS from its effect on future P0 action
+paths.
+
+The mathematical derivation, exact parameters and reproduction command are in
+[Q1-R analytical verification](theory/HLS_Q1R_ANALYTICAL_VERIFICATION.md);
+the executable enumeration is `tests/test_hls_q1r_analytical.py`. Focused
+validation passed (2 tests). The Q1 preflight's 24-period MIS-OFF primary
+remains **NO-GO as registered**; no campaign was redesigned or run. The
+laboratory remains **PARTIAL**.
