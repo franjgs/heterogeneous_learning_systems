@@ -19,6 +19,7 @@ from .hls_lab_nk_geometry import (
     ProblemSpecNK,
     ProductiveAllocationNK,
     enumerate_productive_action_entries_nk,
+    validate_productive_allocation_nk,
 )
 from .hls_lab_nk_production import (
     FunctionalResultNK,
@@ -28,6 +29,14 @@ from .hls_lab_nk_production import (
     productive_outputs_nk,
 )
 from .hls_lab_nk_learning import LearningProfileNK, mis_v2_transition_nk
+from .hls_lab_nk_nembhard import (
+    NembhardDirectExecutionNK,
+    NembhardDirectStateNK,
+    NembhardDirectProfileNK,
+    NembhardOutputUnitContract,
+    advance_nembhard_experience_nk,
+    nembhard_productive_outputs_nk,
+)
 from .hls_lab_nk_estimation import (
     CompetenceObservationParametersNK,
     CompetencePosteriorNK,
@@ -186,7 +195,52 @@ class NKEnvironmentRunResult:
     """
 
     trajectory: EnvironmentTrajectoryNK
-    execution: NKProductionRunResult | NKLearningRunResult | NKTeachingRunResult | NKInformationRunResult
+    execution: NKProductionRunResult | NKLearningRunResult | NKTeachingRunResult | NKInformationRunResult | NKNembhardDirectRunResult
+
+
+@dataclass(frozen=True)
+class NKNembhardDirectEpisodeRecord:
+    mechanism_id: str
+    period: int
+    problem_id: str
+    requirements: tuple[float, ...]
+    ces_weights: tuple[float, ...]
+    allocation: ProductiveAllocationNK
+    duration: float
+    experience_before: tuple[tuple[float, ...], ...]
+    productivity_before: tuple[tuple[float, ...], ...]
+    individual_outputs: tuple[tuple[float, ...], ...]
+    outputs: tuple[float, ...]
+    experience_increment: tuple[tuple[float, ...], ...]
+    experience_after: tuple[tuple[float, ...], ...]
+    functional_result: FunctionalResultNK
+    ces_reward: float
+    organization_effort_budget: float
+    problem_effort_budget: float
+    effective_collective_budget: float
+    individual_effort_limits: tuple[float, ...]
+    individual_effort_used: tuple[float, ...]
+    productive_effort_used: float
+    effective_work_used: float
+    unused_collective_capacity: float
+
+
+@dataclass(frozen=True)
+class NKNembhardDirectRunResult:
+    mechanism_id: str
+    agent_ids: tuple[str, ...]
+    skill_ids: tuple[str, ...]
+    effort_intensity_unit: str
+    duration_unit: str
+    exposure_unit: str
+    output_unit: str
+    requirement_unit: str
+    initial_experience: tuple[tuple[float, ...], ...]
+    final_experience: tuple[tuple[float, ...], ...]
+    profile_k: tuple[tuple[float, ...], ...]
+    profile_p: tuple[tuple[float, ...], ...]
+    profile_r: tuple[tuple[float, ...], ...]
+    records: tuple[NKNembhardDirectEpisodeRecord, ...]
 
 
 def run_nk_production_sequence(
@@ -210,7 +264,9 @@ def run_nk_production_sequence(
     information_mode: str | None = None,
     observation_parameters: CompetenceObservationParametersNK = CompetenceObservationParametersNK(),
     information_seed: int = 0,
-) -> NKProductionRunResult | NKLearningRunResult | NKTeachingRunResult | NKInformationRunResult | NKEnvironmentRunResult:
+    mechanism_id: str = "mis_v2",
+    nembhard_execution: NembhardDirectExecutionNK | None = None,
+) -> NKProductionRunResult | NKLearningRunResult | NKTeachingRunResult | NKInformationRunResult | NKEnvironmentRunResult | NKNembhardDirectRunResult:
     """Run episodes over either a frozen sequence or generated environment.
 
     P0 receives actual competence as its estimate at each decision (the
@@ -228,7 +284,35 @@ def run_nk_production_sequence(
     environmental random draws.
     Generated demand is frozen first and then passed through exactly this
     explicit-sequence path. Existing callers need not adopt an environment.
+
+    The explicit selector ``mechanism_id="mis_v2"`` follows this same
+    historical path as the default. ``mechanism_id="nembhard_direct"`` opts
+    into the separate direct-experience branch, which requires explicit
+    allocations and unit calibration and does not use competence, P0/P1/P2,
+    MIS-v2, teaching, or estimation.
     """
+    if not isinstance(mechanism_id, str) or mechanism_id not in {"mis_v2", "nembhard_direct"}:
+        raise ValueError("mechanism_id must be 'mis_v2' or 'nembhard_direct'")
+    if mechanism_id == "mis_v2" and nembhard_execution is not None:
+        raise ValueError("nembhard_execution requires mechanism_id='nembhard_direct'")
+    if mechanism_id == "nembhard_direct":
+        if nembhard_execution is None:
+            raise ValueError("Nembhard Direct requires nembhard_execution configuration")
+        if not isinstance(nembhard_execution, NembhardDirectExecutionNK):
+            raise TypeError("nembhard_execution must be NembhardDirectExecutionNK")
+        if (individual_learning or learning_profile is not None or teaching_enabled
+                or teaching_efficacy is not None or explicit_actions is not None
+                or policy is not None or initial_policy_memory is not None
+                or information_mode is not None or per_agent_effort_choices is not None
+                or not organizational_learning
+                or teaching_parameters != TeachingParametersNK()
+                or policy_parameters != TeachingPolicyParametersNK()
+                or observation_parameters != CompetenceObservationParametersNK()
+                or information_seed != 0):
+            raise ValueError(
+                "Nembhard Direct accepts explicit allocations only; MIS-v2, teaching, "
+                "P0/P1/P2, competence estimation and action catalog overrides are unsupported"
+            )
     if environment is not None:
         if problems is not None:
             raise ValueError("supply either problems or environment, not both")
@@ -251,12 +335,19 @@ def run_nk_production_sequence(
             information_mode=information_mode,
             observation_parameters=observation_parameters,
             information_seed=information_seed,
+            mechanism_id=mechanism_id,
+            nembhard_execution=nembhard_execution,
         )
         return NKEnvironmentRunResult(trajectory, execution)
     if environment_seed is not None:
         raise ValueError("environment_seed requires an environment")
     if not problems:
         raise ValueError("problem sequence must be non-empty")
+    if mechanism_id == "nembhard_direct":
+        assert nembhard_execution is not None
+        return _run_nk_nembhard_direct_sequence(
+            organization, problems, nembhard_execution,
+        )
     initial = organization.initial_state()
     if information_mode is not None:
         if information_mode not in {"perfect", "imperfect"}:
@@ -953,6 +1044,102 @@ def _run_nk_learning_sequence(
     return NKLearningRunResult(tuple(records), state)
 
 
+def _run_nk_nembhard_direct_sequence(
+    organization: OrganizationConfigNK,
+    problems: tuple[ProblemSpecNK, ...],
+    configuration: NembhardDirectExecutionNK,
+) -> NKNembhardDirectRunResult:
+    """Execute explicit feasible allocations under the separate Nembhard state.
+
+    ``organization`` supplies agent/skill identifiers and existing effort
+    limits/budgets only. Its competence matrices are not read by this path.
+    """
+    n, k = len(organization.agent_ids), len(organization.skill_ids)
+    configuration.profile.validate_dimensions(n, k)
+    if len(configuration.allocations) != len(problems):
+        raise ValueError("Nembhard allocations must contain one allocation per problem")
+    state = configuration.initial_state or NembhardDirectStateNK.zeros(n, k)
+    state.validate_dimensions(n, k)
+    units = configuration.unit_contract
+    records: list[NKNembhardDirectEpisodeRecord] = []
+
+    for period, (problem, allocation) in enumerate(zip(problems, configuration.allocations)):
+        if len(problem.requirements) != k:
+            raise ValueError(f"problem {problem.problem_id} does not match organization K")
+        if not validate_productive_allocation_nk(allocation, organization, problem):
+            raise ValueError(f"Nembhard allocation at period {period} is infeasible")
+        effort_by_agent = tuple(sum(row) for row in allocation)
+        effort_used = sum(effort_by_agent)
+        effective_budget = min(organization.collective_effort_budget, problem.resource_budget)
+        if effort_used > effective_budget + TOL or any(
+            effort_by_agent[i] > organization.effort_limits[i] + TOL for i in range(n)
+        ):
+            raise AssertionError("validated Nembhard allocation violates resource constraints")
+
+        experience_before = state.experience
+        outputs, productivity = nembhard_productive_outputs_nk(
+            allocation, state, configuration.profile,
+            period_duration=configuration.period_duration,
+        )
+        individual_outputs = tuple(tuple(
+            allocation[i][skill] * productivity[i][skill] * configuration.period_duration
+            for skill in range(k)
+        ) for i in range(n))
+        functional = evaluate_problem_nk(outputs, problem.requirements)
+        reward = ces_reward_nk(outputs, problem.ces_weights)  # type: ignore[arg-type]
+
+        next_state = advance_nembhard_experience_nk(
+            state, allocation, period_duration=configuration.period_duration,
+        )
+        increments = tuple(tuple(next_state.experience[i][skill] - experience_before[i][skill]
+                                 for skill in range(k)) for i in range(n))
+        records.append(NKNembhardDirectEpisodeRecord(
+            mechanism_id="nembhard_direct_v0.1_hls_adaptation",
+            period=period,
+            problem_id=problem.problem_id,
+            requirements=problem.requirements,
+            ces_weights=problem.ces_weights,  # type: ignore[arg-type]
+            allocation=allocation,
+            duration=configuration.period_duration,
+            experience_before=experience_before,
+            productivity_before=productivity,
+            individual_outputs=individual_outputs,
+            outputs=outputs,
+            experience_increment=increments,
+            experience_after=next_state.experience,
+            functional_result=functional,
+            ces_reward=reward,
+            organization_effort_budget=organization.collective_effort_budget,
+            problem_effort_budget=problem.resource_budget,
+            effective_collective_budget=effective_budget,
+            individual_effort_limits=organization.effort_limits,
+            individual_effort_used=effort_by_agent,
+            productive_effort_used=effort_used,
+            effective_work_used=effort_used * configuration.period_duration,
+            unused_collective_capacity=max(0.0, effective_budget - effort_used),
+        ))
+        state = next_state
+
+    return NKNembhardDirectRunResult(
+        mechanism_id="nembhard_direct_v0.1_hls_adaptation",
+        agent_ids=organization.agent_ids,
+        skill_ids=organization.skill_ids,
+        effort_intensity_unit=units.effort_intensity_unit,
+        duration_unit=units.duration_unit,
+        exposure_unit=units.exposure_unit,
+        output_unit=units.output_unit,
+        requirement_unit=units.requirement_unit,
+        initial_experience=(configuration.initial_state.experience
+                            if configuration.initial_state is not None
+                            else NembhardDirectStateNK.zeros(n, k).experience),
+        final_experience=state.experience,
+        profile_k=configuration.profile.asymptotic_productivity,
+        profile_p=configuration.profile.prior_experience,
+        profile_r=configuration.profile.experience_scale,
+        records=tuple(records),
+    )
+
+
 def serialize_nk_production_result(result: NKProductionRunResult) -> str:
     """Stable JSON serialization for exact deterministic replay checks."""
     return json.dumps(asdict(result), sort_keys=True, separators=(",", ":"), allow_nan=False)
@@ -970,4 +1157,9 @@ def serialize_nk_teaching_result(result: NKTeachingRunResult) -> str:
 
 def serialize_nk_information_result(result: NKInformationRunResult) -> str:
     """Stable JSON serialization for explicit perfect/imperfect-information runs."""
+    return json.dumps(asdict(result), sort_keys=True, separators=(",", ":"), allow_nan=False)
+
+
+def serialize_nk_nembhard_direct_result(result: NKNembhardDirectRunResult) -> str:
+    """Stable JSON serialization for Nembhard Direct adapted trajectories."""
     return json.dumps(asdict(result), sort_keys=True, separators=(",", ":"), allow_nan=False)

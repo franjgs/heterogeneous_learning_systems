@@ -2,8 +2,9 @@
 
 This module implements only the scalar direct-experience curve from
 Nembhard & Bentefouet (2015), Eq. (1), printed p. 176. It is intentionally
-separate from HLS normalized competence, MIS-v2, production, and the N×K
-episode runner.
+separate from HLS normalized competence and the native MIS-v2 transition.
+The N×K adapter applies this scalar law under a separately declared HLS
+exposure/output convention.
 
 The implemented operational domain is ``k >= 0``, ``p >= 0``, ``r > 0`` and
 ``D >= 0``. This is the positive-scale monotone/saturating domain used for
