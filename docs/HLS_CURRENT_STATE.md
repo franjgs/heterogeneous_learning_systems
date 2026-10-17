@@ -7,6 +7,25 @@ position of the HLS research programme.
 Frozen protocols, detailed derivations, executable code, and result artifacts
 remain authoritative for their own scope; this file does not replace them.
 
+## Consolidated laboratory status — 2026-10-17
+
+The published laboratory retains an operational HLS N×K / MIS-v2 route.
+Nembhard Direct is available with explicit feasible allocations,
+`nembhard_oracle`, and `nembhard_adaptive`. The contextual quality–cost router
+is an independent capability, not connected to the N×K runner. A versioned
+common experiment envelope adapts these route results with typed events,
+route-specific metrics, units, provenance fields, and stable JSON; it does not
+establish scientific comparability across mechanisms. System-1.x and Baccara
+remain deferred. HLS Laboratory remains **PARTIAL**.
+
+The last full-suite result reported before this documentation task was 1,487
+passed and 5 known historical integrity/inventory failures. This task did not
+rerun the suite. No new campaign was executed as part of the recent mechanism
+integration and documentation work. The current priority is to
+design—not execute—a first Nembhard allocation protocol; see the dated
+decision in the [execution plan](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md)
+and [history](HISTORY.md).
+
 The programme-level philosophy is defined in [HLS_PHILOSOPHY.md](HLS_PHILOSOPHY.md),
 and the common semantic contract is defined in [the HLS ontology](hls_ontology.md).
 
