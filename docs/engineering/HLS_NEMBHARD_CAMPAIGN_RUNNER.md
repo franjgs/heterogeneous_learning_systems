@@ -1,8 +1,8 @@
 # HLS Nembhard E1 campaign runner and analysis
 
-**Status:** implementation and small-test validation complete; campaign not
-executed. **Execution:** pending separate PI/CE authorization. HLS Laboratory
-remains **PARTIAL**.
+**Status:** implementation and small-test validation complete; HLS-E1 execution
+was started and interrupted. The campaign is **NOT COMPLETED** and partial
+outputs are not scientific conclusions. HLS Laboratory remains **PARTIAL**.
 
 This module operationalizes the reviewed protocol in
 [`docs/experiments/HLS_NEMBHARD_ADAPTIVE_ALLOCATION_PROTOCOL.md`](../experiments/HLS_NEMBHARD_ADAPTIVE_ALLOCATION_PROTOCOL.md).
@@ -132,10 +132,79 @@ The full campaign additionally requires the explicit token:
 python -m hls.nembhard_campaign run --all --confirm-campaign HLS-EXECUTE-1016
 ```
 
-That command was **not** run. `validate` only constructs and checks the
-registry and does not simulate any configuration. A caller may provide
+`validate` only constructs and checks the registry and does not simulate any
+configuration. A caller may provide
 `--software-revision` when running to record a revision; the tool does not
 guess one. Analysis output written with `--output` also refuses overwrite.
+
+### Inspecting and resuming an interrupted campaign
+
+`status --output-root <path>` reads and validates every present episode
+directory, reports complete and pending counts, and does not execute episodes.
+It rejects unknown episode directories, directories missing any of the three
+expected files, malformed/non-finite JSON, and trajectory/provenance mismatches.
+Completion requires valid `run.json`, `campaign_metrics.json`, and
+`native_nembhard_result.json`, all 120 problem/period records, matching demand
+hashes and expected common trace events. Directory existence alone is not
+completion.
+
+After an interrupted run, the explicit resume command is:
+
+```text
+python -m hls.nembhard_campaign resume --confirm-resume HLS-RESUME-E1 \
+  --output-root results/experiments/hls_nembhard_adaptive_allocation
+```
+
+Resume first validates all existing runs, requires at least one valid completed
+episode, then dispatches only missing IDs in registry order. Existing outputs
+are never replaced. Incomplete or inconsistent episode directories stop the
+resume and require manual investigation; the command never deletes or repairs
+them. `run --all` retains its original behavior and confirmation token.
+Neither `status` nor this documentation update started a resume.
+
+## Incident record — 2026-10-17
+
+HLS-E1 execution was **STARTED AND INTERRUPTED; CAMPAIGN NOT COMPLETED**. The
+reported exception occurred in `ProductivityEstimateCellNK.update()` while
+constructing the Welford state. A minimal reproducible floating-point case is:
+
+```text
+initial estimate / mean_old = 0.6; observation_count = 0
+work = 0.5; observed work output = 0.8336012378255072
+x = observed_output / work = 1.6672024756510144
+delta = 1.0672024756510146
+mean_new = 1.6672024756510146
+delta_after = -2.220446049250313e-16
+m2_old = 0.0; delta * delta_after = -2.3696655208094487e-16
+```
+
+Mathematically, a first observation with count zero must set the sample mean to
+`x` and `m2` to zero. The generic Welford expression `mean_old + delta / 1`
+can round one ULP beyond `x`; this is a small cancellation artifact, not a
+materially negative variance. The `0.6` value is the decision prior, not an
+observed sample. The first-update branch now installs `(x, 1, 0)` directly.
+For subsequent updates, a negative `m2` is normalized only when its magnitude
+fits an eight-ULP bound based on the input/product scale; non-finite and
+materially negative values remain errors. No estimator, observation, seed,
+exploration, production, or experience semantics were changed.
+
+The persisted campaign outputs do not contain the failed episode's in-memory
+observation, so the exact operands from the interruption cannot be recovered.
+The reproduced tuple above establishes the source defect and a valid input
+that triggered the same exception. The 16 completed adaptive traces were
+replayed through the pre-fix arithmetic offline; none had a negative update.
+Observation noise is not mathematically required for the defect, though the
+likely interrupted registry item was the noisy ADAPTIVE run
+`nembhard-e1-07fa9df8f35b0d9e064a` (the 30th item in default registry order).
+The run order and absence of its output directory make this the probable, not
+trace-confirmed, failing ID.
+
+Read-only result audit found **29 complete episodes**, **0 incomplete episode
+directories**, and **0 corrupt JSON files**. All 29 pass the result loader's
+three-file, JSON, demand-hash, mechanism/router, and 120-period trace checks.
+There are **987 pending episodes**. The first pending ID is
+`nembhard-e1-07fa9df8f35b0d9e064a`. No partial result was modified or included
+in version control. These partial trajectories are not campaign findings.
 
 ## Validation and limitations
 
@@ -149,8 +218,15 @@ synthetic periods and does not run the 1,016-episode campaign. Existing
 Nembhard and common-contract tests remain the mechanism and serialization
 authorities.
 
+Incident regression and safe-resume validation passed 74 focused tests across
+the adaptive estimator, Nembhard execution, campaign runner, and common
+experiment contract. The final repository suite passed 1,512 tests and retained
+the same five known historical inventory/provenance failures. No campaign run
+was launched for these checks.
+
 This is an implementation of the existing reviewed protocol, not scientific
 evidence. It does not make ORACLE a long-horizon optimum, isolate the causal
 effect of adaptation from information/exploration, establish FIXED as the
-best possible static baseline, add MIS-v2/teaching, or authorize execution.
-**Campaign not executed; PI/CE execution authorization remains pending.**
+best possible static baseline, or add MIS-v2/teaching. The campaign is
+interrupted and incomplete; resume remains an explicit operation requiring
+review/authorization.

@@ -22,6 +22,8 @@ from hls.hls_lab_nk_nembhard_adaptive import (
     NembhardAdaptiveDecisionViewNK,
     NembhardAdaptiveRouterConfigNK,
     NembhardAdaptiveRouterNK,
+    ProductivityEstimateCellNK,
+    _normalize_welford_dispersion,
     initialize_productivity_estimator_nk,
     observe_nembhard_work_outputs_nk,
     update_productivity_estimator_nk,
@@ -90,6 +92,88 @@ def test_estimator_running_statistics_and_negative_noise_clip():
     clipped = update_productivity_estimator_nk(state, ((1.0,),), ((-8.0,),), minimum_observation_work=1e-9)
     assert clipped.means == ((2.0,),)
     assert clipped.counts == ((3,),)
+
+
+def test_first_welford_observation_does_not_treat_prior_mean_as_a_sample():
+    # This valid noisy-work observation reproduced the interruption: using
+    # the generic count=1 formula from prior mean 0.6 rounds mean_new one ULP
+    # above x and yields m2=-2.3696655208094487e-16.
+    work = 0.5
+    observed_output = 0.8336012378255072
+    observed_productivity = observed_output / work
+    delta = observed_productivity - 0.6
+    rounded_mean = 0.6 + delta / 1
+    rounded_m2 = delta * (observed_productivity - rounded_mean)
+    assert rounded_m2 == pytest.approx(-2.3696655208094487e-16, abs=1e-30)
+
+    initial = initialize_productivity_estimator_nk(1, 1, 0.6)
+    updated = update_productivity_estimator_nk(
+        initial, ((work,),), ((observed_output,),), minimum_observation_work=1e-9,
+    )
+    assert updated.means == ((observed_productivity,),)
+    assert updated.counts == ((1,),)
+    assert updated.cells[0][0].m2 == 0.0
+
+
+def test_welford_roundoff_tolerance_is_scale_aware_and_rejects_material_negative():
+    observed = 1.6672024756510144
+    delta = observed - 0.6
+    mean_new = 1.6672024756510146
+    delta_after = observed - mean_new
+    residue = delta * delta_after
+    assert residue < 0.0
+    assert _normalize_welford_dispersion(
+        residue, mean_old=0.6, observed=observed, mean_new=mean_new,
+        delta=delta, delta_after=delta_after, m2_old=0.0, increment=residue,
+    ) == 0.0
+    with pytest.raises(ValueError, match="materially negative"):
+        _normalize_welford_dispersion(
+            -1e-6, mean_old=0.6, observed=observed, mean_new=mean_new,
+            delta=delta, delta_after=delta_after, m2_old=0.0, increment=-1e-6,
+        )
+
+
+def test_estimator_rejects_nonfinite_and_materially_invalid_states():
+    with pytest.raises(ValueError):
+        ProductivityEstimateCellNK(0.5, 1, -1e-8)
+    with pytest.raises(ValueError):
+        ProductivityEstimateCellNK(0.5, 1, float("nan"))
+    with pytest.raises(ValueError):
+        ProductivityEstimateCellNK(0.5, 1, float("inf"))
+    state = initialize_productivity_estimator_nk(1, 1)
+    for bad in (float("nan"), float("inf"), -float("inf")):
+        with pytest.raises(ValueError):
+            state.cells[0][0].update(bad)
+
+
+def test_constant_close_and_long_observation_sequences_keep_valid_dispersion():
+    cell = ProductivityEstimateCellNK(1.0)
+    for value in (1.0,) * 100 + (1.0 + 1e-12, 1.0 - 1e-12):
+        cell = cell.update(value)
+        assert cell.m2 >= 0.0
+    assert cell.observation_count == 102
+    assert cell.sample_variance == pytest.approx(2e-26, rel=0.1, abs=1e-28)
+    for index in range(10_000):
+        cell = cell.update(0.9 + (index % 7) * 1e-12)
+    assert cell.observation_count == 10_102
+    assert cell.m2 >= 0.0 and cell.sample_variance is not None
+
+
+def test_adaptive_episode_accepts_roundoff_sensitive_first_productivity_observation():
+    observed_productivity = 1.6672024756510144
+    org = _organization(1, 1, budget=0.5)
+    problem = ProblemSpecNK("roundoff", (0.1,), 0.5)
+    choices = (((0.0,), (0.5,)),)
+    result = _run(
+        org, (problem,), _profile(((2.0 * observed_productivity,),)),
+        NembhardAdaptiveRouterConfigNK(initial_productivity_estimate=0.6),
+        choices=choices,
+    )
+    record = result.records[0]
+    assert record.allocation == ((0.5,),)
+    assert record.adaptive_observations[0][0] == pytest.approx(
+        0.5 * observed_productivity)
+    assert record.adaptive_estimator_after.cells[0][0].m2 == 0.0
 
 
 def test_observation_is_deterministic_and_zero_work_is_unobserved():

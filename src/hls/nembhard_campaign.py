@@ -35,7 +35,9 @@ HORIZON = 120
 MAX_CANDIDATES = 64
 RESULTS_DIRECTORY = Path("results/experiments/hls_nembhard_adaptive_allocation")
 CONFIRM_ALL_TOKEN = "HLS-EXECUTE-1016"
+CONFIRM_RESUME_TOKEN = "HLS-RESUME-E1"
 MECHANISM_ID = "nembhard_direct"
+NATIVE_MECHANISM_ID = "nembhard_direct_v0.1_hls_adaptation"
 UNIT_CONTRACT = NembhardOutputUnitContract(
     "effort-unit/period", "period", "work-exposure-unit",
     "task-output-unit", "task-output-unit",
@@ -1110,40 +1112,160 @@ def load_completed_results(
     rows = []
     for episode_id in sorted(selected):
         directory = Path(root) / episode_id
+        if not directory.exists():
+            continue
+        if not directory.is_dir():
+            raise ValueError(f"episode output is not a directory for {episode_id}")
         run_path = directory / "run.json"
         metrics_path = directory / "campaign_metrics.json"
         native_path = directory / "native_nembhard_result.json"
-        if not run_path.exists() and not metrics_path.exists():
-            continue
         if not run_path.is_file() or not metrics_path.is_file() or not native_path.is_file():
             raise ValueError(f"incomplete result artifacts for {episode_id}")
-        run = json.loads(run_path.read_text(encoding="utf-8"))
-        metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
-        native = json.loads(native_path.read_text(encoding="utf-8"))
+        try:
+            run = json.loads(run_path.read_text(encoding="utf-8"), parse_constant=_reject_json_constant)
+            metrics = json.loads(metrics_path.read_text(encoding="utf-8"), parse_constant=_reject_json_constant)
+            native = json.loads(native_path.read_text(encoding="utf-8"), parse_constant=_reject_json_constant)
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
+            raise ValueError(f"invalid JSON result artifacts for {episode_id}") from exc
         if run.get("run_id") != episode_id:
             raise ValueError(f"run ID mismatch for {episode_id}")
         config = by_id[episode_id]
+        recorded_configuration = run.get("configuration", {})
+        expected_configuration = json.loads(canonical_json(asdict(config)))
+        if any(recorded_configuration.get(name) != value
+               for name, value in expected_configuration.items()):
+            raise ValueError(f"result configuration mismatch for {episode_id}")
         demand = metrics.get("demand", {})
+        campaign_metrics = metrics.get("campaign_metrics", {})
+        native_records = native.get("records", ())
+        expected_profile = _profile(config.profile_id, config.learning_scale_id,
+                                    config.permutation)
+        expected_policy = {
+            "fixed": "fixed_role_map", "oracle": "nembhard_oracle",
+            "adaptive_sigma_0": "nembhard_adaptive",
+            "adaptive_sigma_005": "nembhard_adaptive",
+        }[config.arm]
+        expected_adaptive_config = None if not config.arm.startswith("adaptive") else {
+            "epsilon": config.epsilon,
+            "exploration_seed": config.exploration_seed,
+            "initial_productivity_estimate": config.initial_estimate,
+            "minimum_observation_work": 1e-9,
+            "observation_noise_stddev": config.observation_noise_stddev,
+            "observation_seed": config.observation_seed,
+        }
         if (demand.get("ordered_hash") != config.sequence_id
                 or demand.get("multiset_hash") != config.multiset_id
                 or run.get("configuration", {}).get("ordered_demand_hash") != config.sequence_id
+                or run.get("policy_id") != expected_policy
+                or native.get("mechanism_id") != NATIVE_MECHANISM_ID
                 or native.get("router_id") != (None if config.arm == "fixed" else
                                                   "nembhard_oracle" if config.arm == "oracle"
-                                                  else "nembhard_adaptive")):
+                                                  else "nembhard_adaptive")
+                or native.get("agent_ids") != list(config.agent_ids)
+                or native.get("skill_ids") != ["skill1", "skill2"]
+                or native.get("profile_k") != [list(row) for row in expected_profile.asymptotic_productivity]
+                or native.get("profile_p") != [list(row) for row in expected_profile.prior_experience]
+                or native.get("profile_r") != [list(row) for row in expected_profile.experience_scale]
+                or native.get("adaptive_router_config") != expected_adaptive_config
+                or native.get("initial_experience") != [[0.0, 0.0]] * 3):
             raise ValueError(f"result provenance/configuration mismatch for {episode_id}")
         stored_problems = tuple(ProblemSpecNK(
             row["problem_id"], tuple(row["requirements"]), row["resource_budget"],
             tuple(row["ces_weights"]),
         ) for row in demand.get("problems", ()))
         expected_sequence = build_demand_sequence(config.demand_order, config.sequence_seed)
-        native_problem_ids = tuple(record["problem_id"] for record in native.get("records", ()))
+        native_problem_ids = tuple(record.get("problem_id") for record in native_records)
+        period_metrics = campaign_metrics.get("period_metrics", ())
+        events = run.get("events", ())
+        expected_seeds = [
+            {"stream": "demand", "value": config.sequence_seed,
+             "purpose": "frozen explicit problem order"}
+        ]
+        if config.arm.startswith("adaptive"):
+            expected_seeds.extend((
+                {"stream": "adaptive_observation", "value": config.observation_seed,
+                 "purpose": "Nembhard feedback noise"},
+                {"stream": "adaptive_exploration", "value": config.exploration_seed,
+                 "purpose": "epsilon-greedy decisions"},
+            ))
+        required_event_counts = Counter(
+            event.get("event_type") for event in events
+            if event.get("event_type") in {"decision", "execution", "state_update"}
+        )
         if (ordered_demand_hash(stored_problems) != config.sequence_id
                 or demand_multiset_hash(stored_problems) != config.multiset_id
                 or stored_problems != expected_sequence.problems
-                or native_problem_ids != tuple(problem.problem_id for problem in stored_problems)):
+                or run.get("random_seeds") != expected_seeds
+                or native_problem_ids != tuple(problem.problem_id for problem in stored_problems)
+                or len(stored_problems) != config.horizon
+                or len(native_records) != config.horizon
+                or tuple(record.get("period") for record in native_records) != tuple(range(config.horizon))
+                or len(period_metrics) != config.horizon
+                or required_event_counts != Counter({"decision": config.horizon,
+                                                       "execution": config.horizon,
+                                                       "state_update": config.horizon})):
             raise ValueError(f"saved demand/trajectory integrity mismatch for {episode_id}")
         rows.append((by_id[episode_id], metrics))
     return tuple(rows)
+
+
+def _reject_json_constant(value: str) -> None:
+    raise ValueError(f"non-finite JSON constant {value} is not permitted")
+
+
+def inspect_campaign_progress(
+    root: Path | str = RESULTS_DIRECTORY,
+    registry: DesignRegistry | None = None,
+) -> dict[str, Any]:
+    """Validate existing episodes and return complete/pending IDs without execution."""
+    registry = registry or build_design_registry()
+    root = Path(root)
+    expected = {config.episode_id for config in registry.episodes}
+    if root.exists():
+        if not root.is_dir():
+            raise ValueError("campaign output root must be a directory")
+        unexpected = {path.name for path in root.iterdir() if path.is_dir()} - expected
+        if unexpected:
+            raise ValueError(f"unexpected episode directories in output root: {sorted(unexpected)[:3]}")
+    rows = load_completed_results(root, registry)
+    completed = {config.episode_id for config, _ in rows}
+    pending = tuple(config.episode_id for config in registry.episodes
+                    if config.episode_id not in completed)
+    return {
+        "total": len(registry.episodes),
+        "completed": len(completed),
+        "pending": len(pending),
+        "completed_episode_ids": tuple(sorted(completed)),
+        "pending_episode_ids": pending,
+    }
+
+
+def resume_campaign(
+    root: Path | str = RESULTS_DIRECTORY,
+    *,
+    confirmation: str,
+    registry: DesignRegistry | None = None,
+    software_revision: str | None = None,
+) -> tuple[str, ...]:
+    """Explicitly execute only pending runs after validating all saved results.
+
+    Resume cannot start a fresh campaign: at least one complete episode must
+    already exist. Existing or incomplete directories are never overwritten.
+    """
+    if confirmation != CONFIRM_RESUME_TOKEN:
+        raise ValueError(f"resume requires confirmation {CONFIRM_RESUME_TOKEN}")
+    registry = registry or build_design_registry()
+    progress = inspect_campaign_progress(root, registry)
+    if progress["completed"] == 0:
+        raise ValueError("resume requires at least one validated completed episode")
+    pending = set(progress["pending_episode_ids"])
+    completed_now = []
+    for config in registry.episodes:
+        if config.episode_id not in pending:
+            continue
+        execute_episode(config, root, software_revision=software_revision)
+        completed_now.append(config.episode_id)
+    return tuple(completed_now)
 
 
 def bootstrap_interval(values: Sequence[float], *, seed: int = MASTER_SEED,
@@ -1185,6 +1307,8 @@ def _cli() -> None:
     analyze_parser = subparsers.add_parser("analyze")
     analyze_parser.add_argument("--input-root", type=Path, default=RESULTS_DIRECTORY)
     analyze_parser.add_argument("--output", type=Path)
+    status_parser = subparsers.add_parser("status")
+    status_parser.add_argument("--output-root", type=Path, default=RESULTS_DIRECTORY)
     run_parser = subparsers.add_parser("run")
     group = run_parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--episode-id")
@@ -1193,6 +1317,10 @@ def _cli() -> None:
     run_parser.add_argument("--confirm-campaign")
     run_parser.add_argument("--output-root", type=Path, default=RESULTS_DIRECTORY)
     run_parser.add_argument("--software-revision")
+    resume_parser = subparsers.add_parser("resume")
+    resume_parser.add_argument("--confirm-resume", required=True)
+    resume_parser.add_argument("--output-root", type=Path, default=RESULTS_DIRECTORY)
+    resume_parser.add_argument("--software-revision")
     args = parser.parse_args()
     registry = build_design_registry()
     if args.command == "list":
@@ -1215,6 +1343,23 @@ def _cli() -> None:
             args.output.parent.mkdir(parents=True, exist_ok=True)
             with args.output.open("x", encoding="utf-8") as handle:
                 handle.write(rendered)
+    elif args.command == "status":
+        progress = inspect_campaign_progress(args.output_root, registry)
+        print(canonical_json({
+            "total": progress["total"],
+            "completed": progress["completed"],
+            "pending": progress["pending"],
+            "first_pending_episode_ids": progress["pending_episode_ids"][:10],
+        }))
+    elif args.command == "resume":
+        try:
+            completed = resume_campaign(
+                args.output_root, confirmation=args.confirm_resume,
+                registry=registry, software_revision=args.software_revision,
+            )
+        except ValueError as exc:
+            parser.error(str(exc))
+        print(canonical_json({"resumed": len(completed), "episode_ids": completed}))
     else:
         if args.all:
             if args.confirm_campaign != CONFIRM_ALL_TOKEN:

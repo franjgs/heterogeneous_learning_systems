@@ -8,7 +8,7 @@ observations to the estimator.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from math import isfinite
+from math import isfinite, ulp
 from random import Random
 
 from .hls_lab_nk_geometry import (
@@ -43,6 +43,35 @@ def _nonnegative_matrix(values, name: str) -> Matrix:
     if not result or not result[0] or any(len(row) != len(result[0]) for row in result):
         raise ValueError(f"{name} must be a non-empty rectangular matrix")
     return result
+
+
+def _normalize_welford_dispersion(
+    m2: float,
+    *,
+    mean_old: float,
+    observed: float,
+    mean_new: float,
+    delta: float,
+    delta_after: float,
+    m2_old: float,
+    increment: float,
+) -> float:
+    if not isfinite(m2) or not isfinite(increment):
+        raise ValueError("productivity dispersion update must remain finite")
+    if m2 >= 0.0:
+        return m2
+    scale = max(abs(mean_old), abs(observed), abs(mean_new))
+    # Bound cancellation/rounding from the mean, product and final addition.
+    # Eight ULPs is a small operation-count allowance; materially negative
+    # states still fail closed. The product term gives this bound dispersion
+    # units rather than applying a dimensionless absolute epsilon.
+    tolerance = 8.0 * (
+        ulp(scale) * max(abs(delta), abs(delta_after))
+        + ulp(abs(m2_old)) + ulp(abs(increment)) + ulp(abs(m2))
+    )
+    if not isfinite(tolerance) or -m2 > tolerance:
+        raise ValueError("productivity dispersion update became materially negative")
+    return 0.0
 
 
 @dataclass(frozen=True)
@@ -115,11 +144,26 @@ class ProductivityEstimateCellNK:
 
     def update(self, value: float) -> "ProductivityEstimateCellNK":
         observed = _finite_nonnegative(value, "observed productivity")
+        # The configured initial estimate is a decision-time prior, not an
+        # observed sample.  With count=0, Welford's first update is exactly
+        # (observed, count=1, m2=0); evaluating mean + (observed-mean) can
+        # round one ULP past observed and manufacture a negative m2.
+        if self.observation_count == 0:
+            return ProductivityEstimateCellNK(observed, 1, 0.0)
         count = self.observation_count + 1
         delta = observed - self.mean
         mean = self.mean + delta / count
         delta_after = observed - mean
-        return ProductivityEstimateCellNK(mean, count, self.m2 + delta * delta_after)
+        increment = delta * delta_after
+        m2 = self.m2 + increment
+        if not isfinite(mean):
+            raise ValueError("productivity mean update must remain finite")
+        m2 = _normalize_welford_dispersion(
+            m2, mean_old=self.mean, observed=observed, mean_new=mean,
+            delta=delta, delta_after=delta_after, m2_old=self.m2,
+            increment=increment,
+        )
+        return ProductivityEstimateCellNK(mean, count, m2)
 
 
 @dataclass(frozen=True)

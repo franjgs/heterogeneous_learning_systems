@@ -1,11 +1,14 @@
 from collections import Counter
 from dataclasses import replace
+import json
 import math
 
 import pytest
+import hls.nembhard_campaign as campaign
 
 from hls.nembhard_campaign import (
     ARMS,
+    CONFIRM_RESUME_TOKEN,
     PROFILE_K,
     _fixed_allocation,
     _build_result_payload,
@@ -18,12 +21,15 @@ from hls.nembhard_campaign import (
     build_design_registry,
     build_demand_sequence,
     demand_multiset_hash,
+    inspect_campaign_progress,
+    load_completed_results,
     ordered_demand_hash,
     paired_differences,
     paired_order_differences,
     paired_period_differences,
     policy_condition_id,
     protocol_interaction_contrasts,
+    resume_campaign,
     seed_bundle,
     summarize_paired_contrast,
     temporal_summary,
@@ -322,3 +328,68 @@ def test_result_persistence_is_stable_and_refuses_overwrite(tmp_path):
     with pytest.raises(FileExistsError):
         _persist_result_payload(config, payload, tmp_path)
     assert (destination / "run.json").read_bytes() == original
+
+
+def test_progress_detects_absent_and_incomplete_episode_directories(tmp_path):
+    registry = build_design_registry()
+    progress = inspect_campaign_progress(tmp_path, registry)
+    assert (progress["total"], progress["completed"], progress["pending"]) == (1016, 0, 1016)
+    with pytest.raises(ValueError, match="at least one validated"):
+        resume_campaign(tmp_path, confirmation=CONFIRM_RESUME_TOKEN, registry=registry)
+
+    first = registry.episodes[0]
+    (tmp_path / first.episode_id).mkdir()
+    with pytest.raises(ValueError, match="incomplete result artifacts"):
+        inspect_campaign_progress(tmp_path, registry)
+
+
+def test_progress_rejects_corrupt_or_nonfinite_json(tmp_path):
+    registry = build_design_registry()
+    config = registry.episodes[0]
+    episode_dir = tmp_path / config.episode_id
+    episode_dir.mkdir()
+    for name in ("run.json", "campaign_metrics.json", "native_nembhard_result.json"):
+        (episode_dir / name).write_text("{\"invalid\": NaN}", encoding="utf-8")
+    with pytest.raises(ValueError, match="invalid JSON result artifacts"):
+        load_completed_results(tmp_path, registry)
+
+
+def test_resume_skips_only_valid_completed_episode_and_preserves_its_files(
+    tmp_path, monkeypatch,
+):
+    registry = build_design_registry()
+    config = next(row for row in registry.episodes
+                  if row.design_component == "primary" and row.arm == "fixed")
+    native, problems = _run_configuration(config)
+    payload = _build_result_payload(config, native, problems)
+    destination = _persist_result_payload(config, payload, tmp_path)
+    before = {path.name: path.read_bytes() for path in destination.iterdir()}
+
+    progress = inspect_campaign_progress(tmp_path, registry)
+    assert (progress["completed"], progress["pending"]) == (1, 1015)
+    assert config.episode_id not in progress["pending_episode_ids"]
+    run_path = destination / "run.json"
+    mismatched_run = json.loads(before["run.json"])
+    mismatched_run["configuration"]["profile_id"] = "specialists"
+    run_path.write_text(json.dumps(mismatched_run), encoding="utf-8")
+    with pytest.raises(ValueError, match="configuration mismatch"):
+        inspect_campaign_progress(tmp_path, registry)
+    run_path.write_bytes(before["run.json"])
+
+    dispatched = []
+    monkeypatch.setattr(
+        campaign, "execute_episode",
+        lambda pending, output_root, *, software_revision=None: dispatched.append(pending.episode_id),
+    )
+    resumed = resume_campaign(
+        tmp_path, confirmation=CONFIRM_RESUME_TOKEN, registry=registry,
+    )
+    assert resumed == tuple(dispatched)
+    assert len(resumed) == 1015
+    assert resumed == progress["pending_episode_ids"]
+    assert {path.name: path.read_bytes() for path in destination.iterdir()} == before
+
+
+def test_resume_requires_explicit_confirmation_before_inspecting_or_running(tmp_path):
+    with pytest.raises(ValueError, match="requires confirmation"):
+        resume_campaign(tmp_path, confirmation="", registry=build_design_registry())
