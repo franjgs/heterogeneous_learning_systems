@@ -62,6 +62,21 @@ record](experiments/HLS_LAB_ADAPTIVE_CAPABILITY_VALIDATION.md), its
 and [compact evidence](../results/analysis/hls_lab_validation/integrated_validation_results.json).
 HLS Laboratory remains **PARTIAL**.
 
+**Current next-session priority — 2026-10-17, for 2026-10-18:** no new
+adaptive capability is required before the next literature-reproduction
+design task. The bounded integrated validation above is complete within its
+documented scope: 135 focused tests passed, the full suite was not run, and
+the result/registry links above are the evidence authority. The next task is
+to inspect available primary papers, compare concrete reproducible
+experiments against existing HLS components, select one candidate, create a
+model/scenario/policy/implementation/metric correspondence matrix, and
+prepare a bounded protocol for review. This authorizes design only, not
+execution. Nembhard is not selected automatically; prior audits should be
+reused, and mechanisms should not be rebuilt. This validation establishes
+neither policy superiority nor complete article reproduction. See the
+[cumulative execution-plan decision](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md)
+and [canonical project history](HISTORY.md). HLS remains **PARTIAL**.
+
 The programme-level philosophy is defined in [HLS_PHILOSOPHY.md](HLS_PHILOSOPHY.md),
 and the common semantic contract is defined in [the HLS ontology](hls_ontology.md).
 
@@ -335,15 +350,18 @@ heterogeneous teaching efficacy, configurable observation noise, elementary
 estimators, and heuristic policies are permitted as explicit replaceable
 simplifications—not as empirically validated models.
 
-The active next action is to resolve or formally disposition the unrelated
-full-suite integrity failures and close remaining acceptance gaps against
-[HLS Laboratory v1](experiments/HLS_LAB_V1.md). Until this milestone is
-verified, development is limited to its acceptance needs; no
-separate audit phase or new status/roadmap document is authorized. Previous
-recommendations to prioritize a narrower research line are historical and
-superseded as the immediate operational priority, not erased as evidence of
-the project's evolution. The dated history is the chronology authority; this
-file records the current status rather than duplicating that chronology.
+At the time this earlier status was recorded, the active next action was to
+resolve or formally disposition unrelated full-suite integrity failures and
+close remaining acceptance gaps against [HLS Laboratory v1](experiments/HLS_LAB_V1.md).
+That remains relevant to claims of full milestone completion; it does not
+block the documentary literature-selection task now authorized for
+2026-10-18. Previous recommendations to prioritize a narrower research line
+are historical and superseded as the immediate operational priority, not
+erased as evidence of the project's evolution. The 2026-10-17 decision above
+supersedes the earlier next action for the 2026-10-18 session; the five known
+provenance/inventory failures remain unresolved and are not represented as
+fixed. The dated history is the chronology authority; this file records the
+current status rather than duplicating that chronology.
 
 ### Campaign 2 sensitivity audit — 16 October 2026
 

@@ -27,7 +27,7 @@ The principal documents have distinct jobs:
 | [HLS Nembhard Campaign Runner](engineering/HLS_NEMBHARD_CAMPAIGN_RUNNER.md) | Reviewed Nembhard E1 registry, guarded execution, metrics, paired analysis, and validated status/resume handling. The earlier tracked incident record is 29/1,016; a later local read-only check found 1,016 valid episodes in an untracked/unpublished result tree—see Current State and History before treating it as published evidence. |
 | [Adaptive-capability validation](experiments/HLS_LAB_ADAPTIVE_CAPABILITY_VALIDATION.md) | Canonical bounded validation record for existing C5/N×K demand-to-runner integration, MIS-v2, estimation, P0/P2 behavior, G2 controls, and trace evidence; not policy superiority or full-paper reproduction. |
 | [History](HISTORY.md) | Canonical dated chronology of significant decisions and milestones; preserves durable scientific lessons and provenance. |
-| [HLS Laboratory Execution Plan (2026-10-17)](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md) | Operational calendar and cumulative decision register; does not supersede Current State, scientific protocols, or campaign authorization requirements. |
+| [HLS Laboratory Execution Plan (2026-10-17)](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md) | Operational calendar and cumulative decision register, including the 2026-10-18 literature-reproduction protocol-design priority; does not supersede Current State, scientific protocols, or campaign authorization requirements. |
 | **This guide** | Repository authority, provenance, and implementation map. |
 
 If this guide conflicts with a canonical scientific source, the scientific
@@ -38,6 +38,12 @@ For the active implementation milestone, [HLS Laboratory v1](experiments/HLS_LAB
 defines the approved scope and acceptance criteria; [History](HISTORY.md) is
 the dated chronology, while [HLS Current State](HLS_CURRENT_STATE.md) gives
 the present status. These roles are complementary, not competing roadmaps.
+The existing adaptive-capability evidence and its reproducibility boundary are
+consolidated in [the canonical validation record](experiments/HLS_LAB_ADAPTIVE_CAPABILITY_VALIDATION.md),
+with results and a machine-readable registry under
+`../results/analysis/hls_lab_validation/`. For the 2026-10-18 session, the
+execution plan directs literature experiment selection and protocol design
+only; campaign execution still requires separate authorization.
 
 ## Status vocabulary
 

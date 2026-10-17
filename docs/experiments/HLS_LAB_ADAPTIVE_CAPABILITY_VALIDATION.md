@@ -3,6 +3,16 @@
 **Status:** bounded integration validation, 2026-10-17. HLS Laboratory remains
 **PARTIAL**. This is a diagnostic validation, not a scientific campaign.
 
+**Closure and handoff (2026-10-17):** this validation is complete within the
+scope and claim boundaries below. Its published focused-test result is 135
+passed; the full suite was not run, and the five known historical
+provenance/inventory failures remain unresolved. The evidence demonstrates
+reproducible execution of selected existing mechanisms, not general policy
+superiority or full reproduction of scientific articles. The next session
+(2026-10-18) is limited to selecting one literature experiment and preparing
+a bounded reproduction protocol for authorization; no campaign is authorized
+by this validation.
+
 ## 1. Purpose and scope
 
 This record verifies that selected adaptive capabilities already present in
