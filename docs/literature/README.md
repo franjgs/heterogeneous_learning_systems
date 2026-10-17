@@ -28,6 +28,22 @@ alone is not a reason to add or retain a document.
 These categories describe scientific content, not a claim that every document
 is part of the current two-beam theoretical skeleton.
 
+## Adaptive assignment, training, and transfer
+
+The focused bibliography consolidation for the proposed adaptive teaching
+question is indexed in:
+
+- [Reference register](ADAPTIVE_TRAINING_REFERENCE_REGISTER.md): metadata
+  sources, repository PDF inventory, legal-access status, and reading status.
+- [Comparative analysis](ADAPTIVE_TRAINING_COMPARATIVE_ANALYSIS.md): evidence
+  matrix and novelty boundary, with uncertainty marked explicitly.
+- Master BibTeX remains [`references.bib`](references.bib). Do not create a
+  second bibliography for this topic.
+
+Local PDFs are retained for research/reference only. Presence in this checkout
+does not itself establish redistribution permission; no third-party PDF from
+this audit is authorized for a commit or redistribution.
+
 ## PDF naming and migration integrity record
 
 Local PDFs use `Author_Year_ShortTitle.pdf`: one surname for a sole author,
