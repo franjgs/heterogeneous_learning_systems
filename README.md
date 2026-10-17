@@ -140,6 +140,9 @@ For technical depth:
 - [Theory Registry](docs/theory/README.md) — formal results and scoped models;
 - [Experimental Documentation Registry](docs/experiments/README.md) — worlds,
   protocols, runners, and evidence;
+- [Adaptive-capability validation](docs/experiments/HLS_LAB_ADAPTIVE_CAPABILITY_VALIDATION.md)
+  — bounded evidence for existing dynamic-demand, competence, estimation,
+  policy, and trace paths; not a policy-superiority claim;
 - [Literature Collection](docs/literature/README.md) — source and literature
   policy;
 - [Scientific History](docs/HISTORY.md) — the compact scientific path to the

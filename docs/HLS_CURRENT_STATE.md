@@ -32,15 +32,35 @@ allocation protocol has a deterministic configuration registry, guarded
 execution CLI, common-contract result adapter, and post-run analysis in
 `src/hls/nembhard_campaign.py`. The registry contains 1,016 unique
 configurations after reuse of two identity diagnostics. HLS-E1 execution was
-started and interrupted; the campaign is not complete. A read-only audit found
-29 valid completed episodes and 987 pending episodes. These partial outputs
-are not scientific findings. The focused estimator/campaign/Nembhard/common-
-contract selection passed 74 tests; validation did not execute or resume the
-1,016-episode campaign (one isolated 120-period FIXED fixture ran only under a
-test temporary directory). Resume now validates all three result files and
-requires an explicit command/token. See the [runner record](engineering/HLS_NEMBHARD_CAMPAIGN_RUNNER.md),
+started and interrupted; the earlier tracked incident record counted 29
+valid completed episodes and 987 pending. A later read-only inspection of the
+current local result tree validates 1,016 complete episodes and zero pending;
+the result directory and analysis file are untracked/unpublished in this
+worktree, so this discrepancy is recorded rather than silently treating the
+local files as repository-published evidence. Neither record is changed by
+the adaptive-capability validation below. Resume validates all three result
+files and requires an explicit command/token. See the [runner record](engineering/HLS_NEMBHARD_CAMPAIGN_RUNNER.md),
 [execution plan](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md), and
 [history](HISTORY.md).
+
+## Bounded adaptive-capability validation — 2026-10-17
+
+Five small checks reuse existing C5/N×K fixtures, the current runner, the
+canonical G2 D0/D1/D2 references and the saved four-period imperfect-information
+P2 reference. Stationary, time-indexed nonstationary and seeded Markov demand
+were generated and then verified against problem IDs executed by the N×K
+runner. In the indexed shift fixture, P0's selected allocation changed across
+the changed current problem. The reference trace preserves actual and
+estimated competence, observations, MIS-v2, teaching increments, efficacy
+memory, output and resource accounting. This validates bounded execution and
+trace contracts, not policy superiority, demand inference, external validity
+or full literature reproduction. The G2 controls are explicitly not identified
+with the MIS-v2 transition. The focused suite passed 135 tests; the full suite
+was not rerun. No large campaign was run. See the [canonical validation
+record](experiments/HLS_LAB_ADAPTIVE_CAPABILITY_VALIDATION.md), its
+[machine-readable registry](../results/analysis/hls_lab_validation/capability_registry.json),
+and [compact evidence](../results/analysis/hls_lab_validation/integrated_validation_results.json).
+HLS Laboratory remains **PARTIAL**.
 
 The programme-level philosophy is defined in [HLS_PHILOSOPHY.md](HLS_PHILOSOPHY.md),
 and the common semantic contract is defined in [the HLS ontology](hls_ontology.md).

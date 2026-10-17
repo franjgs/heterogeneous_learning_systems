@@ -6,6 +6,7 @@ conceptual index; it is not a second results ledger.
 
 ## Current synthetic framework
 
+- [HLS Laboratory adaptive-capability validation](HLS_LAB_ADAPTIVE_CAPABILITY_VALIDATION.md): bounded S0–S4 integration checks for existing dynamic demand, competence evolution/estimation, state-responsive policies and trace contracts; not a superiority claim or paper reproduction
 - [HLS Laboratory v1 implementation and limitations](HLS_LAB_V1.md)
 - [HLS Laboratory v1 scientific contracts (CE-22 reference)](HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md)
 - [HLS Laboratory v1 CE-24 deterministic train/evaluate validation](HLS_LAB_CE24.md): local organizational-learning effect, order sensitivity, and HOLD on general claims

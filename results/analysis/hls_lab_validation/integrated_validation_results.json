@@ -1,0 +1,4779 @@
+{
+  "artifact_type": "bounded_laboratory_capability_validation_not_campaign",
+  "capability_checks": {
+    "G2_action_dependent_development_controls": "PASS",
+    "imperfect_information_adaptive_teaching_reference": "PASS",
+    "markov_demand_runner": "PASS",
+    "nonstationary_demand_runner": "PASS",
+    "stationary_demand_runner": "PASS"
+  },
+  "heterogeneous_productivity_diagnostic": {
+    "allocation": [
+      [
+        0.5,
+        0.0
+      ],
+      [
+        0.0,
+        0.5
+      ]
+    ],
+    "checks": {
+      "actual_competence_not_substituted_for_productivity": true,
+      "cell_specific_productivity_profile_used": true,
+      "different_agent_limits_respected": true
+    },
+    "collective_budget": 1.5,
+    "effort_limits": [
+      0.5,
+      1.0
+    ],
+    "experience_after": [
+      [
+        0.5,
+        0.0
+      ],
+      [
+        0.0,
+        0.5
+      ]
+    ],
+    "individual_output": [
+      [
+        0.3333333333333333,
+        0.0
+      ],
+      [
+        0.0,
+        0.5
+      ]
+    ],
+    "initial_competence_not_used_by_Nembhard_output": [
+      [
+        0.8,
+        0.2
+      ],
+      [
+        0.3,
+        0.7
+      ]
+    ],
+    "parameters": {
+      "k": [
+        [
+          2.0,
+          1.0
+        ],
+        [
+          1.0,
+          3.0
+        ]
+      ],
+      "p": [
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "r": [
+        [
+          2.0,
+          1.0
+        ],
+        [
+          1.0,
+          2.0
+        ]
+      ]
+    },
+    "productive_effort_used": 1.0,
+    "productivity_before": [
+      [
+        0.6666666666666666,
+        0.0
+      ],
+      [
+        0.0,
+        1.0
+      ]
+    ],
+    "scope": "single-period heterogeneity and feasibility diagnostic; not a campaign",
+    "status": "PASS",
+    "total_output": [
+      0.3333333333333333,
+      0.5
+    ]
+  },
+  "interpretation_boundary": "Execution and contract validation only; no policy superiority, prevalence, or full paper reproduction claim.",
+  "model_code_baseline_revision": "8d16f901b238cfce0ca0df884906e8180e0096c3",
+  "reproducibility": "The command reconstructs this compact record from fixed seeds and existing fixtures.",
+  "runtime": {
+    "python": "3.11.9"
+  },
+  "scenarios": [
+    {
+      "checks": {
+        "actual_and_estimated_competence_are_separate": false,
+        "all_actions_respect_runner_feasibility": true,
+        "environment_path_matches_runner_problems": true,
+        "production_uses_actual_competence": true,
+        "same_seed_exact_replay": true
+      },
+      "configuration": {
+        "K": 2,
+        "MIS_v2": "enabled eta=0.2 per agent-skill cell",
+        "MIS_v2_eta": [
+          [
+            0.2,
+            0.05
+          ],
+          [
+            0.08,
+            0.15
+          ]
+        ],
+        "N": 2,
+        "collective_effort_budget": 1.5,
+        "effort_limits": [
+          0.75,
+          1.0
+        ],
+        "environment_seed": 731,
+        "horizon": 3,
+        "information_mode": "perfect",
+        "information_seed": 732,
+        "initial_actual_competence": [
+          [
+            0.25,
+            0.3
+          ],
+          [
+            0.3,
+            0.35
+          ]
+        ],
+        "initial_estimated_competence": [
+          [
+            0.7,
+            0.2
+          ],
+          [
+            0.3,
+            0.65
+          ]
+        ],
+        "policy": "P0_PRODUCTION_ONLY",
+        "process": "StationaryTaskDemand",
+        "resource_budget": 2.0
+      },
+      "environment": {
+        "latent_states": [
+          "steady",
+          "steady",
+          "steady"
+        ],
+        "problems": [
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.8,0.2",
+            "requirements": [
+              0.8,
+              0.2
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.2,0.8",
+            "requirements": [
+              0.2,
+              0.8
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.8,0.2",
+            "requirements": [
+              0.8,
+              0.2
+            ]
+          }
+        ],
+        "regime_labels": [
+          "stationary",
+          "stationary",
+          "stationary"
+        ]
+      },
+      "measurements": {
+        "functional_successes": 0,
+        "gross_ces_sum": 0.7414048060669964,
+        "normalized_deficit_sum": 2.4674922033874713,
+        "periods": 3,
+        "productive_effort_sum": 3.0
+      },
+      "scenario_id": "S0_stationary_control",
+      "status": "PASS",
+      "trace": [
+        {
+          "actual_competence_after": [
+            [
+              0.8,
+              0.15
+            ],
+            [
+              0.280625271503092,
+              0.7695113885676779
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.8,
+              0.15
+            ],
+            [
+              0.25,
+              0.75
+            ]
+          ],
+          "allocation": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "ces_gross": 0.2332531754730548,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.8,
+              0.15
+            ],
+            [
+              0.280625271503092,
+              0.7695113885676779
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.8,
+              0.15
+            ],
+            [
+              0.25,
+              0.75
+            ]
+          ],
+          "functional_success": false,
+          "mis_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.030625271503092022,
+              0.019511388567677868
+            ]
+          ],
+          "normalized_deficit": 0.84375,
+          "period": 0,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.8,0.2",
+          "production_by_agent_skill": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.125,
+              0.375
+            ]
+          ],
+          "production_by_skill": [
+            0.125,
+            0.375
+          ],
+          "production_observations": [
+            [
+              -0.028208138635786653,
+              0.0013872390484107311
+            ],
+            [
+              0.12799676877660013,
+              0.35788311016152385
+            ]
+          ],
+          "productive_effort": 1.0,
+          "requirements": [
+            0.8,
+            0.2
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 1.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.8,
+              0.15
+            ],
+            [
+              0.30999999999999994,
+              0.7875000000000001
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.8,
+              0.15
+            ],
+            [
+              0.280625271503092,
+              0.7695113885676779
+            ]
+          ],
+          "allocation": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "ces_gross": 0.24744161240393708,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.8,
+              0.15
+            ],
+            [
+              0.30999999999999994,
+              0.7875000000000001
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.8,
+              0.15
+            ],
+            [
+              0.280625271503092,
+              0.7695113885676779
+            ]
+          ],
+          "functional_success": false,
+          "mis_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.02937472849690792,
+              0.01798861143232222
+            ]
+          ],
+          "normalized_deficit": 0.8174922033874713,
+          "period": 1,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.2,0.8",
+          "production_by_agent_skill": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.140312635751546,
+              0.38475569428383893
+            ]
+          ],
+          "production_by_skill": [
+            0.140312635751546,
+            0.38475569428383893
+          ],
+          "production_observations": [
+            [
+              -0.014807783146224763,
+              0.01062317515537167
+            ],
+            [
+              0.17741717083988937,
+              0.38116453589362165
+            ]
+          ],
+          "productive_effort": 1.0,
+          "requirements": [
+            0.2,
+            0.8
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 1.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.8,
+              0.15
+            ],
+            [
+              0.33817524978284463,
+              0.8040846802825262
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.8,
+              0.15
+            ],
+            [
+              0.30999999999999994,
+              0.7875000000000001
+            ]
+          ],
+          "allocation": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "ces_gross": 0.2607100181900045,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.8,
+              0.15
+            ],
+            [
+              0.33817524978284463,
+              0.8040846802825262
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.8,
+              0.15
+            ],
+            [
+              0.30999999999999994,
+              0.7875000000000001
+            ]
+          ],
+          "functional_success": false,
+          "mis_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.02817524978284469,
+              0.016584680282526132
+            ]
+          ],
+          "normalized_deficit": 0.80625,
+          "period": 2,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.8,0.2",
+          "production_by_agent_skill": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.15499999999999997,
+              0.39375000000000004
+            ]
+          ],
+          "production_by_skill": [
+            0.15499999999999997,
+            0.39375000000000004
+          ],
+          "production_observations": [
+            [
+              0.0059565745118824835,
+              0.008756916444521132
+            ],
+            [
+              0.182757048974383,
+              0.4039950174032736
+            ]
+          ],
+          "productive_effort": 1.0,
+          "requirements": [
+            0.8,
+            0.2
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 1.0
+        }
+      ]
+    },
+    {
+      "checks": {
+        "actual_and_estimated_competence_are_separate": true,
+        "all_actions_respect_runner_feasibility": true,
+        "environment_path_matches_runner_problems": true,
+        "production_uses_actual_competence": true,
+        "same_seed_exact_replay": true
+      },
+      "configuration": {
+        "K": 3,
+        "MIS_v2": "enabled eta=0.2 per agent-skill cell",
+        "MIS_v2_eta": [
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ]
+        ],
+        "N": 2,
+        "collective_effort_budget": 2.0,
+        "effort_limits": [
+          1.0,
+          1.0
+        ],
+        "environment_seed": 4,
+        "horizon": 4,
+        "information_mode": "imperfect",
+        "information_seed": 5,
+        "initial_actual_competence": [
+          [
+            0.25,
+            0.3,
+            0.35
+          ],
+          [
+            0.3,
+            0.35,
+            0.25
+          ]
+        ],
+        "initial_estimated_competence": [
+          [
+            0.3,
+            0.35,
+            0.39999999999999997
+          ],
+          [
+            0.35,
+            0.39999999999999997,
+            0.3
+          ]
+        ],
+        "policy": "P0_PRODUCTION_ONLY",
+        "process": "NonStationaryTaskDemand",
+        "resource_budget": 3.0
+      },
+      "environment": {
+        "latent_states": [
+          "old",
+          "old",
+          "new",
+          "new"
+        ],
+        "problems": [
+          {
+            "budget": 3.0,
+            "ces_weights": [
+              0.3333333333333333,
+              0.3333333333333333,
+              0.3333333333333333
+            ],
+            "problem_id": "old",
+            "requirements": [
+              0.7,
+              0.1,
+              0.1
+            ]
+          },
+          {
+            "budget": 3.0,
+            "ces_weights": [
+              0.3333333333333333,
+              0.3333333333333333,
+              0.3333333333333333
+            ],
+            "problem_id": "old",
+            "requirements": [
+              0.7,
+              0.1,
+              0.1
+            ]
+          },
+          {
+            "budget": 3.0,
+            "ces_weights": [
+              0.3333333333333333,
+              0.3333333333333333,
+              0.3333333333333333
+            ],
+            "problem_id": "new",
+            "requirements": [
+              0.1,
+              0.1,
+              0.7
+            ]
+          },
+          {
+            "budget": 3.0,
+            "ces_weights": [
+              0.3333333333333333,
+              0.3333333333333333,
+              0.3333333333333333
+            ],
+            "problem_id": "new",
+            "requirements": [
+              0.1,
+              0.1,
+              0.7
+            ]
+          }
+        ],
+        "regime_labels": [
+          "old",
+          "old",
+          "new",
+          "new"
+        ]
+      },
+      "measurements": {
+        "functional_successes": 0,
+        "gross_ces_sum": 0.6360815229288348,
+        "normalized_deficit_sum": 4.0,
+        "periods": 4,
+        "productive_effort_sum": 8.0
+      },
+      "scenario_id": "S1_nonstationary_runner_integration",
+      "status": "PASS",
+      "trace": [
+        {
+          "actual_competence_after": [
+            [
+              0.25,
+              0.44000000000000006,
+              0.35
+            ],
+            [
+              0.3,
+              0.35,
+              0.3999999999999999
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.25,
+              0.3,
+              0.35
+            ],
+            [
+              0.3,
+              0.35,
+              0.25
+            ]
+          ],
+          "allocation": [
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "ces_gross": 0.12196917305612953,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.3000000000002,
+              0.47999999999696397,
+              0.4000000000001
+            ],
+            [
+              0.35000000000015,
+              0.4000000000001,
+              0.43999999999999334
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.3000000000002,
+              0.35000000000015,
+              0.4000000000001
+            ],
+            [
+              0.35000000000015,
+              0.4000000000001,
+              0.3000000000002
+            ]
+          ],
+          "functional_success": false,
+          "mis_increment": [
+            [
+              0.0,
+              0.14000000000000007,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.1499999999999999
+            ]
+          ],
+          "normalized_deficit": 1.0,
+          "period": 0,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "old",
+          "production_by_agent_skill": [
+            [
+              0.0,
+              0.3,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.25
+            ]
+          ],
+          "production_by_skill": [
+            0.0,
+            0.3,
+            0.25
+          ],
+          "production_observations": [
+            [
+              0.04032728640297547,
+              0.2764949261753512,
+              -0.010031871917619967
+            ],
+            [
+              0.009897603553604516,
+              0.02959294947999723,
+              0.26637717312150494
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.7,
+            0.1,
+            0.1
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.25,
+              0.552,
+              0.35
+            ],
+            [
+              0.3,
+              0.35,
+              0.5199999999999999
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.25,
+              0.44000000000000006,
+              0.35
+            ],
+            [
+              0.3,
+              0.35,
+              0.3999999999999999
+            ]
+          ],
+          "allocation": [
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "ces_gross": 0.18656078650401348,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.3000000000002,
+              0.5839999999990453,
+              0.4000000000001
+            ],
+            [
+              0.35000000000015,
+              0.4000000000001,
+              0.5519999999994571
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.3000000000002,
+              0.47999999999696397,
+              0.4000000000001
+            ],
+            [
+              0.35000000000015,
+              0.4000000000001,
+              0.43999999999999334
+            ]
+          ],
+          "functional_success": false,
+          "mis_increment": [
+            [
+              0.0,
+              0.11199999999999999,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.12
+            ]
+          ],
+          "normalized_deficit": 1.0,
+          "period": 1,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "old",
+          "production_by_agent_skill": [
+            [
+              0.0,
+              0.44000000000000006,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.3999999999999999
+            ]
+          ],
+          "production_by_skill": [
+            0.0,
+            0.44000000000000006,
+            0.3999999999999999
+          ],
+          "production_observations": [
+            [
+              0.0363808083849312,
+              0.45782610889130726,
+              0.005681668730401681
+            ],
+            [
+              0.016263571049760443,
+              0.01149559730472285,
+              0.3729133420713143
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.7,
+            0.1,
+            0.1
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.3999999999999999,
+              0.552,
+              0.35
+            ],
+            [
+              0.3,
+              0.48,
+              0.5199999999999999
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.25,
+              0.552,
+              0.35
+            ],
+            [
+              0.3,
+              0.35,
+              0.5199999999999999
+            ]
+          ],
+          "allocation": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ]
+          ],
+          "ces_gross": 0.1324008864788846,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.4399999999999769,
+              0.5839999999990453,
+              0.4000000000001
+            ],
+            [
+              0.35000000000015,
+              0.519999999999396,
+              0.5519999999994571
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.3000000000002,
+              0.5839999999990453,
+              0.4000000000001
+            ],
+            [
+              0.35000000000015,
+              0.4000000000001,
+              0.5519999999994571
+            ]
+          ],
+          "functional_success": false,
+          "mis_increment": [
+            [
+              0.1499999999999999,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.13,
+              0.0
+            ]
+          ],
+          "normalized_deficit": 1.0,
+          "period": 2,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "new",
+          "production_by_agent_skill": [
+            [
+              0.25,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.35,
+              0.0
+            ]
+          ],
+          "production_by_skill": [
+            0.25,
+            0.35,
+            0.0
+          ],
+          "production_observations": [
+            [
+              0.256381056820648,
+              -0.03869737836225069,
+              0.0030551258814780846
+            ],
+            [
+              -0.011411778866865507,
+              0.3350454635459738,
+              0.011506953079854127
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.1,
+            0.1,
+            0.7
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.5199999999999999,
+              0.552,
+              0.35
+            ],
+            [
+              0.3,
+              0.584,
+              0.5199999999999999
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.3999999999999999,
+              0.552,
+              0.35
+            ],
+            [
+              0.3,
+              0.48,
+              0.5199999999999999
+            ]
+          ],
+          "allocation": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ]
+          ],
+          "ces_gross": 0.19515067688980725,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.5519999999999682,
+              0.5839999999990453,
+              0.4000000000001
+            ],
+            [
+              0.35000000000015,
+              0.6159999990484014,
+              0.5519999999994571
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.4399999999999769,
+              0.5839999999990453,
+              0.4000000000001
+            ],
+            [
+              0.35000000000015,
+              0.519999999999396,
+              0.5519999999994571
+            ]
+          ],
+          "functional_success": false,
+          "mis_increment": [
+            [
+              0.12,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.10399999999999998,
+              0.0
+            ]
+          ],
+          "normalized_deficit": 1.0,
+          "period": 3,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "new",
+          "production_by_agent_skill": [
+            [
+              0.3999999999999999,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.48,
+              0.0
+            ]
+          ],
+          "production_by_skill": [
+            0.3999999999999999,
+            0.48,
+            0.0
+          ],
+          "production_observations": [
+            [
+              0.41281130138807676,
+              -0.020657801515122986,
+              0.00047019545408966135
+            ],
+            [
+              0.026338022805100825,
+              0.43853348185614893,
+              0.03284811336356479
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.1,
+            0.1,
+            0.7
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        }
+      ]
+    },
+    {
+      "checks": {
+        "actual_and_estimated_competence_are_separate": true,
+        "all_actions_respect_runner_feasibility": true,
+        "environment_path_matches_runner_problems": true,
+        "production_uses_actual_competence": true,
+        "same_seed_exact_replay": true
+      },
+      "configuration": {
+        "K": 2,
+        "MIS_v2": "enabled eta=0.2 per agent-skill cell",
+        "MIS_v2_eta": [
+          [
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2
+          ]
+        ],
+        "N": 2,
+        "collective_effort_budget": 2.0,
+        "effort_limits": [
+          1.0,
+          1.0
+        ],
+        "environment_seed": 17,
+        "horizon": 20,
+        "information_mode": "imperfect",
+        "information_seed": 18,
+        "initial_actual_competence": [
+          [
+            0.25,
+            0.3
+          ],
+          [
+            0.3,
+            0.35
+          ]
+        ],
+        "initial_estimated_competence": [
+          [
+            0.3,
+            0.35
+          ],
+          [
+            0.35,
+            0.39999999999999997
+          ]
+        ],
+        "policy": "P0_PRODUCTION_ONLY",
+        "process": "MarkovTaskDemand",
+        "resource_budget": 2.0
+      },
+      "environment": {
+        "latent_states": [
+          "y",
+          "y",
+          "y",
+          "y",
+          "y",
+          "y",
+          "y",
+          "y",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "y",
+          "y",
+          "y",
+          "x",
+          "x"
+        ],
+        "problems": [
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.1,0.7",
+            "requirements": [
+              0.1,
+              0.7
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.1,0.7",
+            "requirements": [
+              0.1,
+              0.7
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.1,0.7",
+            "requirements": [
+              0.1,
+              0.7
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.1,0.7",
+            "requirements": [
+              0.1,
+              0.7
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.1,0.7",
+            "requirements": [
+              0.1,
+              0.7
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.1,0.7",
+            "requirements": [
+              0.1,
+              0.7
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.1,0.7",
+            "requirements": [
+              0.1,
+              0.7
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.1,0.7",
+            "requirements": [
+              0.1,
+              0.7
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.7,0.1",
+            "requirements": [
+              0.7,
+              0.1
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.7,0.1",
+            "requirements": [
+              0.7,
+              0.1
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.7,0.1",
+            "requirements": [
+              0.7,
+              0.1
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.7,0.1",
+            "requirements": [
+              0.7,
+              0.1
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.7,0.1",
+            "requirements": [
+              0.7,
+              0.1
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.7,0.1",
+            "requirements": [
+              0.7,
+              0.1
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.7,0.1",
+            "requirements": [
+              0.7,
+              0.1
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.1,0.7",
+            "requirements": [
+              0.1,
+              0.7
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.1,0.7",
+            "requirements": [
+              0.1,
+              0.7
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.1,0.7",
+            "requirements": [
+              0.1,
+              0.7
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.7,0.1",
+            "requirements": [
+              0.7,
+              0.1
+            ]
+          },
+          {
+            "budget": 2.0,
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.7,0.1",
+            "requirements": [
+              0.7,
+              0.1
+            ]
+          }
+        ],
+        "regime_labels": [
+          "markov-y",
+          "markov-y",
+          "markov-y",
+          "markov-y",
+          "markov-y",
+          "markov-y",
+          "markov-y",
+          "markov-y",
+          "markov-x",
+          "markov-x",
+          "markov-x",
+          "markov-x",
+          "markov-x",
+          "markov-x",
+          "markov-x",
+          "markov-y",
+          "markov-y",
+          "markov-y",
+          "markov-x",
+          "markov-x"
+        ]
+      },
+      "measurements": {
+        "functional_successes": 18,
+        "gross_ces_sum": 13.541997148228804,
+        "normalized_deficit_sum": 0.3329278812142435,
+        "periods": 20,
+        "productive_effort_sum": 40.0
+      },
+      "scenario_id": "S2_markov_runner_integration",
+      "status": "PASS",
+      "trace": [
+        {
+          "actual_competence_after": [
+            [
+              0.3291796067500631,
+              0.373900966300059
+            ],
+            [
+              0.3,
+              0.48
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.25,
+              0.3
+            ],
+            [
+              0.3,
+              0.35
+            ]
+          ],
+          "allocation": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "ces_gross": 0.28125000000000006,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.37390096630006486,
+              0.4186223258500493
+            ],
+            [
+              0.35000000000015,
+              0.5199999999953173
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.3000000000002,
+              0.35000000000015
+            ],
+            [
+              0.35000000000015,
+              0.4000000000001
+            ]
+          ],
+          "functional_success": false,
+          "mis_increment": [
+            [
+              0.07917960675006308,
+              0.07390096630005899
+            ],
+            [
+              0.0,
+              0.13
+            ]
+          ],
+          "normalized_deficit": 0.28571428571428564,
+          "period": 0,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.1,0.7",
+          "production_by_agent_skill": [
+            [
+              0.125,
+              0.15
+            ],
+            [
+              0.0,
+              0.35
+            ]
+          ],
+          "production_by_skill": [
+            0.125,
+            0.5
+          ],
+          "production_observations": [
+            [
+              0.16783432385956107,
+              0.15953468238410232
+            ],
+            [
+              0.012779849611723598,
+              0.3242723513316167
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.1,
+            0.7
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.4,
+              0.44000000000000006
+            ],
+            [
+              0.3,
+              0.584
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.3291796067500631,
+              0.373900966300059
+            ],
+            [
+              0.3,
+              0.48
+            ]
+          ],
+          "allocation": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "ces_gross": 0.37354530288981563,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.43999999999999906,
+              0.4799999999999987
+            ],
+            [
+              0.35000000000015,
+              0.6159999999937086
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.37390096630006486,
+              0.4186223258500493
+            ],
+            [
+              0.35000000000015,
+              0.5199999999953173
+            ]
+          ],
+          "functional_success": false,
+          "mis_increment": [
+            [
+              0.07082039324993694,
+              0.06609903369994108
+            ],
+            [
+              0.0,
+              0.10399999999999998
+            ]
+          ],
+          "normalized_deficit": 0.047213595499957836,
+          "period": 1,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.1,0.7",
+          "production_by_agent_skill": [
+            [
+              0.16458980337503154,
+              0.1869504831500295
+            ],
+            [
+              0.0,
+              0.48
+            ]
+          ],
+          "production_by_skill": [
+            0.16458980337503154,
+            0.6669504831500295
+          ],
+          "production_observations": [
+            [
+              0.15704710804431432,
+              0.20990947126015244
+            ],
+            [
+              0.02511173467586418,
+              0.48564644051862677
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.1,
+            0.7
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.46334368540005055,
+              0.4991207730400472
+            ],
+            [
+              0.3,
+              0.6672
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.4,
+              0.44000000000000006
+            ],
+            [
+              0.3,
+              0.584
+            ]
+          ],
+          "allocation": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "ces_gross": 0.4514993765576342,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.49912077304004676,
+              0.5348978606800421
+            ],
+            [
+              0.35000000000015,
+              0.6927999999979815
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.43999999999999906,
+              0.4799999999999987
+            ],
+            [
+              0.35000000000015,
+              0.6159999999937086
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.06334368540005053,
+              0.05912077304004715
+            ],
+            [
+              0.0,
+              0.08320000000000005
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 2,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.1,0.7",
+          "production_by_agent_skill": [
+            [
+              0.2,
+              0.22000000000000003
+            ],
+            [
+              0.0,
+              0.584
+            ]
+          ],
+          "production_by_skill": [
+            0.2,
+            0.804
+          ],
+          "production_observations": [
+            [
+              0.21933413267718338,
+              0.22559786728585435
+            ],
+            [
+              -0.004963707911301344,
+              0.6043392434737853
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.1,
+            0.7
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.52,
+              0.552
+            ],
+            [
+              0.3,
+              0.73376
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.46334368540005055,
+              0.4991207730400472
+            ],
+            [
+              0.3,
+              0.6672
+            ]
+          ],
+          "allocation": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "ces_gross": 0.5175356858890653,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.5519999999999997,
+              0.5839999999999979
+            ],
+            [
+              0.35000000000015,
+              0.7542399999632459
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.49912077304004676,
+              0.5348978606800421
+            ],
+            [
+              0.35000000000015,
+              0.6927999999979815
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.056656314599949464,
+              0.05287922695995284
+            ],
+            [
+              0.0,
+              0.06655999999999995
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 3,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.1,0.7",
+          "production_by_agent_skill": [
+            [
+              0.23167184270002528,
+              0.2495603865200236
+            ],
+            [
+              0.0,
+              0.6672
+            ]
+          ],
+          "production_by_skill": [
+            0.23167184270002528,
+            0.9167603865200236
+          ],
+          "production_observations": [
+            [
+              0.24236320529702615,
+              0.2488928206945267
+            ],
+            [
+              -0.018718346740523032,
+              0.6362294063378763
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.1,
+            0.7
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.5706749483200404,
+              0.5992966184320377
+            ],
+            [
+              0.3,
+              0.7870079999999999
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.52,
+              0.552
+            ],
+            [
+              0.3,
+              0.73376
+            ]
+          ],
+          "allocation": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "ces_gross": 0.5736321154134139,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.5992966184320372,
+              0.6279182885440306
+            ],
+            [
+              0.35000000000015,
+              0.803391999972898
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.5519999999999997,
+              0.5839999999999979
+            ],
+            [
+              0.35000000000015,
+              0.7542399999632459
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.05067494832004038,
+              0.047296618432037696
+            ],
+            [
+              0.0,
+              0.05324799999999996
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 4,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.1,0.7",
+          "production_by_agent_skill": [
+            [
+              0.26,
+              0.276
+            ],
+            [
+              0.0,
+              0.73376
+            ]
+          ],
+          "production_by_skill": [
+            0.26,
+            1.00976
+          ],
+          "production_observations": [
+            [
+              0.2881717977550345,
+              0.26575573913055056
+            ],
+            [
+              0.01911817952843224,
+              0.7422689047450455
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.1,
+            0.7
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.6160000000000001,
+              0.6416000000000001
+            ],
+            [
+              0.3,
+              0.8296064
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.5706749483200404,
+              0.5992966184320377
+            ],
+            [
+              0.3,
+              0.7870079999999999
+            ]
+          ],
+          "allocation": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "ces_gross": 0.6214152945402357,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.6416,
+              0.6671999999999932
+            ],
+            [
+              0.35000000000015,
+              0.8427135999649621
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.5992966184320372,
+              0.6279182885440306
+            ],
+            [
+              0.35000000000015,
+              0.803391999972898
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.045325051679959705,
+              0.04230338156796232
+            ],
+            [
+              0.0,
+              0.042598400000000036
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 5,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.1,0.7",
+          "production_by_agent_skill": [
+            [
+              0.2853374741600202,
+              0.29964830921601887
+            ],
+            [
+              0.0,
+              0.7870079999999999
+            ]
+          ],
+          "production_by_skill": [
+            0.2853374741600202,
+            1.0866563092160189
+          ],
+          "production_observations": [
+            [
+              0.2892395314378549,
+              0.28881943620727557
+            ],
+            [
+              0.0008473910550592427,
+              0.7833885721086932
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.1,
+            0.7
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.6565399586560324,
+              0.6794372947456302
+            ],
+            [
+              0.3,
+              0.86368512
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.6160000000000001,
+              0.6416000000000001
+            ],
+            [
+              0.3,
+              0.8296064
+            ]
+          ],
+          "allocation": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "ces_gross": 0.6622276956300707,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.6794372947456294,
+              0.7023346308352056
+            ],
+            [
+              0.35000000000015,
+              0.874170879970879
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.6416,
+              0.6671999999999932
+            ],
+            [
+              0.35000000000015,
+              0.8427135999649621
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.04053995865603233,
+              0.037837294745630135
+            ],
+            [
+              0.0,
+              0.03407872000000001
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 6,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.1,0.7",
+          "production_by_agent_skill": [
+            [
+              0.30800000000000005,
+              0.32080000000000003
+            ],
+            [
+              0.0,
+              0.8296064
+            ]
+          ],
+          "production_by_skill": [
+            0.30800000000000005,
+            1.1504064
+          ],
+          "production_observations": [
+            [
+              0.270878105374833,
+              0.28763002954894445
+            ],
+            [
+              0.009323422974523918,
+              0.833479663389537
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.1,
+            0.7
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.6928000000000001,
+              0.71328
+            ],
+            [
+              0.3,
+              0.890948096
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.6565399586560324,
+              0.6794372947456302
+            ],
+            [
+              0.3,
+              0.86368512
+            ]
+          ],
+          "allocation": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "ces_gross": 0.6971800036217289,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.7132799999999991,
+              0.7337599999999816
+            ],
+            [
+              0.35000000000015,
+              0.8993367039907092
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.6794372947456294,
+              0.7023346308352056
+            ],
+            [
+              0.35000000000015,
+              0.874170879970879
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.03626004134396765,
+              0.03384270525436983
+            ],
+            [
+              0.0,
+              0.02726297600000005
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 7,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.1,0.7",
+          "production_by_agent_skill": [
+            [
+              0.3282699793280162,
+              0.3397186473728151
+            ],
+            [
+              0.0,
+              0.86368512
+            ]
+          ],
+          "production_by_skill": [
+            0.3282699793280162,
+            1.203403767372815
+          ],
+          "production_observations": [
+            [
+              0.32843876317851495,
+              0.3463783438689335
+            ],
+            [
+              -0.018986064836837523,
+              0.897403527862267
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.1,
+            0.7
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.75424,
+              0.71328
+            ],
+            [
+              0.373900966300059,
+              0.9024610118320875
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.6928000000000001,
+              0.71328
+            ],
+            [
+              0.3,
+              0.890948096
+            ]
+          ],
+          "allocation": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "ces_gross": 0.628436561759762,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.7706239999999988,
+              0.7337599999999816
+            ],
+            [
+              0.4186223258438184,
+              0.9099640109128065
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.7132799999999991,
+              0.7337599999999816
+            ],
+            [
+              0.35000000000015,
+              0.8993367039907092
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.06143999999999994,
+              0.0
+            ],
+            [
+              0.07390096630005899,
+              0.011512915832087467
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 8,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.7,0.1",
+          "production_by_agent_skill": [
+            [
+              0.6928000000000001,
+              0.0
+            ],
+            [
+              0.15,
+              0.445474048
+            ]
+          ],
+          "production_by_skill": [
+            0.8428000000000001,
+            0.445474048
+          ],
+          "production_observations": [
+            [
+              0.6891985577872329,
+              -0.0075878401066934754
+            ],
+            [
+              0.13931641771474274,
+              0.43946683235579
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.7,
+            0.1
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.803392,
+              0.71328
+            ],
+            [
+              0.44000000000000006,
+              0.9127584768
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.75424,
+              0.71328
+            ],
+            [
+              0.373900966300059,
+              0.9024610118320875
+            ]
+          ],
+          "allocation": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "ces_gross": 0.6739479462315073,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.8164991999999957,
+              0.7337599999999816
+            ],
+            [
+              0.47999999999997567,
+              0.9194693631904785
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.7706239999999988,
+              0.7337599999999816
+            ],
+            [
+              0.4186223258438184,
+              0.9099640109128065
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.049151999999999973,
+              0.0
+            ],
+            [
+              0.06609903369994108,
+              0.010297464967912506
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 9,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.7,0.1",
+          "production_by_agent_skill": [
+            [
+              0.75424,
+              0.0
+            ],
+            [
+              0.1869504831500295,
+              0.45123050591604374
+            ]
+          ],
+          "production_by_skill": [
+            0.9411904831500295,
+            0.45123050591604374
+          ],
+          "production_observations": [
+            [
+              0.721750111471082,
+              0.03607765150716577
+            ],
+            [
+              0.19243784275038384,
+              0.4385199444923627
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.7,
+            0.1
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.8427136,
+              0.71328
+            ],
+            [
+              0.4991207730400472,
+              0.92196880946567
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.803392,
+              0.71328
+            ],
+            [
+              0.44000000000000006,
+              0.9127584768
+            ]
+          ],
+          "allocation": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "ces_gross": 0.7116498703789123,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.853199359999999,
+              0.7337599999999816
+            ],
+            [
+              0.5348978606800256,
+              0.9279712087267494
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.8164991999999957,
+              0.7337599999999816
+            ],
+            [
+              0.47999999999997567,
+              0.9194693631904785
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.03932159999999996,
+              0.0
+            ],
+            [
+              0.05912077304004715,
+              0.009210332665669951
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 10,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.7,0.1",
+          "production_by_agent_skill": [
+            [
+              0.803392,
+              0.0
+            ],
+            [
+              0.22000000000000003,
+              0.4563792384
+            ]
+          ],
+          "production_by_skill": [
+            1.023392,
+            0.4563792384
+          ],
+          "production_observations": [
+            [
+              0.8544597023501257,
+              -0.002018120058027071
+            ],
+            [
+              0.22767644723306507,
+              0.43355601938691374
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.7,
+            0.1
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.87417088,
+              0.71328
+            ],
+            [
+              0.552,
+              0.9302067814399999
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.8427136,
+              0.71328
+            ],
+            [
+              0.4991207730400472,
+              0.92196880946567
+            ]
+          ],
+          "allocation": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "ces_gross": 0.743110762350366,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.8825594879999992,
+              0.7337599999999816
+            ],
+            [
+              0.5839999999999925,
+              0.9355754905515233
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.853199359999999,
+              0.7337599999999816
+            ],
+            [
+              0.5348978606800256,
+              0.9279712087267494
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.03145728000000003,
+              0.0
+            ],
+            [
+              0.05287922695995284,
+              0.00823797197432996
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 11,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.7,0.1",
+          "production_by_agent_skill": [
+            [
+              0.8427136,
+              0.0
+            ],
+            [
+              0.2495603865200236,
+              0.460984404732835
+            ]
+          ],
+          "production_by_skill": [
+            1.0922739865200235,
+            0.460984404732835
+          ],
+          "production_observations": [
+            [
+              0.8637472380594753,
+              0.00834358154305634
+            ],
+            [
+              0.27117103046916996,
+              0.47693740036729854
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.7,
+            0.1
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.899336704,
+              0.71328
+            ],
+            [
+              0.5992966184320377,
+              0.937575047572536
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.87417088,
+              0.71328
+            ],
+            [
+              0.552,
+              0.9302067814399999
+            ]
+          ],
+          "allocation": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "ces_gross": 0.7695193935593677,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.9060475903999998,
+              0.7337599999999816
+            ],
+            [
+              0.6279182885440229,
+              0.9423769669817595
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.8825594879999992,
+              0.7337599999999816
+            ],
+            [
+              0.5839999999999925,
+              0.9355754905515233
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.025165824000000003,
+              0.0
+            ],
+            [
+              0.047296618432037696,
+              0.00736826613253605
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 12,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.7,0.1",
+          "production_by_agent_skill": [
+            [
+              0.87417088,
+              0.0
+            ],
+            [
+              0.276,
+              0.46510339071999995
+            ]
+          ],
+          "production_by_skill": [
+            1.1501708800000001,
+            0.46510339071999995
+          ],
+          "production_observations": [
+            [
+              0.9185615537508842,
+              -0.01987767432512511
+            ],
+            [
+              0.2674859069577633,
+              0.4550277196436302
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.7,
+            0.1
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.9194693632,
+              0.71328
+            ],
+            [
+              0.6416000000000001,
+              0.944165425152
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.899336704,
+              0.71328
+            ],
+            [
+              0.5992966184320377,
+              0.937575047572536
+            ]
+          ],
+          "allocation": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "ces_gross": 0.7917995118815199,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.9248380723199996,
+              0.7337599999999816
+            ],
+            [
+              0.6671999999999452,
+              0.9484603924399619
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.9060475903999998,
+              0.7337599999999816
+            ],
+            [
+              0.6279182885440229,
+              0.9423769669817595
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.020132659199999958,
+              0.0
+            ],
+            [
+              0.04230338156796232,
+              0.006590377579464013
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 13,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.7,0.1",
+          "production_by_agent_skill": [
+            [
+              0.899336704,
+              0.0
+            ],
+            [
+              0.29964830921601887,
+              0.468787523786268
+            ]
+          ],
+          "production_by_skill": [
+            1.198985013216019,
+            0.468787523786268
+          ],
+          "production_observations": [
+            [
+              0.868484761412722,
+              -0.038395750295863826
+            ],
+            [
+              0.2665372545451825,
+              0.4579841398612343
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.7,
+            0.1
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.93557549056,
+              0.71328
+            ],
+            [
+              0.6794372947456302,
+              0.9500600380580287
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.9194693632,
+              0.71328
+            ],
+            [
+              0.6416000000000001,
+              0.944165425152
+            ]
+          ],
+          "allocation": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "ces_gross": 0.8106810551144077,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.9398704578559994,
+              0.7337599999999816
+            ],
+            [
+              0.7023346308351732,
+              0.9539015735844901
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.9248380723199996,
+              0.7337599999999816
+            ],
+            [
+              0.6671999999999452,
+              0.9484603924399619
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.016106127360000055,
+              0.0
+            ],
+            [
+              0.037837294745630135,
+              0.005894612906028773
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 14,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.7,0.1",
+          "production_by_agent_skill": [
+            [
+              0.9194693632,
+              0.0
+            ],
+            [
+              0.32080000000000003,
+              0.472082712576
+            ]
+          ],
+          "production_by_skill": [
+            1.2402693632,
+            0.472082712576
+          ],
+          "production_observations": [
+            [
+              0.8791182288179836,
+              -0.0023833948367317985
+            ],
+            [
+              0.3221267437622839,
+              0.4654519097837105
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.7,
+            0.1
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.9423769669900333,
+              0.7435498357965041
+            ],
+            [
+              0.6794372947456302,
+              0.960048030446423
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.93557549056,
+              0.71328
+            ],
+            [
+              0.6794372947456302,
+              0.9500600380580287
+            ]
+          ],
+          "allocation": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "ces_gross": 0.8345369828183943,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.9462185025240304,
+              0.7618677046681609
+            ],
+            [
+              0.7023346308351732,
+              0.9631212588681994
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.9398704578559994,
+              0.7337599999999816
+            ],
+            [
+              0.7023346308351732,
+              0.9539015735844901
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.00680147643003326,
+              0.030269835796504108
+            ],
+            [
+              0.0,
+              0.009987992388394207
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 15,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.1,0.7",
+          "production_by_agent_skill": [
+            [
+              0.46778774528,
+              0.35664
+            ],
+            [
+              0.0,
+              0.9500600380580287
+            ]
+          ],
+          "production_by_skill": [
+            0.46778774528,
+            1.3067000380580287
+          ],
+          "production_observations": [
+            [
+              0.46352217276655716,
+              0.3509255187004935
+            ],
+            [
+              -0.007353783852385467,
+              0.9609711202826274
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.1,
+            0.7
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.9484603924480001,
+              0.770624
+            ],
+            [
+              0.6794372947456302,
+              0.9680384243571384
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.9423769669900333,
+              0.7435498357965041
+            ],
+            [
+              0.6794372947456302,
+              0.960048030446423
+            ]
+          ],
+          "allocation": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "ces_gross": 0.8468398545005784,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.9518963662847996,
+              0.7870079999999869
+            ],
+            [
+              0.7023346308351732,
+              0.9704970070948509
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.9462185025240304,
+              0.7618677046681609
+            ],
+            [
+              0.7023346308351732,
+              0.9631212588681994
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.006083425457966807,
+              0.027074164203495843
+            ],
+            [
+              0.0,
+              0.007990393910715432
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 16,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.1,0.7",
+          "production_by_agent_skill": [
+            [
+              0.47118848349501663,
+              0.37177491789825207
+            ],
+            [
+              0.0,
+              0.960048030446423
+            ]
+          ],
+          "production_by_skill": [
+            0.47118848349501663,
+            1.331822948344675
+          ],
+          "production_observations": [
+            [
+              0.49920141720562194,
+              0.39173648524256
+            ],
+            [
+              -0.034842627190397296,
+              0.9689936632756482
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.1,
+            0.7
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.9539015735920267,
+              0.7948398686372032
+            ],
+            [
+              0.6794372947456302,
+              0.9744307394857107
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.9484603924480001,
+              0.770624
+            ],
+            [
+              0.6794372947456302,
+              0.9680384243571384
+            ]
+          ],
+          "allocation": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "ces_gross": 0.8574571470088161,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.9569748020192245,
+              0.8094941637345381
+            ],
+            [
+              0.7023346308351732,
+              0.9763976056766822
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.9518963662847996,
+              0.7870079999999869
+            ],
+            [
+              0.7023346308351732,
+              0.9704970070948509
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.005441181144026586,
+              0.024215868637203264
+            ],
+            [
+              0.0,
+              0.006392315128572301
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 17,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.1,0.7",
+          "production_by_agent_skill": [
+            [
+              0.47423019622400003,
+              0.385312
+            ],
+            [
+              0.0,
+              0.9680384243571384
+            ]
+          ],
+          "production_by_skill": [
+            0.47423019622400003,
+            1.3533504243571384
+          ],
+          "production_observations": [
+            [
+              0.4778067851136099,
+              0.40667716252465475
+            ],
+            [
+              -0.03402306653450756,
+              1.0089267516068812
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.1,
+            0.7
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.9631212588736213,
+              0.7948398686372032
+            ],
+            [
+              0.71328,
+              0.9771301581422591
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.9539015735920267,
+              0.7948398686372032
+            ],
+            [
+              0.6794372947456302,
+              0.9744307394857107
+            ]
+          ],
+          "allocation": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "ces_gross": 0.8421571481656434,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.9655798416153797,
+              0.8094941637345381
+            ],
+            [
+              0.7337599999999477,
+              0.9788893767445379
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.9569748020192245,
+              0.8094941637345381
+            ],
+            [
+              0.7023346308351732,
+              0.9763976056766822
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.00921968528159467,
+              0.0
+            ],
+            [
+              0.03384270525436983,
+              0.0026994186565484357
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 18,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.7,0.1",
+          "production_by_agent_skill": [
+            [
+              0.9539015735920267,
+              0.0
+            ],
+            [
+              0.3397186473728151,
+              0.48721536974285534
+            ]
+          ],
+          "production_by_skill": [
+            1.2936202209648417,
+            0.48721536974285534
+          ],
+          "production_observations": [
+            [
+              0.9943128103598836,
+              0.045937618313931575
+            ],
+            [
+              0.3416631605297963,
+              0.4901327577582486
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.7,
+            0.1
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.9704970070988971,
+              0.7948398686372032
+            ],
+            [
+              0.7435498357965041,
+              0.9795445915885685
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.9631212588736213,
+              0.7948398686372032
+            ],
+            [
+              0.71328,
+              0.9771301581422591
+            ]
+          ],
+          "allocation": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "ces_gross": 0.8535754399175642,
+          "efficacy_memory_after": [],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.9724638732923035,
+              0.8094941637345381
+            ],
+            [
+              0.761867704668151,
+              0.9811180845414229
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.9655798416153797,
+              0.8094941637345381
+            ],
+            [
+              0.7337599999999477,
+              0.9788893767445379
+            ]
+          ],
+          "functional_success": true,
+          "mis_increment": [
+            [
+              0.007375748225275758,
+              0.0
+            ],
+            [
+              0.030269835796504108,
+              0.0024144334463094275
+            ]
+          ],
+          "normalized_deficit": 0.0,
+          "period": 19,
+          "policy": "P0_PRODUCTION_ONLY",
+          "policy_updated": false,
+          "problem_id": "r:0.7,0.1",
+          "production_by_agent_skill": [
+            [
+              0.9631212588736213,
+              0.0
+            ],
+            [
+              0.35664,
+              0.48856507907112956
+            ]
+          ],
+          "production_by_skill": [
+            1.3197612588736214,
+            0.48856507907112956
+          ],
+          "production_observations": [
+            [
+              0.9545932225350247,
+              -0.008836178192277206
+            ],
+            [
+              0.3734658920102122,
+              0.5020245141555856
+            ]
+          ],
+          "productive_effort": 2.0,
+          "requirements": [
+            0.7,
+            0.1
+          ],
+          "teaching_action": null,
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "teaching_resource": 0.0,
+          "total_resource": 2.0
+        }
+      ]
+    },
+    {
+      "D0_no_evolution": {
+        "delta_development": 0.0,
+        "delta_total": -0.10000000000000009
+      },
+      "D1_learning_without_frontier_value": {
+        "delta_development": 0.0,
+        "future_state_after_action_1": [
+          [
+            0.5,
+            0.8
+          ],
+          [
+            0.8,
+            0.4
+          ]
+        ],
+        "learning_rate": [
+          0.1,
+          0.0
+        ]
+      },
+      "D2_learning_with_future_value": {
+        "delta_development": 0.1499999999999999,
+        "delta_total": 0.04999999999999982,
+        "future_state_after_action_1": [
+          [
+            1.0,
+            0.8
+          ],
+          [
+            0.8,
+            0.6
+          ]
+        ],
+        "learning_rate": [
+          0.3,
+          0.0
+        ]
+      },
+      "checks": {
+        "D0_has_zero_development_value": true,
+        "D1_changes_state_but_has_zero_development_value": true,
+        "D2_has_positive_conditional_development_value": true
+      },
+      "demand_probability_p": 0.75,
+      "scenario_id": "S3_G2_competence_development_controls",
+      "scope": "canonical G2 law, separate from current exponential MIS-v2",
+      "status": "PASS",
+      "validation_tests": [
+        "tests/test_g2_dynamic.py",
+        "tests/test_hls_lab_nk_learning.py"
+      ]
+    },
+    {
+      "checks": {
+        "MIS_and_teaching_transitions_recorded": true,
+        "decision_mode_is_imperfect": true,
+        "efficacy_memory_recorded": true,
+        "reused_existing_saved_reference_trace": true,
+        "same_seed_exact_replay": true,
+        "true_and_estimated_competence_separate": true
+      },
+      "configuration": {
+        "MIS_v2": {
+          "enabled": true,
+          "eta": [
+            [
+              0.2,
+              0.15
+            ],
+            [
+              0.12,
+              0.18
+            ]
+          ]
+        },
+        "candidate_limit": 216,
+        "collective_budget": 2.0,
+        "demand": {
+          "emissions": {
+            "x": {
+              "ces_weights": [
+                0.5,
+                0.5
+              ],
+              "problem_id": "task-x",
+              "requirements": [
+                1.1,
+                0.1
+              ]
+            },
+            "y": {
+              "ces_weights": [
+                0.5,
+                0.5
+              ],
+              "problem_id": "task-y",
+              "requirements": [
+                0.1,
+                1.2
+              ]
+            }
+          },
+          "environment_seed": 24016,
+          "horizon": 4,
+          "initial_distribution": {
+            "x": 1.0,
+            "y": 0.0
+          },
+          "process": "first-order Markov",
+          "transitions": {
+            "x": {
+              "x": 0.0,
+              "y": 1.0
+            },
+            "y": {
+              "x": 1.0,
+              "y": 0.0
+            }
+          }
+        },
+        "effort_limits": [
+          1.0,
+          1.0
+        ],
+        "geometry": {
+          "agent_ids": [
+            "A",
+            "B"
+          ],
+          "skill_ids": [
+            "x",
+            "y"
+          ]
+        },
+        "information": {
+          "mode": "imperfect",
+          "parameters": {
+            "competence_grid_points": 101,
+            "competence_prior_variance": 0.04,
+            "outcome_noise_sd": 0.0,
+            "production_observation_noise_sd": 0.02
+          },
+          "seed": 24017
+        },
+        "initial_actual_competence": [
+          [
+            0.85,
+            0.15
+          ],
+          [
+            0.2,
+            0.2
+          ]
+        ],
+        "initial_estimated_competence": [
+          [
+            0.75,
+            0.25
+          ],
+          [
+            0.3,
+            0.3
+          ]
+        ],
+        "per_agent_effort_choices": [
+          [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              0.5
+            ],
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              0.5
+            ],
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ]
+        ],
+        "policy": {
+          "name": "P2_ADAPTIVE_TEACHING",
+          "parameters": {
+            "efficacy_prior_mean": 0.5,
+            "efficacy_threshold": 0.35,
+            "effort": 0.25,
+            "target_competence": 0.95
+          },
+          "relations": [
+            [
+              "A",
+              "B",
+              "y"
+            ],
+            [
+              "B",
+              "A",
+              "x"
+            ]
+          ]
+        },
+        "teaching": {
+          "efficacy": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.75,
+                0.8
+              ]
+            ],
+            [
+              [
+                0.7,
+                0.65
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          ],
+          "enabled": true,
+          "one_event_maximum": true,
+          "transfer_rate": 0.4
+        }
+      },
+      "environment": {
+        "latent_states": [
+          "x",
+          "y",
+          "x",
+          "y"
+        ],
+        "problems": [
+          {
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:1.1,0.1",
+            "requirements": [
+              1.1,
+              0.1
+            ],
+            "resource_budget": 2.0
+          },
+          {
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.1,1.2",
+            "requirements": [
+              0.1,
+              1.2
+            ],
+            "resource_budget": 2.0
+          },
+          {
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:1.1,0.1",
+            "requirements": [
+              1.1,
+              0.1
+            ],
+            "resource_budget": 2.0
+          },
+          {
+            "ces_weights": [
+              0.5,
+              0.5
+            ],
+            "problem_id": "r:0.1,1.2",
+            "requirements": [
+              0.1,
+              1.2
+            ],
+            "resource_budget": 2.0
+          }
+        ],
+        "regime_labels": [
+          "x-regime",
+          "y-regime",
+          "x-regime",
+          "y-regime"
+        ],
+        "seed": 24016
+      },
+      "measurements": {
+        "final_actual_competence": [
+          [
+            0.91072,
+            0.15
+          ],
+          [
+            0.2,
+            0.58112815104
+          ]
+        ],
+        "final_efficacy_memory": {
+          "efficacy": [
+            {
+              "count": 1,
+              "mean": 0.5082813393530161,
+              "relation": [
+                "B",
+                "A",
+                "x"
+              ]
+            },
+            {
+              "count": 3,
+              "mean": 0.9260322710756913,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ]
+        },
+        "final_estimated_competence": [
+          [
+            0.8482960492217209,
+            0.25000000000024997
+          ],
+          [
+            0.3000000000002,
+            0.6476565678778202
+          ]
+        ],
+        "functional_successes": 0,
+        "periods": 4,
+        "policy": "P2_ADAPTIVE_TEACHING",
+        "total_resource": 6.0
+      },
+      "scenario_id": "S4_existing_adaptive_coordination_reference",
+      "source_runner": "experiments/synthetic/hls_lab_v1/scientific_model_reference.py",
+      "source_trace_commit": "e8e115030e064df23f07f1b5824264f97513099a",
+      "status": "PASS",
+      "trace": [
+        {
+          "actual_competence_after": [
+            [
+              0.8658359213500126,
+              0.15
+            ],
+            [
+              0.2,
+              0.3335236538330861
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.85,
+              0.15
+            ],
+            [
+              0.2,
+              0.2
+            ]
+          ],
+          "efficacy_memory_after": [
+            {
+              "count": 1,
+              "mean": 0.9142857141405136,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "efficacy_memory_before": [],
+          "estimated_competence_after": [
+            [
+              0.7770854067021314,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.42407750511379244
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.74999999999975,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.3000000000002
+            ]
+          ],
+          "mis_increment": [
+            [
+              0.01583592135001266,
+              0.0
+            ],
+            [
+              0.0,
+              0.0755691889490066
+            ]
+          ],
+          "observations": [
+            [
+              0.42411749814212174,
+              -0.00454661292118358
+            ],
+            [
+              -0.002272196369677584,
+              0.1280999682740157
+            ]
+          ],
+          "outputs": [
+            0.425,
+            0.1
+          ],
+          "period": 0,
+          "problem_id": "r:1.1,0.1",
+          "production_action": [
+            [
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              0.5
+            ]
+          ],
+          "requirements": [
+            1.1,
+            0.1
+          ],
+          "resource_used": 1.5,
+          "success": false,
+          "teaching_action": {
+            "effort": 0.25,
+            "learner_id": "B",
+            "skill_id": "y",
+            "teacher_id": "A"
+          },
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.05795446488407946
+            ]
+          ]
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.8884,
+              0.15
+            ],
+            [
+              0.2,
+              0.39648000000000005
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.8658359213500126,
+              0.15
+            ],
+            [
+              0.2,
+              0.3335236538330861
+            ]
+          ],
+          "efficacy_memory_after": [
+            {
+              "count": 1,
+              "mean": 0.9142857141405136,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            },
+            {
+              "count": 1,
+              "mean": 0.5082813393530161,
+              "relation": [
+                "B",
+                "A",
+                "x"
+              ]
+            }
+          ],
+          "efficacy_memory_before": [
+            {
+              "count": 1,
+              "mean": 0.9142857141405136,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "estimated_competence_after": [
+            [
+              0.843137194745489,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.47847999998356516
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.7770854067021314,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.42407750511379244
+            ]
+          ],
+          "mis_increment": [
+            [
+              0.014164078649987366,
+              0.0
+            ],
+            [
+              0.0,
+              0.06295634616691398
+            ]
+          ],
+          "observations": [
+            [
+              0.4591781164091783,
+              -0.03677384494452922
+            ],
+            [
+              -0.03825225748261568,
+              0.15792810485848288
+            ]
+          ],
+          "outputs": [
+            0.4329179606750063,
+            0.16676182691654304
+          ],
+          "period": 1,
+          "problem_id": "r:0.1,1.2",
+          "production_action": [
+            [
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              0.5
+            ]
+          ],
+          "requirements": [
+            0.1,
+            1.2
+          ],
+          "resource_used": 1.5,
+          "success": false,
+          "teaching_action": {
+            "effort": 0.25,
+            "learner_id": "A",
+            "skill_id": "x",
+            "teacher_id": "B"
+          },
+          "teaching_increment": [
+            [
+              0.008399999999999963,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.9001819254844093,
+              0.15
+            ],
+            [
+              0.2,
+              0.4972102444516802
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.8884,
+              0.15
+            ],
+            [
+              0.2,
+              0.39648000000000005
+            ]
+          ],
+          "efficacy_memory_after": [
+            {
+              "count": 1,
+              "mean": 0.5082813393530161,
+              "relation": [
+                "B",
+                "A",
+                "x"
+              ]
+            },
+            {
+              "count": 2,
+              "mean": 0.9200359388228219,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "efficacy_memory_before": [
+            {
+              "count": 1,
+              "mean": 0.9142857141405136,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            },
+            {
+              "count": 1,
+              "mean": 0.5082813393530161,
+              "relation": [
+                "B",
+                "A",
+                "x"
+              ]
+            }
+          ],
+          "estimated_competence_after": [
+            [
+              0.8493712194106826,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.5711928445087318
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.843137194745489,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.47847999998356516
+            ]
+          ],
+          "mis_increment": [
+            [
+              0.011781925484409372,
+              0.0
+            ],
+            [
+              0.0,
+              0.05700939614313061
+            ]
+          ],
+          "observations": [
+            [
+              0.45042568370350694,
+              0.03438964720880053
+            ],
+            [
+              -0.03726575321276167,
+              0.19806096163581452
+            ]
+          ],
+          "outputs": [
+            0.4442,
+            0.19824000000000003
+          ],
+          "period": 2,
+          "problem_id": "r:1.1,0.1",
+          "production_action": [
+            [
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              0.5
+            ]
+          ],
+          "requirements": [
+            1.1,
+            0.1
+          ],
+          "resource_used": 1.5,
+          "success": false,
+          "teaching_action": {
+            "effort": 0.25,
+            "learner_id": "B",
+            "skill_id": "y",
+            "teacher_id": "A"
+          },
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.043720848308549554
+            ]
+          ]
+        },
+        {
+          "actual_competence_after": [
+            [
+              0.91072,
+              0.15
+            ],
+            [
+              0.2,
+              0.58112815104
+            ]
+          ],
+          "actual_competence_before": [
+            [
+              0.9001819254844093,
+              0.15
+            ],
+            [
+              0.2,
+              0.4972102444516802
+            ]
+          ],
+          "efficacy_memory_after": [
+            {
+              "count": 1,
+              "mean": 0.5082813393530161,
+              "relation": [
+                "B",
+                "A",
+                "x"
+              ]
+            },
+            {
+              "count": 3,
+              "mean": 0.9260322710756913,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "efficacy_memory_before": [
+            {
+              "count": 1,
+              "mean": 0.5082813393530161,
+              "relation": [
+                "B",
+                "A",
+                "x"
+              ]
+            },
+            {
+              "count": 2,
+              "mean": 0.9200359388228219,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "estimated_competence_after": [
+            [
+              0.8482960492217209,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.6476565678778202
+            ]
+          ],
+          "estimated_competence_before": [
+            [
+              0.8493712194106826,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.5711928445087318
+            ]
+          ],
+          "mis_increment": [
+            [
+              0.010538074515590634,
+              0.0
+            ],
+            [
+              0.0,
+              0.04749426754831981
+            ]
+          ],
+          "observations": [
+            [
+              0.4350734987823024,
+              0.0027819609906363785
+            ],
+            [
+              -0.0036167121188721797,
+              0.2234484962730448
+            ]
+          ],
+          "outputs": [
+            0.45009096274220467,
+            0.2486051222258401
+          ],
+          "period": 3,
+          "problem_id": "r:0.1,1.2",
+          "production_action": [
+            [
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              0.5
+            ]
+          ],
+          "requirements": [
+            0.1,
+            1.2
+          ],
+          "resource_used": 1.5,
+          "success": false,
+          "teaching_action": {
+            "effort": 0.25,
+            "learner_id": "B",
+            "skill_id": "y",
+            "teacher_id": "A"
+          },
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.03642363904000001
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}
