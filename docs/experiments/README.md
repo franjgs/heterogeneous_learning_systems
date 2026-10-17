@@ -18,6 +18,7 @@ conceptual index; it is not a second results ledger.
 - [Adaptive teaching: laboratory reuse audit](HLS_ADAPTIVE_TRAINING_REUSE_AUDIT.md): component-level reuse boundaries and historical results relevant to avoid repeating prior work
 - [HLS laboratory functional-completeness audit](HLS_LABORATORY_FUNCTIONAL_COMPLETENESS_AUDIT.md): executable component status, missing links in the closed loop, and a staged additive integration plan
 - [Nembhard adaptive allocation protocol](HLS_NEMBHARD_ADAPTIVE_ALLOCATION_PROTOCOL.md): documentary exploratory design for fixed, ORACLE and ADAPTIVE assignment under matched Nembhard demand; campaign execution is not authorized
+- [Nembhard protocol critical review](HLS_NEMBHARD_PROTOCOL_REVIEW.md): evidence-based ADJUST decision, run-count reconstruction, code-contract audit and pre-execution corrections; no campaign authorization
 - [G0 current instrument](G0.md)
 - [G2 D0/D1/D2 dynamic ground truth runner](../../experiments/synthetic/g2/)
 - [A1 reference specification](../experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md)

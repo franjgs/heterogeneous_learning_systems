@@ -1,8 +1,10 @@
 # Exploratory protocol: fixed and adaptive Nembhard allocation
 
-**Status:** protocol design completed as a documentary deliverable; not a
-frozen confirmatory registration and not authorization to execute a campaign.
-No experiment was run to prepare this document. HLS Laboratory remains
+**Status:** documentary protocol design; reviewed **ADJUST** against commit
+`62a08df` and corrected in the associated protocol review update. It is not a
+frozen confirmatory registration and does not authorize campaign execution;
+PI/CE review and separate execution authorization remain required. No
+experiment was run to prepare or review this document. HLS Laboratory remains
 **PARTIAL**.
 
 ## 1. Research question and scope
@@ -161,7 +163,10 @@ The sequence builder is a small protocol-level preparation step, not a new
 demand mechanism. It must deterministically materialize the 120
 `ProblemSpecNK` objects, preserve IDs/requirements/weights/budgets, record the
 seed and serialized sequence digest, and assert the counts and run-length
-condition before any model run. Pass the frozen list through the runner's
+condition before any model run. Define that digest over UTF-8 compact JSON
+(`sort_keys=True`, `separators=(",", ":")`, `allow_nan=False`) for the ordered
+list of records containing `problem_id`, `requirements`, `resource_budget`,
+and `ces_weights`; calculate SHA-256 over those bytes. Pass the frozen list through the runner's
 existing explicit-`problems` interface. Do not use policy-specific demand
 generation. This is preferable to IID/Markov sampling here because those
 generators do not guarantee exact per-replicate counts.
@@ -247,8 +252,11 @@ replicate bundles (**40 additional episodes**). Also run a bounded catalogue-
 order diagnostic: one mixed/fast/interleaved seed bundle, all six permutations
 of agent rows/IDs with profiles, resource limits, and FIXED role allocation
 permuted together, FIXED/ORACLE/ADAPTIVE (`epsilon=0`, `sigma=0`) (**18
-episodes**). This is a tie/order diagnostic, not another replicate or basis
-for population inference. The proposed total is 1,018 episodes (122,160
+diagnostic cells**). Reuse the identity-permutation FIXED and ORACLE results
+from the primary matrix; only the identity ADAPTIVE epsilon-zero result and
+the five non-identity permutations for each policy require execution (**16
+additional episodes**). This is a tie/order diagnostic, not another replicate
+or basis for population inference. The unique proposed total is 1,016 episodes (121,920
 period records). Each paired replicate creates the
 interleaved and clustered sequence from its demand-seed bundle. For the same
 profile, learning level, replicate, and order, all four primary arms receive
@@ -266,20 +274,24 @@ builder, `master + 10000*r + 3` for adaptive observations, and
 seeds, not only the master seed. Demand construction, observation noise, and
 exploration are separate streams. The
 same demand path is replayed across policies; the same observation and
-exploration seed values are used for paired adaptive noise conditions. The
-noise-free implementation consumes no Gaussian draws, so this is not a
-shared-noise-draw comparison at `sigma=0`; exploration remains aligned because
-it has an independent stream. Do not claim equal seed values alone guarantee
-comparable random draws across different code paths.
+exploration seed values are used for paired adaptive noise conditions. At
+positive observation noise, the implementation consumes one Gaussian draw
+for every agent-skill coordinate each period, discarding it when work is zero.
+Therefore, equal dimensions, horizon and observation seed align positive-noise
+innovations by period and cell even when selected allocations differ; only
+worked cells generate observations and enter the estimator. The `sigma=0`
+condition consumes no Gaussian draws, so it has no corresponding shared
+Gaussian variates. Exploration remains a separate stream. Same seed values do
+not imply identical decisions, observations, or state trajectories.
 
 Twenty replicates are an exploratory compromise, not a power calculation or
 confirmatory sample-size justification. The randomized schedule builder gives
 some demand-path variation while preserving exact composition. The estimand
 is conditional on the declared profile, task, budget, sequence-builder, and
 seed distributions; it does not represent a population of organizations.
-The design entails at most 5,928,960 catalogue-candidate scoring operations
+The design entails at most 5,921,280 catalogue-candidate scoring operations
 across ORACLE and ADAPTIVE (64-candidate upper bound, before per-problem
-feasibility filtering), and 122,160 period records. This is a count-based
+feasibility filtering), and 121,920 period records. This is a count-based
 feasibility estimate, not a runtime benchmark or permission to execute.
 
 ## 8. Metrics and aggregation
@@ -341,17 +353,22 @@ level × demand-order × replicate, compute:
 - `ORACLE − FIXED` as a current-period-perfect-information policy reference;
 - `ADAPTIVE(σ=.05) − ADAPTIVE(σ=0)` using common demand and the same
   replicate-level observation/exploration seed values. These are paired seed
-  conditions, not guaranteed common-random-number trajectories: selected
-  cells and the number/order of Gaussian draws can diverge after decisions
-  diverge, so do not describe the normal draws themselves as aligned;
+  conditions, not identical trajectories: positive-noise innovations align
+  by period/cell, but only selected cells are observed; sigma-zero runs
+  consume no Gaussian draws;
 - clustered-minus-interleaved contrasts within the same seed bundle and
   policy arm.
 
-Then examine moderation of ADAPTIVE-minus-FIXED by organization profile,
-learning scale, order, and observation noise. Report first-period contrasts
-separately from full-horizon contrasts. Do not interpret ORACLE-minus-FIXED
-as the value of perfect information alone because policy and information
-access differ.
+For the stated moderation hypotheses, also calculate replicate-bundle
+difference-in-differences: (ADAPTIVE−FIXED) for mixed and specialists minus
+the homogeneous contrast (H1); fast minus slow learning-scale contrasts (H2);
+and clustered minus interleaved contrasts (H3). Compute these separately for
+each primary outcome and relevant remaining factor levels. H4 is the paired
+ADAPTIVE noisy-minus-noiseless contrast. Summarize the 20 bundle-level values
+and resample bundles, not periods, for uncertainty. Report first-period
+contrasts separately from full-horizon contrasts. Do not interpret
+ORACLE-minus-FIXED as the value of perfect information alone because policy
+and information access differ.
 
 For each contrast/outcome report all paired values, mean and median paired
 difference, and a 95% uncertainty interval. A paired t interval for the mean
