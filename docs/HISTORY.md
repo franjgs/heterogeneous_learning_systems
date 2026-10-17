@@ -4,6 +4,433 @@ This is a compact record of the reasoning that matters for interpreting the
 current programme. It is not a replacement for frozen protocols or result
 artifacts, and it is not an exhaustive transcript of earlier documents.
 
+## Chronology and date confidence
+
+This file is the canonical chronology for significant project decisions and
+milestones. For new entries, event time and documentation time are separate.
+Times use Europe/Madrid and the form `YYYY-MM-DD HH:MM ±HH:MM`. A Git
+timestamp verifies when a repository record was made; it does not by itself
+date the decision that motivated it. Earlier narrative sections below remain
+undated where the source material does not establish a defensible event date.
+
+| Event / record | Event date and confidence | Record date and evidence | Scope note |
+| --- | --- | --- | --- |
+| Nembhard adaptive-allocation protocol design | **2026-10-17, documentary design event.** | `docs/experiments/HLS_NEMBHARD_ADAPTIVE_ALLOCATION_PROTOCOL.md`; feasibility checked against current Nembhard/geometry/environment/runner contracts. | Defines an exploratory, matched Nembhard-only comparison of a predeclared fixed role map, myopic perfect-information ORACLE, and observation-based ADAPTIVE across three productivity distributions, two exposure scales, exact-composition temporal-order pairs, adaptive observation-noise levels, and bounded exploration/order sensitivities. Initial draft proposed 1,018 episodes × 120 periods; the subsequent critical review identifies two duplicate diagnostic executions and records a corrected unique proposal of 1,016 episodes. The design is not a frozen confirmatory registration; this documentary work does not authorize campaign execution or claim adaptive superiority / long-horizon ORACLE optimality. No code, result, or calendar changed. |
+| Critical review of Nembhard adaptive-allocation protocol | **2026-10-17, documentary review event.** | `docs/experiments/HLS_NEMBHARD_PROTOCOL_REVIEW.md`, reviewed against commit `62a08df08adcf85822cb0dfa3e7e027cba9c5ddc` and current execution/observation code. | Decision **ADJUST** before any execution. Found two duplicate identity permutation episodes, an incorrect statement about Gaussian draw alignment, underspecified H1–H3 interaction estimands, and an unspecified canonical demand digest. Recommended protocol count after reuse: 1,016 episodes / 121,920 periods. No simulation or campaign run; campaign remains unauthorized. |
+| Nembhard E1 campaign runner and analysis implementation | **2026-10-17, implementation and validation event.** | `src/hls/nembhard_campaign.py`, `tests/test_hls_nembhard_campaign.py`, and `docs/engineering/HLS_NEMBHARD_CAMPAIGN_RUNNER.md`. | Added a deterministic 1,016-unique-configuration registry (960 primary, 40 epsilon-zero, 16 additional permutation diagnostics; two identity diagnostics alias existing primary runs), exact problem-order/multiset hashes, the protocol FIXED role map, and calls to the existing Nembhard ORACLE/ADAPTIVE route. Results use the common experiment contract plus native and campaign-specific metrics; paired and H1–H3 contrasts are bundle-level and stratified by remaining scenario factors. The CLI separates listing/validation/analysis from episode execution and requires a confirmation token for `run --all`; existing results are not overwritten. Focused campaign tests: 16 passed; combined Nembhard/common-contract selection: 65 passed. Final full suite: 1,503 passed, 5 known provenance/integrity failures. No campaign was executed. PI/CE authorization remains pending. HLS Laboratory remains PARTIAL. |
+| HLS-E1 estimator interruption and safe resume correction | **2026-10-17, incident and repair event.** | `src/hls/hls_lab_nk_nembhard_adaptive.py`, `src/hls/nembhard_campaign.py`, and `docs/engineering/HLS_NEMBHARD_CAMPAIGN_RUNNER.md`. | A Welford first-sample update from prior mean 0.6/count 0 reproduced a negative M2 of `-2.3696655208094487e-16` through one-ULP cancellation. The count-zero case now assigns the observed mean and zero M2 exactly; only scale-aware eight-ULP negative residuals are normalized, while material negatives/non-finite values fail. Added read-only `status` and explicit-token `resume`; existing complete runs are validated, partial/corrupt directories rejected, and only missing IDs dispatched. Read-only audit: 29 valid completed episodes, no incomplete/corrupt directories, 987 pending; the likely interrupted ID is recorded as probable, as its in-memory failing observation was not persisted. Focused selection: 74 passed; final full suite: 1,512 passed and five known inventory/provenance failures. Campaign started/interrupted, not complete; partial outputs are not findings. HLS remains PARTIAL. |
+| Consolidated HLS Laboratory status and Nembhard protocol-design priority | **2026-10-17, decision/documentation event.** | `docs/HLS_CURRENT_STATE.md`; cumulative decision register in `docs/engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md`; published implementation and architecture records. | Confirms N×K/MIS-v2, Nembhard explicit/ORACLE/ADAPTIVE, the independent contextual router, and the non-comparability scope of the common run envelope. System-1.x and Baccara remain deferred; HLS remains PARTIAL. Last previously reported full suite: 1,487 passed / 5 known historical integrity or inventory failures; this documentation task did not rerun it. No campaign was run as part of this consolidation. Next authorized work is protocol design only: fixed allocation vs Nembhard ORACLE vs Nembhard ADAPTIVE, under matched conditions; no superiority or long-horizon optimality claim. |
+| HLS common experiment envelope and route adapters | **2026-10-17, implementation and focused-validation event.** | `src/hls/experiment_contract.py`, `tests/test_hls_common_experiment_contract.py`, and `docs/engineering/HLS_COMMON_EXPERIMENT_CONTRACT.md`. | Added a versioned, non-destructive `ExperimentRun` envelope, ordered typed events, route-specific adapters for N×K/MIS-v2, Nembhard and contextual routing, explicit units/metrics/provenance, and stable strict JSON. New tests: 11 passed; combined focused route regressions: 184 passed. Native result objects and serializers remain unchanged. The format does not create a shared execution engine or scientific comparability; HLS remains PARTIAL. |
+| HLS Laboratory architecture consolidation | **2026-10-17, documentary architecture review.** | `docs/engineering/HLS_LAB_ARCHITECTURE_2026-10-17.md`; audited against the N×K, Nembhard and contextual-router modules and their focused tests. | Records actual execution surfaces and reuse boundaries. Clarifies that contextual query/candidate routing is not wired into the N×K runner and that competence, productivity, output, quality, effort and monetary cost are not interchangeable. Documents within-route comparison conditions and three cross-route gaps. No code, mechanisms, experiments or calendar changed; HLS remains PARTIAL. |
+| HLS contextual quality–cost router, bounded synthetic implementation | **2026-10-17, implementation and focused-validation event.** | Recorded 2026-10-17 (Europe/Madrid); implementation `src/hls/contextual_router.py` and `src/hls/contextual_router_synthetic.py`, tests `tests/test_hls_contextual_router.py`, contract `engineering/HLS_MIXLLM_ROUTER_CONTRACT.md`. | Added candidate-specific contextual ridge predictors for quality and simulated monetary cost, selected-only feedback, the contract's quality-target/cost-minimizing rule and fallback, optional seeded exploration, separate metrics, and deterministic JSON replay. 17 focused tests pass, including hand calculations and fresh-process replay. Related N×K regressions: 162 passed. Full suite: 1,476 passed and the same 5 known provenance/integrity failures (foundation inventory, Campaign 2 closure/theory digests, Campaign 3 frozen source, strategy-gate source). This is not MixLLM reproduction, an HLS N×K mechanism, a scientific campaign, or evidence of benefit. Existing MIS-v2/Nembhard/P0/P1/P2 and historical results are unchanged; HLS remains PARTIAL. |
+| Selection of the next external mechanism | **2026-10-17, comparative decision record.** | Recorded 2026-10-17 (Europe/Madrid) in `engineering/HLS_NEXT_MECHANISMS_SELECTION_2026-10-17.md` and the cumulative register of `engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md`. | Recommends one conditional next mechanism: a MixLLM-inspired contextual quality/cost predictor updated from selected-candidate feedback. System-1.x and Baccara are deferred because their planning and queue/service state is absent from the current N×K runner. No dates/calendar changed, code or campaign added, or full MixLLM reproduction claimed. HLS remains PARTIAL. |
+| HLS MixLLM-inspired router contract | **2026-10-17, specification record.** | Recorded 2026-10-17 14:58 +02:00 (Europe/Madrid) in `engineering/HLS_MIXLLM_ROUTER_CONTRACT.md`; local original source and prior equation audit identified in the literature register and routing audit. | Specifies contextual ridge predictors for quality and monetary cost, selected-only online feedback, feasibility/fallback behavior, and an optional exploration boundary. It was a specification, subsequently instantiated only in a bounded synthetic environment as recorded above; neither record claims MixLLM reproduction. HLS remains PARTIAL. |
+| Nembhard Direct adaptive productivity router | **2026-10-17, implementation and focused-validation event.** | Recorded 2026-10-17 12:17 +02:00 (Europe/Madrid); implementation `src/hls/hls_lab_nk_nembhard_adaptive.py` and runner integration `src/hls/hls_lab_nk_execution.py`; tests `tests/test_hls_lab_nk_nembhard_adaptive.py`; contract `engineering/HLS_NEMBHARD_ADAPTIVE_ROUTER.md`. | Consolidated observation, online productivity estimation, epsilon-greedy exploration and routing into one delivery as recorded in the execution-plan decision register. Final adaptive + ORACLE + standalone Nembhard selection: 48 passed; broader N×K selection: 180 passed. Full suite: 1,458 passed, 5 known provenance/integrity failures; one additional focused test passed after the suite run. Adaptive decisions use estimates and independent observation/exploration seeds; no true-profile leakage, MIS-v2 changes, campaign execution or MixLLM reproduction. HLS remains PARTIAL. |
+| Nembhard Direct ORACLE router | **2026-10-17, implementation and focused-validation event.** | Recorded 2026-10-17 11:58 +02:00 (Europe/Madrid); implementation `src/hls/hls_lab_nk_nembhard_router.py`, tests `tests/test_hls_lab_nk_nembhard_oracle.py`, and [router contract](engineering/HLS_NEMBHARD_ORACLE_ROUTER.md). | Added a perfect-information automatic assignment baseline using true Nembhard experience/productivity, feasible action enumeration and the shared P0 functional/effort rank. Focused combined Nembhard/N×K selection: 166 passed; no full suite or campaign. MIS-v2 and historical P0/P1/P2 semantics remain unchanged. This intermediate oracle replaces the immediate router milestone; an estimate-based productivity router is next. HLS remains PARTIAL. |
+| HLS Laboratory execution-plan review and decision-register publication | **2026-10-17, calendar review and documentation event.** | Recorded 2026-10-17 11:53 +02:00 (Europe/Madrid); plan at `docs/engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md`. | Preserved the original calendar as a baseline and published the revised schedule with its cumulative decision register. Records the bounded Nembhard Direct integration as complete on the existing evidence (222 focused tests; no full-suite run or campaign), and names the adaptive router as the next objective under the PI's existing priority. HLS Laboratory remains PARTIAL; campaign execution still requires separate authorization. |
+| HLS G3 / MIS-v2 learning-law reconciliation | **2026-10-16 21:09 +02:00, decision and documentation record.** | Recorded 2026-10-16 21:09 +02:00 (Europe/Madrid); decision documented in `docs/engineering/HLS_SCIENTIFIC_MODEL_DOSSIER.md`, against source audit HEAD `1d0fdb2fb15615fea9beb110c8ed211578bdce1d`. | Classified the historical quadratic MIS/G3 law and exponential MIS-v2 as distinct models. MIS-v2 remains the N×K laboratory reference; the quadratic law remains in MIS original, DISCOVER-v0, G3 and G3-H. Configurations must record law, equation, exposure convention and parameters. No simulator code/equations/parameters, historical results or frozen documents changed; HLS remains PARTIAL. |
+| HLS Laboratory Phase 5A scientific model audit and evidence dossier | **2026-10-16 20:48 +02:00, verified dossier/reference-trace event; final validation 20:59 +02:00.** | Recorded 2026-10-16 20:59 +02:00 (Europe/Madrid); audited source commit `e8e115030e064df23f07f1b5824264f97513099a`; dossier `docs/engineering/HLS_SCIENTIFIC_MODEL_DOSSIER.md`; trace `results/diagnostics/hls_scientific_model_dossier/reference_trace.json` (SHA-256 `d852887c723ae0d2573e358d15c0d708430bee7d22519a777283eb0014885784`). | Extracted source-linked equations, assumptions, properties, constructs, historical G1/G2/MIS/G3-H/RQ0 and Campaign 1–2 evidence. Replayed a four-period diagnostic episode exercising production, MIS-v2, P2 teaching, imperfect observations/estimation, efficacy memory and resource accounting; 161 focused tests passed. Reported, without reconciling, the G3 quadratic-gap versus DISCOVER-v2 MIS-v2 equation lineage distinction and the pre-N×K snapshot in the dated research framework. No scientific mechanism or frozen artifact changed. Full suite on current worktree: 1,397 passed, 5 failed in 634.58s; all five match known provenance/integrity failures (foundation inventory, Campaign 2 closure/source digests, Campaign 3 and strategy-gate source digests). HLS remains PARTIAL. |
+| HLS Laboratory Phase 5 research-readiness validation | **2026-10-16 20:22 +02:00, verified validation record.** | Recorded 2026-10-16 20:22 +02:00 (Europe/Madrid); report `docs/engineering/HLS_RESEARCH_READINESS_REVIEW.md`; baseline `8804daf6303a5db134098ea87ac5c8ff2469a3b8`. | Added independent integrated invariants across 1×1, 2×2, 3×2, 4×3. Focused N×K/HLS regressions: 172 passed; full suite: 1,396 passed and the same five historical provenance/integrity failures. Fresh-process serialized replay matched. Conditional readiness only; no simulator physics, historical evidence or campaign changed. HLS remains PARTIAL pending PI review. |
+| N×K environment and demand generation, Phase 4 | **2026-10-16 20:08 +02:00, verified final validation record.** | Recorded 2026-10-16 20:08 +02:00 (Europe/Madrid); code in `src/hls/hls_lab_nk_environment.py`, integration in `src/hls/hls_lab_nk_execution.py`, tests in `tests/test_hls_lab_nk_environment.py`. | Generalized N×K emission over existing C5 IID/stationary, time-indexed nonstationary and first-order Markov task processes. Frozen paths retain configuration, seed, latent states/regime labels and `ProblemSpecNK` outputs. Optional runner generation reuses the explicit-sequence path. Historical 3×2 emissions matched. Combined focused environment/C5/dynamic/Phase 1–3D selection: 155 passed. Full suite: 1,390 passed, 5 failed in 515.55s; the five failures are the previously documented provenance/integrity failures. No physics, historical artifacts or campaigns changed; HLS remains PARTIAL. |
+| N×K competence estimation and imperfect observation, Phase 3D | **2026-10-16 19:06 +02:00, verified implementation/final-validation completion.** | Recorded 2026-10-16 19:10 +02:00 (Europe/Madrid); current code/tests in `src/hls/hls_lab_nk_estimation.py`, `src/hls/hls_lab_nk_execution.py`, and `tests/test_hls_lab_nk_estimation.py`. | Added explicit perfect/imperfect information execution using the unchanged scalar historical posterior, production-observation likelihood, indexed noise streams, MIS posterior prediction and formative teaching observation. N×K actual state remains the physical state; the policy view receives estimates only. Exact noisy 3×2 comparisons matched legacy P1/P2 decisions, observations, estimates, transitions and efficacy memory; perfect mode matches actual competence and the default runner contracts remain unchanged. Focused/regression selection: 86 passed. Full suite: 1,357 passed, 5 failed in 483.40s; exactly the known foundation inventory, Campaign 2 closure/theory digest, Campaign 3 frozen source, and strategy-gate integrity failures. Engineering timings recorded in the N×K design. No scientific campaign or frozen artifact modification; HLS Laboratory remains PARTIAL. |
+| N×K directed teaching Phase 3B | **2026-10-16 16:22 +02:00, verified final validation time.** | Recorded 2026-10-16 16:22 +02:00 (Europe/Madrid), based on the system clock and final test output; implementation commit `551a661`. | Added an N×N×K relation-efficacy adapter and explicit joint-action runner path. Preserves the legacy equation, two-party effort charge, and production → MIS-v2 → teaching ordering; no teaching-selection policy is included. Historical 3×2 episode outputs and transition matched. Focused validation 95 passed; full suite 1320 passed, 5 failed in 479.80s, the same five provenance/integrity failures as the documented baseline. No historical artifacts or hashes changed. HLS remains PARTIAL. |
+| N×K MIS-v2 learning-by-doing Phase 3A | **2026-10-16 15:50 +02:00, verified final validation time.** | Recorded 2026-10-16 15:50 +02:00 (Europe/Madrid); commits `c9ccbca`, `5b8e9f7`, paired-control test `4f7a310`, and this scoped documentation update. | Added a dimension-generic adapter over the unchanged DISCOVER-v2 scalar transition and an optional P0 learning episode mode. MIS is applied after production/reward and affects the next period; MIS-OFF retains Phase 2 result and serialization. N×K P1/P2, teaching, estimation and environment emission remain unsupported. 87 focused tests passed. Full suite: 1303 passed, 5 failed; all five match the pre-existing provenance/integrity baseline. No historical artifacts or hashes changed; HLS remains PARTIAL. |
+| N×K productive execution Phase 2: additive production and P0 episodes | **2026-10-16 14:55 +02:00, verified implementation/final validation time.** | Recorded 2026-10-16 14:56 +02:00 (Europe/Madrid); implementation commits `7e29376` and `ef6ca3c`; this record contains acceptance tests/docs. | Added dimension-generic additive production, the exact legacy P0 ranking, K-dimensional CES weights and deterministic production-only sequence runner, using Phase 1 geometry. N×K learning, teaching, P1/P2, estimation and environment generation remain unsupported. Focused tests 99/99; full suite 1288 passed/5 failed, exactly the five known provenance/integrity failures. Direct 3×2 decisions and metrics match legacy P0; historical 64/508 catalog and trace-hash assertions remain passing. No frozen artifacts or expected hashes changed. Laboratory remains PARTIAL. |
+| N×K geometry Phase 1 implementation and validation | **2026-10-16 14:22 +02:00, verified implementation/validation completion time.** | Recorded 2026-10-16 14:22 +02:00 (Europe/Madrid); code commit `671df10583f02e9bc323360e2e821f695926ceb8`; scoped tests and documentation changes follow in the task's second commit. | Added N×K organization/state/problem contracts and guarded Cartesian productive-allocation enumeration in a separate module. Pinned pre-change 3×2 action and serialization traces. Focused tests 50/50; full suite 1274 passed/5 failed, exactly the five previously documented provenance/integrity failures. Legacy source modules and frozen artifacts/hashes remain unchanged. HLS Laboratory remains PARTIAL. |
+| B2.3 and Campaign 2 preregistration provenance-validator corrections | **2026-10-16 13:50 +02:00, verified correction/validation completion time.** | Recorded 2026-10-16 13:50 +02:00 (Europe/Madrid); commits `80a01b6936fed4cfebe03478f9bfb5222dce2238` and `5e60e283bfff17d4448b9732c6a866c95c5c616e`. | B2.3 protocol SHA is now resolved at the run header's `git_commit`, with fail-closed handling for missing revision/blob/digest. Preregistration temporal validation uses frozen commit `9cfb6891e73536a63694041711de56cbd147eed` and its immutable results-tree inventory; later Campaign 2 artifacts no longer contaminate the freeze-time audit. The execution preflight also authenticates preregistered source bytes at that commit and checks current manifest files against their frozen copies. Full suite: 1253 passed, 5 failed; remaining gaps (foundation inventory/B13 manifest, frozen `finite_problem_belief.py` source, Campaign 2 closure document hashes) remain unmodified. No historical output, manifest, expected hash, or campaign configuration changed. Laboratory remains PARTIAL. |
+| Provenance diagnosis and N×K geometry technical design | **2026-10-16 11:26 +02:00, verified audit/design start.** | Recorded 2026-10-16 11:37 +02:00 (Europe/Madrid); [provenance diagnosis](engineering/HLS_PROVENANCE_FAILURE_DIAGNOSIS.md), [N×K design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md); baseline `4940d4b22d7ea67e49b0f55f9e8afac37c4850da`. | Full suite reproduced 1237 passed/13 failed. Identified six root-cause families, including B2.3 commit-insensitive validation, missing frozen source/B13 provenance, later campaign outputs rejected by a freeze-time contamination test, and closure-document hash gaps. Designed an additive N×K path with exact 3×2 preservation; no code, manifests, results, hashes, or campaigns changed. Laboratory remains PARTIAL. |
+| HLS minimal theoretical model documented | **2026-10-16, documentation event; exact start time not recorded.** | Recorded 2026-10-16 09:56 +02:00 (Europe/Madrid), as stated by the system clock; [model](theory/HLS_MINIMAL_THEORETICAL_MODEL.md). | Domain-independent finite-horizon model and conditional derivations mapped to existing HLS. No code, simulator physics, campaigns, or historical results changed. It makes no novelty claim; multi-task scheduling, externally grounded objective units, and empirical relevance remain open. |
+| Campaign 2 experimental sensitivity audit | **2026-10-16 09:07 +02:00, verified audit start; findings recorded 09:08 +02:00.** | Recorded 2026-10-16 09:08 +02:00 (Europe/Madrid); [audit](experiments/HLS_EXPERIMENTAL_SENSITIVITY_AUDIT.md), published Campaign 2 trace and output manifest. | Read-only code/artifact audit: ten noisy seeds produce ten logged observation/estimate paths but one true-competence path and one CES/success path per scenario/condition. P0 estimate perturbations mostly remain within broad score regions; C/MIS-OFF action changes are reward-equivalent. All eight source and six frozen output hashes matched; 16 focused tests passed. No simulator/result changes; known 13 full-suite provenance/integrity failures remain; milestone PARTIAL. |
+| HLS Laboratory Campaign 2: directed teaching × MIS × productive assignment | **2026-10-15 20:38:57–20:39:04 +02:00, verified** by execution manifest; design registered at 20:37:57 +02:00 before outcomes. | Documented 2026-10-15 20:44 +02:00, Europe/Madrid; source base `1c902f180d37a12fd9806d0db427b0adf83a0029`; [scientific findings](experiments/HLS_CAMPAIGN2_FINDINGS.md). | CE-authorized experiment COMPLETE: 33 main plus one zero-efficacy quadruple, 136 runs/3,264 periods, common P0 continuation. CES interaction A −1.092473, B +1.561953, C +.339151; teaching opened 23/11 target exposures in B/C. Ten noisy seeds per scenario had identical CES despite varying estimates/selected equivalent actions. Conditional mechanism evidence, no causal mediation or population claim. 123 focused/regression tests passed; 13 historical provenance failures unresolved, laboratory milestone remains PARTIAL. |
+| HLS Laboratory behavioral plausibility validation | **2026-10-15 17:42:56 +02:00, verified** by the final result manifest. | Recorded 2026-10-15 17:43 +02:00, Europe/Madrid, with test and artifact hashes. | Six deterministic paired intervention fixtures plus mechanism invariants; confirms conditional response only. No core physics changes; milestone remains PARTIAL. |
+| Campaign 1 scientific knowledge consolidation | **2026-10-15 20:31 +02:00, documentation event time verified** by the system clock. | Recorded 2026-10-15 20:31 +02:00, Europe/Madrid; synthesis at [HLS_CAMPAIGN1_FINDINGS.md](experiments/HLS_CAMPAIGN1_FINDINGS.md). | Cross-checked published machine-readable outputs and hashes for the pilot, mechanism diagnostics, 64 counterfactual branches, and behavioral validation. Preserves limitations and separates an untested teaching × MIS hypothesis. No experiments run; HLS Laboratory remains PARTIAL. |
+| PI / CE decision to prioritize integrated HLS Laboratory v1 and approve milestone `HLS-LAB-V1-INTEGRATED` | **2026-10-15, date verified; exact time unknown**, from the dated PI/CE instruction. | Documented 2026-10-15 08:40 +02:00, Europe/Madrid, in this entry and the linked current-state/lab documents. | Operational-priority change; it does not change the research questions or retrospectively alter prior decisions. |
+| Scientific Campaign 1 pilot: exploitation versus capability development | **2026-10-15 10:22:04 +02:00, verified** by the final output manifest. | Recorded 2026-10-15 10:22 +02:00, Europe/Madrid; source baseline `a179041a1617e250e3fe83065db7dbc8402b0d62`. | 16 configurations × 10 paired seeds × four policies × LI ON/OFF = 1,280 runs, 20,480 episode records. Pilot observations only; no population-level inference. Three earlier designs were excluded: latent-label exposure, oracle skill initialization, and zero-production teaching periods from budget/action granularity. Formatting reruns reused the same seeds and did not add replicates. |
+| Campaign 1 conditional counterfactual teaching-value diagnostic | **2026-10-15 15:34:12 +02:00, verified** by the derived-result manifest. | Recorded 2026-10-15 15:34 +02:00 (Europe/Madrid), from published pilot seed `2026101511`; outputs under `results/diagnostics/hls_campaign1_counterfactual_teaching_value/`. | 32 preselected states × two existing directed relations = 64 paired remaining-horizon interventions. Descriptive conditional results only; not a global teaching-policy value or population estimate. |
+| Additive B1–B6 integrated teaching-cycle implementation and acceptance run | **2026-10-15, implementation date verified; exact start time unknown.** | Documented 2026-10-15 09:08 +02:00, Europe/Madrid, with implementation and test paths in the scope note. | Focused laboratory tests passed; full suite had 1181 passes and 13 failures on pre-existing local integrity/provenance conditions. Milestone remains PARTIAL; engineering verification is not scientific evidence. |
+| Additive exogenous environment/problem trajectory interface and regression run | **2026-10-15, implementation date verified; exact start time unknown.** | Documented 2026-10-15 09:45 +02:00, Europe/Madrid. | Reuses C5 demand processes and dynamic-lab emission; 17 focused tests passed; full suite 1189 passed/13 failed, same 13 named failures as the prior run. Milestone remains PARTIAL. |
+| HLS Laboratory v1 candidate-set consolidation and final validation | **2026-10-15 09:57 +02:00, verified execution time.** | Recorded 2026-10-15 09:57 +02:00, Europe/Madrid. | Ten scoped files imported and ran; focused tests 17/17; full suite 1189/13, same pre-existing failures. Milestone remains PARTIAL. |
+| HLS Laboratory v1 minimum package published | **2026-10-15 09:58 +02:00, verified push/remote-ref check.** | Recorded 2026-10-15 09:58 +02:00, Europe/Madrid; commit `37a011804f9ea013fc3a5436c00a72eb0b8280da`. | Pushed to `origin/feature/hls-laboratory-v1`; remote ref matches commit. Publication does not close the milestone; 13 full-suite failures remain. |
+| HLS Laboratory v1 vertical-slice implementation recorded | Decision/event date **unknown**; repository record timestamp verified. | 2026-10-14 10:32 +02:00; commit `624e249` (full hash in Git). | Commit date establishes when the implementation was recorded, not when CE-23 was authorized. |
+| CE-24 validated output manifest created | **2026-10-14 10:50 +02:00, verified** by `created_utc` in `results/experiments/hls_lab_ce24_validated/manifest.json`; exact simulation start/end times are not recorded. | Manifest records `2026-10-14T08:50:09.236416+00:00`; result report was committed at 10:55 +02:00 (`ae78cda`). | Timestamp verifies the manifest/output record, not exact execution duration. The deterministic run is not population-level evidence. |
+| CE-24 validation record committed | Decision/event date **unknown**; repository record timestamp verified. | 2026-10-14 10:55 +02:00; commit `ae78cda`. | Commit date records report/code publication in Git, not decision authorization. |
+| CE-25 mechanism-decomposition experiment and report | **2026-10-14, approximate only**: the report identifies `ae78cda` as the source-code baseline and is recorded in the same-day `aeea566` commit; no run timestamp appears in its manifest. | Repository report commit 2026-10-14 11:20 +02:00 (`aeea566`); its manifest has no execution timestamp. | Do not infer an exact execution time. Finite deterministic mechanism validation; its FAST/DEEP next-step recommendation is superseded operationally by the 15 October decision, while findings remain historical. |
+| C2/C3 results and C4 status documentation consolidation committed | Decision dates **not inferred from commit time**; repository record timestamp verified. | 2026-10-13 08:15 +02:00; commit `931c560`. | The status recorded there is preserved in its scoped sources; it is not the current HLS Laboratory v1 priority. |
+| G1 static and G2 dynamic ground-truth consolidations | Original experiment/decision dates **unknown** from the reviewed chronology. | Repository records: G1 consolidation 2026-10-01 07:59 +02:00 (`f8897e7`); G2 validation 2026-10-01 10:57 +02:00 (`5c55a59`). | These are verified artifact-record dates, not dates of the original G1/G2 work or decisions. |
+| G0/reference-scenario and G3/G3-H repository milestones | Original event/decision dates **unknown**; repository record timestamps verified. | Relevant records include minimal reference scenario 2026-10-01 18:45 +02:00 (`b4551b7`), G3 ground truth 2026-10-02 13:01 +02:00 (`a3f2a85`), G3-H future-opportunity closure 2026-10-04 22:16 +02:00 (`2eca948`), and C1/C2 boundary closure 2026-10-05 18:03 +02:00 (`8972c3c`). | These dates establish when Git recorded the artifacts, not the underlying decision dates. |
+| Initial portfolio framing; H1/M0/CIV; vehicle search; transition to G0; A1; C1–C5/RQ0 narrative (sections 1–9 below) | **DATE UNKNOWN** for the events as described; no direct event timestamps were found in this history entry. | Individual source documents/commits exist, but their record dates are not asserted here as event dates. | Preserve the ordering and conclusions; do not invent dates or infer them from unrelated commit timestamps. |
+
+Dates marked “unknown” are intentionally not reconstructed from commit time.
+Dates for which only a bounded period is supported should remain approximate
+in future entries rather than being assigned invented day/time precision.
+
+### 2026-10-16 — N×K geometry Phase 1 (partial)
+
+**Event:** implementation and final validation completed 2026-10-16 14:22 +02:00.
+**Recorded:** 2026-10-16 14:22 +02:00 (Europe/Madrid). **Authority:** CE
+authorization for N×K state/action geometry only. **Type:** additive
+engineering implementation and regression validation.
+
+Added `src/hls/hls_lab_nk_geometry.py` with immutable validated
+`OrganizationConfigNK`, `OrganizationStateNK`, and `ProblemSpecNK` contracts;
+real and estimated competence matrices remain separate. The allocation
+enumerator uses an ordered per-agent catalog and exact Cartesian enumeration,
+filters individual and shared budget limits, and requires an explicit
+`max_candidates` guard. The legacy 3×2 default uses the original 64-entry
+`JOINT_ACTIONS`; non-2-skill configurations require an explicit effort
+catalog. N×K episode execution, policies, MIS-v2, teaching, estimators and
+environment emission remain unsupported.
+
+Before implementation, the action catalog and deterministic 3-episode P0,
+P1 and P2 traces were recorded as SHA-256 values and asserted by
+`tests/test_hls_lab_v1_integrated.py`; the test also checks selected action
+IDs, teaching choices, CES, functional success and resource use. Focused
+HLS-v1, CE-23/24/25, environment and N×K tests passed (50). Full
+`PYTHONPATH=src:. pytest -q` completed with 1274 passed and 5 failed. The
+remaining failures are the known foundation inventory/B13 discrepancy;
+Campaign 2 closure hashes for four documents; and historical hash checks that
+observe the pre-existing modified `src/hls/finite_problem_belief.py`. The
+identities are `test_every_foundation_result_has_consistent_manifest`,
+`test_frozen_inputs_and_completed_artifacts`,
+`test_preexperiment_manifest_and_contamination_boundary`,
+`test_pre_execution_manifest_and_raw_integrity_when_present`, and
+`test_source_hashes_and_raw_output_hashes`. No expected hash or frozen result
+was changed.
+
+An initial in-place implementation in the two historical runner modules
+caused two additional frozen-source hash failures. It was moved into the new
+geometry module; SHA-256 checks then matched the branch baseline exactly for
+`hls_lab_v1.py` (`c8dc4cb3…e11aa6f`) and
+`hls_lab_v1_integrated.py` (`9a3006db…a48b8c76`), and the full suite returned
+to the same five known failures. This is the documented deviation from the
+original file-level design suggestion and avoids touching historical evidence.
+Code commit: `671df10583f02e9bc323360e2e821f695926ceb8`. The follow-up test and
+documentation commit records the final published state. No campaign ran;
+`HLS-LAB-V1-INTEGRATED` remains **PARTIAL**.
+
+### 2026-10-16 — N×K production-only execution Phase 2 (partial)
+
+**Event and final validation completed:** 2026-10-16 14:55 +02:00. **Recorded:**
+2026-10-16 14:56 +02:00 (Europe/Madrid). **Authority:** CE authorization for
+N×K production-only execution and dimension-independent P0; learning, teaching,
+new policies and scientific campaigns remain held. **Type:** additive
+engineering implementation and regression validation.
+
+Added `src/hls/hls_lab_nk_production.py` for the dimension-generic additive
+production equation, v1 functional success/deficit/margin observer, generalized
+DISCOVER-v0 CES, and P0's exact lexicographic objective. Added
+`src/hls/hls_lab_nk_execution.py` for deterministic production-only episodes
+over an already generated ordered problem sequence. Extended
+`ProblemSpecNK` only to carry normalized K-dimensional CES weights. The runner
+sets the organizational estimate equal to true competence as an explicit
+perfect-information control, freezes both matrices, and records effort limits,
+effective/shared budgets, consumed effort and unused capacity separately.
+No net utility, environmental randomness, MIS-v2, teaching, estimator update,
+P1 or P2 was added.
+
+The 3×2 path was compared directly with legacy P0 for matched states, action
+budgets and problems: selected action ID, output vector, functional result,
+gross CES and productive effort matched exactly. Existing regression checks
+still pin the 64-action production catalogue, 508-action integrated catalogue,
+and byte-stable legacy P0/P1/P2 serialized traces. The focused laboratory and
+historical regression set passed **99 tests**. The full command
+`PYTHONPATH=src:. pytest -q` completed with **1288 passed and 5 failed**; the
+failures are the same known historical integrity/provenance cases:
+`test_every_foundation_result_has_consistent_manifest`,
+`test_frozen_inputs_and_completed_artifacts`,
+`test_preexperiment_manifest_and_contamination_boundary`,
+`test_pre_execution_manifest_and_raw_integrity_when_present`, and
+`test_source_hashes_and_raw_output_hashes`. No historical source, result,
+manifest, or expected hash was edited. `git diff --check` passed.
+
+One local non-scientific timing check (Python 3.11.9, macOS 27.0.1 arm64;
+1,000 repetitions, separate `tracemalloc` pass) enumerated 2/16/64/256
+candidates for 1×1/2×2/3×2/4×3. Mean enumeration / P0 evaluation time was
+0.0054/0.0069, 0.0509/0.0920, 0.2011/0.2334 and 1.0144/1.1329 ms, with peak
+traced allocation 2,344/6,312/21,640/89,672 bytes. These are local engineering
+measurements, not portable speed claims. The explicit `max_candidates` guard
+continues to fail closed rather than truncate the exhaustive catalog.
+
+Implementation commits: `7e29376` (production/P0) and `ef6ca3c` (episode
+runner); this scoped record contains the acceptance tests and documentation.
+No scientific campaign ran. `HLS-LAB-V1-INTEGRATED` remains
+**PARTIAL**.
+
+### 2026-10-15 — operational priority change
+
+**Event:** 2026-10-15, exact time not documented. **Recorded:** 2026-10-15
+08:40 +02:00 (Europe/Madrid). **Authority:** PI / Chief Engineer. **Type:**
+operational-priority decision. **Decision:** prioritize completing HLS
+Laboratory v1 as integrated experimental infrastructure, under milestone
+`HLS-LAB-V1-INTEGRATED`, status **APPROVED — IMPLEMENTATION PENDING**.
+
+HLS's two research questions and general scientific doctrine are unchanged.
+Infrastructure completion comes first; scientific investigations follow on a
+causally coherent, reproducible, and verifiable integrated laboratory. The
+approved implementation is one milestone with blocks B1–B6: joint actions and
+shared resources; teaching transition; observations and elementary
+organizational estimation; a minimal adaptive policy; integrated multiperiod
+execution; and tests plus reproducible demonstration. Extensive campaigns and
+component sophistication are deferred. See [current state](HLS_CURRENT_STATE.md)
+and the [v1 implementation reference](experiments/HLS_LAB_V1.md).
+
+**Operational consequence:** development stays focused on meeting the
+HLS-LAB-V1-INTEGRATED acceptance criteria; no intermediate audit phases or new
+status/roadmap documents are opened. The previous narrower next-step
+recommendations (including CE-25's FAST/DEEP recommendation) are superseded as
+the immediate priority, not erased or reinterpreted as historical findings.
+
+### 2026-10-15 — integrated teaching-cycle implementation (partial)
+
+**Event:** 2026-10-15, implementation performed during this work session;
+exact start time not recorded. **Recorded:** 2026-10-15 09:08 +02:00
+(Europe/Madrid). **Authority:** implementation under the PI/CE-approved
+HLS-LAB-V1-INTEGRATED decision. **Type:** engineering implementation and
+verification.
+
+An additive execution layer, `src/hls/hls_lab_v1_integrated.py`, composes
+existing DISCOVER-v0 production actions, MIS-v2 individual learning, existing
+competence-posterior helpers, and a bounded directed teaching event. It adds
+shared feasibility checks, private heterogeneous teaching efficacy, noisy
+public observations, elementary efficacy memory, P0/P1/P2, multiperiod traces,
+and deterministic coordinate-indexed innovations. The reproducible demo is
+`experiments/synthetic/hls_lab_v1/integrated_demo.py`; focused tests are in
+`tests/test_hls_lab_v1_integrated.py`.
+
+The deterministic engineering fixture produced both outcomes: for recurrent
+demand, P2 obtained cumulative CES 6.4564 versus P0 5.0728 (33 versus 2
+successful periods); for short mismatched demand, P1 obtained 1.5763 versus
+P0 2.1997 and P2 declined to teach, matching P0 at 2.1997. These are fixture
+outputs, not scientific effect estimates. Focused tests across the integrated
+layer and its CE-23/24/25, dynamic, DISCOVER, MIS-v2 and Small Problem World
+dependencies passed (87). The complete suite reported 1181 passed, 13 failed;
+the reported failures concern local frozen-source hashes, additional local
+artifacts, and Campaign 2/B2.3/RQ0 provenance checks outside files changed for
+this integration. No historical hashes or results were edited.
+
+**Status:** `HLS-LAB-V1-INTEGRATED` remains **PARTIAL**. The new layer, demo and
+scoped tests pass, but the full-suite gate is not clean. Existing discrete
+production-action granularity can also leave residual participant effort
+unusable during teaching. No campaign or scientific inference was performed.
+See [the implementation record](experiments/HLS_LAB_V1.md) and
+[current state](HLS_CURRENT_STATE.md).
+
+### 2026-10-15 — exogenous environment/organization boundary (partial)
+
+**Event:** 2026-10-15, implementation and test run; exact start time unknown.
+**Recorded:** 2026-10-15 09:45 +02:00 (Europe/Madrid). **Authority:**
+PI/CE focalized GO instruction. **Type:** additive engineering integration.
+
+Added `src/hls/hls_lab_v1_environment.py` to compose C5's stationary,
+nonstationary, or Markov task process with the existing
+`DemandRegime`/`generate_problems` emitter. It produces a frozen exogenous
+problem trajectory before any policy is run; environment and emission random
+streams are separate, while policies receive only the emitted problems and
+not latent environment states. Structural tests cover specialization,
+complementarity, recurrence, novelty, regime change, matched policy inputs,
+and reproducibility. A small executable regime-switching demo compares P0,
+P1, and P2 on a shared trajectory. This is engineering verification, not a
+scientific campaign or evidence of policy superiority.
+
+**Implementation:** the integrated organization layer and exogenous environment
+adapter, their tests, and demos are included in the minimum package.
+**Validation:** focused environment plus integrated tests: 17 passed. Full
+suite: 1189 passed, 13 failed in 314.78 seconds. The same 13 test identities from the
+preceding full run failed again: a local foundation-result inventory mismatch,
+B2.3/RQ0 protocol-provenance mismatches, and frozen Campaign 2/3/Gate hash or
+artifact checks. No frozen hashes were refreshed. Source hashes for
+`hls_lab_v1.py`, `hls_lab_dynamic.py`, `synthetic/c5.py`, and
+`finite_problem_belief.py` were unchanged across this intervention.
+**Publication:** commit `37a011804f9ea013fc3a5436c00a72eb0b8280da` was pushed at
+2026-10-15 09:58 +02:00 to `origin/feature/hls-laboratory-v1`; the remote ref
+was verified to match. Only the ten named package files were committed; other
+pre-existing worktree changes were preserved. **Milestone closure:** not
+declared; `HLS-LAB-V1-INTEGRATED` remains **PARTIAL** because the full-suite
+integrity/provenance failures remain unresolved.
+
+### 2026-10-15 — Scientific Campaign 1 pilot: exploitation vs capability development
+
+**Event:** validated pilot execution completed 2026-10-15 10:22:04 +02:00.
+**Recorded:** 2026-10-15 10:22 +02:00 (Europe/Madrid). **Authority:** CE
+campaign instruction. **Type:** bounded scientific pilot.
+
+The protocol varied demand (stationary/changing), initial competence deficit
+(low/high), teaching effectiveness (0.10/0.85), and horizon (8/24) in 16
+predeclared cells, with 10 seeds (`2026101511`–`2026101520`) per cell. It
+compared P0 production-only, P1 fixed relation `(2,1,1)`, P2 adaptive teaching
+over relations `(2,1,1)` and `(0,1,0)`, and a deterministic
+scheduled-teaching/no-feedback control. Each ran with individual MIS-v2
+learning OFF and ON. The OFF/ON block is a mechanism control, not an
+additional environmental factor. Demand sequences and coordinate-indexed
+observation innovations were paired by seed; policies did not receive the
+experimenter-only latent regime. Every condition used a shared budget of 2.0,
+which permits at least one unit of production alongside a lesson. Requirements
+were 0.80/0.90 by competence axis; the common prior predicts at most 0.80
+under the frozen catalogue/budget, while low- and high-deficit teams have
+different analytical initial frontiers. These choices were fixed by the
+catalogue and team geometry, not policy outcomes.
+
+The discrete action catalogue means the teaching opportunity cost is not
+only the explicit 0.5 participant-effort charge: with a 2.0 budget, a lesson
+leaves 1.5 units, but only one full production unit is assignable, whereas
+two units can be productive without a lesson. Residual effort granularity
+therefore shapes the results and is a stated limitation.
+
+**Observed results:** relative to P0, P1 had lower CES in 320/320 paired
+comparisons. For P2, P0 had higher CES in 241/320, P2 higher in 37/320, and
+42 tied; for the scheduled/no-feedback control, P0 was higher in 258/320,
+that control higher in 20/320, and 42 tied. In high-deficit/high-efficacy/
+long-horizon cells with individual learning OFF, P2 improved both outcomes:
+stationary demand ΔCES +0.313 (between-seed SD 0.194), Δsuccess +0.483
+(SD 0.074); changing demand ΔCES +0.380 (SD 0.107), Δsuccess +0.537
+(SD 0.105). These CES and success gains were not present in the corresponding
+LI-ON cells. P2 declined to teach in 4,497 of 5,120 episodes; P1 taught in
+every episode. The common partial prior also prompted some unnecessary
+teaching in low-deficit cases, demonstrating an information-cost limitation.
+
+This bounded pilot contains conditions where investment in capability
+development improved both measured CES and success, and conditions where
+fixed or scheduled teaching was harmful. It does not establish a general
+teaching advantage: the episode-level policy score is functional success,
+deficit, margin, and effort—not the reported CES outcome. Means and
+between-seed standard deviations are descriptive; no inferential tests or
+population confidence intervals were calculated.
+
+**Validation incidents:** three preceding executions were excluded. The first
+exposed the latent regime through `demand_label`; the second initialized
+estimated skills from private truth via `make_team`; the third used budget
+1.0, under which teaching's 0.5 resource charge left no feasible positive
+production action. Their manifests are retained as
+`attempt_1_invalid_latent_label.json`,
+`attempt_2_invalid_oracle_initialization.json`, and
+`attempt_3_invalid_resource_granularity.json`. The validated run passes only
+the generic label `observed-demand` and uses `make_dynamic_team` in
+PARTIAL_STATIC mode with common initial estimates `((0.40,0.40),)*3`. The
+final output uses `NA` for non-applicable CSV metrics. Its manifest is in
+`results/experiments/hls_campaign1_pilot/manifest.json`; protocol and paired
+machine-readable results are stored beside it. A pre-encoding manifest is
+retained as `prior_complete_manifest_pre_na_encoding.json`; its rerun used
+the same seeds and was only to make missing-value serialization explicit,
+not an additional replicate set.
+
+**Engineering validation:** the focused campaign/laboratory/environment
+selection passed 71 tests (including 24 directly scoped campaign/integration
+tests). The full repository suite was not run; its previously documented 13
+integrity/provenance failures remain unresolved. This campaign neither closes
+the laboratory integration milestone nor establishes a general scientific
+conclusion.
+
+### 2026-10-15 — Campaign 1 mechanism diagnostics
+
+**Event:** existing-pilot analysis and deterministic targeted teaching-gain
+replays completed 2026-10-15 14:28:17 +02:00. **Recorded:** 2026-10-15
+14:28 +02:00 (Europe/Madrid). **Authority:** CE mechanism-diagnostics
+instruction. **Type:** post-pilot diagnostic; no new policy comparison
+campaign.
+
+The published pilot's 20,480 episode records and 1,280 seed summaries were
+hash-verified and reused. The P2−P0 CES contrast averaged −0.241 (SD 0.181)
+for MIS-v2 ON and −0.126 (SD 0.246) for MIS-v2 OFF across 160 paired
+configuration-seed units per condition. Their difference-in-differences was
+−0.115 (SD 0.196; 28 positive, 112 negative, 20 ties). This is descriptive
+factorial interaction within the frozen simulated design, not an estimate of
+population effects or independent mechanism shares.
+
+For 320 P2−P0 cumulative episode trajectories, 278 runs with teaching had a
+negative cumulative path at some point; 39 later crossed back to nonnegative
+(30 LI-OFF, 9 LI-ON), while 239 never crossed back. P2 finished ahead in 37,
+behind in 241, tied in 42; 42 runs had no P2 teaching and tied throughout. In
+the high-deficit/high-efficacy/long-horizon cells, the first teaching episode
+had lower same-period CES in all 20 runs. With LI OFF, all 20 subsequently
+crossed and finished ahead (mean break-even period 8.2 for changing and 17.3
+for stationary demand). With LI ON, only 4/20 crossed after the teaching
+episode's negative path; 3/20 finished ahead.
+
+The frozen CSV directly supports nominal teaching effort, production effort,
+resource use, residual capacity, CES, and real competence before/after each
+period. It omits the record's exact `teaching_gain_real` field. A targeted
+replay recovered that field from 876 teaching-containing policy/seed blocks
+(7,422 events); every replay matched published actions, CES, resources, and
+real-competence states. Each lesson used 0.5 participant-effort units and was
+paired with 1.0 production effort versus P0's 2.0, leaving 0.5 budget unused
+under the discrete catalogue. Exact realized skill gain by teaching was
+available from the targeted replay, but LI-ON net competence change in the
+published CSV cannot separate teaching from MIS-v2 without it.
+
+P2 versus P0 estimates only the total policy-package contrast under paired
+external conditions. The MIS ON/OFF difference-in-differences is interpretable
+as the controlled interaction of that toggle and the policy contrast inside
+this model. P2 versus scheduled-no-feedback does not isolate organizational
+information because policies differ in teaching choices and exposure. Costs
+are reported in resource units, not converted into an arbitrary CES utility.
+No inferential tests or population confidence intervals were calculated.
+
+Reproducible analysis code is
+`experiments/synthetic/hls_campaign1/analyze_mechanisms.py`; summaries,
+event-level targeted-replay records, temporal trajectories, SVG figure, and
+hash manifest are in `results/diagnostics/hls_campaign1_mechanism_diagnostics/`.
+The diagnostic work did not rerun the full 1,280-run pilot or change its
+frozen artifacts.
+
+Exact direct gains averaged 0.0352 (high efficacy) and 0.0103 (low) across
+P1's teaching events. P2's event-selected means were 0.1031/0.0131 with LI
+OFF and 0.1014/0.0128 with LI ON (high/low efficacy). These means condition
+on distinct event-selection and competence-state paths and must not be read
+as comparative estimates of teaching efficacy. Focused diagnostics, campaign
+regressions, and integrated/environment regressions passed 62 tests; no full
+repository suite was run. `git diff --cached --check` passed for the scoped
+staged changes.
+
+### 2026-10-15 — Campaign 1 counterfactual teaching value
+
+**Event:** bounded paired intervention execution completed 2026-10-15
+15:34:12 +02:00. **Recorded:** 2026-10-15 15:34 +02:00 (Europe/Madrid).
+**Authority:** CE Campaign 1 counterfactual-teaching instruction. **Type:**
+state-conditional counterfactual diagnostic; no adaptive policy was added.
+
+The state-selection rule used all 32 combinations of the published pilot's
+long-horizon cells (stationary/changing demand, low/high initial deficit,
+0.10/0.85 teaching efficacy, MIS OFF/ON, period 2/16), fixed at the first
+published seed `2026101511`. At every selected state, the two already-defined
+directed relations `(2,1,1)` and `(0,1,0)` were evaluated: 64 paired branches.
+The intervention was either P0's production-only action or a teaching action
+for the specified relation with the best feasible production allocation
+under the current observable score. Thereafter both branches followed the
+same P2 rule, with separately evolving branch states and memories.
+
+The published pilot CSV did not retain the full competence posterior needed
+to continue faithfully. The runner was extended additively with a
+period-boundary `OrganizationSnapshot` containing true team state, complete
+skill posterior, public organization memory, and next period. Deterministic
+prefix replays were checked against the pilot before snapshots were used;
+the counterfactual branches deep-copy those snapshots and share the same
+exogenous problem suffix and coordinate-indexed innovation scheme.
+
+Initial teaching used 0.5 effort, displaced 1.0 production effort, and left
+0.5 budget unused in every pair under the fixed discrete action catalog.
+Immediate CES difference averaged −0.142 (SD 0.103). Remaining-horizon
+`DeltaV_H` averaged −0.074 (SD 0.181; range −0.370 to +0.565), with 19
+positive and 45 negative contrasts. The early group (22 decisions remaining)
+averaged +0.033 (SD 0.186; 19 positive/13 negative); the late group (8
+remaining) averaged −0.181 (SD 0.093; 0 positive/32 negative).
+
+P2 chose no teaching in 22 of 32 selected states and relation `(0,1,0)` in
+the other 10. Against only the tested conditional candidate values, 17 states
+were correct no-teaching choices, 5 missed a positive candidate, 4 selected
+a positive candidate, and 6 selected a candidate with negative conditional
+value. These classifications do not establish global policy regret. The
+sample has one fixed seed per stratum and supports no population inference;
+the estimand is conditional on each state/event/P2 continuation/exogenous
+suffix/coupling, not globally optimal teaching value.
+
+Artifacts and SHA-256 manifest are in
+`results/diagnostics/hls_campaign1_counterfactual_teaching_value/`; runner:
+`experiments/synthetic/hls_campaign1/counterfactual_teaching.py`; tests:
+`tests/test_hls_campaign1_counterfactual_teaching.py`. The focused validation
+passed 23 tests across the integrated laboratory, published pilot,
+mechanism-diagnostic and new snapshot/counterfactual suites. The full suite
+was not run. This diagnostic does not close `HLS-LAB-V1-INTEGRATED`.
+
 ## 1. Initial portfolio and routing framing
 
 The programme began from heterogeneous agents with changing task allocation,
@@ -454,3 +881,426 @@ evidence, not a scientific C4 result.
 
 Source: [C4 engineering verification](experiments/CAMPAIGN_4_ENGINE_VERIFICATION.md)
 and the current local [C4 protocol](experiments/CAMPAIGN_4_COUNTERFACTUAL_PROTOCOL.md).
+
+### 2026-10-15 17:42 +02:00 — behavioral plausibility validation
+
+**Event time:** 2026-10-15 17:42:56 +02:00, verified by
+`results/diagnostics/hls_behavioral_plausibility/manifest.json`.
+**Recorded:** 2026-10-15 17:43 +02:00 (Europe/Madrid). **Authority:** CE-ordered
+engineering/scientific-model validation. **Status:** completed bounded
+validation; no implementation defect demonstrated; HLS Laboratory v1 remains
+PARTIAL.
+
+The deterministic fixture verified monotone additive production, task-relevant
+specialization, requirement-based functional complementarity, resource
+accounting, MIS-v2 exposure/saturation/bounds, directed teaching efficacy and
+targeting, teaching/MIS separation, P2 abstention when requirements are met,
+and exogenous environment contracts. With P0 as common continuation, selected
+teaching interventions had both signs: persistent deficit/high efficacy and
+long horizon `DeltaCES_H=+0.8825` (break-even period 12); short horizon
+`−0.3575`; weak efficacy `−0.9000`; and after regime change `−0.0475`.
+Learning-by-doing ON produced `+2.4445` in that fixture, so the hypothesized
+reduction of teaching's marginal value was not observed in this configuration.
+These are conditional deterministic checks, not policy-ranking or population
+claims.
+
+The frozen discrete action catalogue explains the exact budget-2 resource
+example: teaching consumes 0.5, permits 1.0 productive effort, and leaves 0.5
+unusable; compared with the no-teaching maximum of 2.0, 1.0 productive effort
+is displaced. This is an existing granularity assumption, not an accidental
+resource-accounting defect. The initial diagnostic threshold 1.8 was above
+the selected team's 1.15 frontier and was rejected before the recorded run;
+the final 1.0 threshold was fixed from the frontier calculation, not selected
+by policy outcome. Specialized fixture CES weights were aligned to the active
+skill so an inactive dimension could not zero the reward.
+
+Tests executed: 54 focused integrated/environment/CE-23–25 checks passed; 56
+DISCOVER-v0, MIS-v2, dynamic-lab and Campaign 1 regression checks passed (110
+total). The full suite was not rerun; the previously recorded 13 provenance
+failures remain unresolved and hashes were not changed. `LearningProfile`
+inherits MIS-v2's `0<eta<1` contract, so zero MIS learning is represented by
+the existing disabled flag; an exact per-competence eta=0 rate is unsupported.
+
+Artifacts: runner
+`experiments/synthetic/hls_lab_v1/behavioral_plausibility.py`, tests
+`tests/test_hls_behavioral_plausibility.py`, and machine-readable
+`scenario_summary.csv`, `scenario_trajectory.csv`, `manifest.json` under
+`results/diagnostics/hls_behavioral_plausibility/`. The manifest records seed,
+parameters and source/output SHA-256 values. No frozen result or source was
+modified.
+
+### 2026-10-16 — HLS laboratory experimental-validity assessment
+
+**Event:** deterministic diagnostic run completed 2026-10-16 10:14:59 +02:00;
+**recorded:** 2026-10-16 10:15 +02:00 (Europe/Madrid). **Authority:** PI
+priority decision (laboratory consolidation GO; experimental validity priority
+1; new scientific campaign HOLD). **Type:** instrument validation and
+documentation; no simulator physics, historical result, or policy was changed.
+
+Eight predeclared fixture checks passed: equivalence across seeds under zero
+noise; a competence-sensitive output/CES change (`.5→.6`); functional success
+below and failure above the enumerated output frontier `1.15`; allocation
+sensitivity (`.8` vs `.2` output); isolated MIS-v2 (`.4→.85` skill and `.4→.7`
+second-period output with LI ON); budget-2 resource accounting (lesson `.5`,
+production 1.0, residual `.5`); zero-efficacy teaching (no direct gain but
+resources charged); and common generated demand for P0/P1/P2. Two runs yielded
+identical diagnostic JSON SHA-256
+`b3778c626f7fad6800fc74d88922f0feb8324858d37da7d8893d08a42fc7bb58`.
+Focused tests passed: 26.
+
+The assessment concludes that conditional internal mechanism and matched-path
+checks are possible, but ordinary P0/P1/P2 comparisons bundle policy,
+teaching and information differences. Gross CES, separately reported cost,
+and functional success do not yet define a single net comparison objective;
+equal budgets need not mean equal consumption. No external calibration or new
+campaign was performed. The full suite was not rerun; the previously reported
+13 integrity/provenance failures remain an open repository-level validation
+issue. HLS Laboratory v1 remains **PARTIAL**. See
+[the assessment](experiments/HLS_LABORATORY_VALIDITY_ASSESSMENT.md) and its
+reproducible artifacts in `results/diagnostics/hls_laboratory_validity_assessment/`.
+
+### 2026-10-16 — first scientific campaign design (execution on hold)
+
+**Event/recorded:** 2026-10-16 10:29 +02:00 (Europe/Madrid). **Authority:**
+PI/CE request to design, but not execute, the first scientifically
+interpretable HLS campaign. **Type:** protocol design only; no simulation,
+code or historical result changed.
+
+The recommended primary question is whether redistributing a fixed aggregate
+three-agent/two-skill competence endowment changes collective gross
+performance under IID versus persistent demand with the same task marginals,
+and whether the contrast changes when the same MIS-v2 learning mechanism is
+enabled. The proposed experiment holds P0, information, action catalogue,
+resources and horizon common; teaching is excluded to avoid mixing the
+architecture question with a mechanism already examined in Campaigns 1–2.
+The proposal uses frontier-based difficulty strata, matched demand paths,
+40 independent demand trajectories per demand process, and an explicit
+equivalence control. It estimates 964 organization-trajectories if all
+preflight strata pass; it is not a power-certified sample.
+
+Q1 was selected over Q2 (substantial overlap with G2/G3-H and no existing
+matched developmental-assignment policy contrast) and Q3 (directly overlaps
+Campaigns 1–2 and is one mechanism rather than the general architecture
+question). Novelty for Q1 remains unverified because G1/G2 and workforce
+allocation literature cover adjacent territory. Recommendation is **GO for
+preflight and protocol registration; HOLD execution** pending frontier and
+equivalence acceptance, CE selection of a minimum meaningful CES difference
+or estimation-only objective, and a novelty review. No new policy or
+simulator generalization is currently required. Details: [campaign design](experiments/HLS_FIRST_SCIENTIFIC_CAMPAIGN_DESIGN.md).
+
+### 2026-10-16 — Q1 scientific campaign preflight
+
+**Event/recorded:** 2026-10-16 10:45 +02:00 (Europe/Madrid). **Authority:**
+CE authorization for preflight only; main campaign remained on HOLD. **Type:**
+preregistered instrument and identifiability diagnostic. The preflight protocol
+was registered before samples were generated (document SHA-256
+`7fcfb9a900e522356531d02ef1fa65bc619643e798c3373a7031b39bdc4572ce`; JSON
+SHA-256 `45cbdd4254ea6353d6ef3dc1a66b8f9c5b900b1ff2fc4a602b7fe00db81e804f`).
+
+Architecture matching, equal-marginal demand specification, IID/Markov
+persistence, exact feasibility frontiers, MIS-v2/no-teaching controls,
+resource accounting and equivalence controls passed. Demand diagnostics used
+200 paths per process; outcome checks used 12 independent paths per process,
+288 matched organization trajectories and four equivalence-control runs. The
+frontier controls produced both easy shared-feasible tasks, a near-boundary
+architecture success contrast, and initially infeasible but MIS-witness-
+reachable tasks.
+
+The preregistered primary interaction was structurally null in this design:
+with MIS OFF, matched P0 architecture effects were `+2.4` CES over 24 periods
+for every paired path; direct one-period checks gave `+.1` for each task type.
+IID and Markov have the same stationary task marginals, and the primary block
+has no material competence/state transition, so temporal ordering cannot
+change the expected mean architecture contrast. The seed-cluster bootstrap
+estimate was approximately zero (`−1.33×10⁻¹⁵`, 95% percentile interval
+`[−4.00×10⁻¹⁵, 4.44×10⁻¹⁶]`). This is a structural limitation of the
+registered estimand, not evidence against the simulator or a scientific
+discovery. MIS-ON remained secondary and was not promoted after observing
+results.
+
+**Decision:** **NO-GO** for the 960-run campaign as registered; require a
+CE-approved redesign and new registration before any campaign execution. The
+main campaign was not run. Focused regression tests passed (24), and two
+independent output-directory executions were byte-identical. The full suite
+was not rerun; the 13 previously documented integrity/provenance failures
+remain unresolved and untouched. HLS Laboratory remains **PARTIAL**. Evidence,
+runner, tests, results and hashes: [Q1 preflight](experiments/HLS_Q1_PREFLIGHT.md)
+and `results/diagnostics/hls_q1_preflight/`.
+
+### 2026-10-16 — Q1-R analytical verification
+
+**Event/recorded:** 2026-10-16 11:05:36 +02:00 (Europe/Madrid). **Authority:**
+CE authorization for analytical verification; campaign design and execution
+remain on HOLD. **Type:** exact finite-state mathematical/computational check;
+no simulator physics, registered Q1 protocol, or historical campaign artifact
+was changed.
+
+Under fixed competence, stationary initialization with common demand marginal,
+memoryless task-specific P0 decisions, time-invariant actions/constraints,
+and per-period resource reset, the expected cumulative reward is
+`T * sum_d pi[d] * u_A(d)` for either IID or Markov demand. Hence the
+architecture × persistence interaction is zero for MIS OFF under those
+conditions, though the realized path distributions need not be equal. The
+current runner's competence posterior can update even with MIS OFF; the result
+requires that this update not change P0's decision mapping, as in the registered
+full-information, zero-observation-noise contract. No universal claim that
+Theta(0) must vanish under partial/noisy estimates is made.
+
+An exhaustive two-period enumeration over all four demand paths using the
+existing P0/MIS-v2 runner produced `Theta(0)=0` and `Theta(1)=-0.003` gross
+CES for matched homogeneous and tilted architectures, with `pi=(.5,.5)`,
+Markov persistence `.8`, `B=2`, cap `1`, and `eta=.10`. Architecture effects
+were `.200` under MIS OFF for both processes, `.195` under IID/MIS ON, and
+`.192` under Markov/MIS ON. This is a negative, design-conditional existence
+result: repeated exposure reduces the tilted architecture's relative
+remaining-gap learning increment. It demonstrates current-model
+expressibility, not general superiority, external validity, or a novel
+scientific result. The accounting identity for the factorial interaction
+holds; it does not causally separate MIS from its effect on future P0 action
+paths.
+
+The mathematical derivation, exact parameters and reproduction command are in
+[Q1-R analytical verification](theory/HLS_Q1R_ANALYTICAL_VERIFICATION.md);
+the executable enumeration is `tests/test_hls_q1r_analytical.py`. Focused
+validation passed (2 tests). The Q1 preflight's 24-period MIS-OFF primary
+remains **NO-GO as registered**; no campaign was redesigned or run. The
+laboratory remains **PARTIAL**.
+
+### 2026-10-16 — HLS laboratory research framework consolidation
+
+**Event/recorded:** 2026-10-16 11:15:38 +02:00 (Europe/Madrid). **Authority:**
+PI/CE decision to treat the research laboratory, its conceptual framework,
+methodology, and ability to compare organizations as central research outputs;
+no scientific novelty assessment was requested. **Type:** code/documentation
+audit and framework consolidation only; no simulator code, campaign, or
+historical artifact changed.
+
+The [HLS Laboratory Research Framework](HLS_LABORATORY_RESEARCH_FRAMEWORK.md)
+defines organization, decision policies, learning mechanisms, environment,
+and evaluation as distinct components, maps actual executable boundaries,
+classifies current experiment capabilities, records a five-question research
+portfolio, and proposes a bounded development sequence. The audit confirms
+that C5 demand, frozen environment paths, matched policy runs, MIS-v2,
+directed teaching, resource accounting, outcome traces, and study-specific
+controls already exist. It also confirms fixed 3-agent × 2-skill shapes, a
+single task/decision per period, one additive production kernel, runner-coupled
+mechanism composition, no integrated latent-demand inference, and a discrete
+catalogue that can strand capacity. Campaign 2 and Q1 preflight demonstrate
+that seeds or noisy estimates alone do not ensure outcome sensitivity; Q1-R
+proves only that a nonzero MIS interaction is expressible in a separate exact
+fixture.
+
+The recommended first implementation, requiring separate authorization, is
+bounded agent/skill/action-geometry generalization with an exact 3×2
+compatibility gate; resolution of existing provenance failures remains a
+validation prerequisite. No code or campaign was executed. HLS Laboratory
+remains **PARTIAL** and historical registrations/results are unchanged.
+
+### 2026-10-16 — N×K directed teaching Phase 3B
+
+**Implementation event:** 2026-10-16; exact start time not recorded.
+**Final validation/record:** 2026-10-16 16:22 +02:00 (Europe/Madrid).
+**Authority:** CE authorization for N×K teaching transitions, explicit
+teaching actions, and integration with productive episodes only. **Type:**
+additive engineering implementation; no campaign was run.
+
+The N×K adapter preserves the legacy directed teaching formula
+`gain = transfer_rate × teaching_effort × T[teacher, learner, skill] ×
+(1 − learner_competence_after_MIS)`, saturating the learner's targeted cell
+at one. The historical formula does not directly use teacher competence;
+relation-specific efficacy is the teacher-indexed representation. Teacher
+and learner each consume event effort, so collective teaching consumption is
+`2 × effort`. The explicit runner composes production/outcome, MIS-v2, then
+teaching. Four ON/OFF mechanism combinations are expressible, while no
+automatic teaching-selection policy is added. The default Phase 2 and Phase
+3A paths and all legacy source modules remain unchanged.
+
+The focused suite passed 95 tests, including tensor/transition boundaries,
+resource constraints, deterministic replay, zero-efficacy resource charging,
+MIS/teaching isolation, and direct 3×2 comparison against the historical
+integrated runner. `PYTHONPATH=.:src pytest -q` completed in 479.80 seconds:
+1320 passed and these five previously documented provenance/integrity tests
+failed, with no new functional failures:
+
+- `tests/foundations/test_result_manifests.py::test_every_foundation_result_has_consistent_manifest`
+- `tests/test_campaign2_state_coverage_audit.py::test_frozen_inputs_and_completed_artifacts`
+- `tests/test_campaign2_theory.py::test_preexperiment_manifest_and_contamination_boundary`
+- `tests/test_campaign3_meta_voc_confirmatory.py::test_pre_execution_manifest_and_raw_integrity_when_present`
+- `tests/test_strategy_discrimination_gate.py::test_source_hashes_and_raw_output_hashes`
+
+No historical result, manifest, fixture, or expected hash was modified. Local
+microbenchmarks are engineering diagnostics only. N×K generalized P1/P2,
+teaching selection, competence estimation, and environment emission remain
+unsupported; the HLS Laboratory milestone remains **PARTIAL**.
+
+## 2026-10-16 18:14 +02:00 — N×K coordination policies (Phase 3C)
+
+**Type:** authorized engineering implementation and regression validation.
+**Authority:** CE Phase 3C authorization. **Scope:** generalize the existing
+P0/P1/P2 decision rules and connect them to N×K production/teaching episodes;
+no new policy, production equation, MIS-v2 law, teaching equation, campaign,
+or historical artifact was introduced or changed.
+
+The N×K policy adapter preserves P0's lexicographic success/deficit/margin/
+effort ranking and production-only behavior; P1's single configured directed
+teaching relation and production-only fallback; and P2's production-success
+check, configured relation exploration order, efficacy running-mean ranking,
+threshold and numeric-index tie-break. It enumerates complete feasible
+production/one-lesson actions, charges both teaching participants, and fails
+if the declared candidate bound is exceeded. The N×K decision view exposes
+perfectly observed competence and public efficacy memory but not private
+efficacy or the organization configuration. P2's formative memory uses the
+existing deterministic zero-noise outcome observation; the existing
+organizational-learning toggle controls whether that memory updates.
+
+The original 3×2 policy tests were run against generalized choices and
+outcomes with matched perfect information and zero observation noise. The
+ordered 64-action production and 508-action integrated catalogues remain
+unchanged. Focused Phase 1–3B plus Phase 3C validation passed **93 tests**.
+The full suite completed in **490.82 s**: **1,337 passed, 5 failed**. The
+five failures are unchanged provenance/integrity cases:
+
+- `tests/foundations/test_result_manifests.py::test_every_foundation_result_has_consistent_manifest`
+- `tests/test_campaign2_state_coverage_audit.py::test_frozen_inputs_and_completed_artifacts`
+- `tests/test_campaign2_theory.py::test_preexperiment_manifest_and_contamination_boundary`
+- `tests/test_campaign3_meta_voc_confirmatory.py::test_pre_execution_manifest_and_raw_integrity_when_present`
+- `tests/test_strategy_discrimination_gate.py::test_source_hashes_and_raw_output_hashes`
+
+Engineering microbenchmarks cover 1×1, 2×2, 3×2 and 4×3 joint catalogues and
+short episodes; exact configurations and measurements are in the
+[N×K technical design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md).
+N=1 supports P0 only because no valid directed teaching relation exists;
+P1/P2 require a non-empty valid relation. Competence estimation, imperfect
+information/noisy efficacy observations and scientific campaigns remain
+outside this phase. HLS Laboratory remains **PARTIAL**.
+
+Implementation commit: `5418d6e` (`feat(hls): generalize NK coordination policies`).
+Regression commit: `277cb28c85f1ef2727b1d5ec1a2ddff71729f775`
+(`test(hls): verify NK P0 P1 P2 coordination`).
+
+## 2026-10-16 18:23 +02:00 — Shared N×K policy interface and final regression
+
+**Type:** implementation consistency correction and final validation. The P0
+adapter was aligned with the same `choose(view, memory, parameters)` contract
+as P1/P2; it still receives only production actions and selects no teaching
+event. The small addition is commit `160037e945105910d569cd56f3ee6d7de5884449`
+(`fix(hls): unify NK coordination policy interface`). The 1×1 P0-path
+microbenchmark row was refreshed in the engineering design.
+
+After this final code change, focused Phase 1–3B/3C regressions again passed
+**93 tests**. The second complete suite passed **1,337 tests, 5 failed** in
+**475.44 s**; it reproduced exactly the same five historical
+provenance/integrity failures listed in the preceding entry, with no added
+functional regression. `git diff --check` passed. The only remaining worktree
+changes outside this intervention are unrelated and were not staged. No
+historical artifacts or expected hashes changed. HLS Laboratory remains
+**PARTIAL**.
+
+### 2026-10-16 — N×K environment and demand generation, Phase 4
+
+**Event and record:** 2026-10-16 20:08 +02:00 (Europe/Madrid), verified by the
+system clock. **Authority:** Phase 4 CE authorization. **Type:** additive
+environment generalization and focused validation.
+
+Added `src/hls/hls_lab_nk_environment.py`. It reuses C5's IID/stationary,
+time-indexed nonstationary, and first-order Markov task processes and generalizes
+only the state-to-problem emission catalogue to K-dimensional
+`ProblemSpecNK` types. Fixed problem sequences remain a direct input to the
+existing runner; they are not treated as a stochastic generator. The runner
+also accepts an environment config and seed, generates and freezes the full
+trajectory before invoking the existing sequence execution path, and returns
+environment-only latent states/regime metadata separately from policy traces.
+The C5 random source remains a single seeded sequence; emission randomness
+retains the existing v1 SHA-256 seed/period coordinate derivation. For the
+legacy equal-weight 3×2 emission, the historical dynamic emitter is reused;
+comparison matched sampled states, problem IDs, requirement vectors, CES
+weights and budgets. No process was coupled to organization state and no
+scientific equation or historical module was changed.
+
+`tests/test_hls_lab_nk_environment.py` covers 1×1, 2×2, 3×2 and 4×3 emission,
+replay, stationary/IID, Markov transitions, indexed nonstationarity, invalid
+catalogue/configuration, exact historical 3×2 emission, and integrated replay
+across P0/P1/P2 × MIS × teaching × perfect/imperfect information. The focused
+environment, C5, dynamic laboratory and Phase 1–3D regressions passed 155
+tests after adding controls for different seeds and reuse across organizations.
+The complete
+`PYTHONPATH=src:. python -m pytest -q` run passed 1,390 tests and failed the
+same five documented provenance/integrity checks in 515.55s:
+`test_every_foundation_result_has_consistent_manifest` (current inventory is
+12 rather than frozen 11), `test_frozen_inputs_and_completed_artifacts`,
+`test_preexperiment_manifest_and_contamination_boundary`,
+`test_pre_execution_manifest_and_raw_integrity_when_present`, and
+`test_source_hashes_and_raw_output_hashes`. The latter four concern existing
+frozen artifact/source mismatches, including the already-modified
+`finite_problem_belief.py`; they are outside Phase 4 and were not changed.
+The full-suite run preceded those two final test-only controls; the updated
+full focused selection passed 155/155 afterward. Publication state is
+recorded in the final handoff; no scientific campaign ran and the laboratory
+remains PARTIAL.
+
+### 2026-10-16 20:22 +02:00 — Phase 5 integrated validation and readiness review
+
+**Record time:** 2026-10-16 20:22 +02:00 (Europe/Madrid), from the system
+clock. **Authority:** Phase 5 CE authorization. **Validated code baseline:**
+`8804daf6303a5db134098ea87ac5c8ff2469a3b8`.
+
+Added `tests/test_hls_research_readiness.py` with an integrated deterministic
+regime-switch fixture for 1×1, 2×2, 3×2 and 4×3. Across valid policy,
+MIS-v2, teaching and information-mode combinations, the tests independently
+check production, CES, functional success, resource balances, competence
+bounds and the MIS-v2 → teaching transitions. Focused N×K/HLS regressions
+passed 172 tests. Two fresh processes produced the same serialized-run SHA-256
+(`0a5710ce5f7b40e58b2760d53f2f916c544098c1e28d13870634c405eac90985`).
+Microbenchmarks locate exhaustive joint-action enumeration as the main
+measured bottleneck at 4×3; exact settings and stage timings are in the
+[readiness review](engineering/HLS_RESEARCH_READINESS_REVIEW.md).
+
+The final full suite completed in 503.84 seconds: **1,396 passed, 5 failed**.
+The five failures are the same baseline provenance/integrity cases: foundation
+inventory (12 current result directories vs frozen 11), Campaign 2 closure
+digest mismatches in four frozen documents, and a `finite_problem_belief.py`
+source digest mismatch in the Campaign 2, Campaign 3 and strategy-gate freezes.
+They were neither altered nor suppressed. No new functional regression was
+found; `git diff --check` passed. No simulator equations, historical artifacts
+or campaigns changed.
+
+Readiness recommendation: **CONDITIONALLY READY** for bounded preregistered
+research inside the validated model, provided the study archives a complete
+configuration/seed/software manifest and frozen demand trajectory and checks
+its exact action-catalog size. Repository-wide provenance is not clean, so
+claims relying on the five affected evidence checks require their resolution.
+This is not an authorization to execute a campaign; HLS Laboratory remains
+**PARTIAL** pending PI review.
+
+### 2026-10-17 — Standalone direct-experience productivity mechanism
+
+**Record time:** 2026-10-17 10:38 +02:00 (Europe/Madrid). Added the isolated
+Nembhard-inspired direct-experience productivity curve
+`P(D)=k(D+p)/(D+p+r)`, explicit cumulative-experience advancement, and a
+before/after evaluation helper. This mechanism keeps productivity and
+experience units explicit and is not equated with HLS competence or effort.
+MIS-v2, the N×K simulator, policies and historical results are unchanged; no
+campaign was run. The 24 focused tests passed. Full N×K regression validation
+passed 184 tests; `git diff --check` passed. The legacy MIS-v2 and N×K
+production/policy/transition modules have no changes from this intervention.
+HLS Laboratory remains **PARTIAL**.
+
+### 2026-10-17 11:46 +02:00 — Nembhard Direct v0.1 N×K integration
+
+**Authority:** CE integration task. Added an explicit `mechanism_id` selector
+to the existing N×K runner. Its default and explicit `mis_v2` choices use the
+same legacy execution path; byte-serialized equality is tested for frozen and
+MIS-v2 learning episodes. The opt-in `nembhard_direct` branch stores a
+separate `D[N,K]` experience state and cell-specific `k,p,r`, uses explicit
+feasible allocations, evaluates production from beginning-of-period
+productivity, then advances `D` by `e*delta_t`. It reuses existing task
+functional/CES evaluation only behind an explicit output/requirement-unit
+contract. Existing budgets constrain effort intensity per period; effective
+work exposure is traced separately. HLS competence fields are not read by
+this branch. P0/P1/P2, MIS-v2, teaching and competence estimation are rejected
+in Nembhard mode; no new policy or campaign was introduced.
+
+The focused scalar-mechanism and N×K/HLS regression selection passed **222
+tests**. `git diff --check` passed. No historical results or PDFs were
+changed, and MIS-v2/P0/P1/P2 source semantics remain unchanged. The full suite
+was not run. HLS Laboratory remains **PARTIAL**.

@@ -1,0 +1,27 @@
+{
+  "command": "PYTHONPATH=src:. python -m experiments.synthetic.hls_campaign2.analyze_teaching_mis --output /Volumes/Lacie_8Tb/UC3M.Drive/Investigacion/Lineas/heterogeneous_learning_systems/results/experiments/hls_campaign2_teaching_mis_assignment",
+  "input_manifest_sha256": "f8d8609069ef243e0a2b0f426512e7b8f68736b32a4b482f45cae3620c2a29d3",
+  "output_sha256": {
+    "assignment_contrasts.csv": "3c7f600bd79a331960f0869baf8e94a6fcc7d810787b83e72d4561cf82bbb866",
+    "mechanism_summary.csv": "4d78f41b8650f70be13f40a6c6aac18cabb09829310500d430629f6ef6d3cff7",
+    "seed_sensitivity.csv": "50b3a8cc077e8a57c9833f6860af51d491aebdd8b799b560a1e05275cd02b7f3",
+    "test_results.xml": "86b3b55fc7e7949270861034e65f0c7f8ff702bc7798e4b27b3da176f4f2faab"
+  },
+  "recorded_at": "2026-10-15T20:44:09+02:00",
+  "source_sha256": {
+    "experiments/synthetic/hls_campaign2/analyze_teaching_mis.py": "46dce1b6f4586c46889f5ac31ea09c168b4f12f989eba396aa0b772cde5602c8",
+    "tests/test_hls_campaign2_teaching_mis_assignment.py": "ce888164a51bebe301283411e60dd2c88fa469927677bc01c56a75f163ace5ff"
+  },
+  "validation": {
+    "demand_matched": true,
+    "initial_states_matched": true,
+    "max_distinct_estimates_across_seeds_at_same_condition_period": 10,
+    "mis_off_zero_increment": true,
+    "no_learning_preserves_true_competencies": true,
+    "resource_accounting": true,
+    "trace_rows": 3264,
+    "unique_quadruples": 34,
+    "unique_runs": 136,
+    "zero_efficacy_zero_direct_gain": true
+  }
+}

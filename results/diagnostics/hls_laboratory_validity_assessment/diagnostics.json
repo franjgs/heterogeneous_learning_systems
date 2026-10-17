@@ -1,0 +1,684 @@
+{
+  "design": {
+    "budget_frontier": {
+      "budget": 2.0,
+      "expert_cap": 1.0
+    },
+    "conditions": "deterministic diagnostics; no population sampling",
+    "learning_profile_eta": [
+      [
+        0.5,
+        0.1
+      ],
+      [
+        0.2,
+        0.2
+      ],
+      [
+        0.1,
+        0.1
+      ]
+    ],
+    "production_observation_noise_sd": 0.0,
+    "seed": 2026101607,
+    "teaching_observation_noise_sd": 0.0
+  },
+  "diagnostics": {
+    "A_equivalence": {
+      "actual_identical": true,
+      "ces": [
+        2.2,
+        2.2
+      ],
+      "expected": "identical episode signatures with identical inputs and zero observation noise",
+      "status": "PASS",
+      "successes": [
+        2,
+        2
+      ]
+    },
+    "B_competence_sensitive": {
+      "actual": {
+        "ces": [
+          0.5000000000000001,
+          0.6000000000000001
+        ],
+        "outputs": [
+          [
+            0.5,
+            0.0
+          ],
+          [
+            0.6,
+            0.0
+          ]
+        ],
+        "success": [
+          true,
+          true
+        ]
+      },
+      "expected": "same fixed assignment; +0.1 relevant skill yields +0.1 output while both remain successful",
+      "status": "PASS"
+    },
+    "C_feasibility_boundary": {
+      "actual": {
+        "epsilon": 0.01,
+        "frontier": 1.15,
+        "maximizing_actions": [
+          51
+        ],
+        "outputs": [
+          [
+            1.15,
+            0.0
+          ],
+          [
+            1.15,
+            0.0
+          ]
+        ],
+        "requirements": [
+          1.14,
+          1.16
+        ],
+        "success": [
+          true,
+          false
+        ]
+      },
+      "expected": "success just below and failure just above the enumerated production frontier",
+      "status": "PASS"
+    },
+    "D_assignment_sensitive": {
+      "actual": {
+        "actions": [
+          [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        ],
+        "outputs": [
+          [
+            0.8,
+            0.0
+          ],
+          [
+            0.2,
+            0.0
+          ]
+        ],
+        "success": [
+          true,
+          false
+        ]
+      },
+      "expected": "assigning one unit to E0 succeeds; the same action to lower-skill E1 fails",
+      "status": "PASS"
+    },
+    "E_MIS_v2_control": {
+      "actual": {
+        "competence_off": [
+          [
+            0.4,
+            0.2
+          ],
+          [
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2
+          ]
+        ],
+        "competence_on": [
+          [
+            0.85,
+            0.2
+          ],
+          [
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2
+          ]
+        ],
+        "outputs_off": [
+          [
+            0.4,
+            0.0
+          ],
+          [
+            0.4,
+            0.0
+          ]
+        ],
+        "outputs_on": [
+          [
+            0.4,
+            0.0
+          ],
+          [
+            0.7,
+            0.0
+          ]
+        ]
+      },
+      "expected": "identical first output; LI ON increases the same expert's skill and second output; LI OFF remains fixed",
+      "status": "PASS"
+    },
+    "F_resource_accounting": {
+      "actual": {
+        "budget_each": 2.0,
+        "catalog_max_production_effort": [
+          2.0,
+          1.0
+        ],
+        "recorded": {
+          "ces": [
+            1.1500000000000001,
+            0.25
+          ],
+          "lesson_effort": 0.5,
+          "lesson_production_effort": 1.0,
+          "lesson_residual": 0.5,
+          "lesson_total_used": 1.5,
+          "no_lesson_production_effort": 2.0,
+          "resource_cost": [
+            0.4,
+            0.30000000000000004
+          ]
+        }
+      },
+      "expected": "budget 2; no-lesson catalog supports 2.0 production; lesson uses 0.5 and caps catalog production at 1.0, stranding 0.5",
+      "status": "PASS"
+    },
+    "matched_policy_comparison": {
+      "exogenous_seed": 2026101607,
+      "expected": "P0/P1/P2 receive the same frozen generated problems and resource limits",
+      "policies": [
+        {
+          "actions": [
+            {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            }
+          ],
+          "ces": 0.8250000000000001,
+          "competence_final": [
+            [
+              0.8,
+              0.2
+            ],
+            [
+              0.3,
+              0.2
+            ],
+            [
+              0.2,
+              0.3
+            ]
+          ],
+          "estimates_final": [
+            [
+              0.8,
+              0.20000000000030002
+            ],
+            [
+              0.3,
+              0.20000000000030002
+            ],
+            [
+              0.20000000000030002,
+              0.3000000000002
+            ]
+          ],
+          "observations": [
+            [
+              [
+                0.8,
+                0.0
+              ],
+              [
+                0.3,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            [
+              [
+                0.8,
+                0.0
+              ],
+              [
+                0.3,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            [
+              [
+                0.8,
+                0.0
+              ],
+              [
+                0.3,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          ],
+          "policy": "P0_PRODUCTION_ONLY",
+          "production_effort": 6.0,
+          "resource_cost": 0.0,
+          "resource_used": 6.0,
+          "successes": 3,
+          "teaching_effort": 0.0
+        },
+        {
+          "actions": [
+            {
+              "production": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": {
+                "capability": 0,
+                "effort": 0.25,
+                "instructor": 0,
+                "learner": 1
+              }
+            },
+            {
+              "production": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": {
+                "capability": 0,
+                "effort": 0.25,
+                "instructor": 0,
+                "learner": 1
+              }
+            },
+            {
+              "production": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": {
+                "capability": 0,
+                "effort": 0.25,
+                "instructor": 0,
+                "learner": 1
+              }
+            }
+          ],
+          "ces": 0.15,
+          "competence_final": [
+            [
+              0.8,
+              0.2
+            ],
+            [
+              0.5701125,
+              0.2
+            ],
+            [
+              0.2,
+              0.3
+            ]
+          ],
+          "estimates_final": [
+            [
+              0.7999999999997001,
+              0.20000000000030002
+            ],
+            [
+              0.5701125000001938,
+              0.20000000000030002
+            ],
+            [
+              0.2,
+              0.3000000000002
+            ]
+          ],
+          "observations": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.2,
+                0.0
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.2,
+                0.0
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.2,
+                0.0
+              ]
+            ]
+          ],
+          "policy": "P1_FIXED_TEACHING",
+          "production_effort": 3.0,
+          "resource_cost": 0.0,
+          "resource_used": 4.5,
+          "successes": 0,
+          "teaching_effort": 1.5
+        },
+        {
+          "actions": [
+            {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            }
+          ],
+          "ces": 0.8250000000000001,
+          "competence_final": [
+            [
+              0.8,
+              0.2
+            ],
+            [
+              0.3,
+              0.2
+            ],
+            [
+              0.2,
+              0.3
+            ]
+          ],
+          "estimates_final": [
+            [
+              0.8,
+              0.20000000000030002
+            ],
+            [
+              0.3,
+              0.20000000000030002
+            ],
+            [
+              0.20000000000030002,
+              0.3000000000002
+            ]
+          ],
+          "observations": [
+            [
+              [
+                0.8,
+                0.0
+              ],
+              [
+                0.3,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            [
+              [
+                0.8,
+                0.0
+              ],
+              [
+                0.3,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            [
+              [
+                0.8,
+                0.0
+              ],
+              [
+                0.3,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          ],
+          "policy": "P2_ADAPTIVE_TEACHING",
+          "production_effort": 6.0,
+          "resource_cost": 0.0,
+          "resource_used": 6.0,
+          "successes": 3,
+          "teaching_effort": 0.0
+        }
+      ],
+      "shared_problems": [
+        [
+          "r:0.5,0",
+          [
+            0.5,
+            0.0
+          ],
+          2.0
+        ],
+        [
+          "r:0.5,0",
+          [
+            0.5,
+            0.0
+          ],
+          2.0
+        ],
+        [
+          "r:0.5,0",
+          [
+            0.5,
+            0.0
+          ],
+          2.0
+        ]
+      ],
+      "status": "PASS",
+      "trajectory_reproducible": true
+    },
+    "negative_zero_efficacy": {
+      "actual": {
+        "direct_gain": 0.0,
+        "teaching_effort": 0.5,
+        "total_resource_used": 1.5
+      },
+      "expected": "zero efficacy gives zero direct gain while lesson resources remain charged",
+      "status": "PASS"
+    }
+  }
+}

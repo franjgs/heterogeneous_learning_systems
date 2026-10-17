@@ -1,0 +1,40 @@
+{
+  "artifacts_sha256": {
+    "aggregate_summary.csv": "f4a428007e429b50234b9c285b80e0ba341508f20349e1ed63c4626f828aed58",
+    "episodes.csv": "5261c1fa346154141ea54e5abbd3631d69847a41804fd7ca8ccfeea9a5af2e9a",
+    "paired_aggregate.csv": "16d6a0ab3948464701d92653bb44821db84be140c542e93ac9fef52e71684b2f",
+    "paired_differences.csv": "0daf1473ccf938c0eaeca8e14f016145a3191910fe86913e7a85b30b88590bef",
+    "protocol.json": "170d57dc86a5c30fc3078afc27fd46f3aca790586b7aade7170c18107dde94aa",
+    "seed_summaries.csv": "f732a94a2bdd466feaaa32d0016a3aa339281659263ae332d7c20e557b395307"
+  },
+  "campaign": "HLS-SCIENTIFIC-CAMPAIGN-1-PILOT",
+  "counts": {
+    "episode_records": 20480,
+    "factor_configurations": 16,
+    "individual_learning_conditions": 2,
+    "policies": 4,
+    "policy_runs": 1280,
+    "seeds_per_configuration": 10
+  },
+  "environment": {
+    "numpy": "1.26.4",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "pytest": "8.4.2",
+    "python": "3.11.9 (main, Apr 19 2024, 11:43:47) [Clang 14.0.6 ]"
+  },
+  "execution_timestamp_europe_madrid": "2026-10-15T10:15:07+02:00",
+  "protocol_sha256": "170d57dc86a5c30fc3078afc27fd46f3aca790586b7aade7170c18107dde94aa",
+  "repository_head_before_run": "a179041a1617e250e3fe83065db7dbc8402b0d62",
+  "source_sha256": {
+    "experiments/synthetic/hls_campaign1/run.py": "cf0daf9210cfd56b68f81cd514ed11d8fed2a1f0f8142973437dcbfbefd5af41",
+    "src/hls/discover_develop_v2.py": "06d70479a1f8e5bd7408a3a3c5596de4fca9e139838441f5de7dbb78c32e4e80",
+    "src/hls/discover_v0.py": "ef1eee85cf7735107e46e285af4ce2734906a55a6741ec09a72a2623c1ab470f",
+    "src/hls/hls_lab_dynamic.py": "d6cbb568a9624884da7eeb7da080ffca737326d72359c087ebdc374e76449c70",
+    "src/hls/hls_lab_v1.py": "c8dc4cb387cc5c47eb19c9af44c40e43772aeb755b4149bf99d3eb586e11aa6f",
+    "src/hls/hls_lab_v1_environment.py": "a59ca1ef5f8a7248cece1a2acb7900d9b0a37dc72896464a0c59d74b33f170b7",
+    "src/hls/hls_lab_v1_integrated.py": "b482098c0ab6e02f7867e24bdc1a30599201c421286006f5415b51a3459d7238",
+    "src/hls/synthetic/c5.py": "9a264bd5121b51ef5cb285b19dd766f79f88b18a3c01f0231fb16c8cc8c6dbf8"
+  },
+  "status": "COMPLETE_SUPERSEDED_BY_CSV_ENCODING",
+  "validation_note": "This manifest covers the same scientifically valid predetermined seeds and outcomes. A formatting-only rerun encoded not-applicable CSV cells as NA so line endings pass repository diff checks; it did not add independent replicates."
+}

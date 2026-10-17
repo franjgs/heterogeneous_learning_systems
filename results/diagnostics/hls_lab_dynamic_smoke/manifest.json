@@ -1,0 +1,160 @@
+{
+  "decision_horizon": 2,
+  "environment_seed": 409,
+  "episode_trace_sha256": "5ee5b2da4c672067941bbaab5bc624d0f99718fafe4147814fae60e483f4abb3",
+  "initial_team": [
+    [
+      0.82,
+      0.12
+    ],
+    [
+      0.18,
+      0.76
+    ],
+    [
+      0.35,
+      0.28
+    ]
+  ],
+  "kind": "bounded_engineering_smoke_not_scientific_campaign",
+  "latent_environment_types": {
+    "theta1": [
+      0.8,
+      0.2
+    ],
+    "theta2": [
+      0.2,
+      0.8
+    ]
+  },
+  "learning_eta_by_expert_capability": [
+    [
+      0.1,
+      0.2
+    ],
+    [
+      0.7,
+      0.3
+    ],
+    [
+      0.4,
+      0.6
+    ]
+  ],
+  "observation_noise_seed": 610,
+  "observation_sigma": 0.1,
+  "policies": [
+    "discover_unknown_policy",
+    "adaptive_greedy"
+  ],
+  "policy_pairing": "same task sequence, latent types, and Gaussian innovations",
+  "prior": 0.5,
+  "problem_schedule": [
+    {
+      "count": 4,
+      "label": "first-demand",
+      "probabilities": [
+        0.9,
+        0.1
+      ]
+    },
+    {
+      "count": 4,
+      "label": "second-demand",
+      "probabilities": [
+        0.1,
+        0.9
+      ]
+    }
+  ],
+  "problem_seed": 208,
+  "quadrature_order": 3,
+  "requirement_options": [
+    [
+      0.6,
+      0.0
+    ],
+    [
+      0.0,
+      0.6
+    ]
+  ],
+  "run_seed_metadata": 42,
+  "source_sha256": {
+    "experiments/synthetic/hls_lab_dynamic/smoke.py": "dbee1619412c79f0fea7f070d14c5a2b712f2fb5ef5b5c93a7fd3a4aa38effab",
+    "src/hls/discover_develop_v2.py": "06d70479a1f8e5bd7408a3a3c5596de4fca9e139838441f5de7dbb78c32e4e80",
+    "src/hls/discover_v0.py": "ef1eee85cf7735107e46e285af4ce2734906a55a6741ec09a72a2623c1ab470f",
+    "src/hls/hls_lab_dynamic.py": "6708160062a8c4ccdfcacde6261a9f6b2d1bb9c42ccd980830cd07cc4c037dd8",
+    "src/hls/hls_lab_v1.py": "c8dc4cb387cc5c47eb19c9af44c40e43772aeb755b4149bf99d3eb586e11aa6f"
+  },
+  "summary": {
+    "adaptive_greedy": {
+      "belief_updates": 8,
+      "cumulative_true_ces_reward": 13.178989941120001,
+      "decisions": 16,
+      "final_estimated_competencies": [
+        [
+          0.9225159022,
+          0.8523604991999999
+        ],
+        [
+          0.9999461998,
+          0.9861644776
+        ],
+        [
+          0.989082496,
+          0.9995281408
+        ]
+      ],
+      "final_real_competencies": [
+        [
+          0.9225159022,
+          0.8523604991999999
+        ],
+        [
+          0.9999461998,
+          0.9861644776
+        ],
+        [
+          0.989082496,
+          0.9995281408
+        ]
+      ],
+      "functional_successes": 16
+    },
+    "discover_unknown_policy": {
+      "belief_updates": 16,
+      "cumulative_true_ces_reward": 23.97497266555809,
+      "decisions": 16,
+      "final_estimated_competencies": [
+        [
+          0.9666456366006668,
+          0.12
+        ],
+        [
+          0.18,
+          0.9992024096663297
+        ],
+        [
+          0.8596,
+          0.999995168161792
+        ]
+      ],
+      "final_real_competencies": [
+        [
+          0.9666456366006668,
+          0.12
+        ],
+        [
+          0.18,
+          0.9992024096663297
+        ],
+        [
+          0.8596,
+          0.999995168161792
+        ]
+      ],
+      "functional_successes": 16
+    }
+  }
+}

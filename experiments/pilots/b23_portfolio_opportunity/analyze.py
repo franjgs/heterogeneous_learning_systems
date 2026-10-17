@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib.util
 import json
+import re
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -30,6 +33,35 @@ def _load_run():
 
 
 b23 = _load_run()
+B23_PROTOCOL_RELATIVE_PATH = "docs/experimental_foundations/B23_PROTOCOL.md"
+
+
+def _historical_protocol_sha256(commit: object, repo_root: Path = ROOT) -> str:
+    """Hash the protocol blob recorded by a run, never the working-tree file."""
+    if not isinstance(commit, str) or re.fullmatch(r"[0-9a-f]{40}", commit) is None:
+        raise RuntimeError("historical protocol provenance unverifiable: missing or invalid Git commit")
+    try:
+        completed = subprocess.run(
+            ["git", "show", f"{commit}:{B23_PROTOCOL_RELATIVE_PATH}"],
+            cwd=repo_root,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise RuntimeError(
+            f"historical protocol provenance unverifiable: cannot recover {B23_PROTOCOL_RELATIVE_PATH} at {commit}"
+        ) from exc
+    return hashlib.sha256(completed.stdout).hexdigest()
+
+
+def _verify_historical_protocol(commit: object, expected_sha256: object, repo_root: Path = ROOT) -> str:
+    if not isinstance(expected_sha256, str) or re.fullmatch(r"[0-9a-f]{64}", expected_sha256) is None:
+        raise RuntimeError("historical protocol provenance unverifiable: missing or invalid recorded digest")
+    observed = _historical_protocol_sha256(commit, repo_root)
+    if observed != expected_sha256:
+        raise RuntimeError("historical protocol provenance mismatch: protocol_sha256")
+    return observed
 
 
 def operational_value(scores: dict[str, float], deep: dict[str, float], cost: float) -> tuple[float, str, dict[str, float]]:
@@ -149,7 +181,6 @@ def compatibility_audit(output_dir: Path) -> tuple[dict[tuple, dict[str, float]]
     if header.get("protocol_id") != b23.PROTOCOL_ID or header.get("device") != "cpu" or header.get("test_used") is not False or header.get("deterministic_algorithms") is not True:
         raise RuntimeError("run-level provenance is incompatible")
     frozen_hashes = {
-        "protocol_sha256": b23.sha256_file(b23.PROTOCOL_PATH),
         "config_sha256": b23.sha256_file(b23.CONFIG_PATH),
         "implementation_sha256": b23.SCIENTIFIC_IMPLEMENTATION_SHA256,
         "analysis_sha256": b23.SCIENTIFIC_ANALYSIS_SHA256,
@@ -158,6 +189,7 @@ def compatibility_audit(output_dir: Path) -> tuple[dict[tuple, dict[str, float]]
         "dataset_revision": b23.DATASET_REVISION,
         "dataset_sha256": b23.DATASET_SHA256,
     }
+    _verify_historical_protocol(header.get("git_commit"), header.get("protocol_sha256"))
     for key, expected in frozen_hashes.items():
         if header.get(key) != expected:
             raise RuntimeError(f"run-level provenance mismatch: {key}")

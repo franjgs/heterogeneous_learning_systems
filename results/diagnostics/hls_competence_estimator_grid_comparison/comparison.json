@@ -1,0 +1,141 @@
+{
+  "git_head": "50394f2d3130b8524a2f42baa04f991b92e62bbf",
+  "grid_points": 101,
+  "interval": "equal-tailed discrete 90% posterior interval",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "python": "3.11.9 (main, Apr 19 2024, 11:43:47) [Clang 14.0.6 ]",
+  "replicate_seed_ranges": {
+    "B": "base+0..127",
+    "C": "base+1000..1127",
+    "E": "base+2000..2127",
+    "F": "base+3000..3127"
+  },
+  "results": {
+    "A_constant_noiseless": {
+      "grid": {
+        "bias_estimate_minus_truth": 0.0,
+        "credible_90_coverage": 1.0,
+        "elapsed_seconds": 0.00010891701094806194,
+        "mae": 0.0,
+        "mean_posterior_variance": 0.0,
+        "n": 1,
+        "rmse": 0.0
+      },
+      "three_point": {
+        "bias_estimate_minus_truth": 0.0,
+        "credible_90_coverage": 1.0,
+        "elapsed_seconds": 2.6582973077893257e-05,
+        "mae": 0.0,
+        "mean_posterior_variance": 0.0,
+        "n": 1,
+        "rmse": 0.0
+      }
+    },
+    "B_constant_noisy": {
+      "grid": {
+        "bias_estimate_minus_truth": 0.00040699442857571044,
+        "credible_90_coverage": 0.9609375,
+        "elapsed_seconds": 0.30415874999016523,
+        "mae": 0.009808222251739253,
+        "mean_posterior_variance": 0.00016666666666667376,
+        "n": 128,
+        "rmse": 0.012261954828878086
+      },
+      "three_point": {
+        "bias_estimate_minus_truth": 0.2612775087869208,
+        "credible_90_coverage": 0.0,
+        "elapsed_seconds": 0.02813679096288979,
+        "mae": 0.28115632848471606,
+        "mean_posterior_variance": 5.5601295423834564e-05,
+        "n": 128,
+        "rmse": 0.28123530779953543
+      }
+    },
+    "C_mis_growth_observed": {
+      "grid": {
+        "bias_estimate_minus_truth": 0.009121631932823705,
+        "credible_90_coverage": 0.0546875,
+        "elapsed_seconds": 0.21717091696336865,
+        "mae": 0.010183707649867323,
+        "mean_posterior_variance": 8.230664246469473e-06,
+        "n": 128,
+        "rmse": 0.010303934541917074
+      },
+      "three_point": {
+        "bias_estimate_minus_truth": 0.009121684888756657,
+        "credible_90_coverage": 0.0546875,
+        "elapsed_seconds": 0.01707712491042912,
+        "mae": 0.010183822135087412,
+        "mean_posterior_variance": 8.231674443386117e-06,
+        "n": 128,
+        "rmse": 0.010304044226109614
+      }
+    },
+    "D_no_observation_public_mis_prediction": {
+      "grid": {
+        "bias_estimate_minus_truth": -6.139533326177116e-14,
+        "credible_90_coverage": 1.0,
+        "elapsed_seconds": 0.0006813330110162497,
+        "mae": 6.139533326177116e-14,
+        "mean_posterior_variance": 0.015085980625020798,
+        "n": 1,
+        "rmse": 6.139533326177116e-14
+      },
+      "three_point": {
+        "bias_estimate_minus_truth": -1.1102230246251565e-16,
+        "credible_90_coverage": 1.0,
+        "elapsed_seconds": 5.9916870668530464e-05,
+        "mae": 1.1102230246251565e-16,
+        "mean_posterior_variance": 0.015085980625000054,
+        "n": 1,
+        "rmse": 1.1102230246251565e-16
+      }
+    },
+    "E_bad_initial_estimate": {
+      "grid": {
+        "bias_estimate_minus_truth": 0.04979722825096666,
+        "credible_90_coverage": 0.0234375,
+        "elapsed_seconds": 0.08506933297030628,
+        "mae": 0.04979722825096666,
+        "mean_posterior_variance": 1.3998983407701656e-05,
+        "n": 128,
+        "rmse": 0.049812983923686584
+      },
+      "three_point": {
+        "bias_estimate_minus_truth": 0.04999999999999989,
+        "credible_90_coverage": 0.0,
+        "elapsed_seconds": 0.007674749940633774,
+        "mae": 0.04999999999999989,
+        "mean_posterior_variance": 0.0,
+        "n": 128,
+        "rmse": 0.050000000000000024
+      }
+    },
+    "F_small_effort": {
+      "grid": {
+        "bias_estimate_minus_truth": -0.1360970957031822,
+        "credible_90_coverage": 0.4453125,
+        "elapsed_seconds": 0.21548666595481336,
+        "mae": 0.25328090760973554,
+        "mean_posterior_variance": 0.024856464758951154,
+        "n": 128,
+        "rmse": 0.26499001651882526
+      },
+      "three_point": {
+        "bias_estimate_minus_truth": -0.1360970957034119,
+        "credible_90_coverage": 0.4453125,
+        "elapsed_seconds": 0.017225666902959347,
+        "mae": 0.2532809076102735,
+        "mean_posterior_variance": 0.024856464758951938,
+        "n": 128,
+        "rmse": 0.2649900165193008
+      }
+    }
+  },
+  "scope": "bounded A-F estimator comparison; no organization experiment",
+  "seed_base": 20261014,
+  "source_sha256": {
+    "hls_lab_dynamic.py": "d6cbb568a9624884da7eeb7da080ffca737326d72359c087ebdc374e76449c70",
+    "runner": "ffd75371c586f7633cf73e860fb77f48dd7f3567d9b2152eeb7270dcfd6f0b47"
+  }
+}

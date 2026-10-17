@@ -1,0 +1,13 @@
+scenario,condition,distinct_estimate_paths,distinct_action_paths,distinct_ces_totals,learner_participation_min,learner_participation_max
+A_substitution_candidate,C00,10,1,1,24,24
+A_substitution_candidate,C01,10,1,1,24,24
+A_substitution_candidate,C10,10,1,1,23,23
+A_substitution_candidate,C11,10,1,1,23,23
+B_enabling_candidate,C00,10,1,1,0,0
+B_enabling_candidate,C01,10,1,1,0,0
+B_enabling_candidate,C10,10,1,1,23,23
+B_enabling_candidate,C11,10,1,1,23,23
+C_demand_change,C00,10,7,1,1,11
+C_demand_change,C01,10,1,1,12,12
+C_demand_change,C10,10,7,1,12,22
+C_demand_change,C11,10,1,1,23,23

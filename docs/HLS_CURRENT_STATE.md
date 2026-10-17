@@ -7,10 +7,581 @@ position of the HLS research programme.
 Frozen protocols, detailed derivations, executable code, and result artifacts
 remain authoritative for their own scope; this file does not replace them.
 
+## Consolidated laboratory status — 2026-10-17
+
+The published laboratory retains an operational HLS N×K / MIS-v2 route.
+Nembhard Direct is available with explicit feasible allocations,
+`nembhard_oracle`, and `nembhard_adaptive`. The contextual quality–cost router
+is an independent capability, not connected to the N×K runner. A versioned
+common experiment envelope adapts these route results with typed events,
+route-specific metrics, units, provenance fields, and stable JSON; it does not
+establish scientific comparability across mechanisms. System-1.x and Baccara
+remain deferred. HLS Laboratory remains **PARTIAL**.
+
+The final full suite after the estimator/resume repair completed with 1,512
+passed and the same 5 known historical integrity/inventory failures in 611.98 seconds.
+The five were `test_every_foundation_result_has_consistent_manifest` (12 result
+directories versus frozen count 11), `test_frozen_inputs_and_completed_artifacts`
+(Campaign 2 closure digest), `test_preexperiment_manifest_and_contamination_boundary`
+(frozen theory-source digest), `test_pre_execution_manifest_and_raw_integrity_when_present`
+(frozen `finite_problem_belief.py` input), and
+`test_source_hashes_and_raw_output_hashes` (strategy-gate source digest).
+These match the previously documented provenance/inventory failures; this
+task did not alter their manifests, hashes or artifacts. The reviewed Nembhard
+allocation protocol has a deterministic configuration registry, guarded
+execution CLI, common-contract result adapter, and post-run analysis in
+`src/hls/nembhard_campaign.py`. The registry contains 1,016 unique
+configurations after reuse of two identity diagnostics. HLS-E1 execution was
+started and interrupted; the campaign is not complete. A read-only audit found
+29 valid completed episodes and 987 pending episodes. These partial outputs
+are not scientific findings. The focused estimator/campaign/Nembhard/common-
+contract selection passed 74 tests; validation did not execute or resume the
+1,016-episode campaign (one isolated 120-period FIXED fixture ran only under a
+test temporary directory). Resume now validates all three result files and
+requires an explicit command/token. See the [runner record](engineering/HLS_NEMBHARD_CAMPAIGN_RUNNER.md),
+[execution plan](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md), and
+[history](HISTORY.md).
+
 The programme-level philosophy is defined in [HLS_PHILOSOPHY.md](HLS_PHILOSOPHY.md),
 and the common semantic contract is defined in [the HLS ontology](hls_ontology.md).
 
+## Current operational direction — 15 October 2026
+
+**Decision event:** 2026-10-15; exact decision time was not supplied.
+**Documented:** 2026-10-15 09:45 +02:00 (Europe/Madrid). See the dated entry
+in the [canonical project history](HISTORY.md).
+
+The PI and Chief Engineer approved prioritizing completion of **HLS Laboratory
+v1 as integrated experimental infrastructure**. The active milestone is
+**HLS-LAB-V1-INTEGRATED — APPROVED / IMPLEMENTATION PARTIAL**. An additive
+integrated teaching runner, P0/P1/P2 policies, a policy-independent exogenous
+problem-trajectory generator and focused acceptance tests now exist. The
+generator composes C5 demand processes with the existing dynamic problem
+emitter; problem trajectories are frozen before policy evaluation. Two
+authorized provenance validators were corrected: B2.3 now verifies the
+protocol blob at the run's recorded Git revision, and Campaign 2 preregistration
+checks source/artifact scope against its immutable freeze snapshot. The latest
+full suite (2026-10-16 18:23 +02:00) reports 1,337 passed and the same 5
+historical provenance/integrity failures: foundation inventory/B13 manifest,
+unavailable `finite_problem_belief.py` source evidence, and Campaign 2
+closure-document hashes. Provenance is not fully restored. See the
+[provenance diagnosis](engineering/HLS_PROVENANCE_FAILURE_DIAGNOSIS.md) and
+the dated [history entry](HISTORY.md).
+As of **2026-10-16 14:56 +02:00** (Europe/Madrid), the additive N×K path
+supports deterministic production-only episodes with dimension-independent
+P0 under frozen competencies and perfect information. It reuses Phase 1's
+validated geometry/catalogue, supports K-dimensional requirements and CES
+weights, and records production, functional outcomes and resource use without
+modifying the legacy simulator. Direct 3×2 comparisons match legacy P0
+decisions and episode metrics; the existing 64-production / 508-integrated
+catalogue and serialized P0/P1/P2 hash regressions remain covered. See the
+[N×K technical design and Phase 1–2 record](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md).
+N×K MIS-v2, learning, teaching, estimation, P1/P2 and environment emission
+remain unsupported; the full legacy 3×2 simulator remains operational. Phase
+1's 50-test validation and current Phase 2 validation (99 focused passes;
+full suite 1288 passed / 5 failed) are retained in `HISTORY.md`. The five
+known failures are unchanged repository provenance/integrity issues; no frozen
+expected hash or historical artifact was changed.
+
+**Current N×K status — 2026-10-16 15:50 +02:00 (Europe/Madrid):** Phase 3A
+adds MIS-v2 learning-by-doing to the N×K P0 episode runner. It reuses the
+unchanged scalar DISCOVER-v2 law, applies cell-specific eta values to the
+effort assigned in each period, and records output/reward from pre-learning
+competence before applying the transition for the next decision. Both MIS-OFF
+(Phase 2 contract) and MIS-ON are available. N×K episodes remain perfect
+information; teaching, estimation, P1/P2 and environment generation are not
+generalized. Validation: 87 focused tests passed; full suite 1303 passed and
+the same five historical provenance/integrity tests failed. A paired MIS
+OFF/ON regression verifies identical initial state, problem sequence and first
+period before any learning-induced divergence. Engineering timing
+and trace-memory measurements and the exact transition contract are in the
+[N×K geometry technical design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md).
+HLS Laboratory remains **PARTIAL**; this is a mechanism validation, not a
+scientific campaign.
+
+**Current N×K status — 2026-10-16 16:22 +02:00 (Europe/Madrid):** Phase 3B
+adds a dimension-independent directed teaching transition and explicit joint
+actions to the N×K episode runner. Teaching efficacy is an `N×N×K` relation
+tensor; teaching charges both participants and competes with production for
+the same collective budget. The explicit action path supports MIS OFF/ON ×
+teaching OFF/ON, preserving production → MIS-v2 → teaching order. It does not
+select teaching actions automatically and does not generalize P1/P2 or
+competence estimation. Historical 3×2 transition and episode checks match;
+the old paths remain untouched. Focused validation: 95 passed. Full suite:
+1320 passed, 5 failed in 479.80s; all five match the documented provenance
+baseline (foundation inventory count, Campaign 2 closure/source hashes,
+Campaign 3 frozen source hash, and strategy-gate source hash); no functional
+regressions appeared. Performance and equation details are recorded in the
+[N×K technical design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md).
+HLS Laboratory remains **PARTIAL**; no campaign was run.
+
+**Current N×K status — 2026-10-16 18:23 +02:00 (Europe/Madrid):** Phase 3C adds
+dimension-independent P0/P1/P2 coordination with one shared decision-view,
+memory and policy-parameter interface, and automatic joint production /
+teaching action selection to the N×K runner. P0 remains production-only. The
+historical lexicographic production ranking, P1 fixed directed relation, P2
+success-first/unseen-relation/efficacy-threshold rules, catalogue tie order,
+and production → MIS-v2 → teaching timing are retained. Joint actions enforce
+individual participant loads and the shared budget, with explicit
+`max_candidates` failure rather than truncation. Policy views contain problem
+requirements, current estimated competence (the required perfect-information
+condition), allowed feasible actions and observed efficacy memory, but no
+private efficacy tensor or organization configuration. P2's formative update
+uses the existing deterministic zero-noise observation case. Direct 3×2
+decision and outcome checks match the legacy policies under matched perfect
+information; the 64-production/508-integrated catalogues remain pinned. N=1
+supports P0; P1/P2 require a valid distinct-agent teaching relation and
+therefore cannot be instantiated for N=1. Competence estimation, imperfect
+information and noisy formative observations remain unsupported. Focused
+validation and engineering measurements are recorded in the [N×K technical
+design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md). No scientific
+campaign was run. Phase 3C focused validation passed 93 tests; the final full
+suite passed 1,337 in 475.44 seconds and retained the same five documented historical provenance /
+integrity failures. HLS Laboratory remains **PARTIAL**.
+
+**Current N×K status — 2026-10-16 19:10 +02:00 (Europe/Madrid):** Phase 3D
+adds explicit perfect- and imperfect-information execution modes. Imperfect
+mode reuses the historical finite-grid competence posterior, per-cell noisy
+production observations, MIS-v2 posterior prediction, and noisy formative
+efficacy observation; actual competence remains the production/transition
+state, estimates drive only policy views, and observation/latent diagnostics
+are not exposed to policies. The established runner remains unchanged when
+the new `information_mode` argument is omitted. Focused validation covered
+N×K dimensions and matched legacy 3×2 trajectories for P1/P2, MIS, teaching,
+both observation streams, posterior updates and efficacy memory; 86 focused /
+regression tests passed. The full suite had 1,357 passed and the same five
+documented provenance/integrity failures, with no new functional regression.
+Measurements and failure names are in the [N×K technical design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md)
+and dated [history](HISTORY.md). No campaign was run; HLS Laboratory remains
+**PARTIAL**.
+
+**Current N×K status — 2026-10-16 20:08 +02:00 (Europe/Madrid):** Phase 4
+adds K-dimensional demand emission using the existing C5 stationary (IID),
+time-indexed nonstationary and first-order Markov task processes. Each
+environment maps its latent task state to an independent finite catalogue of
+`ProblemSpecNK` types; problem-type count is not tied to K. Generated paths
+record the seed, configuration, sampled environment states/regime labels and
+emitted problem specifications. Environmental randomness is completed before
+organization execution and is separated from Phase 3D observation randomness.
+The N×K runner now accepts either its existing explicit problem sequence or an
+environment configuration plus seed; the generated path is then passed through
+the same runner. Fixed sequences therefore remain a supported experimental
+input, while stationarity remains a process property rather than a generator
+class. The existing 3×2 environment was matched on demand states, problem IDs,
+requirements, equal CES weights and budget. Focused environment and Phase 1–3D
+regressions passed 155 tests. Full suite: 1,390 passed and the same five
+documented provenance/integrity failures in 515.55 seconds; this full-suite run
+preceded two final controls for seed variation and replay across different
+organizations, which passed in the complete 155-test focused environment/C5/
+dynamic/Phase 1–3D selection. HLS Laboratory remains **PARTIAL**; this is
+infrastructure validation, not a scientific campaign. Details and local
+microbenchmarks are in the [N×K technical design](engineering/HLS_NK_GEOMETRY_TECHNICAL_DESIGN.md)
+and [history](HISTORY.md).
+
+**Current validation — 2026-10-16 20:22 +02:00 (Europe/Madrid):** Phase 5
+cross-validated complete generated-demand episodes across 1×1, 2×2, 3×2 and
+4×3, with all valid P0/P1/P2 × MIS × teaching × perfect/imperfect-information
+combinations. Independent trace checks cover production, CES, success,
+resources and ordered competence transitions. Fresh-process serialization
+matched. The focused HLS/Phase 1–4 regression selection passed 172 tests; the
+final full suite passed 1,396 and retained the same five provenance/integrity
+failures. Stage-level measurements identify exhaustive joint-action enumeration
+as the principal 4×3 bottleneck. No equations, historical results or campaigns
+changed. Recommendation: **CONDITIONALLY READY** for a bounded, preregistered
+study only if its harness archives a full run manifest, frozen demand and
+source/runtime metadata. See the [Phase 5 research-readiness review](engineering/HLS_RESEARCH_READINESS_REVIEW.md).
+HLS Laboratory remains **PARTIAL**, pending PI review.
+
+**Current mechanism status — 2026-10-17 11:46 +02:00 (Europe/Madrid):** Nembhard Direct v0.1 is now an
+explicit alternative execution branch in the N×K runner, alongside the
+unchanged default MIS-v2 path. It maintains a separate `D[N,K]` state and
+cell-specific `k,p,r`; caller-supplied feasible allocations produce output
+from beginning-of-period productivity, then update experience by `e*Δt`.
+This exposure mapping and the declared output/requirement-unit calibration
+are HLS adaptation conventions, not claims about the article's unresolved
+timing. The branch reuses existing task evaluation and effort/resource
+validation, requires an explicit unit contract, and records separate
+productivity/experience traces. It does not use HLS competence values and
+rejects P0/P1/P2, MIS-v2, teaching and estimation in this mode. Explicit
+`mechanism_id="mis_v2"` is byte-identical to the default in frozen and MIS-v2
+learning tests. See the [integration contract](engineering/HLS_EXTERNAL_MECHANISM_INTEGRATION_01.md).
+The final focused mechanism/N×K regression selection passed 222 tests,
+including generated-environment replay. No campaigns were run; HLS Laboratory
+remains **PARTIAL**.
+
+The ten-file minimum reproducible package is published on
+`feature/hls-laboratory-v1` at `37a011804f9ea013fc3a5436c00a72eb0b8280da`.
+The acceptance gate is therefore not closed. See the implementation record in
+[HLS Laboratory v1](experiments/HLS_LAB_V1.md). This changes the
+operational priority, not HLS's research questions or general scientific
+doctrine: HLS continues to ask **WHO SHOULD DO WHAT?** and **WHO SHOULD LEARN
+WHAT, HOW, AND FROM WHOM?** HLS concerns dynamic management of heterogeneous
+capabilities; it is not exclusively a worker-training simulator, and teaching
+is one possible competence-development action.
+
+**Nembhard routing status — 2026-10-17 11:58 +02:00 (Europe/Madrid):** The
+N×K runner now optionally supports `router_id="nembhard_oracle"` with
+`mechanism_id="nembhard_direct"`. This deterministic oracle uses the true
+Nembhard experience/profile state, enumerates resource-feasible actions, and
+shares the exact P0 functional lexicographic rank (success, normalized
+deficit, margin, effort); it predicts only current-period output and breaks
+ties by existing catalogue order. A competence-free resource view keeps HLS
+competence out of this policy interface. The trace records the selected
+catalogue action and predicted output for comparison with execution. This is
+an information-perfect baseline, not a learned router or MixLLM reproduction;
+future-learning value is not optimized. Focused Nembhard and N×K regressions:
+166 passed. MIS-v2 default/explicit equivalence tests remain passing. No full
+suite or campaign was run. The next planned step is a router based on
+productivity estimates. HLS Laboratory remains **PARTIAL**; details are in the
+[oracle-router contract](engineering/HLS_NEMBHARD_ORACLE_ROUTER.md) and the
+[execution plan](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md).
+
+**Nembhard adaptive-router status — 2026-10-17 12:17 +02:00 (Europe/Madrid):**
+The N×K Nembhard route now also supports `router_id="nembhard_adaptive"`.
+It uses a per-cell online running mean and Welford dispersion from configurable
+individual work-output observations; negative observed rates are clipped to
+zero, zero-work cells are unobserved, and a minimum-work threshold avoids
+unstable division. The estimate-based selector shares the existing P0
+functional/effort rank and catalogue tie-breaking. Optional epsilon-greedy
+exploration uses a separate seed from observation noise. Its decision view
+contains no true `k,p,r`, productivity, or HLS competence; decision-visible
+experience is reconstructed only from allocations executed in this run. The
+runner executes true Nembhard production, then observes/updates the estimator
+for subsequent decisions, with experience likewise available to next-period
+production. Per-period traces distinguish predictions, observations,
+estimator state and diagnostic truth. The default MIS-v2 path, historical
+P0/P1/P2 and ORACLE route are unchanged. Final focused Nembhard selection: 48
+passed; full N×K/Nembhard selection: 180 passed. Full suite: 1,458 passed and
+5 failed in 633.87s; the failures are the known foundation inventory,
+Campaign 2 closure/theory digests, Campaign 3 frozen source, and strategy-gate
+source integrity checks. One additional focused test was added and passed
+after that suite run. No campaign was run. See the
+[adaptive-router contract](engineering/HLS_NEMBHARD_ADAPTIVE_ROUTER.md) and
+the updated [execution plan](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md).
+No historical evidence or PDFs were altered; HLS Laboratory remains
+**PARTIAL**.
+
+**Contextual quality–cost router status — 2026-10-17 (Europe/Madrid):** HLS
+now has a separate, bounded contextual-routing implementation in
+`src/hls/contextual_router.py` and a local synthetic execution environment in
+`src/hls/contextual_router_synthetic.py`. It predicts per-candidate quality
+and simulated monetary cost with separate ridge regressions, selects by the
+approved quality-threshold/minimum-predicted-cost rule (with its maximum-
+quality fallback), and updates only from feedback of the candidate actually
+executed. Optional seeded epsilon exploration is off by default. Traces and
+descriptive summaries keep observed quality, cost, and budget compliance
+separate. This is an independent contextual query-router capability, not a
+mapping onto agents or `ProblemSpecNK`, not a MixLLM reproduction, and not
+evidence of scientific benefit. Real-domain schema, priors, evaluator and
+accounting remain caller responsibilities. Focused validation: 17 passed;
+related N×K regressions: 162 passed; full suite: 1,476 passed and the same 5
+known provenance/integrity failures in 595.25s. No campaign was run. MIS-v2,
+Nembhard, P0/P1/P2, and historical results were not changed. See the
+[implementation note](engineering/HLS_MIXLLM_ROUTER_IMPLEMENTATION.md) and
+[normative v0.1 contract](engineering/HLS_MIXLLM_ROUTER_CONTRACT.md). HLS
+Laboratory remains **PARTIAL**.
+
+**Common experiment-envelope status — 2026-10-17:**
+`src/hls/experiment_contract.py` now adapts existing N×K/MIS-v2, Nembhard
+Direct and contextual-router results into the versioned
+`hls-experiment-run/1.0` record. It adds ordered events, explicitly named
+units, separate route-specific metrics, optional provenance, and stable JSON
+without changing source result objects or native serializers. 11 contract
+tests passed, with 184 combined focused adapter and route regressions. The
+envelope is post-execution only: it does not supply a shared runner, infer
+missing seeds/configuration, convert metrics, or establish cross-route
+scientific comparability. See the [common experiment contract](engineering/HLS_COMMON_EXPERIMENT_CONTRACT.md).
+HLS Laboratory remains **PARTIAL**.
+
+Work is separated into two levels. **Infrastructure (first):** functional
+completeness, coherent states/transitions, shared-resource constraints,
+real/observed-state separation, reproducibility, policy comparability, and
+replaceable mechanisms. **Scientific research (subsequently):** theory,
+literature review, hypotheses, baselines, experiments, statistical analysis,
+and publishable claims. Simple infrastructure mechanisms need not be optimal
+or empirically definitive, but must remain causally coherent, reproducible,
+and verifiable; this priority does not relax scientific rigor.
+
+The approved implementation is one milestone, organized as B1 joint actions
+and shared resources; B2 teaching transition; B3 observations and elementary
+estimation; B4 minimal adaptive policy; B5 integrated multi-period execution;
+and B6 tests and reproducible demonstration. Teaching must consume resources
+that could otherwise support production; individual learning and teaching
+remain distinct; policies must not receive private simulator state; teaching
+may help or hurt and may be declined; and disabling new mechanisms must
+preserve historical behavior under an explicit compatibility contract.
+Small collectives, two competence dimensions, short horizons, fixed but
+heterogeneous teaching efficacy, configurable observation noise, elementary
+estimators, and heuristic policies are permitted as explicit replaceable
+simplifications—not as empirically validated models.
+
+The active next action is to resolve or formally disposition the unrelated
+full-suite integrity failures and close remaining acceptance gaps against
+[HLS Laboratory v1](experiments/HLS_LAB_V1.md). Until this milestone is
+verified, development is limited to its acceptance needs; no
+separate audit phase or new status/roadmap document is authorized. Previous
+recommendations to prioritize a narrower research line are historical and
+superseded as the immediate operational priority, not erased as evidence of
+the project's evolution. The dated history is the chronology authority; this
+file records the current status rather than duplicating that chronology.
+
+### Campaign 2 sensitivity audit — 16 October 2026
+
+The read-only [experimental sensitivity audit](experiments/HLS_EXPERIMENTAL_SENSITIVITY_AUDIT.md)
+verified why Campaign 2's ten noisy replicates per scenario have identical
+CES: indexed noise changes observations and estimates, but not outcome-relevant
+P0 choices in A/B; the action-path changes in C are output-equivalent ties.
+All scenario/condition cells have one demand path, one true-competence path,
+one CES trajectory and one success trajectory. P0's score boundaries,
+success saturation, capability frontiers, source-to-outcome dependency map,
+and causal-identifiability limits are documented against the published traces
+and code. The audit reran 16 focused Campaign 2 tests successfully and
+verified all eight source and six frozen output hashes. It did not rerun the full repository
+suite; the known 13 provenance/integrity failures remain unresolved. This
+diagnostic does not change the laboratory's **PARTIAL** status or authorize a
+new campaign.
+
+### Minimal theoretical model — 16 October 2026
+
+The domain-independent [minimal HLS theoretical model](theory/HLS_MINIMAL_THEORETICAL_MODEL.md)
+now states the common finite-horizon, partially observed assignment and
+development problem, including multiple pending tasks and shared resources.
+It derives conditional comparisons for current-best versus learning-oriented
+assignment, teaching versus learning-by-doing, same-skill substitution versus
+assignment-mediated complementarity, and a narrow greedy concentration case.
+These are model-scoped results, not novelty claims or empirical findings. The
+document maps each quantity to the existing simulator and records gaps,
+including the absence of general multi-task queueing and of an objective that
+values CES and resource use in a common unit. No code or experiment changed;
+the lab remains **PARTIAL**.
+
+### Authorized scientific pilot — 15 October 2026
+
+The CE authorized and completed a bounded **Scientific Campaign 1 pilot** on
+exploitation versus teaching/capability development. The protocol covers 16
+predeclared demand × initial-deficit × teaching-effectiveness × horizon cells,
+10 paired seeds per cell, four policy conditions, and a matched individual
+MIS-v2 learning ON/OFF block (1,280 policy runs). Results and machine-readable
+traces are in `results/experiments/hls_campaign1_pilot/`; the runner is
+`experiments/synthetic/hls_campaign1/run.py`.
+
+The validated run completed 2026-10-15 10:22:04 +02:00 (Europe/Madrid), using
+10 non-overlapping seeds (`2026101511`–`2026101520`) per cell, a common
+PARTIAL_STATIC prior (0.40 for each skill), and a shared budget of 2.0. P0
+production-only had higher CES than P1 in 320/320 paired comparisons. Against
+P2, P0 was higher in 241/320, lower in 37/320, and tied in 42/320; against
+the scheduled no-feedback control it was higher in 258/320, lower in 20/320,
+and tied in 42/320. P2 nevertheless outperformed P0 on both CES and success
+in high-deficit/high-efficacy/long-horizon cells with individual learning
+OFF: ΔCES +0.313 (SD 0.194) and
+Δsuccess +0.483 (SD 0.074) under stationary demand; ΔCES +0.380 (SD 0.107)
+and Δsuccess +0.537 (SD 0.105) under changing demand. These advantages did
+not appear with individual learning ON. P2 outperformed the no-feedback
+teaching schedule in some matched cells, while P1 fixed teaching was
+consistently harmful. P2 declined to teach in 4,497/5,120 episodes. These are
+bounded pilot observations, with ten-seed descriptive variability only—not
+population inference or a general claim that teaching is beneficial.
+
+Three earlier executions were excluded and retained as invalid-attempt
+manifests: one exposed an experimenter-only regime label; one initialized
+estimated skills from private truth; and one used budget 1.0, which made all
+teaching-period production zero because the frozen action catalogue's
+minimum positive productive allocation costs 1.0 and a lesson consumes 0.5.
+The final budget 2.0 was selected by that action-granularity check, not by
+policy outcomes, and a fresh seed namespace was used. The final policy input
+contains only the generic observed label and a shared PARTIAL_STATIC estimate.
+Non-applicable CSV metrics are explicitly encoded as `NA`.
+
+One remaining resource limitation is that frozen production actions have
+integer total effort: a teaching period consumes 0.5 units and leaves 1.5
+available, but at most one full productive unit can be assigned; without
+teaching, two units can be productive. Thus the realized production
+opportunity cost is shaped by the existing action granularity, not just the
+0.5 teaching charge.
+
+This scientific pilot does not close `HLS-LAB-V1-INTEGRATED`, change its
+acceptance status, or resolve the previously recorded 13 full-suite
+integrity/provenance failures. See the dated [history entry](HISTORY.md) and
+the manifest for protocol, source, seed, and artifact hashes.
+
+The consolidated evidence across the pilot, mechanism diagnostics,
+counterfactual teaching analysis, and behavioral-plausibility checks is in
+[HLS Campaign 1 findings](experiments/HLS_CAMPAIGN1_FINDINGS.md). It preserves
+the conditional positive and negative cases, the resource/action-granularity
+limitation, and the distinction between verified behavior and the open
+teaching × learning-by-doing hypothesis. No new campaign was run for that
+synthesis; the laboratory remains **PARTIAL**.
+
+### Campaign 1 mechanism diagnostics — 15 October 2026
+
+Diagnostic analysis timestamp: 2026-10-15 14:28:17 +02:00 (Europe/Madrid).
+
+The published pilot traces were analyzed without rerunning its 1,280 runs.
+The paired P2−P0 CES contrast averaged −0.241 (between-seed SD 0.181) with
+MIS-v2 ON and −0.126 (SD 0.246) with MIS-v2 OFF. The descriptive difference
+in differences, `Delta_ON − Delta_OFF`, was −0.115 (SD 0.196; 160
+configuration-seed pairs: 28 positive, 112 negative, 20 ties). This is an
+in-simulator factorial interaction, not a population-level or mechanism-share
+estimate.
+
+Across the 320 P2/P0 trajectories, 278 experienced a negative cumulative CES
+difference during a run in which P2 taught. Thirty-nine later crossed back to
+nonnegative cumulative difference; 239 never did. At the end, P2 was ahead in
+37, behind in 241, and tied in 42. The 42 P2 trajectories with no teaching
+were ties. In the high-deficit/high-efficacy/long-horizon cells, every
+first-teaching episode had lower same-period CES than P0. With MIS OFF all 20
+such trajectories later crossed break-even and ended ahead (mean crossing
+period 8.2 after changing demand, 17.3 under stationary demand). With MIS ON,
+only 4/20 crossed after the teaching-associated negative path; 3/20 ended
+ahead, so a crossing did not always persist.
+
+Resource accounting was recoverable directly: each lesson used 0.5 total
+participant effort, and all 7,422 logged teaching episodes paired with 1.0
+production effort versus P0's 2.0, leaving 0.5 budget unused because of the
+discrete action catalogue. Across 320 run blocks per policy, P1 taught 5,120
+times, P2 623 times, and the scheduled no-feedback control 1,679 times.
+Exact per-event `teaching_gain_real` was absent from the published CSV, so
+876 teaching-containing policy/seed blocks were deterministically replayed;
+actions, CES, resources, and real-competence trajectories matched the frozen
+records. The replay recovered 7,422 direct teaching increments. These are
+simulator-private diagnostics, not policy observations. The original CSV's
+net competence change cannot by itself separate MIS-v2 from teaching when LI
+is ON.
+
+The analysis and provenance are in
+`results/diagnostics/hls_campaign1_mechanism_diagnostics/`, generated by
+`experiments/synthetic/hls_campaign1/analyze_mechanisms.py`. The P2−P0 contrast
+is a total policy-package comparison. The MIS ON/OFF difference-in-differences
+isolates the interaction of that toggle with the policy contrast only within
+this simulator and fixed design. P2 versus scheduled no-feedback does not
+isolate organizational information: their teaching choices/exposures differ.
+Teaching effort and residual capacity are exact; translating them into
+productive value is limited by action granularity. All seed summaries remain
+descriptive, without significance tests or population inference. The pilot's
+production-choice score remains functional success/deficit/margin/effort,
+not CES.
+
+Among recorded teaching events, mean direct competence increment was 0.0352
+for P1 at high efficacy and 0.0103 at low efficacy; P2's selected events
+averaged 0.1024/0.0131 with MIS OFF and 0.1014/0.0128 with MIS ON (high/low
+efficacy). These per-event summaries are conditional on each policy's
+selection and state trajectory, and are not comparable efficacy estimates.
+The reproducible command is
+`PYTHONPATH=.:src python experiments/synthetic/hls_campaign1/analyze_mechanisms.py`.
+
+### Campaign 1 counterfactual teaching value — 15 October 2026
+
+At 2026-10-15 15:34:12 +02:00, a bounded, state-conditional intervention
+analysis completed from the published pilot. Its prespecified sample is the
+full long-horizon grid of demand (stationary/changing), initial deficit
+(low/high), efficacy (0.10/0.85), MIS (OFF/ON), and intervention timing
+(period 2/16), with the first published seed `2026101511`: 32 states. Each
+state compared the existing directed relations `(2,1,1)` and `(0,1,0)`, for
+64 paired remaining-horizon branches. States were not outcome-selected.
+
+The continuation rule was the same existing P2 in both branches. The
+no-teaching intervention used P0's observable, production-only action; the
+teaching intervention used the best feasible production allocation for the
+specified relation under the same observable decision score. Thus this is a
+conditional intervention contrast, not an optimal policy comparison. In all
+64 initial pairs, the lesson used 0.5 effort, displaced 1.0 productive effort,
+and left 0.5 of the shared budget unused under the frozen action granularity.
+Immediate CES difference averaged −0.142 (SD 0.103). Remaining-horizon
+`DeltaV_H` averaged −0.074 (SD 0.181; range −0.370 to +0.565): 19 positive
+and 45 negative cases. Early interventions (22 decisions remaining) averaged
++0.033 (SD 0.186; 19 positive, 13 negative); late interventions (8 remaining)
+averaged −0.181 (SD 0.093; all 32 negative). These are one-seed-per-stratum
+descriptive simulator outcomes, not population estimates.
+
+At selected states, P2 chose no teaching in 22/32 and the `(0,1,0)` relation
+in 10/32. Against the tested candidate-specific counterfactual values, its
+choices classified as 17 no-teaching decisions with no positive tested
+candidate, 5 missed positive opportunities, 4 selected positive teaching
+cases, and 6 harmful selected teaching cases. These labels are conditional
+diagnostics, not policy regret against an oracle. The full posterior was not
+saved in the pilot CSV; deterministic prefix replay reconstructed it and
+matched the frozen pilot trace before branching. Results and hashes are in
+`results/diagnostics/hls_campaign1_counterfactual_teaching_value/`; code and
+focused tests are `experiments/synthetic/hls_campaign1/counterfactual_teaching.py`
+and `tests/test_hls_campaign1_counterfactual_teaching.py`. The test command
+is `PYTHONPATH=src:. pytest -q tests/test_hls_lab_v1_integrated.py tests/test_hls_campaign1_pilot.py tests/test_hls_campaign1_mechanism_diagnostics.py tests/test_hls_campaign1_counterfactual_teaching.py`;
+the trace manifest records the run command and hashes. This estimate is
+conditional on the selected state, specified event, P2 continuation, frozen
+exogenous suffix, and common indexed innovations; it is not globally optimal
+teaching value.
+
+### Campaign 2: teaching × MIS × work assignment — 15 October 2026
+
+The CE-authorized bounded experiment completed at **2026-10-15 20:39:04 +02:00**,
+with this record updated **2026-10-15 20:44 +02:00** (Europe/Madrid).
+Three prespecified scenarios each used one deterministic and ten noisy
+matched teaching ON/OFF × MIS ON/OFF quadruples, plus a zero-efficacy control:
+34 quadruples, 136 runs, 3,264 decisions. All branches used the same P0
+production-only continuation after one forced period-0 lesson.
+
+The CES interaction `(R11−R01)−(R10−R00)` was −1.092473 when the learner
+already participated, +1.561953 when teaching changed its preferred
+productive assignment, and +0.339151 after an exogenous demand switch.
+The latter two scenarios opened respectively 23 and 11 subsequent learner
+target-skill exposures; the first left subsequent assignments unchanged.
+These are conditional model results, not identified causal mediation.
+No-teaching functional success was 24/24; teaching was 23/24 even where
+cumulative CES improved. All ten noise seeds per scenario had the same CES
+totals despite distinct estimates and some different equally productive
+assignments; collapsed bootstrap intervals do not establish zero uncertainty.
+
+See [Campaign 2 findings](experiments/HLS_CAMPAIGN2_FINDINGS.md) for the
+registered rationale, four-condition outcomes, direct/MIS gains, negative
+controls, full traces, source hashes and reproduction commands. Results are
+isolated in `results/experiments/hls_campaign2_teaching_mis_assignment/`.
+Sixteen new tests plus 107 relevant regressions passed. The full suite was
+not rerun; the 13 historical provenance/integrity failures remain and
+`HLS-LAB-V1-INTEGRATED` stays **PARTIAL**. No laboratory physics or policy
+was changed; Campaign 1 findings remain intact.
+
 ## Current empirical status — 13 October 2026
+
+### Behavioral plausibility validation — 15 October 2026
+
+Validation run: **2026-10-15 17:42:56 +02:00** (final reproducible artifact
+generation); status recorded at **17:43 +02:00** (Europe/Madrid).
+
+Small deterministic checks were added in `tests/test_hls_behavioral_plausibility.py`
+and run with `experiments/synthetic/hls_lab_v1/behavioral_plausibility.py`.
+They exercise existing production, resource, MIS-v2, teaching and exogenous
+environment mechanisms; they do not modify their physics or constitute a
+campaign. Production is additive (`Y_k=Σ_i x_ik s_ik`), so specialization and
+multidisciplinary complementarity here mean relevance to explicit functional
+requirements, not superadditive agent interaction. The discrete production
+catalogue intentionally permits total production effort only in integer
+steps. In the reproduced budget-2 teaching example, a 0.5 participant-effort
+lesson leaves 1.5 budget, but the catalogue allows only 1.0 productive effort;
+the residual 0.5 is stranded and 1.0 productive effort is displaced versus
+the no-teaching maximum. No global divisible-allocation control was added.
+
+The deterministic paired intervention fixtures use a fixed requirement of
+1.0 on the active skill (the deficit team's two-unit skill-0 frontier is 1.15),
+the same P0 continuation, and organizational updates from observations. Their
+remaining-horizon CES differences were: adequate team −0.4002 (24 periods;
+P2 independently declined teaching); persistent deficit/effective early
+teaching +0.8825 (24); short horizon −0.3575 (8); weak efficacy −0.9000 (24);
+learning-by-doing ON +2.4445 (24); regime change −0.0475 (24). The positive
+long-horizon result crosses cumulative break-even at period 12; the learning-
+by-doing case crosses at period 10. These are conditional deterministic
+mechanism checks, not estimates of policy superiority. In this fixture,
+learning-by-doing increased rather than reduced the intervention's measured
+increment; no universal marginal-substitution claim follows. The full result
+and source/output hashes are in
+`results/diagnostics/hls_behavioral_plausibility/`.
+
+Focused plausibility plus v1/CE-24/CE-25 tests: **54 passed**; DISCOVER-v0,
+MIS-v2, dynamic laboratory and published Campaign 1 regression tests:
+**56 passed**. The full repository suite was not rerun; its last recorded
+result remains 1,189 passed / 13 provenance-integrity failures. No historical
+hashes or results were changed. MIS-v2's existing eta domain excludes eta=0;
+the zero-learning control is its supported `enabled=False` condition, not a
+new per-cell zero-rate parameter. The HLS Laboratory milestone remains
+**PARTIAL** pending its previously recorded full-suite provenance disposition.
 
 This dated status block supplements the broader programme and foundational
 discussion below. Campaign 3 is a completed, scoped finite-problem study; it
@@ -718,12 +1289,14 @@ organization/development.
 
 ## 13. Current implementation boundary
 
-**Scope note (13 October 2026):** this section records the separate
-programme-level minimal-reference-system track. It is not a status inventory
+**Historical scope note (13 October 2026; priority superseded 15 October
+2026):** this section records the separate programme-level
+minimal-reference-system track as it stood then. It is not a status inventory
 of all later campaign-specific laboratories. Campaign 2/3 finite-problem
-experiments and Campaign 4 preparation are summarized in the dated status
-block above and do not, by themselves, close the general HLS reference-system
-requirements in this section.
+experiments and Campaign 4 preparation did not, by themselves, close the
+general HLS reference-system requirements. The active operational response is
+now the approved HLS-LAB-V1-INTEGRATED milestone above; this does not
+retroactively change the historical scope or evidence below.
 
 The next work is **not** another parameter sweep or an extension of the
 existing RQ0 synthetic campaign.  The minimum reference scenario has been
@@ -813,12 +1386,17 @@ empirical relevance:         NOT ESTABLISHED
 
 Those results are retained.
 
-The outstanding broader programme-level priority remains to operationalize
-and validate the documented minimal HLS reference scenario with explicit
-organization, limitations, constraints, performance, experience, learning,
-and competence evolution, grounded in the T0--T6 baseline, existing theory,
-and the HLS ontology. This is an open programme direction, not an
-authorization for a new experiment in the current task.
+The following records the priority as stated in the 13 October 2026 status
+snapshot; it is **historical and superseded as the immediate operational
+priority** by the 15 October approval to complete HLS Laboratory v1. Its
+scientific motivation remains relevant, but implementation now follows the
+bounded B1–B6 scope in [the v1 reference](experiments/HLS_LAB_V1.md).
+
+The then-outstanding direction was to operationalize and validate the
+documented minimal HLS reference scenario with explicit organization,
+limitations, constraints, performance, experience, learning, and competence
+evolution, grounded in the T0--T6 baseline, existing theory, and the HLS
+ontology. That dated text was not authorization for an experiment.
 
 This is not a rejection of RQ0 or of the existing synthetic work. It is a
 change in scientific hierarchy:
@@ -874,3 +1452,129 @@ them to define HLS itself.
   [RQ0_ROUTING_OPPORTUNITY_COUPLING_PROTOCOL.md](experimental_foundations/RQ0_ROUTING_OPPORTUNITY_COUPLING_PROTOCOL.md)
 - Executable synthetic gates:
   [experiments/synthetic](../experiments/synthetic/)
+
+### Experimental-validity diagnostics — 16 October 2026
+
+Recorded at **2026-10-16 10:15 +02:00** (Europe/Madrid). A predeclared,
+deterministic instrument suite passed eight checks covering equivalence,
+competence response, the enumerated 1.15 feasibility frontier, assignment
+sensitivity, isolated MIS-v2, resource accounting, zero teaching efficacy,
+and matched P0/P1/P2 inputs. Focused integrated/environment/plausibility
+tests passed (26). Results and hashes are in
+[the validity assessment](experiments/HLS_LABORATORY_VALIDITY_ASSESSMENT.md)
+and `results/diagnostics/hls_laboratory_validity_assessment/`.
+
+This verifies internal behaviors only. P0/P1/P2 remain bundled strategy
+comparisons; CES is gross, costs are separate, and equal budgets do not ensure
+equal use. The laboratory still lacks an agreed comparison estimand and
+external calibration for broad architecture or policy superiority claims.
+No campaign was run; the integrated laboratory remains **PARTIAL** and new
+scientific campaigns remain on hold pending the outcome-contract decision.
+
+### First scientific campaign design — 16 October 2026
+
+Recorded at **2026-10-16 10:29 +02:00** (Europe/Madrid). The proposed first
+scientific question is the interaction between matched aggregate competence
+distribution and temporal demand structure, with the existing P0 policy held
+fixed and MIS-v2 as a matched ON/OFF mechanism block. The design reuses the
+three-agent/two-skill model, C5 IID/Markov demand and frontier-enumerated
+scenarios; no simulator changes or campaign execution are authorized. The
+proposal is **GO for preflight/registration, HOLD for execution** pending
+preflight, an approved minimum meaningful CES effect (or estimation-only
+decision), and a novelty check. See
+[HLS first scientific campaign design](experiments/HLS_FIRST_SCIENTIFIC_CAMPAIGN_DESIGN.md).
+
+### Q1 campaign preflight — 16 October 2026
+
+Recorded at **2026-10-16 10:45 +02:00** (Europe/Madrid). The registered
+architecture match, C5 IID/Markov process, frontier controls, outcome/resource
+instrumentation, MIS-v2 toggles and reproducibility checks passed. However,
+the preregistered primary estimand (architecture effect under Markov minus
+architecture effect under IID, near-boundary, MIS OFF) was structurally
+insensitive to temporal persistence: the matched architecture effect was
+`+2.4` cumulative gross CES in every diagnostic path, and the one-period
+effect was `+.1` for each of the three task types. With common stationary task
+marginals and no material state transition in that block, the expected
+moderation is zero. Therefore the 960-run campaign is **NO-GO as registered**;
+the registered MIS-ON secondary is not promoted after observing results. No
+main campaign was run. The diagnostic runner, preregistration hashes and
+machine-readable evidence are in
+[HLS Q1 preflight](experiments/HLS_Q1_PREFLIGHT.md) and
+`results/diagnostics/hls_q1_preflight/`. The laboratory remains **PARTIAL**;
+the 13 known repository integrity/provenance failures were not rerun or
+modified. Chronology: [HISTORY.md](HISTORY.md).
+
+### Q1-R analytical verification — 16 October 2026
+
+Recorded at **2026-10-16 11:05:36 +02:00** (Europe/Madrid). An exact
+two-period enumeration through the current P0/MIS-v2 integrated runner
+established a conditional stationary-marginal result: with fixed competence,
+memoryless task-specific decisions, per-period reset resources, and stationary
+initialization, IID and Markov demand have equal expected cumulative CES, so
+the architecture × persistence interaction is zero. A minimal current-HLS
+construction with the registered matched competence matrices, two equally
+likely skill-specific demands, budget 2, cap 1, and η=.10 gives
+Θ(MIS OFF)=0 and Θ(MIS ON)=−.003 CES over two periods. The negative
+interaction arises because persistent repetition reuses an already exposed
+skill with architecture-dependent remaining MIS headroom; it is a model-bound
+existence result, not evidence of general advantage. The registered Q1
+24-period MIS-OFF primary remains structurally null and **NO-GO as registered**;
+campaign design/execution remain on HOLD. Details and exact reproducible
+checks: [Q1-R analytical verification](theory/HLS_Q1R_ANALYTICAL_VERIFICATION.md)
+and `tests/test_hls_q1r_analytical.py`. HLS Laboratory remains **PARTIAL**.
+
+### Research laboratory framework — 16 October 2026
+
+Recorded at **2026-10-16 11:15:38 +02:00** (Europe/Madrid). The new
+[HLS Laboratory Research Framework](HLS_LABORATORY_RESEARCH_FRAMEWORK.md)
+consolidates five separable components—organization, decision policies,
+learning mechanisms, exogenous environment, and evaluation—and maps them to
+the executable code and bounded campaign evidence. Current experimental
+support is strongest for paired exogenous paths, deterministic mechanism
+controls and the fixed 3-agent × 2-skill model; architecture/policy/mechanism
+comparisons remain partial where their factors are bundled or interfaces are
+hard-coded. The primary structural ceiling is fixed agent/skill/action
+geometry; concurrent-task coordination and latent-demand inference are not
+implemented. The proposed first implementation, subject to separate
+authorization, is bounded n-agent/k-skill state/action generalization with
+an exact 3×2 compatibility gate. No code or scientific campaign was run for
+this framework. Historical registrations and results remain unchanged; the
+laboratory remains **PARTIAL**.
+
+### Phase 5A scientific model dossier — 16 October 2026
+
+Recorded at **2026-10-16 20:59 +02:00** (Europe/Madrid), against audited
+source commit `e8e115030e064df23f07f1b5824264f97513099a`. The
+[scientific model dossier](engineering/HLS_SCIENTIFIC_MODEL_DOSSIER.md)
+extracts production/CES, MIS-v2, teaching, policy, observation/estimation,
+resource and demand equations; maps constructs and mathematical properties;
+and links historical G1/G2/MIS/G3-H/RQ0 and Campaign 1–2 evidence. A four-period
+diagnostic reference trace (script and JSON) was replayed exactly and exercises
+production, MIS-v2, P2-directed teaching, imperfect observations, competence
+posterior updates, efficacy memory and resource accounting. This validates
+trace reproducibility, not empirical validity. The dossier records an
+unresolved equation-lineage distinction: the G3/MIS reference's
+`s + eta*(1-s)^2` law is not identical to current DISCOVER-v2 MIS-v2 at unit
+effort, `s + eta*(1-s)`. It also identifies that the 11:14 research framework
+describes the pre-Phase-1 fixed 3×2 implementation; later N×K addenda and
+current code supersede that dated capability map. No scientific source,
+historical artifact, or expected hash was changed. Focused HLS/Phase 1–5
+checks: 161 passed. Final full suite on the current worktree: 1,397 passed,
+5 failed in 634.58s; the five failures are the same known provenance/integrity
+checks (foundation result inventory, Campaign 2 closure/source digests, and
+Campaign 3 / strategy-gate frozen source digests). No failure implicates the
+scientific mechanisms audited here. HLS Laboratory remains **PARTIAL**.
+
+### G3 / MIS-v2 learning-law reconciliation — 16 October 2026
+
+Recorded at **2026-10-16 21:09 +02:00** (Europe/Madrid). The former open
+lineage question in the Phase 5A dossier is resolved: the historical quadratic
+law `min(1, c + α·e·(1−c)²)` and exponential MIS-v2 law
+`1 − (1−c)(1−η)^e` are distinct models, with no fixed parameter conversion
+valid across states and effort. MIS-v2 remains the N×K laboratory reference;
+the quadratic formulation remains in the original MIS scenario,
+DISCOVER-v0, G3 and G3-H. The dossier now specifies that every experimental
+configuration identify the law, equation, exposure convention and parameters.
+This addendum clarifies the 20:59 Phase 5A record without rewriting it or the
+historical G3 ground truth. No code, equation, parameter or result changed;
+HLS Laboratory remains **PARTIAL**.
