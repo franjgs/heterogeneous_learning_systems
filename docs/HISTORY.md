@@ -1271,3 +1271,23 @@ campaign was run. The 24 focused tests passed. Full N×K regression validation
 passed 184 tests; `git diff --check` passed. The legacy MIS-v2 and N×K
 production/policy/transition modules have no changes from this intervention.
 HLS Laboratory remains **PARTIAL**.
+
+### 2026-10-17 11:46 +02:00 — Nembhard Direct v0.1 N×K integration
+
+**Authority:** CE integration task. Added an explicit `mechanism_id` selector
+to the existing N×K runner. Its default and explicit `mis_v2` choices use the
+same legacy execution path; byte-serialized equality is tested for frozen and
+MIS-v2 learning episodes. The opt-in `nembhard_direct` branch stores a
+separate `D[N,K]` experience state and cell-specific `k,p,r`, uses explicit
+feasible allocations, evaluates production from beginning-of-period
+productivity, then advances `D` by `e*delta_t`. It reuses existing task
+functional/CES evaluation only behind an explicit output/requirement-unit
+contract. Existing budgets constrain effort intensity per period; effective
+work exposure is traced separately. HLS competence fields are not read by
+this branch. P0/P1/P2, MIS-v2, teaching and competence estimation are rejected
+in Nembhard mode; no new policy or campaign was introduced.
+
+The focused scalar-mechanism and N×K/HLS regression selection passed **222
+tests**. `git diff --check` passed. No historical results or PDFs were
+changed, and MIS-v2/P0/P1/P2 source semantics remain unchanged. The full suite
+was not run. HLS Laboratory remains **PARTIAL**.

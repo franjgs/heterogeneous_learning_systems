@@ -6,6 +6,16 @@
 
 ## 1. Purpose and boundary
 
+**Implementation status addendum (2026-10-17):** the design-only status above
+records the decision at the time v0.1 was drafted. A subsequent CE
+authorization approved a narrowly scoped HLS N×K adaptation of the direct
+curve only. It is implemented and documented in
+[`HLS_EXTERNAL_MECHANISM_INTEGRATION_01.md`](../../engineering/HLS_EXTERNAL_MECHANISM_INTEGRATION_01.md).
+That authorization does not change v0.1's source-fidelity limits: the
+adaptation's effort-to-exposure and beginning-of-period output conventions
+are HLS decisions, not a full source-model reproduction. Indirect transfer,
+grouping and source production timing remain excluded or unresolved.
+
 Define the **smallest reversible seam** for independently testing an external *experience-to-productivity* law while preserving the existing N×K MIS-v2 path and its semantics. The first candidate is Nembhard & Bentefouet's **direct-experience curve only**. Do not implement peer transfer, workforce selection, grouping, serial production, a universal plugin framework, or a cross-paper comparison under this contract.
 
 The contract must support three independent claims, never conflated: (A) source equation correctly evaluated; (B) source experiments reproduced; (C) an explicitly adapted HLS comparison performed. v0.1 aims only to specify (A) and the prerequisites for (C), not to assert (B).

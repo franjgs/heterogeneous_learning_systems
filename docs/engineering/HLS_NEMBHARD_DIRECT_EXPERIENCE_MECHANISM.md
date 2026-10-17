@@ -78,11 +78,12 @@ step = evaluate_direct_exposure(6.0, 2.0, parameters)
 This is the **Nembhard-inspired direct-experience productivity mechanism**.
 It is deliberately independent of MIS-v2, whose exponential competence
 transition is a distinct model. It does not update HLS competence, determine
-how task effort maps to experience, represent indirect learning, or alter
-production/assignment decisions. Those mappings require a separately
-specified integration contract and are not implemented here. No campaign was
-run and no claim is made that the full Nembhard and Bentefouet model has been
-reproduced.
+or replace HLS competence. The scalar evaluator does not determine how task
+effort maps to experience; the authorized N×K adaptation now specifies that
+mapping in [the external mechanism integration contract](HLS_EXTERNAL_MECHANISM_INTEGRATION_01.md).
+It does not represent indirect learning or the source paper's assignment
+decisions. No campaign was run and no claim is made that the full Nembhard
+and Bentefouet model has been reproduced.
 
 Focused equation and domain checks are in
 [`tests/test_nembhard_direct.py`](../../tests/test_nembhard_direct.py).

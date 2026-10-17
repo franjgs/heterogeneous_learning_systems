@@ -157,14 +157,22 @@ study only if its harness archives a full run manifest, frozen demand and
 source/runtime metadata. See the [Phase 5 research-readiness review](engineering/HLS_RESEARCH_READINESS_REVIEW.md).
 HLS Laboratory remains **PARTIAL**, pending PI review.
 
-**Current mechanism status — 2026-10-17:** A standalone
-Nembhard-inspired direct-experience productivity mechanism is implemented at
-`src/hls/mechanisms/nembhard_direct.py`. It evaluates the scalar
-`P(D)=k(D+p)/(D+p+r)` curve and explicit cumulative-experience increments; it
-does not map experience to HLS effort or competence and is not connected to
-the N×K runner. MIS-v2 and P0/P1/P2 are unchanged. Focused mechanism tests
-passed 24 cases. See the [mechanism note](engineering/HLS_NEMBHARD_DIRECT_EXPERIENCE_MECHANISM.md).
-HLS Laboratory remains **PARTIAL**.
+**Current mechanism status — 2026-10-17 11:46 +02:00 (Europe/Madrid):** Nembhard Direct v0.1 is now an
+explicit alternative execution branch in the N×K runner, alongside the
+unchanged default MIS-v2 path. It maintains a separate `D[N,K]` state and
+cell-specific `k,p,r`; caller-supplied feasible allocations produce output
+from beginning-of-period productivity, then update experience by `e*Δt`.
+This exposure mapping and the declared output/requirement-unit calibration
+are HLS adaptation conventions, not claims about the article's unresolved
+timing. The branch reuses existing task evaluation and effort/resource
+validation, requires an explicit unit contract, and records separate
+productivity/experience traces. It does not use HLS competence values and
+rejects P0/P1/P2, MIS-v2, teaching and estimation in this mode. Explicit
+`mechanism_id="mis_v2"` is byte-identical to the default in frozen and MIS-v2
+learning tests. See the [integration contract](engineering/HLS_EXTERNAL_MECHANISM_INTEGRATION_01.md).
+The final focused mechanism/N×K regression selection passed 222 tests,
+including generated-environment replay. No campaigns were run; HLS Laboratory
+remains **PARTIAL**.
 
 The ten-file minimum reproducible package is published on
 `feature/hls-laboratory-v1` at `37a011804f9ea013fc3a5436c00a72eb0b8280da`.
