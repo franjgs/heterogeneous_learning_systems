@@ -35,9 +35,10 @@ configurations after reuse of two identity diagnostics. HLS-E1 execution was
 started and interrupted; the campaign is not complete. A read-only audit found
 29 valid completed episodes and 987 pending episodes. These partial outputs
 are not scientific findings. The focused estimator/campaign/Nembhard/common-
-contract selection passed 74 tests; the campaign itself was not executed by
-validation. Resume now validates all three result files and requires an
-explicit command/token. See the [runner record](engineering/HLS_NEMBHARD_CAMPAIGN_RUNNER.md),
+contract selection passed 74 tests; validation did not execute or resume the
+1,016-episode campaign (one isolated 120-period FIXED fixture ran only under a
+test temporary directory). Resume now validates all three result files and
+requires an explicit command/token. See the [runner record](engineering/HLS_NEMBHARD_CAMPAIGN_RUNNER.md),
 [execution plan](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md), and
 [history](HISTORY.md).
 

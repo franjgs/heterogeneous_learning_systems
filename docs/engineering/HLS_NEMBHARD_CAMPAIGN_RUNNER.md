@@ -213,8 +213,11 @@ seed formula, deterministic demand construction, same multiset/different
 order hashes, all profiles, resource-feasible FIXED actions, short synthetic
 end-to-end calls to the existing runner, adaptive replay and information
 separation, common-envelope adaptation, no-overwrite persistence, paired
-contrasts, scenario-stratified summaries, and H1–H3 interaction calculations. It uses at most three
-synthetic periods and does not run the 1,016-episode campaign. Existing
+contrasts, scenario-stratified summaries, and H1–H3 interaction calculations.
+Most synthetic route fixtures use at most three periods. One isolated 120-period
+FIXED fixture is created under the test temporary directory to validate full
+result integrity and resume skipping; the subsequent 1,015-item resume dispatch
+is mocked. No campaign output is created or changed by that test. Existing
 Nembhard and common-contract tests remain the mechanism and serialization
 authorities.
 
