@@ -100,9 +100,13 @@ problem budgets. No production allocation is silently reduced.
 
 P0/P1/P2 are not offered for this mechanism: their decision view ranks HLS
 competence, whereas Nembhard productivity is determined by `D` and its own
-`k,p,r`. The API rejects policies, teaching actions, MIS-v2 learning and
-competence-estimation modes in the Nembhard branch. It does not add a router
-or policy.
+`k,p,r`. The API rejects those policies, teaching actions, MIS-v2 learning and
+competence-estimation modes in the Nembhard branch. Automatic assignment is
+now available through separate `nembhard_oracle` (perfect information) and
+`nembhard_adaptive` (observation-based productivity estimates) routers; neither
+reuses HLS competence. See the [ORACLE contract](HLS_NEMBHARD_ORACLE_ROUTER.md)
+and [adaptive-router contract](HLS_NEMBHARD_ADAPTIVE_ROUTER.md). The explicit
+allocation path remains available.
 
 Per-period records identify the mechanism, task, allocation, duration,
 beginning `D`, beginning productivity, per-agent output contribution,
@@ -147,10 +151,13 @@ pre-transition output timing, direct-experience update, independent cells,
 unit mismatch rejection, infeasible allocations, N×K sizes through 4×3,
 deterministic traces, and byte-identical explicit/default MIS-v2 execution.
 The mechanism does not include indirect transfer, worker grouping/selection,
-continuous-time production, source assignment policies, or a source-paper
-objective. Task requirements and CES are used only through the existing HLS
-evaluation contract after the caller declares compatible output units.
+continuous-time production, or a source-paper objective. The estimate-based
+router is myopic and its observations/estimator are HLS instrumentation
+conventions rather than mechanisms attributed to the source paper. Task
+requirements and CES are used only through the existing HLS evaluation
+contract after the caller declares compatible output units.
 
 No campaign was run. The new route is suitable for controlled explicit
-allocation validation; automatic decision-making must wait for a policy with
-inputs expressed in experience/productivity terms and separate authorization.
+allocation validation. Automatic decision-making is now authorized only in
+the explicit ORACLE and adaptive routes described above; this does not
+authorize campaigns or imply policy superiority.

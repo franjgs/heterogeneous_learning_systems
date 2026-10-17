@@ -134,7 +134,7 @@ class NembhardDirectExecutionNK:
 
     ``allocations`` contains one explicit action per problem in controlled
     execution. It may be empty only when the caller selects an automatic
-    router such as ``nembhard_oracle``.
+    router such as ``nembhard_oracle`` or ``nembhard_adaptive``.
     """
 
     profile: NembhardDirectProfileNK

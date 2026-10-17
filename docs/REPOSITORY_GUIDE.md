@@ -19,6 +19,7 @@ The principal documents have distinct jobs:
 | [Research Questions](research_questions.md) | Official research-question authority. |
 | [HLS Current State](HLS_CURRENT_STATE.md) | Canonical current scientific-state authority. |
 | [Nembhard Oracle Router](engineering/HLS_NEMBHARD_ORACLE_ROUTER.md) | Contract and limits of the perfect-information Nembhard assignment baseline. |
+| [Nembhard Adaptive Router](engineering/HLS_NEMBHARD_ADAPTIVE_ROUTER.md) | Observation-based productivity estimates, reproducible exploration, decision boundary, and limits. |
 | [History](HISTORY.md) | Canonical dated chronology of significant decisions and milestones; preserves durable scientific lessons and provenance. |
 | [HLS Laboratory Execution Plan (2026-10-17)](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md) | Operational calendar and cumulative decision register; does not supersede Current State, scientific protocols, or campaign authorization requirements. |
 | **This guide** | Repository authority, provenance, and implementation map. |

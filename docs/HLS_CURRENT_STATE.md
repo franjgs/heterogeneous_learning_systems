@@ -201,6 +201,31 @@ productivity estimates. HLS Laboratory remains **PARTIAL**; details are in the
 [oracle-router contract](engineering/HLS_NEMBHARD_ORACLE_ROUTER.md) and the
 [execution plan](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md).
 
+**Nembhard adaptive-router status — 2026-10-17 12:17 +02:00 (Europe/Madrid):**
+The N×K Nembhard route now also supports `router_id="nembhard_adaptive"`.
+It uses a per-cell online running mean and Welford dispersion from configurable
+individual work-output observations; negative observed rates are clipped to
+zero, zero-work cells are unobserved, and a minimum-work threshold avoids
+unstable division. The estimate-based selector shares the existing P0
+functional/effort rank and catalogue tie-breaking. Optional epsilon-greedy
+exploration uses a separate seed from observation noise. Its decision view
+contains no true `k,p,r`, productivity, or HLS competence; decision-visible
+experience is reconstructed only from allocations executed in this run. The
+runner executes true Nembhard production, then observes/updates the estimator
+for subsequent decisions, with experience likewise available to next-period
+production. Per-period traces distinguish predictions, observations,
+estimator state and diagnostic truth. The default MIS-v2 path, historical
+P0/P1/P2 and ORACLE route are unchanged. Final focused Nembhard selection: 48
+passed; full N×K/Nembhard selection: 180 passed. Full suite: 1,458 passed and
+5 failed in 633.87s; the failures are the known foundation inventory,
+Campaign 2 closure/theory digests, Campaign 3 frozen source, and strategy-gate
+source integrity checks. One additional focused test was added and passed
+after that suite run. No campaign was run. See the
+[adaptive-router contract](engineering/HLS_NEMBHARD_ADAPTIVE_ROUTER.md) and
+the updated [execution plan](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md).
+No historical evidence or PDFs were altered; HLS Laboratory remains
+**PARTIAL**.
+
 Work is separated into two levels. **Infrastructure (first):** functional
 completeness, coherent states/transitions, shared-resource constraints,
 real/observed-state separation, reproducibility, policy comparability, and

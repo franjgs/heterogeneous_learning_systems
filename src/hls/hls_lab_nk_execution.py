@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 import json
+from random import Random
 
 from .hls_lab_nk_geometry import (
     OrganizationConfigNK,
@@ -41,6 +42,15 @@ from .hls_lab_nk_nembhard import (
 from .hls_lab_nk_nembhard_router import (
     NembhardOracleDecisionViewNK,
     NembhardOracleRouterNK,
+)
+from .hls_lab_nk_nembhard_adaptive import (
+    NembhardAdaptiveDecisionViewNK,
+    NembhardAdaptiveRouterConfigNK,
+    NembhardAdaptiveRouterNK,
+    ProductivityEstimatorStateNK,
+    initialize_productivity_estimator_nk,
+    observe_nembhard_work_outputs_nk,
+    update_productivity_estimator_nk,
 )
 from .hls_lab_nk_estimation import (
     CompetenceObservationParametersNK,
@@ -233,6 +243,11 @@ class NKNembhardDirectEpisodeRecord:
     router_candidate_count: int | None = None
     router_rank: tuple[float, float, float, float] | None = None
     router_predicted_outputs: tuple[float, ...] | None = None
+    router_exploratory: bool | None = None
+    adaptive_estimator_before: ProductivityEstimatorStateNK | None = None
+    adaptive_estimator_after: ProductivityEstimatorStateNK | None = None
+    adaptive_observations: tuple[tuple[float | None, ...], ...] | None = None
+    router_observable_experience: tuple[tuple[float, ...], ...] | None = None
 
 
 @dataclass(frozen=True)
@@ -252,6 +267,8 @@ class NKNembhardDirectRunResult:
     profile_r: tuple[tuple[float, ...], ...]
     records: tuple[NKNembhardDirectEpisodeRecord, ...]
     router_id: str | None = None
+    adaptive_router_config: NembhardAdaptiveRouterConfigNK | None = None
+    final_productivity_estimator: ProductivityEstimatorStateNK | None = None
 
 
 def run_nk_production_sequence(
@@ -278,6 +295,7 @@ def run_nk_production_sequence(
     mechanism_id: str = "mis_v2",
     nembhard_execution: NembhardDirectExecutionNK | None = None,
     router_id: str | None = None,
+    adaptive_router_config: NembhardAdaptiveRouterConfigNK | None = None,
 ) -> NKProductionRunResult | NKLearningRunResult | NKTeachingRunResult | NKInformationRunResult | NKEnvironmentRunResult | NKNembhardDirectRunResult:
     """Run episodes over either a frozen sequence or generated environment.
 
@@ -299,17 +317,24 @@ def run_nk_production_sequence(
 
     The explicit selector ``mechanism_id="mis_v2"`` follows this same
     historical path as the default. ``mechanism_id="nembhard_direct"`` opts
-    into the separate direct-experience branch. It accepts either explicit
-    allocations or, with ``router_id="nembhard_oracle"``, the perfect-
-    information Nembhard productivity router. Neither route uses HLS
-    competence, P0/P1/P2, MIS-v2, teaching, or competence estimation.
+    into the separate direct-experience branch. It accepts explicit
+    allocations or ``router_id="nembhard_oracle"`` / ``"nembhard_adaptive"``.
+    The adaptive route estimates productivity from post-production
+    observations and has independent exploration/noise streams. Neither
+    automatic route uses HLS competence, P0/P1/P2, MIS-v2 or teaching.
     """
     if not isinstance(mechanism_id, str) or mechanism_id not in {"mis_v2", "nembhard_direct"}:
         raise ValueError("mechanism_id must be 'mis_v2' or 'nembhard_direct'")
     if mechanism_id == "mis_v2" and nembhard_execution is not None:
         raise ValueError("nembhard_execution requires mechanism_id='nembhard_direct'")
-    if router_id is not None and (mechanism_id != "nembhard_direct" or router_id != "nembhard_oracle"):
-        raise ValueError("router_id must be omitted or 'nembhard_oracle' with mechanism_id='nembhard_direct'")
+    if router_id is not None and (mechanism_id != "nembhard_direct" or router_id not in {"nembhard_oracle", "nembhard_adaptive"}):
+        raise ValueError("router_id must be omitted, 'nembhard_oracle', or 'nembhard_adaptive' with mechanism_id='nembhard_direct'")
+    if adaptive_router_config is not None and not isinstance(adaptive_router_config, NembhardAdaptiveRouterConfigNK):
+        raise TypeError("adaptive_router_config must be NembhardAdaptiveRouterConfigNK")
+    if router_id == "nembhard_adaptive" and adaptive_router_config is None:
+        raise ValueError("nembhard_adaptive requires adaptive_router_config")
+    if router_id != "nembhard_adaptive" and adaptive_router_config is not None:
+        raise ValueError("adaptive_router_config requires router_id='nembhard_adaptive'")
     if mechanism_id == "nembhard_direct":
         if nembhard_execution is None:
             raise ValueError("Nembhard Direct requires nembhard_execution configuration")
@@ -329,8 +354,8 @@ def run_nk_production_sequence(
                 "Nembhard Direct does not accept MIS-v2, teaching, P0/P1/P2, "
                 "competence estimation or their policy controls"
             )
-        if router_id == "nembhard_oracle" and nembhard_execution.allocations:
-            raise ValueError("nembhard_oracle selects allocations; supply an empty allocations tuple")
+        if router_id in {"nembhard_oracle", "nembhard_adaptive"} and nembhard_execution.allocations:
+            raise ValueError(f"{router_id} selects allocations; supply an empty allocations tuple")
         if router_id is None and not nembhard_execution.allocations:
             raise ValueError("explicit Nembhard execution requires allocations")
     if environment is not None:
@@ -358,6 +383,7 @@ def run_nk_production_sequence(
             mechanism_id=mechanism_id,
             nembhard_execution=nembhard_execution,
             router_id=router_id,
+            adaptive_router_config=adaptive_router_config,
         )
         return NKEnvironmentRunResult(trajectory, execution)
     if environment_seed is not None:
@@ -371,6 +397,7 @@ def run_nk_production_sequence(
             max_candidates=max_candidates,
             per_agent_effort_choices=per_agent_effort_choices,
             router_id=router_id,
+            adaptive_router_config=adaptive_router_config,
         )
     initial = organization.initial_state()
     if information_mode is not None:
@@ -1076,8 +1103,9 @@ def _run_nk_nembhard_direct_sequence(
     max_candidates: int,
     per_agent_effort_choices: tuple[tuple[tuple[float, ...], ...], ...] | None,
     router_id: str | None,
+    adaptive_router_config: NembhardAdaptiveRouterConfigNK | None,
 ) -> NKNembhardDirectRunResult:
-    """Execute explicit or oracle-selected allocations under Nembhard state.
+    """Execute explicit, oracle, or estimate-based Nembhard allocations.
 
     ``organization`` supplies agent/skill identifiers and existing effort
     limits/budgets only. Its competence matrices are not read by this path.
@@ -1086,7 +1114,7 @@ def _run_nk_nembhard_direct_sequence(
     configuration.profile.validate_dimensions(n, k)
     if router_id is None and len(configuration.allocations) != len(problems):
         raise ValueError("Nembhard allocations must contain one allocation per problem")
-    if router_id is not None and router_id != "nembhard_oracle":
+    if router_id is not None and router_id not in {"nembhard_oracle", "nembhard_adaptive"}:
         raise ValueError("unsupported Nembhard router_id")
     state = configuration.initial_state or NembhardDirectStateNK.zeros(n, k)
     state.validate_dimensions(n, k)
@@ -1094,12 +1122,50 @@ def _run_nk_nembhard_direct_sequence(
     records: list[NKNembhardDirectEpisodeRecord] = []
 
     router = NembhardOracleRouterNK() if router_id == "nembhard_oracle" else None
+    adaptive_router = NembhardAdaptiveRouterNK() if router_id == "nembhard_adaptive" else None
+    if adaptive_router is not None and adaptive_router_config is None:
+        raise ValueError("nembhard_adaptive requires adaptive_router_config")
+    adaptive_estimator = None
+    observation_rng = exploration_rng = None
+    # Decision-visible D is reconstructed only from assignments executed in
+    # this run. A caller-supplied latent initial D is not exposed as an
+    # observable history.
+    observable_experience = [[0.0] * k for _ in range(n)]
+    previous_allocations: list[ProductiveAllocationNK] = []
+    if adaptive_router_config is not None:
+        adaptive_estimator = initialize_productivity_estimator_nk(
+            n, k, adaptive_router_config.initial_productivity_estimate,
+        )
+        observation_rng = Random(adaptive_router_config.observation_seed)
+        exploration_rng = Random(adaptive_router_config.exploration_seed)
     for period, problem in enumerate(problems):
         if len(problem.requirements) != k:
             raise ValueError(f"problem {problem.problem_id} does not match organization K")
         decision = None
+        adaptive_decision = None
+        estimator_before = adaptive_estimator
+        observable_experience_before = tuple(tuple(row) for row in observable_experience)
         if router is None:
-            allocation = configuration.allocations[period]
+            if adaptive_router is None:
+                allocation = configuration.allocations[period]
+            else:
+                assert adaptive_estimator is not None and adaptive_router_config is not None
+                assert exploration_rng is not None
+                adaptive_decision = adaptive_router.choose(
+                    NembhardAdaptiveDecisionViewNK(
+                        resources=OrganizationResourcesNK.from_organization(organization),
+                        problem=problem,
+                        estimator=adaptive_estimator,
+                        previous_allocations=tuple(previous_allocations),
+                        observable_experience=observable_experience_before,
+                        period_duration=configuration.period_duration,
+                    ),
+                    epsilon=adaptive_router_config.epsilon,
+                    rng=exploration_rng,
+                    max_candidates=max_candidates,
+                    per_agent_effort_choices=per_agent_effort_choices,
+                )
+                allocation = adaptive_decision.allocation
         else:
             decision = router.choose(
                 NembhardOracleDecisionViewNK(
@@ -1138,6 +1204,28 @@ def _run_nk_nembhard_direct_sequence(
         next_state = advance_nembhard_experience_nk(
             state, allocation, period_duration=configuration.period_duration,
         )
+        adaptive_observations = None
+        if adaptive_router is not None:
+            assert adaptive_estimator is not None
+            assert adaptive_router_config is not None and observation_rng is not None
+            work = tuple(tuple(value * configuration.period_duration for value in row)
+                         for row in allocation)
+            adaptive_observations = observe_nembhard_work_outputs_nk(
+                work,
+                individual_outputs,
+                noise_stddev=adaptive_router_config.observation_noise_stddev,
+                rng=observation_rng,
+            )
+            adaptive_estimator = update_productivity_estimator_nk(
+                adaptive_estimator,
+                work,
+                adaptive_observations,
+                minimum_observation_work=adaptive_router_config.minimum_observation_work,
+            )
+            previous_allocations.append(allocation)
+            for i in range(n):
+                for skill in range(k):
+                    observable_experience[i][skill] += work[i][skill]
         increments = tuple(tuple(next_state.experience[i][skill] - experience_before[i][skill]
                                  for skill in range(k)) for i in range(n))
         records.append(NKNembhardDirectEpisodeRecord(
@@ -1164,11 +1252,22 @@ def _run_nk_nembhard_direct_sequence(
             productive_effort_used=effort_used,
             effective_work_used=effort_used * configuration.period_duration,
             unused_collective_capacity=max(0.0, effective_budget - effort_used),
-            router_id=None if decision is None else decision.router_id,
-            router_action_id=None if decision is None else decision.catalog_action_id,
-            router_candidate_count=None if decision is None else decision.feasible_candidate_count,
-            router_rank=None if decision is None else decision.rank,
-            router_predicted_outputs=None if decision is None else decision.predicted_outputs,
+            router_id=(decision.router_id if decision is not None else
+                       None if adaptive_decision is None else adaptive_decision.router_id),
+            router_action_id=(decision.catalog_action_id if decision is not None else
+                              None if adaptive_decision is None else adaptive_decision.catalog_action_id),
+            router_candidate_count=(decision.feasible_candidate_count if decision is not None else
+                                    None if adaptive_decision is None else adaptive_decision.feasible_candidate_count),
+            router_rank=(decision.rank if decision is not None else
+                         None if adaptive_decision is None else adaptive_decision.rank),
+            router_predicted_outputs=(decision.predicted_outputs if decision is not None else
+                                      None if adaptive_decision is None else adaptive_decision.predicted_outputs),
+            router_exploratory=(None if adaptive_decision is None else adaptive_decision.exploratory),
+            adaptive_estimator_before=estimator_before,
+            adaptive_estimator_after=adaptive_estimator,
+            adaptive_observations=adaptive_observations,
+            router_observable_experience=(observable_experience_before
+                                          if adaptive_router is not None else None),
         ))
         state = next_state
 
@@ -1190,6 +1289,8 @@ def _run_nk_nembhard_direct_sequence(
         profile_r=configuration.profile.experience_scale,
         records=tuple(records),
         router_id=router_id,
+        adaptive_router_config=adaptive_router_config,
+        final_productivity_estimator=adaptive_estimator,
     )
 
 
