@@ -24,6 +24,7 @@ The principal documents have distinct jobs:
 | [MixLLM-inspired Router Implementation](engineering/HLS_MIXLLM_ROUTER_IMPLEMENTATION.md) | Scope, interfaces, synthetic instance, validation and limitations of the independent contextual-router capability. |
 | [HLS Laboratory Architecture (2026-10-17)](engineering/HLS_LAB_ARCHITECTURE_2026-10-17.md) | Code-audited map of N×K, Nembhard and contextual-routing surfaces, ontology boundaries, and defensible comparison limits. |
 | [HLS Common Experiment Contract](engineering/HLS_COMMON_EXPERIMENT_CONTRACT.md) | Versioned post-execution envelope and non-destructive adapters for existing N×K, Nembhard, and contextual results; not a common simulator or comparability claim. |
+| [HLS Nembhard Campaign Runner](engineering/HLS_NEMBHARD_CAMPAIGN_RUNNER.md) | Reviewed Nembhard E1 configuration registry, demand hashing, guarded execution, metrics and paired analysis; campaign execution remains unauthorized. |
 | [History](HISTORY.md) | Canonical dated chronology of significant decisions and milestones; preserves durable scientific lessons and provenance. |
 | [HLS Laboratory Execution Plan (2026-10-17)](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md) | Operational calendar and cumulative decision register; does not supersede Current State, scientific protocols, or campaign authorization requirements. |
 | **This guide** | Repository authority, provenance, and implementation map. |

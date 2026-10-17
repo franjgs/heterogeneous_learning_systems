@@ -43,6 +43,10 @@ flowchart LR
     NTRACE[Nembhard-specific execution trace]
     ADAPT[Non-destructive result adapters]
     COMMON[ExperimentRun JSON envelope]
+    E1[Reviewed Nembhard E1 protocol]
+    E1PREP[Protocol registry / frozen demand]
+    E1RUN[Selected-episode orchestration]
+    E1AN[Paired E1 post-run analysis]
     EC --> ET --> PS --> RUN
     OC --> OS --> RUN
     RUN --> POL --> PROD
@@ -55,6 +59,9 @@ flowchart LR
     EVAL --> NTRACE
     RUN --> ADAPT --> COMMON
     NTRACE --> ADAPT
+    E1 --> E1PREP --> E1RUN --> RUN
+    RUN --> E1RUN --> ADAPT
+    E1RUN --> E1AN
   end
 
   subgraph CTX[ Independent contextual routing capability ]
@@ -91,6 +98,7 @@ CES, or effort.
 | G. Execution and production | `run_nk_production_sequence(...)` accepts explicit problems or environment, selected mechanism, optional N×K policy, information mode and mechanism controls. HLS production is additive in actual competence; Nembhard production uses beginning-of-period experience-derived productivity. Contextual execution calls `QueryExecutor.execute(candidate, query)`. | N×K mechanism dispatch is in one runner; contextual has its own online loop. | **Implemented; tested.** `src/hls/hls_lab_nk_execution.py`, `hls_lab_nk_production.py`, `hls_lab_nk_nembhard.py`, `contextual_router.py`; execution, policy, environment and router tests. |
 | H. Learning / state evolution | HLS MIS-v2 updates competence after production; directed teaching is a separate transition composed in the historical order. Nembhard Direct advances experience after production. Contextual ridge parameters update only from selected-candidate feedback; they do not change candidate capability. | Mechanism-specific; Nembhard execution rejects MIS/teaching/HLS policy controls. | **Implemented; scoped tests.** `src/hls/hls_lab_nk_learning.py`, `hls_lab_nk_teaching.py`, `hls_lab_nk_nembhard.py`, `contextual_router.py`; learning, teaching and contextual tests. |
 | I. Evaluation, metrics, traces | N×K: functional success, deficit/margin, gross CES, output and resource accounting. Nembhard returns mechanism-specific productivity/exposure trace plus compatible functional evaluation when its unit contract permits. Contextual traces keep predicted/observed quality and cost, eligibility, selection and model-update information separate. | Native route-specific schemas; optional non-destructive adapters produce a common run envelope, but no shared evaluator exists. | **Implemented; trace contracts tested within each route.** `src/hls/hls_lab_nk_production.py`, `hls_lab_nk_execution.py`, `contextual_router.py`, `experiment_contract.py`; route and adapter tests. |
+| J. Nembhard E1 experiment orchestration | `build_design_registry()` / `validate_design()` materialize and check protocol configs; `execute_episode()` calls the existing Nembhard runner for a selected config; analysis operates on saved common/native result artifacts. | Specific to the reviewed Nembhard protocol; it does not replace or unify N×K/contextual executors. | **Implemented; short synthetic tests. Campaign not executed.** `src/hls/nembhard_campaign.py`, `tests/test_hls_nembhard_campaign.py`, `docs/engineering/HLS_NEMBHARD_CAMPAIGN_RUNNER.md`. |
 
 The runner dispatch is explicit: `mechanism_id` accepts `mis_v2` or
 `nembhard_direct`; Nembhard permits explicit assignments or its two named
@@ -98,6 +106,14 @@ routers and rejects HLS policies, learning, teaching, and competence
 estimation. The contextual router is not an additional `mechanism_id` or
 `router_id` there. See `run_nk_production_sequence` in
 `src/hls/hls_lab_nk_execution.py`.
+
+The separate Nembhard E1 orchestration module prepares a 1,016-run registry,
+freezes demand as explicit `ProblemSpecNK` sequences, and invokes that same
+runner only through an explicit selected-episode API or CLI command. Its
+analysis consumes archived outputs and does not simulate. `list` and
+`validate` never execute episodes; `run --all` requires a confirmation token.
+This adds protocol-specific experiment orchestration, not a common campaign
+engine. The campaign has not run and requires separate PI/CE authorization.
 
 Representative test evidence includes
 `test_nk_p0_matches_legacy_3x2_decisions_and_outcomes_for_same_inputs`,

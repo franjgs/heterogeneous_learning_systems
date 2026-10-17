@@ -18,13 +18,24 @@ route-specific metrics, units, provenance fields, and stable JSON; it does not
 establish scientific comparability across mechanisms. System-1.x and Baccara
 remain deferred. HLS Laboratory remains **PARTIAL**.
 
-The last full-suite result reported before this documentation task was 1,487
-passed and 5 known historical integrity/inventory failures. This task did not
-rerun the suite. No new campaign was executed as part of the recent mechanism
-integration and documentation work. The current priority is to
-design—not execute—a first Nembhard allocation protocol; see the dated
-decision in the [execution plan](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md)
-and [history](HISTORY.md).
+The final full suite after this campaign-runner implementation completed with 1,503
+passed and 5 known historical integrity/inventory failures in 604.37 seconds.
+The five were `test_every_foundation_result_has_consistent_manifest` (12 result
+directories versus frozen count 11), `test_frozen_inputs_and_completed_artifacts`
+(Campaign 2 closure digest), `test_preexperiment_manifest_and_contamination_boundary`
+(frozen theory-source digest), `test_pre_execution_manifest_and_raw_integrity_when_present`
+(frozen `finite_problem_belief.py` input), and
+`test_source_hashes_and_raw_output_hashes` (strategy-gate source digest).
+These match the previously documented provenance/inventory failures; this
+task did not alter their manifests, hashes or artifacts. The reviewed Nembhard allocation protocol now has a
+deterministic configuration registry, guarded execution CLI, common-contract
+result adapter, and post-run analysis in `src/hls/nembhard_campaign.py`. The
+registry contains 1,016 unique configurations after reuse of two identity
+diagnostics. The focused campaign/Nembhard/common-contract selection passed
+65 tests and uses only short synthetic episodes; the scientific campaign has
+not been run and remains pending separate PI/CE authorization. See the [runner record](engineering/HLS_NEMBHARD_CAMPAIGN_RUNNER.md),
+[execution plan](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md), and
+[history](HISTORY.md).
 
 The programme-level philosophy is defined in [HLS_PHILOSOPHY.md](HLS_PHILOSOPHY.md),
 and the common semantic contract is defined in [the HLS ontology](hls_ontology.md).
