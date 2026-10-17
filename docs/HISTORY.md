@@ -1258,3 +1258,16 @@ its exact action-catalog size. Repository-wide provenance is not clean, so
 claims relying on the five affected evidence checks require their resolution.
 This is not an authorization to execute a campaign; HLS Laboratory remains
 **PARTIAL** pending PI review.
+
+### 2026-10-17 — Standalone direct-experience productivity mechanism
+
+**Record time:** 2026-10-17 10:38 +02:00 (Europe/Madrid). Added the isolated
+Nembhard-inspired direct-experience productivity curve
+`P(D)=k(D+p)/(D+p+r)`, explicit cumulative-experience advancement, and a
+before/after evaluation helper. This mechanism keeps productivity and
+experience units explicit and is not equated with HLS competence or effort.
+MIS-v2, the N×K simulator, policies and historical results are unchanged; no
+campaign was run. The 24 focused tests passed. Full N×K regression validation
+passed 184 tests; `git diff --check` passed. The legacy MIS-v2 and N×K
+production/policy/transition modules have no changes from this intervention.
+HLS Laboratory remains **PARTIAL**.

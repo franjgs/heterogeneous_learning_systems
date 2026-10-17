@@ -157,6 +157,15 @@ study only if its harness archives a full run manifest, frozen demand and
 source/runtime metadata. See the [Phase 5 research-readiness review](engineering/HLS_RESEARCH_READINESS_REVIEW.md).
 HLS Laboratory remains **PARTIAL**, pending PI review.
 
+**Current mechanism status — 2026-10-17:** A standalone
+Nembhard-inspired direct-experience productivity mechanism is implemented at
+`src/hls/mechanisms/nembhard_direct.py`. It evaluates the scalar
+`P(D)=k(D+p)/(D+p+r)` curve and explicit cumulative-experience increments; it
+does not map experience to HLS effort or competence and is not connected to
+the N×K runner. MIS-v2 and P0/P1/P2 are unchanged. Focused mechanism tests
+passed 24 cases. See the [mechanism note](engineering/HLS_NEMBHARD_DIRECT_EXPERIENCE_MECHANISM.md).
+HLS Laboratory remains **PARTIAL**.
+
 The ten-file minimum reproducible package is published on
 `feature/hls-laboratory-v1` at `37a011804f9ea013fc3a5436c00a72eb0b8280da`.
 The acceptance gate is therefore not closed. See the implementation record in
