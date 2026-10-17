@@ -16,6 +16,7 @@ import json
 from .hls_lab_nk_geometry import (
     OrganizationConfigNK,
     OrganizationStateNK,
+    OrganizationResourcesNK,
     ProblemSpecNK,
     ProductiveAllocationNK,
     enumerate_productive_action_entries_nk,
@@ -36,6 +37,10 @@ from .hls_lab_nk_nembhard import (
     NembhardOutputUnitContract,
     advance_nembhard_experience_nk,
     nembhard_productive_outputs_nk,
+)
+from .hls_lab_nk_nembhard_router import (
+    NembhardOracleDecisionViewNK,
+    NembhardOracleRouterNK,
 )
 from .hls_lab_nk_estimation import (
     CompetenceObservationParametersNK,
@@ -223,6 +228,11 @@ class NKNembhardDirectEpisodeRecord:
     productive_effort_used: float
     effective_work_used: float
     unused_collective_capacity: float
+    router_id: str | None = None
+    router_action_id: int | None = None
+    router_candidate_count: int | None = None
+    router_rank: tuple[float, float, float, float] | None = None
+    router_predicted_outputs: tuple[float, ...] | None = None
 
 
 @dataclass(frozen=True)
@@ -241,6 +251,7 @@ class NKNembhardDirectRunResult:
     profile_p: tuple[tuple[float, ...], ...]
     profile_r: tuple[tuple[float, ...], ...]
     records: tuple[NKNembhardDirectEpisodeRecord, ...]
+    router_id: str | None = None
 
 
 def run_nk_production_sequence(
@@ -266,6 +277,7 @@ def run_nk_production_sequence(
     information_seed: int = 0,
     mechanism_id: str = "mis_v2",
     nembhard_execution: NembhardDirectExecutionNK | None = None,
+    router_id: str | None = None,
 ) -> NKProductionRunResult | NKLearningRunResult | NKTeachingRunResult | NKInformationRunResult | NKEnvironmentRunResult | NKNembhardDirectRunResult:
     """Run episodes over either a frozen sequence or generated environment.
 
@@ -287,14 +299,17 @@ def run_nk_production_sequence(
 
     The explicit selector ``mechanism_id="mis_v2"`` follows this same
     historical path as the default. ``mechanism_id="nembhard_direct"`` opts
-    into the separate direct-experience branch, which requires explicit
-    allocations and unit calibration and does not use competence, P0/P1/P2,
-    MIS-v2, teaching, or estimation.
+    into the separate direct-experience branch. It accepts either explicit
+    allocations or, with ``router_id="nembhard_oracle"``, the perfect-
+    information Nembhard productivity router. Neither route uses HLS
+    competence, P0/P1/P2, MIS-v2, teaching, or competence estimation.
     """
     if not isinstance(mechanism_id, str) or mechanism_id not in {"mis_v2", "nembhard_direct"}:
         raise ValueError("mechanism_id must be 'mis_v2' or 'nembhard_direct'")
     if mechanism_id == "mis_v2" and nembhard_execution is not None:
         raise ValueError("nembhard_execution requires mechanism_id='nembhard_direct'")
+    if router_id is not None and (mechanism_id != "nembhard_direct" or router_id != "nembhard_oracle"):
+        raise ValueError("router_id must be omitted or 'nembhard_oracle' with mechanism_id='nembhard_direct'")
     if mechanism_id == "nembhard_direct":
         if nembhard_execution is None:
             raise ValueError("Nembhard Direct requires nembhard_execution configuration")
@@ -303,16 +318,21 @@ def run_nk_production_sequence(
         if (individual_learning or learning_profile is not None or teaching_enabled
                 or teaching_efficacy is not None or explicit_actions is not None
                 or policy is not None or initial_policy_memory is not None
-                or information_mode is not None or per_agent_effort_choices is not None
+                or information_mode is not None
+                or (router_id is None and per_agent_effort_choices is not None)
                 or not organizational_learning
                 or teaching_parameters != TeachingParametersNK()
                 or policy_parameters != TeachingPolicyParametersNK()
                 or observation_parameters != CompetenceObservationParametersNK()
                 or information_seed != 0):
             raise ValueError(
-                "Nembhard Direct accepts explicit allocations only; MIS-v2, teaching, "
-                "P0/P1/P2, competence estimation and action catalog overrides are unsupported"
+                "Nembhard Direct does not accept MIS-v2, teaching, P0/P1/P2, "
+                "competence estimation or their policy controls"
             )
+        if router_id == "nembhard_oracle" and nembhard_execution.allocations:
+            raise ValueError("nembhard_oracle selects allocations; supply an empty allocations tuple")
+        if router_id is None and not nembhard_execution.allocations:
+            raise ValueError("explicit Nembhard execution requires allocations")
     if environment is not None:
         if problems is not None:
             raise ValueError("supply either problems or environment, not both")
@@ -337,6 +357,7 @@ def run_nk_production_sequence(
             information_seed=information_seed,
             mechanism_id=mechanism_id,
             nembhard_execution=nembhard_execution,
+            router_id=router_id,
         )
         return NKEnvironmentRunResult(trajectory, execution)
     if environment_seed is not None:
@@ -347,6 +368,9 @@ def run_nk_production_sequence(
         assert nembhard_execution is not None
         return _run_nk_nembhard_direct_sequence(
             organization, problems, nembhard_execution,
+            max_candidates=max_candidates,
+            per_agent_effort_choices=per_agent_effort_choices,
+            router_id=router_id,
         )
     initial = organization.initial_state()
     if information_mode is not None:
@@ -1048,24 +1072,47 @@ def _run_nk_nembhard_direct_sequence(
     organization: OrganizationConfigNK,
     problems: tuple[ProblemSpecNK, ...],
     configuration: NembhardDirectExecutionNK,
+    *,
+    max_candidates: int,
+    per_agent_effort_choices: tuple[tuple[tuple[float, ...], ...], ...] | None,
+    router_id: str | None,
 ) -> NKNembhardDirectRunResult:
-    """Execute explicit feasible allocations under the separate Nembhard state.
+    """Execute explicit or oracle-selected allocations under Nembhard state.
 
     ``organization`` supplies agent/skill identifiers and existing effort
     limits/budgets only. Its competence matrices are not read by this path.
     """
     n, k = len(organization.agent_ids), len(organization.skill_ids)
     configuration.profile.validate_dimensions(n, k)
-    if len(configuration.allocations) != len(problems):
+    if router_id is None and len(configuration.allocations) != len(problems):
         raise ValueError("Nembhard allocations must contain one allocation per problem")
+    if router_id is not None and router_id != "nembhard_oracle":
+        raise ValueError("unsupported Nembhard router_id")
     state = configuration.initial_state or NembhardDirectStateNK.zeros(n, k)
     state.validate_dimensions(n, k)
     units = configuration.unit_contract
     records: list[NKNembhardDirectEpisodeRecord] = []
 
-    for period, (problem, allocation) in enumerate(zip(problems, configuration.allocations)):
+    router = NembhardOracleRouterNK() if router_id == "nembhard_oracle" else None
+    for period, problem in enumerate(problems):
         if len(problem.requirements) != k:
             raise ValueError(f"problem {problem.problem_id} does not match organization K")
+        decision = None
+        if router is None:
+            allocation = configuration.allocations[period]
+        else:
+            decision = router.choose(
+                NembhardOracleDecisionViewNK(
+                    resources=OrganizationResourcesNK.from_organization(organization),
+                    problem=problem,
+                    experience=state,
+                    profile=configuration.profile,
+                    period_duration=configuration.period_duration,
+                ),
+                max_candidates=max_candidates,
+                per_agent_effort_choices=per_agent_effort_choices,
+            )
+            allocation = decision.allocation
         if not validate_productive_allocation_nk(allocation, organization, problem):
             raise ValueError(f"Nembhard allocation at period {period} is infeasible")
         effort_by_agent = tuple(sum(row) for row in allocation)
@@ -1117,6 +1164,11 @@ def _run_nk_nembhard_direct_sequence(
             productive_effort_used=effort_used,
             effective_work_used=effort_used * configuration.period_duration,
             unused_collective_capacity=max(0.0, effective_budget - effort_used),
+            router_id=None if decision is None else decision.router_id,
+            router_action_id=None if decision is None else decision.catalog_action_id,
+            router_candidate_count=None if decision is None else decision.feasible_candidate_count,
+            router_rank=None if decision is None else decision.rank,
+            router_predicted_outputs=None if decision is None else decision.predicted_outputs,
         ))
         state = next_state
 
@@ -1137,6 +1189,7 @@ def _run_nk_nembhard_direct_sequence(
         profile_p=configuration.profile.prior_experience,
         profile_r=configuration.profile.experience_scale,
         records=tuple(records),
+        router_id=router_id,
     )
 
 

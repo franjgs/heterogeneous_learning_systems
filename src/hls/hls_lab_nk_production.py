@@ -85,8 +85,25 @@ def p0_rank_nk(
 ) -> tuple[float, float, float, float]:
     """Exact legacy P0 lexicographic ordering; CES is not part of the score."""
     outputs = productive_outputs_nk(estimated_competencies, allocation)
-    result = evaluate_problem_nk(outputs, problem.requirements)
-    effort = sum(sum(row) for row in allocation)
+    return functional_effort_rank_nk(
+        outputs, problem.requirements, sum(sum(row) for row in allocation),
+    )
+
+
+def functional_effort_rank_nk(
+    outputs: tuple[float, ...],
+    requirements: tuple[float, ...],
+    effort: float,
+) -> tuple[float, float, float, float]:
+    """Shared P0 ordering over already-predicted output and effort.
+
+    This preserves the exact historical tuple while allowing another physical
+    productivity mechanism to supply its own output prediction without
+    pretending its productivity values are normalized HLS competencies.
+    """
+    if not isfinite(effort) or effort < 0:
+        raise ValueError("effort must be finite and non-negative")
+    result = evaluate_problem_nk(outputs, requirements)
     return (int(result.success), -result.normalized_deficit, result.margin, -effort)
 
 

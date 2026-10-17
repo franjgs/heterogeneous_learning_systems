@@ -127,6 +127,42 @@ class OrganizationConfigNK:
 
 
 @dataclass(frozen=True)
+class OrganizationResourcesNK:
+    """Decision-facing organization geometry without competence fields.
+
+    This view is useful for policies whose physical state is not HLS
+    competence (for example, the Nembhard productivity router).
+    """
+
+    agent_ids: tuple[str, ...]
+    skill_ids: tuple[str, ...]
+    effort_limits: tuple[float, ...]
+    collective_effort_budget: float
+
+    def __post_init__(self) -> None:
+        agents = _validated_identifiers(self.agent_ids, "agent_ids")
+        skills = _validated_identifiers(self.skill_ids, "skill_ids")
+        try:
+            limits = tuple(float(value) for value in self.effort_limits)
+            budget = float(self.collective_effort_budget)
+        except (TypeError, ValueError, OverflowError) as exc:
+            raise ValueError("resource limits and budget must be numeric") from exc
+        if len(limits) != len(agents) or any(not isfinite(value) or value < 0 for value in limits):
+            raise ValueError("effort_limits must have length N and be finite non-negative values")
+        if not isfinite(budget) or budget < 0:
+            raise ValueError("collective_effort_budget must be finite and non-negative")
+        object.__setattr__(self, "agent_ids", agents)
+        object.__setattr__(self, "skill_ids", skills)
+        object.__setattr__(self, "effort_limits", limits)
+        object.__setattr__(self, "collective_effort_budget", budget)
+
+    @classmethod
+    def from_organization(cls, organization: OrganizationConfigNK) -> "OrganizationResourcesNK":
+        return cls(organization.agent_ids, organization.skill_ids,
+                   organization.effort_limits, organization.collective_effort_budget)
+
+
+@dataclass(frozen=True)
 class ProblemSpecNK:
     """K-dimensional requirements, CES weights and shared effort cap."""
 
@@ -167,7 +203,7 @@ class ProblemSpecNK:
 
 def validate_productive_allocation_nk(
     allocation: ProductiveAllocationNK,
-    organization: OrganizationConfigNK,
+    organization: OrganizationConfigNK | OrganizationResourcesNK,
     problem: ProblemSpecNK,
 ) -> bool:
     """Return whether allocation respects shape, actor limits and both budgets."""
@@ -185,7 +221,7 @@ def validate_productive_allocation_nk(
 
 
 def enumerate_productive_allocations_nk(
-    organization: OrganizationConfigNK,
+    organization: OrganizationConfigNK | OrganizationResourcesNK,
     problem: ProblemSpecNK,
     *,
     max_candidates: int,
@@ -199,7 +235,7 @@ def enumerate_productive_allocations_nk(
 
 
 def enumerate_productive_action_entries_nk(
-    organization: OrganizationConfigNK,
+    organization: OrganizationConfigNK | OrganizationResourcesNK,
     problem: ProblemSpecNK,
     *,
     max_candidates: int,

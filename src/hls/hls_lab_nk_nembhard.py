@@ -130,7 +130,12 @@ class NembhardOutputUnitContract:
 
 @dataclass(frozen=True)
 class NembhardDirectExecutionNK:
-    """Explicit-allocation episode specification for Nembhard Direct v0.1."""
+    """Nembhard Direct episode configuration.
+
+    ``allocations`` contains one explicit action per problem in controlled
+    execution. It may be empty only when the caller selects an automatic
+    router such as ``nembhard_oracle``.
+    """
 
     profile: NembhardDirectProfileNK
     allocations: tuple[ProductiveAllocationNK, ...]
@@ -149,8 +154,6 @@ class NembhardDirectExecutionNK:
             raise ValueError("period_duration must be finite and strictly positive")
         allocations = tuple(tuple(tuple(float(x) for x in row) for row in allocation)
                             for allocation in self.allocations)
-        if not allocations:
-            raise ValueError("Nembhard execution requires a non-empty explicit allocation sequence")
         if not isinstance(self.profile, NembhardDirectProfileNK):
             raise TypeError("profile must be NembhardDirectProfileNK")
         if self.initial_state is not None and not isinstance(self.initial_state, NembhardDirectStateNK):

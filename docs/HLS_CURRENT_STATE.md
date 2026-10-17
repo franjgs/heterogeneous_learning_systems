@@ -184,6 +184,23 @@ WHAT, HOW, AND FROM WHOM?** HLS concerns dynamic management of heterogeneous
 capabilities; it is not exclusively a worker-training simulator, and teaching
 is one possible competence-development action.
 
+**Nembhard routing status — 2026-10-17 11:58 +02:00 (Europe/Madrid):** The
+N×K runner now optionally supports `router_id="nembhard_oracle"` with
+`mechanism_id="nembhard_direct"`. This deterministic oracle uses the true
+Nembhard experience/profile state, enumerates resource-feasible actions, and
+shares the exact P0 functional lexicographic rank (success, normalized
+deficit, margin, effort); it predicts only current-period output and breaks
+ties by existing catalogue order. A competence-free resource view keeps HLS
+competence out of this policy interface. The trace records the selected
+catalogue action and predicted output for comparison with execution. This is
+an information-perfect baseline, not a learned router or MixLLM reproduction;
+future-learning value is not optimized. Focused Nembhard and N×K regressions:
+166 passed. MIS-v2 default/explicit equivalence tests remain passing. No full
+suite or campaign was run. The next planned step is a router based on
+productivity estimates. HLS Laboratory remains **PARTIAL**; details are in the
+[oracle-router contract](engineering/HLS_NEMBHARD_ORACLE_ROUTER.md) and the
+[execution plan](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md).
+
 Work is separated into two levels. **Infrastructure (first):** functional
 completeness, coherent states/transitions, shared-resource constraints,
 real/observed-state separation, reproducibility, policy comparability, and

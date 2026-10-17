@@ -36,27 +36,29 @@
 | 3 | Adaptador experimental Nembhard–HLS | COMPLETADO (acotado) | Commits `be4d1a0`, `f73e688`; 222 tests focalizados; sin campañas |
 | 4 | Transferencia indirecta Nembhard | APLAZADO | Fuera de integración actual |
 | 5 | Reproducción completa del artículo | APLAZADO / FUERA DE ALCANCE | No necesaria para adaptación acotada |
-| 6 | Router adaptativo inspirado en MixLLM | SIGUIENTE | Requiere política e información de productividad compatibles |
+| 6 | Router ORACLE Nembhard Direct, como baseline intermedio | COMPLETADO | `router_id="nembhard_oracle"`; información perfecta de experiencia/productividad, ranking funcional P0 actual, tests N×K; no es un router aprendido ni reproducción de MixLLM |
+| 7 | Router Nembhard basado en estimaciones | SIGUIENTE | Requiere definir observables/estimador de productividad y su validación; no reutilizar competencia HLS como sustituto |
 
-**Estado del laboratorio: PARTIAL.** La integración Nembhard usa `mechanism_id="nembhard_direct"`, experiencia `D[N,K]` y parámetros `k,p,r` separados de competencia; productividad al inicio del periodo, output `Σ_i e[i,k]P[i,k](D)Δt`, después incremento de experiencia `eΔt`. Contrato explícito de unidades. Presupuestos limitan intensidad `e` por periodo. Soporta asignaciones explícitas factibles y demanda del entorno; no políticas P0/P1/P2, MIS-v2, enseñanza ni estimación en esa ruta. MIS-v2 permanece predeterminado y sus serializaciones coinciden con selección explícita en modos probados. No hay política automática Nembhard. Suite completa no ejecutada para esta integración. Se conservaron cambios locales ajenos.
+**Estado del laboratorio: PARTIAL.** La integración Nembhard usa `mechanism_id="nembhard_direct"`, experiencia `D[N,K]` y parámetros `k,p,r` separados de competencia; productividad al inicio del periodo, output `Σ_i e[i,k]P[i,k](D)Δt`, después incremento de experiencia `eΔt`. Contrato explícito de unidades. Presupuestos limitan intensidad `e` por periodo. Soporta asignaciones explícitas factibles y demanda del entorno. Desde el 17-10-2026 también dispone del router `nembhard_oracle`, que enumera acciones factibles y aplica el ranking funcional P0 a producción Nembhard del periodo actual con información perfecta sobre experiencia y parámetros; no consulta competencia HLS, estima productividad ni valora aprendizaje futuro. Nembhard sigue sin admitir P0/P1/P2 históricos, MIS-v2, enseñanza o estimación de competencias. MIS-v2 permanece predeterminado y sus serializaciones coinciden con selección explícita en modos probados. La integración del router pasó 166 tests focalizados combinados; no se ejecutó la suite completa ni campaña científica. La siguiente capacidad prevista es un router basado en estimaciones de productividad. Se conservaron cambios locales ajenos.
 
 ## 4. Calendario reajustado (objetivos, no resultados)
 
 | Fecha | Trabajo principal | Entregable o criterio de cierre | Estado |
 |---|---|---|---|
 | 17 oct. | Integración Nembhard–HLS y formalización del plan | Adaptador y pruebas; registro de decisiones | Integración COMPLETADA (222 tests focalizados); plan incorporado en esta revisión documental |
+| 17 oct. | Router Nembhard ORACLE intermedio | Selección determinista de asignaciones con productividad verdadera; tests N×K | COMPLETADO (166 tests focalizados combinados); no estima ni aprende |
 | 19 oct. | Revisión de integración y contrato de comparación | Nota de observables comunes, límites de comparación y tests | PREVISTO |
 | 20 oct. | Modelo de información para decisión | Definir estado conocido/estimado, productividad, costes y política base | PREVISTO |
 | 21 oct. | Análisis de componentes MixLLM | Mapa de predicción, routing, feedback y límites de reutilización | PREVISTO |
-| 22 oct. | Diseño del router HLS | Contrato mínimo de política, baseline y plan de pruebas | PREVISTO |
-| 23 oct. | Implementación inicial del router, si está preparado; revisión semanal | Router probado o bloqueo documentado y nuevo plazo | CONDICIONAL |
+| 22 oct. | Diseño del router Nembhard basado en estimaciones | Contrato de información, baseline ORACLE y plan de pruebas | PREVISTO |
+| 23 oct. | Implementación inicial del router basado en estimaciones, si está preparado; revisión semanal | Router probado o bloqueo documentado y nuevo plazo | CONDICIONAL |
 | 26 oct. | Integración de política con mecanismos compatibles | Tests end-to-end, sin equivalencias implícitas | CONDICIONAL |
 | 27 oct. | Revisión Baccara y System-1.x | Opciones de componentes reutilizables | PREVISTO |
 | 28 oct. | Consolidación ontológica y arquitectónica | Arquitectura y contratos reales actualizados | PREVISTO |
 | 29 oct. | Diseño de protocolo exploratorio | Escenarios, métricas, controles, comparabilidad; ejecución solo con autorización | PREVISTO |
 | 30 oct. | Informe de cierre de fase | Capacidades, tests, límites, decisiones y siguiente fase | PREVISTO |
 
-El objetivo inicialmente previsto para el 19–20 oct. (adaptador Nembhard) se adelantó al 17 oct. El tiempo liberado se asigna al contrato de comparación y a los datos necesarios para un router. Las fechas de implementación del router son orientativas, no garantías.
+El objetivo inicialmente previsto para el 19–20 oct. (adaptador Nembhard) se adelantó al 17 oct. La etapa de router ORACLE se completó como baseline intermedio; el objetivo de estimación de productividad permanece pendiente. Las fechas de implementación del router basado en estimaciones son orientativas, no garantías.
 
 ## 5. Registro de decisiones (acumulativo)
 
@@ -67,6 +69,7 @@ El objetivo inicialmente previsto para el 19–20 oct. (adaptador Nembhard) se a
 | 17-10-2026 | Retirar evaluación de novedad/publicabilidad del calendario operativo | Instrucción expresa del PI | Sustituir hito del 28 oct. por consolidación de arquitectura y ontología |
 | 17-10-2026 | Dar por terminada la integración Nembhard acotada según informe Codex | Commits `be4d1a0`, `f73e688` y 222 tests focalizados | Priorizar contrato de comparación y router; no confundir integración con política automática |
 | 17-10-2026 | Revisar el calendario y publicar este plan con su registro acumulativo de decisiones | Hacer explícitos los cambios de calendario y conservar la línea base sin sustituirla | El registro y las tablas se mantienen versionados; el router adaptativo permanece como siguiente objetivo y las campañas siguen requiriendo autorización específica |
+| 17-10-2026 | Cambiar el hito inmediato previamente denominado «router adaptativo inspirado en MixLLM» por un baseline Nembhard ORACLE; conservar como objetivo posterior el router basado en estimaciones | Validar selección, catálogo y ranking con estado verdadero de productividad antes de añadir inferencia, sin presentar el ORACLE como aprendido ni como reproducción de MixLLM | `nembhard_oracle` queda disponible como baseline determinista de decisión actual; el siguiente diseño debe estimar productividad desde observaciones, sin equipararla a competencia HLS |
 | 17-10-2026 | No autorizar campañas por el mero hecho de estar en el calendario | Aún no hay protocolo aprobado para nueva campaña | 29 oct. queda en diseño; ejecución requiere permiso |
 | 17-10-2026 | Registrar toda modificación del plan en archivo versionado | Evitar pérdida de decisiones entre chats y agentes | Actualizar tablas y registro, hacer commit y push identificables |
 
