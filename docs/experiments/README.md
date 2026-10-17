@@ -14,6 +14,10 @@ conceptual index; it is not a second results ledger.
 - [HLS competence estimator validation](HLS_COMPETENCE_ESTIMATOR_VALIDATION.md): bounded one-skill numerical checks of the three-support Bayesian estimate and MIS-v2 temporal prediction
 - [HLS dynamic laboratory characterization pilot](HLS_DYNAMIC_LAB_CHARACTERIZATION.md): paired bounded characterization of information, partial competence estimates, individual learning, planning horizon, and the existing tabular organizational update
 - [HLS dynamic stress-scenario pilot](HLS_DYNAMIC_STRESS_PILOT.md): pre-policy frontier-calibrated requirements, a restricted-budget compatible subset, and paired stress tests of existing organizations
+- [Adaptive teaching: reuse audit and minimal campaign proposal](HLS_ADAPTIVE_TRAINING_MINIMAL_PROPOSAL.md): documentary preparation only; no teaching mechanism implemented and no campaign authorized
+- [Adaptive teaching: laboratory reuse audit](HLS_ADAPTIVE_TRAINING_REUSE_AUDIT.md): component-level reuse boundaries and historical results relevant to avoid repeating prior work
+- [HLS laboratory functional-completeness audit](HLS_LABORATORY_FUNCTIONAL_COMPLETENESS_AUDIT.md): executable component status, missing links in the closed loop, and a staged additive integration plan
+- [Nembhard adaptive allocation protocol](HLS_NEMBHARD_ADAPTIVE_ALLOCATION_PROTOCOL.md): documentary exploratory design for fixed, ORACLE and ADAPTIVE assignment under matched Nembhard demand; campaign execution is not authorized
 - [G0 current instrument](G0.md)
 - [G2 D0/D1/D2 dynamic ground truth runner](../../experiments/synthetic/g2/)
 - [A1 reference specification](../experimental_foundations/HLS_SYNTHETIC_ENVIRONMENT.md)
