@@ -2,7 +2,7 @@
 
 **Version:** HLS adaptation specification 0.1
 
-**Status:** specified; not implemented; no campaign authorized
+**Status:** normative v0.1 contract; independently implemented for a bounded synthetic instance on 2026-10-17; no campaign authorized
 
 **Recorded:** 2026-10-17 (Europe/Madrid)
 **Scope:** one query, a finite set of feasible execution candidates, contextual predictions of expected quality and monetary cost, and updates from the selected candidate's observed outcome.
@@ -167,4 +167,17 @@ The following decisions are **required before a domain instance/implementation**
 5. Whether the cost budget is merely a predicted-selection constraint or must be hard-enforced by execution reservation.
 6. Whether controlled exploration may override the quality target; default is off.
 
-No scientific-model change, code, test, experiment, or capacity claim is made here. HLS Laboratory remains **PARTIAL**. The original article and equations are documented in the local source audit and reference register; this contract chooses a simpler constrained selector and linear online update, so the label remains “MixLLM-inspired,” never “MixLLM implementation/reproduction.”
+The contract remains normative. A bounded synthetic implementation is documented separately in [HLS_MIXLLM_ROUTER_IMPLEMENTATION.md](HLS_MIXLLM_ROUTER_IMPLEMENTATION.md); it does not change these semantics or close the domain-specific decisions listed above. No campaign or real-system capacity claim is made. The original article and equations are documented in the local source audit and reference register; this contract chooses a simpler constrained selector and linear online update, so the label remains “MixLLM-inspired,” never “MixLLM implementation/reproduction.”
+
+### Implementation record — 2026-10-17
+
+The records and selection/update semantics in this contract now have a bounded
+implementation in `src/hls/contextual_router.py`, with a synthetic executor in
+`src/hls/contextual_router_synthetic.py` and focused tests in
+`tests/test_hls_contextual_router.py`. The implementation uses context-linear
+quality and monetary-cost response functions only in its synthetic executor;
+it preserves selected-candidate-only feedback, separate ridge models, the
+contract selector/fallback, and optional seeded exploration. See the
+[implementation note](HLS_MIXLLM_ROUTER_IMPLEMENTATION.md) for exact scope,
+tests, and limitations. No N×K, MIS-v2, Nembhard, or P0/P1/P2 route is changed.
+HLS Laboratory remains **PARTIAL**.

@@ -226,6 +226,26 @@ the updated [execution plan](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md).
 No historical evidence or PDFs were altered; HLS Laboratory remains
 **PARTIAL**.
 
+**Contextual quality–cost router status — 2026-10-17 (Europe/Madrid):** HLS
+now has a separate, bounded contextual-routing implementation in
+`src/hls/contextual_router.py` and a local synthetic execution environment in
+`src/hls/contextual_router_synthetic.py`. It predicts per-candidate quality
+and simulated monetary cost with separate ridge regressions, selects by the
+approved quality-threshold/minimum-predicted-cost rule (with its maximum-
+quality fallback), and updates only from feedback of the candidate actually
+executed. Optional seeded epsilon exploration is off by default. Traces and
+descriptive summaries keep observed quality, cost, and budget compliance
+separate. This is an independent contextual query-router capability, not a
+mapping onto agents or `ProblemSpecNK`, not a MixLLM reproduction, and not
+evidence of scientific benefit. Real-domain schema, priors, evaluator and
+accounting remain caller responsibilities. Focused validation: 17 passed;
+related N×K regressions: 162 passed; full suite: 1,476 passed and the same 5
+known provenance/integrity failures in 595.25s. No campaign was run. MIS-v2,
+Nembhard, P0/P1/P2, and historical results were not changed. See the
+[implementation note](engineering/HLS_MIXLLM_ROUTER_IMPLEMENTATION.md) and
+[normative v0.1 contract](engineering/HLS_MIXLLM_ROUTER_CONTRACT.md). HLS
+Laboratory remains **PARTIAL**.
+
 Work is separated into two levels. **Infrastructure (first):** functional
 completeness, coherent states/transitions, shared-resource constraints,
 real/observed-state separation, reproducibility, policy comparability, and

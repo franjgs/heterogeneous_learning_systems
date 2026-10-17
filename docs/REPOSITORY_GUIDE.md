@@ -20,7 +20,8 @@ The principal documents have distinct jobs:
 | [HLS Current State](HLS_CURRENT_STATE.md) | Canonical current scientific-state authority. |
 | [Nembhard Oracle Router](engineering/HLS_NEMBHARD_ORACLE_ROUTER.md) | Contract and limits of the perfect-information Nembhard assignment baseline. |
 | [Nembhard Adaptive Router](engineering/HLS_NEMBHARD_ADAPTIVE_ROUTER.md) | Observation-based productivity estimates, reproducible exploration, decision boundary, and limits. |
-| [MixLLM-inspired Router Contract](engineering/HLS_MIXLLM_ROUTER_CONTRACT.md) | Proposed contextual quality/cost prediction and selected-only feedback contract; specification only, not implemented and not a MixLLM reproduction. |
+| [MixLLM-inspired Router Contract](engineering/HLS_MIXLLM_ROUTER_CONTRACT.md) | Normative v0.1 contextual quality/cost prediction and selected-only feedback contract; not a MixLLM reproduction. |
+| [MixLLM-inspired Router Implementation](engineering/HLS_MIXLLM_ROUTER_IMPLEMENTATION.md) | Scope, interfaces, synthetic instance, validation and limitations of the independent contextual-router capability. |
 | [History](HISTORY.md) | Canonical dated chronology of significant decisions and milestones; preserves durable scientific lessons and provenance. |
 | [HLS Laboratory Execution Plan (2026-10-17)](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md) | Operational calendar and cumulative decision register; does not supersede Current State, scientific protocols, or campaign authorization requirements. |
 | **This guide** | Repository authority, provenance, and implementation map. |
@@ -61,6 +62,8 @@ classification.
 | [hls_ontology.md](hls_ontology.md) | Semantic infrastructure | CANONICAL | Terms, dimensional consistency, and cross-theory mappings. | A closed universal model or current-results ledger. |
 | [research_questions.md](research_questions.md) | Official question record | CANONICAL | Active RQ0 and its scope. | Historical questions or theory proofs. |
 | [HLS_CURRENT_STATE.md](HLS_CURRENT_STATE.md) | Scientific-status summary | CANONICAL | Established, scoped, open, and deliberately unclaimed results. | Detailed derivations or protocol chronology. |
+| [HLS_MIXLLM_ROUTER_CONTRACT.md](engineering/HLS_MIXLLM_ROUTER_CONTRACT.md) | Contextual router contract | NORMATIVE v0.1 | Query/candidate/outcome semantics, ridge updates, selection, budgets, and information boundaries. | MixLLM reproduction, N×K integration, or evidence of performance. |
+| [HLS_MIXLLM_ROUTER_IMPLEMENTATION.md](engineering/HLS_MIXLLM_ROUTER_IMPLEMENTATION.md) | Bounded synthetic implementation note | IMPLEMENTED / SCOPED | Independent contextual routing module, deterministic synthetic execution, tests and limits. | Real-system validation, scientific campaign results, or any change to N×K mechanisms. |
 | [HISTORY.md](HISTORY.md) | Dated project chronology | CANONICAL chronology | Timestamped significant decisions, milestones, outcomes, and their evidence/date confidence. | Current status or a task backlog. |
 | [experiments/HLS_LAB_V1.md](experiments/HLS_LAB_V1.md) | HLS Laboratory v1 integration reference | ACTIVE MILESTONE: HLS-LAB-V1-INTEGRATED — APPROVED / IMPLEMENTATION PENDING | B1–B6 implementation scope, constraints, invariants, and acceptance criteria. | General HLS doctrine, completed implementation, or scientific evidence beyond CE-23–25. |
 | [CAMPAIGN_2_RESULTS.md](experiments/CAMPAIGN_2_RESULTS.md) | Campaign result record | CANONICAL for frozen C2 outcomes | Preregistered H1–H4, consequence results, nulls, and scope limits. | General HLS policy value or outcomes outside the Q11-reference/frozen test range. |
