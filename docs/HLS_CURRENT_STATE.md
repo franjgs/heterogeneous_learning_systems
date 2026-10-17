@@ -246,6 +246,18 @@ Nembhard, P0/P1/P2, and historical results were not changed. See the
 [normative v0.1 contract](engineering/HLS_MIXLLM_ROUTER_CONTRACT.md). HLS
 Laboratory remains **PARTIAL**.
 
+**Common experiment-envelope status — 2026-10-17:**
+`src/hls/experiment_contract.py` now adapts existing N×K/MIS-v2, Nembhard
+Direct and contextual-router results into the versioned
+`hls-experiment-run/1.0` record. It adds ordered events, explicitly named
+units, separate route-specific metrics, optional provenance, and stable JSON
+without changing source result objects or native serializers. 11 contract
+tests passed, with 184 combined focused adapter and route regressions. The
+envelope is post-execution only: it does not supply a shared runner, infer
+missing seeds/configuration, convert metrics, or establish cross-route
+scientific comparability. See the [common experiment contract](engineering/HLS_COMMON_EXPERIMENT_CONTRACT.md).
+HLS Laboratory remains **PARTIAL**.
+
 Work is separated into two levels. **Infrastructure (first):** functional
 completeness, coherent states/transitions, shared-resource constraints,
 real/observed-state separation, reproducibility, policy comparability, and

@@ -41,6 +41,8 @@ flowchart LR
     NEST[Nembhard productivity observations / estimates]
     EVAL[Functional evaluation, CES, resource traces]
     NTRACE[Nembhard-specific execution trace]
+    ADAPT[Non-destructive result adapters]
+    COMMON[ExperimentRun JSON envelope]
     EC --> ET --> PS --> RUN
     OC --> OS --> RUN
     RUN --> POL --> PROD
@@ -51,6 +53,8 @@ flowchart LR
     PROD --> NEXP --> NEM
     PROD --> NEST --> NEM
     EVAL --> NTRACE
+    RUN --> ADAPT --> COMMON
+    NTRACE --> ADAPT
   end
 
   subgraph CTX[ Independent contextual routing capability ]
@@ -65,6 +69,7 @@ flowchart LR
     CR --> EX --> OUT --> CR
     CR --> TR
     EX --> TR
+    TR --> ADAPT
   end
 ```
 
@@ -85,7 +90,7 @@ CES, or effort.
 | F. Decision policies | N×K `NKCoordinationPolicy.choose(view, memory, parameters)` implements P0/P1/P2 over joint production/teaching actions. Nembhard exposes explicit allocation, `NembhardOracleRouterNK.choose`, and `NembhardAdaptiveRouterNK.choose`. Contextual `ContextualQualityCostRouter.decide` selects candidate IDs. | N×K policies are wired only to MIS-v2 organization route. Nembhard routes only to `nembhard_direct`. Contextual decision stays in its module. | **Implemented; tested in declared contracts, not universally integrated.** `src/hls/hls_lab_nk_policies.py`, both Nembhard router modules, `contextual_router.py`; policy and router tests. |
 | G. Execution and production | `run_nk_production_sequence(...)` accepts explicit problems or environment, selected mechanism, optional N×K policy, information mode and mechanism controls. HLS production is additive in actual competence; Nembhard production uses beginning-of-period experience-derived productivity. Contextual execution calls `QueryExecutor.execute(candidate, query)`. | N×K mechanism dispatch is in one runner; contextual has its own online loop. | **Implemented; tested.** `src/hls/hls_lab_nk_execution.py`, `hls_lab_nk_production.py`, `hls_lab_nk_nembhard.py`, `contextual_router.py`; execution, policy, environment and router tests. |
 | H. Learning / state evolution | HLS MIS-v2 updates competence after production; directed teaching is a separate transition composed in the historical order. Nembhard Direct advances experience after production. Contextual ridge parameters update only from selected-candidate feedback; they do not change candidate capability. | Mechanism-specific; Nembhard execution rejects MIS/teaching/HLS policy controls. | **Implemented; scoped tests.** `src/hls/hls_lab_nk_learning.py`, `hls_lab_nk_teaching.py`, `hls_lab_nk_nembhard.py`, `contextual_router.py`; learning, teaching and contextual tests. |
-| I. Evaluation, metrics, traces | N×K: functional success, deficit/margin, gross CES, output and resource accounting. Nembhard returns mechanism-specific productivity/exposure trace plus compatible functional evaluation when its unit contract permits. Contextual traces keep predicted/observed quality and cost, eligibility, selection and model-update information separate. | No common cross-route result schema or common quality/cost evaluator exists. | **Implemented; trace contracts tested within each route.** `src/hls/hls_lab_nk_production.py`, `hls_lab_nk_execution.py`, `contextual_router.py`; replay and trace/summary tests. |
+| I. Evaluation, metrics, traces | N×K: functional success, deficit/margin, gross CES, output and resource accounting. Nembhard returns mechanism-specific productivity/exposure trace plus compatible functional evaluation when its unit contract permits. Contextual traces keep predicted/observed quality and cost, eligibility, selection and model-update information separate. | Native route-specific schemas; optional non-destructive adapters produce a common run envelope, but no shared evaluator exists. | **Implemented; trace contracts tested within each route.** `src/hls/hls_lab_nk_production.py`, `hls_lab_nk_execution.py`, `contextual_router.py`, `experiment_contract.py`; route and adapter tests. |
 
 The runner dispatch is explicit: `mechanism_id` accepts `mis_v2` or
 `nembhard_direct`; Nembhard permits explicit assignments or its two named
@@ -117,6 +122,11 @@ The contextual route shares no executable N×K domain interface. Its
 selection rule, synthetic environment, and serializer are independent. Reuse
 of broad software practices (immutable records, explicit seeds, deterministic
 ties) is not mechanism integration.
+
+`src/hls/experiment_contract.py` provides a post-execution common envelope
+and adapters for existing N×K/MIS-v2, Nembhard, and contextual result types.
+This is data/trace interoperability only: it does not change runner dispatch,
+model interfaces, or physical/decision semantics.
 
 ## 4. Ontology and magnitudes
 
@@ -270,17 +280,19 @@ findings remain governed by `docs/HLS_CURRENT_STATE.md`.
   competence estimation.
 - Contextual routing is not connected to N×K agents, generated N×K demand,
   or HLS production/CES; it is not a MixLLM reproduction.
-- No common experiment manifest/result schema guarantees cross-route pairing,
-  evaluator equivalence, or universal resource units.
+- The common result envelope does not create a shared execution harness,
+  evaluator equivalence, complete source configuration, or universal resource
+  units. Route-native serializers remain unchanged.
 - Action enumeration is exhaustive within its configured catalog and guarded
   by `max_candidates`; scalability is bounded by the combinatorial action
   space. No pruning or optimizer is part of this architecture.
 
 ### Three salient gaps (not projects or phases)
 
-1. **Cross-route experiment/trace contract:** configuration, result and
-   serialization shapes differ; reproducible pairing currently needs explicit
-   external orchestration.
+1. **Shared execution/provenance completeness:** the common adapter is
+   post-execution; route-specific results still omit some configuration and
+   random seeds, so callers must supply missing provenance and pair runs
+   explicitly. There is no shared runner or universal seed contract.
 2. **Common evaluator and units:** no validated mapping exists among
    functional success/CES, Nembhard output, contextual quality, effort, and
    monetary cost. Cross-route performance claims are not directly supported.
