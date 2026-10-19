@@ -26,8 +26,9 @@ The principal documents have distinct jobs:
 | [HLS Common Experiment Contract](engineering/HLS_COMMON_EXPERIMENT_CONTRACT.md) | Versioned post-execution envelope and non-destructive adapters for existing N×K, Nembhard, and contextual results; not a common simulator or comparability claim. |
 | [HLS Nembhard Campaign Runner](engineering/HLS_NEMBHARD_CAMPAIGN_RUNNER.md) | Reviewed Nembhard E1 registry, guarded execution, metrics, paired analysis, and validated status/resume handling. The earlier tracked incident record is 29/1,016; a later local read-only check found 1,016 valid episodes in an untracked/unpublished result tree—see Current State and History before treating it as published evidence. |
 | [Adaptive-capability validation](experiments/HLS_LAB_ADAPTIVE_CAPABILITY_VALIDATION.md) | Canonical bounded validation record for existing C5/N×K demand-to-runner integration, MIS-v2, estimation, P0/P2 behavior, G2 controls, and trace evidence; not policy superiority or full-paper reproduction. |
+| [Literature reproduction selection (2026-10-19)](experiments/HLS_LITERATURE_REPRODUCTION_SELECTION_2026-10-19.md) | Primary-source comparison and STOP-before-execution decision; screens MixLLM Table 1 as closest candidate but does not authorize or claim a reproduction. |
 | [History](HISTORY.md) | Canonical dated chronology of significant decisions and milestones; preserves durable scientific lessons and provenance. |
-| [HLS Laboratory Execution Plan (2026-10-17)](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md) | Operational calendar and cumulative decision register, including the 2026-10-18 literature-reproduction protocol-design priority; does not supersede Current State, scientific protocols, or campaign authorization requirements. |
+| [HLS Laboratory Execution Plan (2026-10-17)](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md) | Original operational calendar and cumulative decision register; records the 2026-10-19 literature screening STOP outcome without replacing the 2026-10-18 planned session or authorizing execution. |
 | **This guide** | Repository authority, provenance, and implementation map. |
 
 If this guide conflicts with a canonical scientific source, the scientific
@@ -42,8 +43,9 @@ The existing adaptive-capability evidence and its reproducibility boundary are
 consolidated in [the canonical validation record](experiments/HLS_LAB_ADAPTIVE_CAPABILITY_VALIDATION.md),
 with results and a machine-readable registry under
 `../results/analysis/hls_lab_validation/`. For the 2026-10-18 session, the
-execution plan directs literature experiment selection and protocol design
-only; campaign execution still requires separate authorization.
+execution plan records the literature-reproduction screening outcome; the
+current candidate is blocked before execution, and any later campaign still
+requires a faithful protocol and separate PI authorization.
 
 ## Status vocabulary
 

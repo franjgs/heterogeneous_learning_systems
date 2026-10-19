@@ -6,6 +6,7 @@ conceptual index; it is not a second results ledger.
 
 ## Current synthetic framework
 
+- [Literature reproduction selection (2026-10-19)](HLS_LITERATURE_REPRODUCTION_SELECTION_2026-10-19.md): primary-source review and STOP decision before execution; MixLLM Table 1 is screened as the closest candidate but is not currently reproducible with validated HLS components and available source artifacts.
 - [HLS Laboratory adaptive-capability validation](HLS_LAB_ADAPTIVE_CAPABILITY_VALIDATION.md): bounded S0–S4 integration checks for existing dynamic demand, competence evolution/estimation, state-responsive policies and trace contracts; not a superiority claim or paper reproduction
 - [HLS Laboratory v1 implementation and limitations](HLS_LAB_V1.md)
 - [HLS Laboratory v1 scientific contracts (CE-22 reference)](HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md)

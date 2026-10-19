@@ -62,20 +62,21 @@ record](experiments/HLS_LAB_ADAPTIVE_CAPABILITY_VALIDATION.md), its
 and [compact evidence](../results/analysis/hls_lab_validation/integrated_validation_results.json).
 HLS Laboratory remains **PARTIAL**.
 
-**Current next-session priority — 2026-10-17, for 2026-10-18:** no new
-adaptive capability is required before the next literature-reproduction
-design task. The bounded integrated validation above is complete within its
-documented scope: 135 focused tests passed, the full suite was not run, and
-the result/registry links above are the evidence authority. The next task is
-to inspect available primary papers, compare concrete reproducible
-experiments against existing HLS components, select one candidate, create a
-model/scenario/policy/implementation/metric correspondence matrix, and
-prepare a bounded protocol for review. This authorizes design only, not
-execution. Nembhard is not selected automatically; prior audits should be
-reused, and mechanisms should not be rebuilt. This validation establishes
-neither policy superiority nor complete article reproduction. See the
-[cumulative execution-plan decision](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md)
-and [canonical project history](HISTORY.md). HLS remains **PARTIAL**.
+**Prior-session priority — recorded 2026-10-17 for 2026-10-18; resumed
+2026-10-19:** the task was to inspect primary papers, compare concrete
+experiments with existing HLS components, select one, and prepare a bounded
+protocol. This was documentary work only. The source review found no candidate
+that currently meets exact or defensibly approximate reproduction requirements
+with the available HLS mechanisms and source artifacts. MixLLM §4.3/Table 1
+was the closest candidate screened, but the HLS contextual router has a
+different predictor, selector, feedback model, and synthetic data; source
+data/runtime dependencies also remain unresolved. The recommendation is
+**STOP before execution**, not a claim that HLS lacks adaptive capability. See
+the [selection report](experiments/HLS_LITERATURE_REPRODUCTION_SELECTION_2026-10-19.md)
+and [cumulative plan decision](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md).
+No experiment or campaign was run, no model was changed, and HLS remains
+**PARTIAL**. Any later reproduction requires resolving the documented
+dependencies, a faithful protocol, and separate PI authorization.
 
 The programme-level philosophy is defined in [HLS_PHILOSOPHY.md](HLS_PHILOSOPHY.md),
 and the common semantic contract is defined in [the HLS ontology](hls_ontology.md).

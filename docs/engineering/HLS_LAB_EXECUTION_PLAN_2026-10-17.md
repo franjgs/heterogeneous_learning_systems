@@ -86,10 +86,15 @@ El objetivo inicialmente previsto para el 19–20 oct. (adaptador Nembhard) se a
 | 17-10-2026 | Implementar el ejecutor y análisis del protocolo Nembhard revisado, sin ejecutar la campaña | Convertir el protocolo revisado en configuraciones deterministas, secuencias explícitas, rutas de política existentes, resultados versionados y contrastes predeclarados | `src/hls/nembhard_campaign.py` genera y valida 1.016 configuraciones únicas (960 factoriales, 40 epsilon-cero y 16 diagnósticos únicos), adapta resultados al contrato común y calcula métricas/contrastes incluyendo H1–H3. FIXED reutiliza la tabla estática protocolizada; ORACLE/ADAPTIVE son las rutas existentes. Los tests usan secuencias sintéticas de hasta 3 periodos; la campaña NO se ejecutó. Validación focalizada: 65 tests combinados; suite completa: 1.503 pasaron y los mismos 5 fallos históricos de inventario/procedencia. `run --all` sin token de confirmación se verificó como rechazado sin ejecución. Ejecución científica requiere autorización PI/CE. No cambia el calendario; HLS permanece PARTIAL. |
 | 17-10-2026 | Corregir la interrupción de HLS-E1 y permitir reanudación segura sin alterar el diseño | El estimador podía producir un M2 diminuto negativo en la primera observación al tratar un prior con count=0 mediante la fórmula aritmética de Welford; los resultados parciales deben poder auditarse y continuarse sin sobrescritura | La primera observación ahora establece exactamente media observada/count=1/M2=0; actualizaciones posteriores toleran solo negativos dentro de un límite de ocho ULPs y rechazan no finitos/negativos materiales. Añadidos `status` y `resume` explícito: exige resultados previos válidos, comprueba los tres JSON, demanda y trazas, y ejecuta solo IDs ausentes; `run --all` no cambia. Auditoría local: 29 completos válidos, 0 incompletos/corruptos, 987 pendientes; ejecución iniciada e interrumpida, campaña NO COMPLETADA ni interpretada. Validación focalizada: 74; suite completa: 1.512 aprobados y los mismos cinco fallos históricos de inventario/proveniencia. No se altera el calendario ni HLS PARTIAL. |
 | 17-10-2026 (trabajo previsto para la sesión del 18-10-2026) | Dar por completada, dentro de su alcance documentado, la validación integrada de capacidades adaptativas existentes y priorizar la preparación de una reproducción controlada de literatura | La validación S0–S4 ya publicada demuestra ejecución reproducible de mecanismos existentes; no hace falta desarrollar nuevas capacidades adaptativas antes del trabajo de reproducción | El 18 oct. se revisarán fuentes primarias y experimentos reproducibles, se compararán candidatos con HLS, se seleccionará uno, se preparará una matriz de correspondencia y un protocolo acotado, y se solicitará autorización antes de ejecutar. No seleccionar Nembhard por defecto, no repetir auditorías ya completadas, no reconstruir mecanismos existentes ni ejecutar campañas. La validación no implica superioridad de políticas ni reproducción completa de artículos. HLS permanece PARTIAL. Evidencia: `docs/experiments/HLS_LAB_ADAPTIVE_CAPABILITY_VALIDATION.md`, `results/analysis/hls_lab_validation/integrated_validation_results.json` y `results/analysis/hls_lab_validation/capability_registry.json`; 135 tests focalizados pasaron y la suite completa no se ejecutó en esa validación. |
+| 19-10-2026 (reanudación del trabajo previsto para el 18-10-2026) | Revisar fuentes primarias, seleccionar un experimento y preparar un protocolo acotado, sin ejecutar | Se consultaron los artículos originales registrados y se contrastaron contra las rutas implementadas y su evidencia validada. El ajuste conceptual no equivale a fidelidad matemática/experimental | Informe `docs/experiments/HLS_LITERATURE_REPRODUCTION_SELECTION_2026-10-19.md`. MixLLM §4.3/Table 1 queda como el candidato más próximo por interfaz, pero el router HLS usa otro predictor, objetivo, datos y feedback; faltan artefactos primarios críticos. Decisión **STOP**: no hay candidato autorizado/preparado para reproducción exacta o defendiblemente aproximada con las capacidades e insumos actuales. No se ejecutó experimento ni se implementó nada. La decisión no cancela la prioridad de reproducibilidad: antes de GO se deben resolver las dependencias o elegir otro experimento con correspondencia suficiente. HLS permanece PARTIAL. |
 
 ## 6. Procedimiento obligatorio para cambios futuros
 
-### Prioridad de la próxima sesión — domingo 18 de octubre de 2026
+### Prioridad de sesión registrada el 17 de octubre — domingo 18 de octubre de 2026
+
+**Estado actualizado el 19-10-2026:** el trabajo se reanudó el lunes 19; véase
+“Registro de reanudación y resultado” más abajo. La prioridad original y el
+calendario de la sección 2 se conservan como registro histórico.
 
 La validación integrada de capacidades adaptativas existentes se considera
 completada en el alcance de la evidencia publicada. La siguiente sesión se
@@ -110,3 +115,19 @@ esta es una prioridad de sesión registrada, no una reescritura del calendario.
 5. Comunicar SHA, estado de push y asuntos pendientes. No declarar una actividad completada sin evidencia.
 
 Esta regla se aplica a cada entrega: registrar antes de continuar, documentar y validar, y publicar mediante commit y push. Un cambio sin publicar no forma parte del estado oficial. No se añadirán fases/subfases salvo necesidad técnica justificada y registrada.
+
+### Registro de reanudación y resultado — lunes 19 de octubre de 2026
+
+El trabajo documental previsto para el domingo 18 se reanudó el lunes 19,
+conservando la prioridad y el calendario original. Se revisaron las fuentes
+primarias disponibles de Nembhard–Bentefouet, Borgonjon–Maenhout,
+Baccara–Lee–Yariv, MixLLM, System-1.x y Liu et al., y se confrontaron sus
+experimentos con el código y las pruebas HLS. La selección no produjo un
+protocolo ejecutable fiel: MixLLM Table 1 es el candidato más cercano en el
+nivel abstracto de routing, pero faltan datos/modelos/runtime de origen y sus
+componentes no corresponden al router contextual HLS. Por ello se registra
+**STOP antes de ejecución** en el informe de selección. Esto no es un rechazo
+de futuras reproducciones ni autorización para construir sustitutos; el
+siguiente paso deberá resolver dependencias primarias o seleccionar otra
+fuente y pedir autorización PI antes de cualquier ejecución. Véase
+[`HLS_LITERATURE_REPRODUCTION_SELECTION_2026-10-19.md`](../experiments/HLS_LITERATURE_REPRODUCTION_SELECTION_2026-10-19.md).
