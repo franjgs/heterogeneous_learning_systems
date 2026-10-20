@@ -7,6 +7,18 @@ position of the HLS research programme.
 Frozen protocols, detailed derivations, executable code, and result artifacts
 remain authoritative for their own scope; this file does not replace them.
 
+## HLS-G0-C6 experiment disposition — 2026-10-19
+
+**HLS-G0-C6 is CLOSED — STOP.** Its exact finite-instance HLS versus
+BEST_STATIC gap is documented in the [canonical closure record](experiments/HLS_G0_C6_CLOSURE_2026-10-19.md),
+with trajectory evidence in `results/experiments/hls_g0_c6/`. C6 quantifies
+an anticipatory-development and subsequent flexible-routing mechanism already
+consistent with G2, G3-H and RQ0; it does not establish general superiority or
+a new structural result. Do not reopen or extend this experiment. This
+experiment identifier is distinct from the separately named synthetic
+capability C6 in the capability taxonomy. The STOP decision does not change
+RQ0's status or the broader HLS programme.
+
 ## Consolidated laboratory status — 2026-10-17
 
 The published laboratory retains an operational HLS N×K / MIS-v2 route.

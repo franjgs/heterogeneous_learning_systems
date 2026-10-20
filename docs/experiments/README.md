@@ -6,7 +6,9 @@ conceptual index; it is not a second results ledger.
 
 ## Current synthetic framework
 
+- [HLS-G0-C6 closure (2026-10-19)](HLS_G0_C6_CLOSURE_2026-10-19.md): CLOSED — STOP; exact finite-instance characterization preserved. This experiment identifier is distinct from the separately named synthetic capability C6.
 - [Literature reproduction selection (2026-10-19)](HLS_LITERATURE_REPRODUCTION_SELECTION_2026-10-19.md): primary-source review and STOP decision before execution; MixLLM Table 1 is screened as the closest candidate but is not currently reproducible with validated HLS components and available source artifacts.
+- [Targeted adaptive-advantage literature search (2026-10-19)](HLS_TARGETED_ADAPTIVE_ADVANTAGE_LITERATURE_SEARCH_2026-10-19.md): targeted search for published positive adaptive-versus-fixed results; closest candidates and STOP decision for HLS reproduction authorization.
 - [HLS Laboratory adaptive-capability validation](HLS_LAB_ADAPTIVE_CAPABILITY_VALIDATION.md): bounded S0–S4 integration checks for existing dynamic demand, competence evolution/estimation, state-responsive policies and trace contracts; not a superiority claim or paper reproduction
 - [HLS Laboratory v1 implementation and limitations](HLS_LAB_V1.md)
 - [HLS Laboratory v1 scientific contracts (CE-22 reference)](HLS_LAB_V1_SCIENTIFIC_CONTRACTS.md)
