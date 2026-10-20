@@ -310,3 +310,46 @@ authorization to modify code or conduct experiments.
   `tests/test_hls_lab_nk_learning.py`, `tests/test_hls_lab_nk_teaching.py`,
   `tests/test_hls_lab_nk_policies.py`, `tests/test_hls_lab_nk_estimation.py`,
   `tests/test_hls_lab_nk_environment.py`, `tests/test_hls_lab_nk_execution.py`.
+
+## 11. Cross-scenario formulation and boundary (consolidation note)
+
+This section connects the existing A/B/C ontology to the S1–S4 scientific
+scenarios; it does not replace the N×K definitions above. For the detailed
+common state/action/observation model, scenario reductions, evidence status,
+and research questions, see the [HLS unified scientific formulation](HLS_UNIFIED_FRAMEWORK.md).
+
+The scenario portfolio uses one conceptual decomposition but **not one
+homogeneous implementation contract**:
+
+- **A — Scenario/system:** agent/task sets, demand, true capability state,
+  exogenous environment, reward law, resources and feasible action set.
+- **B — Mechanisms:** transitions in physical capabilities (e.g. MIS-v2),
+  exogenous capability changes, and/or updates to estimates from feedback.
+  These are distinct: S3a/S3b capability/reward changes are exogenous; S4
+  MIS-v2 changes competence only through executed assignments; S3b estimators
+  learn reward estimates without changing agent competence.
+- **C — Organization:** a policy using its permitted observations and memory
+  to select a feasible action. Matching, period-wise optimization, fixed
+  policies, bandit-plus-matching adaptations, and finite-horizon planning are
+  different decision rules, not interchangeable labels.
+
+The canonical assignment scenarios use discrete one-to-one task units, while
+the general N×K execution ontology also models divisible effort and optional
+directed teaching. Thus `ProductiveAllocationNK` must not be assumed to be the
+binary `x[i,k,t]` used by S1–S4. A scenario's reward, capacity, observation
+timing and transition determine the action contract.
+
+**Evidence boundary.** S1–S4 and the corresponding source/results are recorded
+in the cumulative [engineering plan](../engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md).
+The exact finite-state claims are limited to their enumerated models. The
+existence of shared ontology terms does not establish a universal HLS state,
+algorithm, theorem, practical validity, or scalability. In particular, S3b's
+evaluated GLR-CUCB iteration is complete, while the broader scientific line
+on nonstationary combinatorial partial feedback remains open; S4's initial
+tie-sensitive gap was later narrowed using BEST-MYOPIC before a separate
+strict-gap family was verified.
+
+**Temporal metadata note.** This source remains titled/versioned 2026-10-23,
+while the consolidation note is recorded on 2026-10-21. That ordering is
+retained rather than silently corrected; available repository evidence does
+not establish whether the original date is prospective metadata or an error.
