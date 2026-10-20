@@ -22,6 +22,7 @@ Agent = int
 Task = int
 State = tuple[tuple[float, float], tuple[float, float], tuple[float, float]]
 PolicyName = Literal["GREEDY_USE", "JOINT_DP"]
+EvaluationName = Literal["FIXED", "FIXED_BEST", "GREEDY_USE", "JOINT_DP"]
 
 
 GENERALIST: State = ((0.5, 0.5), (0.5, 0.5), (0.5, 0.5))
@@ -89,10 +90,76 @@ def optimal_actions(values: dict[Agent, float], *, tolerance: float = EXACT_TOL)
 
 @dataclass(frozen=True)
 class PolicyEvaluation:
-    policy: PolicyName
+    policy: EvaluationName
     value: float
     first_actions: tuple[Agent, ...]
     greedy_tie_steps: int
+    fixed_agent: Agent | None = None
+
+
+def evaluate_fixed(
+    state: State,
+    sequence: tuple[Task, ...],
+    learning_scale: float,
+    agent: Agent,
+) -> PolicyEvaluation:
+    """Evaluate one preselected agent on every task in a known sequence.
+
+    The agent is fixed for the complete sequence. Its assigned competence may
+    still develop through the same MIS transition used by other policies.
+    """
+    _validate_state(state)
+    if not isfinite(learning_scale) or learning_scale < 0.0:
+        raise ValueError("learning_scale must be finite and non-negative")
+    if agent not in (0, 1, 2):
+        raise ValueError("agent must be 0, 1, or 2")
+    if not sequence:
+        raise ValueError("sequence must be non-empty")
+    for task in sequence:
+        _validate_task(task)
+
+    current = state
+    value = 0.0
+    for task in sequence:
+        value += reward(current, agent, task)
+        current = transition(current, agent, task, learning_scale)
+
+    return PolicyEvaluation(
+        policy="FIXED",
+        value=value,
+        first_actions=(agent,),
+        greedy_tie_steps=0,
+        fixed_agent=agent,
+    )
+
+
+def evaluate_fixed_best(
+    state: State,
+    sequence: tuple[Task, ...],
+    learning_scale: float,
+) -> PolicyEvaluation:
+    """Return the oracle-best value among the three constant-agent rules.
+
+    The complete known sequence is used to choose the fixed agent
+    retrospectively. No agent switching occurs during a candidate trajectory.
+    Ties are retained in ascending agent-index order.
+    """
+    candidates = tuple(
+        evaluate_fixed(state, sequence, learning_scale, agent)
+        for agent in range(3)
+    )
+    best_value = max(candidate.value for candidate in candidates)
+    best_agents = tuple(
+        agent
+        for agent, candidate in enumerate(candidates)
+        if best_value - candidate.value <= EXACT_TOL
+    )
+    return PolicyEvaluation(
+        policy="FIXED_BEST",
+        value=best_value,
+        first_actions=best_agents,
+        greedy_tie_steps=0,
+    )
 
 
 def evaluate_policy(
@@ -185,6 +252,8 @@ class MatrixPoint:
     learning_scale: float
     greedy: PolicyEvaluation
     joint_dp: PolicyEvaluation
+    fixed_candidates: tuple[PolicyEvaluation, ...]
+    fixed_best: PolicyEvaluation
 
     @property
     def management_value(self) -> float:
@@ -199,8 +268,15 @@ def evaluate_matrix(*, learning_scale: float = 0.5, development_enabled: bool = 
         for environment, sequence in ENVIRONMENTS.items():
             greedy = evaluate_policy(state, sequence, effective_scale, "GREEDY_USE")
             joint = evaluate_policy(state, sequence, effective_scale, "JOINT_DP")
+            fixed_candidates = tuple(
+                evaluate_fixed(state, sequence, effective_scale, agent)
+                for agent in range(3)
+            )
+            fixed_best = evaluate_fixed_best(state, sequence, effective_scale)
             if joint.value + EXACT_TOL < greedy.value:
                 raise AssertionError("dynamic programming must weakly dominate the greedy policy class")
+            if joint.value + EXACT_TOL < fixed_best.value:
+                raise AssertionError("dynamic programming must weakly dominate FIXED_BEST")
             rows.append(
                 MatrixPoint(
                     configuration=configuration,
@@ -209,6 +285,8 @@ def evaluate_matrix(*, learning_scale: float = 0.5, development_enabled: bool = 
                     learning_scale=effective_scale,
                     greedy=greedy,
                     joint_dp=joint,
+                    fixed_candidates=fixed_candidates,
+                    fixed_best=fixed_best,
                 )
             )
     return tuple(rows)

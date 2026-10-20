@@ -1,0 +1,8 @@
+{
+  "incident": "execution-manifest validation counted CSV chunks instead of rows",
+  "phase": "post-generation integrity finalization",
+  "observed": "All 50 batch files were written, each with 512 rows (25,600 paired Monte Carlo records total). The finalizer summed one read chunk per file and incorrectly reported 50 rows, then raised before writing execution_manifest.json.",
+  "scientific_effect": "None. No target values were modified, dropped, rerun, or analyzed as a consequence of the error.",
+  "recovery": "Correct the row-count integrity check to sum len(chunk), add a regression test, rerun finalization against existing batch files only, then validate exact state/replicate keys and hashes.",
+  "preserve_original_batches": true
+}

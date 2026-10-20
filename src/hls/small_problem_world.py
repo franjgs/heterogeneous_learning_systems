@@ -6,6 +6,7 @@ from dataclasses import dataclass
 
 from .discover_v0 import DEFAULT_HORIZON
 from .finite_problem_belief import uniform_prior
+from .functional_problem import common_feasible_level, requirements_from_orientation
 from .problem_geometry import (
     Problem,
     change_magnitudes,
@@ -36,6 +37,7 @@ STATE_PERSISTS_BETWEEN_PROBLEMS = True
 class WorldStage:
     label: str
     problem: Problem
+    requirements: Problem
 
 
 @dataclass(frozen=True)
@@ -43,6 +45,7 @@ class WorldDescriptor:
     stage_index: int
     label: str
     problem: Problem
+    requirements: Problem
     p: float
     change_magnitude: float | None
     historical_novelty: float | None
@@ -50,13 +53,26 @@ class WorldDescriptor:
     represented: bool
 
 
+UNIQUE_PROBLEM_TYPES: tuple[Problem, ...] = (A, A_PRIME, B, B_PRIME, C)
+# Largest common total requirement that remains physically feasible for every
+# existing problem orientation on the frozen G00 reference action space.
+REQUIREMENT_LEVEL = common_feasible_level(UNIQUE_PROBLEM_TYPES)
+
+
+def requirements_for_problem(problem: Problem) -> Problem:
+    """Return the frozen differentiated requirement vector r=L*z for a type."""
+    if problem not in UNIQUE_PROBLEM_TYPES:
+        raise ValueError("requirements are defined only for the five frozen problem types")
+    return requirements_from_orientation(problem, REQUIREMENT_LEVEL)
+
+
 WORLD: tuple[WorldStage, ...] = (
-    WorldStage("A", A),
-    WorldStage("A'", A_PRIME),
-    WorldStage("B", B),
-    WorldStage("B'", B_PRIME),
-    WorldStage("C", C),
-    WorldStage("A", A),
+    WorldStage("A", A, requirements_for_problem(A)),
+    WorldStage("A'", A_PRIME, requirements_for_problem(A_PRIME)),
+    WorldStage("B", B, requirements_for_problem(B)),
+    WorldStage("B'", B_PRIME, requirements_for_problem(B_PRIME)),
+    WorldStage("C", C, requirements_for_problem(C)),
+    WorldStage("A", A, requirements_for_problem(A)),
 )
 
 UNIQUE_WORLD_PROBLEMS: tuple[WorldStage, ...] = WORLD[:5]
@@ -68,6 +84,9 @@ def validate_frozen_world() -> None:
         raise AssertionError("the frozen Small Problem World requires the existing horizon H=3")
     for stage in WORLD:
         validate_problem(stage.problem)
+        if (any(value <= 0.0 for value in stage.requirements)
+                or abs(sum(stage.requirements) - REQUIREMENT_LEVEL) > 1e-12):
+            raise AssertionError("functional requirements must be positive and share the frozen total level")
     for hypothesis in HYPOTHESIS_REPERTOIRE:
         validate_problem(hypothesis)
     if len(set(stage.problem for stage in UNIQUE_WORLD_PROBLEMS)) != len(UNIQUE_WORLD_PROBLEMS):
@@ -88,6 +107,7 @@ def world_descriptors() -> tuple[WorldDescriptor, ...]:
             stage_index=index + 1,
             label=stage.label,
             problem=stage.problem,
+            requirements=stage.requirements,
             p=stage.problem[0],
             change_magnitude=changes[index],
             historical_novelty=novelties[index],

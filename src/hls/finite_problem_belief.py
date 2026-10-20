@@ -13,7 +13,7 @@ from enum import Enum
 from functools import lru_cache
 from math import exp, isclose, isfinite, log
 from random import Random
-from typing import Iterable
+from typing import Iterable, Mapping
 
 from .discover_develop_v0 import DEVELOP_KNOWN, DISCOVER_DEVELOP, DISCOVER_ONLY, MODES, STATIC_KNOWN
 from .discover_develop_v2 import mis_v2_transition
@@ -31,6 +31,7 @@ from .discover_v0 import (
     production_inputs,
     validate_state,
 )
+from .functional_problem import RequirementEvaluation, assigned_effort, evaluate_requirements
 from .problem_geometry import Problem, validate_problem
 
 
@@ -90,6 +91,16 @@ def expected_reward(belief: BeliefVector, predicted_means: tuple[float, ...]) ->
     return sum(probability * mean for probability, mean in zip(validated, predicted_means))
 
 
+def _expected_reward_validated(belief: BeliefVector, predicted_means: tuple[float, ...]) -> float:
+    """Inner-loop arithmetic for values already validated by the planner."""
+    if len(belief) == 3:
+        # Preserve sum/zip's left-to-right IEEE-754 accumulation while
+        # avoiding millions of short-lived generator/zip objects in the DP.
+        return ((belief[0] * predicted_means[0] + belief[1] * predicted_means[1])
+                + belief[2] * predicted_means[2])
+    return sum(probability * mean for probability, mean in zip(belief, predicted_means))
+
+
 def finite_bayes_update(
     belief: BeliefVector,
     observation: float,
@@ -102,6 +113,18 @@ def finite_bayes_update(
         raise ValueError("observation and positive sigma must be finite")
     if any(not isfinite(mean) for mean in predicted_means):
         raise ValueError("predicted means must be finite")
+    return validate_belief(
+        _finite_bayes_update_validated(prior, observation, predicted_means, sigma), len(prior)
+    )
+
+
+def _finite_bayes_update_validated(
+    prior: BeliefVector,
+    observation: float,
+    predicted_means: tuple[float, ...],
+    sigma: float,
+) -> BeliefVector:
+    """Numerically identical Bayes arithmetic for planner-validated inputs."""
     if len(prior) == 1:
         return (1.0,)
     if max(predicted_means) - min(predicted_means) <= EXACT_TOL:
@@ -115,8 +138,7 @@ def finite_bayes_update(
     total = sum(weights)
     if not isfinite(total) or total <= 0.0:
         raise ArithmeticError("finite Bayes normalization failed")
-    posterior = tuple(weight / total for weight in weights)
-    return validate_belief(posterior, len(prior))
+    return tuple(weight / total for weight in weights)
 
 
 def _action_key(action: JointAction) -> str:
@@ -126,6 +148,27 @@ def _action_key(action: JointAction) -> str:
 def _optimal_actions(values: dict[JointAction, float]) -> tuple[JointAction, ...]:
     maximum = max(values.values())
     return tuple(sorted((action for action, value in values.items() if maximum - value <= EXACT_TOL), key=_action_key))
+
+
+def _componentwise_undominated(
+    vectors: Iterable[tuple[float, ...]],
+) -> tuple[tuple[float, ...], ...]:
+    """Exact pruning for a terminal expected-reward maximization.
+
+    A vector weakly dominated in every hypothesis cannot maximize a
+    probability-weighted immediate reward for any valid belief. This is used
+    only below the root of the finite-horizon recursion, where a choice has
+    no subsequent information value. Root actions remain fully enumerated.
+    """
+    unique = tuple(dict.fromkeys(vectors))
+    return tuple(
+        candidate for candidate in unique
+        if not any(
+            other != candidate
+            and all(left >= right for left, right in zip(other, candidate))
+            for other in unique
+        )
+    )
 
 
 def finite_unknown_policy_value(
@@ -146,24 +189,28 @@ def finite_unknown_policy_value(
     mean_groups: dict[tuple[float, ...], list[JointAction]] = {}
     for action, predicted in action_means.items():
         mean_groups.setdefault(predicted, []).append(action)
+    terminal_frontier = _componentwise_undominated(mean_groups)
 
     @lru_cache(maxsize=None)
     def value_at(remaining: int, belief: BeliefVector) -> float:
         if remaining == 0:
             return 0.0
-        return max(group_values(remaining, belief).values())
+        return max(group_values(remaining, belief, terminal_only=remaining == 1).values())
 
-    def group_values(remaining: int, belief: BeliefVector) -> dict[tuple[float, ...], float]:
+    def group_values(
+        remaining: int, belief: BeliefVector, *, terminal_only: bool = False,
+    ) -> dict[tuple[float, ...], float]:
         values: dict[tuple[float, ...], float] = {}
-        for predicted in mean_groups:
-            immediate = expected_reward(belief, predicted)
+        candidates = terminal_frontier if terminal_only else mean_groups
+        for predicted in candidates:
+            immediate = _expected_reward_validated(belief, predicted)
             future = 0.0
             if remaining > 1:
                 for probability, mean in zip(belief, predicted):
                     if probability == 0.0:
                         continue
                     for observation, weight in gaussian_quadrature_nodes(mean, sigma, quadrature_order):
-                        posterior = finite_bayes_update(belief, observation, predicted, sigma)
+                        posterior = _finite_bayes_update_validated(belief, observation, predicted, sigma)
                         future += probability * weight * value_at(remaining - 1, posterior)
             values[predicted] = immediate + future
         return values
@@ -331,6 +378,10 @@ class FiniteBeliefStep:
     observed_reward: float
     cumulative_reward: float
     mode: str
+    functional_outputs: tuple[float, float] | None = None
+    functional_requirements: tuple[float, float] | None = None
+    functional_evaluation: RequirementEvaluation | None = None
+    assigned_effort: float | None = None
 
 
 def run_finite_problem_sequence(
@@ -343,18 +394,38 @@ def run_finite_problem_sequence(
     eta: float,
     horizon: int = DEFAULT_HORIZON,
     seed: int = 20261006,
+    requirements: tuple[float, float] | None = None,
+    requirements_by_problem: Mapping[Problem, tuple[float, float]] | None = None,
 ) -> tuple[FiniteBeliefStep, ...]:
-    """Run problems with continuous world truth and a reset finite agent belief."""
+    """Run problems with optional post-action, policy-independent requirements observation."""
     if mode not in MODES or horizon < 1:
         raise ValueError("invalid mode or horizon")
     validate_state(initial_state)
     model, reset_prior = canonical_model(hypotheses, prior)
+    if requirements is not None and requirements_by_problem is not None:
+        raise ValueError("supply either one fixed requirement or a problem-specific mapping")
+    if requirements is not None:
+        evaluate_requirements((0.0, 0.0), requirements)
+        requirements = tuple(float(value) for value in requirements)
+    if requirements_by_problem is not None:
+        requirements_by_problem = {
+            validate_problem(problem): tuple(float(value) for value in req)
+            for problem, req in requirements_by_problem.items()
+        }
+        for req in requirements_by_problem.values():
+            evaluate_requirements((0.0, 0.0), req)
     world_problems = tuple(validate_problem(problem) for problem in true_problems)
     rng, state, cumulative, rows = Random(seed), initial_state, 0.0, []
     for problem_id, true_problem in enumerate(world_problems):
         known = mode in (DEVELOP_KNOWN, STATIC_KNOWN)
         develop = mode in (DISCOVER_DEVELOP, DEVELOP_KNOWN)
         belief: BeliefVector | None = None if known else reset_prior
+        current_requirements = (
+            requirements_by_problem.get(true_problem)
+            if requirements_by_problem is not None else requirements
+        )
+        if requirements_by_problem is not None and current_requirements is None:
+            raise ValueError(f"no functional requirements registered for problem {true_problem}")
         for step_id in range(horizon):
             remaining = horizon - step_id
             before = state
@@ -375,6 +446,11 @@ def run_finite_problem_sequence(
                     state, true_problem, remaining=remaining, develop=True, eta=eta
                 )[0]
             true_mean = ces_reward(production_inputs(state, action), true_problem)
+            outputs = production_inputs(state, action) if current_requirements is not None else None
+            functional_evaluation = (
+                evaluate_requirements(outputs, current_requirements)
+                if outputs is not None and current_requirements is not None else None
+            )
             observed = true_mean + DEFAULT_SIGMA * rng.gauss(0.0, 1.0)
             if belief is None:
                 after_belief = None
@@ -386,7 +462,9 @@ def run_finite_problem_sequence(
             rows.append(
                 FiniteBeliefStep(
                     problem_id, step_id, true_problem, belief, after_belief, before,
-                    state, action, true_mean, observed, cumulative, mode
+                    state, action, true_mean, observed, cumulative, mode,
+                    outputs, current_requirements, functional_evaluation,
+                    assigned_effort(action) if current_requirements is not None else None,
                 )
             )
             belief = after_belief

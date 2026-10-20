@@ -1,0 +1,56 @@
+{
+  "command": "python experiments/synthetic/prototype_v01/run_fixed_organization_factorial.py",
+  "execution_timestamp_utc": "2026-10-13T07:07:31.497017+00:00",
+  "historical_reference_sha256": {
+    "manifest.json": "eddfebfe64d2f1ec41c58e770aff652d76ce16a0f7f1adaecb158050cd3f0c19",
+    "points.csv": "b72a9ba264db5c226023337dc2f041d3e42f172796b1bde436c5920d0ea7da0d",
+    "summary.json": "530bfd37fe82700cd30ee5000006358235cc1d2eeff74566b553168479784d28"
+  },
+  "output_sha256": {
+    "configuration_summary": "8d4b0a208288b24d73d5a8ff3fe40295d653aa2890b730e95b765fcfba135d76",
+    "organization_learning_interactions": "f2d0316323948e98da163080278ba2c30f7be56dd7e791cf64a695af796ccf51",
+    "organizational_regimes": "6a2cabde50329c7b203aed40e8f399fa113b6b6a07d8f6637095242645bed7bc",
+    "policy_ledger": "4ace13f3c9c3e3916b9d5157ebfd9908e3cb1498c8059baf830194c59ca7ba79",
+    "summary.json": "7691a0b43d31aa488aef4fa553621ca6440783b5a018a937ece93b5517e3d0f5"
+  },
+  "parameters": {
+    "configurations": [
+      "GENERALIST",
+      "SPECIALIST",
+      "DIVERSE"
+    ],
+    "dominance_check": "FIXED_BEST <= JOINT_DP + 7.105427357601002e-15 (frozen EXACT_TOL)",
+    "environment_count": 125,
+    "environment_grid_per_axis": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "fixed_best": "retrospective maximum over three constant-agent assignments; not online",
+    "horizon": 16,
+    "learning_scale_off": 0.0,
+    "learning_scale_on": 0.5,
+    "policies": [
+      "FIXED_BEST",
+      "GREEDY_USE",
+      "JOINT_DP"
+    ],
+    "reward": "existing v0 individual competence reward, summed over tasks",
+    "transition": "existing v0 canonical MIS learning_increment"
+  },
+  "protocol": "HLS CE-03 configuration \u00d7 environment \u00d7 organization \u00d7 learning factorial v0.1",
+  "repository_commit_at_run": "931c560aae5424a29844f8a998518460db9db973",
+  "row_counts": {
+    "cells": 750,
+    "environment_configuration_pairs": 375,
+    "policy_evaluations": 2250
+  },
+  "source_sha256": {
+    "experiments/synthetic/prototype_v01/run_fixed_organization_factorial.py": "411cd4c5634d5a16cdd85c03dff9d1f7ab9255cb4dff65a6a38aa62f57716fc3",
+    "src/hls/configuration_environment_policy_v0.py": "3be0c1d39842be7711772bc98a8e45655cd66c18d448a2f255bfd6a77e35972a",
+    "src/hls/configuration_environment_policy_v01.py": "01362c759a6cbcb776c404f1f8d7ecbf55a524142740c5cf8ff0cd8cc114cb82"
+  },
+  "working_tree_dirty_at_run": true
+}

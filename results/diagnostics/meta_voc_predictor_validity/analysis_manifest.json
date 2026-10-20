@@ -1,0 +1,11 @@
+{
+  "analysis_source_sha256": "7910f2df7330f030dc9000a2e66e7edbffb7729867b478cf950b0c6022c5eb56",
+  "bootstrap_intervals_sha256": "a953a000218e4c9b2556e355777a59edd6c772fb3862b7eaf560e4ccd3db365c",
+  "bootstrap_metrics_sha256": "8277ddef91243a15ad3ef3aaa47bb05b5dc3997246d1358cfdd3f1b93b1b90ec",
+  "completed_utc": "2026-10-12T20:45:04Z",
+  "execution_manifest_sha256": "14dba4e2a07142d4618199b49f33186912eabb450b25367991ca542c62889e52",
+  "paired_mc_replicates_sha256": "3968b00caf3905e5381ad123ce29f5c426c632034e0b3946b38ad6d6247835fc",
+  "protocol": "HLS-META-VOC-PREDICTOR-VALIDITY-v1",
+  "route_selection_contrast_sha256": "7302a5451c5faed0f56b860f729251a3010e8fe773e4ebc7c4d90e3d8c36a53f",
+  "state_estimates_sha256": "fe48380ea538b17d497885d9befbdb2a9a1851c5536fae379182212a058ffd12"
+}

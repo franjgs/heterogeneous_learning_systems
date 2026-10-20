@@ -1,0 +1,34 @@
+{
+  "artifacts": {
+    "configuration_summary": "configuration_summary.csv",
+    "organization_learning_interactions": "organization_learning_interactions.csv",
+    "organizational_regimes": "organizational_regimes.csv",
+    "policy_ledger": "policy_ledger.csv"
+  },
+  "configuration_count": 3,
+  "configuration_environment_learning_cells": 750,
+  "environment_count": 125,
+  "experiment_id": "configuration_environment_factorial_v01_fixed",
+  "finite_grid_means_are_not_population_prevalence": true,
+  "fixedbest_dominance_roundoff_count": 6,
+  "fixedbest_dominance_tolerance": 7.105427357601002e-15,
+  "grid_levels": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "horizon": 16,
+  "learning_conditions": [
+    "ON",
+    "OFF"
+  ],
+  "organization_policies": [
+    "FIXED_BEST",
+    "GREEDY_USE",
+    "JOINT_DP"
+  ],
+  "policy_evaluations": 2250,
+  "scope": "deterministic finite-grid factorial using frozen v0/v0.1 physics and transitions"
+}

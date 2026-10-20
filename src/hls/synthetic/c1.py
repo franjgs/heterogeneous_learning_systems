@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from itertools import product
 from typing import Callable, Mapping
 
 from .components import (
@@ -52,6 +53,33 @@ class StrongSEPSolution:
     value_max: float
     immediate_optimal_actions: frozenset[str]
     action_value_bounds: Mapping[str, tuple[float, float]]
+
+
+@dataclass(frozen=True)
+class FixedRoutingSolution:
+    """Value of one task-to-learner routing fixed for the full horizon.
+
+    The assignment is also used for the terminal task evaluation. Development
+    decisions remain optimized with the same admissible actions/resources as
+    in HLS and STRONG_SEP.
+    """
+
+    task_to_learner: tuple[tuple[int, str], ...]
+    value: float
+
+
+@dataclass(frozen=True)
+class FixedRoutingBestSolution:
+    """Retrospective oracle over all admissible fixed task routings."""
+
+    candidates: tuple[FixedRoutingSolution, ...]
+    value: float
+    optimal_assignments: tuple[tuple[tuple[int, str], ...], ...]
+
+    @property
+    def selected_assignment(self) -> tuple[tuple[int, str], ...]:
+        """Deterministic first maximizer; ties remain available above."""
+        return self.optimal_assignments[0]
 
 
 @dataclass(frozen=True)
@@ -189,6 +217,61 @@ def solve_strong_sep(world: C1ReferenceWorld) -> StrongSEPSolution:
         immediate,
         action_bounds,
     )
+
+
+def evaluate_fixed_routing(
+    world: C1ReferenceWorld,
+    task_to_learner: Mapping[int, str],
+) -> FixedRoutingSolution:
+    """Evaluate a stable task-to-learner map with unchanged C1 mechanics.
+
+    Routing is fixed before the horizon and depends only on task identity.
+    The existing development branch still selects among precisely the same
+    admissible development decisions, opportunity transitions, costs, and
+    continuation values used by the other C1 evaluators.
+    """
+    if set(task_to_learner) != set(TASKS):
+        raise ValueError(f"fixed routing must assign exactly task types {TASKS}")
+    if any(learner not in LEARNERS for learner in task_to_learner.values()):
+        raise ValueError(f"fixed routing learners must be selected from {LEARNERS}")
+
+    routing = tuple((task, task_to_learner[task]) for task in TASKS)
+    route = dict(routing)
+    environment = world.environment
+
+    def value(state: WorldState) -> float:
+        if state.time == 2:
+            return environment.reward.operational_reward(
+                state, world.terminal_task, route[world.terminal_task]
+            )
+        task = environment.tasks.task_at(state.time, state, ())
+        return _branch_value(environment, state, route[task], value)
+
+    return FixedRoutingSolution(routing, value(environment.initial_state()))
+
+
+def enumerate_fixed_routings(world: C1ReferenceWorld) -> tuple[FixedRoutingSolution, ...]:
+    """Evaluate every admissible task-to-learner map in deterministic order."""
+    return tuple(
+        evaluate_fixed_routing(world, dict(zip(TASKS, assignment)))
+        for assignment in product(LEARNERS, repeat=len(TASKS))
+    )
+
+
+def solve_fixed_best(world: C1ReferenceWorld) -> FixedRoutingBestSolution:
+    """Return the retrospective best value among fixed routings only.
+
+    This is an oracle comparator for the fixed-routing class, not an online
+    policy: the winning map is selected after evaluating the complete world.
+    """
+    candidates = enumerate_fixed_routings(world)
+    best = max(candidate.value for candidate in candidates)
+    optimal = tuple(
+        candidate.task_to_learner
+        for candidate in candidates
+        if abs(candidate.value - best) <= C1_TOL
+    )
+    return FixedRoutingBestSolution(candidates, best, optimal)
 
 
 def solve_sep_omega(world: C1ReferenceWorld) -> DynamicSolution:

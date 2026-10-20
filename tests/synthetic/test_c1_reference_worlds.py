@@ -167,3 +167,81 @@ def test_reference_results_are_derived_not_stored_in_world() -> None:
     world = c1.reference_worlds()["R5_recursive_strict_value"]
     assert not hasattr(world, "expected_value")
     assert not hasattr(world, "desired_winner")
+
+
+def test_fixed_routing_uses_one_preassigned_learner_per_task(monkeypatch) -> None:
+    world = c1.reference_worlds()["R5_recursive_strict_value"]
+    original = c1._branch_value
+    visited = set()
+
+    def record_route(environment, state, action, continuation):
+        task = environment.tasks.task_at(state.time, state, ())
+        visited.add((task, action))
+        return original(environment, state, action, continuation)
+
+    monkeypatch.setattr(c1, "_branch_value", record_route)
+    result = c1.evaluate_fixed_routing(world, {1: "M2", 2: "M1"})
+    assert result.task_to_learner == ((1, "M2"), (2, "M1"))
+    assert visited == {(1, "M2"), (2, "M1")}
+
+
+@pytest.mark.parametrize("name", tuple(EXPECTED))
+def test_fixed_best_is_maximum_over_all_fixed_assignments(name: str) -> None:
+    world = c1.reference_worlds()[name]
+    result = c1.solve_fixed_best(world)
+    assert len(result.candidates) == len(c1.LEARNERS) ** len(c1.TASKS)
+    assert result.value == pytest.approx(max(item.value for item in result.candidates), abs=c1.C1_TOL)
+    assert all(
+        item.task_to_learner in result.optimal_assignments
+        for item in result.candidates
+        if abs(item.value - result.value) <= c1.C1_TOL
+    )
+
+
+def test_r5_fixed_best_and_existing_policy_invariants() -> None:
+    world = c1.reference_worlds()["R5_recursive_strict_value"]
+    environment_id = id(world.environment)
+    hls_before = c1.solve_hls(world)
+    sep_before = c1.solve_strong_sep(world)
+    fixed = c1.solve_fixed_best(world)
+    hls_after = c1.solve_hls(world)
+    sep_after = c1.solve_strong_sep(world)
+
+    assert fixed.value == pytest.approx(2.4, abs=1e-12)
+    assert fixed.selected_assignment == ((1, "M1"), (2, "M1"))
+    assert fixed.value <= hls_before.value + c1.C1_TOL
+    assert hls_before.value == pytest.approx(49 / 20, abs=1e-12)
+    assert sep_before.value_min == pytest.approx(12 / 5, abs=1e-12)
+    assert hls_after == hls_before
+    assert sep_after == sep_before
+    assert id(world.environment) == environment_id
+
+
+@pytest.mark.parametrize("name", tuple(EXPECTED))
+def test_fixed_best_never_exceeds_hls_on_frozen_reference_worlds(name: str) -> None:
+    world = c1.reference_worlds()[name]
+    assert c1.solve_fixed_best(world).value <= c1.solve_hls(world).value + c1.C1_TOL
+
+
+def test_policy_comparisons_do_not_encode_a_fixed_vs_sep_dominance_rule() -> None:
+    worlds = c1.reference_worlds()
+    for world in worlds.values():
+        # All evaluators receive the same immutable world and environment;
+        # this test intentionally imposes no FIXED_BEST/STRONG_SEP ordering.
+        assert world.environment is worlds[world.name].environment
+        fixed = c1.solve_fixed_best(world)
+        sep = c1.solve_strong_sep(world)
+        assert fixed.candidates
+        assert sep.action_value_bounds
+
+
+def test_learning_disabled_reference_world_preserves_original_values() -> None:
+    world = c1.reference_worlds()["R1_no_evolution"]
+    fixed = c1.solve_fixed_best(world)
+    hls = c1.solve_hls(world)
+    sep = c1.solve_strong_sep(world)
+    assert world.environment.development.eta == 0.0
+    assert fixed.value == pytest.approx(2.4, abs=1e-12)
+    assert hls.value == pytest.approx(2.4, abs=1e-12)
+    assert sep.value_min == pytest.approx(2.4, abs=1e-12)
+    assert sep.value_max == pytest.approx(2.4, abs=1e-12)

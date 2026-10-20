@@ -19,6 +19,8 @@ from .configuration_environment_policy_v0 import (
     PolicyEvaluation,
     State,
     Task,
+    evaluate_fixed,
+    evaluate_fixed_best,
     evaluate_policy,
 )
 
@@ -145,6 +147,8 @@ class SweepPoint:
     development_enabled: bool
     learning_scale: float
     diagnostics: EnvironmentDiagnostics
+    fixed_candidates: tuple[PolicyEvaluation, ...]
+    fixed_best: PolicyEvaluation
     greedy: PolicyEvaluation
     joint_dp: PolicyEvaluation
 
@@ -174,10 +178,19 @@ def evaluate_sweep(
     for spec in specs:
         diagnostics = environment_diagnostics(spec)
         for configuration, state in CONFIGURATIONS.items():
+            fixed_candidates = tuple(
+                evaluate_fixed(state, diagnostics.sequence, effective_scale, agent)
+                for agent in range(3)
+            )
+            fixed_best = evaluate_fixed_best(
+                state, diagnostics.sequence, effective_scale
+            )
             greedy = evaluate_policy(state, diagnostics.sequence, effective_scale, "GREEDY_USE")
             joint = evaluate_policy(state, diagnostics.sequence, effective_scale, "JOINT_DP")
             if joint.value + EXACT_TOL < greedy.value:
                 raise AssertionError("JOINT_DP must weakly dominate the fair GREEDY_USE policy class")
+            if joint.value + EXACT_TOL < fixed_best.value:
+                raise AssertionError("JOINT_DP must weakly dominate FIXED_BEST")
             points.append(
                 SweepPoint(
                     configuration=configuration,
@@ -185,6 +198,8 @@ def evaluate_sweep(
                     development_enabled=development_enabled,
                     learning_scale=effective_scale,
                     diagnostics=diagnostics,
+                    fixed_candidates=fixed_candidates,
+                    fixed_best=fixed_best,
                     greedy=greedy,
                     joint_dp=joint,
                 )
@@ -219,6 +234,8 @@ def paired_development_rows(
                 "configuration": on.configuration,
                 "sequence": "".join("A" if task == 0 else "B" for task in on.diagnostics.sequence),
                 "P": on.performance,
+                "J_FIXED_BEST_plus": on.fixed_best.value,
+                "J_FIXED_BEST_0": off.fixed_best.value,
                 "J_GREEDY_plus": on.greedy.value,
                 "M": on.management_value,
                 "P0": off.performance,

@@ -1,0 +1,1416 @@
+{
+  "configuration_source": "experiments/synthetic/hls_lab_v1/scientific_model_reference.py S4",
+  "experiment_id": "HLS-P1-supported-policy-comparison",
+  "interpretation_limits": [
+    "P1 is not a fixed task-to-agent organization: only its teaching relation is fixed; production is state-responsive.",
+    "P0 has no teaching actions in its policy action catalog; P1/P2 do. Physical budgets and accounting are shared, but action spaces differ by policy class.",
+    "The fixture has no demand persistence factor comparison and is one deterministic four-period path.",
+    "No Monte Carlo uncertainty estimate or population inference is supported.",
+    "This subcomparison cannot answer the HLS-P1 question about anticipatory development versus FIXED-OPT and REACTIVE."
+  ],
+  "model": {
+    "agents": [
+      "A",
+      "B"
+    ],
+    "collective_effort_budget": 2.0,
+    "demand_process": "deterministic two-state Markov alternation x,y,x,y (existing S4 fixture)",
+    "horizon": 4,
+    "individual_effort_limits": [
+      1.0,
+      1.0
+    ],
+    "initial_estimated_competence": [
+      [
+        0.75,
+        0.25
+      ],
+      [
+        0.3,
+        0.3
+      ]
+    ],
+    "initial_true_competence": [
+      [
+        0.85,
+        0.15
+      ],
+      [
+        0.2,
+        0.2
+      ]
+    ],
+    "mis_v2_eta": [
+      [
+        0.2,
+        0.15
+      ],
+      [
+        0.12,
+        0.18
+      ]
+    ],
+    "observation_mode": "imperfect, same coordinate-indexed observation seed across policies",
+    "observation_parameters": {
+      "competence_grid_points": 101,
+      "competence_prior_variance": 0.04,
+      "outcome_noise_sd": 0.0,
+      "production_observation_noise_sd": 0.02
+    },
+    "reward": "period CES production; separately reports functional success and deficit",
+    "skills": [
+      "x",
+      "y"
+    ],
+    "task_requirements": {
+      "task-x": [
+        1.1,
+        0.1
+      ],
+      "task-y": [
+        0.1,
+        1.2
+      ]
+    },
+    "teaching_efficacy": [
+      [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.75,
+          0.8
+        ]
+      ],
+      [
+        [
+          0.7,
+          0.65
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ]
+    ],
+    "teaching_effort": 0.25,
+    "transfer_rate": 0.4
+  },
+  "policies": {
+    "P0_PRODUCTION_ONLY": "reactive current-view production rule; no teaching actions",
+    "P1_FIXED_TEACHING": "fixed A\u2192B on skill y relation; production remains reactive",
+    "P2_ADAPTIVE_TEACHING": "existing relation-memory heuristic over A\u2192B/y and B\u2192A/x; not anticipatory",
+    "unavailable": {
+      "FIXED_OPT": "No globally optimized fixed organization is implemented in the N\u00d7K/MIS-v2 route.",
+      "HLS_ANTICIPATORY": "No exact anticipatory policy is implemented for the N\u00d7K/MIS-v2 transition. G0/RQ0 HLS exact uses a different A1 model."
+    }
+  },
+  "randomness": {
+    "common_frozen_trajectory_verified": true,
+    "environment_seed": 24016,
+    "information_seed": 24017,
+    "policy_randomness": "none in these P0/P1/P2 rules"
+  },
+  "runs": {
+    "P0_PRODUCTION_ONLY": {
+      "ces_difference_vs_p0": 0.0,
+      "cumulative_ces_reward": 1.8550497116681317,
+      "cumulative_normalized_deficit": 1.444073503016343,
+      "final_true_competence": [
+        [
+          0.9232,
+          0.27749999999999997
+        ],
+        [
+          0.29599999999999993,
+          0.5589056000000001
+        ]
+      ],
+      "functional_success_periods": 0,
+      "period_trace": [
+        {
+          "action": {
+            "production": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.5,
+                0.5
+              ]
+            ],
+            "teaching": null
+          },
+          "competence_after_all_transitions": [
+            [
+              0.88,
+              0.15
+            ],
+            [
+              0.24953347842825124,
+              0.2755691889490066
+            ]
+          ],
+          "competence_after_mis": [
+            [
+              0.88,
+              0.15
+            ],
+            [
+              0.24953347842825124,
+              0.2755691889490066
+            ]
+          ],
+          "competence_before": [
+            [
+              0.85,
+              0.15
+            ],
+            [
+              0.2,
+              0.2
+            ]
+          ],
+          "competence_estimate_before": [
+            [
+              0.74999999999975,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.3000000000002
+            ]
+          ],
+          "mis_increment": [
+            [
+              0.030000000000000027,
+              0.0
+            ],
+            [
+              0.04953347842825123,
+              0.0755691889490066
+            ]
+          ],
+          "normalized_deficit": 0.13636363636363646,
+          "period": 0,
+          "policy_memory_after": [],
+          "policy_memory_before": [],
+          "resource_used": 2.0,
+          "reward": 0.41661035007422437,
+          "success": false,
+          "task": "r:1.1,0.1",
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "action": {
+            "production": [
+              [
+                0.5,
+                0.5
+              ],
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "teaching": null
+          },
+          "competence_after_all_transitions": [
+            [
+              0.8926687370800102,
+              0.21633872113010455
+            ],
+            [
+              0.24953347842825124,
+              0.40596673493818547
+            ]
+          ],
+          "competence_after_mis": [
+            [
+              0.8926687370800102,
+              0.21633872113010455
+            ],
+            [
+              0.24953347842825124,
+              0.40596673493818547
+            ]
+          ],
+          "competence_before": [
+            [
+              0.88,
+              0.15
+            ],
+            [
+              0.24953347842825124,
+              0.2755691889490066
+            ]
+          ],
+          "competence_estimate_before": [
+            [
+              0.8000000049145731,
+              0.25000000000024997
+            ],
+            [
+              0.34333257645455406,
+              0.3661230402297129
+            ]
+          ],
+          "mis_increment": [
+            [
+              0.01266873708001015,
+              0.06633872113010456
+            ],
+            [
+              0.0,
+              0.13039754598917885
+            ]
+          ],
+          "normalized_deficit": 0.7078590092091612,
+          "period": 1,
+          "policy_memory_after": [],
+          "policy_memory_before": [],
+          "resource_used": 2.0,
+          "reward": 0.39401594817950697,
+          "success": false,
+          "task": "r:0.1,1.2",
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "action": {
+            "production": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.5,
+                0.5
+              ]
+            ],
+            "teaching": null
+          },
+          "competence_after_all_transitions": [
+            [
+              0.9141349896640081,
+              0.21633872113010455
+            ],
+            [
+              0.29599999999999993,
+              0.46208000000000005
+            ]
+          ],
+          "competence_after_mis": [
+            [
+              0.9141349896640081,
+              0.21633872113010455
+            ],
+            [
+              0.29599999999999993,
+              0.46208000000000005
+            ]
+          ],
+          "competence_before": [
+            [
+              0.8926687370800102,
+              0.21633872113010455
+            ],
+            [
+              0.24953347842825124,
+              0.40596673493818547
+            ]
+          ],
+          "competence_estimate_before": [
+            [
+              0.8211148719761656,
+              0.07861949021361771
+            ],
+            [
+              0.34333257645455406,
+              0.48022089245625454
+            ]
+          ],
+          "mis_increment": [
+            [
+              0.021466252583997925,
+              0.0
+            ],
+            [
+              0.04646652157174869,
+              0.05611326506181458
+            ]
+          ],
+          "normalized_deficit": 0.0750586579144221,
+          "period": 2,
+          "policy_memory_after": [],
+          "policy_memory_before": [],
+          "resource_used": 2.0,
+          "reward": 0.5323284328321976,
+          "success": false,
+          "task": "r:1.1,0.1",
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "action": {
+            "production": [
+              [
+                0.5,
+                0.5
+              ],
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "teaching": null
+          },
+          "competence_after_all_transitions": [
+            [
+              0.9232,
+              0.27749999999999997
+            ],
+            [
+              0.29599999999999993,
+              0.5589056000000001
+            ]
+          ],
+          "competence_after_mis": [
+            [
+              0.9232,
+              0.27749999999999997
+            ],
+            [
+              0.29599999999999993,
+              0.5589056000000001
+            ]
+          ],
+          "competence_before": [
+            [
+              0.9141349896640081,
+              0.21633872113010455
+            ],
+            [
+              0.29599999999999993,
+              0.46208000000000005
+            ]
+          ],
+          "competence_estimate_before": [
+            [
+              0.8570327847497771,
+              0.07861949021361771
+            ],
+            [
+              0.3828897269224825,
+              0.5293199970113348
+            ]
+          ],
+          "mis_increment": [
+            [
+              0.009065010335991941,
+              0.06116127886989542
+            ],
+            [
+              0.0,
+              0.09682560000000007
+            ]
+          ],
+          "normalized_deficit": 0.5247921995291231,
+          "period": 3,
+          "policy_memory_after": [],
+          "policy_memory_before": [],
+          "resource_used": 2.0,
+          "reward": 0.5120949805822029,
+          "success": false,
+          "task": "r:0.1,1.2",
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "periods": 4,
+      "periods_with_mis_learning": 4,
+      "periods_with_teaching": 0,
+      "policy_id": "P0_PRODUCTION_ONLY",
+      "productive_effort": 8.0,
+      "teaching_effort_charge": 0.0,
+      "total_effort_charge": 8.0
+    },
+    "P1_FIXED_TEACHING": {
+      "ces_difference_vs_p0": -0.6625363320622102,
+      "cumulative_ces_reward": 1.1925133796059215,
+      "cumulative_normalized_deficit": 2.850737580832767,
+      "final_true_competence": [
+        [
+          0.904,
+          0.15
+        ],
+        [
+          0.2,
+          0.6146378989568001
+        ]
+      ],
+      "functional_success_periods": 0,
+      "period_trace": [
+        {
+          "action": {
+            "production": [
+              [
+                0.5,
+                0.0
+              ],
+              [
+                0.0,
+                0.5
+              ]
+            ],
+            "teaching": {
+              "effort": 0.25,
+              "learner_id": "B",
+              "skill_id": "y",
+              "teacher_id": "A"
+            }
+          },
+          "competence_after_all_transitions": [
+            [
+              0.8658359213500126,
+              0.15
+            ],
+            [
+              0.2,
+              0.3335236538330861
+            ]
+          ],
+          "competence_after_mis": [
+            [
+              0.8658359213500126,
+              0.15
+            ],
+            [
+              0.2,
+              0.2755691889490066
+            ]
+          ],
+          "competence_before": [
+            [
+              0.85,
+              0.15
+            ],
+            [
+              0.2,
+              0.2
+            ]
+          ],
+          "competence_estimate_before": [
+            [
+              0.74999999999975,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.3000000000002
+            ]
+          ],
+          "mis_increment": [
+            [
+              0.01583592135001266,
+              0.0
+            ],
+            [
+              0.0,
+              0.0755691889490066
+            ]
+          ],
+          "normalized_deficit": 0.6136363636363636,
+          "period": 0,
+          "policy_memory_after": [
+            {
+              "count": 1,
+              "mean": 0.9142857141405136,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "policy_memory_before": [],
+          "resource_used": 1.5,
+          "reward": 0.23432764064044154,
+          "success": false,
+          "task": "r:1.1,0.1",
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.05795446488407946
+            ]
+          ]
+        },
+        {
+          "action": {
+            "production": [
+              [
+                0.5,
+                0.0
+              ],
+              [
+                0.0,
+                0.5
+              ]
+            ],
+            "teaching": {
+              "effort": 0.25,
+              "learner_id": "B",
+              "skill_id": "y",
+              "teacher_id": "A"
+            }
+          },
+          "competence_after_all_transitions": [
+            [
+              0.88,
+              0.15
+            ],
+            [
+              0.2,
+              0.4447616000000001
+            ]
+          ],
+          "competence_after_mis": [
+            [
+              0.88,
+              0.15
+            ],
+            [
+              0.2,
+              0.39648000000000005
+            ]
+          ],
+          "competence_before": [
+            [
+              0.8658359213500126,
+              0.15
+            ],
+            [
+              0.2,
+              0.3335236538330861
+            ]
+          ],
+          "competence_estimate_before": [
+            [
+              0.7770854067021314,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.42407750511379244
+            ]
+          ],
+          "mis_increment": [
+            [
+              0.014164078649987366,
+              0.0
+            ],
+            [
+              0.0,
+              0.06295634616691398
+            ]
+          ],
+          "normalized_deficit": 0.8610318109028808,
+          "period": 1,
+          "policy_memory_after": [
+            {
+              "count": 2,
+              "mean": 0.9200359388166761,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "policy_memory_before": [
+            {
+              "count": 1,
+              "mean": 0.9142857141405136,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "resource_used": 1.5,
+          "reward": 0.28426482959457605,
+          "success": false,
+          "task": "r:0.1,1.2",
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.048281600000000036
+            ]
+          ]
+        },
+        {
+          "action": {
+            "production": [
+              [
+                0.5,
+                0.0
+              ],
+              [
+                0.0,
+                0.5
+              ]
+            ],
+            "teaching": {
+              "effort": 0.25,
+              "learner_id": "B",
+              "skill_id": "y",
+              "teacher_id": "A"
+            }
+          },
+          "competence_after_all_transitions": [
+            [
+              0.8926687370800102,
+              0.15
+            ],
+            [
+              0.2,
+              0.5374334248955459
+            ]
+          ],
+          "competence_after_mis": [
+            [
+              0.8926687370800102,
+              0.15
+            ],
+            [
+              0.2,
+              0.49721024445168027
+            ]
+          ],
+          "competence_before": [
+            [
+              0.88,
+              0.15
+            ],
+            [
+              0.2,
+              0.4447616000000001
+            ]
+          ],
+          "competence_estimate_before": [
+            [
+              0.8347371947454888,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.5264617142662444
+            ]
+          ],
+          "mis_increment": [
+            [
+              0.01266873708001015,
+              0.0
+            ],
+            [
+              0.0,
+              0.05244864445168018
+            ]
+          ],
+          "normalized_deficit": 0.6000000000000001,
+          "period": 2,
+          "policy_memory_after": [
+            {
+              "count": 3,
+              "mean": 0.9260322710960408,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "policy_memory_before": [
+            {
+              "count": 2,
+              "mean": 0.9200359388166761,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "resource_used": 1.5,
+          "reward": 0.3219981667237805,
+          "success": false,
+          "task": "r:1.1,0.1",
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.040223180443865636
+            ]
+          ]
+        },
+        {
+          "action": {
+            "production": [
+              [
+                0.5,
+                0.0
+              ],
+              [
+                0.0,
+                0.5
+              ]
+            ],
+            "teaching": {
+              "effort": 0.25,
+              "learner_id": "B",
+              "skill_id": "y",
+              "teacher_id": "A"
+            }
+          },
+          "competence_after_all_transitions": [
+            [
+              0.904,
+              0.15
+            ],
+            [
+              0.2,
+              0.6146378989568001
+            ]
+          ],
+          "competence_after_mis": [
+            [
+              0.904,
+              0.15
+            ],
+            [
+              0.2,
+              0.5811281510400002
+            ]
+          ],
+          "competence_before": [
+            [
+              0.8926687370800102,
+              0.15
+            ],
+            [
+              0.2,
+              0.5374334248955459
+            ]
+          ],
+          "competence_estimate_before": [
+            [
+              0.8346430972708627,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.61090177091428
+            ]
+          ],
+          "mis_increment": [
+            [
+              0.01133126291998987,
+              0.0
+            ],
+            [
+              0.0,
+              0.04369472614445424
+            ]
+          ],
+          "normalized_deficit": 0.7760694062935225,
+          "period": 3,
+          "policy_memory_after": [
+            {
+              "count": 4,
+              "mean": 0.9322875959371256,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "policy_memory_before": [
+            {
+              "count": 3,
+              "mean": 0.9260322710960408,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "resource_used": 1.5,
+          "reward": 0.35192274264712337,
+          "success": false,
+          "task": "r:0.1,1.2",
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.03350974791679995
+            ]
+          ]
+        }
+      ],
+      "periods": 4,
+      "periods_with_mis_learning": 4,
+      "periods_with_teaching": 4,
+      "policy_id": "P1_FIXED_TEACHING",
+      "productive_effort": 4.0,
+      "teaching_effort_charge": 2.0,
+      "total_effort_charge": 6.0
+    },
+    "P2_ADAPTIVE_TEACHING": {
+      "ces_difference_vs_p0": -0.6855467144217064,
+      "cumulative_ces_reward": 1.1695029972464253,
+      "cumulative_normalized_deficit": 2.8636790575328623,
+      "final_true_competence": [
+        [
+          0.91072,
+          0.15
+        ],
+        [
+          0.2,
+          0.58112815104
+        ]
+      ],
+      "functional_success_periods": 0,
+      "period_trace": [
+        {
+          "action": {
+            "production": [
+              [
+                0.5,
+                0.0
+              ],
+              [
+                0.0,
+                0.5
+              ]
+            ],
+            "teaching": {
+              "effort": 0.25,
+              "learner_id": "B",
+              "skill_id": "y",
+              "teacher_id": "A"
+            }
+          },
+          "competence_after_all_transitions": [
+            [
+              0.8658359213500126,
+              0.15
+            ],
+            [
+              0.2,
+              0.3335236538330861
+            ]
+          ],
+          "competence_after_mis": [
+            [
+              0.8658359213500126,
+              0.15
+            ],
+            [
+              0.2,
+              0.2755691889490066
+            ]
+          ],
+          "competence_before": [
+            [
+              0.85,
+              0.15
+            ],
+            [
+              0.2,
+              0.2
+            ]
+          ],
+          "competence_estimate_before": [
+            [
+              0.74999999999975,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.3000000000002
+            ]
+          ],
+          "mis_increment": [
+            [
+              0.01583592135001266,
+              0.0
+            ],
+            [
+              0.0,
+              0.0755691889490066
+            ]
+          ],
+          "normalized_deficit": 0.6136363636363636,
+          "period": 0,
+          "policy_memory_after": [
+            {
+              "count": 1,
+              "mean": 0.9142857141405136,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "policy_memory_before": [],
+          "resource_used": 1.5,
+          "reward": 0.23432764064044154,
+          "success": false,
+          "task": "r:1.1,0.1",
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.05795446488407946
+            ]
+          ]
+        },
+        {
+          "action": {
+            "production": [
+              [
+                0.5,
+                0.0
+              ],
+              [
+                0.0,
+                0.5
+              ]
+            ],
+            "teaching": {
+              "effort": 0.25,
+              "learner_id": "A",
+              "skill_id": "x",
+              "teacher_id": "B"
+            }
+          },
+          "competence_after_all_transitions": [
+            [
+              0.8884,
+              0.15
+            ],
+            [
+              0.2,
+              0.39648000000000005
+            ]
+          ],
+          "competence_after_mis": [
+            [
+              0.88,
+              0.15
+            ],
+            [
+              0.2,
+              0.39648000000000005
+            ]
+          ],
+          "competence_before": [
+            [
+              0.8658359213500126,
+              0.15
+            ],
+            [
+              0.2,
+              0.3335236538330861
+            ]
+          ],
+          "competence_estimate_before": [
+            [
+              0.7770854067021314,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.42407750511379244
+            ]
+          ],
+          "mis_increment": [
+            [
+              0.014164078649987366,
+              0.0
+            ],
+            [
+              0.0,
+              0.06295634616691398
+            ]
+          ],
+          "normalized_deficit": 0.8610318109028808,
+          "period": 1,
+          "policy_memory_after": [
+            {
+              "count": 1,
+              "mean": 0.9142857141405136,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            },
+            {
+              "count": 1,
+              "mean": 0.5082813393530161,
+              "relation": [
+                "B",
+                "A",
+                "x"
+              ]
+            }
+          ],
+          "policy_memory_before": [
+            {
+              "count": 1,
+              "mean": 0.9142857141405136,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "resource_used": 1.5,
+          "reward": 0.28426482959457605,
+          "success": false,
+          "task": "r:0.1,1.2",
+          "teaching_increment": [
+            [
+              0.008399999999999963,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "action": {
+            "production": [
+              [
+                0.5,
+                0.0
+              ],
+              [
+                0.0,
+                0.5
+              ]
+            ],
+            "teaching": {
+              "effort": 0.25,
+              "learner_id": "B",
+              "skill_id": "y",
+              "teacher_id": "A"
+            }
+          },
+          "competence_after_all_transitions": [
+            [
+              0.9001819254844093,
+              0.15
+            ],
+            [
+              0.2,
+              0.4972102444516802
+            ]
+          ],
+          "competence_after_mis": [
+            [
+              0.9001819254844093,
+              0.15
+            ],
+            [
+              0.2,
+              0.45348939614313066
+            ]
+          ],
+          "competence_before": [
+            [
+              0.8884,
+              0.15
+            ],
+            [
+              0.2,
+              0.39648000000000005
+            ]
+          ],
+          "competence_estimate_before": [
+            [
+              0.843137194745489,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.47847999998356516
+            ]
+          ],
+          "mis_increment": [
+            [
+              0.011781925484409372,
+              0.0
+            ],
+            [
+              0.0,
+              0.05700939614313061
+            ]
+          ],
+          "normalized_deficit": 0.5961818181818183,
+          "period": 2,
+          "policy_memory_after": [
+            {
+              "count": 1,
+              "mean": 0.5082813393530161,
+              "relation": [
+                "B",
+                "A",
+                "x"
+              ]
+            },
+            {
+              "count": 2,
+              "mean": 0.9200359388228219,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "policy_memory_before": [
+            {
+              "count": 1,
+              "mean": 0.9142857141405136,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            },
+            {
+              "count": 1,
+              "mean": 0.5082813393530161,
+              "relation": [
+                "B",
+                "A",
+                "x"
+              ]
+            }
+          ],
+          "resource_used": 1.5,
+          "reward": 0.3089830164147107,
+          "success": false,
+          "task": "r:1.1,0.1",
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.043720848308549554
+            ]
+          ]
+        },
+        {
+          "action": {
+            "production": [
+              [
+                0.5,
+                0.0
+              ],
+              [
+                0.0,
+                0.5
+              ]
+            ],
+            "teaching": {
+              "effort": 0.25,
+              "learner_id": "B",
+              "skill_id": "y",
+              "teacher_id": "A"
+            }
+          },
+          "competence_after_all_transitions": [
+            [
+              0.91072,
+              0.15
+            ],
+            [
+              0.2,
+              0.58112815104
+            ]
+          ],
+          "competence_after_mis": [
+            [
+              0.91072,
+              0.15
+            ],
+            [
+              0.2,
+              0.544704512
+            ]
+          ],
+          "competence_before": [
+            [
+              0.9001819254844093,
+              0.15
+            ],
+            [
+              0.2,
+              0.4972102444516802
+            ]
+          ],
+          "competence_estimate_before": [
+            [
+              0.8493712194106826,
+              0.25000000000024997
+            ],
+            [
+              0.3000000000002,
+              0.5711928445087318
+            ]
+          ],
+          "mis_increment": [
+            [
+              0.010538074515590634,
+              0.0
+            ],
+            [
+              0.0,
+              0.04749426754831981
+            ]
+          ],
+          "normalized_deficit": 0.7928290648117999,
+          "period": 3,
+          "policy_memory_after": [
+            {
+              "count": 1,
+              "mean": 0.5082813393530161,
+              "relation": [
+                "B",
+                "A",
+                "x"
+              ]
+            },
+            {
+              "count": 3,
+              "mean": 0.9260322710756913,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "policy_memory_before": [
+            {
+              "count": 1,
+              "mean": 0.5082813393530161,
+              "relation": [
+                "B",
+                "A",
+                "x"
+              ]
+            },
+            {
+              "count": 2,
+              "mean": 0.9200359388228219,
+              "relation": [
+                "A",
+                "B",
+                "y"
+              ]
+            }
+          ],
+          "resource_used": 1.5,
+          "reward": 0.34192751059669696,
+          "success": false,
+          "task": "r:0.1,1.2",
+          "teaching_increment": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.03642363904000001
+            ]
+          ]
+        }
+      ],
+      "periods": 4,
+      "periods_with_mis_learning": 4,
+      "periods_with_teaching": 4,
+      "policy_id": "P2_ADAPTIVE_TEACHING",
+      "productive_effort": 4.0,
+      "teaching_effort_charge": 2.0,
+      "total_effort_charge": 6.0
+    }
+  },
+  "scientific_question_coverage": "Does not test FIXED-OPT or anticipatory optimization, nor vary demand persistence. Reports existing P0/P1/P2 behavior on the already-defined S4 deterministic alternating path.",
+  "status": "EXECUTED_BOUNDED_SUBCOMPARISON_NOT_FULL_HLS_P1",
+  "title": "Bounded existing-policy comparison on the S4 N\u00d7K/MIS-v2 diagnostic"
+}

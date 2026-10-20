@@ -1,0 +1,32 @@
+{
+  "completed_cells": 160,
+  "completed_decisions": 2880,
+  "elapsed_seconds": 3515.746032124851,
+  "expected_cells": 160,
+  "failure": null,
+  "historical_replay": {
+    "absolute_tolerance": 1e-12,
+    "cell": "G00/H0/seed0/DISCOVER+DEVELOP",
+    "decisions": 18,
+    "max_discrepancies": {
+      "action_mismatch_count": 0,
+      "belief_after": 0.0,
+      "cumulative": 0.0,
+      "mu_true": 0.0,
+      "observed_reward": 0.0,
+      "state_after": 0.0
+    },
+    "passed": true,
+    "replayed_cumulative": 25.94566550360568,
+    "stored_cumulative": 25.94566550360568
+  },
+  "last_completed_cell": {
+    "policy": "discover_only",
+    "seed": 6,
+    "team_id": "G07"
+  },
+  "missing_cells": [],
+  "post_timeout_finalization": "persisted CSV rows parsed and summarized; no simulation executed",
+  "status": "COMPLETE",
+  "unique_cells": 160
+}

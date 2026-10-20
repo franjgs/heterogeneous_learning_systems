@@ -3,6 +3,7 @@
 from math import isclose
 
 import pytest
+import hls.finite_problem_belief as finite_belief_module
 
 from hls.discover_develop_v0 import DEVELOP_KNOWN, DISCOVER_DEVELOP, DISCOVER_ONLY, STATIC_KNOWN
 from hls.discover_develop_v2 import mis_v2_transition, run_sequence_v2
@@ -101,6 +102,41 @@ def test_m3_exact_dp_has_valid_value_and_action_with_continuation():
     result = finite_unknown_policy_value(STATE, TERNARY_MODEL, horizon=2)
     assert result.value > 0.0
     assert result.first_actions and all(action in JOINT_ACTIONS for action in result.first_actions)
+
+
+def test_terminal_frontier_preserves_expected_reward_maximum_for_all_beliefs():
+    vectors = ((0.1, 0.8, 0.2), (0.2, 0.9, 0.2), (0.7, 0.3, 0.4), (0.1, 0.8, 0.2))
+    frontier = finite_belief_module._componentwise_undominated(vectors)
+    assert len(frontier) == 2
+    for belief in ((1.0, 0.0, 0.0), (0.2, 0.5, 0.3), (0.0, 0.0, 1.0)):
+        full_value = max(expected_reward(belief, vector) for vector in set(vectors))
+        pruned_value = max(expected_reward(belief, vector) for vector in frontier)
+        assert pruned_value == full_value
+
+
+def test_discover_only_terminal_pruning_preserves_full_trajectory(monkeypatch):
+    unpruned = finite_belief_module._componentwise_undominated
+    monkeypatch.setattr(finite_belief_module, "_componentwise_undominated",
+                        lambda vectors: tuple(dict.fromkeys(vectors)))
+    reference = run_finite_problem_sequence(
+        G00, (THETA_1,), TERNARY_MODEL, prior=(1 / 3, 1 / 3, 1 / 3),
+        mode=DISCOVER_ONLY, eta=0.35, horizon=3, seed=29,
+    )
+    monkeypatch.setattr(finite_belief_module, "_componentwise_undominated", unpruned)
+    optimized = run_finite_problem_sequence(
+        G00, (THETA_1,), TERNARY_MODEL, prior=(1 / 3, 1 / 3, 1 / 3),
+        mode=DISCOVER_ONLY, eta=0.35, horizon=3, seed=29,
+    )
+    assert len(reference) == len(optimized) == 3
+    for before, after in zip(reference, optimized):
+        assert before.action == after.action
+        assert before.state_before == after.state_before
+        assert before.state_after == after.state_after
+        assert before.belief_before == after.belief_before
+        assert before.belief_after == after.belief_after
+        assert before.true_mean == after.true_mean
+        assert before.observed_reward == after.observed_reward
+        assert before.cumulative_reward == after.cumulative_reward
 
 
 @pytest.mark.parametrize("mode", (DISCOVER_ONLY, DISCOVER_DEVELOP))

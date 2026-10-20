@@ -80,10 +80,49 @@ def test_dp_dominates_greedy_and_disabled_learning_is_identity() -> None:
     for enabled in (True, False):
         for point in evaluate_sweep(development_enabled=enabled, specifications=specs):
             assert point.joint_dp.value >= point.greedy.value - 1e-12
+            assert point.joint_dp.value >= point.fixed_best.value - 1e-12
+            assert len(point.fixed_candidates) == 3
             if not enabled:
                 for agent in range(3):
                     for task in range(2):
                         assert transition(CONFIGURATIONS[point.configuration], agent, task, 0.0) == CONFIGURATIONS[point.configuration]
+
+
+def test_all_policy_evaluations_share_configuration_sequence_and_learning_condition() -> None:
+    specification = EnvironmentSpec(0.5, 0.5, 0.5)
+    points = evaluate_sweep(specifications=(specification,))
+    assert len(points) == len(CONFIGURATIONS)
+    for point in points:
+        assert point.environment == specification
+        assert point.diagnostics.sequence == environment_diagnostics(specification).sequence
+        assert point.learning_scale == ENABLED_LEARNING_SCALE
+        assert point.development_enabled is True
+        assert len(point.fixed_candidates) == 3
+        assert all(item.policy == "FIXED" for item in point.fixed_candidates)
+        assert point.fixed_best.policy == "FIXED_BEST"
+        assert point.greedy.policy == "GREEDY_USE"
+        assert point.joint_dp.policy == "JOINT_DP"
+
+
+def test_historical_greedy_and_dp_values_are_unchanged() -> None:
+    specifications = (
+        EnvironmentSpec(0.5, 0.5, 0.5),
+        EnvironmentSpec(0.25, 0.75, 1.0),
+    )
+    points = evaluate_sweep(specifications=specifications)
+    observed = {
+        (point.configuration, point.environment): (point.greedy.value, point.joint_dp.value)
+        for point in points
+    }
+    expected = {
+        ("GENERALIST", specifications[0]): (11.588493095471463, 11.588493095471463),
+        ("SPECIALIST", specifications[0]): (16.0, 16.0),
+        ("DIVERSE", specifications[0]): (13.605182421185571, 13.605182421185571),
+        ("GENERALIST", specifications[1]): (11.642665571009307, 11.642665571009307),
+        ("SPECIALIST", specifications[1]): (16.0, 16.0),
+        ("DIVERSE", specifications[1]): (13.631187085905385, 13.631187085905385),
+    }
+    assert observed == expected
 
 
 def test_dp_matches_independent_brute_force_on_small_known_sequence() -> None:
