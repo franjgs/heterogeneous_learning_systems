@@ -6,6 +6,18 @@
 > historical traceability and must not override this snapshot where dates
 > differ.
 
+**USE/DEVELOP status — 23 October 2026:** the focused grounding phase ended
+with an initial **REFRAME**; the subsequent originality assessment concludes
+**NO-GO as an immediate standalone publication candidate**. Unrestricted,
+fully coordinated USE and DEVELOP modules implement the same behavior class
+as joint policies under explicit common-information, synchronization,
+feasibility, and computation assumptions. Existing HLS results remain
+bounded evidence, not a general claim that joint management is necessary. The
+[research note](research/HLS_USE_DEVELOP_SEPARABILITY_NOTE.md) records the
+formal equivalence, literature comparison, and decision. S3b-E1 is the sole
+priority alternative for further originality positioning, not an open or
+authorized campaign. No historical result was changed.
+
 ## Executive status
 
 HLS is a research laboratory and a parameterized family of heterogeneous
