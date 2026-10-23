@@ -219,6 +219,56 @@ class ExperimentRun:
         return json.dumps(self.to_dict(), sort_keys=True, separators=(",", ":"),
                           ensure_ascii=False, allow_nan=False)
 
+    @classmethod
+    def from_dict(cls, payload: Mapping[str, Any]) -> "ExperimentRun":
+        """Reconstruct a run from its schema-v1 JSON-compatible mapping.
+
+        This is deliberately strict: unknown/missing envelope fields are not
+        silently discarded, while ``mechanism_results`` remains the opaque
+        JSON payload recorded by the originating route.
+        """
+        expected = {item.name for item in fields(cls)}
+        actual = set(payload)
+        if actual != expected:
+            missing = sorted(expected - actual)
+            unknown = sorted(actual - expected)
+            raise ValueError(f"ExperimentRun fields mismatch; missing={missing}, unknown={unknown}")
+        if payload["schema_version"] != SCHEMA_VERSION:
+            raise ValueError(f"unsupported ExperimentRun schema: {payload['schema_version']!r}")
+
+        seeds = payload["random_seeds"]
+        events = payload["events"]
+        metrics = payload["metrics"]
+        if seeds is not None and not isinstance(seeds, (tuple, list)):
+            raise TypeError("random_seeds must be a list, tuple, or None")
+        if not isinstance(events, (tuple, list)) or not isinstance(metrics, (tuple, list)):
+            raise TypeError("events and metrics must be sequences")
+        return cls(
+            schema_version=payload["schema_version"],
+            run_id=payload["run_id"],
+            mechanism_id=payload["mechanism_id"],
+            policy_id=payload["policy_id"],
+            configuration=payload["configuration"],
+            initial_conditions=payload["initial_conditions"],
+            random_seeds=(None if seeds is None else tuple(SeedRecord(**row) for row in seeds)),
+            information_available=payload["information_available"],
+            observation_model=payload["observation_model"],
+            software_revision=payload["software_revision"],
+            units=tuple(UnitDeclaration(**row) for row in payload["units"]),
+            events=tuple(ExperimentEvent(**row) for row in events),
+            metrics=tuple(MetricValue(**row) for row in metrics),
+            mechanism_results=payload["mechanism_results"],
+            metadata=payload["metadata"],
+        )
+
+    @classmethod
+    def from_json(cls, serialized: str) -> "ExperimentRun":
+        """Deserialize stable JSON produced by :meth:`to_json`."""
+        payload = json.loads(serialized)
+        if not isinstance(payload, dict):
+            raise TypeError("ExperimentRun JSON root must be an object")
+        return cls.from_dict(payload)
+
 
 def _digest_id(result: Any, prefix: str) -> str:
     payload = json.dumps(_json_value(result, "source_result"), sort_keys=True,

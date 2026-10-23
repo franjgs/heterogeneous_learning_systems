@@ -7373,3 +7373,694 @@ mínimo solo donde el mapa demuestre una carencia, seguido de un vertical
 slice de evaluación no-S7. Este documento y
 [HLS_LAB_ROADMAP_CURRENT.md](HLS_LAB_ROADMAP_CURRENT.md) son los únicos
 documentos modificados en esta actualización.
+
+## 2026-10-23 — Hito 1, Incremento 1: auditoría y contrato experimental común
+
+**Fecha del trabajo y del registro:** 23 de octubre de 2026; no se conservó
+hora exacta. **Tipo:** auditoría y especificación documental. No se modificó
+código ni se ejecutaron simulaciones.
+
+### Trabajo y hallazgos verificados
+
+Se inspeccionaron `src/hls/experiment_contract.py`,
+`src/hls/performance_evaluation.py`, el adaptador y piloto PEF de S7, los
+runners representativos S2a/S3b/S4/S7, y pruebas/resultados disponibles. El
+contrato `ExperimentRun` versionado ya contiene identidad de mecanismo,
+configuración, condiciones iniciales, semillas, régimen de información,
+unidades, eventos, métricas, procedencia y resultado fuente; adaptadores
+explícitos cubren solo algunas estructuras N×K, Nembhard y contextual. No es
+un ejecutor ni todos los runners lo producen. PEF ya ofrece perfiles,
+registros, resultados, estados de disponibilidad, agregación ponderada y
+comparación semántica básica; no alinea semillas ni calcula intervalos
+pareados. La única ruta nueva completa runner→adaptador→PEF verificada es
+S7.
+
+El contraste de rutas mostró semánticas que deben permanecer distintas:
+S2a es determinista y separable, S3b tiene feedback selectivo y varios
+protocolos, S4 mezcla dinámicas/objetivos N×K y exactos, y S7 usa ramas
+Markov exactas ponderadas. El contrato común debe describir esas diferencias,
+no homogeneizarlas. En particular, ausencia/no observabilidad no equivale a
+cero, y recompensa original no equivale automáticamente a CES ni a servicio
+funcional.
+
+### Propuesta y decisión técnica
+
+Se recomienda reutilizar `ExperimentRun` como sobre de réplica y
+`EvaluationProfile` como configuración de evaluación, usando inicialmente
+campos/mapas existentes para IDs canónicos de escenario, configuración,
+problema organizativo y perfil. No se justifica todavía cambiar el schema ni
+crear una segunda arquitectura experimental. Los vínculos entre perfil y run,
+ID único de réplica y régimen informacional deben quedar explícitos en el
+adaptador. `PerformanceEvaluator.compare` no sustituye el emparejamiento
+estadístico.
+
+S2a se recomienda como primer vertical slice no-S7: su regresión conocida
+(exacto 8.0, greedy 7.2, enumeración global 8.0 y 84,388 secuencias) permite
+validar el flujo sin nueva estocasticidad. El alcance PEF debe limitarse a la
+recompensa de asignación; conteos de unidades/capacidad se conservan como
+diagnósticos porque el catálogo PEF actual no contiene una métrica genérica
+de cobertura por tipo. S2a no conserva
+requisitos funcionales, producción física, CES ni déficit funcional; no se
+deben inventar esas métricas. Si el PI exige cumplimiento funcional en el
+primer slice, deberá elegir una ruta con requisitos registrados antes de
+autorizar implementación.
+
+### Estado, límites y siguiente paso
+
+Se creó la especificación
+[`HLS_EXPERIMENT_CONTRACT_INTEGRATION.md`](HLS_EXPERIMENT_CONTRACT_INTEGRATION.md),
+con inventario, comparación de flujos, contrato mínimo, evaluación de
+`ExperimentRun`/`EvaluationProfile`, recomendación S2a, límites y pruebas de
+aceptación del Incremento 2. El roadmap vigente incorpora el estado de esta
+auditoría y su decisión pendiente.
+
+**Estado de Hito 1:** Incremento 1 (auditoría/especificación) documentado;
+Incremento 2 (implementación del primer adaptador/vertical slice) no iniciado
+y requiere autorización del PI. No se alteraron runners, políticas,
+escenarios, métricas ni resultados históricos. No se ejecutaron pruebas porque
+el cambio es exclusivamente documental; `git diff --check` es la validación
+solicitada.
+
+## 2026-10-23 — Hito 1, Incremento 2: integración vertical S2a con HLS-PEF
+
+**Fecha del trabajo:** 23 de octubre de 2026; no se conserva hora exacta.
+**Autorización:** GO del PI. **Objetivo:** ejecutar el S2a existente,
+representar sus dos políticas con el contrato común y evaluar los registros
+mediante HLS-PEF sin cambiar la asignación.
+
+### Implementación
+
+Se añadió `src/hls/synthetic/s2a_pef_adapter.py`, que valida la salida en
+memoria de `run_s2a()` y crea un `ExperimentRun`/registros PEF por política.
+La configuración conserva matriz, demanda, capacidad, horizonte, objetivo,
+problema organizativo, información disponible, unidades y procedencia. Los
+eventos por periodo retienen asignaciones, demanda, conteos satisfechos/no
+servidos, capacidad y recompensa. El perfil PEF calcula recompensa original
+y conteo de asignaciones; el desglose por tipo queda como diagnóstico. CES,
+éxito funcional, déficit funcional y producción física se declaran
+`NOT_APPLICABLE`, sin fabricar ceros.
+
+Se añadió `ExperimentRun.from_dict()`/`from_json()` estricto para validar el
+round-trip solicitado. No cambió el schema v1. El adaptador usa IDs distintos
+para exacto y greedy, declara sin azar (`random_seeds=()`), y deja revisión de
+software desconocida. La enumeración global continúa etiquetada como
+referencia de optimalidad y no como política.
+
+La auditoría encontró que el piloto S7 original guardó perfiles/resultados y
+registros PEF, pero no emitió `ExperimentRun`. Se añadió a
+`s7_pef_adapter.py` un conversor downstream del artefacto S7 existente al
+sobre común. Este conversor no reejecuta S7 ni altera sus resultados. Las
+pruebas rehidratan perfiles/registros archivados y vuelven a evaluarlos con
+HLS-PEF, además de verificar el sobre común; queda explícito que la conversión
+es posterior al runner S7, no una emisión nativa suya.
+
+El runner integrado nuevo es
+`experiments/run_hls_s2a_pef_integration.py`. Llama una vez a la función
+existente `run_s2a()` sin invocar su bloque CLI de escritura del resultado
+histórico; filtra timings descriptivos y genera únicamente
+`results/experiments/hls_s2a_pef_integration/results.json`.
+
+### Resultados y aceptación
+
+La ejecución fresca reprodujo desde el runner fuente:
+
+| Método | Recompensa acumulada | Rol en el análisis |
+|---|---:|---|
+| Asignación exacta | 8.0 | Política ejecutable |
+| Greedy | 7.2 | Política ejecutable |
+| Enumeración global | 8.0 | Referencia exhaustiva, no política |
+
+La referencia examinó 84,388 secuencias. HLS-PEF reprodujo 8.0 y 7.2 con
+unidad `declared_reward`; exacto−greedy es 0.8 para esta instancia. No se
+interpreta como resultado general de algoritmo. El uso de capacidad se
+representa como conteo de asignaciones; la distribución por tipo es
+diagnóstica, no una métrica nueva del catálogo.
+
+**Pruebas:** la suite conjunta focalizada ejecutó 63 pruebas y todas pasaron
+(adaptador S2a, contrato común, PEF, asignación S1/S2a y pruebas sintéticas
+S7). Incluye configuración/salida del runner, reconciliación de reward con
+asignaciones, rechazo de datos incompletos, disponibilidad PEF, comparación
+incompatible, pureza del evaluador, round-trip JSON, reejecución determinista
+y compatibilidad estructural del artefacto S7. También se ejecutó el runner
+integrado y se inspeccionó el artefacto nuevo. `git diff --check` se ejecutó
+como verificación final.
+
+### Conclusión, límites y decisión posterior
+
+Incremento 2 queda **completado** para la ruta determinista S2a: el resultado
+fuente permanece en su ubicación, no se alteraron políticas ni instancia y
+PEF evalúa registros adaptados. El resultado histórico S7 tampoco se
+sobrescribió. C9 se cumple estructuralmente con alcance limitado: S7 obtiene
+`ExperimentRun` desde su artefacto guardado; el runner S7 original aún no
+emite ese sobre. La prueba no cubre aprendizaje, feedback parcial,
+reproducibilidad estadística ni una métrica PEF de cobertura por tipo.
+
+Se recomienda como siguiente incremento técnico un adaptador a una ejecución
+S4 N×K ya existente, para verificar traducción de producción, requisitos,
+recursos y MIS-v2/enseñanza a perfiles PEF sin alterar políticas. Es solo una
+recomendación; no se inició y requiere alcance/autorización posterior del PI.
+
+## 2026-10-23 — Hito 2.1: auditoría semántica ejecutable de S4 N×K
+
+**Fecha del trabajo:** 23 de octubre de 2026; no se conserva hora exacta.
+**Autorización:** GO del PI. **Objetivo:** determinar si `ExperimentRun` v1 y
+HLS-PEF preservan la semántica de una ejecución S4 con producción,
+requisitos funcionales y recursos, antes de autorizar su integración.
+
+### Instancia y evidencia examinadas
+
+Se tomó la referencia determinista existente S4 exacta, dos agentes × dos
+competencias, `T=3`, demanda conocida `x,y,y`, con Bellman sin transferencia
+(A) y transferencia opcional (B). Se inspeccionaron `make_case`, el solver
+exacto, leyes N×K de producción/MIS-v2/transferencia, resultados históricos,
+el recálculo retrospectivo HLS-PEF, el contrato común y los perfiles. La
+auditoría detallada y su matriz semántica están en
+[`HLS_S4_SEMANTIC_INTEGRATION_AUDIT.md`](HLS_S4_SEMANTIC_INTEGRATION_AUDIT.md).
+
+Las pruebas recalcularon A/B sin invocar el escritor del runner: ambos valores
+son `1.9175000000000004`, coinciden con enumeración independiente y la
+transferencia de eficacia cero reproduce A. Las decisiones y estados de
+competencia por periodo coinciden con el artefacto histórico. No se modificó
+ni sobrescribió ese artefacto.
+
+### Hallazgos semánticos
+
+Producción es `y_k=Σ_i e_ik c_ik`; no equivale en general a esfuerzo,
+competencia, recompensa ni cumplimiento. El éxito exige alcanzar todos los
+requisitos activos con la tolerancia física existente; el déficit es
+`(q_k-y_k)_+`. En la trayectoria se observa un periodo con producción x
+positiva y cumplimiento, y dos periodos con producción y positiva pero
+servicio funcional fallido. CES/recompensa suma `1.9175`; aquí coincide
+numéricamente con producción por los pesos de la instancia, pero no incluye
+requisitos ni coste de recursos. El esfuerzo productivo total es `6`, el
+recurso docente `0` y el total `6`, frente a capacidad efectiva `2` por
+periodo. La unidad `effort` es abstracta del modelo.
+
+El recálculo HLS-PEF desde el artefacto da por política: reward/CES `1.9175`,
+tasa funcional `1/3`, déficit absoluto acumulado `0.5325`, producción
+acumulada `1.9175`, esfuerzo productivo `6`, recurso docente `0` y recurso
+total `6`; estados y unidades se verifican en las pruebas. Producción por
+agente se deriva exactamente de acción y competencia previa, pero no es una
+métrica de calidad individual. No se añadió una métrica ni un campo al
+contrato.
+
+### Pruebas, límites y decisión
+
+Se añadió una prueba focalizada de caracterización que cubre regresión,
+producción, separación output/éxito/reward, recursos, recálculo PEF y
+round-trip estructural `ExperimentRun` v1. El caso exacto ve competencias
+reales y conoce la secuencia completa; no representa las políticas S4 N×K
+parcialmente observadas. Esta comprobación prueba compatibilidad semántica
+colectiva de una referencia, no integración permanente ni validez para todas
+las rutas S4. No se encontró insuficiencia del contrato o del catálogo PEF:
+la brecha restante es un adaptador que una configuración/requisitos por
+periodo con eventos y registros ya representables.
+
+**Decisión recomendada al PI:** GO acotado para Hito 2.2 sobre esta ruta
+determinista, sujeto a preservar explícitamente su régimen de información y
+sin presentarla como ejecución de política parcialmente observada. Hito 2.2
+no se inició en este trabajo; requiere autorización independiente. No se
+modificaron runner, políticas, transición física, objetivo, `ExperimentRun`,
+HLS-PEF ni resultados históricos. Se ejecutaron pruebas focalizadas y
+`git diff --check`.
+
+## 2026-10-23 — Hito 2.2: integración operativa S4 N×K con ExperimentRun y HLS-PEF
+
+**Fecha del trabajo:** 23 de octubre de 2026; no se conserva hora exacta.
+**Autorización:** GO del PI. **Objetivo:** ejecutar la referencia exacta S4
+auditada y demostrar que el contrato común y HLS-PEF preservan sus magnitudes
+colectivas, sin crear otra arquitectura experimental.
+
+### Implementación
+
+Se añadió [`s4_pef_adapter.py`](../../src/hls/synthetic/s4_pef_adapter.py),
+que consume `ExactResult` del solver existente y produce un `ExperimentRun`
+v1 más `EvaluationRecord` por periodo. Registra decisión, transición
+MIS-v2/transferencia y ejecución como eventos separados; mapea output,
+requisito, éxito, déficit, CES/reward, competencias, incrementos, esfuerzo
+productivo, esfuerzo docente `h`, recurso docente `2h`, total y ociosidad.
+No decide, reproduce física ni modifica el solver. La información completa
+(competencias reales y secuencia determinista de demanda conocida) y la
+procedencia están declaradas.
+
+El runner
+[`run_hls_s4_pef_integration.py`](../../experiments/run_hls_s4_pef_integration.py)
+ejecuta A y B con `make_case()` y `solve_bellman()` originales, serializa los
+sobres v1 y aplica dos perfiles al mismo conjunto de registros. El perfil
+básico incluye recompensa original/CES, producción, cumplimiento y déficit;
+el ampliado añade los recursos separados y acciones docentes. No se cambió
+`ExperimentRun` ni el catálogo PEF.
+
+### Resultados y regresión
+
+El nuevo artefacto se guardó en
+[`results/experiments/hls_s4_pef_integration/results.json`](../../results/experiments/hls_s4_pef_integration/results.json).
+Para A y B reproduce reward `1.9175000000000004`, producción `1.9175`,
+cumplimiento `1/3`, déficit acumulado `.5325`, esfuerzo productivo `6`,
+esfuerzo docente `0`, recurso docente `0`, total `6` y cero acciones docentes.
+La diferencia PEF A−B en reward es `0` dentro de `1e-12`. Los identificadores
+y unidades de reward (`declared_reward`) y producción (`output`) se conservan
+distintos pese a la coincidencia numérica local. La selección de perfil se
+verificó como evaluación de solo lectura sobre un mismo run/traza.
+
+### Reutilización, validación y alcance
+
+La comprobación transversal reusa `ExperimentRun`, `EvaluationProfile`,
+`EvaluationRecord` y `PerformanceEvaluator` para S2a/S4/S7, conservando sus
+perfiles y semánticas diferentes. S2a usa su runner determinista en memoria
+para generar records completos; S7 se reevalúa desde las 16 ramas ya
+guardadas. Los artefactos históricos S2a/S7 y el resultado fuente S4 no se
+sobrescribieron. El artefacto nuevo registra hash del solver antes/después y
+la revisión base Git, el estado dirty/clean y hashes de solver, adaptador y
+runner; cuando el árbol está modificado, `software_revision` se deja nulo en
+vez de atribuir el resultado al commit base. Su salida es determinista.
+
+Se ejecutaron **69 pruebas** de integración S4, caracterización S4, solver
+exacto S4, demanda S7, PEF, contrato común e integración S2a; todas pasaron.
+También se ejecutaron el runner integrado y `git diff --check`. La integración
+valida una tercera familia semántica, no una ejecución parcialmente observada
+P0/P1/P2 ni el efecto de una transferencia utilizada: B ofrece enseñar, pero
+la solución óptima no enseña. S2a, S4 y S7 comparten estructuras, no una
+interpretación forzada de sus métricas.
+
+**Cierre:** C1–C10 del Hito 2.2 se consideran cumplidos en el alcance de esta
+referencia exacta. Hito 2.2 queda completado como integración acotada; quedan
+fuera P0/P1/P2, transferencia efectiva y un ejecutor universal. No se inició
+campaña científica ni otra ruta S4.
+
+## 2026-10-23 — S3b: recuperación y reproducción instrumentada de memoria × dinámica × observabilidad
+
+**Fecha del trabajo:** 23 de octubre de 2026; no se conserva hora exacta.
+**Autorización:** GO del PI. **Alcance:** una reproducción factorial acotada,
+sin modificar otras campañas ni escenarios.
+
+### Estado S3b recuperado
+
+El modelo representa competencias Bernoulli desconocidas que cambian
+exógenamente en un sistema de 3 agentes × 3 tareas. El problema organizativo
+es B2, matching completo uno a uno con los mismos seis matchings factibles.
+El feedback es semi-bandit selectivo: solo se aprende de una pareja ejecutada
+si su oportunidad exógena está disponible. No hay demanda funcional, coste
+independiente de recursos ni métrica de servicio en esta instancia.
+
+El runner compara UCB1 y SW-UCB con PairwiseBanditEstimator y matching exacto.
+UCB1 usa media por pareja más sqrt(2 log(max(2,t+1))/n). SW-UCB usa una
+ventana temporal global W=1214 y bonus sqrt(xi log(max(2,min(t+1,W)))/n),
+xi=2. Es una adaptación por pareja a matching combinatorio; no se atribuyen
+a la composición garantías del bandit de selección individual.
+
+Los antecedentes incluyen B1/E1, B2-Semi, factorial cambios × observabilidad,
+replay offline e intervención de subsidio. Son diseños distintos. El factorial
+anterior favoreció UCB1 en sus cuatro celdas y no encontró interacción
+concluyente frecuencia × disponibilidad en regret (+27.04; IC95%
+[-17.58,71.66]). Sus trazas no guardaban outcomes Bernoulli individuales ni
+estimaciones/índices temporales. La secuencia UCB1/SW-UCB había quedado
+aparcada; esta ejecución registra la prioridad GO actual del PI y no reescribe
+esa decisión histórica.
+
+### Diseño ejecutado
+
+Se conservaron los cuatro niveles ya especificados: cambios infrecuentes cada
+2500 periodos o frecuentes cada 500; oportunidad de feedback por pareja-periodo
+alta p=.75 o baja p=.25. En ambas matrices solo cambia la competencia (2,0),
+que alterna .4 ↔ .9; los demás valores se mantienen. La alternancia recurrente
+cambia el matching óptimo. Horizonte 10000, calibración de nueve periodos,
+xi=2, W=1214, recompensa Bernoulli y oráculo exacto de reward esperado
+permanecieron fijos.
+
+Se ejecutaron 30 semillas emparejadas nuevas (9000–9029), independientes de
+las históricas 8200–8229. Los flujos pre-generados de outcomes y máscaras de
+oportunidad son independientes entre sí y comunes por semilla a ambas políticas
+y a los niveles factoriales; los umbrales .25/.75 son anidados. Un outcome
+ejecutado cuenta para reward aunque no haya feedback; solo las parejas
+ejecutadas y observadas actualizan el estimador. La política no ve competencias
+reales, máscara previa ni demanda futura. El oráculo solo se usa en evaluación.
+
+La separación del flujo se mantuvo verificable: A (escenario) contiene
+competencias, transiciones exógenas, outcomes y mecanismo de observación; B
+(problema organizativo) mantiene el matching completo y sus seis acciones;
+C (mecanismo) intercambia UCB1/SW-UCB sobre la misma ruta de ejecución; D
+(HLS-PEF) evalúa reward esperado desde registros adaptados, sin seleccionar
+acciones ni actualizar estados. La observabilidad es una propiedad de A
+intervenida exógenamente, mientras que las observaciones efectivas dependen
+también de las asignaciones.
+
+La instrumentación opcional registra por periodo decisiones, outcomes,
+feedback, medias, conteos, bonus, índices, régimen y rewards/regret. Una prueba
+de episodio corto confirmó que activar el registro no cambia el resumen de la
+ejecución. El régimen real aparece únicamente como diagnóstico retrospectivo.
+
+### Resultados observados
+
+Se completaron 240 réplicas: 4 celdas × 2 políticas × 30 semillas. La tabla
+muestra medias; el contraste SW-UCB menos UCB1 es pareado por semilla. IC95%
+t sobre las 30 semillas.
+
+| Cambios / oportunidades | Reward UCB1 | Reward SW-UCB | Regret UCB1 | Regret SW-UCB | Δ regret SW−UCB1 (IC95%) |
+|---|---:|---:|---:|---:|---:|
+| Infrecuentes / altas | 16812.5 | 16089.9 | 437.5 | 1160.1 | 722.60 [712.38,732.81] |
+| Infrecuentes / bajas | 16418.8 | 15035.6 | 831.2 | 2214.4 | 1383.25 [1355.75,1410.75] |
+| Frecuentes / altas | 16720.8 | 15959.6 | 529.2 | 1290.4 | 761.26 [750.00,772.52] |
+| Frecuentes / bajas | 16348.0 | 14955.3 | 902.0 | 2294.7 | 1392.75 [1361.17,1424.32] |
+
+La tasa de matching óptimo UCB1/SW-UCB fue 86.1/66.7%, 73.2/55.2%,
+74.9/65.8% y 67.0/54.3%, en el orden de la tabla. El MSE medio, no ponderado
+entre las nueve parejas y comparado por semilla, fue menor para SW-UCB en
+cada celda: Δ MSE SW−UCB1 = -0.00385 (IC95% [-0.00402,-0.00369]),
+-0.00304 ([-0.00333,-0.00276]), -0.00112 ([-0.00126,-0.00099]) y -0.00074
+([-0.00102,-0.00045]). Es una discrepancia estimación/decisión observada,
+no identifica por sí sola un mediador causal.
+
+Reducir p de .75 a .25 elevó el regret: +393.73 (IC95% [372.51,414.94]) y
++1054.38 ([1025.22,1083.54]) con cambios infrecuentes para UCB1 y SW-UCB;
++372.82 ([353.01,392.63]) y +1004.30 ([971.55,1037.06]) con cambios
+frecuentes. El contraste de interacción frecuencia × disponibilidad sobre el
+gap de regret fue +29.17, IC95% [-3.92,62.25], no concluyente. La diferencia
+de frecuencia en ese gap fue +38.66 [24.72,52.60] con oportunidades altas
+y +9.49 [-25.07,44.06] con oportunidades bajas.
+
+El volumen observado por réplica fue aproximadamente 22500 con p=.75 y 7500
+con p=.25 para ambas políticas. Su distribución entre parejas dependió de las
+asignaciones. La cantidad nominal por pareja y estabilidad es p×tau:
+1875/625 en cambios infrecuentes y 375/125 en frecuentes (oportunidad
+alta/baja); no equivale a observaciones efectivas. La pareja cambiante (2,0)
+y las parejas de matchings alternativos reciben cantidades distintas; por
+ejemplo, (0,1), fuera de ambos matchings óptimos, recibió alrededor de 60–77
+observaciones con UCB1 y 199–325 con SW-UCB según celda. Estas tasas son
+endógenas a las asignaciones.
+
+La recuperación se definió como 20 selecciones consecutivas del matching
+óptimo, buscando hasta 1000 periodos tras cada cambio. La latencia media
+descriptiva por semilla UCB1/SW-UCB fue 106.5/162.8, 93.1/171.3,
+66.7/115.8 y 76.0/121.6 periodos; se registraron cambios frecuentes sin
+recuperación dentro del límite. Las fronteras dentro de una semilla no se
+trataron como réplicas independientes para los intervalos.
+
+### Contrato común, interpretación y límites
+
+El runner nuevo crea 240 ExperimentRun v1 compactos y aplica
+EvaluationProfile/PerformanceEvaluator al reward esperado por periodo. El
+reward PEF reconcilia con la salida del simulador en cada ejecución. La traza
+comprimida guarda 2.4 millones de filas de diagnóstico por periodo. Regret,
+índices, estimaciones, observaciones y estabilidad siguen como diagnósticos
+del experimento, no como nuevas métricas genéricas PEF. Producción, servicio,
+déficit y recursos son no aplicables: el modelo no los define. El regret usa
+reward esperado frente al oráculo dinámico, no reward Bernoulli realizado.
+El árbol de trabajo ya estaba modificado por otras integraciones autorizadas;
+por ello ExperimentRun deja software_revision nulo y conserva revisión Git
+base y hashes SHA-256 de las fuentes usadas. Tras la campaña se recalcularon
+solo los resúmenes de latencia desde los eventos guardados, agregando primero
+por semilla para no tratar fronteras de cambio como réplicas; la simulación
+original y sus trazas no se alteraron.
+
+En las condiciones probadas, UCB1 con historial completo obtuvo menor regret;
+SW-UCB obtuvo menor MSE. La baja disponibilidad perjudicó a ambos,
+especialmente a SW-UCB. No se detectó una interacción factorial concluyente.
+La ventana fija W=1214 es menor que tau=2500 y mayor que tau=500; en el
+régimen recurrente UCB1 conserva también observaciones antiguas que pueden
+volver a ser compatibles al regresar el estado base. Esto es compatible con
+los resultados, pero UCB1/SW-UCB difieren también en bonus de confianza y sus
+asignaciones generan historiales endógenos: no se aísla el efecto causal puro
+de conservar memoria. rho=p×tau es solo un descriptor de oportunidades para
+esta instancia, no una ley predictiva. No se modela coste de recursos.
+
+**Conclusión:** en esta configuración concreta, el feedback y el mecanismo
+completo de estimación/índices se relacionan con reward y regret colectivos;
+la comparación no justifica una regla general de selección de memoria ni una
+preferencia universal entre algoritmos. S3b permanece abierta y queda a
+decisión del PI el siguiente paso.
+
+**Validación:** 48 pruebas focalizadas de S3b, contrato y PEF pasaron. Se
+completó la ejecución de 240 réplicas, la reconciliación PEF y el round-trip
+ExperimentRun; git diff --check se ejecutó al cierre. Los resultados
+históricos se conservaron.
++
+## 2026-10-23 — S3b-E1: diagnóstico final de memoria y feedback organizativo
+
+**Fecha del trabajo:** 23 de octubre de 2026; no se conserva hora exacta.
+**Decisión del PI:** GO, cierre de S3b-E1. **Estado tras esta entrada:**
+S3b-E1 cerrado; no se inicia otra campaña.
+
+### Pregunta y controles
+
+El factorial anterior de UCB1/SW-UCB dejó una diferencia de regret junto a
+menor MSE global de SW-UCB, pero no separó memoria de bonus ni del feedback
+endógeno. Este diagnóstico no vuelve a ejecutar UCB1/SW-UCB ni los llama así:
+usa dos variantes locales de media empírica para aislar el filtrado temporal.
+
+FULL promedia todo feedback recibido antes de decidir. WINDOW usa el mismo
+promedio sobre observaciones con timestamp en [t−W,t), W=1214. Ambas usan
+media neutral .5 si no hay observación utilizable; no tienen bonus de
+exploración, prior adicional ni aleatoriedad de decisión. En las seis
+asignaciones B2 factibles eligen el matching que maximiza la suma de medias;
+los empates se resuelven por clave lexicográfica canónica. En los primeros
+nueve periodos se conserva el ciclo de calibración existente. Así, la única
+diferencia del estimador es qué observaciones históricas retiene.
+
+Se usaron tres condiciones seleccionadas antes de esta campaña por su relación
+con W y la tasa de oportunidad: infrecuente/alta (tau=2500,p=.75), frecuente/
+alta (tau=500,p=.75) y frecuente/baja (tau=500,p=.25). El contraste primero
+varía tau a p alta; el segundo varía p a tau corta. Es un diseño L de tres
+celdas y no estima la interacción factorial. Se reutilizó el sistema 3×3,
+matrices recurrentes base/transitoria, horizonte 10000, matching y máscara
+exógena; se reutilizaron las 30 semillas 9000–9029 para acoplar outcomes y
+máscaras entre controles. Total: 3 condiciones × 2 controles × 2 estimadores
+× 30 semillas = 360 ejecuciones.
+
+**Control A, observaciones compartidas:** tras el ciclo común de calibración,
+un calendario externo recorre cíclicamente los seis matchings, balanceando la
+exposición de parejas; la máscara Bernoulli del escenario decide cuáles
+outcomes se observan. Ambos estimadores reciben exactamente las mismas
+parejas, rewards y timestamps. Sus decisiones posteriores son contrafactuales
+y no alteran ese calendario.
+
+**Control B, bucle cerrado:** tras la misma calibración, cada matching elegido
+determina qué parejas se ejecutan y pueden producir feedback. Outcomes
+potenciales y máscaras siguen acoplados por semilla, aunque las parejas
+observadas puedan divergir. No se añadió exploración: la regla greedy y los
+empates permanecen comunes. Esta decisión deja lock-in por falta de
+observaciones como posible limitación diagnóstica.
+
+Se evaluó reward esperado y regret frente al mejor matching de media real
+entre las mismas seis acciones factibles (oráculo solo evaluativo); la suma
+del oráculo es 17250 en todas las condiciones. Se registraron matching óptimo,
+errores globales y por arista, observaciones/máscaras por pareja, edad,
+conteos usados, transiciones, latencia de recuperación y tiempo. HLS-PEF
+evaluó únicamente reward esperado; no se añadieron métricas a su catálogo.
+
+### Resultados observados
+
+Las medias son por réplica; Δ regret es WINDOW−FULL pareado por semilla,
+IC t del 95%. El MSE es el promedio temporal y no ponderado de las nueve
+parejas. La tasa óptima es porcentaje de periodos.
+
+| Condición | Control | Regret FULL | Regret WINDOW | Δ regret (IC95%) | MSE FULL / WINDOW | Matching óptimo FULL / WINDOW |
+|---|---|---:|---:|---:|---:|---:|
+| Infrecuente/alta | A, compartido | 259.47 | 184.88 | -74.59 [-89.60,-59.58] | .00731 / .00390 | 49.91% / 75.33% |
+| Frecuente/alta | A, compartido | 259.47 | 259.47 | 0.00 [0,0] | .00728 / .00630 | 49.91% / 49.91% |
+| Frecuente/baja | A, compartido | 269.55 | 268.97 | -.58 [-1.63,.46] | .00800 / .00743 | 49.74% / 49.96% |
+| Infrecuente/alta | B, bucle cerrado | 641.46 | 361.15 | -280.31 [-842.61,281.98] | .03710 / .06981 | 48.27% / 57.42% |
+| Frecuente/alta | B, bucle cerrado | 641.46 | 373.67 | -267.80 [-811.09,275.50] | .03711 / .06933 | 48.27% / 53.31% |
+| Frecuente/baja | B, bucle cerrado | 662.91 | 415.70 | -247.21 [-727.96,233.53] | .06706 / .08001 | 48.21% / 53.40% |
+
+En A, la igualdad de historiales se comprobó con hashes de las secuencias de
+feedback por réplica. Con observaciones comunes, WINDOW redujo regret en
+74.59 unidades con cambios infrecuentes y disponibilidad alta. A cambios
+rápidos, el regret fue idéntico con disponibilidad alta; con disponibilidad
+baja la diferencia fue pequeña e incluyó cero. El filtrado temporal sí bajó
+el MSE global en las tres condiciones. Por tanto, una mejora de estimación
+no garantiza una mejora de decisión ni de reward.
+
+En B, los intervalos de regret WINDOW−FULL incluyen cero en las tres celdas.
+WINDOW seleccionó el matching óptimo con más frecuencia: diferencias pareadas
+de +9.15, +5.04 y +5.18 puntos porcentuales, con IC95% [4.82,13.47],
+[1.95,8.13] y [1.59,8.78]. El MSE global, en cambio, fue menor para FULL;
+WINDOW−FULL fue +.03270 [.02264,.04277], +.03222 [.02208,.04236] y
++.01295 [.00102,.02487]. Este patrón muestra que MSE global y acierto
+organizativo pueden ordenar los métodos de forma distinta; el efecto en
+regret acumulado no queda establecido con precisión en este control.
+
+La discrepancia se concentra en la relevancia de las parejas. En frecuente/
+baja y bucle cerrado, el MSE de FULL/WINDOW sobre aristas del matching óptimo
+fue .08910/.04582, aunque el MSE global favorece a FULL (.06706 frente a
+.08001). Para la pareja (0,1), que no pertenece a ninguno de los dos
+matchings óptimos, el MSE fue .0586/.1536 y se obtuvieron en promedio 1/3
+observaciones. En cambio, (2,0), cuya competencia cambia y entra en el
+óptimo transitorio, tuvo MSE .2586/.1590. El total de feedback fue similar
+(aprox. 7496/7492 observaciones por ejecución), pero su distribución cambió.
+La media global da el mismo peso a esas parejas y no representa su impacto
+desigual en el matching.
+
+En A no se observó un periodo con menor MSE global y mayor regret de WINDOW
+frente a FULL. En B, FULL tuvo simultáneamente menor MSE global y mayor regret
+en la muestra en varios periodos de trayectorias emparejadas; la frecuencia
+fue baja, aproximadamente 2.2%, 35.0% y 34.1% en las tres condiciones.
+Esta comparación es descriptiva porque los historiales ya divergen.
+
+### Interpretación, validación y límites
+
+A identifica un efecto inmediato del filtrado temporal sobre un historial
+común: en la condición infrecuente/alta, retirar muestras antiguas mejoró
+estimación de aristas cambiantes y decisiones; en las otras condiciones el
+cambio de MSE no produjo una mejora de regret clara. B incorpora la
+retroalimentación de las acciones: FULL y WINDOW recibieron volúmenes totales
+parecidos, pero asignaron observaciones de modo distinto. Por ejemplo, en
+frecuente/baja FULL/WINDOW observaron (2,0) 165/247 veces y (1,1)
+2409/2476; parejas poco relevantes podían quedar casi sin observaciones.
+Esto es compatible con un mecanismo de relevancia selectiva, pero el contraste
+A/B no identifica un mediador causal puro: cambia el calendario de adquisición
+y la trayectoria organizativa.
+
+Una mejor MSE global puede coexistir con más decisiones subóptimas porque el
+MSE no pondera por margen ni por efecto de cada arista sobre matchings
+candidatos. En frecuente/baja el margen real entre matching óptimo y segundo
+mejor es .05 en el régimen transitorio y .45 en el base; los errores
+concentrados en aristas críticas pueden importar más que los errores sobre
+aristas no competitivas. No se generaliza esta relación fuera de estas
+matrices y políticas diagnósticas. Las variantes no son UCB1/SW-UCB, no usan
+bonus ni exploración, y la política greedy puede quedar bloqueada tras una
+calibración con feedback perdido. El diseño de tres celdas no estima una
+interacción A×B. El resultado no cuantifica qué fracción de la brecha previa
+UCB1/SW-UCB se debía a memoria.
+
+Se generaron 360 ExperimentRun v1 y perfiles HLS-PEF; el reward PEF
+reconcilia por ejecución con el simulador. Las curvas por periodo se agregaron
+sobre semillas y no se guardó una traza cruda extensa. El artefacto resume
+decisiones, errores, observaciones, hashes de control común y ejemplos
+decisivos. La corrida ocurrió con árbol de trabajo modificado: la revisión
+base Git está registrada, pero el hash exacto de fuente en el instante de
+ejecución no quedó guardado; el código se modificó después solo para añadir
+resúmenes de régimen/recuperación y más validaciones, sin alterar trayectorias.
+
+**Cierre:** el control de observaciones comunes identifica una ventaja local
+de la ventana en cambios infrecuentes con feedback alto; el control cerrado
+muestra una separación reproducible entre MSE global y acierto del matching,
+pero regret acumulado queda incierto. S3b-E1 se cierra con estas limitaciones.
+No se inicia otra campaña; cualquier prioridad posterior queda a decisión
+del PI.
+
+**Validación:** 53 pruebas focalizadas de memoria, S3b, contrato y PEF pasaron;
+360 ejecuciones completadas; hashes del control A coincidentes; registros
+ExperimentRun serializables; recompensa PEF reconciliada; git diff --check pasó. El resultado está en
+[results.json](../../results/experiments/hls_s3b_memory_replay_diagnostic/results.json);
+la integración usa el runner
+[run_hls_s3b_memory_replay_diagnostic.py](../../experiments/run_hls_s3b_memory_replay_diagnostic.py).
+
+## 2026-10-23 — Piloto de asignación adaptativa de consultas bajo presupuesto
+
+**Objetivo y diseño.** Se ejecutó el primer piloto de asignación de consultas de modelos heterogéneos con presupuesto compartido por lote. xRouteBench `llmrouter_generic` no ofrecía una licencia que pudiéramos establecer con claridad; conforme a la instrucción se usó MMLU (MIT), con pesos Apache-2.0. Se fijaron 200 consultas oficiales `auxiliary_train` (160 ajuste, 40 calibración), 160 consultas `test` balanceadas entre cuatro materias, tres modelos abiertos locales, lotes de 10, 20 semillas de empaquetado emparejadas, lotes homogéneos/heterogéneos y presupuestos de 0,35/0,70 entre extremos de coste predicho. La respuesta se puntuó por coincidencia exacta de letra, sin umbrales de calidad.
+
+**Mecanismos.** Todas las políticas compartieron una adaptación MIRT de IRT-Router y una matriz de costes de latencia predicha mediante regresión afín ajustada solo en train. Se compararon routing independiente con reparación, greedy factible, ILP aditivo conjunto, modelos fijos económico y de mayor calidad de entrenamiento, y una cota retrospectiva de test. El ILP es una adaptación determinista de la formulación de asignación por lotes; no implementa robustez ante incertidumbre ni capacidad/concurrencia del artículo publicado. No es una reproducción completa de IRT-Router: se usó hashing de texto en lugar de BERT.
+
+**Resultados aceptados.** Se produjeron 480 `ExperimentRun` v1, 76.800 asignaciones y 1.080 outcomes de consultas-modelo. En presupuesto 0,35, ILP logró exactitud macro 0,3250/0,3244 en lotes homogéneos/heterogéneos, frente a 0,3278/0,3247 del greedy y 0,2991/0,2953 del routing independiente reparado. La diferencia emparejada ILP−greedy fue −0,28 pp (IC95% bootstrap estratificado por consulta [−1,00; +0,44]) en homogéneos y −0,03 pp (IC [−0,78; +0,75]) en heterogéneos. ILP−independiente fue +2,59 pp (IC [ +0,41; +4,91]) y +2,91 pp (IC [+0,91; +4,97]), respectivamente. Con presupuesto 0,70, greedy e independiente quedaron aproximadamente empatados con ILP (diferencias menores de 0,2 pp; IC por consulta incluyen cero). Los IC por empaquetado y consulta, y las tablas por política/tarea, se preservan en el informe y `results.json`.
+
+La MIRT convergió en 773 iteraciones; su Brier test fue 0,26983 frente a 0,23139 para un baseline constante por modelo ajustado con prevalencias de entrenamiento. El RMSE de latencia test fue 0,414 s por consulta-modelo. Aunque ILP/greedy/reparación respetaron en 100% de los lotes el presupuesto de coste predicho, solo 74–85% de sus lotes heterogéneos cumplieron también el umbral usando latencia observada en las celdas principales (aprox. 64–85% considerando ambas composiciones y presupuestos). La latencia es tiempo de inferencia local serial, no coste monetario ni medida de servicio concurrente.
+
+**Interpretación y límites.** En esta muestra el optimizador ILP no aportó mejora medible frente a greedy; sí superó el router independiente reparado bajo presupuesto más restrictivo, diferencia que se reduce al relajar el presupuesto. Es evidencia local sobre estos datos, modelos y coste imperfectamente predicho, no una superioridad general ni una atribución pura a optimización exacta. El predictor de calidad está peor que el baseline de prevalencia y la predicción de costes no asegura el límite de latencia observada; estas limitaciones restringen especialmente cualquier conclusión sobre despliegue. El estudio no basta por sí solo para sostener novedad publicable: la literatura ya contiene routing IRT y routing conjunto por lotes.
+
+Durante la ejecución se detectó que el ajuste inicial alcanzó el límite de iteraciones; ese resultado no se aceptó. Se amplió el máximo de iteraciones, se exigió convergencia explícita y se volvió a calcular el mismo diseño usando los outcomes ya generados, sin cambiar semillas, datos, políticas ni parámetros experimentales. El artefacto final registra convergencia.
+
+**Artefactos y validación.** Implementación en `src/hls/llm_routing_pilot.py`, runner `experiments/run_hls_budgeted_llm_routing_pilot.py`, pruebas `tests/test_hls_llm_routing_pilot.py`, resultados reproducibles en `results/experiments/hls_budgeted_llm_routing_pilot/` e informe `docs/experiments/HLS_BUDGETED_LLM_ROUTING_PILOT.md`. Pasaron 24 pruebas focalizadas de piloto, contrato y PEF; compilación Python y `git diff --check`. No se modificaron algoritmos históricos ni se hizo commit/push.
+
+## 2026-10-23 — Revisión correctiva del predictor en routing presupuestado
+
+**Objetivo.** Determinar si el Brier deficiente de MIRT adaptado en el piloto LLM condicionó las decisiones organizativas. Se mantuvieron consultas test, modelos, outcomes generados, costes, lotes homogéneos/heterogéneos, presupuestos y semillas originales; los resultados se escribieron en un directorio separado y no se sustituyeron los del piloto inicial.
+
+**Método.** Se añadió regresión logística L2 con texto de pregunta/opciones, identidad de modelo, tipo de tarea e interacción modelo×tarea. `C` se seleccionó entre 0,01/0,1/1/10 por Brier en cinco pliegues agrupados por consulta, exclusivamente dentro de los 160 ejemplos de entrenamiento; resultó C=1. Se comparó contra MIRT adaptado y prevalencia train por modelo. El precio del router independiente se calibró en el mismo subconjunto de 40 consultas auxiliares. La matriz de costes test se reutilizó desde el artefacto original y se verificó frente a su recálculo con tolerancia 1e−12. Se generaron 720 ExperimentRun con HLS-PEF y 115.200 decisiones para los tres predictores por ILP/greedy/router reparado.
+
+**Resultado predictivo.** Brier MIRT/prevalencia/logística: 0,26983/0,23139/0,21744; log-loss: 0,80482/0,65336/0,62402; ECE diez bins: 0,18985/0,08542/0,04305. La diferencia logística−prevalencia fue −0,01395 en Brier (IC95% consulta [−0,02615; −0,00184]) y −0,02934 en log-loss ([−0,05479; −0,00405]). La exactitud top-model fue 0,36875/0,45/0,45; el orden por pares informativos fue 0,52174/0,69022/0,69022. Las diferencias por materia y calibración completa están en `results.json`.
+
+**Resultado organizativo.** A presupuesto 0,35, prevalencia train obtuvo exactitud ILP/greedy/router 0,4359/0,4356/0,4359 en lotes homogéneos y 0,4309/0,4213/0,4219 en heterogéneos. Logística obtuvo 0,4094/0,3878/0,3872 y 0,4247/0,4194/0,4194. A presupuesto 0,70, prevalencia y logística convergieron en 0,45 en las tres políticas y ambas asignaron todas las consultas al modelo de mayor exactitud de entrenamiento. La exactitud logística fue superior a MIRT en todas las condiciones; sin embargo, el predictor contextual de menor Brier no superó al predictor constante en rendimiento organizativo a presupuesto bajo.
+
+ILP−greedy con predictor contextual y lote homogéneo a 0,35 fue +2,16 pp (IC95% por packing [+1,63; +2,72], bootstrap consulta [+0,72; +3,78]); en heterogéneo fue +0,53 pp (IC consulta [−1,34; +2,56]). En el resto de celdas la ventaja conjunta no fue consistente y a presupuesto 0,70 las políticas coincidieron.
+
+**Límite de cobertura.** `auxiliary_train` solo proporcionó el tipo `mmlu_auxiliary_mixed`; las cuatro categorías del test no estaban presentes al entrenar el efecto de tarea. La logística codifica ese atributo, pero no puede aprender coeficientes específicos para esos sujetos no vistos. Coste sigue siendo latencia local estimada, no precio monetario ni serving concurrente. Las consultas test son una sola muestra de cuatro materias y se probaron muchos contrastes exploratorios sin corrección de multiplicidad. La evidencia no establece superioridad general del ILP ni una contribución publicable autónoma.
+
+**Artefactos y verificación.** Predictor en `src/hls/llm_routing_pilot.py`; runner en `experiments/run_hls_budgeted_llm_routing_predictor_recheck.py`; resultados nuevos en `results/experiments/hls_budgeted_llm_routing_predictor_recheck/`; informe `docs/experiments/HLS_BUDGETED_LLM_ROUTING_PREDICTOR_RECHECK.md`. Los resultados originales permanecen en `hls_budgeted_llm_routing_pilot/`. Pasaron pruebas focalizadas de predictor, contrato y PEF; serialización de ExperimentRun, comprobación exacta de costes y `git diff --check`. No se ejecutó inferencia adicional ni se abrió otra línea.
+
+## 2026-10-23 — Consolidación y cierre de routing presupuestado
+
+**Decisión y alcance.** Por decisión del CE se cerró la campaña sin nuevas ejecuciones. Se consolidaron el piloto inicial y la corrección del predictor en [el informe científico unificado](../experiments/HLS_BUDGETED_LLM_ROUTING_CONSOLIDATED_REPORT.md), manteniendo los informes, resultados y hashes de cada iteración como fuentes históricas separadas.
+
+**Síntesis verificable.** El piloto inicial, con MIRT adaptado, no encontró ventaja del ILP frente al greedy en ninguna celda; sí observó que ILP y greedy superaban al router independiente reparado en el presupuesto 0,35. En la corrección, logística contextual obtuvo Brier 0,21744 frente a 0,23139 de prevalencia y 0,26983 de MIRT, pero no mejoró uniformemente el resultado organizativo: con presupuesto 0,35 la prevalencia superó a logística, y con 0,70 ambas dieron la misma asignación. ILP superó a greedy en +2,16 pp solo para predictor contextual, lote homogéneo y presupuesto 0,35 (IC95% bootstrap por packing [+1,63; +2,72] y por consulta [+0,72; +3,78]); los demás contrastes no acreditan una ventaja general. El resultado de coste se refiere a latencia local predicha: el cumplimiento del presupuesto estimado no garantizó cumplimiento con la latencia observada.
+
+**Conclusión y límites.** La campaña demuestra en esta muestra que calidad predictiva y utilidad organizativa no son equivalentes, y que la ventaja ILP–greedy depende de predictor, composición y presupuesto. El único contraste favorable al ILP es local y exploratorio, entre varios contrastes sin corrección por multiplicidad. El benchmark cubre 160 consultas de cuatro materias y tres modelos pequeños; las categorías test no estaban representadas como tipos de tarea en el entrenamiento correctivo. Los costes no son precios ni latencia de servicio concurrente; los métodos publicados se adaptaron, no se reprodujeron íntegramente. No queda establecida superioridad general ni novedad publicable autónoma. HLS puede reutilizar la separación predictor/asignador/evaluador como ejemplo de evaluación organizativa bajo presupuesto.
+
+**Trazabilidad y estado.** Se conservaron íntegros `results/experiments/hls_budgeted_llm_routing_pilot/` y `results/experiments/hls_budgeted_llm_routing_predictor_recheck/`, incluidos sus `artifact_hashes.json`. No se modificaron algoritmos, contratos ni artefactos experimentales; no se inició otra campaña. Informe de origen: `docs/experiments/HLS_BUDGETED_LLM_ROUTING_PILOT.md` e iteración correctiva: `docs/experiments/HLS_BUDGETED_LLM_ROUTING_PREDICTOR_RECHECK.md`. La consolidación es documental y deja la campaña cerrada.
+
+## 2026-10-23 — Organización dinámica de capacidades heterogéneas
+
+**Objetivo y particiones.** Se ejecutó un piloto de selección estática, routing por consulta, escalado FAST→DEEP y combinación sobre MMLU. Se reutilizó el mismo subconjunto test oficial de 160 preguntas del routing presupuestado. Para separar ajuste/decisión se usó `all/dev` (5 preguntas por cada uno de cuatro tipos, selección estática), `all/validation` (muestra fija de 22 por tipo para umbrales y precio del IRT-Router) y `test` (40 por tipo). El predictor IRT usó exclusivamente los 160 ejemplos auxiliares de ajuste del piloto anterior. Se generaron 804 respuestas/scores nuevos para las particiones por modelo; las 480 letras regeneradas en test coincidieron al 100% con las archivadas.
+
+**Mecanismos y señales.** Se reutilizó el predictor IRT multidimensional adaptado de IRT-Router; la selección coste-calidad `argmax(q_hat − λ c_hat)` y la elección de λ por niveles de coste son adaptaciones experimentales. La cascada aplicó umbral selectivo a la masa softmax normalizada de la letra emitida por FAST en logits del primer token, y escaló a DEEP cuando el score quedaba bajo el umbral. Es una adaptación de clasificación selectiva con rechazo, no la implementación de sus garantías de riesgo. Los umbrales se eligieron en validación por tasa objetivo de activación, sin etiquetas de corrección. Se añadió pluralidad de las tres letras como comparador, con DEEP para desempates. FAST/DEEP se fijaron antes del test a partir de coste y calidad train: SmolLM2-360M y SmolLM2-1.7B, respectivamente.
+
+**Resultados.** En test FAST logró exactitud 0,2313 (IC95% estratificado [0,1688; 0,3000]) y DEEP 0,4500 [0,3813; 0,5250]; la diferencia DEEP−FAST fue +21,88 pp [ +11,88; +31,88]. Los outcomes fueron complementarios: 22 preguntas solo correctas por FAST, 57 solo por DEEP, 15 por ambos y 66 por ninguno. Por materia, FAST superó a DEEP en matemáticas (0,225 frente a 0,150), mientras DEEP fue mejor en las otras tres. La selección fija por tarea, entrenada con cinco ejemplos por tipo, obtuvo 0,4688 [0,4000; 0,5438], pero su diferencia emparejada frente a DEEP fue +1,88 pp [−2,50; +6,25], no concluyente.
+
+La cascada alcanzó 0,3813 con 46,25% de activación DEEP y 0,6847 s/consulta; a 93,75% de activación igualó a DEEP en exactitud (0,45) pero costó 0,9031 s/consulta frente a 0,4056. Ningún punto de cascada superó a DEEP siempre en exactitud; todos añadieron la llamada FAST. La pluralidad de los tres modelos obtuvo 0,4188 y 1,4835 s/consulta, sin superar a DEEP. El oráculo retrospectivo alcanzó 0,6625 y no es desplegable.
+
+**Interpretación y límites.** Hay diversidad de errores, pero la pluralidad no la convierte en mejora; la confianza FAST tuvo AUC de ranking de error 0,444 en validación y 0,521 en test. Además, la latencia se invirtió: FAST costó 0,5191 s/consulta test y DEEP 0,4056, aunque FAST era más rápido en ajuste. La salida breve del modelo grande y el hardware local afectan el orden de latencia. Dentro de este test no se encontró condición favorable al escalado por confianza; la especialización de FAST en matemáticas es una señal por confirmar, no una regla general.
+
+**Validación y artefactos.** Se generaron 27 `ExperimentRun` con 4.320 eventos y evaluación HLS-PEF; cada cascada suma la latencia medida de FAST y las llamadas DEEP activadas. Los IC95% son bootstrap emparejado por pregunta, estratificado por materia, y se condicionan a la muestra, modelos y hardware. Pasaron 21 pruebas focalizadas de políticas, routing previo y HLS-PEF; se verificó round-trip de los 27 ExperimentRun y los seis hashes del piloto original. Runner, resultados y curvas están en `experiments/run_hls_dynamic_capacity_organization.py` y `results/experiments/hls_dynamic_capacity_organization/`; mecanismo y pruebas en `src/hls/dynamic_capacity_organization.py` y `tests/test_hls_dynamic_capacity_organization.py`. El informe detallado es [HLS_DYNAMIC_CAPACITY_ORGANIZATION.md](../experiments/HLS_DYNAMIC_CAPACITY_ORGANIZATION.md). No se modificaron resultados históricos ni contratos.
+
+## 2026-10-23 — Organización dinámica de capacidades: corrección experimental
+
+**Objetivo y diagnóstico.** Se corrigió la inversión de latencia del primer piloto sin demoras artificiales ni cambios de objetivo. El piloto anterior midió generación autoregresiva de hasta ocho tokens, una sola vez por consulta y con orden fijo; en su test previo el 360M generó 6,775 tokens de media y tardó 0,5191 s, frente a 2,844 tokens y 0,4056 s para el 1.7B. Esto explica plausiblemente la inversión por longitud de generación, pero el diseño previo no permite aislar el efecto de tokens del orden/backend. Se conservaron los artefactos del piloto anterior.
+
+**Diseño ejecutado.** Se usaron los tres modelos y revisiones fijadas del piloto, FP16, Transformers eager sobre MPS, Apple M2 Max/64 GB, PyTorch 2.4.1 y Transformers 4.45.0. El protocolo nuevo puntúa opciones A–D con una pasada de logits por pregunta y tres repeticiones temporales por consulta/modelo. Entrenamiento: 200 ejemplos auxiliares para MIRT; selector estático con cinco ejemplos `dev` por materia; 88 ejemplos de validación para precio/umbrales. La pareja 360M→1.7B y todos los parámetros se congelaron con train/validación. Test final: seed 20261025, 40 preguntas por cada una de cuatro materias de la partición oficial, excluyendo por hash de pregunta/opciones las 160 preguntas ya evaluadas en el piloto anterior. No se usaron etiquetas test para seleccionar capacidades o políticas.
+
+**Resultados.** En el test nuevo, 360M obtuvo 24,38% (0,0962 s/consulta), 1.7B 45,00% (0,1416 s), y Qwen-0.5B 46,25% (0,0889 s). El contraste emparejado 1.7B−360M fue +20,63 pp (IC95% [11,25; 30,00]) con +45,4 ms de coste. El selector fijo por materia obtuvo 51,25% (IC95% [43,75; 58,75]) en 0,1242 s; su diferencia frente a B fue +6,25 pp (IC95% [0; 12,5]), no concluyente. El router MIRT llegó a 41,88%/0,1065 s en su nivel intermedio; la cascada a 34,38%/0,1523 s con 40,6% de activaciones; pluralidad logró 45,63%/0,3267 s. Qwen fijo dominó en la muestra todos los puntos IRT y cascada. La señal de confianza de A tuvo AUC de error 0,508 en test; el predictor MIRT tuvo Brier 0,2828 frente a 0,2326 de la referencia constante train. Resultados por materia, intervalos, diagnósticos y curvas quedan en [el informe corregido](../experiments/HLS_DYNAMIC_CAPACITY_ORGANIZATION_CORRECTED.md).
+
+**Interpretación y límites.** El protocolo corregido sí revela perfiles calidad-latencia físicos, pero la pareja seleccionada con train/validación no dominó: Qwen fue algo más preciso y bastante más rápido en el test nuevo, mientras la selección estática por materia tuvo la mayor exactitud puntual. El orden Qwen/1.7B no generalizó desde validación y la mejora puntual del selector fijo sobre B no es concluyente. La cascada por confianza no aporta una frontera no dominada; 24 de 65 activaciones en el punto de tasa objetivo 0,3 corrigieron A, 8 empeoraron una respuesta correcta de A, 10 encontraron ambas ya correctas y 23 dejaron ambas incorrectas. No se demuestra valor general de organización dinámica. La muestra sigue siendo 160 preguntas, cuatro materias y un hardware; la latencia es replay local, sin energía ni serving concurrente.
+
+**Capacidad e integridad.** El runner corregido reutiliza las políticas existentes, `ExperimentRun` y HLS-PEF, sin alterar contratos ni el experimento anterior. Se registraron 28 ejecuciones, 4.480 eventos, tres tiempos por consulta/modelo, outputs deterministas, curva PNG/CSV, métricas de señales y hashes. Se verificó la separación por contenido de particiones, round-trip de los 28 `ExperimentRun`, hashes del nuevo artefacto, 25 pruebas focalizadas y `git diff --check`. Runner: `experiments/run_hls_dynamic_capacity_corrected.py`; resumen: `experiments/summarize_hls_dynamic_capacity_corrected.py`; resultados: `results/experiments/hls_dynamic_capacity_organization_corrected/`. Sin commit ni push.
+
+## 2026-10-23 — Selección contextual de capacidades mediante DCS-LA
+
+**Objetivo y método.** Por autorización del CE se evaluó si las características observables de consulta permiten mejorar sobre una selección estática. Se implementó una adaptación de DCS-LA de Woods, Kegelmeyer y Bowyer (1997): exactitud local por modelo en los `k` vecinos de entrenamiento, con similitud coseno sobre TF-IDF. El vocabulario se ajustó solo con entrenamiento; materia fue una característica categórica candidata, observable, nunca inferida de la etiqueta. El grid de 70 configuraciones se eligió con validación. La configuración seleccionada fue `k=21`, unigramas, peso de materia 0; por tanto el resultado final usa texto y no aporta evidencia de utilidad incremental de materia. No se usaron etiquetas test para selección ni se hicieron inferencias nuevas.
+
+**Datos y comparadores.** Se reutilizaron outcomes y latencias del piloto corregido: 200 ejemplos `auxiliary_train` (sin materia registrada), 20 `dev` con materia (5 por tipo), 88 de validación y las mismas 160 consultas test nuevas, disjuntas por contenido. El fijo global se eligió por validación (SmolLM2-1.7B); la política fija por materia conservó el mapeo ajustado en `dev`; el cuarto comparador fue oráculo retrospectivo no operable. Se generaron cuatro `ExperimentRun` v1 con 640 eventos HLS-PEF.
+
+**Resultados.** DCS-LA obtuvo exactitud 46,25% (IC95% [38,75; 53,75]) y latencia total media 139,27 ms/consulta (IC95% [135,77; 142,77]); selección online: media 0,456 ms, con búsqueda de vecinos alrededor de 0,290 ms. Frente al mejor fijo global (45,00%), diferencia +1,25 pp (IC95% [−1,25; +3,75]), no concluyente; ahorró 2,34 ms de latencia total (IC95% de DCS−fijo [−4,30; −0,75] ms), porque seleccionó modelos más baratos en 11/160 casos. Frente al selector por materia (51,25%, 124,20 ms), DCS fue −5 pp (IC95% [−11,25; +1,25]) y +15,07 ms más lento (IC95% [+12,87; +16,94]). Coincidió con la decisión por materia en 76 consultas, difirió en 84; en estas diferencias corrigió 9 errores y perdió 17 aciertos de la selección por materia. Eligió el 1.7B en 149/160, Qwen en 7 y 360M en 4. El oráculo retrospectivo dio 68,75%, 22,5 pp sobre DCS, sin coste decisional operable.
+
+**Interpretación y límites.** La adaptación local no demuestra una mejora de exactitud sobre el mejor fijo global y queda dominada por el punto estimado de selección por materia en calidad/latencia. La pequeña reducción de latencia frente al fijo global es real en esta muestra, pero no acredita superioridad contextual de calidad. Solo 20 ejemplos de entrenamiento tienen materia anotada y la configuración final descarta el peso de materia; se cubren cuatro materias, 160 consultas y tres modelos. Informe, adaptación, resultados, curva, hashes y pruebas: [HLS_CONTEXTUAL_CAPACITY_SELECTION.md](../experiments/HLS_CONTEXTUAL_CAPACITY_SELECTION.md), `src/hls/contextual_capacity_selection.py`, `experiments/run_hls_contextual_capacity_selection.py`, `results/experiments/hls_contextual_capacity_selection/` y `tests/test_hls_contextual_capacity_selection.py`. Pasaron 30 pruebas focalizadas/regresión y `git diff --check`; se verificó round-trip de los cuatro ExperimentRun. Los resultados históricos permanecen intactos; no se hizo commit ni push.
+
+## 2026-10-23 — Consolidación científica y trazabilidad publicable
+
+**Objetivo y alcance.** Se reconstruyó el estado científico desde los
+documentos, implementaciones y artefactos existentes para ofrecer al PI un
+punto de entrada único en GitHub. No se ejecutaron simulaciones, campañas ni
+inferencias, y no se modificaron resultados históricos.
+
+**Documentación consolidada.** Se añadió el snapshot científico y el índice
+de evidencias en [`docs/HLS_CURRENT_STATE.md`](../HLS_CURRENT_STATE.md). Se
+distinguieron los problemas S1–S7 de las secuencias temporales `TR-*`, se
+registró que no existe un escenario canónico S8 y se conservaron por separado
+los resultados positivos, nulos y negativos de S3b-E1, combinación exacta,
+routing presupuestado, MMLU inicial/corregido y DCS-LA. La página diferencia
+estado definido/implementado/ejecutado/evaluado/validado y limita cada
+conclusión a su evidencia. El roadmap recibió una nota de estado que cierra la
+discrepancia temporal sobre Hito 2.2/S3b-E1 y apunta al snapshot; sus entradas
+anteriores no se reescribieron.
+
+**Diagnóstico de publicación.** En la fecha de revisión, `feature/hls-laboratory-v1`
+estaba en `f945836b07a263401bf03f5a9b035835dc53ff8d`, `origin/main` en
+`931c560aae5424a29844f8a998518460db9db973`, y la rama de trabajo estaba 88
+commits por delante y cero por detrás. `origin/main` era antecesora directa;
+los documentos de laboratorio listados en el snapshot existían localmente y
+en la rama de trabajo, pero no en `origin/main`. La falta de acceso se debía a
+que aún no estaban integrados en `main`, no a permisos. `README.md` ya enlazaba
+el snapshot canónico y no requirió cambio.
+
+**Integridad y publicación.** No se reejecutaron artefactos. Los manifiestos
+de hash verificaron los 15 archivos declarados del piloto MMLU corregido, los
+8 del DCS-LA y los 6/4 archivos de datos declarados en los dos pilotos de
+routing. El manifiesto del piloto MMLU inicial verificó 8 de 9 entradas: los
+ocho artefactos de salida coinciden y la entrada del código fuente difiere
+del archivo de fuente actual, que evolucionó después; no se alteró ni se
+reescribió el manifiesto histórico. Se excluyen los trazados crudos ignorados
+por política del repositorio (incluido el trazado comprimido S3b de 318 MB);
+se conservan resultados estructurados y procedencia. Pasaron 92 pruebas
+focalizadas de S2a/S3b/S4/PEF/complementariedad/routing/MMLU/DCS-LA y
+`git diff --check`; enlaces relativos del snapshot y roadmap comprobados.
+La situación de integración y publicación debe verificarse contra el remoto
+después del commit, no inferirse de esta entrada documental.

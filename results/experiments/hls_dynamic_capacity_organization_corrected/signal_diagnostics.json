@@ -1,0 +1,167 @@
+{
+  "cascade_validation_threshold_diagnostics": [
+    {
+      "A_errors_escalated": 0,
+      "B_corrects_A_error": 0,
+      "B_harms_correct_A": 0,
+      "achieved_rate": 0.0,
+      "activated_n": 0,
+      "fraction_of_A_errors_escalated": 0.0,
+      "target_rate": 0.0,
+      "threshold": 0.2586937072215707
+    },
+    {
+      "A_errors_escalated": 6,
+      "B_corrects_A_error": 2,
+      "B_harms_correct_A": 1,
+      "achieved_rate": 0.10227272727272728,
+      "activated_n": 9,
+      "fraction_of_A_errors_escalated": 0.09375,
+      "target_rate": 0.1,
+      "threshold": 0.3189977405257127
+    },
+    {
+      "A_errors_escalated": 12,
+      "B_corrects_A_error": 5,
+      "B_harms_correct_A": 2,
+      "achieved_rate": 0.20454545454545456,
+      "activated_n": 18,
+      "fraction_of_A_errors_escalated": 0.1875,
+      "target_rate": 0.2,
+      "threshold": 0.33225915044475574
+    },
+    {
+      "A_errors_escalated": 16,
+      "B_corrects_A_error": 7,
+      "B_harms_correct_A": 4,
+      "achieved_rate": 0.29545454545454547,
+      "activated_n": 26,
+      "fraction_of_A_errors_escalated": 0.25,
+      "target_rate": 0.3,
+      "threshold": 0.3409244605007029
+    },
+    {
+      "A_errors_escalated": 24,
+      "B_corrects_A_error": 9,
+      "B_harms_correct_A": 5,
+      "achieved_rate": 0.3977272727272727,
+      "activated_n": 35,
+      "fraction_of_A_errors_escalated": 0.375,
+      "target_rate": 0.4,
+      "threshold": 0.34808723663520397
+    },
+    {
+      "A_errors_escalated": 31,
+      "B_corrects_A_error": 13,
+      "B_harms_correct_A": 5,
+      "achieved_rate": 0.5,
+      "activated_n": 44,
+      "fraction_of_A_errors_escalated": 0.484375,
+      "target_rate": 0.5,
+      "threshold": 0.35871986915267706
+    },
+    {
+      "A_errors_escalated": 36,
+      "B_corrects_A_error": 15,
+      "B_harms_correct_A": 6,
+      "achieved_rate": 0.6022727272727273,
+      "activated_n": 53,
+      "fraction_of_A_errors_escalated": 0.5625,
+      "target_rate": 0.6,
+      "threshold": 0.3694831843455235
+    },
+    {
+      "A_errors_escalated": 44,
+      "B_corrects_A_error": 21,
+      "B_harms_correct_A": 7,
+      "achieved_rate": 0.7045454545454546,
+      "activated_n": 62,
+      "fraction_of_A_errors_escalated": 0.6875,
+      "target_rate": 0.7,
+      "threshold": 0.386813994902947
+    },
+    {
+      "A_errors_escalated": 50,
+      "B_corrects_A_error": 25,
+      "B_harms_correct_A": 8,
+      "achieved_rate": 0.7954545454545454,
+      "activated_n": 70,
+      "fraction_of_A_errors_escalated": 0.78125,
+      "target_rate": 0.8,
+      "threshold": 0.4100300751259271
+    },
+    {
+      "A_errors_escalated": 57,
+      "B_corrects_A_error": 30,
+      "B_harms_correct_A": 8,
+      "achieved_rate": 0.8977272727272727,
+      "activated_n": 79,
+      "fraction_of_A_errors_escalated": 0.890625,
+      "target_rate": 0.9,
+      "threshold": 0.44728668082338136
+    },
+    {
+      "A_errors_escalated": 64,
+      "B_corrects_A_error": 35,
+      "B_harms_correct_A": 8,
+      "achieved_rate": 1.0,
+      "activated_n": 88,
+      "fraction_of_A_errors_escalated": 1.0,
+      "target_rate": 1.0,
+      "threshold": 0.5245015118560257
+    }
+  ],
+  "definition": "normalized next-token probability mass for the selected A-D letter; Brier compares this score with exact correctness; error AUC uses 1-confidence to rank errors",
+  "test_evaluation_only": {
+    "HuggingFaceTB/SmolLM2-1.7B-Instruct": {
+      "accuracy": 0.45,
+      "confidence_brier": 0.22008805218182684,
+      "constant_prevalence_brier": 0.24750000000000005,
+      "ece_10_equal_width_bins": 0.1411632587213567,
+      "error_ranking_auc": 0.7340593434343434,
+      "n": 160
+    },
+    "HuggingFaceTB/SmolLM2-360M-Instruct": {
+      "accuracy": 0.24375,
+      "confidence_brier": 0.19964540665068714,
+      "constant_prevalence_brier": 0.1843359375,
+      "ece_10_equal_width_bins": 0.12039757849491044,
+      "error_ranking_auc": 0.5079465988556898,
+      "n": 160
+    },
+    "Qwen/Qwen2.5-0.5B-Instruct": {
+      "accuracy": 0.4625,
+      "confidence_brier": 0.23680074351677205,
+      "constant_prevalence_brier": 0.24859375,
+      "ece_10_equal_width_bins": 0.15235914968904227,
+      "error_ranking_auc": 0.6929604022627279,
+      "n": 160
+    }
+  },
+  "validation": {
+    "HuggingFaceTB/SmolLM2-1.7B-Instruct": {
+      "accuracy": 0.5795454545454546,
+      "confidence_brier": 0.21238718641123464,
+      "constant_prevalence_brier": 0.24367252066115705,
+      "ece_10_equal_width_bins": 0.04878569115206153,
+      "error_ranking_auc": 0.7058823529411764,
+      "n": 88
+    },
+    "HuggingFaceTB/SmolLM2-360M-Instruct": {
+      "accuracy": 0.2727272727272727,
+      "confidence_brier": 0.2133007435830711,
+      "constant_prevalence_brier": 0.1983471074380165,
+      "ece_10_equal_width_bins": 0.12152813003122344,
+      "error_ranking_auc": 0.4296875,
+      "n": 88
+    },
+    "Qwen/Qwen2.5-0.5B-Instruct": {
+      "accuracy": 0.4318181818181818,
+      "confidence_brier": 0.26205678887311,
+      "constant_prevalence_brier": 0.24535123966942143,
+      "ece_10_equal_width_bins": 0.20551621152905578,
+      "error_ranking_auc": 0.6847368421052632,
+      "n": 88
+    }
+  }
+}

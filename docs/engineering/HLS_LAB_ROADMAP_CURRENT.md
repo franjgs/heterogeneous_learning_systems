@@ -5,6 +5,16 @@
 summarizes evidence and proposes engineering gates; it does not authorize a
 campaign or replace historical records.
 
+> **Superseding status note — 23 October 2026:** Hito 2.2, the deterministic
+> S4 N×K vertical integration, is complete for the audited Bellman reference.
+> S3b-E1 is closed; the budgeted-routing campaign and the initial/corrected
+> MMLU plus DCS-LA pilots are recorded as completed, bounded research, not as
+> authorization to extend them. Earlier roadmap paragraphs below that call
+> Hito 2.2 or S3b-E1 pending preserve their original decision-time context and
+> are superseded by this note and the dated execution log. The canonical
+> scientific summary is [HLS_CURRENT_STATE.md](../HLS_CURRENT_STATE.md).
+> There is no currently authorized next experiment in this roadmap.
+
 ## 1. Purpose and operating principle
 
 HLS is being built as a laboratory for representing heterogeneous systems,
@@ -258,23 +268,25 @@ objective, constraints, demand distribution and output records.
 Sequence work by dependency. Every milestone is an engineering gate; experiment
 execution remains separately authorized.
 
-### Hito 1 — Consolidate the common experiment contract (next)
+### Hito 1 — Consolidate the common experiment contract (complete for first route)
 
-- **Goal:** specify the minimum shared inputs/outputs for an experiment route,
-  reusing `ExperimentRun`, `RunAdapterContext`, `EvaluationProfile` and existing
-  result dataclasses.
+- **Goal:** specify and exercise the minimum shared inputs/outputs for an
+  experiment route, reusing `ExperimentRun`, `RunAdapterContext`,
+  `EvaluationProfile` and existing result dataclasses.
 - **Why:** selected output adapters and PEF already exist, but the same
   boundaries/provenance are not yet expressed for all route families.
 - **Dependencies:** inspect actual N×K, S3b and S7 schemas; no new physical
   model or algorithm.
-- **Deliverable:** contract mapping table and a small compatibility layer or
-  adapter specification, only for fields genuinely absent; stable identity,
-  config/version, objective, constraints, observation regime, seed streams,
-  events and availability states.
-- **Exit checks:** serialize/round-trip records; prove evaluator-only truth is
-  segregated from policy observations; legacy results remain unchanged; reject
-  ambiguous units/objective/horizon; existing adapters remain backward
-  compatible.
+- **Deliverable:** audit/specification plus the S2a vertical slice in
+  [`HLS_EXPERIMENT_CONTRACT_INTEGRATION.md`](HLS_EXPERIMENT_CONTRACT_INTEGRATION.md).
+  The existing runner produces exact and greedy results, a localized adapter
+  builds common runs/records, and HLS-PEF evaluates them. A strict JSON reader
+  was added to the existing run envelope to satisfy round-trip validation.
+- **Exit checks:** S2a exact 8.0, greedy 7.2, global enumeration 8.0 / 84,388
+  sequences; common run serialization round-trip; PEF reward reproduction;
+  unsupported metrics explicit; policy-neutral adapter; S7 artifact structural
+  compatibility. These checks pass for the bounded routes. The original S7
+  runner does not yet emit `ExperimentRun` natively.
 
 ### Hito 2 — Bind scenario, organization, mechanisms and PEF profiles
 
@@ -290,7 +302,7 @@ execution remains separately authorized.
   unchanged with PEF attached/detached; invalid information/constraint
   contracts fail before execution; artifact points back to source run.
 
-### Hito 3 — Validate reuse across scenarios, starting outside S7
+### Hito 3 — Validate reuse across scenarios, starting outside S7 (partially evidenced)
 
 - **Goal:** demonstrate that the contract is reusable for at least two
   semantically distinct existing scenario routes, without a new scenario.
@@ -298,8 +310,9 @@ execution remains separately authorized.
   route, then an existing S4 N×K execution route or S3b selective-feedback
   route. Select based on record gaps discovered in Hito 1, not expected policy
   rankings.
-- **Deliverable:** read/execute through common contract and PEF with distinct
-  profiles and preserved provenance.
+- **Deliverable:** S2a has a fresh runner→contract→PEF path; S7 uses PEF
+  natively and its stored result is wrapped in the same run envelope for a
+  structural check. A second live runner-native integration remains untested.
 - **Exit checks:** reproduce an existing deterministic result or stored
   aggregate without changing its source artifact; declare not-recorded fields
   rather than reconstruct them; keep differing objectives/units incomparable.
@@ -333,21 +346,17 @@ execution remains separately authorized.
 
 ## 11. Next increment recommendation
 
-**Recommend Hito 1: contract consolidation using existing code as the baseline.**
-Do not rebuild `experiment_contract.py` or the PEF data model. First map each
-existing route's actual scenario, organization, mechanism, information,
-objective, units, seed provenance, events and retained outputs to
-`ExperimentRun` and `EvaluationProfile`. The gap should be a short, auditable
-matrix. Then define only the missing shared fields and adapters needed for a
-thin vertical slice. Prefer an existing deterministic S2a route for the first
-non-S7 connection if its output contract fits; otherwise select the smallest
-route whose missing data can be recorded without changing its decisions.
-
-This is the minimum step that advances the PI's present goal: assembling the
-laboratory. It avoids repeating the already validated S7 PEF pilot, avoids
-turning a documentation design into a general framework rewrite, and creates
-a measurable gate before any subsequent experiment. Implementation and
-execution of that vertical slice still require the next authorization.
+**Hito 1 is complete for the first deterministic route.** Keep
+`experiment_contract.py` and PEF as the common structures; do not build a
+second execution framework. The next technically informative integration
+would be an existing S4 N×K execution result with requirements, production,
+resources and MIS-v2/teaching fields. It would test semantic adaptation beyond
+assignment reward and distinguish physical outputs from the optimized CES.
+The route should be selected based on what an existing result actually
+records, with no scenario or policy change. This is an engineering integration
+recommendation only; it has not been authorized or started. The S7 envelope
+adapter should be wired into a future S7 run only if a later requirement
+demonstrates that native emission is needed.
 
 ## 12. PI decisions pending
 
@@ -381,3 +390,156 @@ campaigns, tests, or diagnostics within their declared scopes. They do not
 establish external validity, universal algorithm rankings, or a common runner
 simply because individual runners share some code. The current roadmap is an
 engineering plan, not a new scientific result.
+
+## 14. Hito 1 — Incrementos 1 y 2 (23 Oct 2026)
+
+Incremento 1 (auditoría/especificación) e Incremento 2 (primera integración
+vertical S2a) están completos en el alcance acotado documentado en
+[HLS_EXPERIMENT_CONTRACT_INTEGRATION.md](HLS_EXPERIMENT_CONTRACT_INTEGRATION.md).
+La entrada cronológica con resultados y pruebas se añadió al
+[registro acumulativo](HLS_LAB_EXECUTION_PLAN_2026-10-17.md); se conservaron
+las entradas previas.
+
+**Flujo S2a comprobado:** el runner original ejecuta la instancia existente;
+un adaptador downstream crea un `ExperimentRun` por política y registros PEF;
+`PerformanceEvaluator` calcula recompensa original, conteo de asignaciones y
+disponibilidad de métricas no definidas. No se añadió un ejecutor universal.
+Exacto=8.0, greedy=7.2; la enumeración exhaustiva global=8.0 sobre 84,388
+secuencias se registra solo como referencia de optimalidad. La diferencia
+exacto−greedy=0.8 describe esta instancia determinista.
+
+**Contrato común y S7:** S2a y el artefacto PEF de S7 se validaron con las
+mismas clases centrales. La auditoría mostró que el runner S7 histórico
+produce PEF, pero no `ExperimentRun`; un adaptador downstream ahora envuelve
+sus registros guardados, sin reejecutar ni sobrescribir S7. Es compatibilidad
+del artefacto, no emisión nativa del runner S7.
+
+**Disponibilidad:** el catálogo PEF actual no mide cobertura por tipo; los
+conteos quedan como diagnósticos estructurados. CES, cumplimiento funcional,
+déficit y producción física son `NOT_APPLICABLE` para S2a. La ruta no valida
+aprendizaje, feedback parcial ni inferencia estocástica. PEF compare hace una
+diferencia compatible, no un análisis estadístico pareado.
+
+**Estado de hitos:** Hito 1 se cierra como primer corte vertical. Hito 2
+(orquestación fina de configuración/organización/mecanismo/perfil en otra
+ruta) sigue pendiente. Se recomienda como siguiente integración técnica una
+ruta existente S4 N×K que ya registra requisitos, producción, recursos y
+aprendizaje/enseñanza, después de auditar su resultado fuente. Es una
+recomendación no iniciada y requiere decisión/alcance del PI.
+
+## 15. Hito 2.1 — Auditoría semántica de S4 N×K (23 Oct 2026)
+
+La auditoría ejecutable se completó para la instancia determinista exacta
+S4 `T=3` (dos agentes, dos competencias, demanda `x,y,y`), usando resultados
+históricos y solver/leyes existentes. La recompensa Bellman A y B se
+reprodujo como `1.9175000000000004`; HLS-PEF retrospectivo conserva CES,
+producción, cumplimiento, déficit y recursos con unidades y denominadores
+declarados. Se verificó que producción positiva puede no cumplir requisitos
+y que la coincidencia numérica CES/producción es propia de esta instancia.
+
+**Conclusión de integración:** `ExperimentRun` v1 y el catálogo HLS-PEF bastan
+para representar las magnitudes colectivas observadas mediante un adaptador
+S4 localizado. No se identificó una limitación del contrato ni necesidad de
+añadir métricas. Calidad individual no está definida; producción individual
+es derivable pero no equivale a calidad. La instancia exacta conoce estado
+real y demanda completa, por lo que no acredita compatibilidad con las rutas
+S4 parcialmente observadas P0/P1/P2.
+
+**Estado:** Hito 2.1 completado; auditoría y prueba de caracterización en
+[`HLS_S4_SEMANTIC_INTEGRATION_AUDIT.md`](HLS_S4_SEMANTIC_INTEGRATION_AUDIT.md)
+y `tests/synthetic/test_hls_s4_pef_semantic_characterization.py`. Hito 2.2
+(adaptador e integración vertical S4) está pendiente de decisión/autorización
+del PI; no se inició. Recomendación técnica: GO acotado con esta referencia,
+declarando estado completo y demanda conocida, sin extrapolar a políticas con
+información parcial. No se alteraron runner, políticas, física, objetivo,
+contrato, PEF ni artefactos históricos.
+
+## 16. Hito 2.2 — Integración operativa S4 N×K con HLS-PEF (23 Oct 2026)
+
+**Estado: completado en el alcance de la referencia exacta auditada.** El
+adaptador S4 produce `ExperimentRun` v1 y `EvaluationRecord` desde los
+resultados del solver existente; el runner aplica dos perfiles HLS-PEF sobre
+los mismos records. El artefacto está en
+[`hls_s4_pef_integration/results.json`](../../results/experiments/hls_s4_pef_integration/results.json).
+El contrato v1 y el catálogo de métricas no cambiaron.
+
+Regresión: A/B reward `1.9175000000000004`; cumplimiento `1/3`; déficit
+`.5325`; esfuerzo productivo `6`, esfuerzo docente `0`, recurso docente `0`
+y total `6`. Ambas políticas evaluadas con perfiles básico y ampliado
+producen las mismas decisiones, estados y métricas colectivas. Ninguna
+selecciona transferencia.
+
+**Validación transversal:** S2a, S4 y S7 utilizan las mismas clases
+`ExperimentRun`, `EvaluationProfile`, `EvaluationRecord` y
+`PerformanceEvaluator`; cada escenario conserva perfiles, métricas, unidades
+y disponibilidad propios. Esto valida reutilización estructural y semántica
+local. No demuestra equivalencia de magnitudes, ni valida S4 P0/P1/P2 con
+observación parcial, ni transferencia efectiva.
+
+**Siguiente estado:** Hito 2.2 queda cerrado conforme a sus criterios para la
+ruta determinista S4. La expansión a rutas S4 parcialmente observadas o a
+otros escenarios queda fuera del alcance y requiere decisión del PI. No se
+inició otra campaña.
+
+## 17. S3b — Recuperación y reproducción instrumentada (23 Oct 2026)
+
+**Decisión vigente del PI:** prioridad S3b, GO para una reproducción acotada.
+Esta ejecución retoma una pregunta dentro de S3b y no borra la decisión
+histórica de aparcar la secuencia anterior UCB1/SW-UCB.
+
+Se reutilizó S3b B2 3×3: matching completo, recompensas Bernoulli desconocidas,
+cambios exógenos recurrentes y feedback semi-bandit selectivo. Se mantuvieron
+los niveles registrados de frecuencia (tau=2500/500), disponibilidad (.75/.25),
+UCB1 y SW-UCB (xi=2, W=1214), horizonte 10000, seis matchings y oráculo
+dinámico. Se usaron 30 semillas emparejadas nuevas (9000–9029), sin modificar
+parámetros ni matrices.
+
+En las 240 réplicas UCB1 obtuvo menor regret en las cuatro celdas; SW-UCB tuvo
+menor MSE medio de parejas. Reducir oportunidades elevó el regret de ambas.
+La interacción factorial frecuencia × disponibilidad fue +29.17
+(IC95% [-3.92,62.25]), no concluyente. La diferencia entre algoritmos no
+aísla memoria del bonus de confianza ni de los historiales endógenos.
+
+La ruta produce ExperimentRun v1 y aplica EvaluationProfile/HLS-PEF al reward
+esperado. Las trazas detalladas comprimidas conservan las variables
+diagnósticas; PEF no calcula regret mediante una métrica genérica nueva. El
+modelo S3b evaluado no define costes, producción ni requisitos funcionales.
+
+**Artefactos:** [runner](../../experiments/run_hls_s3b_observability_recovery.py),
+[adaptador](../../src/hls/synthetic/s3b_pef_adapter.py),
+[resultados](../../results/experiments/hls_s3b_observability_recovery/results.json),
+[trazas](../../results/experiments/hls_s3b_observability_recovery/period_traces.jsonl.gz),
+[pruebas](../../tests/test_hls_s3b_observability_recovery.py).
+
+**Estado:** esta ejecución está cerrada; S3b sigue abierta. El PI decidirá
+si continúa la investigación. No se inició otra campaña ni se tocaron otros
+escenarios o resultados históricos.
+
+## 18. S3b-E1 — Diagnóstico final de memoria y feedback (23 Oct 2026)
+
+El PI autorizó el cierre de S3b-E1 con dos controles FULL/WINDOW. Se
+reutilizaron las condiciones infrecuente/alta, frecuente/alta y frecuente/
+baja, 30 semillas 9000–9029 y horizonte 10000. FULL y WINDOW comparten
+estimador de media, inicialización neutral, matching exacto y desempate;
+solo difiere el historial retenido (global frente a W=1214). Ninguno usa
+bonus de confianza: no son reproducciones de UCB1/SW-UCB.
+
+Con calendario de observaciones común, WINDOW redujo regret en
+74.59 [IC95% -89.60,-59.58] para cambios infrecuentes y feedback alto;
+en las otras dos celdas el regret no mostró una diferencia concluyente.
+En bucle cerrado el regret WINDOW−FULL favoreció en media a WINDOW, pero
+los tres IC incluyeron cero. WINDOW tuvo mayor tasa de matching óptimo en
+las tres condiciones, pese a mayor MSE global. En frecuente/baja, el MSE
+sobre aristas óptimas fue .0458 para WINDOW y .0891 para FULL, aunque el
+MSE global fue .0800/.0671. La distribución de feedback por pareja difería
+con volumen total parecido.
+
+S3b-E1 queda cerrado. El resultado no separa por completo efectos de la
+memoria y trayectorias de feedback, no reproduce los algoritmos UCB
+publicados y no estima interacción factorial con el diseño reducido. No
+inicia otra campaña ni decide la prioridad científica posterior.
+
+**Evidencia y artefacto:** entrada detallada y límites en el
+[registro acumulativo](HLS_LAB_EXECUTION_PLAN_2026-10-17.md); resultados en
+[results.json](../../results/experiments/hls_s3b_memory_replay_diagnostic/results.json).
+**Estado:** E1 cerrado; S3b general no se declara cerrada por esta ejecución.

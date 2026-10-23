@@ -1,0 +1,82 @@
+{
+  "constant_train_prevalence_by_model": {
+    "HuggingFaceTB/SmolLM2-1.7B-Instruct": 0.56,
+    "HuggingFaceTB/SmolLM2-360M-Instruct": 0.27,
+    "Qwen/Qwen2.5-0.5B-Instruct": 0.53
+  },
+  "fit_info": {
+    "iterations": 1234,
+    "message": "CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH",
+    "objective": 289.1478400304155,
+    "success": true
+  },
+  "test_evaluation_only": {
+    "brier": 0.282806440701788,
+    "by_task": {
+      "high_school_biology": {
+        "brier": 0.2646094716272151,
+        "log_loss": 0.7989432443943526,
+        "top_model_correct_fraction": 0.45
+      },
+      "high_school_mathematics": {
+        "brier": 0.25994903656908264,
+        "log_loss": 0.7685228261287733,
+        "top_model_correct_fraction": 0.225
+      },
+      "high_school_psychology": {
+        "brier": 0.3296734239774451,
+        "log_loss": 1.0289859265164383,
+        "top_model_correct_fraction": 0.475
+      },
+      "high_school_us_history": {
+        "brier": 0.2769938306334092,
+        "log_loss": 0.7833436124624621,
+        "top_model_correct_fraction": 0.525
+      }
+    },
+    "constant_train_prevalence_brier": 0.23259166666666667,
+    "constant_train_prevalence_brier_by_model": {
+      "HuggingFaceTB/SmolLM2-1.7B-Instruct": 0.2596,
+      "HuggingFaceTB/SmolLM2-360M-Instruct": 0.185025,
+      "Qwen/Qwen2.5-0.5B-Instruct": 0.25314999999999993
+    },
+    "log_loss": 0.8449489023755066,
+    "pairwise_model_order_accuracy_on_discordant_outcomes": 0.5606060606060606,
+    "top_model_correct_fraction": 0.41875
+  },
+  "trained_only_on_auxiliary_train": true,
+  "validation": {
+    "brier": 0.2906590259598297,
+    "by_task": {
+      "high_school_biology": {
+        "brier": 0.30187654692805127,
+        "log_loss": 0.8835154481562495,
+        "top_model_correct_fraction": 0.5
+      },
+      "high_school_mathematics": {
+        "brier": 0.22696401974806113,
+        "log_loss": 0.6574186244300904,
+        "top_model_correct_fraction": 0.2727272727272727
+      },
+      "high_school_psychology": {
+        "brier": 0.34350967851676556,
+        "log_loss": 1.0836425107099923,
+        "top_model_correct_fraction": 0.6363636363636364
+      },
+      "high_school_us_history": {
+        "brier": 0.2902858586464408,
+        "log_loss": 0.8175368440908559,
+        "top_model_correct_fraction": 0.36363636363636365
+      }
+    },
+    "constant_train_prevalence_brier": 0.23246666666666668,
+    "constant_train_prevalence_brier_by_model": {
+      "HuggingFaceTB/SmolLM2-1.7B-Instruct": 0.24405454545454547,
+      "HuggingFaceTB/SmolLM2-360M-Instruct": 0.19835454545454542,
+      "Qwen/Qwen2.5-0.5B-Instruct": 0.254990909090909
+    },
+    "log_loss": 0.8605283568467971,
+    "pairwise_model_order_accuracy_on_discordant_outcomes": 0.5636363636363636,
+    "top_model_correct_fraction": 0.4431818181818182
+  }
+}

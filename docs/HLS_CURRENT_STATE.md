@@ -1,5 +1,253 @@
 # HLS Current State
 
+> **Current scientific snapshot — 23 October 2026.** This section is the
+> authoritative entry point for the PI. The dated records and artifacts linked
+> here remain the source of detail; older material below is retained for
+> historical traceability and must not override this snapshot where dates
+> differ.
+
+## Executive status
+
+HLS is a research laboratory and a parameterized family of heterogeneous
+organizational problems, not a single algorithm. Its scientific frame remains
+the system / organizational modality / decision architecture distinction in
+the [unified framework](architecture/HLS_UNIFIED_FRAMEWORK.md) and
+[ontology v0.1](architecture/HLS_ONTOLOGY_V0_1_2026-10-23.md). Operationally,
+experiments also declare evaluation independently through
+[HLS-PEF](architecture/HLS_PERFORMANCE_EVALUATION_FRAMEWORK.md). Scenario
+labels identify problem regimes; they are not maturity levels. The notation
+`S1`–`S7` names scenario families, whereas `TR-PR`, `TR-PM`, `TR-G`, `TR-J`,
+`TR-R`, `TR-D`, `TR-HA`, and `TR-HB` identify ordered demand/problem histories
+in the Campaign 1–3 line. There is no canonical HLS scenario S8.
+
+The laboratory now contains tested models for assignment, selective-feedback
+learning, endogenous skill development, transfer, uncertain demand and
+intertemporal planning, plus `ExperimentRun` v1 and an independent metric
+evaluator. Vertical integrations show that S2a, one deterministic S4 N×K
+reference and S7 records can use common contracts while retaining different
+physical meanings. This is not yet a universal runner: integrations are
+scenario-specific adapters, and not all legacy runners emit common records
+natively. HLS-PEF evaluates outcomes; it does not select actions or impose a
+universal objective.
+
+**Scientific position:** there are several bounded, reproducible findings,
+including negative and null results. They do not establish a universal
+organizational policy, broad superiority of a named optimizer, or external
+validity across applications. “Validated” below means checked against the
+declared mathematical/software contract and evidence for the stated finite
+scope; it does not mean independently replicated or validated in a real
+organization.
+
+## Philosophy, ontology, and evidence rules
+
+- **A — System:** agents, tasks, competencies, demand, state, dynamics,
+  resources, observation and transitions.
+- **B — Organizational problem:** the decisions and feasible action set.
+  B1 individual selection, B2 combinatorial assignment and B3 intertemporal
+  planning are useful, non-exhaustive modalities.
+- **C — Decision architecture:** estimation, learning, optimization,
+  adaptation and planning components under a declared information regime.
+- **Evaluation:** an explicit profile and metrics. The objective optimized
+  by a policy remains distinct from evaluation metrics, service requirements,
+  resource constraints and diagnostics.
+
+Evidence statuses used in this snapshot are deliberately separate:
+**defined** (problem specified), **implemented** (code exists), **executed**
+(runs/results exist), **evaluated** (metrics and comparisons are reported),
+and **validated** (specific claims checked against tests, exact enumeration,
+or a declared reproducible design). A published-method name alone does not
+establish faithful reproduction of its literature formulation.
+
+## Scenario inventory: S1–S7
+
+| Family | Problem and implemented route | Evidence and bounded conclusion | Current limit |
+|---|---|---|---|
+| **S1** | Known static assignment; exact bipartite assignment and greedy reference. | Small deterministic reference: exact value 2.60 versus greedy 1.80; exact solver checked against enumeration. | One bounded assignment geometry; no general superiority claim. |
+| **S2a** | Known, period-separable demand and capacity-constrained assignment. | Exact 8.0, greedy 7.2, global enumeration 8.0 over 84,388 sequences. Hito 1/2 integration builds `ExperimentRun` and evaluates with HLS-PEF without changing the runner. | The result depends on period separability; it does not show intertemporal planning value. |
+| **S2b** | Shared nonrenewable budget couples decisions across periods (B3). | In a finite exact reference, Bellman 1.00 versus myopic 0.90; sufficient-budget control 1.90. | Small constructed instance; not evidence that planning generally wins. |
+| **S3a** | Exogenous changing competence/reward with observation regimes and assignment. | Implemented estimator/observation controls and bounded comparisons; exact assignment can attain the declared oracle under the fully observed mapping. | No evidence that online learning is needed or useful in that mapping; scope is the encoded regimes. |
+| **S3b** | Unknown, exogenously changing pair rewards/competencies; selective Bernoulli feedback; individual or matching decisions. | UCB1, SW-UCB and diagnostic controls have separate experiments. In the recovered 240-run factorial, UCB1 had lower regret in all four cells while SW-UCB had lower global MSE. Final S3b-E1 isolates memory more carefully: shared-observation controls found a WINDOW benefit only in infrequent-change/high-feedback (regret 184.88 vs 259.47; paired Δ WINDOW−FULL −74.59, 95% CI [−89.60,−59.58]); other shared cells were null/nonconclusive. In closed loop, WINDOW mean regret was lower in three cells but every paired CI included zero. | The UCB algorithms differ beyond memory. FULL/WINDOW are diagnostics, not UCB reproductions. Endogenous observations prevent a pure feedback-mediated causal estimate; S3b-E1 is closed, broader S3b is not declared closed. |
+| **S4** | Endogenous MIS-v2 learning by production, optional directed teaching/transfer, shared resources; exact and N×K routes. | Exact small references, N×K transitions/policies, and deterministic HLS-PEF integration. In the audited T=3 `x,y,y` instance, both Bellman variants reward 1.9175000000000004, functional compliance 1/3, deficit .5325, productive effort 6, teaching effort 0. Exact transfer frontier tested finite `x^p y^q` instances without positive transfer gain under those parameters. | No claim transfer never helps. The integration’s optimum does not teach and does not validate P0/P1/P2 or effective transfer. S4 studies use distinct objectives and information regimes. |
+| **S5 / S6** | Specialization/bottlenecks/cross-training and experience-versus-transfer were candidate research problems. | Document/literature analyses only. | Not implemented as scenario families; no experimental conclusions. |
+| **S7** | Uncertain Markov demand, MIS-v2 competence dynamics, optional transfer, finite B3 planning. | Exact finite tree and independent enumeration. Central T=4 CES: Bellman without transfer 3.1628653621; with transfer 3.1743777327; myopic 3.0346209871. A BEST-MYOPIC tie audit gives 3.0444737839, reducing Bellman’s gap to .1183915782. Mechanistic audit found CURRENT-DEMAND-MYOPIC matches Bellman’s central CES (3.1628653621); key Bellman/BEST-MYOPIC divergences were CES ties with different learning allocation and continuation value. | Exact for small declared instances, not a general planner result. CES can rise while functional service worsens (transfer case: expected services 3.001→3.000 and deficit .04995→.175); CES is not service compliance. Tie-breaking is a material comparator issue. |
+
+The full chronological technical record, including code, tests, configurations
+and limits, is the [cumulative execution plan](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md).
+
+## Other research lines and demand histories
+
+The Campaign 0–4 / G0 / Q1 / META-VOC work is a related historical research
+track, not another S-scenario numbering system. The Campaign 1 histories
+`TR-*` are ordered demand/problem sequences, not scenarios S1–S7 and not a
+hierarchy. For example, TR-PR reuses Campaign 0 H2; TR-G/TR-J and TR-HA/TR-HB
+reuse or reorder previously used content; TR-PM and TR-D are the narrower
+pre-performance Campaign 1 cases. See [Campaign 1 results](experiments/CAMPAIGN_1_RESULTS.md),
+[Campaign 2 results](experiments/CAMPAIGN_2_RESULTS.md), and the
+[Campaign 3 META-VOC confirmatory report](experiments/CAMPAIGN_3_META_VOC_CONFIRMATORY_RESULTS.md).
+
+The Campaign 2 record supports a bounded positive result alongside important
+nulls: specific preregistered hypotheses held in the sampled problem
+population, while Q01 realized utility was not established (mean .0015,
+95% CI [−.0194,.0193]); reported coupling was rare (71/15,360, about .46%).
+It does not establish universal superiority of Q11 or that development is
+useless. Campaign 3 META-VOC reported a confirmatory equal-domain
+META-VOC-50 minus RANDOM-50 cumulative `mu_true` difference of +.1167 per
+history (95% CI [.0310,.2013]) and decision-computation difference −.1924 s
+(95% CI [−.3539,−.0228]); invocation counts were not exactly equal, and the
+predictor-validity audit found weak discrimination (AUC .624; deep-versus-fast
+contrast +.0104, CI [−.020,.0431]). These are bounded synthetic findings, not
+evidence of a reliable real-world opportunity detector. Campaign 4 remained
+HOLD/NO-GO for full execution in its recorded protocol. Historical details
+and frozen records remain in their linked reports; this snapshot does not
+reinterpret them as S1–S7 results.
+
+## Investigations and scientific findings
+
+### S3b-E1 — memory and organization-dependent observations
+
+The controlled shared-observation result demonstrates that retaining a
+shorter history can improve regret under one tested combination of rare
+changes and high feedback, while MSE improvements in other cells need not
+change assignment quality. In closed loop, actions change which pairs are
+observed; regret uncertainty remains too large to claim a decisive FULL versus
+WINDOW winner. Global MSE can mis-rank organizational decisions because it
+weights all pairs equally, whereas matching utility depends on which edges
+change the feasible optimum and its margin. This is evidence about these
+3×3 matrices, policies, horizon and observation schedules only. The detailed
+[S3b-E1 result and diagnostic JSON](../results/experiments/hls_s3b_memory_replay_diagnostic/results.json)
+and append-only execution log preserve the controls and provenance. A
+separate 240-run UCB1/SW-UCB factorial is recorded in the
+[observability-recovery results](../results/experiments/hls_s3b_observability_recovery/results.json);
+it must not be conflated with the memory-isolating controls.
+
+### Complementarity and budgeted model allocation
+
+The small classifier-combination pilot used exact enumeration, Kittler sum
+fusion and a declared common-U mixture for error dependence. The seven
+coalitions and error-pattern probabilities were computed exactly. Fusion
+quality depended on task, dependence and feasibility: under rho=0, the full
+coalition had accuracy 413/500=.826 for both task types; under rho=1 it had
+.700; under rho=.25 it had 1589/2000=.7945. These numbers validate this
+synthetic construction and are consistent with known ensemble behavior; they
+do not establish scientific novelty or practical organizational benefit.
+See the [machine-readable exact result](../results/experiments/hls_expert_complementarity_math_validation/results.json)
+and [validator](../experiments/validate_hls_expert_complementarity_math.py).
+
+The budgeted MMLU routing study assigned one model per query under a shared
+predicted-latency budget. Its original MIRT adaptation had Brier .2698 versus
+.2314 for a constant baseline; a logistic correction improved predictive
+Brier to .2174 and log-loss to .6240, but did not uniformly improve
+organizational outcomes. ILP and greedy were essentially tied in most cells;
+the only clear local ILP-over-greedy result was +2.16 percentage points for
+contextual logistic prediction, homogeneous batches and budget .35 (95% CIs
+by packing [1.63,2.72] pp and by query [.72,3.78] pp). Other tested cells did
+not establish a general ILP advantage. This shows that optimizer comparisons
+depend on predictor quality and batch composition; the optimizer and
+predictor effects must remain separate. The [consolidated report](experiments/HLS_BUDGETED_LLM_ROUTING_CONSOLIDATED_REPORT.md)
+links both pilots and structured results.
+
+### MMLU dynamic capacity and contextual selection
+
+The initial free-generation pilot was retained separately: the nominally
+smaller FAST model was slower (23.1%, .519 s) than DEEP (45.0%, .406 s),
+plausibly because it generated more tokens under a non-comparable timing
+protocol. The corrected direct-choice protocol measured SmolLM2-360M at
+24.4%/96.2 ms, SmolLM2-1.7B at 45.0%/141.6 ms, and Qwen2.5-0.5B at
+46.3%/88.9 ms. Static selection by subject reached 51.3%/124.2 ms. The
+tested confidence cascade reached 34.4%/152.3 ms and did not improve the
+observed quality-latency frontier; first-model confidence had AUC .508 for
+error detection. This is a negative result for this signal, models and
+protocol, not for all cascades.
+
+The later contextual DCS-LA adaptation selected `k=21`, unigram TF-IDF,
+subject weight zero using validation, then evaluated 160 held-out queries.
+It reached 46.25%/139.27 ms versus 45.00%/141.61 ms for the best global fixed
+model: +1.25 pp, 95% paired CI [−1.25,+3.75], hence not conclusive. It chose
+the same 1.7B model in 149/160 queries; online selection cost averaged
+.456 ms/query. The subject-fixed selector scored 51.25%/124.20 ms, but its
+accuracy advantage over DCS-LA is not established solely by point estimates;
+there were only 20 training examples with explicit subject metadata. The
+68.75% retrospective oracle is not deployable and excludes the cost of
+oracle information. These findings do not show that TF-IDF is generally
+useless or that subject routing always wins. See the [corrected dynamic
+capacity report](experiments/HLS_DYNAMIC_CAPACITY_ORGANIZATION_CORRECTED.md)
+and [DCS-LA report](experiments/HLS_CONTEXTUAL_CAPACITY_SELECTION.md).
+
+## Cross-cutting knowledge, with scope
+
+| Observation supported in studied cases | What it does not establish |
+|---|---|
+| More diverse errors do not guarantee that the evaluated fusion rule exploits complementarity; plurality was below a fixed model in the corrected MMLU pilot. | That combinations are generally ineffective. |
+| Predictive MSE/Brier and organizational utility are distinct; errors on decision-critical alternatives can matter more than global average error. | A universal decision-weighted estimator or causal decomposition. |
+| Better calibration does not guarantee better budgeted assignments; ILP gains were conditional on predictor and batch regime. | General superiority of ILP, greedy, or contextual routing. |
+| Coordination/latency costs can move an organizational mechanism outside the measured frontier. | Transfer of local MPS timing to serving, monetary, energy, or concurrent costs. |
+| Myopic tie-breaking can explain part of apparent planning value; a current-task reactive diagnostic matched Bellman CES in the central S7 instance. | That planning has no value in other dynamics, objectives or horizons. |
+| CES, production, service success, deficit, effort and resource consumption are distinct quantities. | That a single metric is appropriate for every HLS application. |
+| In feedback systems, organizational actions shape later observations. | A pure causal feedback effect from the closed-loop FULL/WINDOW contrast. |
+
+Dimensions still weakly characterized include real-world outcome and cost
+measurement; robustness across independent task populations and systems;
+scalable intertemporal planning; realistic teacher/learner effectiveness;
+coordination under concurrency; causal identification with endogenous
+observations; generalization beyond the tested agents/tasks; and consistent
+provenance across all legacy runners. S5/S6 remain candidate problem families,
+not operational scenarios.
+
+## Publication potential (evidence-based, not a novelty claim)
+
+| Class | Current material | Evidence still needed / risk |
+|---|---|---|
+| **A. Potentially publishable with current evidence, after positioning and consolidation** | Bounded Campaign 2 / Campaign 3 META-VOC findings may support a narrowly framed synthetic methods/results paper; S3b-E1 provides a controlled memory contrast. | Establish literature novelty, explain frozen-population scope, address weak predictor discrimination and selected contrasts, and avoid treating synthetic results as external validation. Current evidence is not enough for a general HLS theory claim. |
+| **B. Promising but needs more validation before a standalone claim** | Budgeted routing, dynamic MMLU organization, DCS-LA, S4/S7 planning and transfer analyses. | Small task/model sets, predictor and timing dependence, uncertain pairwise contrasts, finite exact instances, limited independent populations, and known overlap with published ensemble/routing/planning results. |
+| **C. Technical/scientific antecedents** | S1–S2b exact references; classifier exact enumeration; HLS-PEF/ExperimentRun; S4/S7 finite solver checks. | Useful as methods, controls, reusable infrastructure and bounded demonstrations; infrastructure alone is not a novel scientific result. |
+| **D. Closed or not currently justified for further investment** | S3b-E1 is closed; classifier-combination pilot is complete and not extended; original/corrected routing and MMLU pilots have reports; no S8 exists. | Do not reopen or extend by default. This status does not declare all broader research questions closed. |
+
+## Laboratory implementation state
+
+- **Scenario/mechanism code:** substantial, runnable, and tested for the
+  represented finite and synthetic routes; definitions and state semantics
+  remain route-specific.
+- **Organizational problems:** B1/B2/B3 are represented in different
+  scenarios, but there is no universal modality interface or optimizer
+  registry.
+- **ExperimentRun v1 / HLS-PEF:** implemented, tested and used in S2a/S4/S7
+  vertical slices and recent S3b/model-routing experiments. Shared structures
+  preserve provenance and availability; they do not make unlike physical
+  metrics equivalent or perform paired statistical inference automatically.
+- **Integration:** adapters and runners remain scenario-specific. The
+  deterministic S4 integration does not validate S4 P0/P1/P2 or effective
+  transfer. S3b-MMLU records use the common run/evaluation structures, but
+  not every historical runner is natively integrated.
+- **Publication and external validity:** open; reproducible code is necessary
+  infrastructure, not by itself a publication contribution.
+- **Artifact integrity:** the saved-output hashes in the corrected MMLU,
+  DCS-LA and routing manifests verified. The initial dynamic-MMLU manifest
+  verifies its eight output artifacts, while its source-code hash does not
+  match the current evolved source file; the historical manifest and results
+  are preserved, and that source hash is not represented as verified.
+
+## Evidence index
+
+- [Unified scientific framework](architecture/HLS_UNIFIED_FRAMEWORK.md)
+- [Ontology v0.1](architecture/HLS_ONTOLOGY_V0_1_2026-10-23.md)
+- [HLS-PEF specification](architecture/HLS_PERFORMANCE_EVALUATION_FRAMEWORK.md)
+- [Collective-performance audit](architecture/HLS_COLLECTIVE_PERFORMANCE_AUDIT.md)
+- [Cumulative execution plan and dated experiment log](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md)
+- [Current laboratory roadmap](engineering/HLS_LAB_ROADMAP_CURRENT.md)
+- [Experiment contract integration](engineering/HLS_EXPERIMENT_CONTRACT_INTEGRATION.md)
+- [S4 semantic integration audit](engineering/HLS_S4_SEMANTIC_INTEGRATION_AUDIT.md)
+- [S2a/S4/S7 HLS-PEF integration results](../results/experiments/hls_s2a_pef_integration/results.json), [S4](../results/experiments/hls_s4_pef_integration/results.json), [S7 pilot](../results/experiments/hls_pef_s7_pilot/results.json)
+- [S3b memory diagnostic](../results/experiments/hls_s3b_memory_replay_diagnostic/results.json), [S3b observability factorial](../results/experiments/hls_s3b_observability_recovery/results.json)
+- [Classifier-combination exact validation](../results/experiments/hls_expert_complementarity_math_validation/results.json)
+- [Budgeted routing report](experiments/HLS_BUDGETED_LLM_ROUTING_CONSOLIDATED_REPORT.md)
+- [Corrected MMLU organization](experiments/HLS_DYNAMIC_CAPACITY_ORGANIZATION_CORRECTED.md), [DCS-LA](experiments/HLS_CONTEXTUAL_CAPACITY_SELECTION.md)
+
+The detailed dated account below preserves prior project status, historical
+decisions, integrity notes and experiments outside the current S1–S7 work.
+Where an older status paragraph says that a later-dated Hito or result is
+pending, the dated cumulative log and this 23 October snapshot supersede it;
+the historic entry itself remains unchanged.
+
 This is the single canonical summary of the programme's present scientific
 state. It records both established results and the current methodological
 position of the HLS research programme.

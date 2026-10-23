@@ -84,7 +84,8 @@ def _recovery_lag(actions: list[int], oracle_ids: list[int], boundary: int,
 
 
 def run_episode(seed: int, interval: int, opportunity_probability: float,
-                policy: str, reward_uniforms, opportunity_uniforms) -> dict:
+                policy: str, reward_uniforms, opportunity_uniforms,
+                *, detailed_trace: bool = False) -> dict:
     method = "ucb1" if policy == "UCB1" else "sw_ucb"
     estimator = PairwiseBanditEstimator(N, K, method=method, window=WINDOW, xi=XI)
     executions = {pair: 0 for pair in PAIRS}
@@ -109,6 +110,7 @@ def run_episode(seed: int, interval: int, opportunity_probability: float,
     boundaries = change_times(interval)
     boundary_set = set(boundaries)
     assignment_ids, observed_masks = [], []
+    detailed_periods = []
     expected_rewards, realized_rewards, oracle_rewards, regrets, optimal_flags = [], [], [], [], []
     for period in range(HORIZON):
         interval_index = regime_index(period, interval)
@@ -142,6 +144,9 @@ def run_episode(seed: int, interval: int, opportunity_probability: float,
             information_sums[(i, k)]["recent_retained"] += min(
                 recent_counts[(i, k)], retained)
         estimates = estimator.empirical_mean_matrix(period)
+        decision_diagnostics = None
+        if detailed_trace and period >= CALIBRATION:
+            decision_diagnostics = estimator.diagnostic_matrix(period)
         for i, k in PAIRS:
             estimate_sq_error[(i, k)] += (estimates[i][k] - matrix[i][k]) ** 2
             estimate_count[(i, k)] += 1
@@ -150,7 +155,14 @@ def run_episode(seed: int, interval: int, opportunity_probability: float,
                 age_sum[(i, k)] += period - last_seen
                 age_count[(i, k)] += 1
 
-        matching = calibration_matching(period) if period < CALIBRATION else exact_matching(estimator.score_matrix(period))
+        if period < CALIBRATION:
+            matching = calibration_matching(period)
+        elif decision_diagnostics is not None:
+            score_matrix = tuple(tuple(cell["index"] for cell in row)
+                                 for row in decision_diagnostics)
+            matching = exact_matching(score_matrix)
+        else:
+            matching = exact_matching(estimator.score_matrix(period))
         matching = tuple(sorted(matching))
         assert len(matching) == N and len({i for i, _ in matching}) == N
         assert len({k for _, k in matching}) == K
@@ -158,8 +170,11 @@ def run_episode(seed: int, interval: int, opportunity_probability: float,
         oracle = oracle_matching(matrix)
         value = sum(matrix[i][k] for i, k in matching)
         oracle_value = sum(matrix[i][k] for i, k in oracle)
-        realised = sum(float(reward_uniforms[period][i][k] < matrix[i][k])
-                       for i, k in matching)
+        selected_outcomes = {
+            (i, k): float(reward_uniforms[period][i][k] < matrix[i][k])
+            for i, k in matching
+        }
+        realised = sum(selected_outcomes.values())
         expected_rewards.append(value)
         realized_rewards.append(realised)
         oracle_rewards.append(oracle_value)
@@ -173,7 +188,7 @@ def run_episode(seed: int, interval: int, opportunity_probability: float,
             executions[pair] += 1
             bit = 1 << (i * K + k)
             if available_mask & bit:
-                reward = float(reward_uniforms[period][i][k] < matrix[i][k])
+                reward = selected_outcomes[pair]
                 feedback_edges.append(pair)
                 feedback[pair] = reward
                 observed_mask |= bit
@@ -189,6 +204,33 @@ def run_episode(seed: int, interval: int, opportunity_probability: float,
         observed_masks.append(observed_mask)
         # The estimator sees only executed edges whose feedback was available.
         estimator.update(period, feedback_edges, feedback)
+        if detailed_trace:
+            diagnostics = estimator.diagnostic_matrix(period)
+            detailed_periods.append({
+                # Compact trace schema. Pair ordering is row-major (agent, task);
+                # matching IDs decode through the `matching_catalog` in the artifact.
+                "t": period,
+                "z": 0 if label == "base" else 1,
+                "availability_mask_all_pairs": available_mask,
+                "feedback_mask_selected_pairs": observed_mask,
+                "assignment_id": assignment_ids[-1],
+                "oracle_assignment_id": matching_id(oracle),
+                "pair_outcomes_in_assignment_order": [selected_outcomes[pair]
+                                                       for pair in matching],
+                "estimated_mean_flat_nk": [estimates[i][k] for i, k in PAIRS],
+                "observations_used_flat_nk": [diagnostics[i][k]["observations_used"]
+                                              for i, k in PAIRS],
+                "bonus_flat_nk": [diagnostics[i][k]["exploration_bonus"]
+                                  for i, k in PAIRS],
+                "index_flat_nk": [diagnostics[i][k]["index"] for i, k in PAIRS],
+                "expected_reward": value,
+                "realized_reward": realised,
+                "oracle_expected_reward": oracle_value,
+                "expected_regret": regrets[-1],
+                "optimal_matching": optimal_flags[-1],
+                "decision_source": "fixed_calibration_cycle" if period < CALIBRATION
+                                   else "estimated_pairwise_indices",
+            })
 
     oracle_ids = [matching_id(oracle_matching(matrix_at(t, interval))) for t in range(HORIZON)]
     recovery = []
@@ -263,7 +305,8 @@ def run_episode(seed: int, interval: int, opportunity_probability: float,
         "trace": {"assignment_id": assignment_ids, "observed_mask": observed_masks,
                   "expected_reward": expected_rewards, "realized_reward": realized_rewards,
                   "oracle_reward": oracle_rewards, "expected_regret": regrets,
-                  "optimal": optimal_flags},
+                  "optimal": optimal_flags,
+                  **({"detailed_periods": detailed_periods} if detailed_trace else {})},
     }
 
 

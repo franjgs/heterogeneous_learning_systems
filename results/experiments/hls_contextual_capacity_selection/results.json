@@ -1,0 +1,1531 @@
+{
+  "artifacts": {
+    "test_latency_repetitions_sha256": "f92d35b018dc02f345dae0f99a919ce89d675ca93ada5e9f81e56754e7c2e979",
+    "test_model_scores_sha256": "f009afe3d042ffc865923e1e49e0f96657ae3cf52ab81287b392e2ecb04cda8a",
+    "test_query_ids_sha256": "f6ec88439b1c0f9388e585b4cd3298b8c52f34624df938aa2077c114fcf40958",
+    "train_query_ids_sha256": "4433379a1367bb8420fbe47b6dda2733693ba36d9402b20aaf328c3507be0052",
+    "train_validation_scores_sha256": "3f6b6ff88ca14e4e5bf0174156a5adf951d7322cbc0a01aab85b0aaf2339255e",
+    "validation_query_ids_sha256": "24741265e655627004015388441c5f82d8e98f420e98e8936e48eb156b1890bf"
+  },
+  "complementarity": {
+    "HuggingFaceTB/SmolLM2-360M-Instruct__HuggingFaceTB/SmolLM2-1.7B-Instruct": {
+      "both_correct": 21,
+      "both_wrong": 70,
+      "left_only": 18,
+      "right_only": 51
+    },
+    "HuggingFaceTB/SmolLM2-360M-Instruct__Qwen/Qwen2.5-0.5B-Instruct": {
+      "both_correct": 22,
+      "both_wrong": 69,
+      "left_only": 17,
+      "right_only": 52
+    },
+    "Qwen/Qwen2.5-0.5B-Instruct__HuggingFaceTB/SmolLM2-1.7B-Instruct": {
+      "both_correct": 43,
+      "both_wrong": 57,
+      "left_only": 31,
+      "right_only": 29
+    }
+  },
+  "configuration": {
+    "dcs": {
+      "k": 21,
+      "ngram_range": [
+        1,
+        1
+      ],
+      "task_weight": 0.0
+    },
+    "feature_protocol": "question enunciado TF-IDF; observed task one-hot; fit vocabulary and IDF on train only",
+    "fixed_model": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+    "local_competence": "unweighted fraction of k neighbors correctly classified for each model",
+    "model_tie_break": "MODEL_IDS declaration order",
+    "neighbor_protocol": "cosine similarity; exact brute-force ranking; ties by query ID",
+    "parameter_grid": {
+      "k": [
+        1,
+        3,
+        5,
+        7,
+        11,
+        15,
+        21
+      ],
+      "ngram_range": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "task_weight": [
+        0.0,
+        0.5,
+        1.0,
+        2.0,
+        4.0
+      ]
+    },
+    "parameter_selection": "maximum validation accuracy; ties prefer larger k, unigram representation, then lower task weight",
+    "static_by_task": {
+      "high_school_biology": "Qwen/Qwen2.5-0.5B-Instruct",
+      "high_school_mathematics": "HuggingFaceTB/SmolLM2-360M-Instruct",
+      "high_school_psychology": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "high_school_us_history": "HuggingFaceTB/SmolLM2-1.7B-Instruct"
+    }
+  },
+  "dataset": {
+    "id": "cais/mmlu",
+    "revision": "c30699e8356da336a370243923dbaf21066bb9fe",
+    "test_excludes_prior_pilot_by_question_and_choices": true,
+    "test_n": 160,
+    "test_seed": 20261025,
+    "test_task_counts": {
+      "high_school_biology": 40,
+      "high_school_mathematics": 40,
+      "high_school_psychology": 40,
+      "high_school_us_history": 40
+    },
+    "train_examples_with_observed_subject": 20,
+    "train_examples_without_recorded_subject": 200,
+    "train_n": 220,
+    "validation_n": 88
+  },
+  "dcs_diagnostics": {
+    "correct_fixed_responses_lost": 1,
+    "correct_static_responses_lost": 17,
+    "dcs_accuracy_when_differs_from_static": 0.35714285714285715,
+    "dcs_accuracy_when_matches_static": 0.5789473684210527,
+    "dcs_selections": {
+      "HuggingFaceTB/SmolLM2-1.7B-Instruct": 149,
+      "HuggingFaceTB/SmolLM2-360M-Instruct": 4,
+      "Qwen/Qwen2.5-0.5B-Instruct": 7
+    },
+    "dcs_selections_by_task": {
+      "high_school_biology": {
+        "HuggingFaceTB/SmolLM2-1.7B-Instruct": 38,
+        "HuggingFaceTB/SmolLM2-360M-Instruct": 1,
+        "Qwen/Qwen2.5-0.5B-Instruct": 1
+      },
+      "high_school_mathematics": {
+        "HuggingFaceTB/SmolLM2-1.7B-Instruct": 37,
+        "HuggingFaceTB/SmolLM2-360M-Instruct": 1,
+        "Qwen/Qwen2.5-0.5B-Instruct": 2
+      },
+      "high_school_psychology": {
+        "HuggingFaceTB/SmolLM2-1.7B-Instruct": 36,
+        "HuggingFaceTB/SmolLM2-360M-Instruct": 2,
+        "Qwen/Qwen2.5-0.5B-Instruct": 2
+      },
+      "high_school_us_history": {
+        "HuggingFaceTB/SmolLM2-1.7B-Instruct": 38,
+        "HuggingFaceTB/SmolLM2-360M-Instruct": 0,
+        "Qwen/Qwen2.5-0.5B-Instruct": 2
+      }
+    },
+    "dcs_static_changed_decisions_same_outcome": 58,
+    "dcs_validation_accuracy": 0.5795454545454546,
+    "dcs_validation_config": {
+      "k": 21,
+      "ngram_range": [
+        1,
+        1
+      ],
+      "task_weight": 0.0
+    },
+    "errors_corrected_vs_best_fixed": 3,
+    "errors_corrected_vs_static_by_task": 9,
+    "fixed_errors_dcs_corrects_fraction": 0.03409090909090909,
+    "fixed_model_selected_from_validation": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+    "fixed_model_validation_accuracy": 0.5795454545454546,
+    "n_validation_configurations": 70,
+    "offline_fit_and_validation_tuning_seconds": 6.19279179116711,
+    "online_timing_repetitions_per_test_query": 7,
+    "selection_cost_components_seconds_median_of_query_medians": {
+      "context_extraction": 1.4585e-06,
+      "feature_combination_and_normalization": 4.64795e-05,
+      "local_competence_and_selection": 7.5e-06,
+      "neighbor_search": 0.000290375,
+      "tfidf_transform": 8.41455e-05,
+      "total_selection": 0.000436915
+    },
+    "selection_differs_from_static_by_task": 84,
+    "selection_matches_static_by_task": 76,
+    "static_task_mapping_frozen_from_training": {
+      "high_school_biology": "Qwen/Qwen2.5-0.5B-Instruct",
+      "high_school_mathematics": "HuggingFaceTB/SmolLM2-360M-Instruct",
+      "high_school_psychology": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "high_school_us_history": "HuggingFaceTB/SmolLM2-1.7B-Instruct"
+    },
+    "validation_config_scores": [
+      {
+        "accuracy": 0.32954545454545453,
+        "config": {
+          "k": 1,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 0.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 11,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 51,
+          "Qwen/Qwen2.5-0.5B-Instruct": 26
+        }
+      },
+      {
+        "accuracy": 0.3068181818181818,
+        "config": {
+          "k": 1,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 0.5
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 15,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 61,
+          "Qwen/Qwen2.5-0.5B-Instruct": 12
+        }
+      },
+      {
+        "accuracy": 0.32954545454545453,
+        "config": {
+          "k": 1,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 1.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 17,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 59,
+          "Qwen/Qwen2.5-0.5B-Instruct": 12
+        }
+      },
+      {
+        "accuracy": 0.32954545454545453,
+        "config": {
+          "k": 1,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 2.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 17,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 59,
+          "Qwen/Qwen2.5-0.5B-Instruct": 12
+        }
+      },
+      {
+        "accuracy": 0.32954545454545453,
+        "config": {
+          "k": 1,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 4.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 17,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 59,
+          "Qwen/Qwen2.5-0.5B-Instruct": 12
+        }
+      },
+      {
+        "accuracy": 0.29545454545454547,
+        "config": {
+          "k": 1,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 0.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 10,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 57,
+          "Qwen/Qwen2.5-0.5B-Instruct": 21
+        }
+      },
+      {
+        "accuracy": 0.375,
+        "config": {
+          "k": 1,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 0.5
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 17,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 62,
+          "Qwen/Qwen2.5-0.5B-Instruct": 9
+        }
+      },
+      {
+        "accuracy": 0.375,
+        "config": {
+          "k": 1,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 1.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 18,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 61,
+          "Qwen/Qwen2.5-0.5B-Instruct": 9
+        }
+      },
+      {
+        "accuracy": 0.375,
+        "config": {
+          "k": 1,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 2.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 18,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 61,
+          "Qwen/Qwen2.5-0.5B-Instruct": 9
+        }
+      },
+      {
+        "accuracy": 0.375,
+        "config": {
+          "k": 1,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 4.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 18,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 61,
+          "Qwen/Qwen2.5-0.5B-Instruct": 9
+        }
+      },
+      {
+        "accuracy": 0.4318181818181818,
+        "config": {
+          "k": 3,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 0.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 29,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 35,
+          "Qwen/Qwen2.5-0.5B-Instruct": 24
+        }
+      },
+      {
+        "accuracy": 0.42045454545454547,
+        "config": {
+          "k": 3,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 0.5
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 29,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 36,
+          "Qwen/Qwen2.5-0.5B-Instruct": 23
+        }
+      },
+      {
+        "accuracy": 0.4431818181818182,
+        "config": {
+          "k": 3,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 1.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 32,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 33,
+          "Qwen/Qwen2.5-0.5B-Instruct": 23
+        }
+      },
+      {
+        "accuracy": 0.4431818181818182,
+        "config": {
+          "k": 3,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 2.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 32,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 33,
+          "Qwen/Qwen2.5-0.5B-Instruct": 23
+        }
+      },
+      {
+        "accuracy": 0.4431818181818182,
+        "config": {
+          "k": 3,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 4.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 33,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 32,
+          "Qwen/Qwen2.5-0.5B-Instruct": 23
+        }
+      },
+      {
+        "accuracy": 0.48863636363636365,
+        "config": {
+          "k": 3,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 0.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 34,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 27,
+          "Qwen/Qwen2.5-0.5B-Instruct": 27
+        }
+      },
+      {
+        "accuracy": 0.4431818181818182,
+        "config": {
+          "k": 3,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 0.5
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 30,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 35,
+          "Qwen/Qwen2.5-0.5B-Instruct": 23
+        }
+      },
+      {
+        "accuracy": 0.4431818181818182,
+        "config": {
+          "k": 3,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 1.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 33,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 32,
+          "Qwen/Qwen2.5-0.5B-Instruct": 23
+        }
+      },
+      {
+        "accuracy": 0.4431818181818182,
+        "config": {
+          "k": 3,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 2.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 31,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 34,
+          "Qwen/Qwen2.5-0.5B-Instruct": 23
+        }
+      },
+      {
+        "accuracy": 0.4431818181818182,
+        "config": {
+          "k": 3,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 4.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 32,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 33,
+          "Qwen/Qwen2.5-0.5B-Instruct": 23
+        }
+      },
+      {
+        "accuracy": 0.48863636363636365,
+        "config": {
+          "k": 5,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 0.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 49,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 25,
+          "Qwen/Qwen2.5-0.5B-Instruct": 14
+        }
+      },
+      {
+        "accuracy": 0.5568181818181818,
+        "config": {
+          "k": 5,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 0.5
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 42,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 23,
+          "Qwen/Qwen2.5-0.5B-Instruct": 23
+        }
+      },
+      {
+        "accuracy": 0.5454545454545454,
+        "config": {
+          "k": 5,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 1.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 44,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 22,
+          "Qwen/Qwen2.5-0.5B-Instruct": 22
+        }
+      },
+      {
+        "accuracy": 0.5454545454545454,
+        "config": {
+          "k": 5,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 2.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 44,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 22,
+          "Qwen/Qwen2.5-0.5B-Instruct": 22
+        }
+      },
+      {
+        "accuracy": 0.5454545454545454,
+        "config": {
+          "k": 5,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 4.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 44,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 22,
+          "Qwen/Qwen2.5-0.5B-Instruct": 22
+        }
+      },
+      {
+        "accuracy": 0.5,
+        "config": {
+          "k": 5,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 0.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 46,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 19,
+          "Qwen/Qwen2.5-0.5B-Instruct": 23
+        }
+      },
+      {
+        "accuracy": 0.5568181818181818,
+        "config": {
+          "k": 5,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 0.5
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 43,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 22,
+          "Qwen/Qwen2.5-0.5B-Instruct": 23
+        }
+      },
+      {
+        "accuracy": 0.5454545454545454,
+        "config": {
+          "k": 5,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 1.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 44,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 22,
+          "Qwen/Qwen2.5-0.5B-Instruct": 22
+        }
+      },
+      {
+        "accuracy": 0.5454545454545454,
+        "config": {
+          "k": 5,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 2.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 44,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 22,
+          "Qwen/Qwen2.5-0.5B-Instruct": 22
+        }
+      },
+      {
+        "accuracy": 0.5454545454545454,
+        "config": {
+          "k": 5,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 4.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 44,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 22,
+          "Qwen/Qwen2.5-0.5B-Instruct": 22
+        }
+      },
+      {
+        "accuracy": 0.5,
+        "config": {
+          "k": 7,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 0.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 56,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 23,
+          "Qwen/Qwen2.5-0.5B-Instruct": 9
+        }
+      },
+      {
+        "accuracy": 0.5340909090909091,
+        "config": {
+          "k": 7,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 0.5
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 52,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 15,
+          "Qwen/Qwen2.5-0.5B-Instruct": 21
+        }
+      },
+      {
+        "accuracy": 0.5340909090909091,
+        "config": {
+          "k": 7,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 1.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 50,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 15,
+          "Qwen/Qwen2.5-0.5B-Instruct": 23
+        }
+      },
+      {
+        "accuracy": 0.5340909090909091,
+        "config": {
+          "k": 7,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 2.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 50,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 15,
+          "Qwen/Qwen2.5-0.5B-Instruct": 23
+        }
+      },
+      {
+        "accuracy": 0.5340909090909091,
+        "config": {
+          "k": 7,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 4.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 50,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 15,
+          "Qwen/Qwen2.5-0.5B-Instruct": 23
+        }
+      },
+      {
+        "accuracy": 0.5340909090909091,
+        "config": {
+          "k": 7,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 0.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 56,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 15,
+          "Qwen/Qwen2.5-0.5B-Instruct": 17
+        }
+      },
+      {
+        "accuracy": 0.5227272727272727,
+        "config": {
+          "k": 7,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 0.5
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 50,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 17,
+          "Qwen/Qwen2.5-0.5B-Instruct": 21
+        }
+      },
+      {
+        "accuracy": 0.5227272727272727,
+        "config": {
+          "k": 7,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 1.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 49,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 17,
+          "Qwen/Qwen2.5-0.5B-Instruct": 22
+        }
+      },
+      {
+        "accuracy": 0.5227272727272727,
+        "config": {
+          "k": 7,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 2.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 48,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 17,
+          "Qwen/Qwen2.5-0.5B-Instruct": 23
+        }
+      },
+      {
+        "accuracy": 0.5340909090909091,
+        "config": {
+          "k": 7,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 4.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 47,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 17,
+          "Qwen/Qwen2.5-0.5B-Instruct": 24
+        }
+      },
+      {
+        "accuracy": 0.5340909090909091,
+        "config": {
+          "k": 11,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 0.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 70,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 7,
+          "Qwen/Qwen2.5-0.5B-Instruct": 11
+        }
+      },
+      {
+        "accuracy": 0.5227272727272727,
+        "config": {
+          "k": 11,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 0.5
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 62,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 9,
+          "Qwen/Qwen2.5-0.5B-Instruct": 17
+        }
+      },
+      {
+        "accuracy": 0.5227272727272727,
+        "config": {
+          "k": 11,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 1.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 59,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 10,
+          "Qwen/Qwen2.5-0.5B-Instruct": 19
+        }
+      },
+      {
+        "accuracy": 0.5227272727272727,
+        "config": {
+          "k": 11,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 2.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 57,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 10,
+          "Qwen/Qwen2.5-0.5B-Instruct": 21
+        }
+      },
+      {
+        "accuracy": 0.5227272727272727,
+        "config": {
+          "k": 11,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 4.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 57,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 10,
+          "Qwen/Qwen2.5-0.5B-Instruct": 21
+        }
+      },
+      {
+        "accuracy": 0.5227272727272727,
+        "config": {
+          "k": 11,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 0.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 64,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 12,
+          "Qwen/Qwen2.5-0.5B-Instruct": 12
+        }
+      },
+      {
+        "accuracy": 0.5568181818181818,
+        "config": {
+          "k": 11,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 0.5
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 53,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 13,
+          "Qwen/Qwen2.5-0.5B-Instruct": 22
+        }
+      },
+      {
+        "accuracy": 0.5568181818181818,
+        "config": {
+          "k": 11,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 1.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 44,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 14,
+          "Qwen/Qwen2.5-0.5B-Instruct": 30
+        }
+      },
+      {
+        "accuracy": 0.5454545454545454,
+        "config": {
+          "k": 11,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 2.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 46,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 14,
+          "Qwen/Qwen2.5-0.5B-Instruct": 28
+        }
+      },
+      {
+        "accuracy": 0.5568181818181818,
+        "config": {
+          "k": 11,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 4.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 45,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 14,
+          "Qwen/Qwen2.5-0.5B-Instruct": 29
+        }
+      },
+      {
+        "accuracy": 0.5454545454545454,
+        "config": {
+          "k": 15,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 0.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 75,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 3,
+          "Qwen/Qwen2.5-0.5B-Instruct": 10
+        }
+      },
+      {
+        "accuracy": 0.5795454545454546,
+        "config": {
+          "k": 15,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 0.5
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 68,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 6,
+          "Qwen/Qwen2.5-0.5B-Instruct": 14
+        }
+      },
+      {
+        "accuracy": 0.5454545454545454,
+        "config": {
+          "k": 15,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 1.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 60,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 5,
+          "Qwen/Qwen2.5-0.5B-Instruct": 23
+        }
+      },
+      {
+        "accuracy": 0.5568181818181818,
+        "config": {
+          "k": 15,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 2.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 58,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 5,
+          "Qwen/Qwen2.5-0.5B-Instruct": 25
+        }
+      },
+      {
+        "accuracy": 0.5568181818181818,
+        "config": {
+          "k": 15,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 4.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 58,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 5,
+          "Qwen/Qwen2.5-0.5B-Instruct": 25
+        }
+      },
+      {
+        "accuracy": 0.5113636363636364,
+        "config": {
+          "k": 15,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 0.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 72,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 4,
+          "Qwen/Qwen2.5-0.5B-Instruct": 12
+        }
+      },
+      {
+        "accuracy": 0.5681818181818182,
+        "config": {
+          "k": 15,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 0.5
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 65,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 7,
+          "Qwen/Qwen2.5-0.5B-Instruct": 16
+        }
+      },
+      {
+        "accuracy": 0.5681818181818182,
+        "config": {
+          "k": 15,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 1.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 53,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 6,
+          "Qwen/Qwen2.5-0.5B-Instruct": 29
+        }
+      },
+      {
+        "accuracy": 0.5681818181818182,
+        "config": {
+          "k": 15,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 2.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 54,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 6,
+          "Qwen/Qwen2.5-0.5B-Instruct": 28
+        }
+      },
+      {
+        "accuracy": 0.5681818181818182,
+        "config": {
+          "k": 15,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 4.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 54,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 6,
+          "Qwen/Qwen2.5-0.5B-Instruct": 28
+        }
+      },
+      {
+        "accuracy": 0.5795454545454546,
+        "config": {
+          "k": 21,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 0.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 85,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 0,
+          "Qwen/Qwen2.5-0.5B-Instruct": 3
+        }
+      },
+      {
+        "accuracy": 0.5568181818181818,
+        "config": {
+          "k": 21,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 0.5
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 73,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 2,
+          "Qwen/Qwen2.5-0.5B-Instruct": 13
+        }
+      },
+      {
+        "accuracy": 0.5568181818181818,
+        "config": {
+          "k": 21,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 1.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 69,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 3,
+          "Qwen/Qwen2.5-0.5B-Instruct": 16
+        }
+      },
+      {
+        "accuracy": 0.5681818181818182,
+        "config": {
+          "k": 21,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 2.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 72,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 2,
+          "Qwen/Qwen2.5-0.5B-Instruct": 14
+        }
+      },
+      {
+        "accuracy": 0.5681818181818182,
+        "config": {
+          "k": 21,
+          "ngram_range": [
+            1,
+            1
+          ],
+          "task_weight": 4.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 72,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 2,
+          "Qwen/Qwen2.5-0.5B-Instruct": 14
+        }
+      },
+      {
+        "accuracy": 0.5340909090909091,
+        "config": {
+          "k": 21,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 0.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 75,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 2,
+          "Qwen/Qwen2.5-0.5B-Instruct": 11
+        }
+      },
+      {
+        "accuracy": 0.5340909090909091,
+        "config": {
+          "k": 21,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 0.5
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 68,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 5,
+          "Qwen/Qwen2.5-0.5B-Instruct": 15
+        }
+      },
+      {
+        "accuracy": 0.5454545454545454,
+        "config": {
+          "k": 21,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 1.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 56,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 5,
+          "Qwen/Qwen2.5-0.5B-Instruct": 27
+        }
+      },
+      {
+        "accuracy": 0.5454545454545454,
+        "config": {
+          "k": 21,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 2.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 54,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 6,
+          "Qwen/Qwen2.5-0.5B-Instruct": 28
+        }
+      },
+      {
+        "accuracy": 0.5454545454545454,
+        "config": {
+          "k": 21,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "task_weight": 4.0
+        },
+        "selected_model_counts": {
+          "HuggingFaceTB/SmolLM2-1.7B-Instruct": 54,
+          "HuggingFaceTB/SmolLM2-360M-Instruct": 6,
+          "Qwen/Qwen2.5-0.5B-Instruct": 28
+        }
+      }
+    ]
+  },
+  "experiment": {
+    "adaptation": "Woods et al. local-accuracy selection, with sparse TF-IDF cosine neighborhoods and task one-hot feature; k and representation tuned on validation",
+    "method": "DCS-LA local classifier accuracy over k-nearest training queries; one selected model per query",
+    "name": "HLS contextual capacity selection using DCS-LA adaptation",
+    "no_new_model_inference": true,
+    "no_test_answers_used_for_selection": true,
+    "question": "Do observable query text and subject permit local-accuracy selection to outperform the best global static model?"
+  },
+  "limitations": [
+    "only four MMLU subjects and 160 test queries",
+    "the auxiliary training subset lacks recorded subject metadata; it is represented as missing, not inferred",
+    "offline logged model outcomes do not capture serving concurrency or queueing",
+    "test oracle uses correctness labels and is not deployable"
+  ],
+  "model_ids": [
+    "HuggingFaceTB/SmolLM2-360M-Instruct",
+    "Qwen/Qwen2.5-0.5B-Instruct",
+    "HuggingFaceTB/SmolLM2-1.7B-Instruct"
+  ],
+  "model_revisions": {
+    "HuggingFaceTB/SmolLM2-1.7B-Instruct": "31b70e2e869a7173562077fd711b654946d38674",
+    "HuggingFaceTB/SmolLM2-360M-Instruct": "a10cc1512eabd3dde888204e902eca88bddb4951",
+    "Qwen/Qwen2.5-0.5B-Instruct": "7ae557604adf67be50417f59c2c2f167def9a775"
+  },
+  "paired_comparisons": {
+    "dcs_distance_to_oracle": {
+      "accuracy_oracle_minus_dcs": {
+        "ci95_high": 0.2875,
+        "ci95_low": 0.1625,
+        "difference_a_minus_b": 0.225
+      },
+      "latency_dcs_minus_oracle_seconds": {
+        "ci95_high": 0.04694257272767366,
+        "ci95_low": 0.03860538649268648,
+        "difference_a_minus_b": 0.0428963073518631
+      }
+    },
+    "dcs_minus_best_fixed_validation": {
+      "accuracy": {
+        "ci95_high": 0.0375,
+        "ci95_low": -0.0125,
+        "difference_a_minus_b": 0.0125
+      },
+      "mean_total_latency_seconds": {
+        "ci95_high": -0.0007488979834740145,
+        "ci95_low": -0.004295174761981752,
+        "difference_a_minus_b": -0.0023419161777035423
+      }
+    },
+    "dcs_minus_static_by_task_training": {
+      "accuracy": {
+        "ci95_high": 0.0125,
+        "ci95_low": -0.1125,
+        "difference_a_minus_b": -0.05
+      },
+      "mean_total_latency_seconds": {
+        "ci95_high": 0.01693960359932633,
+        "ci95_low": 0.0128748732663681,
+        "difference_a_minus_b": 0.015070908606993024
+      }
+    }
+  },
+  "results": {
+    "best_fixed_validation": {
+      "accuracy": {
+        "ci95_high": 0.525,
+        "ci95_low": 0.375,
+        "mean": 0.45
+      },
+      "accuracy_by_task": {
+        "high_school_biology": 0.425,
+        "high_school_mathematics": 0.2,
+        "high_school_psychology": 0.575,
+        "high_school_us_history": 0.6
+      },
+      "mean_inference_latency_seconds": {
+        "ci95_high": 0.14439586027197943,
+        "ci95_low": 0.138796919572087,
+        "mean": 0.1416113976738415
+      },
+      "mean_selection_latency_seconds": {
+        "ci95_high": 4.199999999999999e-08,
+        "ci95_low": 4.199999999999999e-08,
+        "mean": 4.199999999999999e-08
+      },
+      "mean_total_latency_seconds": {
+        "ci95_high": 0.14439590227197943,
+        "ci95_low": 0.138796961572087,
+        "mean": 0.14161143967384154
+      },
+      "n": 160,
+      "p50_inference_latency_seconds": 0.12001872947439546,
+      "p50_selection_latency_seconds": 4.2e-08,
+      "p50_total_latency_seconds": 0.12001877147439546,
+      "p95_inference_latency_seconds": 0.235923063114751,
+      "p95_selection_latency_seconds": 4.2e-08,
+      "p95_total_latency_seconds": 0.235923105114751,
+      "selected_model_counts": {
+        "HuggingFaceTB/SmolLM2-1.7B-Instruct": 160,
+        "HuggingFaceTB/SmolLM2-360M-Instruct": 0,
+        "Qwen/Qwen2.5-0.5B-Instruct": 0
+      },
+      "selected_model_frequency": {
+        "HuggingFaceTB/SmolLM2-1.7B-Instruct": 1.0,
+        "HuggingFaceTB/SmolLM2-360M-Instruct": 0.0,
+        "Qwen/Qwen2.5-0.5B-Instruct": 0.0
+      }
+    },
+    "dcs_la_tfidf_knn": {
+      "accuracy": {
+        "ci95_high": 0.5375,
+        "ci95_low": 0.3875,
+        "mean": 0.4625
+      },
+      "accuracy_by_task": {
+        "high_school_biology": 0.45,
+        "high_school_mathematics": 0.25,
+        "high_school_psychology": 0.575,
+        "high_school_us_history": 0.575
+      },
+      "mean_inference_latency_seconds": {
+        "ci95_high": 0.14231201547321684,
+        "ci95_low": 0.13531687836017223,
+        "mean": 0.13881345860863797
+      },
+      "mean_selection_latency_seconds": {
+        "ci95_high": 0.00046123328593750004,
+        "ci95_low": 0.000451411775,
+        "mean": 0.0004560648875
+      },
+      "mean_total_latency_seconds": {
+        "ci95_high": 0.14277002372352934,
+        "ci95_low": 0.13577418201829722,
+        "mean": 0.139269523496138
+      },
+      "n": 160,
+      "p50_inference_latency_seconds": 0.11968964652623976,
+      "p50_selection_latency_seconds": 0.000436915,
+      "p50_total_latency_seconds": 0.12011206402623975,
+      "p95_inference_latency_seconds": 0.235923063114751,
+      "p95_selection_latency_seconds": 0.00053580465,
+      "p95_total_latency_seconds": 0.23645203721475103,
+      "selected_model_counts": {
+        "HuggingFaceTB/SmolLM2-1.7B-Instruct": 149,
+        "HuggingFaceTB/SmolLM2-360M-Instruct": 4,
+        "Qwen/Qwen2.5-0.5B-Instruct": 7
+      },
+      "selected_model_frequency": {
+        "HuggingFaceTB/SmolLM2-1.7B-Instruct": 0.93125,
+        "HuggingFaceTB/SmolLM2-360M-Instruct": 0.025,
+        "Qwen/Qwen2.5-0.5B-Instruct": 0.04375
+      }
+    },
+    "retrospective_fastest_correct_oracle": {
+      "accuracy": {
+        "ci95_high": 0.75625,
+        "ci95_low": 0.6125,
+        "mean": 0.6875
+      },
+      "accuracy_by_task": {
+        "high_school_biology": 0.75,
+        "high_school_mathematics": 0.5,
+        "high_school_psychology": 0.75,
+        "high_school_us_history": 0.75
+      },
+      "mean_inference_latency_seconds": {
+        "ci95_high": 0.10013404660006922,
+        "ci95_low": 0.0930732927127246,
+        "mean": 0.09637321614427488
+      },
+      "mean_selection_latency_seconds": {
+        "ci95_high": 0.0,
+        "ci95_low": 0.0,
+        "mean": 0.0
+      },
+      "mean_total_latency_seconds": {
+        "ci95_high": 0.10013404660006922,
+        "ci95_low": 0.0930732927127246,
+        "mean": 0.09637321614427488
+      },
+      "n": 160,
+      "p50_inference_latency_seconds": 0.08654647902585565,
+      "p50_selection_latency_seconds": 0.0,
+      "p50_total_latency_seconds": 0.08654647902585565,
+      "p95_inference_latency_seconds": 0.1334421002189626,
+      "p95_selection_latency_seconds": 0.0,
+      "p95_total_latency_seconds": 0.1334421002189626,
+      "selected_model_counts": {
+        "HuggingFaceTB/SmolLM2-1.7B-Instruct": 19,
+        "HuggingFaceTB/SmolLM2-360M-Instruct": 26,
+        "Qwen/Qwen2.5-0.5B-Instruct": 115
+      },
+      "selected_model_frequency": {
+        "HuggingFaceTB/SmolLM2-1.7B-Instruct": 0.11875,
+        "HuggingFaceTB/SmolLM2-360M-Instruct": 0.1625,
+        "Qwen/Qwen2.5-0.5B-Instruct": 0.71875
+      }
+    },
+    "static_by_task_training": {
+      "accuracy": {
+        "ci95_high": 0.5875,
+        "ci95_low": 0.4375,
+        "mean": 0.5125
+      },
+      "accuracy_by_task": {
+        "high_school_biology": 0.6,
+        "high_school_mathematics": 0.275,
+        "high_school_psychology": 0.575,
+        "high_school_us_history": 0.6
+      },
+      "mean_inference_latency_seconds": {
+        "ci95_high": 0.12674925132807396,
+        "ci95_low": 0.1216375353381954,
+        "mean": 0.12419857288914496
+      },
+      "mean_selection_latency_seconds": {
+        "ci95_high": 4.199999999999999e-08,
+        "ci95_low": 4.199999999999999e-08,
+        "mean": 4.199999999999999e-08
+      },
+      "mean_total_latency_seconds": {
+        "ci95_high": 0.126749293328074,
+        "ci95_low": 0.12163757733819541,
+        "mean": 0.12419861488914496
+      },
+      "n": 160,
+      "p50_inference_latency_seconds": 0.0989559579174965,
+      "p50_selection_latency_seconds": 4.2e-08,
+      "p50_total_latency_seconds": 0.09895599991749651,
+      "p95_inference_latency_seconds": 0.235923063114751,
+      "p95_selection_latency_seconds": 4.2e-08,
+      "p95_total_latency_seconds": 0.235923105114751,
+      "selected_model_counts": {
+        "HuggingFaceTB/SmolLM2-1.7B-Instruct": 80,
+        "HuggingFaceTB/SmolLM2-360M-Instruct": 40,
+        "Qwen/Qwen2.5-0.5B-Instruct": 40
+      },
+      "selected_model_frequency": {
+        "HuggingFaceTB/SmolLM2-1.7B-Instruct": 0.5,
+        "HuggingFaceTB/SmolLM2-360M-Instruct": 0.25,
+        "Qwen/Qwen2.5-0.5B-Instruct": 0.25
+      }
+    }
+  },
+  "status": "completed"
+}
