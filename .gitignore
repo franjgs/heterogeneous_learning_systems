@@ -245,3 +245,6 @@ results/campaigns/campaign2_prospective_adaptation/attempt_02/opportunity_landsc
 # Literature PDFs are local reference material; do not add them to Git.
 docs/literature/**/*.pdf
 /results/experiments/hls_nembhard_adaptive_allocation/
+
+# HLS: experimental traces
+results/experiments/**/period_traces.jsonl.gz
