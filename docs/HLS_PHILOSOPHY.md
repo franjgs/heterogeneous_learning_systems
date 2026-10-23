@@ -8,7 +8,42 @@ HLS. This document is intended to remain stable while particular
 research questions, theories, models, methods, experiments, and
 implementations evolve, succeed, fail, or are abandoned.
 
-> **This document does not define how HLS must be investigated.**
+Heterogeneous Learning Systems (HLS) investigates how to organize, use,
+combine, and develop heterogeneous capabilities to solve changing problems
+under constraints of information, resources, time, and cost. It studies the
+individual and collective performance of systems whose agents differ in
+competences, specializations, costs, and limitations, including how selection,
+assignment, coordination, cooperation, adaptation, planning, and capability
+development interact. HLS does not presume that heterogeneity, cooperation,
+learning, or greater organizational complexity necessarily improves outcomes;
+it seeks to understand which strategies work better, when, why, and under what
+conditions.
+
+HLS begins with relevant organizational problems and existing scientific
+knowledge. It examines the foundations and assumptions of suitable published
+models and mechanisms, reproduces or adapts them when appropriate, and studies
+their performance, interactions, and limits experimentally. Reuse is expected:
+originality need not reside in every component. A contribution may instead be
+a justified modification, combination, adaptation, or organizational strategy
+that improves on the state of the art. The immediate research priority is to
+identify a scientifically defensible, publishable contribution within twelve
+months while sustaining the programme's longer-term questions.
+
+The HLS laboratory serves this research; it is not the scientific objective
+itself. It brings together (A) scenarios describing agents, competences, tasks,
+demand, resources, uncertainty, and learning dynamics; (B) organizational
+problems such as selection, assignment, coordination, planning, transfer, and
+reorganization; (C) models and mechanisms for solving those problems; and (D)
+independent performance evaluation through HLS-PEF. The experimental flow is
+scenario → organizational problem → model or mechanism → execution → experiment
+contract → HLS-PEF → comparable results. Shared contracts should allow new
+scenarios and mechanisms to be incorporated without changing their behavior
+and should support scientifically valid comparisons. The laboratory will grow
+only when a concrete experimental need justifies it; HLS will not build another
+framework or infrastructure for its own sake.
+
+> **This document does not prescribe the detailed methods by which HLS
+> must be investigated.**
 >
 > Research doctrine, formal models, ontology, experimental frameworks,
 > algorithms, baselines, and evidence belong to other documents. This
