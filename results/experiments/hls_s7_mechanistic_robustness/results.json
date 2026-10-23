@@ -1,0 +1,4146 @@
+{
+  "experiment": "S7 mechanistic decomposition and local robustness",
+  "date": "2026-10-22",
+  "comparison_information": {
+    "all_policies_observe": "current demand state, exact current competence state, the same physical transition laws, reward and complete feasible actions",
+    "demand_law": "same initial distribution and Markov transition matrix in each paired policy comparison; Bellman uses the known matrix in continuation, reactive policy is defined to maximize only current CES and does not use future transition probabilities",
+    "transfer_access": "Bellman and reactive variants with transfer have the same optional-teaching action catalog; without-transfer variants share the same MIS-only catalog",
+    "objective": "cumulative existing CES; functional completion and resource metrics are diagnostics, not alternate objectives",
+    "future_realization": "not revealed to the action selector; only current demand is observed",
+    "information_fairness": "same state and model information is available to both policy classes; their use of future-demand probabilities differs by the intended planning mechanism. Both exact references know the true competence state, so these are oracle comparisons, not deployable hidden-competence policies."
+  },
+  "sensitivity_protocol": {
+    "method": "center plus symmetric one-factor-at-a-time perturbations; all other settings held fixed",
+    "fixed_horizon": 4,
+    "center": {
+      "p_xy": 0.9,
+      "p_yy": 0.95,
+      "eta_B_y": 0.05,
+      "efficacy_A_B_y": 0.8
+    },
+    "predeclared_perturbations": {
+      "p_xy": [
+        0.85,
+        0.95
+      ],
+      "p_yy": [
+        0.925,
+        0.975
+      ],
+      "eta_B_y": [
+        0.04,
+        0.06
+      ],
+      "efficacy_A_B_y": [
+        0.7,
+        0.9
+      ]
+    },
+    "justification": "Moderate symmetric local changes, interior to valid domains; eta perturbation is restricted to the bottleneck learner-skill cell; efficacy is restricted to the teaching relation used by the candidate action. No parameter chosen by maximizing policy differences."
+  },
+  "sensitivity": {
+    "center": {
+      "design": {
+        "changed_factor": null
+      },
+      "exact_values": {
+        "J_A_bellman_no_transfer": 3.1628653621000002,
+        "J_B_bellman_transfer_optional": 3.1743777327025406,
+        "J_MA_reactive_no_transfer": 3.0346209871000003,
+        "J_MB_reactive_transfer_optional": 3.0346209871000003
+      },
+      "decomposition": {
+        "planning_without_transfer_JA_minus_JMA": 0.12824437499999997,
+        "planning_with_transfer_JB_minus_JMB": 0.13975674560254037,
+        "transfer_with_planning_JB_minus_JA": 0.0115123706025404,
+        "transfer_without_planning_JMB_minus_JMA": 0.0,
+        "interaction_I": 0.0115123706025404,
+        "interaction_identity_check": 0.0115123706025404
+      },
+      "expected_functional_and_resource_metrics": {
+        "J_A_bellman_no_transfer": {
+          "expected_cumulative_CES": 3.1628653621000002,
+          "expected_services_completed": 3.001,
+          "expected_functional_failures": 0.999,
+          "expected_cumulative_normalized_deficit": 0.05257894736842099,
+          "expected_cumulative_raw_deficit_total": 0.04994999999999994,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.04994999999999994
+          },
+          "expected_productive_effort": 8.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 8.0
+        },
+        "J_B_bellman_transfer_optional": {
+          "expected_cumulative_CES": 3.1743777327025406,
+          "expected_services_completed": 3.0,
+          "expected_functional_failures": 1.0,
+          "expected_cumulative_normalized_deficit": 0.5,
+          "expected_cumulative_raw_deficit_total": 0.175,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.175,
+            "y": 0.0
+          },
+          "expected_productive_effort": 7.0,
+          "expected_teaching_resource_consumption": 0.5,
+          "expected_teaching_actions": 1.0,
+          "expected_total_resource_consumption": 7.5
+        },
+        "J_MA_reactive_no_transfer": {
+          "expected_cumulative_CES": 3.0346209871000003,
+          "expected_services_completed": 1.20775,
+          "expected_functional_failures": 2.79225,
+          "expected_cumulative_normalized_deficit": 0.10774480263157869,
+          "expected_cumulative_raw_deficit_total": 0.10235756249999976,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10235756249999976
+          },
+          "expected_productive_effort": 5.207750000000001,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.207750000000001
+        },
+        "J_MB_reactive_transfer_optional": {
+          "expected_cumulative_CES": 3.0346209871000003,
+          "expected_services_completed": 1.20775,
+          "expected_functional_failures": 2.79225,
+          "expected_cumulative_normalized_deficit": 0.10774480263157869,
+          "expected_cumulative_raw_deficit_total": 0.10235756249999976,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10235756249999976
+          },
+          "expected_productive_effort": 5.207750000000001,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.207750000000001
+        }
+      },
+      "initial_decisions": {
+        "J_A_bellman_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_B_bellman_transfer_optional": {
+          "production": [
+            [
+              0.5,
+              0.0
+            ],
+            [
+              0.5,
+              0.0
+            ]
+          ],
+          "teaching": {
+            "teacher_id": "A",
+            "learner_id": "B",
+            "skill_id": "y",
+            "effort": 0.25
+          }
+        },
+        "J_MA_reactive_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_MB_reactive_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        }
+      },
+      "solver_diagnostics": {
+        "states_visited_by_policy": {
+          "J_A_bellman_no_transfer": 300,
+          "J_B_bellman_transfer_optional": 1778,
+          "J_MA_reactive_no_transfer": 20,
+          "J_MB_reactive_transfer_optional": 20
+        },
+        "dominated_actions_pruned": {
+          "J_A_bellman_no_transfer": 8100,
+          "J_B_bellman_transfer_optional": 97790,
+          "J_MA_reactive_no_transfer": 0,
+          "J_MB_reactive_transfer_optional": 0
+        },
+        "runtime_seconds_descriptive": 6.310839042067528
+      },
+      "mechanistic_demand_branches": {
+        "J_A_bellman_no_transfer": {
+          "x_y_y_y": {
+            "demand_path": [
+              "task-x",
+              "task-y",
+              "task-y",
+              "task-y"
+            ],
+            "path_probability": 0.8122499999999999,
+            "periods": [
+              {
+                "period": 0,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.05,
+                    0.9
+                  ],
+                  [
+                    0.3,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.35,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 1,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.8999999999999999,
+                "functional_success": false,
+                "normalized_deficit": 0.052631578947368356,
+                "raw_deficits": [
+                  0.0,
+                  0.04999999999999993
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.915
+                  ],
+                  [
+                    0.384,
+                    0.050000000000000044
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 2,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.24,
+                    0.915
+                  ],
+                  [
+                    0.384,
+                    0.050000000000000044
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.9650000000000002,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.9277500000000001
+                  ],
+                  [
+                    0.384,
+                    0.09750000000000003
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 3,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.24,
+                    0.9277500000000001
+                  ],
+                  [
+                    0.384,
+                    0.09750000000000003
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 1.0252500000000002,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.9385875
+                  ],
+                  [
+                    0.384,
+                    0.1426250000000001
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              }
+            ]
+          },
+          "x_x_y_y": {
+            "demand_path": [
+              "task-x",
+              "task-x",
+              "task-y",
+              "task-y"
+            ],
+            "path_probability": 0.0855,
+            "periods": [
+              {
+                "period": 0,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.05,
+                    0.9
+                  ],
+                  [
+                    0.3,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.35,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 1,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.6239999999999999,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.3919999999999999,
+                    0.9
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 2,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.3919999999999999,
+                    0.9
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.8999999999999999,
+                "functional_success": false,
+                "normalized_deficit": 0.052631578947368356,
+                "raw_deficits": [
+                  0.0,
+                  0.04999999999999993
+                ],
+                "competence_after": [
+                  [
+                    0.3919999999999999,
+                    0.915
+                  ],
+                  [
+                    0.45792,
+                    0.050000000000000044
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 3,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.3919999999999999,
+                    0.915
+                  ],
+                  [
+                    0.45792,
+                    0.050000000000000044
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.9650000000000002,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.3919999999999999,
+                    0.9277500000000001
+                  ],
+                  [
+                    0.45792,
+                    0.09750000000000003
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              }
+            ]
+          },
+          "x_x_x_x": {
+            "demand_path": [
+              "task-x",
+              "task-x",
+              "task-x",
+              "task-x"
+            ],
+            "path_probability": 0.0010000000000000002,
+            "periods": [
+              {
+                "period": 0,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.05,
+                    0.9
+                  ],
+                  [
+                    0.3,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.35,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 1,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.6239999999999999,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.3919999999999999,
+                    0.9
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 2,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.3919999999999999,
+                    0.9
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.8499199999999998,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.5135999999999998,
+                    0.9
+                  ],
+                  [
+                    0.5229695999999999,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 3,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.5135999999999998,
+                    0.9
+                  ],
+                  [
+                    0.5229695999999999,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 1.0365696,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.6108799999999999,
+                    0.9
+                  ],
+                  [
+                    0.580213248,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              }
+            ]
+          }
+        },
+        "J_B_bellman_transfer_optional": {
+          "x_y_y_y": {
+            "demand_path": [
+              "task-x",
+              "task-y",
+              "task-y",
+              "task-y"
+            ],
+            "path_probability": 0.8122499999999999,
+            "periods": [
+              {
+                "period": 0,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.05,
+                    0.9
+                  ],
+                  [
+                    0.3,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.5,
+                      0.0
+                    ],
+                    [
+                      0.5,
+                      0.0
+                    ]
+                  ],
+                  "teaching": {
+                    "teacher_id": "A",
+                    "learner_id": "B",
+                    "skill_id": "y",
+                    "effort": 0.25
+                  }
+                },
+                "immediate_CES": 0.17500000000000002,
+                "functional_success": false,
+                "normalized_deficit": 0.5,
+                "raw_deficits": [
+                  0.175,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.15029416855007993,
+                    0.9
+                  ],
+                  [
+                    0.34334179362471984,
+                    0.08000000000000002
+                  ]
+                ],
+                "production_effort": 1.0,
+                "teaching_resource_consumption": 0.5
+              },
+              {
+                "period": 1,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.15029416855007993,
+                    0.9
+                  ],
+                  [
+                    0.34334179362471984,
+                    0.08000000000000002
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.9800000000000001,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.15029416855007993,
+                    0.915
+                  ],
+                  [
+                    0.34334179362471984,
+                    0.1260000000000001
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 2,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.15029416855007993,
+                    0.915
+                  ],
+                  [
+                    0.34334179362471984,
+                    0.1260000000000001
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 1.0410000000000004,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.15029416855007993,
+                    0.9277500000000001
+                  ],
+                  [
+                    0.34334179362471984,
+                    0.16970000000000018
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 3,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.15029416855007993,
+                    0.9277500000000001
+                  ],
+                  [
+                    0.34334179362471984,
+                    0.16970000000000018
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 1.0974500000000003,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.15029416855007993,
+                    0.9385875
+                  ],
+                  [
+                    0.34334179362471984,
+                    0.21121500000000026
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              }
+            ]
+          },
+          "x_x_y_y": {
+            "demand_path": [
+              "task-x",
+              "task-x",
+              "task-y",
+              "task-y"
+            ],
+            "path_probability": 0.0855,
+            "periods": [
+              {
+                "period": 0,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.05,
+                    0.9
+                  ],
+                  [
+                    0.3,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.5,
+                      0.0
+                    ],
+                    [
+                      0.5,
+                      0.0
+                    ]
+                  ],
+                  "teaching": {
+                    "teacher_id": "A",
+                    "learner_id": "B",
+                    "skill_id": "y",
+                    "effort": 0.25
+                  }
+                },
+                "immediate_CES": 0.17500000000000002,
+                "functional_success": false,
+                "normalized_deficit": 0.5,
+                "raw_deficits": [
+                  0.175,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.15029416855007993,
+                    0.9
+                  ],
+                  [
+                    0.34334179362471984,
+                    0.08000000000000002
+                  ]
+                ],
+                "production_effort": 1.0,
+                "teaching_resource_consumption": 0.5
+              },
+              {
+                "period": 1,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.15029416855007993,
+                    0.9
+                  ],
+                  [
+                    0.34334179362471984,
+                    0.08000000000000002
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.49363596217479977,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.32023533484006395,
+                    0.9
+                  ],
+                  [
+                    0.4221407783897535,
+                    0.08000000000000002
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 2,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.32023533484006395,
+                    0.9
+                  ],
+                  [
+                    0.4221407783897535,
+                    0.08000000000000002
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.9800000000000001,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.32023533484006395,
+                    0.915
+                  ],
+                  [
+                    0.4221407783897535,
+                    0.1260000000000001
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 3,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.32023533484006395,
+                    0.915
+                  ],
+                  [
+                    0.4221407783897535,
+                    0.1260000000000001
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 1.0410000000000004,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.32023533484006395,
+                    0.9277500000000001
+                  ],
+                  [
+                    0.4221407783897535,
+                    0.16970000000000018
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              }
+            ]
+          },
+          "x_x_x_x": {
+            "demand_path": [
+              "task-x",
+              "task-x",
+              "task-x",
+              "task-x"
+            ],
+            "path_probability": 0.0010000000000000002,
+            "periods": [
+              {
+                "period": 0,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.05,
+                    0.9
+                  ],
+                  [
+                    0.3,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.5,
+                      0.0
+                    ],
+                    [
+                      0.5,
+                      0.0
+                    ]
+                  ],
+                  "teaching": {
+                    "teacher_id": "A",
+                    "learner_id": "B",
+                    "skill_id": "y",
+                    "effort": 0.25
+                  }
+                },
+                "immediate_CES": 0.17500000000000002,
+                "functional_success": false,
+                "normalized_deficit": 0.5,
+                "raw_deficits": [
+                  0.175,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.15029416855007993,
+                    0.9
+                  ],
+                  [
+                    0.34334179362471984,
+                    0.08000000000000002
+                  ]
+                ],
+                "production_effort": 1.0,
+                "teaching_resource_consumption": 0.5
+              },
+              {
+                "period": 1,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.15029416855007993,
+                    0.9
+                  ],
+                  [
+                    0.34334179362471984,
+                    0.08000000000000002
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.49363596217479977,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.32023533484006395,
+                    0.9
+                  ],
+                  [
+                    0.4221407783897535,
+                    0.08000000000000002
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 2,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.32023533484006395,
+                    0.9
+                  ],
+                  [
+                    0.4221407783897535,
+                    0.08000000000000002
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.7423761132298176,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.45618826787205113,
+                    0.9
+                  ],
+                  [
+                    0.4914838849829831,
+                    0.08000000000000002
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 3,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.45618826787205113,
+                    0.9
+                  ],
+                  [
+                    0.4914838849829831,
+                    0.08000000000000002
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.9476721528550343,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.5649506142976408,
+                    0.9
+                  ],
+                  [
+                    0.5525058187850251,
+                    0.08000000000000002
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              }
+            ]
+          }
+        },
+        "J_MA_reactive_no_transfer": {
+          "x_y_y_y": {
+            "demand_path": [
+              "task-x",
+              "task-y",
+              "task-y",
+              "task-y"
+            ],
+            "path_probability": 0.8122499999999999,
+            "periods": [
+              {
+                "period": 0,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.05,
+                    0.9
+                  ],
+                  [
+                    0.3,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.35,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 1,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.8999999999999999,
+                "functional_success": false,
+                "normalized_deficit": 0.052631578947368356,
+                "raw_deficits": [
+                  0.0,
+                  0.04999999999999993
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.915
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "production_effort": 1.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 2,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.24,
+                    0.915
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.9150000000000001,
+                "functional_success": false,
+                "normalized_deficit": 0.036842105263157815,
+                "raw_deficits": [
+                  0.0,
+                  0.03499999999999992
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.9277500000000001
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "production_effort": 1.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 3,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.24,
+                    0.9277500000000001
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.9277500000000002,
+                "functional_success": false,
+                "normalized_deficit": 0.02342105263157882,
+                "raw_deficits": [
+                  0.0,
+                  0.02224999999999988
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.9385875
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "production_effort": 1.0,
+                "teaching_resource_consumption": 0.0
+              }
+            ]
+          },
+          "x_x_y_y": {
+            "demand_path": [
+              "task-x",
+              "task-x",
+              "task-y",
+              "task-y"
+            ],
+            "path_probability": 0.0855,
+            "periods": [
+              {
+                "period": 0,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.05,
+                    0.9
+                  ],
+                  [
+                    0.3,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.35,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 1,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.6239999999999999,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.3919999999999999,
+                    0.9
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 2,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.3919999999999999,
+                    0.9
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.8999999999999999,
+                "functional_success": false,
+                "normalized_deficit": 0.052631578947368356,
+                "raw_deficits": [
+                  0.0,
+                  0.04999999999999993
+                ],
+                "competence_after": [
+                  [
+                    0.3919999999999999,
+                    0.915
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "production_effort": 1.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 3,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.3919999999999999,
+                    0.915
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.9150000000000001,
+                "functional_success": false,
+                "normalized_deficit": 0.036842105263157815,
+                "raw_deficits": [
+                  0.0,
+                  0.03499999999999992
+                ],
+                "competence_after": [
+                  [
+                    0.3919999999999999,
+                    0.9277500000000001
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "production_effort": 1.0,
+                "teaching_resource_consumption": 0.0
+              }
+            ]
+          },
+          "x_x_x_x": {
+            "demand_path": [
+              "task-x",
+              "task-x",
+              "task-x",
+              "task-x"
+            ],
+            "path_probability": 0.0010000000000000002,
+            "periods": [
+              {
+                "period": 0,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.05,
+                    0.9
+                  ],
+                  [
+                    0.3,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.35,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 1,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.6239999999999999,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.3919999999999999,
+                    0.9
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 2,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.3919999999999999,
+                    0.9
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.8499199999999998,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.5135999999999998,
+                    0.9
+                  ],
+                  [
+                    0.5229695999999999,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 3,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.5135999999999998,
+                    0.9
+                  ],
+                  [
+                    0.5229695999999999,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 1.0365696,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.6108799999999999,
+                    0.9
+                  ],
+                  [
+                    0.580213248,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              }
+            ]
+          }
+        },
+        "J_MB_reactive_transfer_optional": {
+          "x_y_y_y": {
+            "demand_path": [
+              "task-x",
+              "task-y",
+              "task-y",
+              "task-y"
+            ],
+            "path_probability": 0.8122499999999999,
+            "periods": [
+              {
+                "period": 0,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.05,
+                    0.9
+                  ],
+                  [
+                    0.3,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.35,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 1,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.8999999999999999,
+                "functional_success": false,
+                "normalized_deficit": 0.052631578947368356,
+                "raw_deficits": [
+                  0.0,
+                  0.04999999999999993
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.915
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "production_effort": 1.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 2,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.24,
+                    0.915
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.9150000000000001,
+                "functional_success": false,
+                "normalized_deficit": 0.036842105263157815,
+                "raw_deficits": [
+                  0.0,
+                  0.03499999999999992
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.9277500000000001
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "production_effort": 1.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 3,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.24,
+                    0.9277500000000001
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.9277500000000002,
+                "functional_success": false,
+                "normalized_deficit": 0.02342105263157882,
+                "raw_deficits": [
+                  0.0,
+                  0.02224999999999988
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.9385875
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "production_effort": 1.0,
+                "teaching_resource_consumption": 0.0
+              }
+            ]
+          },
+          "x_x_y_y": {
+            "demand_path": [
+              "task-x",
+              "task-x",
+              "task-y",
+              "task-y"
+            ],
+            "path_probability": 0.0855,
+            "periods": [
+              {
+                "period": 0,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.05,
+                    0.9
+                  ],
+                  [
+                    0.3,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.35,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 1,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.6239999999999999,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.3919999999999999,
+                    0.9
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 2,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.3919999999999999,
+                    0.9
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.8999999999999999,
+                "functional_success": false,
+                "normalized_deficit": 0.052631578947368356,
+                "raw_deficits": [
+                  0.0,
+                  0.04999999999999993
+                ],
+                "competence_after": [
+                  [
+                    0.3919999999999999,
+                    0.915
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "production_effort": 1.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 3,
+                "demand_state": "task-y",
+                "competence_before": [
+                  [
+                    0.3919999999999999,
+                    0.915
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      0.0,
+                      1.0
+                    ],
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.9150000000000001,
+                "functional_success": false,
+                "normalized_deficit": 0.036842105263157815,
+                "raw_deficits": [
+                  0.0,
+                  0.03499999999999992
+                ],
+                "competence_after": [
+                  [
+                    0.3919999999999999,
+                    0.9277500000000001
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "production_effort": 1.0,
+                "teaching_resource_consumption": 0.0
+              }
+            ]
+          },
+          "x_x_x_x": {
+            "demand_path": [
+              "task-x",
+              "task-x",
+              "task-x",
+              "task-x"
+            ],
+            "path_probability": 0.0010000000000000002,
+            "periods": [
+              {
+                "period": 0,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.05,
+                    0.9
+                  ],
+                  [
+                    0.3,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.35,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 1,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.24,
+                    0.9
+                  ],
+                  [
+                    0.384,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.6239999999999999,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.3919999999999999,
+                    0.9
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 2,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.3919999999999999,
+                    0.9
+                  ],
+                  [
+                    0.45792,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 0.8499199999999998,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.5135999999999998,
+                    0.9
+                  ],
+                  [
+                    0.5229695999999999,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              },
+              {
+                "period": 3,
+                "demand_state": "task-x",
+                "competence_before": [
+                  [
+                    0.5135999999999998,
+                    0.9
+                  ],
+                  [
+                    0.5229695999999999,
+                    0.0
+                  ]
+                ],
+                "action": {
+                  "production": [
+                    [
+                      1.0,
+                      0.0
+                    ],
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "teaching": null
+                },
+                "immediate_CES": 1.0365696,
+                "functional_success": true,
+                "normalized_deficit": 0.0,
+                "raw_deficits": [
+                  0.0,
+                  0.0
+                ],
+                "competence_after": [
+                  [
+                    0.6108799999999999,
+                    0.9
+                  ],
+                  [
+                    0.580213248,
+                    0.0
+                  ]
+                ],
+                "production_effort": 2.0,
+                "teaching_resource_consumption": 0.0
+              }
+            ]
+          }
+        }
+      }
+    },
+    "p_xy_0.850": {
+      "design": {
+        "changed_factor": "P(y|x)",
+        "value": 0.85,
+        "justification": "center \u00b10.05, symmetric and interior to [0,1]"
+      },
+      "exact_values": {
+        "J_A_bellman_no_transfer": 3.1432132586500003,
+        "J_B_bellman_transfer_optional": 3.1432132586500003,
+        "J_MA_reactive_no_transfer": 3.02018107115,
+        "J_MB_reactive_transfer_optional": 3.02018107115
+      },
+      "decomposition": {
+        "planning_without_transfer_JA_minus_JMA": 0.12303218750000022,
+        "planning_with_transfer_JB_minus_JMB": 0.12303218750000022,
+        "transfer_with_planning_JB_minus_JA": 0.0,
+        "transfer_without_planning_JMB_minus_JMA": 0.0,
+        "interaction_I": 0.0,
+        "interaction_identity_check": 0.0
+      },
+      "expected_functional_and_resource_metrics": {
+        "J_A_bellman_no_transfer": {
+          "expected_cumulative_CES": 3.1432132586500003,
+          "expected_services_completed": 3.003375,
+          "expected_functional_failures": 0.996625,
+          "expected_cumulative_normalized_deficit": 0.05245394736842099,
+          "expected_cumulative_raw_deficit_total": 0.04983124999999993,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.04983124999999993
+          },
+          "expected_productive_effort": 8.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 8.0
+        },
+        "J_B_bellman_transfer_optional": {
+          "expected_cumulative_CES": 3.1432132586500003,
+          "expected_services_completed": 3.003375,
+          "expected_functional_failures": 0.996625,
+          "expected_cumulative_normalized_deficit": 0.05245394736842099,
+          "expected_cumulative_raw_deficit_total": 0.04983124999999993,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.04983124999999993
+          },
+          "expected_productive_effort": 8.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 8.0
+        },
+        "J_MA_reactive_no_transfer": {
+          "expected_cumulative_CES": 3.02018107115,
+          "expected_services_completed": 1.2715,
+          "expected_functional_failures": 2.7284999999999995,
+          "expected_cumulative_normalized_deficit": 0.10596424342105239,
+          "expected_cumulative_raw_deficit_total": 0.10066603124999976,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10066603124999976
+          },
+          "expected_productive_effort": 5.2715,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.2715
+        },
+        "J_MB_reactive_transfer_optional": {
+          "expected_cumulative_CES": 3.02018107115,
+          "expected_services_completed": 1.2715,
+          "expected_functional_failures": 2.7284999999999995,
+          "expected_cumulative_normalized_deficit": 0.10596424342105239,
+          "expected_cumulative_raw_deficit_total": 0.10066603124999976,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10066603124999976
+          },
+          "expected_productive_effort": 5.2715,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.2715
+        }
+      },
+      "initial_decisions": {
+        "J_A_bellman_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_B_bellman_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_MA_reactive_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_MB_reactive_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        }
+      },
+      "solver_diagnostics": {
+        "states_visited_by_policy": {
+          "J_A_bellman_no_transfer": 300,
+          "J_B_bellman_transfer_optional": 1778,
+          "J_MA_reactive_no_transfer": 20,
+          "J_MB_reactive_transfer_optional": 20
+        },
+        "dominated_actions_pruned": {
+          "J_A_bellman_no_transfer": 8100,
+          "J_B_bellman_transfer_optional": 97790,
+          "J_MA_reactive_no_transfer": 0,
+          "J_MB_reactive_transfer_optional": 0
+        },
+        "runtime_seconds_descriptive": 6.317297667032108
+      }
+    },
+    "p_xy_0.950": {
+      "design": {
+        "changed_factor": "P(y|x)",
+        "value": 0.95,
+        "justification": "center \u00b10.05, symmetric and interior to [0,1]"
+      },
+      "exact_values": {
+        "J_A_bellman_no_transfer": 3.18220445995,
+        "J_B_bellman_transfer_optional": 3.2051619586952045,
+        "J_MA_reactive_no_transfer": 3.0489728974500006,
+        "J_MB_reactive_transfer_optional": 3.0489728974500006
+      },
+      "decomposition": {
+        "planning_without_transfer_JA_minus_JMA": 0.13323156249999935,
+        "planning_with_transfer_JB_minus_JMB": 0.15618906124520393,
+        "transfer_with_planning_JB_minus_JA": 0.022957498745204585,
+        "transfer_without_planning_JMB_minus_JMA": 0.0,
+        "interaction_I": 0.022957498745204585,
+        "interaction_identity_check": 0.022957498745204585
+      },
+      "expected_functional_and_resource_metrics": {
+        "J_A_bellman_no_transfer": {
+          "expected_cumulative_CES": 3.18220445995,
+          "expected_services_completed": 3.000125,
+          "expected_functional_failures": 0.999875,
+          "expected_cumulative_normalized_deficit": 0.052624999999999936,
+          "expected_cumulative_raw_deficit_total": 0.04999374999999993,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.04999374999999993
+          },
+          "expected_productive_effort": 8.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 8.0
+        },
+        "J_B_bellman_transfer_optional": {
+          "expected_cumulative_CES": 3.2051619586952045,
+          "expected_services_completed": 3.0,
+          "expected_functional_failures": 1.0,
+          "expected_cumulative_normalized_deficit": 0.5,
+          "expected_cumulative_raw_deficit_total": 0.175,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.175,
+            "y": 0.0
+          },
+          "expected_productive_effort": 7.0,
+          "expected_teaching_resource_consumption": 0.5,
+          "expected_teaching_actions": 1.0,
+          "expected_total_resource_consumption": 7.5
+        },
+        "J_MA_reactive_no_transfer": {
+          "expected_cumulative_CES": 3.0489728974500006,
+          "expected_services_completed": 1.1500000000000001,
+          "expected_functional_failures": 2.85,
+          "expected_cumulative_normalized_deficit": 0.10928062499999974,
+          "expected_cumulative_raw_deficit_total": 0.10381659374999974,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10381659374999974
+          },
+          "expected_productive_effort": 5.1499999999999995,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.1499999999999995
+        },
+        "J_MB_reactive_transfer_optional": {
+          "expected_cumulative_CES": 3.0489728974500006,
+          "expected_services_completed": 1.1500000000000001,
+          "expected_functional_failures": 2.85,
+          "expected_cumulative_normalized_deficit": 0.10928062499999974,
+          "expected_cumulative_raw_deficit_total": 0.10381659374999974,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10381659374999974
+          },
+          "expected_productive_effort": 5.1499999999999995,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.1499999999999995
+        }
+      },
+      "initial_decisions": {
+        "J_A_bellman_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_B_bellman_transfer_optional": {
+          "production": [
+            [
+              0.5,
+              0.0
+            ],
+            [
+              0.5,
+              0.0
+            ]
+          ],
+          "teaching": {
+            "teacher_id": "A",
+            "learner_id": "B",
+            "skill_id": "y",
+            "effort": 0.25
+          }
+        },
+        "J_MA_reactive_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_MB_reactive_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        }
+      },
+      "solver_diagnostics": {
+        "states_visited_by_policy": {
+          "J_A_bellman_no_transfer": 300,
+          "J_B_bellman_transfer_optional": 1778,
+          "J_MA_reactive_no_transfer": 20,
+          "J_MB_reactive_transfer_optional": 20
+        },
+        "dominated_actions_pruned": {
+          "J_A_bellman_no_transfer": 8100,
+          "J_B_bellman_transfer_optional": 97790,
+          "J_MA_reactive_no_transfer": 0,
+          "J_MB_reactive_transfer_optional": 0
+        },
+        "runtime_seconds_descriptive": 6.31150733307004
+      }
+    },
+    "p_yy_0.925": {
+      "design": {
+        "changed_factor": "P(y|y)",
+        "value": 0.925,
+        "justification": "center \u00b10.025, symmetric and interior to [0,1]"
+      },
+      "exact_values": {
+        "J_A_bellman_no_transfer": 3.1454197677250004,
+        "J_B_bellman_transfer_optional": 3.1475605204913246,
+        "J_MA_reactive_no_transfer": 3.0215136739750004,
+        "J_MB_reactive_transfer_optional": 3.0215136739750004
+      },
+      "decomposition": {
+        "planning_without_transfer_JA_minus_JMA": 0.12390609375000006,
+        "planning_with_transfer_JB_minus_JMB": 0.12604684651632425,
+        "transfer_with_planning_JB_minus_JA": 0.0021407527663241943,
+        "transfer_without_planning_JMB_minus_JMA": 0.0,
+        "interaction_I": 0.0021407527663241943,
+        "interaction_identity_check": 0.0021407527663241943
+      },
+      "expected_functional_and_resource_metrics": {
+        "J_A_bellman_no_transfer": {
+          "expected_cumulative_CES": 3.1454197677250004,
+          "expected_services_completed": 3.001,
+          "expected_functional_failures": 0.999,
+          "expected_cumulative_normalized_deficit": 0.05257894736842099,
+          "expected_cumulative_raw_deficit_total": 0.04994999999999994,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.04994999999999994
+          },
+          "expected_productive_effort": 8.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 8.0
+        },
+        "J_B_bellman_transfer_optional": {
+          "expected_cumulative_CES": 3.1475605204913246,
+          "expected_services_completed": 3.0,
+          "expected_functional_failures": 1.0,
+          "expected_cumulative_normalized_deficit": 0.5,
+          "expected_cumulative_raw_deficit_total": 0.175,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.175,
+            "y": 0.0
+          },
+          "expected_productive_effort": 7.0,
+          "expected_teaching_resource_consumption": 0.5,
+          "expected_teaching_actions": 1.0,
+          "expected_total_resource_consumption": 7.5
+        },
+        "J_MA_reactive_no_transfer": {
+          "expected_cumulative_CES": 3.0215136739750004,
+          "expected_services_completed": 1.2544374999999999,
+          "expected_functional_failures": 2.7455625,
+          "expected_cumulative_normalized_deficit": 0.10659093749999976,
+          "expected_cumulative_raw_deficit_total": 0.10126139062499977,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10126139062499977
+          },
+          "expected_productive_effort": 5.2544375,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.2544375
+        },
+        "J_MB_reactive_transfer_optional": {
+          "expected_cumulative_CES": 3.0215136739750004,
+          "expected_services_completed": 1.2544374999999999,
+          "expected_functional_failures": 2.7455625,
+          "expected_cumulative_normalized_deficit": 0.10659093749999976,
+          "expected_cumulative_raw_deficit_total": 0.10126139062499977,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10126139062499977
+          },
+          "expected_productive_effort": 5.2544375,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.2544375
+        }
+      },
+      "initial_decisions": {
+        "J_A_bellman_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_B_bellman_transfer_optional": {
+          "production": [
+            [
+              0.5,
+              0.0
+            ],
+            [
+              0.5,
+              0.0
+            ]
+          ],
+          "teaching": {
+            "teacher_id": "A",
+            "learner_id": "B",
+            "skill_id": "y",
+            "effort": 0.25
+          }
+        },
+        "J_MA_reactive_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_MB_reactive_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        }
+      },
+      "solver_diagnostics": {
+        "states_visited_by_policy": {
+          "J_A_bellman_no_transfer": 300,
+          "J_B_bellman_transfer_optional": 1778,
+          "J_MA_reactive_no_transfer": 20,
+          "J_MB_reactive_transfer_optional": 20
+        },
+        "dominated_actions_pruned": {
+          "J_A_bellman_no_transfer": 8100,
+          "J_B_bellman_transfer_optional": 97790,
+          "J_MA_reactive_no_transfer": 0,
+          "J_MB_reactive_transfer_optional": 0
+        },
+        "runtime_seconds_descriptive": 6.304850958986208
+      }
+    },
+    "p_yy_0.975": {
+      "design": {
+        "changed_factor": "P(y|y)",
+        "value": 0.975,
+        "justification": "center \u00b10.025, symmetric and interior to [0,1]"
+      },
+      "exact_values": {
+        "J_A_bellman_no_transfer": 3.180762362725001,
+        "J_B_bellman_transfer_optional": 3.2018742357063106,
+        "J_MA_reactive_no_transfer": 3.0480700189750003,
+        "J_MB_reactive_transfer_optional": 3.0480700189750003
+      },
+      "decomposition": {
+        "planning_without_transfer_JA_minus_JMA": 0.1326923437500005,
+        "planning_with_transfer_JB_minus_JMB": 0.15380421673131028,
+        "transfer_with_planning_JB_minus_JA": 0.021111872981309787,
+        "transfer_without_planning_JMB_minus_JMA": 0.0,
+        "interaction_I": 0.021111872981309787,
+        "interaction_identity_check": 0.021111872981309787
+      },
+      "expected_functional_and_resource_metrics": {
+        "J_A_bellman_no_transfer": {
+          "expected_cumulative_CES": 3.180762362725001,
+          "expected_services_completed": 3.001,
+          "expected_functional_failures": 0.999,
+          "expected_cumulative_normalized_deficit": 0.05257894736842099,
+          "expected_cumulative_raw_deficit_total": 0.04994999999999994,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.04994999999999994
+          },
+          "expected_productive_effort": 8.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 8.0
+        },
+        "J_B_bellman_transfer_optional": {
+          "expected_cumulative_CES": 3.2018742357063106,
+          "expected_services_completed": 3.0,
+          "expected_functional_failures": 1.0,
+          "expected_cumulative_normalized_deficit": 0.5,
+          "expected_cumulative_raw_deficit_total": 0.175,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.175,
+            "y": 0.0
+          },
+          "expected_productive_effort": 7.0,
+          "expected_teaching_resource_consumption": 0.5,
+          "expected_teaching_actions": 1.0,
+          "expected_total_resource_consumption": 7.5
+        },
+        "J_MA_reactive_no_transfer": {
+          "expected_cumulative_CES": 3.0480700189750003,
+          "expected_services_completed": 1.1599375,
+          "expected_functional_failures": 2.8400625,
+          "expected_cumulative_normalized_deficit": 0.10892501644736818,
+          "expected_cumulative_raw_deficit_total": 0.10347876562499975,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10347876562499975
+          },
+          "expected_productive_effort": 5.1599375,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.1599375
+        },
+        "J_MB_reactive_transfer_optional": {
+          "expected_cumulative_CES": 3.0480700189750003,
+          "expected_services_completed": 1.1599375,
+          "expected_functional_failures": 2.8400625,
+          "expected_cumulative_normalized_deficit": 0.10892501644736818,
+          "expected_cumulative_raw_deficit_total": 0.10347876562499975,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10347876562499975
+          },
+          "expected_productive_effort": 5.1599375,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.1599375
+        }
+      },
+      "initial_decisions": {
+        "J_A_bellman_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_B_bellman_transfer_optional": {
+          "production": [
+            [
+              0.5,
+              0.0
+            ],
+            [
+              0.5,
+              0.0
+            ]
+          ],
+          "teaching": {
+            "teacher_id": "A",
+            "learner_id": "B",
+            "skill_id": "y",
+            "effort": 0.25
+          }
+        },
+        "J_MA_reactive_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_MB_reactive_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        }
+      },
+      "solver_diagnostics": {
+        "states_visited_by_policy": {
+          "J_A_bellman_no_transfer": 300,
+          "J_B_bellman_transfer_optional": 1778,
+          "J_MA_reactive_no_transfer": 20,
+          "J_MB_reactive_transfer_optional": 20
+        },
+        "dominated_actions_pruned": {
+          "J_A_bellman_no_transfer": 8100,
+          "J_B_bellman_transfer_optional": 97790,
+          "J_MA_reactive_no_transfer": 0,
+          "J_MB_reactive_transfer_optional": 0
+        },
+        "runtime_seconds_descriptive": 6.227189708035439
+      }
+    },
+    "eta_B_y_0.040": {
+      "design": {
+        "changed_factor": "MIS-v2 eta(B,y)",
+        "value": 0.04,
+        "justification": "center 0.05 \u00b10.01; only the future bottleneck cell changes"
+      },
+      "exact_values": {
+        "J_A_bellman_no_transfer": 3.1375413870999997,
+        "J_B_bellman_transfer_optional": 3.15107967570254,
+        "J_MA_reactive_no_transfer": 3.0346209871000003,
+        "J_MB_reactive_transfer_optional": 3.0346209871000003
+      },
+      "decomposition": {
+        "planning_without_transfer_JA_minus_JMA": 0.10292039999999947,
+        "planning_with_transfer_JB_minus_JMB": 0.1164586886025396,
+        "transfer_with_planning_JB_minus_JA": 0.013538288602540138,
+        "transfer_without_planning_JMB_minus_JMA": 0.0,
+        "interaction_I": 0.013538288602540138,
+        "interaction_identity_check": 0.013538288602540138
+      },
+      "expected_functional_and_resource_metrics": {
+        "J_A_bellman_no_transfer": {
+          "expected_cumulative_CES": 3.1375413870999997,
+          "expected_services_completed": 3.001,
+          "expected_functional_failures": 0.999,
+          "expected_cumulative_normalized_deficit": 0.05257894736842099,
+          "expected_cumulative_raw_deficit_total": 0.04994999999999994,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.04994999999999994
+          },
+          "expected_productive_effort": 8.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 8.0
+        },
+        "J_B_bellman_transfer_optional": {
+          "expected_cumulative_CES": 3.15107967570254,
+          "expected_services_completed": 3.0,
+          "expected_functional_failures": 1.0,
+          "expected_cumulative_normalized_deficit": 0.5,
+          "expected_cumulative_raw_deficit_total": 0.175,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.175,
+            "y": 0.0
+          },
+          "expected_productive_effort": 7.0,
+          "expected_teaching_resource_consumption": 0.5,
+          "expected_teaching_actions": 1.0,
+          "expected_total_resource_consumption": 7.5
+        },
+        "J_MA_reactive_no_transfer": {
+          "expected_cumulative_CES": 3.0346209871000003,
+          "expected_services_completed": 1.20775,
+          "expected_functional_failures": 2.79225,
+          "expected_cumulative_normalized_deficit": 0.10774480263157869,
+          "expected_cumulative_raw_deficit_total": 0.10235756249999976,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10235756249999976
+          },
+          "expected_productive_effort": 5.207750000000001,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.207750000000001
+        },
+        "J_MB_reactive_transfer_optional": {
+          "expected_cumulative_CES": 3.0346209871000003,
+          "expected_services_completed": 1.20775,
+          "expected_functional_failures": 2.79225,
+          "expected_cumulative_normalized_deficit": 0.10774480263157869,
+          "expected_cumulative_raw_deficit_total": 0.10235756249999976,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10235756249999976
+          },
+          "expected_productive_effort": 5.207750000000001,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.207750000000001
+        }
+      },
+      "initial_decisions": {
+        "J_A_bellman_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_B_bellman_transfer_optional": {
+          "production": [
+            [
+              0.5,
+              0.0
+            ],
+            [
+              0.5,
+              0.0
+            ]
+          ],
+          "teaching": {
+            "teacher_id": "A",
+            "learner_id": "B",
+            "skill_id": "y",
+            "effort": 0.25
+          }
+        },
+        "J_MA_reactive_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_MB_reactive_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        }
+      },
+      "solver_diagnostics": {
+        "states_visited_by_policy": {
+          "J_A_bellman_no_transfer": 270,
+          "J_B_bellman_transfer_optional": 1560,
+          "J_MA_reactive_no_transfer": 20,
+          "J_MB_reactive_transfer_optional": 20
+        },
+        "dominated_actions_pruned": {
+          "J_A_bellman_no_transfer": 7290,
+          "J_B_bellman_transfer_optional": 85800,
+          "J_MA_reactive_no_transfer": 0,
+          "J_MB_reactive_transfer_optional": 0
+        },
+        "runtime_seconds_descriptive": 5.346632084110752
+      }
+    },
+    "eta_B_y_0.060": {
+      "design": {
+        "changed_factor": "MIS-v2 eta(B,y)",
+        "value": 0.06,
+        "justification": "center 0.05 \u00b10.01; only the future bottleneck cell changes"
+      },
+      "exact_values": {
+        "J_A_bellman_no_transfer": 3.1880268871,
+        "J_B_bellman_transfer_optional": 3.19752633570254,
+        "J_MA_reactive_no_transfer": 3.0346209871000003,
+        "J_MB_reactive_transfer_optional": 3.0346209871000003
+      },
+      "decomposition": {
+        "planning_without_transfer_JA_minus_JMA": 0.15340589999999965,
+        "planning_with_transfer_JB_minus_JMB": 0.16290534860253958,
+        "transfer_with_planning_JB_minus_JA": 0.009499448602539928,
+        "transfer_without_planning_JMB_minus_JMA": 0.0,
+        "interaction_I": 0.009499448602539928,
+        "interaction_identity_check": 0.009499448602539928
+      },
+      "expected_functional_and_resource_metrics": {
+        "J_A_bellman_no_transfer": {
+          "expected_cumulative_CES": 3.1880268871,
+          "expected_services_completed": 3.001,
+          "expected_functional_failures": 0.999,
+          "expected_cumulative_normalized_deficit": 0.05257894736842099,
+          "expected_cumulative_raw_deficit_total": 0.04994999999999994,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.04994999999999994
+          },
+          "expected_productive_effort": 8.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 8.0
+        },
+        "J_B_bellman_transfer_optional": {
+          "expected_cumulative_CES": 3.19752633570254,
+          "expected_services_completed": 3.0,
+          "expected_functional_failures": 1.0,
+          "expected_cumulative_normalized_deficit": 0.5,
+          "expected_cumulative_raw_deficit_total": 0.175,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.175,
+            "y": 0.0
+          },
+          "expected_productive_effort": 7.0,
+          "expected_teaching_resource_consumption": 0.5,
+          "expected_teaching_actions": 1.0,
+          "expected_total_resource_consumption": 7.5
+        },
+        "J_MA_reactive_no_transfer": {
+          "expected_cumulative_CES": 3.0346209871000003,
+          "expected_services_completed": 1.20775,
+          "expected_functional_failures": 2.79225,
+          "expected_cumulative_normalized_deficit": 0.10774480263157869,
+          "expected_cumulative_raw_deficit_total": 0.10235756249999976,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10235756249999976
+          },
+          "expected_productive_effort": 5.207750000000001,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.207750000000001
+        },
+        "J_MB_reactive_transfer_optional": {
+          "expected_cumulative_CES": 3.0346209871000003,
+          "expected_services_completed": 1.20775,
+          "expected_functional_failures": 2.79225,
+          "expected_cumulative_normalized_deficit": 0.10774480263157869,
+          "expected_cumulative_raw_deficit_total": 0.10235756249999976,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10235756249999976
+          },
+          "expected_productive_effort": 5.207750000000001,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.207750000000001
+        }
+      },
+      "initial_decisions": {
+        "J_A_bellman_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_B_bellman_transfer_optional": {
+          "production": [
+            [
+              0.5,
+              0.0
+            ],
+            [
+              0.5,
+              0.0
+            ]
+          ],
+          "teaching": {
+            "teacher_id": "A",
+            "learner_id": "B",
+            "skill_id": "y",
+            "effort": 0.25
+          }
+        },
+        "J_MA_reactive_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_MB_reactive_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        }
+      },
+      "solver_diagnostics": {
+        "states_visited_by_policy": {
+          "J_A_bellman_no_transfer": 340,
+          "J_B_bellman_transfer_optional": 1818,
+          "J_MA_reactive_no_transfer": 20,
+          "J_MB_reactive_transfer_optional": 20
+        },
+        "dominated_actions_pruned": {
+          "J_A_bellman_no_transfer": 9180,
+          "J_B_bellman_transfer_optional": 99990,
+          "J_MA_reactive_no_transfer": 0,
+          "J_MB_reactive_transfer_optional": 0
+        },
+        "runtime_seconds_descriptive": 6.299081625184044
+      }
+    },
+    "efficacy_A_B_y_0.700": {
+      "design": {
+        "changed_factor": "transfer efficacy A\u2192B/y",
+        "value": 0.7,
+        "justification": "center 0.8 \u00b10.1; bounded to [0,1]"
+      },
+      "exact_values": {
+        "J_A_bellman_no_transfer": 3.1628653621000002,
+        "J_B_bellman_transfer_optional": 3.1628653621000002,
+        "J_MA_reactive_no_transfer": 3.0346209871000003,
+        "J_MB_reactive_transfer_optional": 3.0346209871000003
+      },
+      "decomposition": {
+        "planning_without_transfer_JA_minus_JMA": 0.12824437499999997,
+        "planning_with_transfer_JB_minus_JMB": 0.12824437499999997,
+        "transfer_with_planning_JB_minus_JA": 0.0,
+        "transfer_without_planning_JMB_minus_JMA": 0.0,
+        "interaction_I": 0.0,
+        "interaction_identity_check": 0.0
+      },
+      "expected_functional_and_resource_metrics": {
+        "J_A_bellman_no_transfer": {
+          "expected_cumulative_CES": 3.1628653621000002,
+          "expected_services_completed": 3.001,
+          "expected_functional_failures": 0.999,
+          "expected_cumulative_normalized_deficit": 0.05257894736842099,
+          "expected_cumulative_raw_deficit_total": 0.04994999999999994,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.04994999999999994
+          },
+          "expected_productive_effort": 8.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 8.0
+        },
+        "J_B_bellman_transfer_optional": {
+          "expected_cumulative_CES": 3.1628653621000002,
+          "expected_services_completed": 3.001,
+          "expected_functional_failures": 0.999,
+          "expected_cumulative_normalized_deficit": 0.05257894736842099,
+          "expected_cumulative_raw_deficit_total": 0.04994999999999994,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.04994999999999994
+          },
+          "expected_productive_effort": 8.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 8.0
+        },
+        "J_MA_reactive_no_transfer": {
+          "expected_cumulative_CES": 3.0346209871000003,
+          "expected_services_completed": 1.20775,
+          "expected_functional_failures": 2.79225,
+          "expected_cumulative_normalized_deficit": 0.10774480263157869,
+          "expected_cumulative_raw_deficit_total": 0.10235756249999976,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10235756249999976
+          },
+          "expected_productive_effort": 5.207750000000001,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.207750000000001
+        },
+        "J_MB_reactive_transfer_optional": {
+          "expected_cumulative_CES": 3.0346209871000003,
+          "expected_services_completed": 1.20775,
+          "expected_functional_failures": 2.79225,
+          "expected_cumulative_normalized_deficit": 0.10774480263157869,
+          "expected_cumulative_raw_deficit_total": 0.10235756249999976,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10235756249999976
+          },
+          "expected_productive_effort": 5.207750000000001,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.207750000000001
+        }
+      },
+      "initial_decisions": {
+        "J_A_bellman_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_B_bellman_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_MA_reactive_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_MB_reactive_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        }
+      },
+      "solver_diagnostics": {
+        "states_visited_by_policy": {
+          "J_A_bellman_no_transfer": 300,
+          "J_B_bellman_transfer_optional": 1610,
+          "J_MA_reactive_no_transfer": 20,
+          "J_MB_reactive_transfer_optional": 20
+        },
+        "dominated_actions_pruned": {
+          "J_A_bellman_no_transfer": 8100,
+          "J_B_bellman_transfer_optional": 88550,
+          "J_MA_reactive_no_transfer": 0,
+          "J_MB_reactive_transfer_optional": 0
+        },
+        "runtime_seconds_descriptive": 5.556560041150078
+      }
+    },
+    "efficacy_A_B_y_0.900": {
+      "design": {
+        "changed_factor": "transfer efficacy A\u2192B/y",
+        "value": 0.9,
+        "justification": "center 0.8 \u00b10.1; bounded to [0,1]"
+      },
+      "exact_values": {
+        "J_A_bellman_no_transfer": 3.1628653621000002,
+        "J_B_bellman_transfer_optional": 3.2010177889525395,
+        "J_MA_reactive_no_transfer": 3.0346209871000003,
+        "J_MB_reactive_transfer_optional": 3.0346209871000003
+      },
+      "decomposition": {
+        "planning_without_transfer_JA_minus_JMA": 0.12824437499999997,
+        "planning_with_transfer_JB_minus_JMB": 0.16639680185253924,
+        "transfer_with_planning_JB_minus_JA": 0.03815242685253928,
+        "transfer_without_planning_JMB_minus_JMA": 0.0,
+        "interaction_I": 0.03815242685253928,
+        "interaction_identity_check": 0.03815242685253928
+      },
+      "expected_functional_and_resource_metrics": {
+        "J_A_bellman_no_transfer": {
+          "expected_cumulative_CES": 3.1628653621000002,
+          "expected_services_completed": 3.001,
+          "expected_functional_failures": 0.999,
+          "expected_cumulative_normalized_deficit": 0.05257894736842099,
+          "expected_cumulative_raw_deficit_total": 0.04994999999999994,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.04994999999999994
+          },
+          "expected_productive_effort": 8.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 8.0
+        },
+        "J_B_bellman_transfer_optional": {
+          "expected_cumulative_CES": 3.2010177889525395,
+          "expected_services_completed": 3.0,
+          "expected_functional_failures": 1.0,
+          "expected_cumulative_normalized_deficit": 0.5,
+          "expected_cumulative_raw_deficit_total": 0.175,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.175,
+            "y": 0.0
+          },
+          "expected_productive_effort": 7.0,
+          "expected_teaching_resource_consumption": 0.5,
+          "expected_teaching_actions": 1.0,
+          "expected_total_resource_consumption": 7.5
+        },
+        "J_MA_reactive_no_transfer": {
+          "expected_cumulative_CES": 3.0346209871000003,
+          "expected_services_completed": 1.20775,
+          "expected_functional_failures": 2.79225,
+          "expected_cumulative_normalized_deficit": 0.10774480263157869,
+          "expected_cumulative_raw_deficit_total": 0.10235756249999976,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10235756249999976
+          },
+          "expected_productive_effort": 5.207750000000001,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.207750000000001
+        },
+        "J_MB_reactive_transfer_optional": {
+          "expected_cumulative_CES": 3.0346209871000003,
+          "expected_services_completed": 1.20775,
+          "expected_functional_failures": 2.79225,
+          "expected_cumulative_normalized_deficit": 0.10774480263157869,
+          "expected_cumulative_raw_deficit_total": 0.10235756249999976,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.10235756249999976
+          },
+          "expected_productive_effort": 5.207750000000001,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 5.207750000000001
+        }
+      },
+      "initial_decisions": {
+        "J_A_bellman_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_B_bellman_transfer_optional": {
+          "production": [
+            [
+              0.5,
+              0.0
+            ],
+            [
+              0.5,
+              0.0
+            ]
+          ],
+          "teaching": {
+            "teacher_id": "A",
+            "learner_id": "B",
+            "skill_id": "y",
+            "effort": 0.25
+          }
+        },
+        "J_MA_reactive_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_MB_reactive_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        }
+      },
+      "solver_diagnostics": {
+        "states_visited_by_policy": {
+          "J_A_bellman_no_transfer": 300,
+          "J_B_bellman_transfer_optional": 1690,
+          "J_MA_reactive_no_transfer": 20,
+          "J_MB_reactive_transfer_optional": 20
+        },
+        "dominated_actions_pruned": {
+          "J_A_bellman_no_transfer": 8100,
+          "J_B_bellman_transfer_optional": 92950,
+          "J_MA_reactive_no_transfer": 0,
+          "J_MB_reactive_transfer_optional": 0
+        },
+        "runtime_seconds_descriptive": 5.835187582997605
+      }
+    }
+  },
+  "negative_controls": {
+    "short_horizon": {
+      "design": {
+        "horizon": 3,
+        "transition": [
+          [
+            0.1,
+            0.9
+          ],
+          [
+            0.05,
+            0.95
+          ]
+        ],
+        "purpose": "physically feasible preparation, shorter recovery horizon"
+      },
+      "exact_values": {
+        "J_A_bellman_no_transfer": 2.1650542,
+        "J_B_bellman_transfer_optional": 2.1650542,
+        "J_MA_reactive_no_transfer": 2.1223042000000003,
+        "J_MB_reactive_transfer_optional": 2.1223042000000003
+      },
+      "decomposition": {
+        "planning_without_transfer_JA_minus_JMA": 0.042749999999999844,
+        "planning_with_transfer_JB_minus_JMB": 0.042749999999999844,
+        "transfer_with_planning_JB_minus_JA": 0.0,
+        "transfer_without_planning_JMB_minus_JMA": 0.0,
+        "interaction_I": 0.0,
+        "interaction_identity_check": 0.0
+      },
+      "expected_functional_and_resource_metrics": {
+        "J_A_bellman_no_transfer": {
+          "expected_cumulative_CES": 2.1650542,
+          "expected_services_completed": 2.01,
+          "expected_functional_failures": 0.99,
+          "expected_cumulative_normalized_deficit": 0.05210526315789467,
+          "expected_cumulative_raw_deficit_total": 0.04949999999999994,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.04949999999999994
+          },
+          "expected_productive_effort": 6.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 6.0
+        },
+        "J_B_bellman_transfer_optional": {
+          "expected_cumulative_CES": 2.1650542,
+          "expected_services_completed": 2.01,
+          "expected_functional_failures": 0.99,
+          "expected_cumulative_normalized_deficit": 0.05210526315789467,
+          "expected_cumulative_raw_deficit_total": 0.04949999999999994,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.04949999999999994
+          },
+          "expected_productive_effort": 6.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 6.0
+        },
+        "J_MA_reactive_no_transfer": {
+          "expected_cumulative_CES": 2.1223042000000003,
+          "expected_services_completed": 1.155,
+          "expected_functional_failures": 1.845,
+          "expected_cumulative_normalized_deficit": 0.08360526315789461,
+          "expected_cumulative_raw_deficit_total": 0.07942499999999986,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.07942499999999986
+          },
+          "expected_productive_effort": 4.155,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 4.155
+        },
+        "J_MB_reactive_transfer_optional": {
+          "expected_cumulative_CES": 2.1223042000000003,
+          "expected_services_completed": 1.155,
+          "expected_functional_failures": 1.845,
+          "expected_cumulative_normalized_deficit": 0.08360526315789461,
+          "expected_cumulative_raw_deficit_total": 0.07942499999999986,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.07942499999999986
+          },
+          "expected_productive_effort": 4.155,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 4.155
+        }
+      },
+      "initial_decisions": {
+        "J_A_bellman_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_B_bellman_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_MA_reactive_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_MB_reactive_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        }
+      },
+      "solver_diagnostics": {
+        "states_visited_by_policy": {
+          "J_A_bellman_no_transfer": 80,
+          "J_B_bellman_transfer_optional": 300,
+          "J_MA_reactive_no_transfer": 12,
+          "J_MB_reactive_transfer_optional": 12
+        },
+        "dominated_actions_pruned": {
+          "J_A_bellman_no_transfer": 2160,
+          "J_B_bellman_transfer_optional": 16500,
+          "J_MA_reactive_no_transfer": 0,
+          "J_MB_reactive_transfer_optional": 0
+        },
+        "runtime_seconds_descriptive": 1.077678957954049
+      }
+    },
+    "no_future_y_need": {
+      "design": {
+        "horizon": 4,
+        "transition": [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ],
+        "purpose": "x absorbing; no future y requirement state is reached"
+      },
+      "exact_values": {
+        "J_A_bellman_no_transfer": 2.8604895999999997,
+        "J_B_bellman_transfer_optional": 2.8604895999999997,
+        "J_MA_reactive_no_transfer": 2.8604895999999997,
+        "J_MB_reactive_transfer_optional": 2.8604895999999997
+      },
+      "decomposition": {
+        "planning_without_transfer_JA_minus_JMA": 0.0,
+        "planning_with_transfer_JB_minus_JMB": 0.0,
+        "transfer_with_planning_JB_minus_JA": 0.0,
+        "transfer_without_planning_JMB_minus_JMA": 0.0,
+        "interaction_I": 0.0,
+        "interaction_identity_check": 0.0
+      },
+      "expected_functional_and_resource_metrics": {
+        "J_A_bellman_no_transfer": {
+          "expected_cumulative_CES": 2.8604895999999997,
+          "expected_services_completed": 4.0,
+          "expected_functional_failures": 0.0,
+          "expected_cumulative_normalized_deficit": 0.0,
+          "expected_cumulative_raw_deficit_total": 0.0,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "expected_productive_effort": 8.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 8.0
+        },
+        "J_B_bellman_transfer_optional": {
+          "expected_cumulative_CES": 2.8604895999999997,
+          "expected_services_completed": 4.0,
+          "expected_functional_failures": 0.0,
+          "expected_cumulative_normalized_deficit": 0.0,
+          "expected_cumulative_raw_deficit_total": 0.0,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "expected_productive_effort": 8.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 8.0
+        },
+        "J_MA_reactive_no_transfer": {
+          "expected_cumulative_CES": 2.8604895999999997,
+          "expected_services_completed": 4.0,
+          "expected_functional_failures": 0.0,
+          "expected_cumulative_normalized_deficit": 0.0,
+          "expected_cumulative_raw_deficit_total": 0.0,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "expected_productive_effort": 8.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 8.0
+        },
+        "J_MB_reactive_transfer_optional": {
+          "expected_cumulative_CES": 2.8604895999999997,
+          "expected_services_completed": 4.0,
+          "expected_functional_failures": 0.0,
+          "expected_cumulative_normalized_deficit": 0.0,
+          "expected_cumulative_raw_deficit_total": 0.0,
+          "expected_cumulative_raw_deficit_by_skill": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "expected_productive_effort": 8.0,
+          "expected_teaching_resource_consumption": 0.0,
+          "expected_teaching_actions": 0.0,
+          "expected_total_resource_consumption": 8.0
+        }
+      },
+      "initial_decisions": {
+        "J_A_bellman_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_B_bellman_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_MA_reactive_no_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "J_MB_reactive_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        }
+      },
+      "solver_diagnostics": {
+        "states_visited_by_policy": {
+          "J_A_bellman_no_transfer": 300,
+          "J_B_bellman_transfer_optional": 1778,
+          "J_MA_reactive_no_transfer": 20,
+          "J_MB_reactive_transfer_optional": 20
+        },
+        "dominated_actions_pruned": {
+          "J_A_bellman_no_transfer": 8100,
+          "J_B_bellman_transfer_optional": 97790,
+          "J_MA_reactive_no_transfer": 0,
+          "J_MB_reactive_transfer_optional": 0
+        },
+        "runtime_seconds_descriptive": 6.095844332827255
+      }
+    }
+  },
+  "independent_tree_validation_T2": {
+    "False": {
+      "bellman": 1.2224,
+      "independent_tree_enumeration": 1.2224,
+      "absolute_difference": 0.0
+    },
+    "True": {
+      "bellman": 1.2224,
+      "independent_tree_enumeration": 1.2224,
+      "absolute_difference": 0.0
+    }
+  },
+  "interpretation_scope": "Exact finite-case policy comparison and local robustness; it does not establish a general theorem, statistical robustness, or a deployable policy under hidden competence."
+}

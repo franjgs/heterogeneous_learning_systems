@@ -1,0 +1,1148 @@
+{
+  "validation": "read_only_historical_json; no simulation or policy execution",
+  "sources": [
+    "results/experiments/hls_s4_transfer_exact/results.json",
+    "results/experiments/hls_s7_preparation_characterization/results.json",
+    "results/experiments/hls_s7_mechanistic_robustness/results.json"
+  ],
+  "s4": {
+    "profile": {
+      "profile_id": "s4_exact",
+      "scenario_id": "S4",
+      "configuration_id": "transfer_exact_T3",
+      "application_domain": "synthetic_workforce",
+      "organizational_problem": "MIS-v2 production with optional teaching",
+      "decision_objective": {
+        "A": "CES",
+        "B": "CES"
+      },
+      "constraints": "same physical resource constraints; B permits optional teaching",
+      "primary_metrics": [
+        "original_reward_cumulative",
+        "ces_cumulative",
+        "functional_success_rate",
+        "functional_deficit_cumulative",
+        "production_cumulative"
+      ],
+      "secondary_metrics": [
+        "resource_usage:productive_effort",
+        "resource_usage:teaching_resource",
+        "resource_usage:total_resource"
+      ],
+      "diagnostic_metrics": [],
+      "information_regime": "full_state_known",
+      "temporal_horizon": 3,
+      "aggregation_rules": "one demanded problem per period",
+      "demand_distribution_id": "deterministic:x-y-y",
+      "metric_availability": {},
+      "resource_units": {
+        "productive_effort": "effort",
+        "teaching_resource": "effort",
+        "total_resource": "effort"
+      }
+    },
+    "policies": {
+      "A": {
+        "original_reward_cumulative": {
+          "scenario_id": "S4",
+          "configuration_id": "transfer_exact_T3",
+          "policy_id": "A",
+          "metric_id": "original_reward_cumulative",
+          "definition_id": "original_reward:v1:CES",
+          "value": 1.9175000000000004,
+          "unit": "declared_reward",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/0",
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/1",
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/2"
+          ],
+          "temporal_horizon": 3,
+          "demand_distribution_id": "deterministic:x-y-y",
+          "information_regime": "full_state_known",
+          "aggregation_context": "one demanded problem per period",
+          "note": "recomputed_from_period_records"
+        },
+        "ces_cumulative": {
+          "scenario_id": "S4",
+          "configuration_id": "transfer_exact_T3",
+          "policy_id": "A",
+          "metric_id": "ces_cumulative",
+          "definition_id": "ces_recorded:v1",
+          "value": 1.9175000000000004,
+          "unit": "CES_output",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/0",
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/1",
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/2"
+          ],
+          "temporal_horizon": 3,
+          "demand_distribution_id": "deterministic:x-y-y",
+          "information_regime": "full_state_known",
+          "aggregation_context": "one demanded problem per period",
+          "note": "recomputed_from_period_records"
+        },
+        "functional_success_rate": {
+          "scenario_id": "S4",
+          "configuration_id": "transfer_exact_T3",
+          "policy_id": "A",
+          "metric_id": "functional_success_rate",
+          "definition_id": "full_requirements_success:v1",
+          "value": 0.3333333333333333,
+          "unit": "fraction",
+          "aggregation": "successes/demanded_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/0",
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/1",
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/2"
+          ],
+          "temporal_horizon": 3,
+          "demand_distribution_id": "deterministic:x-y-y",
+          "information_regime": "full_state_known",
+          "aggregation_context": "one demanded problem per period",
+          "note": "recomputed_from_period_records"
+        },
+        "functional_deficit_cumulative": {
+          "scenario_id": "S4",
+          "configuration_id": "transfer_exact_T3",
+          "policy_id": "A",
+          "metric_id": "functional_deficit_cumulative",
+          "definition_id": "raw_positive_deficit:v1",
+          "value": 0.5324999999999999,
+          "unit": "output",
+          "aggregation": "sum_periods_and_skills",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/0",
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/1",
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/2"
+          ],
+          "temporal_horizon": 3,
+          "demand_distribution_id": "deterministic:x-y-y",
+          "information_regime": "full_state_known",
+          "aggregation_context": "one demanded problem per period",
+          "note": "recomputed_from_period_records"
+        },
+        "production_cumulative": {
+          "scenario_id": "S4",
+          "configuration_id": "transfer_exact_T3",
+          "policy_id": "A",
+          "metric_id": "production_cumulative",
+          "definition_id": "productive_output:v1",
+          "value": 1.9175,
+          "unit": "output",
+          "aggregation": "sum_periods_and_skills",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/0",
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/1",
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/2"
+          ],
+          "temporal_horizon": 3,
+          "demand_distribution_id": "deterministic:x-y-y",
+          "information_regime": "full_state_known",
+          "aggregation_context": "one demanded problem per period",
+          "note": "recomputed_from_period_records"
+        },
+        "resource_usage:productive_effort": {
+          "scenario_id": "S4",
+          "configuration_id": "transfer_exact_T3",
+          "policy_id": "A",
+          "metric_id": "resource_usage:productive_effort",
+          "definition_id": "resource_usage:productive_effort:v1",
+          "value": 6.0,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/0",
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/1",
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/2"
+          ],
+          "temporal_horizon": 3,
+          "demand_distribution_id": "deterministic:x-y-y",
+          "information_regime": "full_state_known",
+          "aggregation_context": "one demanded problem per period",
+          "note": "recomputed_from_period_records"
+        },
+        "resource_usage:teaching_resource": {
+          "scenario_id": "S4",
+          "configuration_id": "transfer_exact_T3",
+          "policy_id": "A",
+          "metric_id": "resource_usage:teaching_resource",
+          "definition_id": "resource_usage:teaching_resource:v1",
+          "value": 0.0,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/0",
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/1",
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/2"
+          ],
+          "temporal_horizon": 3,
+          "demand_distribution_id": "deterministic:x-y-y",
+          "information_regime": "full_state_known",
+          "aggregation_context": "one demanded problem per period",
+          "note": "recomputed_from_period_records"
+        },
+        "resource_usage:total_resource": {
+          "scenario_id": "S4",
+          "configuration_id": "transfer_exact_T3",
+          "policy_id": "A",
+          "metric_id": "resource_usage:total_resource",
+          "definition_id": "resource_usage:total_resource:v1",
+          "value": 6.0,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/0",
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/1",
+            "results/experiments/hls_s4_transfer_exact/results.json#/A/periods/2"
+          ],
+          "temporal_horizon": 3,
+          "demand_distribution_id": "deterministic:x-y-y",
+          "information_regime": "full_state_known",
+          "aggregation_context": "one demanded problem per period",
+          "note": "recomputed_from_period_records"
+        }
+      },
+      "B": {
+        "original_reward_cumulative": {
+          "scenario_id": "S4",
+          "configuration_id": "transfer_exact_T3",
+          "policy_id": "B",
+          "metric_id": "original_reward_cumulative",
+          "definition_id": "original_reward:v1:CES",
+          "value": 1.9175000000000004,
+          "unit": "declared_reward",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/0",
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/1",
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/2"
+          ],
+          "temporal_horizon": 3,
+          "demand_distribution_id": "deterministic:x-y-y",
+          "information_regime": "full_state_known",
+          "aggregation_context": "one demanded problem per period",
+          "note": "recomputed_from_period_records"
+        },
+        "ces_cumulative": {
+          "scenario_id": "S4",
+          "configuration_id": "transfer_exact_T3",
+          "policy_id": "B",
+          "metric_id": "ces_cumulative",
+          "definition_id": "ces_recorded:v1",
+          "value": 1.9175000000000004,
+          "unit": "CES_output",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/0",
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/1",
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/2"
+          ],
+          "temporal_horizon": 3,
+          "demand_distribution_id": "deterministic:x-y-y",
+          "information_regime": "full_state_known",
+          "aggregation_context": "one demanded problem per period",
+          "note": "recomputed_from_period_records"
+        },
+        "functional_success_rate": {
+          "scenario_id": "S4",
+          "configuration_id": "transfer_exact_T3",
+          "policy_id": "B",
+          "metric_id": "functional_success_rate",
+          "definition_id": "full_requirements_success:v1",
+          "value": 0.3333333333333333,
+          "unit": "fraction",
+          "aggregation": "successes/demanded_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/0",
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/1",
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/2"
+          ],
+          "temporal_horizon": 3,
+          "demand_distribution_id": "deterministic:x-y-y",
+          "information_regime": "full_state_known",
+          "aggregation_context": "one demanded problem per period",
+          "note": "recomputed_from_period_records"
+        },
+        "functional_deficit_cumulative": {
+          "scenario_id": "S4",
+          "configuration_id": "transfer_exact_T3",
+          "policy_id": "B",
+          "metric_id": "functional_deficit_cumulative",
+          "definition_id": "raw_positive_deficit:v1",
+          "value": 0.5324999999999999,
+          "unit": "output",
+          "aggregation": "sum_periods_and_skills",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/0",
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/1",
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/2"
+          ],
+          "temporal_horizon": 3,
+          "demand_distribution_id": "deterministic:x-y-y",
+          "information_regime": "full_state_known",
+          "aggregation_context": "one demanded problem per period",
+          "note": "recomputed_from_period_records"
+        },
+        "production_cumulative": {
+          "scenario_id": "S4",
+          "configuration_id": "transfer_exact_T3",
+          "policy_id": "B",
+          "metric_id": "production_cumulative",
+          "definition_id": "productive_output:v1",
+          "value": 1.9175,
+          "unit": "output",
+          "aggregation": "sum_periods_and_skills",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/0",
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/1",
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/2"
+          ],
+          "temporal_horizon": 3,
+          "demand_distribution_id": "deterministic:x-y-y",
+          "information_regime": "full_state_known",
+          "aggregation_context": "one demanded problem per period",
+          "note": "recomputed_from_period_records"
+        },
+        "resource_usage:productive_effort": {
+          "scenario_id": "S4",
+          "configuration_id": "transfer_exact_T3",
+          "policy_id": "B",
+          "metric_id": "resource_usage:productive_effort",
+          "definition_id": "resource_usage:productive_effort:v1",
+          "value": 6.0,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/0",
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/1",
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/2"
+          ],
+          "temporal_horizon": 3,
+          "demand_distribution_id": "deterministic:x-y-y",
+          "information_regime": "full_state_known",
+          "aggregation_context": "one demanded problem per period",
+          "note": "recomputed_from_period_records"
+        },
+        "resource_usage:teaching_resource": {
+          "scenario_id": "S4",
+          "configuration_id": "transfer_exact_T3",
+          "policy_id": "B",
+          "metric_id": "resource_usage:teaching_resource",
+          "definition_id": "resource_usage:teaching_resource:v1",
+          "value": 0.0,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/0",
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/1",
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/2"
+          ],
+          "temporal_horizon": 3,
+          "demand_distribution_id": "deterministic:x-y-y",
+          "information_regime": "full_state_known",
+          "aggregation_context": "one demanded problem per period",
+          "note": "recomputed_from_period_records"
+        },
+        "resource_usage:total_resource": {
+          "scenario_id": "S4",
+          "configuration_id": "transfer_exact_T3",
+          "policy_id": "B",
+          "metric_id": "resource_usage:total_resource",
+          "definition_id": "resource_usage:total_resource:v1",
+          "value": 6.0,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/0",
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/1",
+            "results/experiments/hls_s4_transfer_exact/results.json#/B/periods/2"
+          ],
+          "temporal_horizon": 3,
+          "demand_distribution_id": "deterministic:x-y-y",
+          "information_regime": "full_state_known",
+          "aggregation_context": "one demanded problem per period",
+          "note": "recomputed_from_period_records"
+        }
+      }
+    },
+    "transfer_difference_CES": {
+      "scenario_id": "S4",
+      "configuration_id": "transfer_exact_T3",
+      "policy_id": "B-minus-A",
+      "metric_id": "difference:ces_cumulative",
+      "definition_id": "difference:ces_recorded:v1",
+      "value": 0.0,
+      "unit": "CES_output",
+      "aggregation": "paired_policy_difference",
+      "status": "VALID",
+      "provenance": [
+        "results/experiments/hls_s4_transfer_exact/results.json#/B/value",
+        "results/experiments/hls_s4_transfer_exact/results.json#/A/value"
+      ],
+      "temporal_horizon": 3,
+      "demand_distribution_id": "deterministic:x-y-y",
+      "information_regime": "full_state_known",
+      "aggregation_context": "one demanded problem per period",
+      "note": "same_information_regime"
+    }
+  },
+  "s7": {
+    "profile": {
+      "profile_id": "s7_center",
+      "scenario_id": "S7",
+      "configuration_id": "opportunity_T4_C5",
+      "application_domain": "synthetic_workforce",
+      "organizational_problem": "unknown future Markov demand with endogenous competence",
+      "decision_objective": {
+        "A": "CES",
+        "B": "CES",
+        "MA": "CES",
+        "MB": "CES"
+      },
+      "constraints": "same production resources; optional teaching for B/MB",
+      "primary_metrics": [
+        "original_reward_cumulative",
+        "ces_cumulative",
+        "functional_success_rate",
+        "functional_deficit_cumulative",
+        "production_cumulative"
+      ],
+      "secondary_metrics": [
+        "resource_usage:productive_effort",
+        "resource_usage:teaching_resource",
+        "resource_usage:total_resource"
+      ],
+      "diagnostic_metrics": [],
+      "information_regime": "full_state_and_known_demand_law",
+      "temporal_horizon": 4,
+      "aggregation_rules": "one demanded problem per period",
+      "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+      "metric_availability": {},
+      "resource_units": {
+        "productive_effort": "effort",
+        "teaching_resource": "effort",
+        "total_resource": "effort"
+      }
+    },
+    "policies": {
+      "A": {
+        "original_reward_cumulative": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "A",
+          "metric_id": "original_reward_cumulative",
+          "definition_id": "original_reward:v1:CES",
+          "value": 3.1628653621000002,
+          "unit": "declared_reward",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_preparation_characterization/results.json#/cases/opportunity/exact_values/J_A_bellman_without_transfer"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "ces_cumulative": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "A",
+          "metric_id": "ces_cumulative",
+          "definition_id": "ces_recorded:v1",
+          "value": 3.1628653621000002,
+          "unit": "CES_output",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_A_bellman_no_transfer/expected_cumulative_CES"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "functional_success_rate": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "A",
+          "metric_id": "functional_success_rate",
+          "definition_id": "full_requirements_success:v1",
+          "value": 0.75025,
+          "unit": "fraction",
+          "aggregation": "successes/demanded_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_A_bellman_no_transfer/expected_services_completed"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_exact_expected_count_divided_by_declared_horizon; not_recomputed_from_paths"
+        },
+        "functional_deficit_cumulative": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "A",
+          "metric_id": "functional_deficit_cumulative",
+          "definition_id": "raw_positive_deficit:v1",
+          "value": 0.04994999999999994,
+          "unit": "output",
+          "aggregation": "sum_periods_and_skills",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_A_bellman_no_transfer/expected_cumulative_raw_deficit_total"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "production_cumulative": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "A",
+          "metric_id": "production_cumulative",
+          "definition_id": "productive_output:v1",
+          "value": null,
+          "unit": "output",
+          "aggregation": "sum_periods_and_skills",
+          "status": "NOT_RECORDED",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "full expected output by skill was not stored; illustrated branches are incomplete"
+        },
+        "resource_usage:productive_effort": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "A",
+          "metric_id": "resource_usage:productive_effort",
+          "definition_id": "resource_usage:productive_effort:v1",
+          "value": 8.0,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_A_bellman_no_transfer/expected_productive_effort"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "resource_usage:teaching_resource": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "A",
+          "metric_id": "resource_usage:teaching_resource",
+          "definition_id": "resource_usage:teaching_resource:v1",
+          "value": 0.0,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_A_bellman_no_transfer/expected_teaching_resource_consumption"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "resource_usage:total_resource": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "A",
+          "metric_id": "resource_usage:total_resource",
+          "definition_id": "resource_usage:total_resource:v1",
+          "value": 8.0,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_A_bellman_no_transfer/expected_total_resource_consumption"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        }
+      },
+      "B": {
+        "original_reward_cumulative": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "B",
+          "metric_id": "original_reward_cumulative",
+          "definition_id": "original_reward:v1:CES",
+          "value": 3.1743777327025406,
+          "unit": "declared_reward",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_preparation_characterization/results.json#/cases/opportunity/exact_values/J_B_bellman_transfer_optional"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "ces_cumulative": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "B",
+          "metric_id": "ces_cumulative",
+          "definition_id": "ces_recorded:v1",
+          "value": 3.1743777327025406,
+          "unit": "CES_output",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_B_bellman_transfer_optional/expected_cumulative_CES"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "functional_success_rate": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "B",
+          "metric_id": "functional_success_rate",
+          "definition_id": "full_requirements_success:v1",
+          "value": 0.75,
+          "unit": "fraction",
+          "aggregation": "successes/demanded_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_B_bellman_transfer_optional/expected_services_completed"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_exact_expected_count_divided_by_declared_horizon; not_recomputed_from_paths"
+        },
+        "functional_deficit_cumulative": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "B",
+          "metric_id": "functional_deficit_cumulative",
+          "definition_id": "raw_positive_deficit:v1",
+          "value": 0.175,
+          "unit": "output",
+          "aggregation": "sum_periods_and_skills",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_B_bellman_transfer_optional/expected_cumulative_raw_deficit_total"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "production_cumulative": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "B",
+          "metric_id": "production_cumulative",
+          "definition_id": "productive_output:v1",
+          "value": null,
+          "unit": "output",
+          "aggregation": "sum_periods_and_skills",
+          "status": "NOT_RECORDED",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "full expected output by skill was not stored; illustrated branches are incomplete"
+        },
+        "resource_usage:productive_effort": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "B",
+          "metric_id": "resource_usage:productive_effort",
+          "definition_id": "resource_usage:productive_effort:v1",
+          "value": 7.0,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_B_bellman_transfer_optional/expected_productive_effort"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "resource_usage:teaching_resource": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "B",
+          "metric_id": "resource_usage:teaching_resource",
+          "definition_id": "resource_usage:teaching_resource:v1",
+          "value": 0.5,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_B_bellman_transfer_optional/expected_teaching_resource_consumption"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "resource_usage:total_resource": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "B",
+          "metric_id": "resource_usage:total_resource",
+          "definition_id": "resource_usage:total_resource:v1",
+          "value": 7.5,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_B_bellman_transfer_optional/expected_total_resource_consumption"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        }
+      },
+      "MA": {
+        "original_reward_cumulative": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "MA",
+          "metric_id": "original_reward_cumulative",
+          "definition_id": "original_reward:v1:CES",
+          "value": 3.0346209871000003,
+          "unit": "declared_reward",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_preparation_characterization/results.json#/cases/opportunity/exact_values/J_M_reactive_without_transfer"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "ces_cumulative": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "MA",
+          "metric_id": "ces_cumulative",
+          "definition_id": "ces_recorded:v1",
+          "value": 3.0346209871000003,
+          "unit": "CES_output",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_MA_reactive_no_transfer/expected_cumulative_CES"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "functional_success_rate": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "MA",
+          "metric_id": "functional_success_rate",
+          "definition_id": "full_requirements_success:v1",
+          "value": 0.3019375,
+          "unit": "fraction",
+          "aggregation": "successes/demanded_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_MA_reactive_no_transfer/expected_services_completed"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_exact_expected_count_divided_by_declared_horizon; not_recomputed_from_paths"
+        },
+        "functional_deficit_cumulative": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "MA",
+          "metric_id": "functional_deficit_cumulative",
+          "definition_id": "raw_positive_deficit:v1",
+          "value": 0.10235756249999976,
+          "unit": "output",
+          "aggregation": "sum_periods_and_skills",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_MA_reactive_no_transfer/expected_cumulative_raw_deficit_total"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "production_cumulative": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "MA",
+          "metric_id": "production_cumulative",
+          "definition_id": "productive_output:v1",
+          "value": null,
+          "unit": "output",
+          "aggregation": "sum_periods_and_skills",
+          "status": "NOT_RECORDED",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "full expected output by skill was not stored; illustrated branches are incomplete"
+        },
+        "resource_usage:productive_effort": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "MA",
+          "metric_id": "resource_usage:productive_effort",
+          "definition_id": "resource_usage:productive_effort:v1",
+          "value": 5.207750000000001,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_MA_reactive_no_transfer/expected_productive_effort"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "resource_usage:teaching_resource": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "MA",
+          "metric_id": "resource_usage:teaching_resource",
+          "definition_id": "resource_usage:teaching_resource:v1",
+          "value": 0.0,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_MA_reactive_no_transfer/expected_teaching_resource_consumption"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "resource_usage:total_resource": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "MA",
+          "metric_id": "resource_usage:total_resource",
+          "definition_id": "resource_usage:total_resource:v1",
+          "value": 5.207750000000001,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_MA_reactive_no_transfer/expected_total_resource_consumption"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        }
+      },
+      "MB": {
+        "original_reward_cumulative": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "MB",
+          "metric_id": "original_reward_cumulative",
+          "definition_id": "original_reward:v1:CES",
+          "value": 3.0346209871000003,
+          "unit": "declared_reward",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_preparation_characterization/results.json#/cases/opportunity/exact_values/J_M_reactive_transfer_optional"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "ces_cumulative": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "MB",
+          "metric_id": "ces_cumulative",
+          "definition_id": "ces_recorded:v1",
+          "value": 3.0346209871000003,
+          "unit": "CES_output",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_MB_reactive_transfer_optional/expected_cumulative_CES"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "functional_success_rate": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "MB",
+          "metric_id": "functional_success_rate",
+          "definition_id": "full_requirements_success:v1",
+          "value": 0.3019375,
+          "unit": "fraction",
+          "aggregation": "successes/demanded_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_MB_reactive_transfer_optional/expected_services_completed"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_exact_expected_count_divided_by_declared_horizon; not_recomputed_from_paths"
+        },
+        "functional_deficit_cumulative": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "MB",
+          "metric_id": "functional_deficit_cumulative",
+          "definition_id": "raw_positive_deficit:v1",
+          "value": 0.10235756249999976,
+          "unit": "output",
+          "aggregation": "sum_periods_and_skills",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_MB_reactive_transfer_optional/expected_cumulative_raw_deficit_total"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "production_cumulative": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "MB",
+          "metric_id": "production_cumulative",
+          "definition_id": "productive_output:v1",
+          "value": null,
+          "unit": "output",
+          "aggregation": "sum_periods_and_skills",
+          "status": "NOT_RECORDED",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "full expected output by skill was not stored; illustrated branches are incomplete"
+        },
+        "resource_usage:productive_effort": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "MB",
+          "metric_id": "resource_usage:productive_effort",
+          "definition_id": "resource_usage:productive_effort:v1",
+          "value": 5.207750000000001,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_MB_reactive_transfer_optional/expected_productive_effort"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "resource_usage:teaching_resource": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "MB",
+          "metric_id": "resource_usage:teaching_resource",
+          "definition_id": "resource_usage:teaching_resource:v1",
+          "value": 0.0,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_MB_reactive_transfer_optional/expected_teaching_resource_consumption"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        },
+        "resource_usage:total_resource": {
+          "scenario_id": "S7",
+          "configuration_id": "opportunity_T4_C5",
+          "policy_id": "MB",
+          "metric_id": "resource_usage:total_resource",
+          "definition_id": "resource_usage:total_resource:v1",
+          "value": 5.207750000000001,
+          "unit": "effort",
+          "aggregation": "sum_periods",
+          "status": "VALID",
+          "provenance": [
+            "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_MB_reactive_transfer_optional/expected_total_resource_consumption"
+          ],
+          "temporal_horizon": 4,
+          "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+          "information_regime": "full_state_and_known_demand_law",
+          "aggregation_context": "one demanded problem per period",
+          "note": "stored_historical_aggregate"
+        }
+      }
+    },
+    "contrasts_CES": {
+      "planning_without_transfer": {
+        "scenario_id": "S7",
+        "configuration_id": "opportunity_T4_C5",
+        "policy_id": "A-minus-MA",
+        "metric_id": "difference:ces_cumulative",
+        "definition_id": "difference:ces_recorded:v1",
+        "value": 0.12824437499999997,
+        "unit": "CES_output",
+        "aggregation": "paired_policy_difference",
+        "status": "VALID",
+        "provenance": [
+          "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_A_bellman_no_transfer/expected_cumulative_CES",
+          "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_MA_reactive_no_transfer/expected_cumulative_CES"
+        ],
+        "temporal_horizon": 4,
+        "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+        "information_regime": "full_state_and_known_demand_law",
+        "aggregation_context": "one demanded problem per period",
+        "note": "same_information_regime"
+      },
+      "planning_with_transfer": {
+        "scenario_id": "S7",
+        "configuration_id": "opportunity_T4_C5",
+        "policy_id": "B-minus-MB",
+        "metric_id": "difference:ces_cumulative",
+        "definition_id": "difference:ces_recorded:v1",
+        "value": 0.13975674560254037,
+        "unit": "CES_output",
+        "aggregation": "paired_policy_difference",
+        "status": "VALID",
+        "provenance": [
+          "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_B_bellman_transfer_optional/expected_cumulative_CES",
+          "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_MB_reactive_transfer_optional/expected_cumulative_CES"
+        ],
+        "temporal_horizon": 4,
+        "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+        "information_regime": "full_state_and_known_demand_law",
+        "aggregation_context": "one demanded problem per period",
+        "note": "same_information_regime"
+      },
+      "transfer_with_planning": {
+        "scenario_id": "S7",
+        "configuration_id": "opportunity_T4_C5",
+        "policy_id": "B-minus-A",
+        "metric_id": "difference:ces_cumulative",
+        "definition_id": "difference:ces_recorded:v1",
+        "value": 0.0115123706025404,
+        "unit": "CES_output",
+        "aggregation": "paired_policy_difference",
+        "status": "VALID",
+        "provenance": [
+          "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_B_bellman_transfer_optional/expected_cumulative_CES",
+          "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_A_bellman_no_transfer/expected_cumulative_CES"
+        ],
+        "temporal_horizon": 4,
+        "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+        "information_regime": "full_state_and_known_demand_law",
+        "aggregation_context": "one demanded problem per period",
+        "note": "same_information_regime"
+      },
+      "transfer_without_planning": {
+        "scenario_id": "S7",
+        "configuration_id": "opportunity_T4_C5",
+        "policy_id": "MB-minus-MA",
+        "metric_id": "difference:ces_cumulative",
+        "definition_id": "difference:ces_recorded:v1",
+        "value": 0.0,
+        "unit": "CES_output",
+        "aggregation": "paired_policy_difference",
+        "status": "VALID",
+        "provenance": [
+          "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_MB_reactive_transfer_optional/expected_cumulative_CES",
+          "results/experiments/hls_s7_mechanistic_robustness/results.json#/sensitivity/center/expected_functional_and_resource_metrics/J_MA_reactive_no_transfer/expected_cumulative_CES"
+        ],
+        "temporal_horizon": 4,
+        "demand_distribution_id": "C5:opportunity:initial_and_transitions_in_prep_design",
+        "information_regime": "full_state_and_known_demand_law",
+        "aggregation_context": "one demanded problem per period",
+        "note": "same_information_regime"
+      }
+    },
+    "interaction_CES": 0.0115123706025404,
+    "historical_aggregate_only": true
+  }
+}

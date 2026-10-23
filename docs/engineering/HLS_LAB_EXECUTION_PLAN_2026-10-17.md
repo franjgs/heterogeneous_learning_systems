@@ -4505,3 +4505,2871 @@ N×K/MIS-v2 y añade una nota de conexión; no se iguala el esfuerzo divisible
 N×K con el matching binario de escenarios canónicos. Los documentos fuente,
 pruebas y JSON se identifican en el §6 del marco unificado. No se alteraron los
 resultados ni el código de ningún escenario.
+
+### 2026-10-21 — S3b: diagnóstico de detectabilidad GLR
+
+**Motivación.** La evaluación GLR-CUCB anterior ejecutó las 30 semillas de
+S3b-0, las 30 de S3b-1 y las 120 oportunidades de cambio de S3b-2 sin alarmas.
+Esta entrada separa error de implementación, falta de evidencia por pareja,
+umbral respecto al horizonte y relevancia para el matching. No se modificaron
+GLR-CUCB, sus parámetros, las políticas ni los escenarios.
+
+#### Verificación matemática y de información
+
+La inspección de [`glr_cucb.py`](../../src/hls/glr_cucb.py) confirma que el
+detector calcula para cada brazo observado
+
+`max_{1<=s<n} {s KL_Bern(p_1:s || p_1:n) + (n-s) KL_Bern(p_(s+1):n || p_1:n)}`,
+
+incluyendo todos los puntos de corte y las convenciones Bernoulli de frontera.
+Coincide con la ecuación (1) y la Definición 2.6 de Zhou et al. El umbral es
+`beta(n,delta)=2 Q(log(3 n^(3/2)/delta)/2)+6 log(1+log n)`: se aplica el límite
+superior publicado de `Q` para argumentos `x>=5`; cuando `x<5`, el código lo
+eleva a 5, una extensión conservadora porque `Q` es creciente. El detector se
+evalúa al recibir feedback de un brazo, usa `n` observaciones de ese brazo (no
+tiempo global) y reinicia globalmente todos los historiales ante cualquier
+alarma. La exploración forzada cicla por los nueve brazos con periodo global
+relativo a `tau`; en cada periodo sólo se actualizan las aristas seleccionadas.
+No se identificó un error matemático de GLR, KL, umbral, reloj ni reinicio.
+
+La única adaptación protocolaria ya declarada permanece: las tres
+observaciones comunes por pareja de los nueve periodos de calibración se pasan
+como prehistoria y el reloj arranca al terminar la calibración. Esto difiere
+de la inicialización cero de Algorithm 2; por tanto, no se transfieren aquí sus
+garantías de regret. Las competencias/recompensas reales y cambios conocidos
+sólo se usan en la evaluación posterior, nunca por el detector ni por las
+decisiones.
+
+#### Reproducción pasiva y trazas
+
+Se instrumentó el evaluador para calcular las trazas antes de `update`, sin
+escribir en el estado de política ni consumir aleatoriedad. Los 90 episodios
+de los tres comparadores reprodujeron sus asignaciones y rewards esperados
+archivados exactamente (diferencia máxima `0.0`). GLR-CUCB reprodujo sus
+rewards esperados por semilla y conteos de alarmas (`0.0` de diferencia y cero
+alarmas); el JSON GLR anterior no guarda IDs de asignación por episodio, por lo
+que su reproducción exacta de la secuencia de asignaciones no se puede
+verificar retrospectivamente. En los 90 episodios, las ejecuciones trazadas y
+no trazadas del mismo evaluador conservaron exactamente las secuencias de
+asignación de las cuatro políticas y sus rewards (diferencia máxima `0.0`);
+para GLR, reward y alarmas también coinciden con el archivo previo. No se
+sobrescribió ningún resultado S3b anterior.
+
+En todos los escenarios hubo cero alarmas. Los máximos observados de
+`GLR/umbral` fueron `0.2554` en S3b-0, `0.8543` en S3b-1 y `0.8691` en S3b-2;
+ningún par alcanzó 1. Los máximos más próximos fueron, respectivamente,
+`9.298/36.414` con `n=26`, `34.936/40.895` con `n=168` y `33.310/38.326` con
+`n=78`. El umbral en los tamaños de muestra relevantes queda aproximadamente
+entre 35 y 41 unidades GLR: alto frente a la evidencia empírica alcanzada en
+este horizonte, aunque no es un defecto del umbral publicado.
+
+| Escenario/cambio | Observaciones posteriores por pareja relevante | Resultado de detectabilidad |
+|---|---:|---|
+| S3b-0, sin cambio | 246 por pareja del matching estacionario (media); 22–29 en varias no asignadas | Sin alarma, como comportamiento esperado bajo estacionariedad |
+| S3b-1, `t=150`, `0.2↔0.8` | 29.17 de media en aristas del matching anterior; 108.93 en aristas del nuevo (rango observado hasta 131); aristas sin cambio de media: 11.90 | El matching óptimo cambió en las 30 semillas; las aristas nuevas recibieron feedback, pero el máximo GLR siguió bajo umbral |
+| S3b-2, cambios cada 60 periodos | En aristas cuyo valor cambió: 26.22 post-cambio de media; 13.74 en aristas del matching previo y 38.69 en aristas del nuevo (máximo 53) | Los cuatro cambios alteraron el matching óptimo; segmentos cortos y evidencia por pareja insuficiente para cruzar el umbral |
+
+En cada breakpoint, 6 de las 9 medias de pareja cambiaron en `0.6`; tres
+permanecieron iguales. En `t=150` (y `t=60,240` en la transición 0→1), cambian
+`(0,0),(1,1),(2,2),(0,1),(1,2),(2,0)`; permanecen iguales
+`(0,2),(1,0),(2,1)`. En `t=120` (1→2) cambian
+`(0,1),(1,2),(2,0),(0,2),(1,0),(2,1)` y permanecen iguales las diagonales.
+En `t=180` (2→0) cambian `(0,2),(1,0),(2,1),(0,0),(1,1),(2,2)` y quedan
+iguales `(0,1),(1,2),(2,0)`. El matching óptimo cambió en cada breakpoint y las seis
+aristas que cambiaron pertenecían al matching antiguo o al nuevo. Por ello,
+**E no explica la ausencia de detecciones**: los cambios fueron relevantes
+para la solución combinatoria. Sí explica por qué no todos los pares debían
+señalar alarma: tres pares por régimen no cambiaron de media.
+
+Las cuentas por pareja son feedback efectivo, no periodos globales. En S3b-1
+las aristas que dejaron el matching pierden exposición tras el cambio; las que
+entraron reciben más, pero sus muestras pre-cambio eran cortas. En S3b-2 la
+ventana de cada régimen fue de sólo 60 periodos; el máximo post-cambio por
+pareja fue 53 y la mayoría recibió bastante menos. No se ejecutó reinicio,
+así que las observaciones de regímenes anteriores siguieron mezcladas en el
+GLR. Esto es evidencia de **D** combinada con poca longitud de segmento.
+
+#### Control aislado del detector
+
+Se ejecutaron secuencias Bernoulli predefinidas con 100 semillas (`41000–41099`),
+`delta=20/300`, umbral original, 60 observaciones pre-cambio y presupuestos de
+10, 25, 50 o 100 observaciones post-cambio. El control estacionario tuvo 0/100
+falsas alarmas. Tasas de detección acumulada:
+
+| Medias antes→después | 10 obs. | 25 obs. | 50 obs. | 100 obs. |
+|---|---:|---:|---:|---:|
+| `0.45→0.55` (pequeño) | 0% | 0% | 0% | 0% |
+| `0.30→0.70` (moderado) | 0% | 0% | 0% | 0% |
+| `0.20→0.80` (amplitud S3b) | 0% | 0% | 2% | 7% |
+| `0.10→0.90` (grande) | 0% | 5% | 60% | 100% |
+
+Para el salto `0.20→0.80`, 15 observaciones pre-cambio (subcaso que aproxima
+mejor la exposición de aristas nuevas de S3b-1) produjeron 0/100 detecciones
+hasta 100 muestras post-cambio; el máximo `GLR/umbral` fue `0.647`. Con 60
+observaciones previas, sólo 7/100 detectaron antes de 100 muestras post, con
+retraso medio condicionado a detección de `69.57`. Es prueba de potencia
+empírica bajo estas semillas y esta parametrización, no una cota probabilística
+ni demostración de imposibilidad. Confirma **B+C**: para el salto de S3b, el
+umbral conservador exige más evidencia de la que típicamente ofrecen los
+segmentos/exposiciones disponibles. En S3b-1 también opera **D** para aristas
+que dejan de ser elegidas; S3b-2 añade que se cambia de régimen antes de que
+muchas parejas acumulen muestras suficientes.
+
+#### Diagnóstico y decisión
+
+- **A — error de implementación:** no observado en GLR Bernoulli, segmentación,
+  umbral publicado/conservador, relojes, reinicio o feedback parcial.
+- **B — evidencia insuficiente:** respaldada por los cocientes GLR/umbral y el
+  control aislado; incluso el salto exacto S3b detectó raramente dentro de 100
+  observaciones por pareja.
+- **C — umbral conservador para `T=300`:** cierto en sentido operativo (ningún
+  cociente llegó a uno y umbrales cercanos a 35–41), no como error ni motivo
+  para cambiar `delta`.
+- **D — observación desigual/insuficiente:** respaldada, especialmente para
+  aristas que dejan de ser elegidas y para segmentos recurrentes de 60 rondas;
+  no es la única causa porque algunas aristas nuevas acumularon >100 feedbacks.
+- **E — cambios irrelevantes para matching:** descartada como explicación
+  general; cada cambio sí alteró el matching óptimo, aunque tres aristas no
+  cambiaron su media en cada régimen.
+
+**Conclusión:** la ausencia de alarmas es coherente con una implementación
+GLR matemáticamente alineada, un umbral deliberadamente conservador y pocas
+observaciones post-cambio por pareja dentro del horizonte. El detector sí
+funciona con evidencia fuerte: en el control `0.10→0.90`, detectó en 100/100
+semillas antes de 100 observaciones y sin falsas alarmas en el control
+estacionario. Para HLS esto implica que “cambió la solución óptima” no basta:
+una política combinatoria debe observar repetidamente las parejas diagnósticas,
+y el horizonte/segmento debe permitir acumular señal antes del siguiente
+cambio. Es una conclusión limitada al protocolo sintético S3b, no una
+recomendación de cambiar el algoritmo o sus parámetros. No se abre otro
+escenario ni campaña; S3b permanece como línea científica abierta conforme a
+la consolidación del 21/10.
+
+Artefactos nuevos: [diagnóstico reproducible](../../experiments/diagnose_hls_s3b_glr_detectability.py),
+[pruebas de no interferencia](../../tests/test_hls_s3b_glr_detectability.py) y
+[trazas compactas por semilla/pareja](../../results/experiments/hls_s3b_glr_detectability/results.json).
+Reproducción:
+
+```bash
+PYTHONPATH=.:src pytest -q tests/test_hls_s3b_glr_cucb.py \
+  tests/test_hls_s3b_glr_detectability.py \
+  tests/test_hls_s3b_nonstationary_assignment.py \
+  tests/test_hls_lab_nk_assignment.py
+PYTHONPATH=.:src python experiments/diagnose_hls_s3b_glr_detectability.py
+```
+
+### 2026-10-21 — S3b-L: evaluación organizativa a horizonte extendido
+
+**Protocolo bloqueado antes de la evaluación.** Para determinar si el
+resultado GLR de 300 periodos era una limitación temporal, se preparó una
+comparación emparejada de 2400 ciclos operativos abstractos (duración física
+no inferida), 3 agentes × 3 tareas, 30 semillas originales `9300–9329`, con
+los mismos nueve periodos iniciales de calibración, matching exacto y feedback
+Bernoulli sólo en aristas ejecutadas. Los tres métodos son UCB1+matching,
+SW-UCB+matching y GLR-CUCB+matching. Las medias y rotaciones siguen el diseño
+original (`0.2/0.8`, con una permutación cíclica por régimen); L0 es estacionario,
+L1 cambia una vez en `t=1200`, y L2 en `t={600,1200,1800}`. Las competencias
+reales, los breakpoints y los uniformes potenciales se reservan al entorno y
+evaluación. Se conservan el generador, el orden de aristas y la semilla XOR del
+experimento original, extendiendo el flujo a 2400 periodos.
+
+La longitud SW-UCB se fijó por la regla ya usada en S3b,
+`W=round(2 sqrt(T log(T)/M))`, con rango de recompensa `B=1` y `M` igual al
+número de cambios de la condición predefinida: L0 `W=2400`, L1 `W=273`, L2
+`W=158`. No se usan instantes de cambio. Para GLR-CUCB se detectó que la
+parametrización del runner histórico (`epsilon=0.5 sqrt((9−1)log(T)/T)`,
+`delta=20/T`) no corresponde literalmente a una receta que el artículo
+establezca como universal; no se altera el algoritmo. Appendix C.2 reporta
+para el experimento sintético del artículo `p=0.05 sqrt((Nseg−1)log(T)/T)`
+con `Nseg=5` y `delta=20/T`; `Nseg` significa número de segmentos y `K` en las
+ecuaciones es el número de brazos base, no agentes ni tipos de tarea. Para
+evitar filtrar el número de cambios y seguir una regla teórica reproducible, se fijó para los
+tres regímenes el corolario del artículo para número de segmentos desconocido:
+`p=sqrt(K log(T)/T)`, `delta=1/T`, usando `K=9` brazos base agente-tarea,
+`T=2400` (`p≈0.1709`, `delta≈0.0004167`). Es una parametrización theorem-guided,
+no una reproducción exacta de los experimentos sintéticos del artículo. La
+composición de GLR-CUCB con matching bipartito sigue siendo la adaptación HLS;
+no se reclaman garantías teóricas trasladadas. La inicialización común de
+nueve periodos también difiere de la inicialización en cero del pseudocódigo
+publicado.
+
+Pruebas focalizadas de configuración, matrices/regímenes, historial de
+calibración sin fuga de información, restricciones de matching y componentes
+previos: `34 passed`; `py_compile` y `git diff --check` pasan. Como smoke test
+operativo previo a la campaña se evaluó una vez la semilla `9300`/L1, que
+pertenece al conjunto luego fijado de evaluación; no se utilizó para ajustar
+ningún parámetro ni se cambió el protocolo, pero se registra como una
+limitación menor de separación estricta entre preflight y evaluación. La
+re-ejecución determinista de tres episodios (uno por condición) coincidió
+exactamente con sus asignaciones y recompensas guardadas. Los hashes de los
+tres resultados históricos S3b se comprobaron antes y después; no se han
+sobrescrito.
+
+**Resultados (30 semillas emparejadas por condición; reward esperado medio
+acumulado, IC 95% entre semillas).** El oráculo esperado es `5738.40` en las
+tres condiciones (`2391×2.4`). El regret es oráculo menos reward esperado.
+
+| Condición | Política | Reward esperado [IC95%] | Regret esperado | Reward Bernoulli realizado medio | Matching óptimo |
+|---|---|---:|---:|---:|---:|
+| L0 estacionario | UCB1 | 5628.56 [5625.42, 5631.70] | 109.84 | 5630.43 | 96.59% |
+| L0 | SW-UCB | 5628.56 [5625.42, 5631.70] | 109.84 | 5630.43 | 96.59% |
+| L0 | GLR-CUCB | 5232.34 [5229.09, 5235.59] | 506.06 | 5231.23 | 85.30% |
+| L1 abrupto | UCB1 | 5580.10 [5570.95, 5589.25] | 158.30 | 5575.17 | 95.43% |
+| L1 | SW-UCB | 5168.42 [5160.63, 5176.21] | 569.98 | 5163.37 | 82.94% |
+| L1 | GLR-CUCB | 5112.66 [5104.27, 5121.05] | 625.74 | 5111.10 | 82.33% |
+| L2 recurrente | UCB1 | 5434.34 [5422.51, 5446.17] | 304.06 | 5444.13 | 90.82% |
+| L2 | SW-UCB | 4966.62 [4958.12, 4975.12] | 771.78 | 4978.73 | 77.01% |
+| L2 | GLR-CUCB | 4871.24 [4859.35, 4883.13] | 867.16 | 4880.43 | 76.46% |
+
+Las diferencias pareadas de reward esperado acumulado (media e IC95%) fueron:
+
+| Condición | Contraste | Diferencia [IC95%] |
+|---|---|---:|
+| L0 | GLR − UCB1 = GLR − SW-UCB | −396.22 [−399.73, −392.71] |
+| L1 | GLR − UCB1 | −467.44 [−479.20, −455.68] |
+| L1 | GLR − SW-UCB | −55.76 [−67.94, −43.58] |
+| L1 | SW-UCB − UCB1 | −411.68 [−422.59, −400.77] |
+| L2 | GLR − UCB1 | −563.10 [−579.70, −546.50] |
+| L2 | GLR − SW-UCB | −95.38 [−111.00, −79.76] |
+| L2 | SW-UCB − UCB1 | −467.72 [−481.54, −453.90] |
+
+Todas las diferencias GLR frente a los comparadores en L1/L2 excluyen cero
+en estos IC pareados. UCB1 y SW-UCB coincidieron exactamente en reward y
+asignaciones en L0. En los regímenes de L1, reward esperado medio por ciclo
+(antes→después del cambio) fue UCB1 `2.324→2.343`, SW-UCB `2.162→2.161` y GLR
+`2.184→2.093`. En L2, UCB1 obtuvo `2.277, 2.313, 2.298, 2.204`; SW-UCB
+`2.089, 2.067, 2.075, 2.078`; GLR `2.169, 1.996, 1.995, 1.991`. El archivo
+de resultados contiene además la serie temporal agregada del regret y las
+trazas por semilla para los 2391 ciclos evaluados.
+
+**Actividad de detección y organización.** GLR produjo `0/30` alarmas en L0,
+`30/30` en L1 y `90/90` alarmas correspondientes a sus tres cambios en L2;
+no hubo alarmas estacionarias ni alarmas extra en L1/L2. Retraso medio
+condicional: `68.47` ciclos para el cambio de L1 y `65.60`, `64.87`, `66.37`
+para los tres cambios de L2 (respectivamente; cada cambio se detectó en las
+30 semillas). Son retrasos del 5.7% de un régimen L1 y ~11% de uno L2. Tras
+la alarma, la siguiente asignación cambió respecto a la anterior en `60.0%`
+de episodios L1 y `87.8%` de eventos L2. Evaluando sólo a posteriori contra el
+matching verdadero: ninguna primera decisión post-alarma fue óptima en L1,
+pero `96.7%` alcanzó una asignación óptima en algún momento dentro de los diez
+ciclos siguientes (`83.3%` exactamente al retardo 10); en L2 `21.1%` fue
+óptima inmediatamente y `88.9%` alcanzó una óptima dentro de diez ciclos
+(`75.6%` exactamente al retardo 10). Este análisis confirma
+reorganización posterior a la detección, no que el reinicio sea la causa de
+la recompensa obtenida.
+
+GLR forzó exploración en media `414.0/2391` periodos L0 (`17.3%`), `421.37`
+L1 (`17.6%`) y `429.17` L2 (`17.9%`). El regret esperado que coincidió con
+periodos forzados fue `499.70`, `506.40`, `511.56`, respectivamente. Son
+regrets observados durante esos periodos, no estimaciones contrafactuales del
+coste causal. En L0, el regret total GLR fue `506.06`, por lo que casi todo
+coincidió con la exploración forzada; el hecho de no haber falsas alarmas no
+elimina ese coste. Todas las políticas usaron tres unidades de recurso por
+ciclo evaluado, sin diferencia de capacidad.
+
+**Interpretación y decisión.** La ampliación temporal resolvió el fallo de
+activación: el detector detectó de forma reproducible las transiciones de
+este diseño, y la demora fue menor que la duración de cada régimen. No
+resolvió la cuestión organizativa a favor de GLR-CUCB: su reward esperado fue
+menor que UCB1 y SW-UCB en las dos condiciones cambiantes y menor que UCB1 en
+estacionario; además, la política de ventana rindió también por debajo de
+UCB1 en L1/L2 con esta ventana preespecificada. La detección sí precedió a
+reasignaciones y a recuperación parcial, pero la tasa de forced exploration,
+los reinicios globales y su interacción con índices/matching coinciden con
+regret alto. Sin ablación contrafactual en este protocolo, no se separa
+causalmente el coste de explorar del coste del reinicio. **Recomendación:**
+GLR-CUCB deja de ser la arquitectura candidata principal para este S3b; UCB1
++ matching queda como referencia/candidato empírico principal en las
+condiciones aquí evaluadas, no como ganador general ni con garantía heredada.
+GLR-CUCB se conserva como comparador con detección activa. Se cierra esta
+evaluación larga, no la línea S3b: no se abre otra campaña de ajuste.
+
+La compatibilidad sigue siendo la de un semi-bandit aditivo con nueve brazos
+Bernoulli y feedback de aristas seleccionadas, pero la aplicación de GLR-CUCB
+al matching es una adaptación, con prehistoria común distinta del Algorithm 2.
+No se transfieren las garantías publicadas. La hipótesis de ciclos abstractos
+no corresponde a una duración empírica; sólo cambia el horizonte matemático.
+
+Reproducción: `PYTHONPATH=.:src python experiments/run_hls_s3b_long_horizon.py`.
+Resultados compactos por escenario/semilla, series de regret, alarmas y
+decisiones: `../../results/experiments/hls_s3b_long_horizon/results.json`.
+Runner y pruebas: `../../experiments/run_hls_s3b_long_horizon.py` y
+`../../tests/test_hls_s3b_long_horizon.py`. Referencia metodológica: Zhou et
+al., *A Near-Optimal Change-Detection Based Algorithm for Piecewise-Stationary
+Combinatorial Semi-Bandits*, AAAI 2020,
+https://arxiv.org/abs/1908.10402.
+
+## 2026-10-21 — D-UCB: reproducción de cambios abruptos y adaptación S3b
+
+**Motivación y fuente primaria.** Se leyó el artículo completo de Garivier y
+Moulines, *On Upper-Confidence Bound Policies for Non-Stationary Bandit
+Problems* (https://arxiv.org/abs/0805.3415), incluidas las secciones de
+definición, análisis y simulaciones. La reproducción objetivo es el primer
+ejemplo de la sección 5, no el ejemplo de evolución periódica. El artículo fija
+K=3, T=10.000, recompensas Bernoulli independientes y medias
+`(0.5, 0.3, p3(t))`, con `p3=0.4` para `t<3000` o `t>=5000` y `p3=0.9` para
+`3000<=t<5000`. El óptimo instantáneo es el brazo 1 antes y después del
+intervalo, y el brazo 3 durante este. La sección 5 no declara semillas ni
+número de réplicas Monte Carlo.
+
+**Formulaciones y parámetros verificados.** Para D-UCB se implementaron
+`S_t(gamma,i)=sum_{s<=t} gamma^(t-s) X_s(i) 1{I_s=i}`,
+`N_t(gamma,i)=sum gamma^(t-s) 1{I_s=i}`, media `S/N`,
+`n_t(gamma)=sum_i N_t(gamma,i)` e índice
+`S/N + 2B sqrt(xi log(n_t(gamma))/N_t(gamma,i))`. Cada periodo descuenta
+también los brazos no seleccionados; el brazo no observado recibe índice
+optimista infinito hasta su inicialización. La inicialización reproduce el
+artículo: una selección forzada de cada brazo durante las primeras K rondas.
+UCB-1 y SW-UCB usan las expresiones publicadas, respectivamente
+`media + B sqrt(xi log(t)/N)` y
+`media_tau + B sqrt(xi log(min(t,tau))/N_tau)`.
+
+Los parámetros de la simulación del artículo son `xi=1/2`,
+`gamma=1-1/(4 sqrt(T))` (0.9975 en T=10.000) y
+`tau=4 sqrt(T log(T))` (1214, redondeado). Se conservaron literalmente para
+esta reproducción. Es distinto de las elecciones derivadas en las notas
+teóricas al conocer el número de cambios. Además, los teoremas del artículo
+requieren `xi>1/2`; por tanto, el valor `xi=1/2` es el ajuste empírico de su
+sección 5, no una instancia cubierta literalmente por esas cotas. Se comparó
+el trío UCB-1/D-UCB/SW-UCB con 50 semillas propias emparejadas. EXP3.S también
+aparece en la figura original, pero no existe implementación EXP3.S en el
+laboratorio y no se añadió otro algoritmo: esta es una reproducción del
+subconjunto UCB, no una reproducción de todas las curvas de la figura.
+
+**Resultado de la reproducción (media de reward esperado acumulado; regret
+dinámico esperado entre paréntesis, IC95% pareado entre semillas).** El oráculo
+instantáneo acumula 5800:
+
+| Política | Reward esperado [IC95%] | Regret esperado | Coincidencia con brazo óptimo |
+|---|---:|---:|---:|
+| UCB-1 | 5130.854 [5098.321, 5163.387] | 669.146 | 48.81% |
+| D-UCB | 5199.280 [5193.572, 5204.988] | 600.720 | 60.92% |
+| SW-UCB | 5511.908 [5492.069, 5531.747] | 288.092 | 79.61% |
+
+D-UCB ganó a UCB-1 por `+68.426` reward esperado (IC95% pareado
+`[35.750, 101.102]`); SW-UCB ganó a D-UCB por `+312.628`
+(`[292.060, 333.196]`). La selección del brazo óptimo fue, antes/durante/después
+del episodio temporal: UCB-1 `0.906/0.248/0.132`, D-UCB
+`0.551/0.062/0.529` y SW-UCB `0.828/0.070/0.726`. El regret por esos tres
+regímenes fue, respectivamente, UCB-1 `35.0/199.8/434.4`, D-UCB
+`185.8/99.0/315.9` y SW-UCB `66.2/63.3/158.6`. Esto apoya la ventaja de
+olvidar parcialmente frente al UCB estacionario y el coste de la memoria
+descontada frente a la ventana en esta reproducción. D-UCB no igualó
+cuantitativamente a SW-UCB, aunque conservó el orden cualitativo de ambos
+métodos no estacionarios por delante de UCB-1 en regret total. Como el artículo
+no aporta semillas ni tamaño de muestra, la discrepancia respecto a la frase
+“casi tan bien” no puede convertirse en una comparación numérica directa; la
+brecha observada queda registrada, no ajustada.
+
+Con un criterio más estricto de recuperación —20 elecciones óptimas
+consecutivas antes del siguiente cambio— D-UCB lo alcanzó en 50/50 semillas
+tras la mejora (retraso medio 7.9) y 49/50 tras la reversión (518.3); SW-UCB,
+50/50 y 48/50 (125.8 y 602.2); UCB-1, 42/50 y 5/50 (266.3 y 0.0 entre las
+cinco que ya estaban óptimas al inicio de la fase). Esto distingue detectar o
+visitar pronto el brazo correcto de sostener la política correcta.
+
+**Adaptación HLS 3×3 inspirada en el artículo.** Se mantuvieron T=10.000 y los
+cambios `t=3000,5000`. La matriz base fue
+`((.8,.05,.05),(.05,.8,.05),(.4,.05,.1))`; en el intervalo central únicamente
+`c[2,0]` cambia de `.4` a `.9`. La enumeración exhaustiva de las seis
+asignaciones perfectas, independiente del solver SciPy, verificó óptimos
+únicos: base `((0,0),(1,1),(2,2))`, valor 1.70; intervalo
+`((0,2),(1,1),(2,0))`, valor 1.75; después vuelve el óptimo base. Por tanto,
+la competencia localizada cambia efectivamente la organización óptima y luego
+revierte. Se usaron 30 semillas emparejadas, recompensas Bernoulli potenciales
+comunes por periodo/arista, nueve periodos de calibración común que cubren cada
+pareja tres veces y matching exacto en todas las políticas. UCB-1, D-UCB y
+SW-UCB usaron `xi=.5`; D-UCB usó `gamma=.9975` y SW-UCB `tau=1214`. Las
+políticas solo recibieron feedback de las aristas ejecutadas.
+
+| Política + matching | Reward esperado [IC95%] | Regret esperado | Reward realizado medio | Matching óptimo |
+|---|---:|---:|---:|---:|
+| UCB-1 | 16860.297 [16848.849, 16871.744] | 224.403 | 16860.333 | 91.98% |
+| D-UCB | 14999.198 [14988.182, 15010.214] | 2085.502 | 15005.867 | 65.70% |
+| SW-UCB | 16691.137 [16683.114, 16699.159] | 393.563 | 16689.500 | 88.68% |
+
+El óptimo esperado del horizonte de evaluación (9991 periodos, sin contabilizar
+la calibración común) es 17084.7. En contrastes pareados de regret, D-UCB
+acumuló `1861.098` más que UCB-1 (IC95% `[1848.731,1873.465]`) y `1691.938`
+más que SW-UCB (`[1681.114,1702.763]`). D-UCB sí eligió por primera vez el
+matching óptimo más pronto tras los cambios (promedio `3.6` y `1.3` ciclos,
+frente a UCB-1 `252.9` y `210.6`, SW-UCB `66.2` y `17.5`), pero su tasa de
+matching óptimo permaneció mucho menor en los tres regímenes: aproximadamente
+`69.4%/49.8%/69.8%`, frente a UCB-1 `97.6%/80.3%/93.3%`. La rapidez de la
+primera decisión correcta no equivale a recuperación sostenida ni a mayor
+reward. El resultado es compatible con un coste persistente de índices
+optimistas por arista dentro de una asignación múltiple; no identifica
+causalmente exploración como explicación única.
+
+Con el mismo criterio de 20 asignaciones óptimas consecutivas antes del
+siguiente cambio, D-UCB solo logró recuperarse en 3/30 y 2/30 semillas
+(retrasos medios condicionales 382.7 y 528.5); UCB-1 en 28/30 y 30/30
+(306.6 y 226.6); SW-UCB en 30/30 en ambos cambios (134.3 y 72.2). La
+desventaja de D-UCB en el escenario combinatorio no se explica por tardar en
+producir una primera coincidencia: en esta instancia se asocia con no sostener
+el matching correcto.
+
+**Traslado a los S3b históricos.** Se añadió D-UCB, sin cambiar matrices,
+horizonte, recompensas o semillas de L0/L1/L2 (H=2400, 30 semillas). Se usó
+`gamma=1-1/(4 sqrt(2400))=0.994896`, `xi=.5`; se mantuvo el discounting por
+periodo global y feedback solo de matching. En la semilla 9300 se reejecutaron
+UCB-1, SW-UCB y GLR-CUCB y el reward esperado acumulado reprodujo exactamente
+los artefactos existentes; estos conservan sus series históricas y no se
+sobrescribieron. Los comparadores publicados de ese S3b ya usaban `xi=2`, así
+que la comparación retrospectiva con D-UCB (`xi=.5`) es descriptiva y no una
+comparación de hiperparámetros igualados.
+
+| Condición | D-UCB reward esperado [IC95%] | UCB-1 previo | SW-UCB previo | GLR-CUCB previo |
+|---|---:|---:|---:|---:|
+| L0 estacionario | 4974.140 [4967.120, 4981.160] | 5628.560 | 5628.560 | 5232.340 |
+| L1 abrupto | 4950.940 [4943.238, 4958.642] | 5580.100 | 5168.420 | 5112.660 |
+| L2 recurrente | 4935.760 [4929.268, 4942.252] | 5434.340 | 4966.620 | 4871.240 |
+
+Las diferencias pareadas de D-UCB frente a UCB-1 fueron `-654.42` en L0,
+`-629.16` en L1 y `-498.58` en L2; frente a SW-UCB fueron `-654.42`, `-217.48`
+y `-30.86`; frente a GLR-CUCB fueron `-258.20`, `-161.72` y `+64.52`. En los
+escenarios históricos, por tanto, D-UCB quedó por debajo de UCB-1 y SW-UCB en
+las tres condiciones y solo superó a GLR-CUCB en L2. Esto no se puede
+atribuir exclusivamente a la dinámica del índice por la diferencia de `xi`
+indicada.
+
+**Lectura A/B/C y conclusión.** A — sistema: competencias heterogéneas
+desconocidas, recompensas Bernoulli y cambios exógenos; en la réplica original
+hay una mejora temporal y reversión. B — problema: bandit de una elección en
+la reproducción y semi-bandit combinatorio en HLS, con feedback parcial. C —
+arquitectura: estimador UCB por brazo/arista más selección individual o
+matching bipartito exacto. En el bandit original, D-UCB mejoró a UCB-1 y quedó
+por debajo de SW-UCB. Al introducir matching, D-UCB fue más rápido en la
+primera reorganización, pero perdió en reward acumulado y porcentaje de
+matching óptimo; no se trasladó la ventaja organizativa. La reversión importa
+porque exige olvidar el episodio temporal, pero también deja un tramo largo
+estacionario donde el descuento mantiene incertidumbre y exploración. La
+composición multiple-play no hereda las garantías single-play del artículo.
+No se concluye generalidad más allá de estas matrices, semillas, parámetros y
+horizontes.
+
+**Estado y trazabilidad.** Evaluación ejecutada y documentada; no se abren más
+campañas en esta tarea. Reproducción y resultados: ejecutar
+`PYTHONPATH=.:src python experiments/run_hls_s3b_discounted_ucb.py`; artefacto
+independiente `../../results/experiments/hls_s3b_discounted_ucb/results.json`.
+Implementación del estimador: `../../src/hls/nonstationary_assignment.py`;
+runner: `../../experiments/run_hls_s3b_discounted_ucb.py`; pruebas focalizadas:
+`../../tests/test_hls_s3b_discounted_ucb.py`. La formulación del entorno se
+mantiene dentro de S3b de `../../docs/architecture/HLS_UNIFIED_FRAMEWORK.md`.
+
+## 2026-10-21 — Formalización de modalidades organizativas y separación A/B/C
+
+**Tipo/estado:** aclaración del marco científico; documentación. No es una
+decisión de algoritmo, rediseño de software ni reinterpretación de resultados
+anteriores. Se apoya en el marco unificado, la ontología v0.1 y los contratos
+implementados para selección individual, asignación combinatoria y planificación.
+
+**Decisión conceptual.** La formulación de HLS distingue:
+
+- **A — Modelo del sistema:** agentes `I`, tareas `K`, competencias reales
+  `C_t`, entorno `Z_t`, demanda `D_t`, recursos, dinámica de capacidades,
+  recompensa y observación. Cada instancia declara qué es conocido, latente,
+  estático/dinámico, exógeno/endógeno y completo/parcialmente observable.
+- **B — Problema y modalidad organizativa:** decisión que debe tomarse,
+  participantes elegibles, cobertura, conjunto factible y dependencias entre
+  decisiones. B1 selecciona un agente `a_t∈I_t` para una tarea; B2 elige una
+  asignación conjunta `X_t∈𝒳(S_t,D_t)`; B3 elige acciones por periodo con
+  consecuencias optimizadas sobre un horizonte. B1–B3 no son exhaustivas.
+- **C — Arquitectura de decisión:** política o composición concreta que
+  estima información, optimiza acciones factibles y/o planifica. Estas
+  funciones son opcionales según el problema. El aprendizaje de estimaciones
+  (EXP3/LinUCB/UCB/D-UCB) no es aprendizaje de competencias (MIS-v2); matching
+  es un solver para una estructura bipartita concreta, no sinónimo de
+  organización.
+
+La notación general es `u_t∈𝒰(S_t,D_t)`, con
+`S_{t+1}=F(S_t,D_t,u_t,ξ_{t+1})` y
+`max_{π∈Π} E_π[Σ_{t=0}^{T−1}R(S_t,u_t,D_t)+R_T^{term}]` (el término terminal
+se omite si no existe). En B1, `u_t=a_t`; en B2, `u_t=X_t`; en B3 la política
+sigue decidiendo por periodo, pero valora la continuación. La notación
+histórica `X_t`/`x[i,k,t]` para asignación se conserva en sus escenarios.
+
+**Relación con S1–S4.** Estos identificadores describen regímenes del sistema
+y acoplamiento temporal, no fijan una modalidad universal: S1/S2a usan B2
+por periodo; S2b añade B3 por presupuesto compartido; S3a evalúa B2 reactivo
+con competencia observable; S4 combina acciones B2 y planificación B3 por
+competencia endógena. S3b admite como configuraciones descriptivas distintas
+la elección individual B1 y la asignación combinatoria B2. `S3b-B1` y
+`S3b-B2` son etiquetas explicativas nuevas; no cambian nombres de artefactos.
+
+**Evidencia S3b y límites.** En la reproducción bandit inspirada en
+Garivier–Moulines, regret dinámico esperado: UCB1 `669.146`, D-UCB `600.720`,
+SW-UCB `288.092`. En la instancia HLS 3×3 con matching: UCB1+matching
+`224.403`, D-UCB+matching `2085.502`, SW-UCB+matching `393.563`. Son instancias
+distintas y sus regrets no son comparables directamente. No se ha demostrado
+que matching por sí solo cause el cambio de ranking, ni se ha identificado
+una arquitectura universalmente óptima para S3b; la línea científica S3b
+permanece abierta.
+
+**Trazabilidad documental.** La formulación matemática, las modalidades y el
+mapa de escenarios se desarrollan en
+[`HLS_UNIFIED_FRAMEWORK.md`](../architecture/HLS_UNIFIED_FRAMEWORK.md); la
+ontología añade esta aclaración sin sustituir sus definiciones N×K en
+[`HLS_ONTOLOGY_V0_1_2026-10-23.md`](../architecture/HLS_ONTOLOGY_V0_1_2026-10-23.md).
+Los artefactos y cifras previas permanecen intactos. El marco general no
+prescribe modalidad ni algoritmo; cada solución se estudia y valida para
+una configuración concreta.
+
+## 2026-10-21 — Decisión PI y diseño revisado de HLS-S3b-E1
+
+**Estado:** GO para especificación; E1 especificado, aún no implementado ni
+ejecutado. Entrada cronológica nueva. Se conservan íntegramente las decisiones,
+resultados y límites históricos anteriores.
+
+**Título aprobado:** “Interacción entre aprendizaje, información y
+organización”.
+
+### Estado anterior y consolidación conceptual
+
+Antes de esta decisión, HLS ya tenía escenarios de referencia S1–S4 y una
+formulación A/B/C que separaba sistema, modalidad organizativa y arquitectura.
+El marco común usa estado real `S_t`, demanda `D_t`, decisión `u_t`, conjunto
+factible `𝒰(S_t,D_t)`, observación `Y_t^{obs}∼O(·|S_t,u_t)` y dinámica
+`S_{t+1}=F(S_t,D_t,u_t,ξ_{t+1})`. La política solo utiliza observaciones,
+historia y conocimiento/modelo declarados; no recibe el estado real ni
+diagnósticos del evaluador.
+
+Se conserva la distinción entre modalidad B1 (elección individual de una
+pareja agente-tarea), B2 (asignación conjunta) y B3 (decisiones por periodo
+optimizadas considerando consecuencias intertemporales). Pueden incorporarse
+otras modalidades si se justifican. Matching sigue siendo un optimizador
+para ciertos problemas bipartitos B2, no una propiedad definitoria de HLS.
+S1–S4 son regímenes de referencia, no una jerarquía rígida; propiedades de
+varios pueden coexistir en una configuración sin acuñar automáticamente un
+nuevo escenario. Aprender estimaciones en S3b no equivale a desarrollar
+competencias en S4.
+
+### RESULTADOS OBSERVADOS
+
+La observación que motiva E1 es:
+
+| Modalidad previa | Horizonte | UCB1 regret | SW-UCB regret |
+|---|---:|---:|---:|
+| B1, selección individual | 10,000 | 669.146 | 288.092 |
+| B2, matching 3×3 | 10,000 | 224.403 | 393.563 |
+
+Estos regrets proceden de instancias distintas. No demuestran que matching
+favorezca intrínsecamente UCB1 o perjudique SW-UCB. Los posibles efectos de
+restricciones, número/distribución de observaciones, exposición por agente y
+pareja, dinámica/magnitud de cambio, márgenes de decisión y parámetros de
+memoria/exploración son explicaciones por comprobar, no resultados. Las
+campañas anteriores de D-UCB y GLR-CUCB se conservan como antecedentes, pero
+no entran en el conjunto inicial de E1.
+
+### DECISIONES DEL PI
+
+El PI decide **GO** y establece prioridades: (1) S3b, aprendizaje, adaptación
+y organización; (2) S4, desarrollo endógeno; (3) S2b, planificación con
+recursos intertemporales. S1, S2a y S3a permanecen como referencias. No se
+autoriza desarrollar nuevas políticas HLS, ampliar escenarios sin necesidad,
+repetir campañas S4 sobre ventajas ya demostradas ni refactorizar el
+laboratorio de forma general. La consolidación del laboratorio será
+incremental durante la investigación de S3b.
+
+**Preguntas de decisión registradas para resolución del PI** (el repositorio
+no conserva un intercambio separado con su formulación literal): (i) ¿se
+prioriza S3b aunque los regrets absolutos de B1 y B2 no sean comparables? Sí:
+UCB1–SW-UCB se contrastan dentro de cada modalidad y se incluyen controles
+específicos. (ii) ¿se conserva S4 como prioridad o se repiten sus
+demostraciones constructivas? Se conserva como segunda línea, sin repetir
+ventajas ya demostradas. (iii) ¿se añaden inmediatamente nuevas políticas o
+escenarios? No; se reutiliza el laboratorio y la consolidación es incremental.
+
+### Consulta externa y aportaciones adoptadas
+
+El CE recibió una evaluación externa del diseño de S3b-E1. Su artefacto o
+referencia independiente no se encuentra en el repositorio; se registra como
+insumo recibido, no como literatura verificada. Se retienen tres advertencias
+metodológicas: B2-Full (bandit sobre matchings completos) cambiaría también
+los estimadores y no es un control de la modalidad bajo UCB1/SW-UCB; escalar
+la ventana como `W/M` no está justificado por el número total de feedbacks
+por periodo, pues éstos no se distribuyen uniformemente entre parejas; y
+correlaciones entre métricas no demuestran causalidad.
+
+### HIPÓTESIS (no confirmadas)
+
+- **H1:** cantidad/distribución del feedback explica parte del cambio de
+  ranking UCB1–SW-UCB.
+- **H2:** SW-UCB descarta observaciones aún útiles durante regímenes
+  estacionarios.
+- **H3:** fluctuaciones de índices inducen cambios de matching que generan
+  regret.
+- **H4:** ventana y exploración explican una parte principal de las diferencias.
+- **H5:** los márgenes entre matchings cambian la pérdida colectiva causada
+  por errores de estimación similares.
+
+Ninguna hipótesis se considerará confirmada por una correlación aislada o por
+una comparación agregada entre instancias.
+
+### DECISIONES DE DISEÑO DEL CE — especificación E1.1
+
+**Pregunta y alcance.** “¿Por qué cambia el rendimiento relativo de UCB1 y
+SW-UCB entre selección individual y asignación combinatoria?” E1 estudia
+aprendizaje de recompensas desconocidas bajo cambios exógenos; no desarrolla
+competencias por experiencia, transferencia, enseñanza ni planificación.
+
+**Sistema común predeclarado.** Tres agentes, tres tareas, demanda de una
+unidad de cada tarea por periodo, recompensas Bernoulli independientes
+condicionadas a medias `C[i,k,t]`. Se reutiliza la matriz de la adaptación
+HLS 3×3 anterior:
+
+```text
+C_base      = ((0.80, 0.05, 0.05),
+               (0.05, 0.80, 0.05),
+               (0.40, 0.05, 0.10))
+C_transient = C_base con C[2,0] = 0.90
+```
+
+Los índices de agente/tarea de esta matriz son base cero.
+
+Horizonte `T=10,000`: base para `t<3,000`; transitoria para
+`3,000≤t<5,000`; después vuelve a base. La enumeración bipartita previa
+verificó matching óptimo único: base `((0,0),(1,1),(2,2))`, valor `1.70`;
+transitorio `((0,2),(1,1),(2,0))`, valor `1.75`; luego se revierte. El
+oráculo B1 elige la pareja de mayor media: valor `0.80` en base y `0.90` en
+la fase transitoria. Es una construcción sintética y no representa una
+duración industrial observada.
+
+Se usarán 30 semillas emparejadas `8200,…,8229`, reutilizando los
+identificadores de la adaptación HLS previa. Para cada semilla, generar una
+matriz de uniformes potenciales con el stream `random.Random(seed XOR
+0xD0C0A7)`, en orden `(periodo, agente, tarea)`, la misma semilla XOR y orden
+de generación usados por esa adaptación HLS, y convertirla a Bernoulli con
+la media real de esa pareja y periodo. Así las políticas comparten el mismo
+resultado potencial para cada arista, aunque solo reciben el feedback
+permitido. Los medios verdaderos, cambios futuros, outcomes no seleccionados
+y oráculos quedan en el evaluador.
+
+**Inicialización común de 9 periodos.** `t=0,…,8` son calibración forzada,
+sin decisiones de política, pero sus recompensas y regrets se incluyen en el
+total y también se reportan separadamente del tramo `t≥9`.
+
+- B1 selecciona cada una de las nueve parejas una vez, en orden
+  lexicográfico `(agente,tarea)`, y observa su recompensa.
+- B2 repite tres veces el ciclo de matchings por permutaciones
+  `((0,1,2),(1,2,0),(2,0,1))`. B2-Semi observa las tres recompensas de cada
+  matching: 27 observaciones iniciales, tres por pareja.
+- En B2-Partial se ejecutan exactamente los mismos matchings, pero se revela
+  solo una pareja ejecutada. En la repetición `r∈{0,1,2}` del ciclo se
+  selecciona la arista lexicográficamente ordenada de rango `r`; cada pareja
+  se observa una vez en los nueve periodos.
+
+Por tanto B1 y B2-Partial inician con una observación por pareja; B2-Semi
+inicia con tres. La diferencia de información de B2-Semi es intencional y se
+medirá, no se presentará como igualdad de feedback.
+
+**Modalidades y control de información.** B1 E1 elige una pareja de las nueve
+por periodo; no aplica matching. El resultado B1 que motiva E1 procede de la
+reproducción de un bandit de tres brazos; la configuración E1 B1 tiene nueve
+parejas candidato y no es un replay exacto de ese benchmark. B2 ejecuta
+siempre un matching completo de
+tres agentes y tres tareas. En B2-Semi el estimador recibe los tres
+resultados individuales. En B2-Partial recibe una sola recompensa individual
+después de ejecutar el matching completo; la arista se elige mediante un
+índice uniforme pre-generado `q(seed,t)∈{0,1,2}` sobre las tres aristas
+ejecutadas ordenadas lexicográficamente; generar rangos con
+`random.Random(seed XOR 0xB2F33D)` en orden temporal, separado del stream de
+recompensas y compartido entre políticas UCB1/SW-UCB. El score colectivo de
+B2 siempre incluye las tres
+tareas; **no** se entrega recompensa agregada al learner. El control modifica
+solo feedback observable, no el conjunto factible, trabajo ejecutado ni
+evaluación de rendimiento.
+
+**Políticas reutilizadas.** Usar `PairwiseBanditEstimator` de
+`src/hls/nonstationary_assignment.py`; no cambiar ecuaciones ni matching.
+UCB1: `index=μ_all+sqrt(2 log(max(2,t+1))/n_all)`. SW-UCB:
+`index=μ_W+sqrt(ξ log(max(2,min(t+1,W))/n_W))`, `ξ=2`, que iguala la escala
+de confianza implementada por UCB1. SW conserva periodos globales y usa
+observaciones `s` con `max(0,t−W)≤s<t`; una pareja sin observaciones válidas
+recibe el sentinel optimista existente. Cada actualización usa únicamente
+parejas seleccionadas y feedback entregado. B1 maximiza índice de pareja y
+resuelve empates por menor par lexicográfico. B2 maximiza la matriz de
+índices mediante el solver bipartito existente; si hay score total empatado
+en tolerancia absoluta `1e-12`, se elige el matching lexicográficamente
+menor entre los óptimos (enumerar las seis permutaciones 3×3 solo para
+resolver empates y comprobar que el solver alcanza el mismo valor). Este
+desempate determinista debe tener prueba focalizada; no cambia el índice ni
+la función objetivo.
+
+Para `T=10,000`, la ventana de referencia de la simulación bibliográfica es
+`W_ref=round(4 sqrt(T log T))=1,214`. Se añade solo una ventana más larga,
+`W_long=min(T,2W_ref)=2,428`, como sensibilidad predeclarada; no se ajusta
+con semillas de evaluación. No se usa `W/M`: múltiples observaciones por
+periodo no equivalen a esa cantidad para cada pareja.
+
+Para separar adaptación inmediata de rendimiento de régimen, reportar los
+regímenes completos `[0,3000)`, `[3000,5000)` y `[5000,10000)`, más ventanas
+post-cambio predefinidas `[3000,3200)` y `[5000,5200)`. Las ventanas de 200
+ciclos son diagnósticos descriptivos comunes a políticas, no costes ni un
+parámetro de decisión.
+
+**Comparaciones.** (i) UCB1 vs SW-UCB dentro de B1; (ii) UCB1 vs SW-UCB
+dentro de B2-Semi y B2-Partial; (iii) B2-Semi vs B2-Partial para cada
+estimador; (iv) SW-UCB con `W_ref` vs `W_long` en B2-Semi. No incluir D-UCB,
+GLR-CUCB ni bandit sobre matchings completos en la primera E1.
+
+El contraste B2-Semi vs B2-Partial es una intervención de protocolo de
+información con acción factible y reward colectivo B2 constantes; su
+estimando es la diferencia cerrada de política/feedback. Tras el inicio,
+decisiones e historiales divergen, por lo que no separa un efecto informativo
+de cada periodo del efecto mediado por asignaciones y exposición posteriores.
+El contraste de ventanas cambia memoria dentro de SW-UCB, pero no identifica
+por sí solo el efecto de cada término de exploración. Por ello H4 solo puede
+evaluarse parcialmente en E1; variar coeficientes requeriría una decisión
+posterior y no forma parte del diseño aprobado. B1-vs-B2 tampoco identifica
+causalmente un efecto puro de matching, pues cambian acción y número de
+trabajos/rewards por periodo.
+
+**Oráculos y métricas.** Regret B1 por periodo es
+`max_{i,k}C[i,k,t]−C[i*,k*,t]`; regret B2 es el valor de matching óptimo
+con medias reales menos valor esperado de las aristas asignadas. No comparar
+regrets absolutos entre modalidades. Reportar recompensa esperada y
+Bernoulli realizada, regret acumulado y por régimen/transición, diferencias
+pareadas UCB1–SW-UCB y B2-Semi–Partial con IC 95% pareado Student-t sobre
+30 semillas, asignaciones/agentes/parejas por periodo, conteos/antigüedad
+de observaciones por pareja, conteos dentro de ventana, error cuadrático de
+estimación (solo diagnóstico del evaluador), índices UCB, tasa de matching
+óptimo, frecuencia de cambios, margen real entre mejor y segundo matching,
+retraso desde cada breakpoint hasta el primer bloque de 20 decisiones
+consecutivas óptimas (en B1, cualquier pareja empatada en media máxima; si
+no aparece antes del siguiente cambio/final, se registra como censurado),
+restricciones activas y coste computacional descriptivo. No existe coste de
+conmutación en este modelo; cambios de matching no se etiquetan como tal.
+
+### TRABAJO PENDIENTE Y PRÓXIMOS PASOS AUTORIZADOS
+
+- **E1.1 Especificación:** registrada en esta entrada.
+- **E1.2 Adaptaciones mínimas:** pendientes; solo runner/adaptador de
+  selección B1 y feedback parcial si las interfaces existentes no bastan.
+- **E1.3 Pruebas de consistencia/reproducibilidad:** pendientes; validar
+  información visible, calibración, common random numbers, update solo de
+  feedback recibido, matching y cálculo de oráculos/métricas.
+- **E1.4 Comparaciones principales:** pendientes.
+- **E1.5 Controles de feedback y memoria:** pendientes.
+- **E1.6 Análisis de H1–H5:** pendiente y sujeto a límites de identificación.
+- **E1.7 Recomendación de siguiente experimento:** pendiente hasta analizar
+  E1.
+
+El siguiente trabajo autorizado se limita a la implementación mínima de
+E1.2 y las verificaciones previas, bajo una instrucción posterior. E1 no se ha
+ejecutado y esta entrada no autoriza su inicio.
+
+## 2026-10-21 — HLS-S3b-E1 ejecutado: aprendizaje, información y organización
+
+**Estado:** E1 ejecutado y analizado en las configuraciones predeclaradas.
+Esta entrada actualiza el estado de trabajo, no reemplaza la especificación
+E1.1 ni reinterpreta los experimentos históricos.
+
+### Implementación y protocolo efectivo
+
+Se creó `experiments/run_hls_s3b_e1.py` y la prueba focalizada
+`tests/test_hls_s3b_e1.py`. Se reutilizaron
+`PairwiseBanditEstimator` y `HungarianAssignmentOptimizerNK` (SciPy/Jonker–Volgenant).
+Para evitar escanear todo el historial en cada decisión se añadieron sumas
+prefijas por pareja en `src/hls/nonstationary_assignment.py`; la ventana,
+medias, índices y feedback siguen siendo exactamente los definidos por E1.1.
+Las pruebas comparan los resultados de esta optimización computacional con
+un escaneo directo del historial.
+
+Se ejecutaron `N=K=3`, `T=10,000`, 30 semillas emparejadas `8200–8229`, con 9
+periodos de calibración incluidos en totales y 9,991 decisiones de evaluación.
+Se conservaron matrices, cambios en `t=3000,5000`, recompensas Bernoulli
+potenciales comunes, demanda, restricciones, stream de selección de feedback
+parcial y ventanas `W_ref=1214`, `W_long=2428` de E1.1. UCB1 usó el índice
+predeclarado `mean + sqrt(2 log(max(2,t+1))/n)`; SW-UCB usó `xi=2` y los
+periodos globales de su ventana. B2 ejecutó matching completo en Semi y
+Partial; Partial evaluó siempre las tres recompensas pero solo reveló una
+observación individual al estimador. Las políticas no recibieron competencias,
+medias verdaderas, cambios futuros ni resultados contrafactuales.
+
+Las siete configuraciones fueron B1/UCB1, B1/SW-UCB-Wref;
+B2-Semi/UCB1, SW-UCB-Wref y SW-UCB-Wlong; B2-Partial/UCB1 y SW-UCB-Wref.
+Para cada seed se guardaron las series por periodo de reward esperado y
+realizado, regret, acción, máscara de observaciones y éxitos, además de
+muestras diagnósticas de medias, índices, bonus, conteos y antigüedad. Los
+oráculos se verificaron contra enumeración de los seis matchings. Los márgenes
+exactos mejor–segundo matching son `0.45` en la matriz base y `0.05` durante
+el régimen transitorio.
+
+### Resultados agregados
+
+La tabla muestra media entre semillas e IC 95% Student-t del valor medio.
+El regret se calcula respecto al oráculo de la modalidad correspondiente;
+los regrets B1 y B2 no son comparables entre sí.
+
+| Configuración | Reward esperado acumulado (IC 95%) | Regret esperado acumulado (IC 95%) | Decisión óptima | Cambios de acción |
+|---|---:|---:|---:|---:|
+| B1 / UCB1 | 7,827.977 [7,819.699; 7,836.255] | 372.023 [363.745; 380.301] | 0.539 | 961 |
+| B1 / SW-UCB Wref | 7,328.523 [7,321.866; 7,335.181] | 871.477 [864.819; 878.134] | 0.466 | 2,185 |
+| B2-Semi / UCB1 | 16,686.640 [16,673.613; 16,699.667] | 413.360 [400.333; 426.387] | 0.918 | 745 |
+| B2-Semi / SW-UCB Wref | 16,052.560 [16,043.492; 16,061.628] | 1,047.440 [1,038.372; 1,056.508] | 0.791 | 1,809 |
+| B2-Semi / SW-UCB Wlong | 16,377.040 [16,368.985; 16,385.095] | 722.960 [714.905; 731.015] | 0.835 | 1,229 |
+| B2-Partial / UCB1 | 16,351.408 [16,334.540; 16,368.276] | 748.592 [731.724; 765.460] | 0.853 | 1,024 |
+| B2-Partial / SW-UCB Wref | 14,986.465 [14,965.711; 15,007.219] | 2,113.535 [2,092.781; 2,134.289] | 0.653 | 2,336 |
+
+Las diferencias pareadas de regret (primera configuración menos segunda)
+fueron: SW-UCB menos UCB1 `+499.453` en B1, IC `[489.227,509.680]`;
+`+634.080` en B2-Semi, IC `[621.808,646.352]`; y `+1,364.943` en
+B2-Partial, IC `[1,338.838,1,391.048]`. El efecto de Wlong frente a Wref
+en B2-Semi fue `−324.480` de regret, IC `[-333.826,-315.134]`.
+B2-Semi frente a B2-Partial redujo regret en `335.232` para UCB1
+(IC `[-349.492,-320.972]`, contraste Semi−Partial) y en `1,066.095`
+para SW-UCB (IC `[-1,089.358,-1,042.832]`). Estas son diferencias de
+protocolos cerrados; después de la intervención cambian las asignaciones,
+exposiciones e historiales, así que no identifican un efecto informativo
+instantáneo separado de sus mediadores.
+
+En los tres tramos, SW-UCB Wref acumuló más regret que UCB1. Diferencia
+SW−UCB por tramos (IC 95% pareado):
+
+| Modalidad | Base previa | Transitorio | Base posterior |
+|---|---:|---:|---:|
+| B1 | +144.47 [141.45;147.48] | +145.63 [134.07;157.18] | +209.36 [197.14;221.57] |
+| B2-Semi | +175.78 [171.36;180.21] | +123.28 [120.02;126.55] | +335.01 [323.06;346.97] |
+| B2-Partial | +304.73 [295.60;313.86] | +220.25 [213.34;227.15] | +839.97 [818.64;861.30] |
+
+Sin embargo, en las ventanas post-cambio predefinidas, SW-UCB tuvo menor
+regret que UCB1 en B1: `10.58` frente a `16.75` en `[3000,3200)` y `29.84`
+frente a `80.17` en `[5000,5200)`. En B2-Semi las cifras fueron `10.12`
+frente a `8.76` y `36.81` frente a `63.52`. Recuperación media a 20 decisiones
+óptimas consecutivas en B2-Semi: SW-UCB `63.5` y `121.8` periodos tras los
+dos cambios, frente a UCB1 `125.3` y `169.8`. Es adaptación local más rápida,
+no mayor rendimiento acumulado.
+
+El total de feedback fue 10,000 observaciones por trayectoria en B1 y
+B2-Partial, y 30,000 en B2-Semi. En B2-Semi, por ejemplo, UCB1 concentró
+feedback en las aristas de los matchings dominantes (promedios por seed:
+`(0,0)=7441`, `(1,1)=9854`, `(2,2)=7388`; las aristas cambiantes `(0,2)` y
+`(2,0)` recibieron aproximadamente 2,485 y 2,540). El flujo completo por
+pareja y periodo se conserva en las trazas. El diagnóstico de bonus mide la
+frecuencia muestreada en que el matching/pareja elegida por índices difiere
+de la elección por medias actuales: 0.240 para B2-Semi UCB1, 0.264 para
+SW-UCB Wref y 0.294 para Wlong. Esta discrepancia mide influencia del bonus,
+no exploración óptima ni regret causal. SW-UCB también mostró menor MSE de
+estimación en las muestras diagnósticas que UCB1, pese a su peor reward; por
+tanto, exactitud de estimación y calidad de decisión no son equivalentes.
+
+El tiempo medio de cálculo por seed fue aproximadamente `0.21–0.25 s` en B1
+y `0.68–0.76 s` en B2 en este equipo; dato descriptivo, no evidencia de
+escalabilidad. La campaña tardó `141.3 s` en total.
+
+### Evaluación de H1–H5
+
+- **H1, cantidad/distribución de feedback — apoyada como efecto del protocolo,
+  no como mecanismo causal aislado.** Semi superó a Partial para ambos
+  estimadores, con diferencias pareadas estrechas; Semi entrega tres veces
+  más observaciones globales. La selección de aristas y los historiales
+  posteriores divergen, por lo que no se atribuye toda la diferencia a una
+  sola observación adicional por periodo.
+- **H2, descarte de observaciones útiles — parcialmente apoyada.** En las
+  fases base SW-UCB Wref rindió peor que el historial completo; Wlong redujo
+  regret frente a Wref en los tres regímenes B2-Semi (diferencias de regret
+  long−ref: `−95.29`, `−55.68`, `−173.51`; IC pareados excluyen cero).
+  Pero ventana y término temporal de confianza cambian conjuntamente, y la
+  MSE de SW fue menor; no se identifica un efecto puro de memoria.
+- **H3, oscilaciones de índices y cambios subóptimos — compatible, no
+  demostrado causalmente.** SW-UCB hizo muchos más cambios de acción y tuvo
+  peor rendimiento acumulado; los cambios no tienen coste explícito en el
+  reward. Tras los breakpoints, SW recuperó antes en varias comparaciones.
+  La actividad de cambio explica descriptivamente volatilidad, no demuestra
+  que cada cambio cause regret.
+- **H4, sensibilidad a memoria/exploración — apoyada parcialmente para
+  memoria.** La ventana larga mejora claramente frente a Wref, pero sigue
+  por debajo de UCB1 en reward total. La influencia observada del bonus
+  permite diagnosticar decisiones alteradas; no se variaron coeficientes,
+  así que el papel cuantitativo de la exploración sigue sin identificar.
+- **H5, márgenes entre matchings — no resuelta.** El margen cambia de `0.45`
+  a `0.05`, pero solo hay dos matrices enlazadas por el mismo cambio de una
+  arista. No se manipuló el margen manteniendo constantes los demás factores.
+  El regret depende también de qué matching subóptimo se elige, no solo del
+  gap al segundo mejor.
+
+### Interpretación, límites y decisión siguiente
+
+En el sistema común E1, UCB1 superó a SW-UCB en las tres modalidades; la
+ventana larga mejoró SW-UCB, pero no cambió el ganador. Por tanto, la ventaja
+SW-UCB del antecedente B1 de tres brazos no se reproduce en B1-E1, que tiene
+nueve parejas candidatas. E1 no reproduce aquel bandit: cambian brazos,
+instancia, calibración y protocolo. Tampoco identifica por qué surgió la
+clasificación histórica. La ventaja acumulada de UCB1 en E1 no demuestra
+superioridad general; el SW-UCB más corto mostró recuperación local más
+rápida tras varios cambios. Los regrets absolutos B1/B2 no se comparan.
+
+La especificación E1.1 se respetó. La elección de `PairwiseBanditEstimator`
+implica la escala UCB1/SW-UCB predeclarada `xi=2`; es una composición HLS de
+índices por pareja con matching y no hereda automáticamente garantías
+single-play publicadas. El B1 de nueve parejas tampoco es reproducción exacta
+del antecedente B1 de tres brazos. No hubo fuga de medias reales ni feedback
+contrafactual. La evidencia es sintética y específica de estas matrices,
+semillas, horizonte y reglas de calibración. Los intervalos cuantifican
+variación entre 30 semillas, no incertidumbre sobre el modelo ni validez
+externa.
+
+**Recomendación concreta:** no ampliar la campaña ni ajustar ventanas ahora.
+Antes de otra evaluación, decidir si se necesita una reconciliación acotada
+del antecedente B1 de tres brazos con el B1-E1 de nueve parejas, verificando
+sus diferencias exactas de brazos, inicialización y coeficientes. Hasta esa
+decisión, la causa del cambio de ranking entre estudios queda **no resuelta**.
+
+### Artefactos y verificaciones
+
+- `experiments/run_hls_s3b_e1.py` — runner reproducible.
+- `src/hls/nonstationary_assignment.py` — aceleración exacta por sumas
+  prefijas, sin cambio de las ecuaciones del estimador.
+- `tests/test_hls_s3b_e1.py` — oráculos, calibración, ecuaciones, información,
+  consistencia reward/regret y reproducibilidad.
+- Resultados compactos: `results/experiments/hls_s3b_e1/results.json` y
+  `results/experiments/hls_s3b_e1/period_traces.jsonl.gz` (30 semillas ×
+  10,000 periodos × 7 configuraciones).
+- Pruebas focalizadas: `PYTHONPATH=src:. pytest -q tests/test_hls_s3b_e1.py
+  tests/test_hls_s3b_nonstationary_assignment.py
+  tests/test_hls_s3b_discounted_ucb.py` — **18 passed**. La campaña completa
+  finalizó para las 30 semillas. La reproducción determinista se comprobó
+  repitiendo una semilla en prueba; los streams de potenciales y de selección
+  parcial son independientes y emparejados como especifica E1.1.
+- Hitos E1.2–E1.6: completados para el alcance anterior. E1.7: la causa
+  histórica sigue pendiente; no se autorizan otras campañas por esta entrada.
+
+## Reconciliación S3b: B1 histórico de tres brazos frente a B1-E1 — 21/10/2026
+
+**Objetivo.** Contrastar los artefactos existentes del antecedente de selección
+individual y de B1-E1, sin ejecutar experimentos ni alterar algoritmos o
+resultados. Fuentes inspeccionadas: `experiments/run_hls_s3b_discounted_ucb.py`,
+`experiments/run_hls_s3b_e1.py`,
+`src/hls/nonstationary_assignment.py`,
+`results/experiments/hls_s3b_discounted_ucb/results.json` y
+`results/experiments/hls_s3b_e1/results.json`.
+
+### Hechos comprobados
+
+| Dimensión | B1 histórico (reproducción de tres brazos) | B1-E1 (selección de una pareja) |
+|---|---|---|
+| Espacio de acciones | 3 brazos abstractos; se elige exactamente uno. No son parejas de un sistema 3×3. | 9 parejas agente–tarea de una matriz 3×3; se elige exactamente una. Sigue siendo selección individual, no matching. |
+| Medias Bernoulli | `(0.5, 0.3, 0.4)` antes y después, salvo el brazo 3 que sube a `0.9` durante `[3000,5000)`. | Matriz base `((.8,.05,.05),(.05,.8,.05),(.4,.05,.1))`; durante `[3000,5000)`, `(2,0)` cambia de `.4` a `.9`. |
+| Cambio y relevancia | Un brazo pasa de estar `.1` por debajo del mejor estable (`.5`) a ser el mejor (`.9`), y luego revierte. | La mejor pareja pasa de `(0,0)` con `.8` a `(2,0)` con `.9`, y revierte. El espacio de selección y los gaps entre alternativas son diferentes. |
+| Horizonte y semillas | 10 000 periodos; 50 semillas `8100–8149`. | 10 000 periodos; 30 semillas `8200–8229`. |
+| Inicialización | Primeros 3 periodos fuerzan una observación por brazo; esos periodos cuentan en reward y regret. Después hay una observación por periodo. | Primeros 9 periodos fuerzan una observación por cada pareja; cuentan en reward y regret. Después hay una observación por periodo en B1. |
+| Índice UCB | `media + B·sqrt(xi·log(t)/n)`, con `B=1`, `xi=.5` (equivale a bonus `sqrt(.5 log(t)/n)`, salvo el suelo numérico `t≥2`). | `media + sqrt(2·log(max(2,t+1))/n)` mediante `PairwiseBanditEstimator`; el bonus es dos veces el histórico para el mismo `t,n`. |
+| Índice SW-UCB | Misma escala histórica `xi=.5`; usa observaciones dentro de ventana temporal global y término `log(max(2,min(t,W)))`. | `PairwiseBanditEstimator`, ventana en periodos globales, `xi=2`; mismo ancho de ventana de referencia, `W=1214`, pero término de confianza de mayor amplitud. |
+| Oráculo y regret | Oráculo dinámico elige el brazo con mayor media en cada periodo; pseudo-regret suma `max_i μ_i(t) − μ_{seleccionado}(t)`. | Oráculo B1 elige la pareja de mayor media en cada periodo; pseudo-regret usa la misma forma, pero sobre otro conjunto y otras medias. |
+| Feedback y aleatoriedad | Feedback Bernoulli solo del brazo elegido. Potenciales comunes entre políticas por semilla, generados con `random.Random(seed)` en orden periodo–brazo. | Feedback Bernoulli solo de la pareja elegida. Potenciales comunes entre configuraciones por semilla, con `random.Random(seed XOR 0xD0C0A7)` en orden periodo–agente–tarea. Semillas y streams no coinciden con el antecedente. |
+| Resultado relevante | UCB1 regret `669.146`; SW-UCB regret `288.092`; SW supera a UCB1 en esta instancia. | UCB1 reward `7827.977`, regret `372.023`; SW-UCB-Wref reward `7328.523`, regret `871.477`; UCB1 supera a SW en B1-E1. |
+
+Ambos artefactos usan recompensas Bernoulli y pseudo-regret esperado respecto
+al oráculo de su propio problema. El antecedente empleó `xi=.5` para UCB1 y
+SW-UCB. B1-E1 predeclaró `xi=2` para ambos índices de confianza; no fue una
+modificación posterior a observar resultados. El ancho de ventana de
+referencia coincide (`1214`), pero no coincide la confianza que acompaña a la
+ventana. B1-E1 además comparó una ventana larga (`2428`), sin equivalente en
+el B1 histórico. Los flujos comunes emparejan políticas dentro de cada
+estudio, pero no emparejan episodios entre estudios.
+
+### Qué permiten concluir los artefactos
+
+- **Hecho observado:** en el protocolo histórico de tres brazos SW-UCB tuvo
+  menos pseudo-regret que UCB1; en el nuevo protocolo de selección individual
+  de nueve parejas ocurrió la clasificación inversa. B1-E1 no es reproducción
+  del B1 histórico.
+- **Hecho observado:** la inversión ya aparece al comparar dos experimentos
+  que son ambos selección individual. Por tanto, no puede atribuirse a un
+  contraste B1 frente a B2/matching basándose en estos dos resultados.
+- **Interpretación compatible, no causalmente aislada:** el número y
+  distribución de candidatos, las medias/gaps, el número de rondas de
+  inicialización y, especialmente, el doble de amplitud del bonus en E1
+  pueden cambiar la trayectoria de selección y el ranking de UCB1/SW-UCB.
+  Que `W=1214` coincida no elimina la diferencia en el índice SW.
+- **No concluible:** los artefactos no identifican cuál diferencia produjo
+  la inversión, ni permiten afirmar que la modalidad organizativa cause el
+  cambio. Tampoco permiten comparar directamente los regrets absolutos,
+  pues los oráculos, medias y escalas de oportunidad son propios de cada
+  instancia. La comparación UCB1–SW dentro de cada artefacto sí corresponde
+  a sus respectivas semillas y protocolo, pero no es un contraste pareado
+  entre estudios.
+
+### Una comparación puente propuesta (no ejecutada)
+
+Si el PI considera necesario identificar una causa concreta, la comparación
+mínima recomendada es un **cruce de escala de confianza en el B1 histórico de
+tres brazos**: conservar exactamente sus medias, cambios, horizonte,
+inicialización de tres pulls, potenciales Bernoulli y semillas; evaluar UCB1
+y SW-UCB con la escala histórica `xi=.5` y con la escala E1 `xi=2`, usando
+los mismos flujos potenciales en las cuatro celdas. Esto aísla si el cambio de
+escala, por sí solo, puede cambiar la clasificación en el benchmark histórico.
+No resolvería por sí solo los efectos del conjunto de nueve parejas ni
+explicaría toda la diferencia entre instancias; si el ranking no cambia,
+esas diferencias estructurales y de calibración seguirían abiertas. No se
+autoriza ni ejecuta esta comparación en esta entrada.
+
+**Estado:** reconciliación documental completada; causa de la inversión
+histórica **no identificada**. No se modificaron algoritmos, resultados ni
+protocolos, y no se ejecutaron nuevas campañas.
+
+## S3b — Control factorial del coeficiente de exploración en B1 — 21/10/2026
+
+**Autorización:** GO para el control focalizado de `xi`. **Pregunta:** ¿cambiar
+`xi` de `0.5` a `2` cambia la clasificación UCB1/SW-UCB dentro de la instancia
+histórica de tres brazos? La reconciliación previa documentó que B1-E1 tiene
+nueve parejas y otros parámetros; aquí se mantuvo exclusivamente el B1
+histórico.
+
+### Diseño y verificaciones
+
+- Instancia: medias Bernoulli `(0.5,0.3,0.4)`; brazo 3 cambia a `0.9` en
+  periodos `[3000,5000)` y vuelve a `0.4`; horizonte 10 000; `W=1214`.
+- Cuatro celdas: UCB1 y SW-UCB, cada uno con `xi∈{0.5,2}`. El peso de
+  recompensa es `B=1`. En cada semilla, las cuatro celdas usan exactamente
+  los mismos potenciales Bernoulli, generados con `random.Random(seed)` en
+  orden periodo–brazo; se conservaron las 50 semillas históricas `8100–8149`.
+- Inicialización intacta: periodos 0, 1 y 2 fuerzan un pull de los brazos
+  0, 1 y 2 respectivamente; esos periodos cuentan en reward y regret. No
+  hubo ajuste de ventana, cambio de recompensas ni modificación de la regla
+  de actualización.
+- Índices con tiempo global `t` y observaciones `n`: UCB1 usa
+  `mean+B·sqrt(xi·log(max(2,t+1))/n)`; SW-UCB sustituye la media por la media
+  de las observaciones en la ventana global y usa
+  `B·sqrt(xi·log(max(2,min(t+1,W)))/n)`. La amplitud del bonus escala como
+  `sqrt(xi)`: cambiar `xi=.5` por `xi=2` duplica el bonus para iguales `t,n`.
+  Se comprobó numéricamente esa razón `2.0`.
+- La celda `xi=.5` reprodujo **por semilla** las recompensas y regrets
+  esperados UCB1 y SW-UCB del artefacto histórico. Es una comprobación de
+  consistencia del runner y de las realizaciones, no una nueva validación de
+  las garantías teóricas publicadas. La parametrización `xi=.5` se conserva
+  como la de la simulación del artículo; la prueba `xi=2` es un control de
+  sensibilidad y no se presenta como reproducción publicada.
+- Comando reproducible: `PYTHONPATH=src:. python
+  experiments/run_hls_s3b_b1_xi_control.py`. Verificación focalizada:
+  `PYTHONPATH=src:. pytest -q tests/test_hls_s3b_discounted_ucb.py` — **5
+  passed**. Salida independiente:
+  `results/experiments/hls_s3b_b1_xi_control/results.json`.
+
+### Resultados
+
+Reward esperado y pseudo-regret son complementarios: el oráculo acumula
+`5800` de reward esperado en esta instancia. Los IC son t-intervalos pareados
+entre semillas para las diferencias y 95% CI entre semillas para las celdas.
+
+| Configuración | Reward esperado | Reward Bernoulli realizado | Pseudo-regret esperado | Fracción de decisiones óptimas |
+|---|---:|---:|---:|---:|
+| UCB1, `xi=.5` | 5130.854 | 5141.14 | 669.146 | 0.4881 |
+| SW-UCB, `xi=.5` | 5511.908 | 5507.48 | 288.092 | 0.7961 |
+| UCB1, `xi=2` | 5204.776 | 5214.02 | 595.224 | 0.4464 |
+| SW-UCB, `xi=2` | 5369.266 | 5367.16 | 430.734 | 0.6938 |
+
+Contrastes pareados positivos de reward (`SW − UCB`) equivalen a contrastes
+negativos de regret:
+
+| Contraste | Diferencia en reward esperado (IC 95%) | Diferencia en regret (IC 95%) |
+|---|---:|---:|
+| SW-UCB − UCB1, `xi=.5` | `+381.054` (`[342.807,419.301]`) | `−381.054` (`[−419.301,−342.807]`) |
+| SW-UCB − UCB1, `xi=2` | `+164.490` (`[153.016,175.964]`) | `−164.490` (`[−175.964,−153.016]`) |
+| UCB1, `xi=2 − .5` | `+73.922` (`[45.042,102.802]`) | `−73.922` (`[−102.802,−45.042]`) |
+| SW-UCB, `xi=2 − .5` | `−142.642` (`[−161.615,−123.669]`) | `+142.642` (`[123.669,161.615]`) |
+
+La atenuación de la ventaja SW-UCB al subir `xi` fue `216.564` puntos de
+reward (`IC 95% [181.427,251.701]`; equivalente a +216.564 regret relativo).
+En fase pre-cambio, regrets medios fueron UCB/SW `34.994/66.172` con `xi=.5`
+y `90.018/137.094` con `xi=2`. En el régimen transitorio fueron
+`199.760/63.332` y `24.860/49.060`, respectivamente; tras la reversión,
+`434.392/158.588` y `480.346/244.580`. Los resultados por régimen son
+descriptivos de estas políticas adaptativas y no equivalen a efectos
+causales aislados por periodo.
+
+Como recuperación se definieron 20 decisiones óptimas consecutivas, buscando
+hasta 1000 periodos posteriores a cada breakpoint. Los lags medios para esa
+recuperación tras el primer breakpoint, UCB/SW, fueron `383.88/125.80`
+(`xi=.5`) y `61.68/23.86` (`xi=2`).
+Tras la reversión fueron `900.90/618.14` con `xi=.5`, y `>1000` en las 50
+semillas para UCB1 frente a `465.94` para SW-UCB con `xi=2`; `>1000` está
+censurado por el límite de búsqueda, no es un lag exacto.
+
+### Interpretación y límites
+
+- **Resultado:** SW-UCB mantuvo menor regret que UCB1 con ambos coeficientes;
+  la clasificación no se invirtió en el B1 histórico. Por tanto, `xi` no
+  explica la inversión como un cambio de ganador dentro de esta instancia.
+- **Sensibilidad demostrada aquí:** al pasar a `xi=2`, el regret de UCB1
+  bajó en `73.922`, mientras que el de SW-UCB subió en `142.642`; la ventaja
+  de SW sobre UCB se redujo, pero siguió siendo positiva. El coeficiente
+  explica una parte cuantificable de la diferencia de magnitud entre las dos
+  configuraciones de `xi`, no la inversión de clasificación.
+- **No concluible:** esto no determina por qué B1-E1 (`xi=2`) favoreció a
+  UCB1. Persisten diferencias de número y distribución de brazos/parejas,
+  medias y gaps, calentamiento de 9 frente a 3 periodos, semillas y streams.
+  Tampoco puede atribuirse a matching: ambos B1 son selección individual.
+- La recompensa Bernoulli realizada es estocástica; el regret reportado se
+  calcula con medias verdaderas conocidas solo al evaluador. Los intervalos
+  miden variación entre estas 50 semillas, no incertidumbre del modelo ni
+  generalización a otros cambios.
+
+**Siguiente paso único recomendado, no autorizado ni ejecutado:** si se
+requiere explicar qué queda del cambio de ranking más allá de `xi`, hacer un
+puente B1 armonizado entre el benchmark histórico de 3 brazos y las 9 parejas
+de E1, con una implementación de estimador, `xi`, horizonte, reglas de
+inicialización por candidato y protocolo de semillas/potenciales comunes
+predeclarados. La comparación debe limitarse a UCB1 frente a SW-UCB dentro de
+cada conjunto de acciones; no comparar regrets absolutos entre los dos
+oráculos. Este puente aún agruparía diferencias inherentes de medias y tamaño
+del conjunto y no justificaría por sí solo una atribución universal a la
+modalidad.
+
+## S3b — Factorial mínimo de cambios de competencias × oportunidades de observación — 21/10/2026
+
+**Decisión del PI:** GO. **Prioridad:** ejecución experimental. Esta entrada
+registra la reformulación aprobada de S3b: estudiar cuándo es útil conservar
+historial frente a descontarlo, mediante el ciclo organización → observaciones
+→ estimación → organización. A diferencia de S4, las asignaciones no alteran
+las competencias reales; solo condicionan qué feedback puede llegar a la
+política.
+
+### Diseño ejecutado y alcance
+
+Se reutilizaron las matrices y componentes de S3b-E1. Se eligió B2-Semi como
+modalidad común: matching completo 3×3, una asignación por agente/tarea y tres
+recompensas individuales ejecutadas que contribuyen al reward colectivo. Las
+condiciones de feedback no cambian las asignaciones factibles, la demanda, el
+reward ni el oráculo.
+
+| Factor | Nivel 1 | Nivel 2 |
+|---|---|---|
+| Frecuencia A | Infrecuente: permanencia `τc=2500`; 3 transiciones en 10 000 periodos | Frecuente: `τc=500`; 19 transiciones |
+| Oportunidad B | Alta: cada pareja-periodo tiene máscara exógena disponible con probabilidad `p=.75` | Baja: `p=.25` |
+
+Las matrices alternan determinísticamente entre la matriz base de E1 y la
+transitoria: solo `(2,0)` cambia de `.4` a `.9` y vuelve, con amplitud constante
+`.5`. Se conserva la matriz inicial; los mismos dos estados cambian el
+matching óptimo: base `((0,0),(1,1),(2,2))`, valor `1.70`, margen al segundo
+matching `.45`; transitorio `((0,2),(1,1),(2,0))`, valor `1.75`, margen `.05`.
+El horizonte, las capacidades, el reward Bernoulli y las seis asignaciones
+factibles son iguales en todas las celdas. Se usaron 30 semillas emparejadas
+`8200–8229`, calibración común E1 de nueve periodos y el mismo solver/oráculo
+exacto para las dos políticas.
+
+Las oportunidades son máscaras Bernoulli exógenas por pareja-periodo,
+precalculadas con un stream independiente del reward y compartidas entre
+políticas y niveles (umbrales anidados `.25/.75`). La política no ve máscaras
+antes de asignar. La recompensa de cada pareja ejecutada cuenta aunque su
+feedback no esté disponible; el estimador solo recibe feedback de parejas
+ejecutadas cuya máscara lo permite. UCB1 y SW-UCB usan la formulación de
+`PairwiseBanditEstimator`, coeficiente efectivo común `xi=2`, ventana global
+fija `W=1214` para SW-UCB y el matching exacto. No se cambió ninguna ecuación.
+
+**Descriptor de información:** `p·τc` es el número esperado de oportunidades
+de sensor por pareja durante una estabilidad (alta/baja: `1875/625` con
+`τc=2500`; `375/125` con `τc=500`). No es `rho_ik` observado ni predictor de
+reward. La tasa efectiva depende además de si la política ejecuta la pareja.
+Se registraron por pareja oportunidades, ejecuciones, feedback obtenido,
+tasas, edad, errores de estimación, observaciones por régimen y cuántas
+observaciones vigentes, compatibles de regímenes anteriores o incompatibles
+permanecen en la memoria. La competencia real solo se usa en reward, oráculo y
+diagnósticos posteriores; no se expone a los estimadores.
+
+**Estatus de hipótesis:** los cuatro niveles y parámetros se fijaron antes de
+la campaña, pero no se congeló por escrito un criterio direccional de
+rechazo antes de ejecutarla. En consecuencia, los contrastes se reportan con
+IC pareados y el análisis direccional se trata como exploratorio, no como una
+prueba confirmatoria prerregistrada. La hipótesis operacional examinada fue
+que, con feedback alto, los cambios frecuentes podrían mejorar SW-UCB
+relativamente a UCB1 más que con feedback bajo; su criterio era la
+diferencia-en-diferencias de `regret(SW)−regret(UCB)`.
+
+### Resultados de rendimiento
+
+El oráculo esperado es `17 250` en las cuatro celdas: cada frecuencia dedica
+5 000 periodos a cada matriz. La tabla presenta reward esperado y regret
+esperado medios por semilla; entre corchetes, IC 95% de cada media. `Δopt`
+es la fracción de decisiones que coincide exactamente con el matching
+óptimo; cambios es el promedio de cambios de matching entre periodos. Reward
+Bernoulli realizado también se conserva en el JSON.
+
+| Cambios / oportunidad | Política | Reward esperado [IC95] | Regret [IC95] | `Δopt` | Cambios de matching |
+|---|---|---:|---:|---:|---:|
+| Infrecuente / alta | UCB1 | 16 822.00 [16 811.97, 16 832.04] | 428.00 [417.96, 438.03] | .863 | 812 |
+| Infrecuente / alta | SW-UCB | 16 088.18 [16 078.57, 16 097.80] | 1 161.82 [1 152.20, 1 171.43] | .669 | 1 828 |
+| Infrecuente / baja | UCB1 | 16 432.12 [16 412.52, 16 451.71] | 817.88 [798.29, 837.48] | .729 | 824 |
+| Infrecuente / baja | SW-UCB | 15 065.04 [15 038.47, 15 091.62] | 2 184.96 [2 158.38, 2 211.53] | .559 | 1 800 |
+| Frecuente / alta | UCB1 | 16 722.90 [16 714.30, 16 731.51] | 527.10 [518.49, 535.70] | .756 | 1 042 |
+| Frecuente / alta | SW-UCB | 15 967.20 [15 956.69, 15 977.70] | 1 282.80 [1 272.30, 1 293.31] | .657 | 2 322 |
+| Frecuente / baja | UCB1 | 16 326.30 [16 307.81, 16 344.80] | 923.70 [905.20, 942.19] | .653 | 955 |
+| Frecuente / baja | SW-UCB | 14 964.38 [14 939.13, 14 989.64] | 2 285.62 [2 260.36, 2 310.87] | .542 | 2 048 |
+
+Diferencias pareadas de regret `SW-UCB − UCB1` (positivo desfavorece SW-UCB):
+
+| Celda | Diferencia de regret (IC 95%) |
+|---|---:|
+| Infrecuente / alta | `+733.82` `[+720.79,+746.85]` |
+| Infrecuente / baja | `+1 367.07` `[+1 336.82,+1 397.32]` |
+| Frecuente / alta | `+755.71` `[+744.75,+766.66]` |
+| Frecuente / baja | `+1 361.92` `[+1 333.93,+1 389.91]` |
+
+Al bajar oportunidades de altas a bajas, el regret aumentó para ambas
+políticas: UCB1 `+389.89` (IC `[369.54,410.24]`) y SW-UCB `+1 023.14`
+(`[993.55,1 052.73]`) en cambios infrecuentes; UCB1 `+396.60`
+(`[377.24,415.96]`) y SW-UCB `+1 002.81` (`[980.44,1 025.19]`) en cambios
+frecuentes. Al aumentar la frecuencia, el regret UCB1 subió `99.10`
+(`[88.83,109.37]`) con oportunidades altas y `105.81` (`[85.33,126.29]`)
+con bajas; el regret SW-UCB subió `120.99` (`[107.62,134.36]`) y `100.66`
+(`[65.64,135.68]`), respectivamente.
+
+Contrastes factoriales sobre el diferencial de regret SW-UCB menos UCB1:
+
+- Efecto de frecuencia con oportunidades altas: `+21.89` (IC95
+  `[+5.04,+38.74]`), desfavorable relativamente a SW-UCB.
+- Efecto de frecuencia con oportunidades bajas: `−5.15` (IC95
+  `[−45.47,+35.16]`), no concluyente.
+- Diferencia-en-diferencias frecuencia × disponibilidad: `+27.04` (IC95
+  `[−17.58,+71.66]`), compatible con cero para regret; no se identifica una
+  interacción de rendimiento acumulado. En tasa de matching óptimo el
+  contraste fue `+.0351` (IC95 `[.0190,.0512]`), señal descriptiva distinta
+  que no se tradujo en una interacción concluyente de regret.
+
+### Información, estimación y organización
+
+- En el par alterado y decisivo `(2,0)`, el número esperado de oportunidades
+  por intervalo estable era `1875/625` con cambios infrecuentes y `375/125`
+  con frecuentes (alta/baja). Pero el número medio efectivo de observaciones
+  por episodio del estado base/transitorio (UCB1/SW-UCB) fue, respectivamente:
+  `190/253` y `1608/1081`; `90/134` y `421/332`; `47/72` y `250/227`; `22/33`
+  y `69/68`. La diferencia entre oportunidades y observaciones muestra el
+  papel de la asignación: `(2,0)` apenas se ejecuta en base, pero es parte del
+  matching óptimo transitorio. Los agregados completos de las nueve parejas
+  están en el artefacto.
+- La reducción de oportunidades disminuyó observaciones de las parejas
+  críticas y empeoró el reward de ambas políticas; el deterioro medio fue
+  mayor para SW-UCB. La frecuencia por sí sola también elevó regret en ambas.
+  Estas son comparaciones del efecto total del tratamiento sobre la política
+  cerrada; cantidad de feedback, estimaciones y decisiones median ese efecto y
+  no son causas aisladas.
+- Error cuadrático medio temporal de la media estimada en `(2,0)` fue menor
+  para SW-UCB en las cuatro celdas (infrecuente alta `.0181` frente a UCB
+  `.0554`; infrecuente baja `.0217` frente a `.0550`; frecuente alta `.0666`
+  frente a `.0793`; frecuente baja `.0606` frente a `.0714`). El MSE promedio
+  sobre nueve pares también fue menor para SW en cada celda. Sin embargo,
+  SW-UCB tuvo menor tasa de matching óptimo, más cambios de matching y mayor
+  regret. Por tanto, MSE agregado no basta para explicar calidad de decisión;
+  son posibles errores concentrados en alternativas críticas, interacción con
+  los índices de confianza y la selección combinatoria. Esta causa no queda
+  aislada por el factorial.
+- La recurrencia hace que observaciones antiguas de `(2,0)` vuelvan a ser
+  compatibles cuando retorna el estado que las generó. Al final del horizonte
+  el régimen vuelve a ser transitorio: con cambios infrecuentes/oportunidades
+  altas UCB1 conserva en promedio `3216` observaciones compatibles y `380`
+  incompatibles, mientras SW-UCB conserva `537` compatibles y ninguna
+  incompatible; con cambios frecuentes/alta, UCB1 conserva `2505/473` y
+  SW-UCB `331/72`. UCB1 guarda más evidencia útil recurrente, pero también
+  más evidencia obsoleta. SW-UCB filtra más datos incompatibles, aunque con
+  `W=1214` puede descartar observaciones compatibles de retornos anteriores.
+  No se puede llamar inútil a todo el historial ni atribuirle por sí solo la
+  clasificación.
+- En esta campaña SW-UCB no recuperó más rápido que UCB1 con la métrica de 20
+  matchings óptimos consecutivos: lags medios observados tras el primer cambio
+  fueron UCB/SW `98/152`, `98/161`, `67/121` y `82/131` para las celdas en el
+  orden de la tabla. En el régimen frecuente hubo eventos sin 20 aciertos
+  consecutivos antes del siguiente cambio o del límite de búsqueda; están
+  contabilizados como no recuperación, no como lags exactos.
+- El número de cambios de matching no implica un coste de conmutación: tal
+  coste no forma parte de reward. Es una medida de estabilidad organizativa.
+
+### Hechos, hipótesis y límites
+
+**Hechos observados:** UCB1 tuvo menor regret que SW-UCB en las cuatro celdas,
+con IC pareados que excluyen cero. Más oportunidades mejoraron ambas políticas;
+menos frecuencia de cambios también redujo regret. La interacción entre
+frecuencia y disponibilidad para regret no quedó identificada. El oráculo
+esperado permaneció idéntico entre niveles de disponibilidad para cada
+trayectoria.
+
+**Hipótesis debilitada/no resuelta:** no se observó la predicción direccional
+exploratoria de que los cambios frecuentes con alto feedback mejorarían SW-UCB
+relativamente más; el efecto puntual fue contrario y la diferencia-en-
+diferencias incluyó cero. Los datos sí muestran que disponibilidad baja
+perjudica especialmente a SW-UCB en este sistema, pero no distinguen por sí
+solos estimación, exploración, selección de parejas y matching.
+
+**Limitaciones/protocolo:** diseño sintético con dos matrices y dos niveles;
+solo una pareja cambia y el margen entre matchings es diferente por régimen.
+La disponibilidad aleatoria se aplica uniformemente a parejas, no manipula
+directamente una cuota fija de observaciones. La feedback efectiva depende de
+la organización. `rho=p·τc` solo describe oportunidades esperadas, mientras
+que `rho` efectiva es dependiente de política. Además, aunque los niveles se
+fijaron antes de correr, faltó dejar congelado antes de la campaña un criterio
+direccional de contraste; inferencias direccionales son exploratorias. Los IC
+miden variación de semillas, no incertidumbre del modelo ni validez externa.
+
+Artefactos y validación focalizada:
+`experiments/run_hls_s3b_change_observation_factorial.py`,
+`tests/test_hls_s3b_change_observation_factorial.py`,
+`results/experiments/hls_s3b_change_observation_factorial/results.json` y
+`period_traces.jsonl.gz`. Ejecución: `PYTHONPATH=src:. python
+experiments/run_hls_s3b_change_observation_factorial.py` (8 celdas, 30 semillas,
+tiempo observado ~124 s). Pruebas: `PYTHONPATH=src:. pytest -q
+tests/test_hls_s3b_change_observation_factorial.py tests/test_hls_s3b_e1.py
+tests/test_hls_s3b_discounted_ucb.py` — **12 passed**. `git diff --check`
+pasó.
+
+**Siguiente paso condicionado, no ejecutado:** queda una ambigüedad concreta:
+SW-UCB tiene menor MSE medio, pero peores decisiones y regret. Si el PI desea
+aislar memoria/índice de la generación endógena de feedback, se propone una
+reproducción diagnóstica offline que congele para ambos estimadores la misma
+secuencia fechada de observaciones por pareja (por ejemplo, la secuencia
+observada de una trayectoria B2-Semi de referencia), y compare medias/índices,
+matching inducido, matching óptimo y regret sobre las mismas competencias.
+Las actualizaciones incluirían solo el replay común; las decisiones no
+determinarían nuevas observaciones. Ese control diagnosticaría el efecto de
+los estimadores condicionados a igual información, pero no sería una política
+operativa ni estimaría el efecto cerrado de organización → feedback. Requiere
+autorización explícita antes de ejecutarse. No se propone otra campaña.
+
+## 2026-10-21 — S3b: replay diagnóstico offline con historial común
+
+**Autorización del PI:** GO con condición de parada. Se implementó el control
+offline para separar estimación, índices y matching; no es una evaluación
+operativa en bucle cerrado.
+
+**Fuente y validez.** El trace del factorial cambios × oportunidades guarda
+asignaciones, máscara de feedback y recompensas por periodo agregadas, pero no
+los outcomes Bernoulli individuales por pareja. No se reconstruyeron rewards
+no registrados. Como alternativa, fijada antes de analizar los resultados,
+se usó el trace B2-Semi/UCB1 de S3b-E1 (`results/experiments/hls_s3b_e1/period_traces.jsonl.gz`):
+30 semillas `8200–8229`, 3×3, horizonte 10.000, matrices base/transitoria,
+cambios en 3.000 y 5.000, full feedback, `W=1214`, `xi=2`. Esta trayectoria
+de origen UCB1 no es una celda del factorial recurrente; toda conclusión es
+condicional a dicho historial. Cada periodo entrega a ambos estimadores las
+mismas tres observaciones fechadas. Las decisiones replay no afectan eventos
+posteriores. Competencias reales se usan solo para evaluación posterior.
+
+Se compararon cuatro reglas diagnósticas: matching por medias e índices de
+UCB1 y SW-UCB, siempre con el mismo solver. Fórmulas y reglas de inicialización
+son las del estimador existente; en SW-UCB la ventana global es `[t−1214,t)`.
+La matriz real determina el óptimo esperado y el regret diagnóstico en cada
+periodo.
+
+**Resultados observados: media de 30 semillas; intervalos de regret acumulado
+al 95%; contrastes pareados por semilla.**
+
+| Regla | Recompensa esperada [IC95] | Regret esperado [IC95] | Matching óptimo [IC95] |
+|---|---:|---:|---:|
+| UCB1 por medias | 16.992,927 [16.988,664; 16.997,190] | 107,073 [102,810; 111,336] | 82,32% [81,31; 83,34] |
+| UCB1 por índices | 16.689,682 [16.676,637; 16.702,726] | 410,318 [397,274; 423,363] | 91,79% [91,36; 92,23] |
+| SW-UCB por medias | 16.990,225 [16.968,353; 17.012,097] | 109,775 [87,903; 131,647] | 88,17% [87,47; 88,86] |
+| SW-UCB por índices | 4.007,577 [3.929,858; 4.085,295] | 13.092,423 [13.014,705; 13.170,142] | 10,37% [10,29; 10,44] |
+
+El MSE global fue `0,010394` para UCB1 y `0,027782` para SW-UCB; diferencia
+pareada SW−UCB `+0,017388`, IC95 `[+0,016528;+0,018248]`. Así, la ventaja de
+MSE global vista en el factorial no persiste en este historial común. En las
+tres parejas del matching verdadero, la diferencia fue `+0,000186`, IC95
+`[-0,000050;+0,000421]` (no concluyente). La señal depende de pareja y tiempo:
+en el régimen transitorio SW-UCB tuvo menor MSE en las parejas del matching
+óptimo (`0,00561` vs `0,01104`) y en `(2,0)` durante el horizonte (`0,02263`
+vs `0,08685`); tras el retorno al régimen base la ventana retuvo evidencia
+transitoria y el MSE de SW-UCB empeoró.
+
+La MSE global de SW-UCB está dominada en parte por parejas poco informadas
+que no pertenecían al matching óptimo: para `(1,0)` fue `0,12886` frente a
+`0,00339` de UCB1. Esa pareja estuvo fuera de la ventana SW en `61,9%` de
+periodos y fue incorporada al matching por índices en promedio `8.139`
+periodos por semilla. Así, el promedio global puede ocultar simultáneamente
+una mejor estimación temporal de una pareja decisiva y errores grandes en
+parejas raras que el índice puede elevar a la asignación.
+
+Por medias, el diferencial acumulado de regret SW−UCB fue `+2,702`, IC95
+`[-20,971;+26,374]`; no hay diferencia global distinguible. SW-UCB por medias
+mejoró en el régimen transitorio en `33,208` (IC95 `[-38,48;-27,93]`) y
+empeoró tras volver al régimen base en `35,910` (IC95 `[+9,83;+61,99]`). El
+matching por índices difirió del matching por medias en `22,98%` de periodos
+UCB1 y `88,48%` SW-UCB. En el mismo historial congelado, índices menos medias
+añadió regret diagnóstico de `303,245` para UCB1 (IC95 `[292,859;313,631]`)
+y `12.982,648` para SW-UCB (IC95 `[12.903,031;13.062,362]`). SW-UCB-index
+menos UCB1-index fue `12.682,105` (IC95 `[12.600,829;12.763,381]`). Esta es
+una diferencia inmediata del criterio de matching, sin consecuencias de
+feedback futuro.
+
+**Mecanismo local identificado.** En `PairwiseBanditEstimator.score_matrix`,
+una pareja sin observaciones dentro de la ventana SW recibe el índice
+optimista finito `2 + sqrt(2 log(max(2,t+1)))`. En el replay, las parejas
+`(1,0)` y `(2,1)` no tuvieron observaciones en la ventana durante `61,9%` y
+`29,1%` de periodos, respectivamente; `(0,1)`, durante `3,0%`. El índice
+SW-UCB añadió `(1,0)` al matching respecto a medias en promedio 8.139
+periodos/semilla y `(2,1)` en 5.415. El margen óptimo–segundo matching era
+`0,45` en base y `0,05` en el transitorio. Esto demuestra el efecto local de
+la ventana vacía/bonus sobre decisiones y regret condicionado a la historia.
+No demuestra que explique causalmente el resultado cerrado del factorial:
+la observación fijada fue generada por UCB1 y no se adapta a decisiones replay.
+
+**Verificaciones y artefactos.** Se validó que las máscaras coinciden con las
+tres parejas ejecutadas y que los outcomes observados suman la recompensa
+realizada registrada. Las trazas por periodo están en
+`results/experiments/hls_s3b_offline_replay/period_traces.jsonl.gz`; resumen,
+regímenes, contrastes e información por semilla en
+`results/experiments/hls_s3b_offline_replay/results.json`. Código:
+`experiments/run_hls_s3b_offline_replay.py`; pruebas focalizadas:
+`tests/test_hls_s3b_offline_replay.py` (**3 passed**). Ejecución reproducible:
+`PYTHONPATH=src:. python experiments/run_hls_s3b_offline_replay.py`. No se
+modificaron algoritmos ni resultados previos.
+
+**Decisión bajo el criterio del PI:** el replay identifica un mecanismo local
+reproducible —parejas sin datos en ventana reciben un índice optimista y
+pueden desplazar asignaciones de mayor recompensa—, pero no reproduce la
+ventaja global de MSE del factorial ni explica su interacción cerrada entre
+organización y feedback. Se registra el mecanismo con ese límite y se devuelve
+al PI. No se amplía la investigación ni se cierra S3b como línea general.
+
+## HLS-S3b — Síntesis científica y consolidación del ciclo experimental (21/10/2026)
+
+**Decisión del PI:** CONSOLIDAR RESULTADOS. **Estado:** el ciclo experimental
+comparativo UCB1/SW-UCB queda **APARCADO**; S3b permanece **ABIERTA** como línea
+general. Esta síntesis integra las entradas anteriores sin tratarlas como un
+diseño único ni modificar sus resultados o interpretaciones fechadas.
+
+### Alcance y trazabilidad de la evidencia
+
+La secuencia consolidada es: (i) S3b inicial, 3×3 y 300 periodos, competencias
+Bernoulli exógenas con feedback parcial; (ii) evaluación no estacionaria y
+revisión metodológica; (iii) reproducción B1 de Garivier–Moulines y traslado
+de índices a B2 matching; (iv) E1, que comparó B1 selección de una entre nueve
+parejas, B2-Semi y B2-Partial; (v) control factorial de `xi` en el B1 histórico
+de tres brazos; (vi) factorial de frecuencia × oportunidades de observación;
+y (vii) replay offline sobre una trayectoria congelada. Sus objetivos,
+entornos, horizontes, streams aleatorios y modalidades difieren. Por tanto,
+las comparaciones entre entradas son síntesis de evidencia, no contrastes
+armonizados ni estimaciones causales conjuntas.
+
+Referencias de código, resultados y decisiones que sustentan esta síntesis:
+
+- S3b original y revisión: `experiments/run_hls_s3b_nonstationary_unknown_assignment.py`,
+  `src/hls/nonstationary_assignment.py`,
+  `results/experiments/hls_s3b_nonstationary_unknown_assignment/results.json`;
+  entradas del 20/10/2026 en este registro.
+- Reproducción B1 y adaptación a matching B2: `experiments/run_hls_s3b_discounted_ucb.py`,
+  `results/experiments/hls_s3b_discounted_ucb/results.json`; entrada del
+  21/10/2026 «D-UCB: reproducción de cambios abruptos y adaptación S3b».
+- E1: `experiments/run_hls_s3b_e1.py`, `tests/test_hls_s3b_e1.py`,
+  `results/experiments/hls_s3b_e1/results.json` y `period_traces.jsonl.gz`;
+  entrada «HLS-S3b-E1 ejecutado».
+- Sensibilidad a `xi`: `experiments/run_hls_s3b_b1_xi_control.py`,
+  `results/experiments/hls_s3b_b1_xi_control/results.json` y su entrada
+  cronológica.
+- Factorial cambios × oportunidades: `experiments/run_hls_s3b_change_observation_factorial.py`,
+  `tests/test_hls_s3b_change_observation_factorial.py`,
+  `results/experiments/hls_s3b_change_observation_factorial/results.json` y
+  `period_traces.jsonl.gz`.
+- Replay: `experiments/run_hls_s3b_offline_replay.py`,
+  `tests/test_hls_s3b_offline_replay.py` y los dos artefactos bajo
+  `results/experiments/hls_s3b_offline_replay/`.
+
+### C1 — Utilidad de la información histórica
+
+**Hechos observados.** El resultado cambia con escenario, memoria y exploración.
+En el S3b inicial de 300 periodos, UCB1 y SW-UCB empataron en S3b-0 (regret
+54,16); UCB1 superó a SW-UCB en S3b-1 (75,10 frente a 123,24) y S3b-2
+(107,30 frente a 174,16). En otra instancia, la reproducción B1 de tres
+brazos obtuvo regret 669,146 para UCB1 y 288,092 para SW-UCB. El cambio de
+`xi=.5` a `xi=2` en ese B1 mantuvo a SW-UCB por delante, pero redujo la ventaja:
+el diferencial de regret SW−UCB pasó de −381,054 a −164,490. En E1, una ventana
+más larga mejoró SW-UCB B2-Semi (regret 722,960 con `W=2428`, frente a
+1.047,440 con `W=1214`), sin superar UCB1 (413,360). Estos son resultados de
+instancias y protocolos distintos.
+
+La evaluación E1 registró además regret UCB1/SW-UCB de 372,023/871,477 en B1
+(nueve parejas), 413,360/1.047,440 en B2-Semi y 748,592/2.113,535 en
+B2-Partial; no es una reproducción del B1 histórico. En la reproducción
+publicada de D-UCB, los regrets B1 fueron UCB1 669,146, D-UCB 600,720 y
+SW-UCB 288,092; en la adaptación B2 con matching fueron 224,403, 2.085,502 y
+393,563, respectivamente. B1 y B2 son instancias diferentes: estos valores no
+permiten atribuir al matching, por sí solo, la inversión de clasificación ni
+comparar regrets absolutos entre modalidades.
+
+En el factorial recurrente, UCB1 obtuvo menor regret en las cuatro celdas.
+Reducir oportunidades de feedback perjudicó a ambas políticas, con deterioro
+mayor para SW-UCB: +1.023,14 frente a +389,89 en cambios infrecuentes, y
++1.002,81 frente a +396,60 en cambios frecuentes. La diferencia-en-diferencias
+frecuencia × disponibilidad fue +27,04, IC95 [−17,58;+71,66], compatible con
+cero. La estimación redondeada pedida por el PI (+27, IC95 [−18;+72]) es
+coherente con la cifra registrada.
+
+La recurrencia también mostró que observaciones antiguas pueden volver a ser
+compatibles al regresar el mismo régimen; SW-UCB, a su vez, puede descartar
+observaciones compatibles de ciclos previos. La antigüedad por sí sola no
+clasifica una observación como útil o inútil.
+
+**Conclusión respaldada y límite.** La utilidad del historial depende de la
+dinámica de competencias, las oportunidades y la secuencia de observaciones
+efectivamente obtenidas. La sensibilidad a `xi`, `W` y feedback está
+demostrada para estas instancias. No hay base para una regla general de
+selección de ventana o memoria óptima; las comparaciones históricas no aíslan
+una causa única.
+
+### C2 — Estimación, incertidumbre y organización
+
+**Hechos observados.** En el factorial, SW-UCB tuvo menor MSE diagnóstica
+promedio que UCB1 en las cuatro condiciones, pero mayor regret y menor
+coincidencia de matching óptimo. En el replay, ambas estimaciones recibieron
+idénticas observaciones fechadas de una trayectoria B2-Semi/UCB1 de E1. El
+MSE global de SW-UCB fue mayor (0,027782 frente a 0,010394), así que la ventaja
+global de MSE del factorial no se reprodujo. Sin embargo, la MSE de la pareja
+`(2,0)` fue menor para SW-UCB (0,02263 frente a 0,08685), en particular en el
+régimen transitorio. El origen de datos importa: el replay utilizó E1 porque
+las trazas factoriales no guardaron outcomes Bernoulli individuales por
+pareja; no se reconstruyeron recompensas ausentes.
+
+El regret acumulado diagnóstico en ese replay fue:
+
+| Regla | Regret |
+|---|---:|
+| UCB1 por medias | 107,073 |
+| SW-UCB por medias | 109,775 |
+| UCB1 por índices | 410,318 |
+| SW-UCB por índices | 13.092,423 |
+
+En el historial congelado, índices frente a medias añadieron 303,245 de
+regret diagnóstico en UCB1 y 12.982,648 en SW-UCB. El índice SW-UCB favoreció
+parejas sin observaciones recientes; `(1,0)` y `(2,1)` carecieron de datos en
+ventana el 61,9% y 29,1% de periodos, respectivamente. El código asigna un
+índice optimista finito a una ventana vacía. La comparación medias/índices
+identifica directamente el efecto inmediato del criterio de decisión sobre
+ese historial fijo.
+
+**Distinciones interpretativas.** Deben mantenerse separados: (a) estimación
+de competencias/recompensas —medias y MSE—; (b) representación de incertidumbre
+—conteos, antigüedad y ventana—; (c) conversión a índices; (d) optimización
+organizativa por matching; y (e) recompensa/regret resultante. MSE y matching
+óptimo valoran aspectos diferentes; una media precisa no determina por sí
+sola el efecto de un bonus ni el matching elegido. El regret offline no es el
+rendimiento de una política desplegada: las decisiones diagnósticas no
+modificaron las observaciones futuras y no midieron sus consecuencias de
+feedback.
+
+**Límite causal.** El factorial compara políticas cerradas que generan
+historiales distintos. El replay controla el historial, pero usa uno originado
+por UCB1 y elimina el bucle organización→feedback. Por ello el efecto local
+de índices sobre matching/regret sí queda medido; no se cuantifica cuánto de
+la diferencia cerrada del factorial se debe causalmente al índice, a la
+historia o a su interacción.
+
+### C3 — Retroalimentación entre organización e información
+
+En S3b, la selección determina qué parejas agente–tarea se ejecutan; junto
+con la disponibilidad exógena, determina qué recompensas se observan. El
+feedback modifica medias, conteos y evidencia conservada; esas cantidades
+alimentan índices y siguientes asignaciones. El ciclo documentado es:
+
+```text
+Organización → Observaciones → Estimación e incertidumbre
+             → Índices de decisión → Organización
+```
+
+Esto es distinto de S4: allí las asignaciones pueden modificar competencias
+reales futuras mediante MIS-v2; en S3b las competencias reales cambian
+exógenamente y la organización modifica qué llega a conocerse, no las
+competencias. Ambas dinámicas pueden coexistir en modelos futuros, pero los
+resultados aquí no las confunden ni las estudian simultáneamente.
+
+**Implicación para HLS.** La información disponible es parcialmente
+consecuencia de la organización. Por tanto, precisión de estimación,
+incertidumbre, regla de índice y optimización organizativa deben evaluarse en
+conjunto, sin usar la precisión aislada como sustituto de rendimiento
+colectivo. Esto es una pauta metodológica sustentada por las comparaciones
+descritas, no una teoría general demostrada ni una propuesta de algoritmo
+integrado.
+
+### Decisión de continuidad y límites generales
+
+**ESTADO:** ciclo experimental UCB1/SW-UCB de S3b **APARCADO**. **Motivo:** el
+replay identificó un mecanismo local verificable —el índice de ventana vacía
+puede elevar parejas poco observadas y cambiar el matching en una secuencia
+congelada—, pero no reprodujo la ventaja global de MSE del factorial ni
+explica causalmente la diferencia en bucle cerrado. La evidencia no justifica
+encadenar más controles sobre estas dos políticas. **Alcance:** se aparca esta
+secuencia experimental, no S3b como línea científica; S3b permanece **ABIERTA**.
+No se inicia automáticamente S4 ni S2b. La siguiente prioridad experimental
+queda pendiente de decisión del PI.
+
+En conjunto, no se identifica una regla universal para preferir UCB1 o
+SW-UCB. Los resultados son sintéticos, específicos de matrices, cambios,
+feedback, inicializaciones, coeficientes y ventanas evaluadas. La composición
+de estimadores por pareja con matching no hereda automáticamente garantías
+single-play. Las interpretaciones causales quedan limitadas por historiales
+endógenos y por el replay condicionado a una trayectoria de origen UCB1.
+
+## 2026-10-21 — S3b: información efectiva y relevancia organizativa
+
+**Autorización del PI:** GO, un análisis acotado. **Pregunta:** si la
+distribución de feedback entre parejas organizativamente relevantes aporta
+información descriptiva del rendimiento que no recogen el volumen total ni
+el MSE global.
+No se repitió el factorial, no se ejecutaron simulaciones y no se alteraron
+políticas. Se reutilizaron los traces B2-Semi de E1 para UCB1, SW-UCB `W=1214`
+y SW-UCB `W=2428`: 30 semillas emparejadas (`8200–8229`), matriz base y
+transitoria conocidas por el evaluador, cambios en `t=3000,5000`, horizonte
+10.000.
+
+**Definición de relevancia (diagnóstico, no observable por las políticas).**
+Para cada periodo, se enumeraron las seis asignaciones completas factibles y
+se obtuvo `V*`, el valor del matching de recompensa esperada máxima. La
+relevancia actual de una pareja es su pertenencia al matching óptimo. La
+sensibilidad se cuantificó sin umbral: para una pareja óptima, pérdida por
+exclusión `V* − max_{M: pareja ∉ M} R(M)`; para otra pareja, brecha de entrada
+`V* − max_{M: pareja ∈ M} R(M)`. Como resumen de competidores se usó el
+matching segundo en valor, no un corte arbitrario de brecha. En el régimen
+base, el matching óptimo es la diagonal y aventaja al segundo por `0,45`; en
+el transitorio, el óptimo es `((2,0),(1,1),(0,2))`, la diagonal pasa a ser
+segunda y la diferencia es solo `0,05`. Así quedan separadas relevancia para
+la solución actual y sensibilidad a una alternativa cercana.
+
+**Oportunidad y observación.** En B2-Semi se ejecutan tres parejas completas
+y se registra feedback Bernoulli de cada una: hay exactamente 30.000
+observaciones efectivas por semilla y política. En esta configuración,
+oportunidad de feedback para una pareja ejecutada = observación efectiva; no
+hay un canal de observabilidad exógeno independiente de la asignación. La
+distribución entre las nueve parejas sí depende de la organización. Una
+observación “relevante” se contabiliza como feedback de una pareja del
+matching óptimo vigente; la sensibilidad de competidores se informa aparte.
+Esto no equivale a medir ganancia de información ni a afirmar que cada
+outcome reduzca incertidumbre útil.
+
+**Resultados descriptivos.** La fracción de los tres feedbacks por periodo
+que corresponde a aristas del matching óptimo vigente fue:
+
+| Régimen | UCB1 | SW-UCB W=1214 | SW-UCB W=2428 | Δ UCB1 − SW ref. (IC95 pareado) |
+|---|---:|---:|---:|---:|
+| Base previo, `t=9–2999` | 94,1% [93,9;94,3] | 88,3% [88,0;88,6] | 91,4% [91,2;91,6] | +5,77 pp [5,58;5,96] |
+| Transitorio, `t=3000–4999` | 96,1% [94,9;97,4] | 72,2% [71,5;73,0] | 75,6% [74,6;76,7] | +23,87 pp [22,44;25,30] |
+| Base posterior, `t=5000–9999` | 94,0% [93,6;94,3] | 88,7% [88,5;88,9] | 92,0% [91,8;92,2] | +5,26 pp [4,92;5,59] |
+
+IC95 de proporciones y diferencias calculados entre semillas, unidad de
+replicación `n=30` (t de Student); periodos dentro de una semilla no se tratan
+como réplicas independientes. Durante el transitorio las nuevas aristas
+óptimas `(0,2),(1,1),(2,0)` recibieron en promedio `1.883, 1.969, 1.914`
+observaciones por UCB1 frente a `1.201, 1.867, 1.265` por SW-UCB W=1214.
+SW-UCB siguió observando más las aristas del régimen anterior, en particular
+`(0,0)` y `(2,2)` (719 y 681 observaciones frente a 86 y 86 de UCB1). La
+ventana larga quedó entre ambos. En el régimen base posterior las aristas
+diagonales vuelven a ser óptimas; observaciones de ciclos anteriores pueden
+volver a ser compatibles, lo que impide llamar “inútil” a toda observación
+antigua.
+
+El patrón coincide descriptivamente con el regret por régimen de E1:
+UCB1/SW-UCB W=1214/W=2428 obtuvieron `166,43/342,22/246,93` en base previo,
+`27,76/151,04/95,35` en el transitorio y `210,92/545,93/372,42` en base
+posterior. En total fueron `413,36/1.047,44/722,96`; la diferencia pareada de
+regret SW ref. menos UCB1 fue `634,08`, IC95 `[621,81;646,35]` (resultado E1,
+no una nueva evaluación). El total de feedback y las restricciones fueron
+iguales.
+
+La concentración global de observaciones (HHI sobre nueve parejas) fue
+`0,2442/0,2350/0,2472` para esas tres organizaciones, frente a `1/9` bajo
+reparto uniforme. SW ref. distribuyó algo menos concentradamente el mismo
+volumen, pero tuvo menos feedback sobre aristas óptimas durante el cambio. El
+MSE global de los snapshots diagnósticos fue `0,010483` [0,010228;0,010738]
+para UCB1, `0,003745` [0,003650;0,003841] para SW ref. y `0,004992`
+[0,004843;0,005140] para SW largo: menor MSE global no implicó menor regret.
+En el transitorio, MSE diagnóstico restringido a las aristas óptimas fue
+`0,01367` para UCB1 y `0,00771` para SW ref., aunque sus regrets medios fueron
+`27,76` y `151,04`. Estos MSE son resúmenes de snapshots espaciados por 100
+periodos, no mediciones continuas ni pruebas causales.
+
+**Interpretación de H1.** El análisis muestra que la asignación del feedback
+entre aristas óptimas aporta una dimensión descriptiva que no muestran el
+volumen total (constante aquí) ni el MSE global. La asociación con el
+comportamiento organizativo es especialmente visible durante el cambio:
+SW-UCB sigue ejecutando con más frecuencia el matching anterior, por lo que
+obtiene más feedback de esas aristas, tarda más en cambiar asignaciones y
+recoge menos feedback de la nueva solución. Es evidencia descriptiva
+compatible con H1,
+no una estimación causal de cuánto “explica” la relevancia por encima de la
+política. La fracción de observaciones sobre aristas óptimas es endógena y
+mecánicamente ligada a las asignaciones y al regret; además, las matrices
+reales usadas para puntuar relevancia solo las conoce el evaluador. No se
+aislaron la secuencia de observaciones, los índices y la organización.
+
+**USE / KNOW / DEVELOP.** USE: en este S3b la organización aprovecha
+competencias exógenas desconocidas al asignar tareas. KNOW: las decisiones
+determinan qué feedback llega y, por tanto, qué se puede estimar; precisión,
+recencia y relevancia organizativa son dimensiones distintas. DEVELOP: valor
+futuro de cambiar competencias reales mediante experiencia; no se estudia en
+este ciclo y corresponde al fenómeno endógeno S4. Esta separación es un marco
+interpretativo, no un módulo ni una conclusión universal.
+
+**Validación, límites y decisión.** Se reutilizaron traces existentes; se
+comprobó que contienen 30 semillas únicas, que cada periodo B2-Semi registra
+feedback de las tres parejas ejecutadas, y que el regret recalculado de las
+series coincide con los agregados E1 (UCB1 `413,36`, SW ref. `1.047,44`, SW
+largo `722,96`). No hubo cambio de código, pruebas nuevas ni simulaciones;
+por ello `git diff --check` es la única comprobación de cambio solicitada.
+La asociación está limitada a una instancia 3×3, un cambio transitorio y
+trazas generadas por cada política; las aristas óptimas y los outcomes son
+estocásticos/temporales dentro de trayectorias, no réplicas independientes.
+La parte atribuible de forma independiente a “información organizativamente
+útil” frente a selección de una asignación ya buena no queda identificada.
+
+**Conclusión:** H1 recibe apoyo exploratorio descriptivo en esta instancia:
+con igual volumen, el feedback de las aristas óptimas vigentes fue menor para
+SW-UCB —sobre todo durante el cambio— y coincidió con mayor regret. No queda
+demostrado que esa distribución añada poder explicativo independiente del
+comportamiento de asignación ni que el patrón generalice. **Estado de esta
+investigación acotada:** análisis concluido con esta limitación; no se inicia
+otra campaña. La prioridad S3b general permanece abierta y cualquier paso
+posterior queda sujeto a decisión del PI.
+
+## S3b — Intervención informativa en bucle cerrado (21/10/2026)
+
+**Decisión del PI:** GO, una intervención controlada. **Objetivo:** estimar el
+efecto de distribuir una observación adicional por periodo sobre el regret
+organizativo de SW-UCB, con el ciclo de decisiones y feedback endógeno activo.
+Esta ejecución no reabre la comparación UCB1/SW-UCB ni agrega una modalidad.
+
+### Configuración A/B/C y tratamientos
+
+- **A — Sistema:** S3b-E1 3×3, competencias reales Bernoulli conocidas solo por
+  el simulador, matriz base/transitoria y cambios exógenos en `t=3000,5000`,
+  10.000 periodos, semillas `8200–8229`. Solo se intervino el mecanismo de
+  observación; competencias, demanda/capacidad y outcomes potenciales de las
+  tareas se mantuvieron comunes entre brazos emparejados.
+- **B — Modalidad:** B2, matching completo 3×3 con las mismas restricciones y
+  solver existente.
+- **C — Arquitectura:** SW-UCB existente, `xi=2`, `W=1214`, misma calibración
+  común de nueve periodos, mismo índice y matching. No se creó política nueva.
+
+En ambos tratamientos cada periodo produjo las tres observaciones semi-bandit
+normales más exactamente una observación subsidiada. En **U (uniforme)**, la
+pareja adicional se muestreó uniformemente entre las nueve; en **R (dirigido)**,
+uniformemente entre las tres parejas del matching óptimo verdadero del periodo.
+R es una intervención oracular no implementable sin conocer competencias. La
+política recibió solo identidad de pareja, outcome Bernoulli y tiempo; no
+recibió etiqueta, competencias ni matching óptimo. La observación adicional
+no aportó recompensa ni capacidad a la asignación.
+
+La asignación se decidió antes de ambos updates. Cada brazo usó flujos
+separados para outcomes de tarea, selección subsidiada y outcomes subsidiados;
+los potenciales de tarea y las semillas se emparejaron. Si la pareja subsidiada
+coincidió con una ejecutada, se generó un segundo Bernoulli independiente con
+la misma competencia real. Ambos samples se guardaron con el timestamp global
+del periodo: incrementan `n` de SW-UCB, pero no adelantan el reloj ni la
+expiración de ventana.
+
+### Resultado experimental
+
+Métrica primaria: `L = Σ_t (R(a*_t,t) − R(a_t,t))`, regret esperado, no reward
+Bernoulli realizado. IC95 t pareado por semilla (`n=30`):
+
+| Tratamiento | Regret acumulado medio [IC95] | Reward esperado [IC95] | Matching óptimo [IC95] |
+|---|---:|---:|---:|
+| U — uniforme | 119,675 [111,499;127,851] | 16.980,325 [16.972,149;16.988,501] | 91,856% [91,544;92,168] |
+| R — dirigido | 1.145,285 [1.134,128;1.156,442] | 15.954,715 [15.943,558;15.965,872] | 76,062% [75,652;76,472] |
+
+Estimando emparejado `Δ=E[L_U−L_R]`: `−1.025,610`, IC95
+`[−1.036,650;−1.014,570]`. Equivalentemente, `L_R−L_U=+1.025,610`,
+IC95 `[+1.014,570;+1.036,650]`: el subsidio uniforme obtuvo menor regret.
+La diferencia emparejada en tasa de matching óptimo (R−U) fue `−15,794`
+puntos porcentuales, IC95 `[−16,218;−15,370]`. Reward realizado medio:
+U `16.975,700` [16.945,047;17.006,353], R `15.959,533`
+[15.931,529;15.987,538]. La tabla de regret por régimen (U/R) fue:
+
+| Régimen | Regret U [IC95] | Regret R [IC95] | Matching óptimo U [IC95] | Matching óptimo R [IC95] |
+|---|---:|---:|---:|---:|
+| Base previo | 32,622 [28,981;36,262] | 371,970 [365,758;378,182] | 97,82% [97,57;98,08] | 82,09% [81,73;82,44] |
+| Transitorio | 31,958 [30,635;33,282] | 170,417 [167,590;173,243] | 68,04% [66,72;69,37] | 51,48% [49,62;53,35] |
+| Base posterior | 46,845 [40,094;53,596] | 594,648 [586,755;602,541] | 97,92% [97,62;98,22] | 82,37% [82,04;82,70] |
+
+La desventaja de R no quedó restringida al cambio.
+
+### Información y diagnóstico
+
+El presupuesto de observación fue idéntico: 30.000 feedbacks endógenos y
+10.000 subsidiados por réplica y brazo, 40.000 en total. U distribuyó el
+subsidio casi uniformemente: entre `1.105` y `1.119` por pareja de media. R
+lo concentró exclusivamente en parejas óptimas verdaderas: aproximadamente
+`2.672` en `(0,0)`, `3.326` en `(1,1)`, `2.663` en `(2,2)`, `673` en `(0,2)` y
+`665` en `(2,0)`; las otras cuatro recibieron cero subsidios. Las asignaciones
+continuaron generando feedback endógeno, que se registra separadamente.
+
+MSE medio por periodo, calculado en cada decisión y agregado dentro de cada
+semilla, global y restringido a parejas del matching óptimo vigente: U
+`0,003022` [0,002918;0,003126] y
+`0,001668` [0,001450;0,001886]; R `0,003196` [0,003105;0,003287] y
+`0,001025` [0,000948;0,001102]. Así, R tuvo menor MSE en parejas óptimas y,
+sin embargo, peor rendimiento colectivo. El feedback global de U redujo
+además la inanición de alternativas: el subsidio uniforme midió todas las
+parejas, mientras el dirigido nunca subsidiaba las cuatro no óptimas en estos
+regímenes. Esto es compatible con que el bonus UCB mantenga atractivo explorar
+alternativas poco observadas, pero el experimento no identifica ese mediador
+por separado.
+
+No hubo parejas sin observaciones en ventana en ninguno de los dos brazos;
+“ventana vacía” no explica aquí el efecto. Las trazas contienen reward/regret,
+asignación, máscara de feedback endógeno, pareja y outcome subsidiados, MSE
+global/óptimo y conteo de ventanas vacías por periodo. Se registran conteos
+recientes y por fuente en los resúmenes por pareja y régimen.
+
+### Validación del laboratorio, interpretación y límites
+
+**Resultado experimental:** en esta configuración, uniformar el subsidio
+causó menor regret que dirigirlo al matching óptimo, bajo el estimando
+emparejado y los flujos compartidos descritos. No se demuestra que la
+información uniforme sea generalmente mejor; el tratamiento R solo informa
+pares actualmente óptimos y puede dejar insuficientemente observadas
+alternativas competitivas. La identidad de las observaciones subsidiadas está
+relacionada mecánicamente con el estado real por definición del tratamiento.
+El efecto estimado es el efecto total de la intervención oracular en bucle
+cerrado, incluidos los cambios posteriores de asignación y feedback endógeno;
+no descompone mediadores ni explica por completo resultados previos UCB1/SW-UCB.
+
+**Resultado del laboratorio:** quedó soportada una intervención local de
+observabilidad que mantiene fijos B y C, da a cada outcome adicional la misma
+marca temporal, distingue feedback endógeno/subsidiado y deja trazas
+reproducibles por periodo. `PairwiseBanditEstimator.update_additional_observation`
+añade un único sample al periodo actual sin avanzar tiempo. El control sin
+subsidio reprodujo acciones y outcomes esperados SW-UCB B2-Semi de E1 para la
+semilla 8200 dentro del redondeo registrado; las dos ejecuciones con semillas
+fijas reprodujeron los agregados primarios.
+
+Pruebas focalizadas: `tests/test_hls_s3b_observation_subsidy.py`,
+`tests/test_hls_s3b_e1.py` y `tests/test_hls_s3b_nonstationary_assignment.py`;
+**17 passed**. Artefactos nuevos, separados de resultados previos:
+`experiments/run_hls_s3b_observation_subsidy.py`,
+`results/experiments/hls_s3b_observation_subsidy/results.json` y
+`period_traces.jsonl.gz`. Ejecución: `PYTHONPATH=src:. python
+experiments/run_hls_s3b_observation_subsidy.py`.
+
+Limitaciones: una instancia 3×3, una política, una matriz transitoria, 30
+semillas; R usa información privilegiada y es intervención diagnóstica, no
+arquitectura operativa. La conclusión concierne al contraste de estos dos
+subsidios, no a la adquisición óptima general. **Estado:** experimento acotado
+cerrado; no se inicia otra campaña. S3b permanece abierta y el siguiente paso
+corresponde al PI.
+
+## 2026-10-22 — S4: interacción MIS-v2 × enseñanza/transferencia (diseño previo)
+
+**Autorización del PI:** GO acotado. Esta entrada fija el diseño antes de evaluar resultados; las cifras y conclusiones se añadirán después, sin alterar campañas previas.
+
+**Pregunta e hipótesis.** En el sistema N×K existente, ¿cómo interactúan la exposición productiva MIS-v2 y la enseñanza dirigida cuando comparten esfuerzo y la demanda cambia? La identidad de transición sobre una misma celda predice una interacción de competencia no positiva por saturación del hueco restante; **no** predice el signo de la interacción de producción o éxito. Se evaluará si el efecto colectivo depende de la demanda y de las acciones elegidas. P2 no tiene superioridad presupuesta frente a una relación fija seleccionada en entrenamiento.
+
+**Instancia fijada antes de resultados.** Dos agentes `A,B`, dos competencias `x,y`; competencia inicial `((.85,.15),(.20,.20))`, estimación inicial igual a la real y observación perfecta para aislar las transiciones. Parámetros existentes del caso de referencia: `eta=((.20,.15),(.12,.18))`; eficacia `A→B=(.75,.80)`, `B→A=(.70,.65)` en `x,y`, diagonal nula; tasa de transferencia `.4`; enseñanza de esfuerzo `.25`; parámetros P1/P2 `(prior=.5, threshold=.35, target=.95)`. Límites individuales `1`, presupuesto colectivo `2`; catálogo productivo de seis vectores por agente del caso de referencia. Demanda C5 Markov con estados `x,y`, distribución inicial `.5/.5`, permanencia `.9` y cambio `.1`, horizonte `24`. Requisitos `x=(.35,0)`, `y=(0,.40)`, pesos CES respectivos `(1,0)` y `(0,1)`: el umbral deja el problema `x` alcanzable inicialmente con media unidad de `A/x`, mientras que `y` supera el máximo productivo inicial `.15+.20=.35` y abre margen para aprendizaje o enseñanza. La elección se fija por este análisis de capacidad inicial, no por resultados de políticas. Semillas de entrenamiento `42000–42019`, evaluación emparejada `43000–43029`, sin reajuste. Solo varía la trayectoria exógena de demanda entre semillas; las transiciones y la observación son deterministas.
+
+**Factorial:** `J00` sin transición, `J10` solo MIS-v2, `J01` solo transferencia, `J11` ambas; `I_J=J11-J10-J01+J00`. En todas las celdas siguen disponibles los mismos catálogos de acciones de cada política. MIS-v2 se desactiva con `individual_learning=False`; transferencia se desactiva con tensor de eficacia cero, conservando lecciones y cargos de `2u` al colectivo y `u` a docente/aprendiz. Producción precede a MIS-v2 y a enseñanza. La recompensa del periodo usa competencia previa a ambas transiciones.
+
+**Dos estimandos distintos.** (1) Transición controlada: repetir en las cuatro celdas una misma acción factible definida por demanda: ante `x`, `A/x=.5, B/y=.5`; ante `y`, `A/y=.5, B/y=.5`; siempre `A→B/y` con `u=.25`. Esto prueba efectos físicos condicionados a una ruta de acciones común, no calidad de una política. (2) Bucle cerrado: ejecutar P0 sin enseñanza, P1 de relación fija y P2 adaptativa con las cuatro relaciones dirigidas posibles, manteniendo código y parámetros. P1 se elige entre esas cuatro relaciones por mayor CES medio acumulado en las 20 trayectorias **de entrenamiento bajo `J11`**, con desempate por orden declarado; la misma relación se congela en las cuatro condiciones y en las 30 semillas independientes de evaluación. P0 es referencia productiva separada. La selección entrenada hace fuerte al comparador fijo para CES en la condición principal, pero le concede información previa adicional; una diferencia P2–P1 no identifica aisladamente el valor causal de adaptar la relación.
+
+**Medidas y lectura.** Principal: CES acumulado y su interacción factorial, calculada por semilla; diferencias/IC95 pareados sobre semillas. Secundarias: éxito funcional, déficit normalizado, competencias por celda, esfuerzo productivo/de enseñanza/total, número de lecciones y relación seleccionada, trayectoria por periodo. Se mostrarán interacciones de transición controlada y de política por separado. El signo de `I_CES` en bucle cerrado incluye respuesta de acciones; no se atribuirá a la identidad mecánica de MIS-v2 y transferencia. Una interacción nula/negativa se conservará como resultado. No se cambiarán instancias ni parámetros tras ver resultados.
+
+### Ejecución y resultados del diseño fijado
+
+**Validación previa.** Las transiciones usan las implementaciones existentes `mis_v2_transition_nk` y `teaching_transition_nk`; no se modificaron sus ecuaciones ni P0/P1/P2. El catálogo conjunto con eficacia real y con eficacia cero es idéntico; la ruta de acciones controladas pertenece a ambos y mantiene un cargo de enseñanza `2u=.5` por periodo en las cuatro celdas. El primer CES coincide entre celdas porque producción antecede al desarrollo. La prueba de una celda confirma `I_c=-(M(c,x)-c)·(.4·.25·T)`. La demanda generada por semilla es común a condiciones y políticas; 29/30 semillas de evaluación tuvieron al menos un cambio (`2.1` cambios medios; 352 periodos `x`, 368 `y`). La observación de competencia es perfecta en todo el protocolo; P2 solo actualiza memoria de eficacia después de una lección. Pruebas focalizadas antes de ejecutar: **46 passed**.
+
+**Factorial de transiciones, acciones emparejadas:** CES acumulado medio [IC95] entre 30 semillas independientes; el éxito es número de periodos funcionales sobre 24. Cada celda utiliza exactamente `24` unidades productivas y `12` de enseñanza, `36` en total por réplica.
+
+| Celda | CES acumulado [IC95] | Éxitos medios | Déficit normalizado acumulado medio | Competencia final media `B/y` |
+|---|---:|---:|---:|---:|
+| `J00` ninguna transición | 7.133 [6.530, 7.736] | 11.73 | 6.900 | .200 |
+| `J10` MIS-v2 | 12.648 [12.189, 13.108] | 21.80 | .620 | .926 |
+| `J01` transferencia | 9.915 [9.690, 10.140] | 19.47 | 1.200 | .892 |
+| `J11` ambas | 13.411 [12.811, 14.011] | 22.50 | .458 | .990 |
+
+Para CES, el efecto marginal de transferencia fue `+2.782` sin MIS-v2 y `+.763` con MIS-v2; **interacción factorial pareada `I_CES=−2.019`, IC95 `[−2.440,−1.598]`**. La interacción de éxitos fue `−7.03` periodos, IC95 `[−8.69,−5.37]`. La interacción final de competencia `B/y` fue `−.628` (misma exposición y lección en todas las semillas), coherente con saturación del hueco de competencia. La mejora absoluta de `J11` frente a `J10` existe en esta ruta, aunque es menor que el efecto de transferir sin MIS-v2. La demanda afecta CES y éxito, mientras la exposición controlada de `B/y` permanece constante.
+
+**Bucle cerrado.** P1 se eligió entre las cuatro relaciones factibles usando solo 20 semillas de entrenamiento `J11`; CES medio de entrenamiento: `A→B/x=16.254`, `A→B/y=15.621`, `B→A/x=14.741`, `B→A/y=15.666`. Se congeló `A→B/x` en todas las celdas de evaluación. No se entrenó con ninguna semilla `43000–43029`.
+
+| Política | `J00` CES | `J10` CES | `J01` CES | `J11` CES [IC95] | `J11` éxitos /24 | `J11` esfuerzo prod. + enseñanza | `J11` lecciones |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| P0 productiva | 16.613 | 34.762 | 16.613 | 34.762 [34.007, 35.517] | 23.03 | 48.000 + 0 | 0 |
+| P1 relación fija entrenada | 8.307 | 14.531 | 10.712 | 15.976 [15.368, 16.584] | 20.37 | 24.000 + 12.000 | 24 |
+| P2 adaptativa | 16.281 | 33.999 | 17.167 | 34.249 [33.448, 35.050] | 23.03 | 47.033 + .483 | .97 |
+
+En `J11`, diferencia pareada P2−P0 de CES `−.513`, IC95 `[−.570,−.456]`; P2−P1 `+18.273`, IC95 `[17.835,18.711]`. P1 es la mejor **relación fija de su clase** en entrenamiento, no un óptimo de todos los calendarios de enseñanza. La regla P1 enseña en los 24 periodos y utiliza `36/48` unidades disponibles; P2 enseña aproximadamente una vez, y P0 no enseña. Los costes y trayectorias de acciones difieren; por ello las brechas entre políticas no pueden atribuirse solo a una transición. P0 es además una referencia fuerte sin enseñanza en esta instancia; P2 no la supera en `J11` para el CES principal, aunque ambas alcanzan `23.03` éxitos medios.
+
+Interacción `I_CES` dentro de cada política: P0 `0` (nunca enseña); P1 `−.960`, IC95 `[−1.293,−.627]`; P2 `−.637`, IC95 `[−.768,−.507]`. Para P2, el efecto marginal de transferencia sobre CES fue `+.887` sin MIS y `+.249` con MIS. Este contraste de bucle cerrado incluye las decisiones y el feedback de eficacia, no identifica el efecto mecánico aislado. El resultado negativo de interacción no significa transferencia nociva: con acciones controladas y en P2, la transferencia elevó CES respecto a la misma condición MIS.
+
+**Interpretación y límites.** El experimento comprueba una interacción física subaditiva en competencia bajo exposición y enseñanza sobre la misma celda y una interacción negativa de CES en la ruta controlada. En el bucle cerrado de esta configuración, P2 recupera casi todo el rendimiento de P0 con un pequeño coste de enseñanza, pero no aporta una mejora colectiva en `J11`; la P1 entrenada queda limitada por su regla fija de enseñanza, pese a haber seleccionado la mejor relación disponible en su clase. El protocolo usa una instancia sintética 2×2, 24 periodos, parámetros del caso de referencia y demanda C5; no estima prevalencia ni validez externa. La observación perfecta y la señal de eficacia sin ruido simplifican la información de P2. CES es rendimiento bruto; el esfuerzo se informa por separado. Los IC95 usan semillas como réplicas y son descriptivos para este diseño, sin corrección por multiplicidad. La capacidad validada del laboratorio es la conmutación controlada de dos transiciones sobre el mismo estado con acciones/cargos fijos, y su evaluación separada bajo políticas existentes en bucle cerrado.
+
+Artefactos: `experiments/run_hls_s4_transfer_interaction.py`, `tests/test_hls_s4_transfer_interaction.py` y `results/experiments/hls_s4_transfer_interaction/results.json` (un JSON compacto con valores por semilla, resúmenes, contrastes y una traza ejemplar). **Estado:** estudio acotado ejecutado y cerrado; cualquier ampliación requiere decisión posterior del PI.
+
+## 2026-10-22 — S4: estimación bayesiana × planificación
+
+**Autorización y pregunta.** GO acotado del PI para evaluar si actualizar las estimaciones de competencias aumenta el valor colectivo de planificar mediante Bellman frente a una decisión reactiva exacta. La configuración es A: sistema S4 pequeño, competencias reales ocultas, observación productiva ruidosa, demanda conocida y transición MIS-v2; B: planificación intertemporal sobre asignaciones factibles B2; C: estimador bayesiano existente y planificador S4 existente.
+
+**Diseño fijado.** Factorial 2×2: reactiva/Bellman × estimación congelada/actualizada. Se reutilizan el caso `A_no_future_return` y la familia S4 ya registrada de horizontes 1–4. Cada celda tiene dos agentes y dos tareas; la familia de inversión demanda solo la tarea `x`. Se usan 30 semillas emparejadas (`81000–81029`), ruido normal de observación `σ=.02`, prior uniforme discreto de 101 puntos en `[0,1]` (media `.5`) para todas las competencias y condiciones, y los parámetros MIS-v2 de los casos originales. El prior inicial común no usa competencias verdaderas. Las observaciones se producen para las parejas ejecutadas y se generan con innovaciones indexadas por semilla, periodo y pareja.
+
+“Congelada” significa que no se incorpora la verosimilitud de observaciones; el estimador sí se propaga por la transición MIS-v2 conocida tras la acción ejecutada. “Actualizada” asimila las observaciones ejecutadas y luego propaga por MIS-v2. Ambas políticas reciben el mismo tipo de observación y la misma información de demanda. En cada periodo, la política reactiva maximiza exactamente la recompensa inmediata sobre la media posterior; Bellman resuelve el sufijo conocido desde esa misma media y ejecuta la primera asignación. Es planificación de certeza equivalente: no resuelve el POMDP ni es planificación bayesiana óptima. La transición física emplea `mis_v2_transition_nk`; la predicción del posterior emplea `predict_mis_v2_nk`. La ley MIS-v2 es afín en cada competencia, por lo que propagar la media coincide con la media de las competencias propagadas bajo esa ley.
+
+**Corrección de inicialización detectada en verificación.** Una ejecución preliminar de comprobación con el prior momento-equivalente por defecto mostró masa prácticamente nula fuera de `{0, .5, 1}`; no permitía actualizar de manera informativa competencias reales intermedias como `.525`. Esa ejecución no se usa como resultado. Antes de la campaña registrada se sustituyó únicamente el prior por una cuadrícula uniforme declarada; se conservaron el soporte acotado, la verosimilitud/update bayesiano y la transición existentes. Esta decisión y el resultado negativo preliminar quedan visibles para trazabilidad.
+
+**Resultados.** La métrica es recompensa colectiva acumulada calculada con competencias reales pretransición; la unidad de replicación son las semillas. IC95 de medias y contrastes se calcularon como aproximación normal pareada (`1.96×SE`).
+
+| Caso | R-F | R-A | B-F | B-A | Interacción `I=(B-A−R-A)−(B-F−R-F)` [IC95] |
+|---|---:|---:|---:|---:|---:|
+| Sin retorno futuro, `T=1` | .7000 | .7000 | .7000 | .7000 | .0000 [.0000, .0000] |
+| Familia inversión, `T=1` | .5250 | .5250 | .5250 | .5250 | .0000 [.0000, .0000] |
+| Familia inversión, `T=2` | 1.1213 | 1.1213 | 1.1250 | 1.1250 | .0000 [.0000, .0000] |
+| Familia inversión, `T=3` | 1.7781 | 1.7781 | 1.8438 | 1.8438 | .0000 [.0000, .0000] |
+| Familia inversión, `T=4` | 2.4864 | 2.4864 | 2.6328 | 2.6328 | .0000 [.0000, .0000] |
+
+No cambió ninguna trayectoria de decisiones entre estimación congelada y actualizada para una política y caso dados; por tanto, el contraste de interacción es exactamente cero en las 30 réplicas de cada caso. Bellman superó a la decisión reactiva en los horizontes 2–4 de la familia, pero en la misma magnitud con estimación congelada y actualizada: la ganancia de planificación ya observada en S4 no aumentó al incorporar las observaciones. El MSE previo medio disminuyó ligeramente con actualización en la trayectoria reactiva para `T=2–4` (aprox. `.052947→.052938`, `.052929→.052905`, `.052915→.052886`); en Bellman aumentó ligeramente (`.052969→.052998`, `.052969→.052996`, `.052969→.052992`). Por tanto, aquí la mejora pequeña de ajuste global no alteró la asignación ni la recompensa.
+
+El tiempo medio medido por decisión fue inferior a `.2 ms` en estas instancias; el coste no es una evidencia de escalabilidad. Las medias de recompensa y de interacción fueron idénticas entre semillas, así que los IC de recompensa/interacción son degenerados; el ruido de observación modificó estimaciones, pero no decisiones en este protocolo.
+
+**Interpretación y límites.** La hipótesis de que actualizar estimaciones aumentaría el valor de Bellman no recibe apoyo en las instancias evaluadas; el contraste factorial la debilita para este conjunto, pero no demuestra equivalencia general. La experiencia informativa fue escasa y las decisiones no cruzaron ningún umbral de asignación. El control sin retorno confirma interacción nula cuando no hay continuación. El resultado muestra que integrar dos componentes ejecutables no basta para obtener complementariedad de rendimiento. El estimador conserva sus ecuaciones, pero usa un prior uniforme especificado para competencias ocultas intermedias; Bellman sigue siendo una referencia exacta solo para su modelo de certeza equivalente, no para el problema parcialmente observable. La familia S4 es pequeña y previamente construida para estudiar valor de planificación; no se estima prevalencia ni generalización.
+
+**Validación y artefactos.** Se verificaron la igualdad de la primera decisión ante cambios exclusivos de competencia oculta, actualización solo de parejas ejecutadas, propagación de la media mediante MIS-v2, coincidencia de la transición real con `mis_v2_transition_nk`, factibilidad por catálogo S4, y reproducibilidad por semilla. Resultados: `results/experiments/hls_s4_estimation_planning/results.json`; implementación adaptadora: `src/hls/synthetic/hls_s4_estimation_planning.py`; runner y pruebas focalizadas: `experiments/run_hls_s4_estimation_planning.py`, `tests/synthetic/test_hls_s4_estimation_planning.py`. **Estado:** experimento acotado ejecutado y registrado; no se inicia otro experimento.
+
+## 2026-10-22 — S4: repetición con actualización informativa
+
+**Objetivo.** GO del PI para repetir el factorial de estimación × planificación en un régimen donde las observaciones puedan mover el posterior y las decisiones. Se conservaron A/B/C y la política de certeza equivalente de la entrada anterior. La regla de actualización bayesiana, transición MIS-v2 y optimizadores no cambiaron.
+
+**Calibración predeclarada.** Se examinaron candidatos en orden, con semillas `80000–80009`, y se seleccionó el primero que cumplía todos estos criterios, sin consultar recompensa ni interacción factorial: (i) desplazamiento medio de la media posterior de al menos `.025` tras la primera observación; (ii) decisiones reactivas posteriores distintas entre estimación congelada/actualizada en al menos la mitad de réplicas; (iii) trayectorias Bellman/reactiva distintas en al menos la mitad. El candidato 1 cumplió: competencias iniciales reales `((.55,.175),(.45,.175))`, `η=((.15,.15),(.05,.25))`, demanda `x` en cuatro periodos; prior gaussiano discretizado en 101 puntos, medias `((.52,.50),(.55,.50))`, desviación `.12`; ruido productivo `σ=.02`. El desplazamiento posterior medio en parejas observadas fue `.05667`; la fracción de semillas con cambio reactivo posterior fue `1.0`; la fracción con trayectorias Bellman/reactiva distintas bajo F fue `1.0`. No se evaluaron candidatos posteriores.
+
+La evaluación usó semillas independientes `82000–82029`. Incluyó el control sin retorno futuro `A_no_future_return` y la familia fijada de horizontes `T=1,2,3,4` con el candidato calibrado. Se ejecutaron R-F, R-A, B-F y B-A sobre las mismas instancias. Las competencias reales se usaron para producción, transición y métricas; las políticas recibieron solo prior, demanda y outcomes observados. Semillas indexaron ruido por periodo y pareja, sin forzar que las políticas observaran las mismas parejas.
+
+**Resultados.** Métrica principal: recompensa colectiva acumulada sobre competencias reales. IC95 pareados usan réplicas como unidades y aproximación normal `1.96×SE`.
+
+| Caso | R-F | R-A | B-F | B-A | `I=(B-A−R-A)−(B-F−R-F)` [IC95%] |
+|---|---:|---:|---:|---:|---:|
+| Sin retorno, control | .7000 | .7000 | .7000 | .7000 | .0000 [.0000, .0000] |
+| Familia, `T=1` | .4500 | .4500 | .4500 | .4500 | .0000 [.0000, .0000] |
+| Familia, `T=2` | .9275 | 1.0000 | .9275 | 1.0000 | .0000 [.0000, .0000] |
+| Familia, `T=3` | 1.4311 | 1.6175 | 1.8424 | 1.8424 | −.1864 [−.1864, −.1864] |
+| Familia, `T=4` | 1.9596 | 2.2924 | 2.5660 | 2.5660 | −.3328 [−.3328, −.3328] |
+
+Los contrastes tienen IC degenerados porque las trayectorias de asignación fueron invariantes entre las 30 semillas dentro de cada condición; la variación del ruido no cruzó los umbrales de acción en este diseño. La fracción de periodos con asignación distinta entre A y F fue, para reactiva, `.50/.667/.75` en `T=2/3/4`; para Bellman, `.50/0/0`. En T=3 y T=4, actualizar el posterior elevó la recompensa reactiva en `.1864` y `.3328`, respectivamente, mientras Bellman no cambió su trayectoria ni recompensa. Por ello la ventaja Bellman−reactiva se redujo exactamente en esas cantidades: la interacción fue negativa. En T=2, la actualización benefició por igual a ambas reglas y la interacción fue cero.
+
+La magnitud media `L1` de actualización posterior por periodo en condiciones A fue para reactiva `.01580/.01118/.00867` y para Bellman `.01580/.00344/.00274` en `T=2/3/4`; el control de un periodo fue `.08516` en el caso canónico y `.02427` en el miembro `T=1`. El MSE medio previo a decisión en `T=4` cambió de `.055194` a `.053628` para reactiva y de `.055458` a `.055404` para Bellman. Se observó así A (cambio de estimación), B (cambios de decisiones, especialmente reactiva), C (mejora de recompensa reactiva en T≥2) y D: no hubo valor adicional de planificar al actualizar; en T≥3, la actualización redujo la ventaja relativa de Bellman.
+
+Coste descriptivo por periodo en `T=4`: R-F `.0930 ms`, R-A `.0898 ms`, B-F `.1566 ms`, B-A `.1549 ms` por decisión. No implica una conclusión de escalabilidad. La propagación posterior de su media coincide con MIS-v2 por la afinidad de la transición en competencia; Bellman sigue siendo exacto solo para el problema determinista de certeza equivalente, no para el estado de creencia completo.
+
+**Conclusión y límites.** La calibración verificó un régimen operativo: observaciones informativas, cambios de decisiones y diferencia entre planificación y reacción. La hipótesis de complementariedad positiva queda **debilitada en esta instancia**: la actualización ayudó a la política reactiva y no cambió Bellman, produciendo interacción negativa a horizontes 3 y 4. Esto es compatible con sustitución entre información y planificación en esta configuración, no demuestra una regla general. El control sin retorno confirma que las observaciones no alteran la recompensa ya ejecutada. La evaluación es una familia pequeña heredada, una matriz de competencias y demanda determinista; los intervalos degenerados reflejan políticas estables bajo los outcomes evaluados y no garantizan ausencia de incertidumbre en otras instancias.
+
+**Artefactos y validación.** Calibración: `experiments/calibrate_hls_s4_estimation_planning.py` y `results/experiments/hls_s4_estimation_planning_informative/calibration.json`. Ejecución: `experiments/run_hls_s4_estimation_planning_informative.py`, con trazas y resúmenes en `results/experiments/hls_s4_estimation_planning_informative/results.json`. Adaptador S4 y pruebas: `src/hls/synthetic/hls_s4_estimation_planning.py`, `tests/synthetic/test_hls_s4_estimation_planning.py`. Pruebas focalizadas, incluido estimador y MIS-v2: **42 passed**; `git diff --check` sin errores. **Estado:** repetición acotada completada; no se inicia otra campaña.
+
+## 2026-10-22 — S4: repetición con oportunidades de transferencia
+
+**Autorización y objetivo.** GO del PI para evaluar MIS-v2 y transferencia en
+bucle cerrado en un régimen donde enseñar tenga una oportunidad organizativa
+plausible. Se reutilizaron las transiciones N×K, los costes, el generador C5 y
+P0/P1/P2; no se modificaron sus reglas de decisión ni las ecuaciones físicas.
+La evaluación se limita a la configuración congelada que sigue.
+
+**Calibración ex ante, independiente de P0/P1/P2.** Se conservaron las
+competencias iniciales `((.85,.15),(.20,.20))`, C5 Markov (`x/y=.5/.5`,
+permanencia `.9`), horizonte `T=24`, presupuesto colectivo `2` y límites
+individuales `1`. Se aumentó el requisito de y de `.40` a `.70`: el output y
+máximo inicial sin lección es `.35`, y una lección A→B/y con eficacia `.8`,
+tasa `.4` y esfuerzo `.25` aporta `.064` a B/y; aun sin contar producción,
+la suma inicial de competencia y tras esa transferencia es `.414 < .70`. La
+transición conserva su ley original; se calibró su parámetro MIS-v2 `eta[B,y]`
+en el orden predeclarado `.18, .10, .05`, dejando el resto de `eta` y la
+eficacia/tasa/esfuerzo de transferencia sin cambios.
+
+El criterio no consultó políticas ni recompensas de P2: trayectoria física
+fija con la demanda C5, un primer y en que se compara no enseñar (producción
+1.5) con enseñar (producción 1.0 + coste docente `.5`), y después acciones
+productivas iguales; exigir déficit inicial, transición de enseñanza positiva,
+al menos ocho periodos y-demandados de media y CES acumulado neto positivo en
+al menos 8/10 trayectorias de calibración (`44000–44009`). Los candidatos
+`eta[B,y]=.18/.10/.05` dieron diferencias CES medias `−.1251/+ .0049/+.1458`
+y signos positivos en `0/5/8` de 10 trayectorias, respectivamente. Se congeló
+`.05`, el primero que cumplió el criterio. La pérdida CES inmediata media al
+enseñar en el primer y fue `.075`; la ganancia posterior bajo esa ruta fija
+compensó esa oportunidad de producción. Esto demuestra potencial físico para
+esa ruta, no que P2 vaya a seleccionarla ni que supere a P0.
+
+**Evaluación fijada.** P1 se seleccionó entre las cuatro relaciones usando
+20 semillas de entrenamiento (`44100–44119`) y luego se congeló; la mejor fue
+A→B/x (CES medio de entrenamiento `15.839`, frente a `15.772` para A→B/y,
+`14.327` para B→A/x y `15.210` para B→A/y). P0, P1 y P2 se ejecutaron sobre
+las mismas 30 trayectorias C5 de evaluación (`44200–44229`), independientes
+de calibración y entrenamiento, con la misma información perfecta del estudio
+S4 previo. La unidad de réplica es la semilla. Los intervalos de diferencias
+son pareados; las medias tienen IC95% t de Student.
+
+| Política | CES acumulado [IC95%] | P2−comparador CES [IC95%] | Éxitos /24 | Déficit normalizado | Lecciones | Esfuerzo productivo + docente; ocioso |
+|---|---:|---:|---:|---:|---:|---:|
+| P0 productiva | `32.421 [31.235,33.606]` | — | `21.10` | `.807` | `0` | `48.00 + 0; 0` |
+| P1 relación fija entrenada (A→B/x) | `15.399 [14.460,16.339]` | `+16.231 [15.739,16.722]` | `13.97` | `4.480` | `24` | `24.00 + 12.00; 12.00` |
+| P2 adaptativa | `31.630 [30.421,32.840]` | `−.791 [−.840,−.741]` vs P0 | `21.10` | `1.892` | `2.90` | `45.10 + 1.45; 1.45` |
+
+La otra diferencia pareada fue P1−P0 CES `−17.021`, IC95%
+`[−17.474,−16.569]`. En evaluación había **24/24 periodos por semilla** con
+alguna acción docente factible y con al menos una acción sobre la competencia
+requerida en ese periodo (18 acciones conjuntas factibles sobre la tarea
+actual, con el catálogo y los recursos configurados). Por tanto, las 2.9
+lecciones medias de P2 no se explican por ausencia de acciones factibles.
+P2 enseñó 2 o 3 veces en cada semilla (57 lecciones A→B/y y 30 B→A/y); primera
+lección en promedio en `t=4.70`, última en `t=8.37`. P1, por su regla fija,
+enseñó A→B/x en los 24 periodos, incluidos periodos cuya demanda era y.
+
+**Competencias y lectura de A/B/C.** P2 produjo transferencia positiva: las
+ganancias transferidas medias fueron `A/y=.047`, `B/y=.111` por réplica; sus
+ganancias MIS-v2 en y fueron `.503` y `.226`. P0, sin transferencia, obtuvo
+ganancias MIS-v2 en y de `.594` y `.298`. Las ganancias agregadas en y son
+parecidas (`.887` P2, contando transferencia, frente a `.892` P0), lo que es
+compatible con que la transferencia sustituyera parte del aprendizaje por
+producción en esta ruta; no identifica por sí solo mediación causal.
+La competencia inicial fue `((.85,.15),(.20,.20))`. Medias finales por
+agente/competencia fueron P0 `((.979,.744),(.801,.498))`, P1
+`((.957,.576),(.944,.375))` y P2 `((.979,.700),(.801,.537))`. La evaluación
+tuvo en promedio `10.13` periodos con demanda y por réplica.
+
+- **A — Sistema:** las necesidades de y exceden el output inicial, existe una
+  relación docente con eficacia positiva y C5 ofrece tiempo futuro; la
+  calibración física muestra un beneficio potencial neto bajo una ruta fija.
+- **B — Modalidad:** esfuerzo productivo y una lección compiten por el mismo
+  presupuesto de recursos; las acciones docentes son factibles durante todos
+  los periodos y su coste está contabilizado.
+- **C — Arquitectura:** P2 selecciona lecciones adaptativamente y las activa,
+  pero no convirtió esa activación en mejora de CES ni de éxitos frente a P0.
+  P2 tuvo los mismos éxitos que P0 y CES `.791` menor; P1 fue aún peor y su
+  coste fijo implicó 12 recursos ociosos por réplica.
+
+**Conclusión y límites.** Se verifican A (transferencia físicamente positiva
+bajo la ruta de calibración), B (P2 selecciona oportunidades docentes) y C
+(en este bucle cerrado, enseñar no mejora el resultado colectivo frente a
+P0). La enseñanza seleccionada es compatible con un coste de oportunidad
+observable: P2 usó `1.45` recursos docentes y produjo `2.90` unidades menos
+de esfuerzo productivo que P0, con idéntico número medio de éxitos pero más
+déficit y menor CES. Así, el potencial mecánico del desarrollo no basta para
+garantizar beneficio de la política. La comparación con P1 es frente a la
+mejor relación fija dentro de esa clase en entrenamiento independiente; su
+regla enseña siempre y no equivale a un calendario fijo optimizado.
+
+El cribado fue deliberadamente físico y estrecho; la calibración escogió un
+régimen donde una ruta de transferencia puede pagar su coste, no una victoria
+de P2. Solo se evaluó una configuración, con observación perfecta, C5 de dos
+estados y parámetros sintéticos; no se infiere superioridad general ni se
+separan causalmente los mediadores del bucle cerrado. El resultado negativo
+P2−P0 se conserva como tal.
+
+Artefactos: runner `experiments/run_hls_s4_transfer_opportunities.py`, pruebas
+`tests/test_hls_s4_transfer_opportunities.py` y resultado reproducible con
+semillas, calibración, agregados, diferencias pareadas y trazas por periodo en
+`results/experiments/hls_s4_transfer_opportunities/results.json`. Pruebas
+focalizadas: `PYTHONPATH=src:. pytest -q
+tests/test_hls_s4_transfer_opportunities.py
+tests/test_hls_s4_transfer_interaction.py` — **9 passed**. `git diff --check`
+se ejecutó tras documentar. **Estado:** esta repetición queda registrada y
+cerrada; no se inicia otra campaña.
+
+## 2026-10-22 — S4: referencia intertemporal exacta de transferencia
+
+**Objetivo y modelo.** Se implementó una referencia exacta para medir el valor
+organizativo de permitir transferencia, manteniendo las leyes físicas
+existentes. El estado es la matriz real de competencias `C_t`; las acciones
+son asignaciones productivas del catálogo declarado y, en la condición B,
+opcionalmente una lección dirigida factible. El reward por periodo es el CES
+colectivo vigente calculado sobre la producción **antes** de las transiciones;
+el déficit funcional se registra, pero no es una penalización adicional del
+objetivo. El estado siguiente aplica primero MIS-v2,
+`c' = 1-(1-c)exp(-lambda(eta)e)`, y luego, si hay lección,
+`c'' = min(1,c' + r e T[i,j,k](1-c'))`. La enseñanza consume los mismos
+recursos y límites individuales según el validador existente. La demanda y
+las competencias son deterministas; la referencia exacta conoce la secuencia
+completa y el estado real. No representa una política desplegable.
+
+**Instancia fijada y espacio de acciones.** Dos agentes (`A,B`), dos
+competencias (`x,y`), `C_0=((.85,.15),(.20,.20))`, parámetros MIS-v2
+`eta=((.20,.15),(.12,.05))`, secuencia de demanda `x,y,y`, requisitos
+`(.35,0)` y `(0,.70)`, pesos CES unitarios sobre la tarea activa, presupuesto
+colectivo `2`, límites individuales `1`, esfuerzo docente `.25`, tasa de
+transferencia `.4` y tensor de eficacia del experimento S4 previo sin cambios
+(incluida `T[A,B,y]=.80`). Se reutilizaron íntegramente los seis vectores de
+esfuerzo declarados por agente; no se redujo el catálogo. La enumeración
+existente produce 36 acciones productivas factibles por periodo en A y 72
+acciones factibles en B, que incluyen todas las acciones de A sin enseñanza.
+La reconstrucción independiente desde los vectores de esfuerzo y relaciones
+docentes encontró exactamente los mismos catálogos.
+
+**Métodos y verificaciones.** Bellman memoizado optimiza por estado y periodo
+en las dos condiciones. Una enumeración independiente recorre secuencias
+factibles completas (46.656 en A y 373.248 en B); no usa la recurrencia ni el
+constructor de acciones de Bellman. Bellman y enumeración coinciden en ambas
+condiciones. También se verificó `J_B* >= J_A*`, la inclusión de acciones A en
+B, la factibilidad de recursos en las trayectorias y que el óptimo de B con
+eficacia física fijada a cero coincide con A.
+
+**Resultado exacto.** `J_A*=1.9175000000000004` y
+`J_B*=1.9175000000000004`; valor organizativo de disponibilidad de
+transferencia en esta instancia: `0`. Ambas referencias eligen las mismas
+acciones: en `t=0` asignan esfuerzo `1` a x para cada agente (reward `1.05`);
+en `t=1,2` asignan esfuerzo `1` a y para cada agente (rewards `.35` y
+`.5175`). No enseñan. El output y permanece bajo el requisito `.70` en ambos
+periodos (`.35` y `.5175`), pero maximizar el CES vigente no aplica una
+bonificación adicional por cruzar ese umbral. La competencia evoluciona por
+MIS-v2 de `((.85,.15),(.20,.20))` a `((.88,.15),(.296,.20))` tras x; luego
+`y` lleva los valores a `((.88,.2775),(.296,.24))` y
+`((.88,.385875),(.296,.278))`.
+
+Como diagnóstico adicional dentro de la misma enumeración, el mejor plan que
+contiene al menos una lección obtiene `1.7239746573521653`, es decir,
+`0.19352534264783516` menos que el óptimo. Enseña A→B/y en `t=1`: la
+competencia de B/y sube por MIS-v2 de `.20` a `.220256` y por transferencia a
+`.282636` (incremento transferido `.062379`). La producción y del periodo
+baja a `.175`; en el último periodo el output y es `.498975`, todavía inferior
+al plan sin enseñanza (`.5175`). En esa acción quedan `.5` recursos colectivos
+sin usar por la granularidad del catálogo y los límites individuales. Así,
+el desarrollo físico ocurre, pero no compensa la producción sacrificada en
+este horizonte.
+
+**Interpretación y límites.** La igualdad no indica que la transferencia sea
+inútil en general: en esta instancia corta, la demanda de la competencia
+objetivo coincide con el periodo en que habría que pagar el coste; MIS-v2
+desarrolla ambas competencias de y mediante producción y genera retorno
+productivo inmediato, mientras la lección solo cambia el estado futuro. El
+resultado también depende de la recompensa CES que no premia directamente
+alcanzar el requisito funcional, de los recursos y del catálogo discreto
+declarado. No se atribuye la igualdad a P2: las dos cifras son óptimos
+intertemporales con modelo conocido. El valor de P2 requeriría una comparación
+separada contra estas cotas y no se evaluó aquí.
+
+**Artefactos y estado.** Implementación acotada: `src/hls/synthetic/hls_s4_transfer_exact.py`;
+runner y resultado: `experiments/run_hls_s4_transfer_exact.py` y
+`results/experiments/hls_s4_transfer_exact/results.json`; pruebas:
+`tests/synthetic/test_hls_s4_transfer_exact.py`. Pruebas focalizadas:
+**4 passed**. Bellman para ambas condiciones tardó descriptivamente `1.29 s`
+y enumeración independiente `13.03 s` en esta ejecución; no se infiere
+escalabilidad de esos tiempos. Se reutilizaron MIS-v2, transferencia, reward,
+catálogo y validación de recursos; P0/P1/P2 y las leyes físicas no se
+modificaron. **Conclusión:** referencia exacta viable para esta instancia;
+valor de transferencia nulo con `T=3`, `x,y,y`. No se ajustaron parámetros
+tras el resultado. Como modificación motivada —no ejecutada— se propone una
+instancia determinista `x,x,y,y`: dos periodos de preparación productiva antes
+de dos demandas consecutivas de y. Esto representa explícitamente un plazo
+para desarrollar capacidad antes de un cuello de botella sostenido; permite
+al MIS-v2 desarrollar y mediante esfuerzo productivo en periodos x (sin
+recompensa CES inmediata por y) y a la transferencia prepararla antes de su
+demanda. La comparación exacta seguiría usando el mismo catálogo y recursos
+en A/B. No se presupone que el nuevo perfil dé ventaja a B; requiere
+autorización aparte.
+
+## 2026-10-22 — S4: frontera preparación × demanda futura para transferencia
+
+**Objetivo y configuración.** Por autorización del PI, se amplió el uso de la
+referencia Bellman exacta para comparar el óptimo A (producción + MIS-v2) con
+el óptimo B (las mismas acciones más transferencia opcional). Se conservaron
+sin cambios dos agentes, las competencias iniciales `((.85,.15),(.20,.20))`,
+parámetros MIS-v2 `((.20,.15),(.12,.05))`, los límites individuales y el
+presupuesto colectivo existentes, el esfuerzo/coste y tasa de enseñanza, el
+tensor de eficacia, el catálogo completo de esfuerzo, la transición física y
+el CES. Solo cambió la secuencia de demanda: `x^p y^q`. Se evaluaron los tres
+puntos T=4 predeclarados (`p,q` = `(2,2)`, `(1,3)`, `(3,1)`) y una ampliación
+secuencial acotada a T=5 (`(2,3)`) tras comprobar el coste del primer nivel.
+No se alteraron parámetros físicos ni se escogieron instancias por reward.
+
+**Método y verificaciones.** Bellman memoizado enumeró en cada periodo el
+catálogo completo de acciones factibles del laboratorio: 36 acciones en A y
+72 en B, incluyendo todas las acciones de A en B; no se restringió el espacio
+de decisiones. En todas las instancias se comprobó `J_B* >= J_A*` y que B con
+eficacia física de transferencia igual a cero coincide con A. La verificación
+independiente por enumeración completa de secuencias para el caso previamente
+registrado `x,y,y` volvió a coincidir con Bellman: 46.656 secuencias A y
+373.248 B. Este control independiente valida las leyes/catálogos y la
+recurrencia en una instancia pequeña; la enumeración exhaustiva no se extendió
+a T=4/5 por el tamaño del producto de acciones (26.873.856 secuencias B ya en
+T=4 y 1.934.917.632 en el punto T=5). La expansión se mantuvo exacta, sin
+discretización ni aproximación.
+
+**Resultados.** Las recompensas son CES acumuladas; éxito funcional y déficit
+se registran aparte y no son términos adicionales del objetivo.
+
+| Preparación `p` | Demanda futura `q` | `J_A*` | `J_B*` | `Δ` | Lecciones óptimas B |
+|---:|---:|---:|---:|---:|---:|
+| 2 | 2 | 3.093500 | 3.093500 | 0 | 0 |
+| 1 | 3 | 2.581375 | 2.581375 | 0 | 0 |
+| 3 | 1 | 3.860480 | 3.860480 | 0 | 0 |
+| 2 | 3 | 3.757375 | 3.757375 | 0 | 0 |
+
+En `x,x,y,y`, ambas referencias eligen producción completa en x en los dos
+primeros periodos (rewards `1.050000`, `1.176000`) y en y en los dos últimos
+(`.350000`, `.517500`). MIS-v2 desarrolla y durante su ejecución; las dos
+salidas y siguen por debajo del umbral funcional `.70`, aunque el CES las
+recompensa como `.35` y `.5175`. En `x,y,y`, el único periodo x no proporciona
+tiempo adicional de preparación y las salidas y son `.35`, `.5175`, `.663875`.
+Con tres periodos x y uno y, el óptimo acumula `.35` en el único periodo y:
+una lección no tiene retorno productivo suficiente dentro del horizonte. En
+`x,x,y,y,y`, la trayectoria óptima coincide con `x,x,y,y` hasta el segundo y,
+y produce `.663875` en el último; competencias y déficits quedan registrados
+por periodo en el artefacto de resultados. En ninguno de los cuatro óptimos B
+enseña: el aumento de horizonte/demanda probado no crea una región de valor
+positivo para transferir bajo estos parámetros.
+
+**Coste computacional y frontera observada.** En esta máquina, Bellman B
+visitó 120.085 estados y tardó descriptivamente 12.60–12.74 s para cada
+instancia T=4. Para el único punto T=5 visitó 654.665 estados y tardó 93.50 s;
+el producto bruto de acciones crece mucho más rápido que el número de estados
+memoizados. Son mediciones de esta ejecución, no una afirmación de escalabilidad.
+El crecimiento observado define el límite práctico de esta evaluación: no se
+amplió a T=6 ni se hizo búsqueda adicional. T=5 permaneció resoluble de forma
+exacta, pero ya con un coste sustancial.
+
+**Interpretación organizativa.** No se identificaron, dentro de la frontera
+temporal explorada y con las leyes físicas, CES, recursos y competencias
+existentes, condiciones donde la transferencia mejore el óptimo colectivo
+frente a MIS-v2. En los perfiles con preparación, la producción x permite
+mejorar x vía MIS-v2, pero el y futuro se desarrolla mediante MIS-v2 al
+asignar y; la lección consume recursos productivos y su incremento transferido
+no recupera ese coste antes del final del horizonte. Alargar la demanda y
+permite más actualizaciones MIS-v2 por experiencia, no evidencia un cambio
+de régimen a favor de enseñar en T=5. Esto es una conclusión exacta para las
+instancias evaluadas, no una prueba de que la transferencia carezca de valor
+en otros parámetros o perfiles de demanda. La frontera `Δ>0` no quedó
+identificada.
+
+**Artefactos, pruebas y estado.** Runner: `experiments/run_hls_s4_transfer_frontier.py`;
+resultados compactos con trazas óptimas por periodo:
+`results/experiments/hls_s4_transfer_frontier/results.json`; pruebas:
+`tests/synthetic/test_hls_s4_transfer_frontier.py`, junto con las pruebas de
+la referencia exacta `tests/synthetic/test_hls_s4_transfer_exact.py`.
+Ejecución focalizada: **6 passed**. `git diff --check` se ejecutó tras esta
+entrada. La referencia exacta verifica `J_B* >= J_A*`, igualdad al desactivar
+físicamente transferencia, y coincidencia Bellman/enumeración independiente
+en el caso pequeño. **Conclusión:** no se demuestra una condición positiva de
+transferencia en la familia temporal acotada; el estudio solicitado queda
+documentado y cerrado en su alcance, sin modificar P0/P1/P2 ni iniciar otra
+campaña.
+
+## 2026-10-22 — S4 y literatura de workforce learning; candidatos S5–S7
+
+**Alcance y verificación bibliográfica.** Revisión documental/científica; no
+se ejecutaron simulaciones ni se modificaron leyes o políticas. Se detecta una
+corrección de autoría: el trabajo de 2015 cuyo título se proporcionó,
+“Selection, grouping, and assignment policies with learning-by-doing and
+knowledge transfer”, es de David A. Nembhard y Frank Bentefouet, no de Jin et
+al. La página editorial confirma *Computers & Industrial Engineering* 79,
+175–187 (2015), DOI [10.1016/j.cie.2014.11.006](https://doi.org/10.1016/j.cie.2014.11.006).
+Para este trabajo se consultaron metadatos, highlights y abstract del editor,
+no el texto completo; no se atribuyen detalles cuantitativos no visibles allí.
+
+Para Jin, Hewitt y Thomas (2018), *International Journal of Production
+Research* 56(14), 4968–4982, DOI
+[10.1080/00207543.2018.1424366](https://doi.org/10.1080/00207543.2018.1424366),
+se consultó el artículo completo en la copia de autor alojada en
+[ResearchGate](https://www.researchgate.net/publication/322638546_Workforce_grouping_and_assignment_with_learning-by-doing_and_knowledge_transfer),
+contrastando título y DOI de publicación. Para Su, Zhong y Zhang (2025),
+*International Journal of Production Economics* 286, artículo 109642, DOI
+[10.1016/j.ijpe.2025.109642](https://doi.org/10.1016/j.ijpe.2025.109642),
+se consultó la página editorial y su abstract, no el texto completo. Por ello
+se pueden comparar su problema, formulación y método tal como los declara el
+abstract, pero no verificar ecuaciones completas, parámetros, resultados
+numéricos ni tratamiento de incertidumbre.
+
+**Comparación técnica con S4.**
+
+| Dimensión | HLS-S4 actual | Nembhard–Bentefouet (2015) | Jin–Hewitt–Thomas (2018) | Su–Zhong–Zhang (2025) |
+|---|---|---|---|---|
+| Competencia/productividad | Matriz `c[i,k]∈[0,1]`; producción aditiva por esfuerzo y competencia. | Productividad por trabajador/tarea con características individuales de aprendizaje y transferencia; detalle de ecuación no confirmado en el abstract consultado. | Curva hiperbólica de productividad con `K`, `r`, experiencia previa `p`; experiencia acumulada directa e indirecta. | Trabajadores multi-skilled y estructura jerárquica de skill-mix; reglas exactas de competencia no verificables desde el abstract. |
+| Aprender y transferir/formar | MIS-v2 exponencial, por celda y esfuerzo ejecutado; transferencia dirigida modifica solo al aprendiz según eficacia fija `T[docente,aprendiz,k]`. | Integra learning-by-doing y learning-by-transfer al modelo de productividad; la organización agrupa trabajadores para transferir. | Compañeros co-localizados transfieren mediante experiencia indirecta, ponderada por `θ` del receptor; no es una lección discreta con coste separado. | Planificación explícita de cursos; certificación/habilitación precede a tareas, con cursos y scheduling integrados. |
+| Organización y horizonte | Acciones por periodo; producción/enseñanza compiten por recursos; demanda C5 o secuencias conocidas; referencia exacta solo para instancias pequeñas. | Selección de trabajadores, agrupación y asignación a trabajos; heurísticas por etapa; se examinan sistemas paralelos y seriales. | Grupos de trabajadores a grupos de trabajos en sistema paralelo y horizonte finito; demuestra que bajo sus hipótesis existe óptimo especializado sin cambios de grupo/job durante el horizonte; MINLP reformulado como MIP exacto. | Modelo entero que integra calendario de cursos y schedules de empleados, con precedencia curso-tarea, capacidad de cursos y otras restricciones; CGBH basado en column generation/matheuristic. |
+| Objetivo/evidencia | CES colectivo; éxito funcional/deficits se reportan aparte. T4/T5 exactos dieron `Δ transferencia=0` en la familia `x^p y^q`; factorial físico S4 e interacción de políticas aportan evidencia distinta. | Throughput; abstract informa comparación con baseline y cota no lineal, y que selección de trabajadores tendió a afectar más que agrupación/asignación; sin cifras verificadas del texto completo. | Throughput acumulado; en 100 instancias 9 trabajadores/9 trabajos el beneficio medio de derivar el plan reconociendo transferencia fue 5.8%; reformulación exacta superó la mejor heurística por gap medio 10.59%. No modela forgetting; no demuestra demanda aleatoria. | Beneficio neto (ingresos de servicio y términos de formación/coste declarados); 18 conjuntos de instancias sintéticas de home services y análisis de escenarios/sensibilidad. No se verifican valores numéricos ni hipótesis de demanda futura incierta. |
+
+La cercanía de S4 a esta literatura es sustantiva: comparte decisiones de
+asignación/desarrollo, competencia heterogénea y horizonte, por lo que “usar
+aprendizaje y transferencia en workforce assignment” no sería por sí sola una
+novedad de HLS. Las diferencias verificables son las leyes físicas y la
+modalidad: MIS-v2 de HLS depende de exposición productiva continua y satura
+exponencialmente; Jin et al. usan una curva hiperbólica con acumulación de
+experiencia indirecta por convivencia en grupos; Su et al. planifican cursos y
+precedencias, no la transición MIS-v2 aquí implementada. En el artículo 2018
+la solución especializada fija se demuestra para sus hipótesis de aprendizaje
+monótono y sistema paralelo; no es una ley universal para demanda que cambia,
+costes de enseñar o reward CES de HLS.
+
+**Revisión de las leyes físicas S4.** `mis_v2_transition_nk` aplica
+`c'=1-(1-c)exp(-λ(η[i,k])e[i,k])`; es determinista, acotada, específica de
+agente-skill, sin forgetting ni transferencia cruzada. El output de producción
+es `Σ_i e[i,k]c[i,k]`. La ley docente aplica al aprendiz
+`min(1,c + r e T[i,j,k](1-c))`; la competencia actual del docente no aparece
+en la ecuación. Su capacidad queda resumida por la eficacia dirigida fija `T`,
+que por tanto representa una hipótesis fuerte: un docente puede tener
+efectividad constante sin que su propio dominio actual module la ganancia. La
+enseñanza carga `e` a docente y aprendiz (`2e` recursos colectivos), por lo
+que el coste de oportunidad productivo sí existe, pero no hay un coste
+monetario adicional.
+
+El reward CES se calcula sobre output antes de las transiciones. El éxito
+funcional se calcula con requisitos y umbrales en paralelo, no como premio o
+penalización CES. Los resultados de transferencia S4 muestran que esto importa:
+puede crecer CES aunque siga habiendo déficit, y alcanzar/mejorar el estado de
+una skill no equivale automáticamente a elevar el objetivo colectivo. Esto no
+es un error de implementación, sino una elección de modelado que limita qué
+afirmaciones sobre cumplimiento de servicio permite hacer. Ninguna ley se
+modifica en esta revisión.
+
+**Evaluación de candidatos (no son escenarios implementados).**
+
+| Candidato | Problema, A/B/C y mecanismos | Qué existe / qué falta y comparaciones | Aportación posible / riesgo de duplicación |
+|---|---|---|---|
+| **S5 — especialización, cuello de botella y cross-training** | A: competencias heterogéneas con una skill crítica y demanda desbalanceada/variable. B: asignación B2 con competencia multi-skill y recursos de preparación. C: MIS-v2, transferencia/P2 y optimización reactiva. Problema real: resiliencia ante ausencia o pico de demanda de una skill especialista. | Existe N×K, tareas/demanda, CES, enseñanza dirigida, MIS-v2 y P0/P1/P2; falta que la eficacia docente dependa de competencia actual, y no hay disponibilidad/ausencia/turnos explícitos. Comparar no cross-training/MIS, transferencia fija y P2, con P0 y referencia exacta pequeña. | Puede estudiar cómo competencia basal y margen de capacidad determinan si se debe especializar o cruzar-formar. Riesgo alto: muy próximo a grouping/assignment con LBD y knowledge transfer de 2015/2018 y al training-scheduling de 2025; requeriría delimitar qué decisión dinámica distinta se aporta. |
+| **S6 — aprendizaje por experiencia vs transferencia** | A: mismo sistema con capacidad de aprendizaje endógeno; B: acción productiva más enseñanza; C: MIS-v2, transferencia y referencias intertemporales. Pregunta: cuándo una vía de desarrollo sustituye o complementa a la otra. | Ya hay factorial de transiciones bajo acciones emparejadas, comparaciones de P0/P1/P2, referencia exacta MIS-v2 frente a transferencia opcional y frontera temporal T=3–5. Falta una región positiva de valor exacto en la configuración canónica, pero no justifica por sí sola repetir. | La interacción física es potencialmente interesante; riesgo muy alto de repetir los artículos 2015/2018 y experimentos S4 ya cerrados. **No GO** mientras no haya una dimensión de sistema nueva y justificada; no reabrir solo para hallar `Δ>0`. |
+| **S7 — desarrollo ante demanda futura incierta** | A: competencias endógenas y demanda futura estocástica, con distribución o proceso de demanda explícito. B: decisión B3 sobre asignación/enseñanza entre periodos. C: políticas existentes P0/P1/P2 frente a una referencia estocástica exacta pequeña; P2 no conoce el futuro. | C5 Markov y P0/P1/P2 ya operan en simulación; existe Bellman determinista de horizonte conocido. Falta que la referencia intertemporal integre probabilidades de demanda como parte del estado/transición, además de tests que separen adaptación al estado actual de preparación anticipada. Comparar reacción a demanda actual, política adaptativa de enseñanza y valor de información/predicción mediante control exacto-oracular acotado. | Puede aportar evidencia sobre valor de preparar capacidades bajo incertidumbre, distinto de los resultados actuales con secuencia conocida. Riesgo medio-alto de solapamiento con ITCESP (2025); el abstract disponible no permite determinar si su demanda es estocástica, por lo que la novedad no se puede afirmar antes de consultar texto completo. |
+
+**Recomendación.** **GO condicionado para especificar S7; NO-GO para comenzar
+implementación o simulación todavía.** Es la pregunta más diferenciada de las
+fronteras S4 ya ejecutadas: mantiene MIS-v2/transferencia y recursos, pero
+introduce incertidumbre genuina sobre qué competencias se necesitarán y mide
+si anticipar bajo una distribución conocida añade valor frente a reaccionar.
+Su viabilidad es razonable en el 2×2 ya usado con C5, aunque requeriría una
+extensión acotada del Bellman determinista a una transición probabilística de
+demanda y estado. Antes de afirmar una brecha científica hay que leer el texto
+completo de Su et al. (2025) y fijar qué incertidumbre del problema no cubre.
+La métrica debería conservar CES como objetivo y reportar éxito/déficit aparte;
+las comparaciones deben separar política ejecutable de referencia que conoce
+la ley de demanda. La evidencia publicable dependería de un efecto reproducible
+de anticipación en una familia delimitada, no de comparar únicamente P2 con un
+baseline débil. Si la lectura completa revela que el artículo ya resuelve la
+misma cuestión bajo hipótesis equivalentes, revisar prioridad antes de autorizar
+trabajo.
+
+**Estado.** S5–S7 son candidatos analizados, no nuevos escenarios ni campañas.
+No se implementó nada, no se ejecutaron simulaciones y no se modificaron leyes,
+políticas, ontología ni resultados. La prioridad propuesta se remite al PI para
+decisión.
+
+## 2026-10-22 — S7: primera referencia exacta con demanda Markov incierta
+
+**Autorización y alcance.** A petición del PI se avanzó desde la especificación
+existente de S7, sin rehacer su definición conceptual. Se leyó íntegramente el
+PDF de 19 páginas `~/Downloads/1-s2.0-S0925527325001276-main.pdf`: Su, Zhong y
+Zhang (2025), “Integrated training course planning and hierarchical multi-skilled
+employee scheduling in the workforce skill transformation context”,
+*International Journal of Production Economics* 286, 109642,
+DOI 10.1016/j.ijpe.2025.109642. El artículo presenta el ITCESP como una
+optimización integrada de calendario de cursos y asignación/scheduling de
+servicios; las tareas, sus tiempos y requisitos se declaran conocidos de
+antemano, el modelo básico es de una etapa y la demanda estocástica aparece en
+las conclusiones como extensión futura (pp. 4–5, 17 del artículo). Su modelo
+usa cursos y habilitación jerárquica, no las leyes continuas MIS-v2/transferencia
+de HLS. Por ello sirve para delimitar el antecedente, no como validación ni
+implementación del modelo HLS.
+
+**Estado anterior y diferencia abordada.** El registro ya describía S7 como
+competencias endógenas y demanda futura estocástica (A), decisión intertemporal
+B3, y comparación de P0/P1/P2 con una referencia estocástica exacta pequeña
+(C). El laboratorio ya tenía C5 Markov, las transiciones N×K de MIS-v2 y
+transferencia, catálogos exhaustivos de acciones factibles, CES y Bellman exacto
+para secuencias de demanda conocidas. Faltaba incorporar la transición
+probabilística de demanda al estado del Bellman y validarla sin revelar la
+demanda futura a la decisión actual. Esta entrada registra el primer incremento
+funcional; no cambia la ontología ni cierra S7.
+
+**Implementación.** Se añadió `src/hls/synthetic/hls_s7_uncertain_demand.py`,
+una referencia finita y específica de escenario. Para competencia real `C` y
+estado Markov observado `q`, usa
+
+`V_t(C,q) = max_a { R(C,a,q) + Σ_q' P(q'|q) V_(t+1)(F(C,a),q') }`,
+
+con condición terminal cero. `F` compone sin cambios MIS-v2 y, si está
+permitida, la transición de enseñanza existente; `R` es el CES existente. La
+acción solo condiciona en el estado de demanda actual. Se añadió también un
+comparador reactivo que maximiza recompensa inmediata y una enumeración
+independiente del árbol contingente para horizontes mínimos. La referencia
+exacta conoce el estado físico y la ley de transición: es un oráculo de
+validación, no una política ejecutable bajo competencia oculta o distribución
+desconocida.
+
+Runner: `experiments/run_hls_s7_uncertain_demand.py`. Resultado separado, sin
+alterar resultados anteriores:
+`results/experiments/hls_s7_uncertain_demand/results.json`.
+Pruebas focalizadas: `tests/synthetic/test_hls_s7_uncertain_demand.py`.
+
+**Diseño de primera validación.** Se reutilizó la instancia física S4 2 agentes
+× 2 competencias, su demanda C5 Markov x/y (probabilidades iniciales 0.5/0.5;
+permanencia 0.9 y cambio 0.1), las competencias iniciales, parámetros MIS-v2,
+recursos, catálogo de producción/enseñanza y CES existentes. Horizonte T=3,
+igual al caso exacto S4 existente. Se evaluaron Bellman y regla reactiva, con el
+espacio de acciones de MIS-v2 solo y con transferencia opcional. No se
+reparametrizó la física ni se seleccionó la instancia según una ventaja de
+rendimiento. Se contrastó T=2 mediante árbol exhaustivo independiente y se
+reprodujeron las políticas exactas en 1.000 trayectorias C5 con semillas
+73000–73999.
+
+**Resultados observados.** En T=2, el valor esperado Bellman y el árbol
+independiente coincidieron exactamente: `1.532075` tanto sin transferencia
+como con transferencia opcional (diferencia numérica 0). En T=3, los cuatro
+valores fueron `J=2.468833775`: Bellman/reactivo y transferencia desactivada/
+opcional coincidieron. En la trayectoria ilustrativa y–y–x, ambas decisiones
+produjeron CES por periodo `0.3500, 0.5175, 1.0500`; no hubo enseñanza. La
+simulación de 1.000 trayectorias dio media `2.44167`, DE `0.90036`, EE `0.02847`
+para cada referencia, compatible con el valor esperado exacto (diferencia
+`−0.02716`, menor que un EE). Las pruebas nuevas pasaron (`7 passed`); la
+enumeración confirma Bellman en ambas disponibilidades de transferencia.
+
+**Interpretación y límites.** El resultado nulo es válido para esta instancia y
+horizonte: acredita que la política contingente, el valor esperado Markov, la
+transición física y la enumeración independiente están conectados
+coherentemente; no demuestra valor de planificación ni de transferencia bajo
+demanda incierta. Con T=3, la reacción óptima coincide con el plan óptimo, y el
+espacio opcional de enseñanza no se utiliza. El chequeo Monte Carlo valida la
+media, no añade evidencia independiente sobre eficacia organizativa. No se han
+ejecutado P0/P1/P2, no se estudió demanda futura desconocida para el decisor, ni
+se generaliza a otras matrices, horizontes o procesos. El artículo 2025 tampoco
+resuelve esta misma extensión estocástica en el modelo aquí estudiado; la
+distinción es que su propia formulación asume órdenes conocidos y deja demanda
+estocástica como trabajo futuro.
+
+**Estado y siguiente requisito técnico.** S7 tiene ahora una referencia exacta
+estocástica verificable en una instancia mínima, pero continúa abierto. Para
+estudiar un efecto organizativo no nulo sin calibración retrospectiva, falta
+fijar ex ante una instancia/horizonte con oportunidades suficientes de
+preparación y una métrica de ejecución de P0/P1/P2 bajo información disponible,
+con el oráculo exacto como referencia separada. Esta tarea no amplió la campaña
+ni inició esa comparación.
+
+## 2026-10-22 — S7: caracterización de oportunidades organizativas
+
+**Pregunta y alcance.** Se examinó por qué la referencia inicial `T=3`
+igualaba Bellman y reacción (`J=2.468833775`, con o sin transferencia) y si,
+bajo las leyes físicas ya existentes, había condiciones concretas en las que
+la anticipación de demanda incierta justificaba preparar una competencia. Se
+mantuvieron intactas las leyes de CES, MIS-v2, transferencia, recursos y
+factibilidad; no se modificaron S1–S6 ni los resultados previos.
+
+**Análisis de la instancia inicial.** El régimen x/y con permanencia `0.9`, el
+horizonte de tres periodos y las competencias originales no hacían rentable
+una acción docente anticipada. La transferencia cobra `e` a docente y aprendiz
+(coste colectivo `2e`), mientras MIS-v2 desarrolla una competencia solo al
+ejecutar producción en ella. En esta instancia el horizonte corto y las
+alternativas de producción/MIS-v2 bastaban para que la acción miope coincidiera
+con Bellman; la opción de transferencia no se usó. Esto es un resultado nulo de
+esa configuración, no evidencia de que preparar nunca aporte valor.
+
+**Diseño de caracterización.** Tras el resultado nulo inicial se hizo un
+cribado determinista pequeño y mecanístico de condiciones, no una búsqueda
+extensa ni una maximización de la diferencia Bellman–miope. La instancia
+principal se debe leer como una caracterización exploratoria: sus valores
+sirven para demostrar una posibilidad estructural en el modelo, no como una
+confirmación preregistrada ni como una estimación de frecuencia del fenómeno.
+La justificación física del candidato final es que el docente es poco
+productivo en la demanda x actual, el aprendiz aporta a x pero carece de y, y
+la transición incierta favorece un régimen y persistente. El incremento inicial
+de B/y (`.08`) multiplicado por el número esperado de periodos y restantes
+(`.90 + .955 + .94775 = 2.80275`, pues la cadena permite regresar a x y volver
+a y) da una cota mecanística de capacidad futura (`.22422`) del mismo orden
+que el coste CES presente observado (`.175`);
+no es una predicción exacta de `J_B−J_A` porque omite aprendizaje posterior,
+alternativas de acción y ramas x.
+
+Se reutilizó el sistema exacto S4 de dos agentes
+(`A`, `B`) y dos competencias (`x`, `y`), la demanda C5 Markov, la recompensa
+CES, los parámetros MIS-v2 y la transferencia existentes (`rate=0.4`,
+`e=0.25`, eficacia `A→B/y=0.8`). El catálogo completo de esfuerzos declarado
+por S4 produjo 36 acciones factibles sin transferencia y 72 con transferencia
+opcional; no se truncaron acciones. Se definió una instancia mecanística
+pequeña: competencias iniciales `A=(.05,.90)`, `B=(.30,0)`, demanda inicial x,
+`P(y|x)=.90`, `P(y|y)=.95`, y requisito funcional de y `.95`. El requisito solo
+hace observable el cuello de botella en éxito funcional; la función objetivo
+sigue siendo el CES inalterado. La preparación en t=0 no conoce el siguiente
+estado: Bellman solo observa la demanda actual y usa las probabilidades C5.
+
+Se fijaron además dos controles: (i) mismos parámetros y proceso incierto,
+pero `T=3`, para examinar oportunidad física con menos tiempo de recuperación;
+(ii) `T=4` con x absorbente, para comprobar un régimen donde la competencia y
+no la demanda futura de y es irrelevante. No se hizo un barrido extenso de
+parámetros; los controles se fijaron para aislar horizonte y necesidad futura.
+En la instancia corta y en el control x absorbente hay acciones docentes
+físicamente factibles; por tanto, sus valores nulos no se explican por haber
+eliminado la opción de enseñar.
+
+**Resultados exactos (CES acumulado esperado).**
+
+| Configuración | `J_A`: Bellman sin transferencia | `J_B`: Bellman, transferencia opcional | `J_M`: reactiva (sin / con transferencia) | `J_A−J_M` | `J_B−J_A` |
+|---|---:|---:|---:|---:|---:|
+| Oportunidad, `T=4`, C5 incierta | 3.1628653621 | 3.1743777327 | 3.0346209871 / 3.0346209871 | 0.1282443750 | 0.0115123706 |
+| Control corto, `T=3`, C5 incierta | 2.1650542000 | 2.1650542000 | 2.1223042000 / 2.1223042000 | 0.0427500000 | 0 |
+| Control sin demanda futura y | 2.8604896000 | 2.8604896000 | 2.8604896000 / 2.8604896000 | 0 | 0 |
+
+En el caso principal, Bellman con transferencia vale `0.1397567456` sobre la
+política reactiva (`J_B−J_M`). Para la reacción, ofrecer transferencia
+opcional no altera el valor: maximiza recompensa inmediata y no elige enseñar.
+`J_A−J_M` mide el valor de planificación sin transferencia; `J_B−J_A` mide el
+valor incremental de hacerla disponible bajo planificación. Son estimandos
+distintos.
+
+**Decisión y transición explicativas.** En el estado inicial x, la política
+miope y Bellman sin transferencia ejecutan esfuerzo productivo `1.0` en x
+para ambos agentes: CES inmediato `0.35`. Bellman con transferencia produce
+`0.5` en x para cada agente y enseña y de A a B con esfuerzo `.25`; el CES
+inmediato baja a `0.175` (sacrificio `0.175`) y el recurso contabilizado es
+`1.5` (producción `1.0` más enseñanza `0.5`). MIS-v2 se aplica primero; la ley
+de transferencia vigente eleva después `B/y` de `0` a `.08` (`.4×.25×.8`). La
+acción se elige usando la probabilidad de transición a y, no con conocimiento
+de que y ocurrirá.
+
+En la rama futura `x→y`, la asignación productiva a y obtiene CES `.98` y éxito
+funcional con preparación, frente a CES `.90` y fallo funcional sin ella
+(`y` requiere `.95`). En periodos y posteriores, MIS-v2 sigue desarrollando
+ambos agentes y la brecha inicial persiste parcialmente. La trayectoria miope
+en la rama `x→y→y→y` logra CES `.90, .915, .92775` y no alcanza el requisito
+funcional en esos tres periodos: al no invertir, deja de desarrollar B/y. Esto
+contrasta con Bellman sin transferencia, que puede usar aprendizaje MIS-v2
+después de observar y, y con Bellman con transferencia, que adelanta parte de
+esa capacidad. El valor esperado incremental neto de transferencia es
+positivo pero pequeño (`.0115123706`), porque debe recuperar el coste presente
+bajo todas las ramas de demanda. En el control `T=3`, la transferencia no se
+selecciona y `J_B=J_A`; en x absorbente no se prepara y Bellman, reacción y ambos
+espacios de acción coinciden.
+
+**Verificación.** Para una truncación `T=2` de la instancia principal, Bellman
+con y sin transferencia coincidió exactamente (`1.2224`) con (a) Bellman sin
+poda de dominancia y (b) enumeración independiente del árbol contingente.
+Las pruebas focalizadas verifican también el estado inicial y su transición,
+coste inmediato, éxito/fallo en la rama y controles de horizonte/demanda. La
+implementación usa poda exacta de acciones dominadas por recompensa inmediata
+y estado de competencias componente a componente; la equivalencia con el
+solver sin poda se comprobó en la validación mínima. Las pruebas
+`tests/synthetic/test_hls_s7_uncertain_demand.py` pasaron (`11 passed`).
+
+Artefactos nuevos:
+`experiments/run_hls_s7_preparation_characterization.py` y
+`results/experiments/hls_s7_preparation_characterization/results.json`.
+El resultado previo `results/experiments/hls_s7_uncertain_demand/results.json`
+se conservó sin sobrescribir.
+
+**Conclusión A/B/C/D.** (A) Sí: existe una oportunidad física, con coste
+presente y mejora de capacidad futura. (B) Sí: en la instancia principal la
+planificación estocástica modifica la acción inicial y selecciona la
+preparación; en los controles no lo hace. (C) Sí: el valor esperado CES mejora
+frente a la política miope en la configuración con retorno temporal. (D) Sí,
+con alcance limitado: disponer de transferencia aporta un incremento exacto de
+`0.0115123706` sobre el óptimo MIS-v2-only en la instancia `T=4`; no aporta
+valor en los controles. La primera validación `T=3` sigue siendo un resultado
+nulo válido.
+
+**Límites y estado.** Es una caracterización exacta de tres configuraciones
+pequeñas, con competencias reales y matriz C5 conocidas por el oráculo; no
+evalúa una política P0/P1/P2 con información realista ni establece robustez,
+superioridad general de Bellman o una frontera completa de preparación. El
+requisito funcional y las competencias iniciales definen una instancia
+focalizada, no datos empíricos. S7 permanece abierto; no se inicia otra campaña
+sin decisión del PI.
+
+## 2026-10-22 — S7: protocolo de validación mecanística y robustez local
+
+**Objetivo.** Antes de ejecutar la sensibilidad local se fijaron cuatro
+referencias sobre la misma instancia y distribución: `J_A` Bellman sin
+transferencia, `J_B` Bellman con transferencia opcional, `J_MA` reacción sin
+transferencia y `J_MB` reacción con transferencia opcional. Las cuatro usan el
+mismo estado observado, competencias reales del oráculo, demanda actual,
+transiciones físicas, restricciones y CES. El Bellman usa la matriz C5 en la
+continuación; la regla reactiva conoce el mismo caso pero, por definición,
+maximiza solo el CES inmediato. Las políticas con transferencia tienen el
+mismo catálogo opcional de enseñanza entre sí; ídem las dos sin transferencia.
+Estas referencias son informacionalmente comparables como contraste de
+planificación exacta, no son políticas ejecutables con competencias ocultas.
+
+Se calcularán las identidades
+`planificación sin transf.=J_A−J_MA`,
+`planificación con transf.=J_B−J_MB`,
+`transferencia con plan.=J_B−J_A`,
+`transferencia sin plan.=J_MB−J_MA`, e interacción
+`I=(J_B−J_A)−(J_MB−J_MA)`. La igualdad algebraica de la interacción con la
+diferencia entre valores de planificación se comprobará automáticamente.
+
+**Sensibilidad fijada antes de la evaluación.** Se conservará el horizonte
+`T=4`, las competencias iniciales, el requisito y los recursos del caso
+constructivo. Se ejecutará el centro y ocho perturbaciones locales
+simétricas, una dimensión cada vez: `P(y|x)=.90±.05` (`.85,.95`),
+`P(y|y)=.95±.025` (`.925,.975`), `eta(B,y)=.05±.01` (`.04,.06`) y eficacia
+`A→B/y=.80±.10` (`.70,.90`). Los cambios permanecen en los dominios físicos
+admisibles; solo se perturba la celda de MIS-v2 correspondiente al cuello de
+botella y la relación docente usada. No se ampliará el intervalo ni se
+seleccionarán parámetros según las diferencias resultantes. Se repetirán como
+controles negativos los casos ya definidos `T=3` con transición incierta y
+`T=4` con demanda x absorbente.
+
+**Métricas funcionales predefinidas.** Se contabilizará como servicio
+completado cada periodo que satisface todos los requisitos activos según
+`evaluate_problem_nk`; incumplimiento será su complemento por periodo. Se
+sumarán el déficit normalizado ya definido por esa función, déficits absolutos
+por competencia, esfuerzo productivo y cargos docentes (`2e` por lección), así
+como número de acciones de enseñanza. Son diagnósticos de trayectoria y no
+modifican el objetivo CES. Cada esperanza se evaluará exactamente sobre el
+árbol C5, no mediante muestreo de periodos.
+
+### Resultados y lectura mecanística
+
+El runner `experiments/run_hls_s7_mechanistic_robustness.py` resolvió las
+cuatro políticas exactamente en el centro, ocho perturbaciones locales y dos
+controles. El artefacto íntegro, con contrastes, métricas por política y ramas
+de demanda `x→y→y→y`, `x→x→y→y` y `x→x→x→x`, está en
+`results/experiments/hls_s7_mechanistic_robustness/results.json`.
+
+| Configuración | `J_A` | `J_B` | `J_MA` | `J_MB` | Planificación sin transf. `J_A−J_MA` | Planificación con transf. `J_B−J_MB` | Transf. con planificación `J_B−J_A` | Transf. miope `J_MB−J_MA` | `I` |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Centro | 3.1628653621 | 3.1743777327 | 3.0346209871 | 3.0346209871 | 0.1282443750 | 0.1397567456 | 0.0115123706 | 0 | 0.0115123706 |
+| `P(y\|x)=.85` | 3.1432132587 | 3.1432132587 | 3.0201810712 | 3.0201810712 | 0.1230321875 | 0.1230321875 | 0 | 0 | 0 |
+| `P(y\|x)=.95` | 3.1822044600 | 3.2051619587 | 3.0489728975 | 3.0489728975 | 0.1332315625 | 0.1561890612 | 0.0229574987 | 0 | 0.0229574987 |
+| `P(y\|y)=.925` | 3.1454197677 | 3.1475605205 | 3.0215136740 | 3.0215136740 | 0.1239060938 | 0.1260468465 | 0.0021407528 | 0 | 0.0021407528 |
+| `P(y\|y)=.975` | 3.1807623627 | 3.2018742357 | 3.0480700190 | 3.0480700190 | 0.1326923438 | 0.1538042167 | 0.0211118730 | 0 | 0.0211118730 |
+| `eta(B,y)=.04` | 3.1375413871 | 3.1510796757 | 3.0346209871 | 3.0346209871 | 0.1029204000 | 0.1164586886 | 0.0135382886 | 0 | 0.0135382886 |
+| `eta(B,y)=.06` | 3.1880268871 | 3.1975263357 | 3.0346209871 | 3.0346209871 | 0.1534059000 | 0.1629053486 | 0.0094994486 | 0 | 0.0094994486 |
+| Eficacia `.70` | 3.1628653621 | 3.1628653621 | 3.0346209871 | 3.0346209871 | 0.1282443750 | 0.1282443750 | 0 | 0 | 0 |
+| Eficacia `.90` | 3.1628653621 | 3.2010177890 | 3.0346209871 | 3.0346209871 | 0.1282443750 | 0.1663968019 | 0.0381524269 | 0 | 0.0381524269 |
+
+`I` satisface en cada caso la identidad entre diferencias de planificación.
+En el centro, la reacción con transferencia opcional no enseña: ambas
+reacciones valen `3.0346209871`. Así, el efecto incremental de transferencia
+sin planificación es cero; el efecto de transferencia con Bellman y la
+interacción son ambos `0.0115123706`. No es una ley general de
+complementariedad: en este diseño, la transferencia solo es utilizada por la
+política que valora consecuencias futuras.
+
+**Mecanismo observado.** En el centro, bajo demanda inicial x, `J_A` y la
+reacción asignan esfuerzo productivo 1 a x por agente (CES inmediato `.35`).
+`J_B` divide ese esfuerzo a `.5` por agente y enseña y de A a B con esfuerzo
+`.25`; CES inmediato baja a `.175` (coste `.175`). MIS-v2 actualiza las
+competencias x por el trabajo productivo; después, la transferencia eleva
+B/y de `0` a `.08`, dejando el estado en
+`(.150294,.90),(.343342,.08)`. En la rama predefinida `x→y→y→y`, la primera tarea y obtiene
+CES `.98` y cumple el requisito y `.95`; `J_A` obtiene `.90` y no lo cumple
+en ese primer periodo y. La transferencia añade `.08` a B/y; luego MIS-v2
+continúa bajo el trabajo efectivamente realizado. La decisión inicial se
+toma con la distribución C5, no con conocimiento de qué rama ocurrirá.
+
+El valor `J_A−J_MA` tiene una explicación más delicada: cuando llega y, Bellman
+asigna esfuerzo también a B aunque su producción inmediata no aumente CES;
+esa acción produce experiencia MIS-v2 y eleva B/y para periodos siguientes.
+La reacción existente no lo hace por su desempate fijo entre acciones con
+igual CES inmediato. Por tanto, los contrafactuales confirman que la
+trayectoria de trabajo genera aprendizaje útil, pero el valor numérico frente
+a esta reacción incluye la resolución de empates y no demuestra ventaja
+estricta frente a toda política miope que escogiese favorablemente entre
+acciones inmediatamente óptimas. En el centro, la ganancia de Bellman sin
+transferencia no requiere elegir una acción de menor CES inmediato; con
+transferencia sí hay un sacrificio inicial estricto.
+
+**CES y servicio no son equivalentes.** En el centro, `J_B` aumenta CES en
+`.0115123706` respecto a `J_A`, pero los diagnósticos exactos dan servicios
+completados esperados `3.000` frente a `3.001`, fallos `1.000` frente a
+`.999`, déficit raw total `.175` frente a `.04995` y déficit normalizado
+`.5` frente a `.05258`. Bellman con transferencia hace una acción docente,
+consume `.5` de recurso docente y reduce el esfuerzo productivo acumulado de
+8 a 7; el total utilizado es 7.5. La mejora CES, pues, no mejora el
+cumplimiento funcional agregado: cambia dónde se incurre en déficit, del
+cuello de botella futuro y al servicio inicial x. Esto impide describir el
+resultado como mejora inequívoca del servicio.
+
+**Robustez local y controles.** La ventaja de planificación sin transferencia
+permanece positiva en las ocho perturbaciones (`.1029204` a `.1534059`). El
+incremento de transferencia permanece positivo en seis de ocho; se anula en
+`P(y|x)=.85` y eficacia `.70`, donde Bellman no enseña. En el control `T=3`,
+con opción física de enseñar, transferencia aporta cero; en el control con x
+absorbente, las cuatro políticas coinciden (`2.8604896`). El efecto de
+transferencia es por tanto sensible al retorno y eficacia, mientras que la
+ventaja observada de planificación frente al desempate miope se mantiene en
+esta vecindad. Son soluciones exactas de una familia pequeña, no réplicas
+estadísticas ni robustez global.
+
+**Conclusiones obligatorias.** (A) El valor de planificación se explica por
+anticipar el régimen y por producir experiencia MIS-v2 en B/y cuando esa
+experiencia tendrá utilidad; el valor medido también depende del desempate de
+la reacción. (B) El valor de transferencia surge de desarrollar antes B/y,
+pagando producción presente y recursos docentes, para elevar CES futuro en
+ramas y. (C) Hay interacción positiva en el centro y en seis perturbaciones,
+pero vale cero en dos; no se generaliza como complementariedad universal.
+(D) La planificación exacta conserva valor CES en la vecindad analizada;
+el valor adicional de transferencia depende de suficiente probabilidad de
+demanda y eficacia docente. (E) No: la ganancia CES central no se traduce en
+ganancia de cumplimiento funcional agregado y el déficit diagnóstico
+aumenta. (F) Limitan la generalización el estado real conocido por estos
+oráculos, una sola instancia base y vecindad OAT, `T=4`, la matriz C5 y las
+leyes físicas particulares; además, el comparador miope usa un desempate
+fijo.
+
+**Clasificación:** fenómeno condicionado a un régimen, no robusto de forma
+general. La planificación exacta conserva valor CES en la vecindad analizada;
+el valor adicional de transferencia depende de suficiente probabilidad de
+demanda y eficacia docente, y puede entrar en conflicto con el éxito
+funcional. No se afirma novedad científica.
+
+La validación focalizada pasó: `PYTHONPATH=src:. pytest -q
+tests/synthetic/test_hls_s7_uncertain_demand.py
+tests/synthetic/test_hls_s7_mechanistic_robustness.py` (`14 passed`). También
+pasó `git diff --check`. El runner guarda cuatro valores, descomposiciones,
+ramas y métricas funcionales/recursos; las pruebas verifican la identidad de
+contrastes, el registro de las ramas, la consistencia CES-métricas y que no
+haya enseñanza en configuraciones sin transferencia. No se modificaron leyes
+físicas ni resultados históricos.
+
+## 2026-10-22 — Auditoría conceptual del rendimiento colectivo
+
+Se añadió [`HLS_COLLECTIVE_PERFORMANCE_AUDIT.md`](../architecture/HLS_COLLECTIVE_PERFORMANCE_AUDIT.md), una revisión documental de la definición de rendimiento colectivo en HLS. No se modificaron código, objetivos implementados ni artefactos históricos, y no se ejecutaron campañas.
+
+**Hechos verificados.** En N×K, `productive_outputs_nk` calcula `y_k=Σ_i e_ik c_ik`; CES es `(Σ_k w_k y_k^ρ)^(1/ρ)` (`ρ=.5` por defecto) y no usa los requisitos funcionales. `evaluate_problem_nk` calcula por separado éxito, déficit truncado, déficit normalizado sumado y margen. Recursos y esfuerzo restringen factibilidad, pero no se restan de CES. MIS-v2/enseñanza modifican el estado después de registrar producción y reward. Bellman S4/S7 optimiza CES; P0/P1/P2 utilizan la jerarquía lexicográfica éxito, déficit normalizado, margen y esfuerzo, más sus reglas docentes. S7 miope maximiza CES inmediato y resuelve empates por primer candidato con tolerancia `1e-12`.
+
+**Diagnóstico.** En S7 central, Bellman con transferencia aumenta CES `3.1628653621→3.1743777327`, mientras servicios esperados cambian `3.001→3.000` y déficit absoluto `.04995→.175`. Es coherente con objetivos diferentes: el coste docente desplaza producción presente y la mejora productiva futura afecta CES, pero CES no impone requisitos. La auditoría también identifica que el valor de planificación medido frente al miope puede depender del desempate entre acciones de igual CES inmediato; para atribuir valor estricto de foresight se debe distinguir del comparador BEST-MYOPIC/tie-set. Los resultados S4/S7 no justifican una noción universal de rendimiento basada exclusivamente en CES.
+
+**Recomendación y decisión pendiente.** Mantener CES como objetivo válido en las referencias donde fue declarado y reportar funcionalidad/déficit/recursos separadamente. Para el marco HLS, declarar por configuración objetivo primario, restricciones, costes explícitos y diagnósticos, sin pesos arbitrarios ni doble conteo. Antes de cambiar código o ampliar S7, el PI debe decidir si el problema prioriza output CES, cumplimiento funcional o una jerarquía/constrained formulation, y confirmar el comparador reactivo tie-aware requerido. No se implementó ni probó ninguna alternativa.
+
+## 2026-10-22 — HLS-PEF, fase 1: especificación científica y arquitectura conceptual
+
+Se creó [`HLS_PERFORMANCE_EVALUATION_FRAMEWORK.md`](../architecture/HLS_PERFORMANCE_EVALUATION_FRAMEWORK.md) como catálogo extensible y protocolo de evaluación, sin definir una puntuación ni un objetivo universal. Se preservan los niveles A (sistema), B (modalidad organizativa) y C (arquitectura de decisión), y se declaran por separado problema, objetivo, restricciones, métricas colectivas, diagnósticos y contrastes entre políticas. Esta fase fue exclusivamente documental: no se cambiaron código, funciones objetivo ni resultados S1–S7, y no se ejecutaron experimentos.
+
+**Auditoría y rectificación de alcance.** Se contrastaron las definiciones con las implementaciones de asignación S1–S3, producción N×K, MIS-v2, transferencia, S4 y S7. Recompensa de matching, reward Bernoulli, output, CES, éxito funcional, déficit, esfuerzo y competencia futura tienen unidades y semánticas diferentes. En particular, el S4 canónico inicial de asignación binaria optimiza `Σ c_ik x_ik`; las referencias posteriores S4 de producción/transferencia N×K optimizan CES. La auditoría conceptual precedente había usado «S4» demasiado ampliamente al hablar de CES; se conserva su entrada histórica y se precisa aquí el alcance, sin alterar sus resultados. En S7, la mejora central CES `3.1628653621→3.1743777327` coexistió con servicios esperados `3.001→3.000` y déficit absoluto `.04995→.175`: no es una mejora inequívoca del servicio. Como los pesos CES de esa instancia recaen en la competencia demandada, la divergencia procede de umbrales, agregación temporal y esfuerzo reasignado, no de sustitución simultánea entre competencias dentro del CES de un periodo.
+
+**Especificación HLS-PEF.** El núcleo propuesto incluye cumplimiento funcional (micro y equilibrado por tipo), calidad específica, déficit, coste y eficiencia de recursos, evolución temporal, robustez, adaptación y ganancia frente a referencias, con contrato de unidad, denominador, orientación, información requerida, agregación, incertidumbre y casos indefinidos. Calidad, robustez y adaptación necesitan contratos de aplicación o perturbación; no reciben una fórmula universal. El `EvaluationProfile` conceptual distingue `no_aplicable`, `no_disponible`, `no_medido` y cero medido, y registra separadamente información de política y verdad accesible solo al evaluador. Se proponen perfiles mínimos S1–S7 y tres niveles de comparabilidad: políticas en una misma instancia, instancias de un escenario y aplicaciones distintas. La analogía con accuracy/balanced accuracy/precision/recall/F1 solo se usa cuando están definidos sus denominadores y errores; no se trasladan nombres mecánicamente.
+
+**Decisiones pendientes del PI.** Fijar la unidad de servicio y el tratamiento de tareas parciales/multiagente; decidir por problema si CES, cumplimiento o déficit será objetivo y qué requisitos serán restricciones; definir de dónde proceden prioridades y precios de recursos; acordar comparadores sensibles a empates para nuevas afirmaciones de planificación; y aprobar el perfil mínimo antes de implementar. La opción técnica posterior, aún no autorizada, es una capa de evaluación offline y de solo lectura sobre artefactos existentes, con pruebas de casos degenerados y sin reescribir campañas históricas.
+
+## 2026-10-22 — HLS-PEF, fase 2: implementación mínima y validación retrospectiva
+
+Se implementó [`performance_evaluation.py`](../../src/hls/performance_evaluation.py) como capa de evaluación independiente de física y políticas, con `EvaluationProfile`, `EvaluationRecord`, `EvaluationResult`, estados explícitos de disponibilidad y una API de registro, agregación, importación histórica y comparación compatible. La especificación técnica y los límites figuran en la [sección 11 de HLS-PEF](../architecture/HLS_PERFORMANCE_EVALUATION_FRAMEWORK.md#11-fase-2--implementación-mínima-y-validación-retrospectiva-2026-10-22). No se cambiaron objetivos, leyes, políticas ni resultados anteriores.
+
+**Auditoría previa.** El [S4 exacto N×K](../../results/experiments/hls_s4_transfer_exact/results.json) guarda tres periodos completos de A/B; se pueden recalcular CES, éxito, déficit absoluto, output y recursos. La [caracterización S7](../../results/experiments/hls_s7_preparation_characterization/results.json) solo guarda algunas ramas ilustrativas además de sus valores exactos; la [validación mecanística S7](../../results/experiments/hls_s7_mechanistic_robustness/results.json) conserva expectativas funcionales y de recursos agregadas. No es posible reconstruir desde esas ramas el árbol completo ni `Σoutput` S7; esa métrica se marca `NOT_RECORDED`. Las expectativas S7 se importan con punteros de procedencia, sin presentarlas como cálculos desde periodos inexistentes.
+
+**Resultados retrospectivos.** El [runner de solo lectura](../../experiments/run_hls_pef_retrospective.py) generó un [resultado separado](../../results/experiments/hls_pef_retrospective/results.json). Desde periodos S4 se obtuvieron para A/B CES `1.9175`, cumplimiento `1/3`, déficit absoluto `.5325` y producción `1.9175`. Desde agregados históricos S7 central se verificaron `J_A=3.1628653621`, `J_B=3.1743777327`, `J_MA=J_MB=3.0346209871`; planificación sin/con transferencia `.1282443750/.1397567456`, transferencia con/sin planificación `.0115123706/0`, interacción `.0115123706`. La tasa funcional esperada A/B es `.75025/.75000` y el déficit absoluto `.04995/.175`; no se infiere mejor servicio de la ganancia CES. La igualdad S4 entre CES y suma de outputs es específica de sus pesos por periodo.
+
+**Validación y límites.** Las [pruebas PEF](../../tests/test_hls_performance_evaluation.py) cubren agregación, unidades, denominador nulo, cinco estados, cero medido, comparaciones incompatibles, regímenes informacionales desiguales, procedencia y regresión histórica; `6 passed`. Las pruebas focalizadas existentes S4/S7 pasaron (`28 passed`), sin reejecutar campañas. El módulo no calcula calidad externa, eficiencia, robustez ni adaptación sin contratos/datos adicionales. Antes de integrarlo en nuevos escenarios el PI debe fijar la unidad de servicio, los perfiles primarios y los registros mínimos de evaluador; no se amplió la implementación ni se hizo commit/push.
+
+## 2026-10-22 — HLS-PEF, fase 3: integración operativa y piloto S7
+
+Se amplió el contrato `EvaluationRecord` para incluir ID de unidad, tipo de tarea, importancia, calidad opcional, episodio/rama y probabilidad, régimen informacional, objetivo de decisión, competencias y estados por campo, conservando compatibilidad con sus campos posicionales originales. El adaptador [`s7_pef_adapter.py`](../../src/hls/synthetic/s7_pef_adapter.py) convierte replays ya calculados; el [runner de piloto](../../experiments/run_hls_pef_s7_pilot.py) obtiene los cuatro resultados S7 centrales y evalúa las 16 ramas T=4 con sus probabilidades exactas. `evaluate_weighted_episodes` agrega los registros sin afectar la selección de acciones.
+
+**Perfil y resultados.** Se declaró unidad de servicio tarea-periodo; CES acumulado como objetivo de las cuatro referencias; cumplimiento y déficit como principales; producción, esfuerzo productivo/docente, consumo docente `2h`, recurso total y acciones docentes como secundarias; competencias y decisiones como campos diagnósticos. El output del piloto nuevo reproduce A/B/MA/MB: CES `3.1628653621/3.1743777327/3.0346209871/3.0346209871`; cumplimiento por periodo `.750250/.750000/.3019375/.3019375`; déficit absoluto `.049950/.175000/.10235756/.10235756`. Esfuerzo productivo `8/7/5.20775/5.20775`, esfuerzo docente `0/.25/0/0`, consumo docente `0/.5/0/0`, recurso total `8/7.5/5.20775/5.20775`, y acciones docentes `0/1/0/0`. Diferencias e interacciones se guardan por métrica y unidad; no hay escalar agregado. El resultado está en [`hls_pef_s7_pilot/results.json`](../../results/experiments/hls_pef_s7_pilot/results.json), separado de los artefactos históricos.
+
+**Integridad y límites.** Las ramas suman probabilidad `1.0`; el CES ponderado reproduce el valor exacto de cada solucionador a `1e-10`. La prueba confirma repetibilidad, identidad de objetivos, contabilidad `total = producción + recurso docente` y retención de decisiones/estados en trazas. Calidad externa e importancia no están definidas por S7 y se marcan `NOT_APPLICABLE`; no se inventan. La caracterización es exacta para la instancia central, no una campaña ni validación estadística nueva. Pasaron las pruebas PEF (`8 passed`) y las pruebas focalizadas existentes S4/S7 en conjunto (`36 passed`). `git diff --check` pasó. No se modificaron las políticas ni leyes físicas, ni se sobrescribieron resultados anteriores.
+
+## 2026-10-23 — S7: auditoría BEST-MYOPIC de desempates
+
+**Pregunta y diseño.** Se comprobó si la ventaja CES de Bellman sobre el miope histórico persistía frente a un comparador reactivo que maximiza el mismo CES inmediato y desempata favoreciendo el incremento positivo inmediato de competencias bajo MIS-v2/transferencia. Se utilizó exclusivamente la instancia central S7 C5, `T=4`, con enumeración exacta de las 16 trayectorias de demanda. BEST-MYOPIC no consulta demanda futura ni valores Bellman; en el régimen exacto existente recibe el estado de competencia actual y demanda usados por las referencias S7. Si persiste empate secundario, selecciona por clave canónica independiente del orden del catálogo.
+
+**Auditoría de implementación.** El miope original recorre el catálogo y cambia la acción vigente solo cuando `reward > best_reward + 1e-12`; por tanto, el primer candidato resuelve empates de CES dentro de esa tolerancia. CES se obtiene mediante la transición `_step`; MIS-v2 y la transferencia actualizan competencias después de la decisión y las acciones empatadas también pueden diferir en output y recursos. La auditoría compara los estados alcanzados por MA/BMA y MB/BMB. En cada variante examinó 32 estados: 16 tenían varias acciones empatadas y en los 16 la acción elegida difería. En los 16 estados empatados hubo sucesores de competencia distintos y diferencias de output o recursos (clases B y C no excluyentes); ninguno tuvo consecuencias físicas equivalentes (clase A).
+
+**Resultados exactos HLS-PEF.** Se reprodujeron los valores históricos: CES A=`3.1628653621`, B=`3.1743777327`, MA=`3.0346209871`, MB=`3.0346209871`. BEST-MYOPIC obtuvo BMA=BMB=`3.0444737839`. Cumplimiento esperado A/B/MA/MB/BMA/BMB: `.750250/.750000/.3019375/.3019375/.3019375/.3019375`; déficit absoluto: `.049950/.175000/.10235756/.10235756/.10235756/.10235756`. Esfuerzo productivo: `8/7/5.20775/5.20775/8/8`; esfuerzo docente: `0/.25/0/0/0/0`; recurso docente: `0/.5/0/0/0/0`; acciones docentes: `0/1/0/0/0/0`. Producción acumulada: `3.16757209/3.17437773/3.03462099/3.03462099/4.31819114/4.31819114`. Se mantienen métricas y unidades separadas; mayor producción no se interpreta automáticamente como mayor CES ni servicio.
+
+La brecha histórica sin transferencia `D0=A−MA=.1282443750` se descompone contablemente en `D1=A−BMA=.1183915782` más `T0=BMA−MA=.0098527968`. Con transferencia, `D0T=B−MB=.1397567456`, `D1T=B−BMB=.1299039488` y `TT=BMB−MB=.0098527968`. Ambos residuos son cero. El desempate explica alrededor del 7.7% de la brecha histórica en esta instancia, pero la ventaja de Bellman frente a BEST-MYOPIC persiste. No se interpreta `T0/TT` como efecto causal independiente de las trayectorias inducidas. La interacción planificación×transferencia respecto a BEST-MYOPIC es `.0115123706` en CES: B−BMB menos A−BMA.
+
+**Mecanismo intertemporal.** Sin transferencia Bellman no escogió acciones estrictamente inferiores al máximo inmediato en los estados de su trayectoria óptima. Con transferencia lo hizo en un estado de probabilidad de ocupación uno: `t=0`, `task-x`, competencia `[[.05,.9],[.3,0]]`. Eligió producir `.5` por agente y enseñar A→B/y con esfuerzo `.25`: CES inmediato `.175` frente a `.35`, sacrificio `.175`; la competencia B/y posterior aumenta `.08`. Bajo continuación Bellman, el valor Q de esa acción es `3.1743777327`, frente a `3.1628653621` al sustituirla por la acción BEST-MYOPIC inmediata; ventaja Q local `.0115123706`. Es una sustitución de una etapa bajo continuación Bellman, no una descomposición aditiva completa del efecto de política.
+
+**Interpretación y límites.** El desempate fijo explica una fracción pequeña pero verificable de la brecha; no la elimina. Bellman conserva ventaja CES contra BEST-MYOPIC en esta instancia. La acción que enseña muestra anticipación intertemporal estricta en la variante con transferencia. BEST-MYOPIC mantiene el cumplimiento y déficit del miope original; tampoco se infiere que la ventaja CES de Bellman sea mejora de servicio, ya que B presenta mayor déficit que A. La evidencia es exacta para una sola instancia, sin incertidumbre estadística ni generalización. El criterio secundario es un comparador diagnóstico, no una política universal recomendada.
+
+**Artefactos y validación.** El [informe de auditoría](../experiments/HLS_S7_MYOPIC_TIEBREAK_AUDIT.md) documenta definición, seis políticas, decisiones empatadas, descomposiciones y límites. El [runner](../../experiments/run_hls_s7_myopic_tiebreak_audit.py) guarda en una ruta nueva el árbol ponderado, métricas HLS-PEF con procedencia y decisiones por estado: [`results.json`](../../results/experiments/hls_s7_myopic_tiebreak_audit/results.json). La extensión de `hls_s7_uncertain_demand.py` conserva la selección histórica y añade BEST-MYOPIC, auditoría y valores Bellman por estado para el contrafactual Q; no cambia leyes físicas ni resultados antiguos. Pasaron las pruebas S7/PEF focalizadas (`25 passed`), incluida reproducción de cuatro valores, acción inmediata óptima, independencia del orden del catálogo para desempates secundarios distintos, árbol/procedencia, identidades contables y sacrificio inmediato. `git diff --check` se ejecutó tras documentar. No se inició otra campaña ni se hizo commit/push.
+
+## 2026-10-23 — S7: selección anticipativa frente a BEST-MYOPIC
+
+Se mantuvo el caso central `T=4` sin transferencia y se añadió el control reactivo **CURRENT-DEMAND-MYOPIC (CDM)**: maximiza CES inmediato y desempata maximizando incrementos MIS-v2 en las competencias con requisito positivo en la demanda corriente; no recibe la ley futura C5. Se compararon Bellman (A), miope histórico (MA), BEST-MYOPIC (BMA) y CDM mediante enumeración exacta y HLS-PEF. De las 16 secuencias combinatorias, 8 tienen probabilidad positiva desde el estado inicial; solo esas forman el árbol de soporte de esta entrada.
+
+**Resultados.** CES A/MA/BMA/CDM=`3.1628653621/3.0346209871/3.0444737839/3.1628653621`; cumplimiento=`.750250/.3019375/.3019375/.750250`; déficit absoluto=`.049950/.1023575625/.1023575625/.049950`. Por tanto A−BMA=`.1183915782`, A−CDM=`0`, BMA−CDM=`−.1183915782`. La ventaja de Bellman sobre BMA se reproduce, pero CDM alcanza el mismo CES, cumplimiento y déficit esperados que Bellman en este caso.
+
+**Mecanismo.** La primera divergencia A/BMA con masa positiva ocurre en `t=1`, demanda y=.9 de probabilidad, después de una acción común en t=0/x. Con competencia `[[.24,.90],[.384,0]]`, ambos asignan esfuerzo total 2 y logran CES inmediato `.90`. Bellman actualiza `ΔC=[[0,.015],[0,.05]]`, total `.065` concentrado en y; BMA actualiza `[[0,.015],[.07392,0]]`, total `.08892` dirigido a B/x. La demanda y permanece y con probabilidad `.95`. Q bajo continuación Bellman favorece la acción de Bellman en `.085086302` en t=1 y `.04424752` en t=2, con rewards inmediatos iguales. Así, el mecanismo observado es la distribución organizativamente útil del aprendizaje; más incremento total no implica mayor continuación. CDM coincide con Bellman antes de la última decisión y elimina la brecha agregada; en t=3 difieren en un empate sin continuación, lo que muestra que aquí la ventaja A/BMA no demuestra una necesidad exclusiva de usar previsiones futuras.
+
+**Descomposición y verificación.** Se comprobó la identidad finita `J_A−J_π = E_π[Σ_t(V_A(s_t,d_t)−Q_A(s_t,d_t,a_t))]` con valores Bellman sin poda usados solo como tabla contrafactual. Para BMA, ambos lados son `.1183915782`, residuo `4.2×10⁻¹⁶`; contribuciones ponderadas por ocupación: t1 `.0765776718`, t2 `.0418139064`, t0/t3 cero. Para MA la suma es `.1282443750` (residuo `8.3×10⁻¹⁷`); para CDM es cero. El JSON registra estados y ocupaciones por política, acciones, CES, matrices de incrementos y Q; las ocupaciones suman uno en cada periodo. No hubo sacrificio estricto de CES inmediato por Bellman sin transferencia.
+
+**Límites y artefactos.** La evidencia es exacta para una única instancia C5 y horizonte corto; no incluye incertidumbre estadística ni generaliza a otras dinámicas. CDM es un control mecanístico, no una nueva política general. El [informe](../experiments/HLS_S7_ANTICIPATORY_SELECTION_AUDIT.md), [runner](../../experiments/run_hls_s7_anticipatory_selection_audit.py), [resultado](../../results/experiments/hls_s7_anticipatory_selection_audit/results.json) y [pruebas](../../tests/synthetic/test_hls_s7_anticipatory_selection.py) se añadieron en rutas nuevas. La matriz de incrementos, valores Q, reproducción histórica, probabilidades, PEF y lema de diferencia de rendimiento se verifican automáticamente. Las pruebas focalizadas S7/PEF pasaron (`28 passed`); queda ejecutar `git diff --check` final. No se alteraron artefactos históricos ni se inició otra campaña.
+
+## 2026-10-23 — Revisión integral del plan y consolidación del laboratorio HLS
+
+**Objetivo y alcance.** Por indicación del PI, se recuperó el plan original,
+se reconstruyó su evolución hasta esta fecha y se contrastó la capacidad
+documentada con código, pruebas y artefactos. La prioridad actual es construir
+el laboratorio HLS como flujo reutilizable; no se busca demostrar todavía la
+superioridad general de una organización o mecanismo. Esta revisión es
+documental: no cambia código, escenarios, políticas ni resultados, y no
+ejecuta pruebas ni campañas.
+
+### Plan original y trazabilidad de cambios
+
+La línea base operativa del 17/10 conservaba un calendario de 19–30/10:
+auditoría de memoria; selección de literatura; prioridades; análisis
+matemático; ontología; reutilización; reproducibilidad/comparabilidad;
+memorando de novedad; diseño preliminar; y cierre GO/REFRAME/STOP. El plan
+original no fijaba umbrales cuantitativos de aceptación, presupuesto de
+campaña ni dependencias detalladas; su calendario no autorizaba ejecutar
+experimentos. La integración Nembhard Direct/router se adelantó y acotó por
+decisiones documentadas del 17/10; la reproducción integral e indirecta quedó
+aplazada. El hito original de novedad fue retirado del calendario operativo
+por instrucción expresa del PI. El documento histórico y la reconstrucción
+de ese plan se mantienen sin reescritura: [línea base y registro](HLS_LAB_EXECUTION_PLAN_2026-10-17.md),
+[reconstrucción original](../project/HLS_ORIGINAL_WORK_PLAN_TO_2026-10-30.md).
+
+Las fechas siguientes son fechas de registro disponibles, no timestamps
+independientes de ejecución. Las entradas del 20–23/10 no documentan horas de
+inicio/fin. La cronología, rectificaciones incluidas, está consolidada en
+[HLS_LAB_ROADMAP_CURRENT.md](HLS_LAB_ROADMAP_CURRENT.md): el 20/10 se
+establecieron referencias finitas S1–S4 y resultados de S3a/S3b; entre
+20–21/10 se revisaron protocolos y líneas S3b, preservando resultados
+negativos y la distinción entre campaña completada y línea científica abierta;
+entre 20–22/10 se expandió S4 desde MIS-v2 a transferencia y planificación,
+incluida la corrección del comparador miope sensible a empates; el 22/10 se
+desarrolló S7 con demanda Markov, preparación y robustez local, y se auditó
+el significado de CES y servicio; HLS-PEF pasó de especificación conceptual a
+módulo independiente, validación retrospectiva y un piloto integrado S7; el
+23/10 se realizaron las auditorías BEST-MYOPIC y CURRENT-DEMAND-MYOPIC. La
+secuencia y los artefactos por hito permanecen en las entradas anteriores y
+no se reordenan aquí.
+
+### Estado auditado por componentes
+
+**A — Escenarios/sistemas.** S1 y S2a tienen instancias deterministas de
+referencia y verificación solver/enumeración; S2b añade un presupuesto
+intertemporal exacto; S3a cubre cambios exógenos observables y ruido; S3b
+cubre recompensas desconocidas y feedback selectivo con varias políticas y
+diagnósticos; S4 incluye el sistema N×K de MIS-v2/enseñanza/transferencia y
+referencias exactas pequeñas; S7 añade demanda incierta Markov al sistema
+endógeno. S5/S6 permanecen como candidatos documentales, no escenarios
+implementados. La validación y limitaciones son locales a cada instancia; no
+se infiere validez externa o una interfaz universal por la existencia de
+simuladores separados.
+
+**B — Organizaciones/problemas.** Hay instancias ejecutables de selección
+individual B1, asignación B2 (matching bipartito y otras acciones N×K) y
+planificación B3 (presupuesto compartido o transiciones endógenas). Los
+contratos de acción y restricciones difieren entre rutas; binary matching,
+unidades repetidas, esfuerzo divisible y enseñanza no son un único problema
+intercambiable. No hay una API organizativa general que permita configurar
+cualquier conjunto factible y seleccionar automáticamente un optimizador.
+
+**C — Modelos/mecanismos.** Están implementados y probados, dentro de ámbitos
+declarados, reglas reactivas, asignación exacta, Bellman finito, estimadores
+bandit/contextuales, MIS-v2, transferencia, estimación N×K y referencias
+Nembhard. BEST-MYOPIC y CURRENT-DEMAND-MYOPIC son controles diagnósticos S7,
+no una política universal. Parte de los mecanismos son reutilizables como
+funciones o componentes; las composiciones, estados, objetivos y vistas
+informacionales siguen ligadas a escenarios concretos. Estimación de una
+competencia desconocida y cambio de competencia real por experiencia son
+procesos distintos.
+
+**D — HLS-PEF.** La capa métrica tiene perfiles, registros y resultados
+tipados, unidades, procedencia, estados explícitos de disponibilidad,
+agregación exacta ponderada por probabilidad, importación de métricas
+históricas y controles de comparabilidad. La validación retrospectiva no
+reconstruye trayectorias ausentes. El piloto nuevo conecta S7 con PEF sin
+participar en decisiones. Además, `experiment_contract.py` define un sobre
+versionado y adaptadores no destructivos para resultados N×K seleccionados,
+Nembhard y ruta contextual; explícitamente no es un ejecutor ni normaliza
+magnitudes para hacerlas comparables. No todos los runners S1–S7 producen
+todavía ese sobre o registros PEF. Por tanto, existe una integración de
+referencia en S7 y piezas de contrato comunes, pero no un pipeline general
+escenario→organización→mecanismos→ejecución→PEF.
+
+### Madurez, decisión de consolidación y próximos hitos
+
+La matriz de madurez del roadmap usa los estados **CONCEPTUAL, ESPECIFICADO,
+IMPLEMENTADO, PROBADO, INTEGRADO y VALIDADO** con evidencia y alcance por
+componente; no traduce código existente en integración general. Se adopta
+como prioridad inmediata el **Hito 1: consolidar el contrato experimental
+común**, partiendo de `ExperimentRun`, adaptadores y perfiles PEF existentes,
+sin reescribirlos. Después: Hito 2, conectar una configuración A/B/C y un
+perfil PEF mediante una ruta fina; Hito 3, validar reutilización en rutas ya
+existentes distintas de S7; Hito 4, uniformar procedencia, reproducibilidad,
+comparabilidad y validación de artefactos; Hito 5, preparar diseños
+científicos de problemas organizativos relevantes. Cada hito tiene
+dependencias y criterios verificables en
+[el roadmap vigente](HLS_LAB_ROADMAP_CURRENT.md). Un diseño posterior no
+autoriza una campaña sin decisión separada.
+
+**Decisiones no asumidas.** Queda para el PI decidir el primer piloto de
+reutilización fuera de S7 si S2a no conserva procedencia suficiente; el
+formato/manifest común de los artefactos; los campos de revisión, semillas e
+información obligatorios para runners heredados; y cuándo reanudar una línea
+científica abierta como S3b. La presente revisión no cierra S3b ni reabre S4,
+S7 u otras campañas. No se alteran objetivos científicos ya registrados.
+
+**Resultado de esta revisión:** se recuperó la línea base y se hizo explícita
+la brecha entre componentes funcionales probados por separado y el flujo
+general todavía no integrado. El siguiente incremento recomendado es un
+mapa de compatibilidad/contrato sobre las rutas actuales y un adaptador
+mínimo solo donde el mapa demuestre una carencia, seguido de un vertical
+slice de evaluación no-S7. Este documento y
+[HLS_LAB_ROADMAP_CURRENT.md](HLS_LAB_ROADMAP_CURRENT.md) son los únicos
+documentos modificados en esta actualización.

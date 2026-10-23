@@ -1,0 +1,143 @@
+{
+  "experiment": "S4 estimation-planning diagnostic calibration",
+  "calibration_seeds": [
+    80000,
+    80001,
+    80002,
+    80003,
+    80004,
+    80005,
+    80006,
+    80007,
+    80008,
+    80009
+  ],
+  "selection_rule": {
+    "order": [
+      "candidate_1",
+      "candidate_2",
+      "candidate_3"
+    ],
+    "mean_posterior_shift_min": 0.025,
+    "reactive_later_decision_switch_fraction_min": 0.5,
+    "bellman_reactive_path_difference_fraction_min": 0.5,
+    "outcomes_used_for_selection": false,
+    "reward_and_factorial_interaction_used": false
+  },
+  "evaluated_candidates": [
+    {
+      "case": "candidate_1",
+      "real_initial": [
+        [
+          0.55,
+          0.175
+        ],
+        [
+          0.45,
+          0.175
+        ]
+      ],
+      "eta": [
+        [
+          0.15,
+          0.15
+        ],
+        [
+          0.05,
+          0.25
+        ]
+      ],
+      "demand": [
+        [
+          true,
+          false
+        ],
+        [
+          true,
+          false
+        ],
+        [
+          true,
+          false
+        ],
+        [
+          true,
+          false
+        ]
+      ],
+      "prior_means": [
+        [
+          0.52,
+          0.5
+        ],
+        [
+          0.55,
+          0.5
+        ]
+      ],
+      "prior_sd": 0.12,
+      "observation_noise_sd": 0.02,
+      "mean_first_period_posterior_shift_on_observed_pairs": 0.05666792963273778,
+      "reactive_decision_switch_fraction_after_first_observation": 1,
+      "bellman_vs_reactive_path_difference_fraction_frozen": 1,
+      "meets_predeclared_operational_criteria": true
+    }
+  ],
+  "selected_candidate": {
+    "case": "candidate_1",
+    "real_initial": [
+      [
+        0.55,
+        0.175
+      ],
+      [
+        0.45,
+        0.175
+      ]
+    ],
+    "eta": [
+      [
+        0.15,
+        0.15
+      ],
+      [
+        0.05,
+        0.25
+      ]
+    ],
+    "demand": [
+      [
+        true,
+        false
+      ],
+      [
+        true,
+        false
+      ],
+      [
+        true,
+        false
+      ],
+      [
+        true,
+        false
+      ]
+    ],
+    "prior_means": [
+      [
+        0.52,
+        0.5
+      ],
+      [
+        0.55,
+        0.5
+      ]
+    ],
+    "prior_sd": 0.12,
+    "observation_noise_sd": 0.02,
+    "mean_first_period_posterior_shift_on_observed_pairs": 0.05666792963273778,
+    "reactive_decision_switch_fraction_after_first_observation": 1,
+    "bellman_vs_reactive_path_difference_fraction_frozen": 1,
+    "meets_predeclared_operational_criteria": true
+  }
+}

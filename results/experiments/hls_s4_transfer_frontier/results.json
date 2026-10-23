@@ -1,0 +1,3071 @@
+{
+  "experiment": "S4 exact transfer option value across preparation/demand lengths",
+  "fixed_physical_configuration": {
+    "agents": [
+      "A",
+      "B"
+    ],
+    "competencies": [
+      "x",
+      "y"
+    ],
+    "initial_competence": [
+      [
+        0.85,
+        0.15
+      ],
+      [
+        0.2,
+        0.2
+      ]
+    ],
+    "MIS_eta": [
+      [
+        0.2,
+        0.15
+      ],
+      [
+        0.12,
+        0.05
+      ]
+    ],
+    "individual_effort_limits": [
+      1.0,
+      1.0
+    ],
+    "collective_budget": 2.0,
+    "teaching_effort": 0.25,
+    "transfer_rate": 0.4,
+    "efficacy_tensor": [
+      [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.75,
+          0.8
+        ]
+      ],
+      [
+        [
+          0.7,
+          0.65
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ]
+    ],
+    "production_effort_catalog": [
+      [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.5,
+          0.0
+        ],
+        [
+          0.0,
+          0.5
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.5,
+          0.0
+        ],
+        [
+          0.0,
+          0.5
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ]
+    ],
+    "all_declared_feasible_actions_enumerated": true,
+    "reward": "existing CES, evaluated before transitions; functional success is reported separately",
+    "demand_family": "x repeated p periods, followed by y repeated q periods"
+  },
+  "frontier_cases": [
+    {
+      "p": 2,
+      "q": 2,
+      "horizon": 4,
+      "action_counts_per_period": {
+        "A": [
+          36,
+          36,
+          36,
+          36
+        ],
+        "B": [
+          72,
+          72,
+          72,
+          72
+        ]
+      },
+      "enumerated_sequence_upper_bounds": {
+        "A": 1679616,
+        "B": 26873856
+      },
+      "A": {
+        "value": 3.0935,
+        "visited_states": 6977,
+        "teaching_count": 0,
+        "teaching_actions": [],
+        "periods": [
+          {
+            "period": 0,
+            "problem_id": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.05,
+              0.0
+            ],
+            "reward": 1.0500000000000003,
+            "success": true,
+            "deficits": [
+              0.0,
+              0.0
+            ],
+            "competence_before": [
+              [
+                0.85,
+                0.15
+              ],
+              [
+                0.2,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "competence_after": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.030000000000000027,
+                0.0
+              ],
+              [
+                0.09599999999999992,
+                0.0
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 1,
+            "problem_id": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.176,
+              0.0
+            ],
+            "reward": 1.1759999999999997,
+            "success": true,
+            "deficits": [
+              0.0,
+              0.0
+            ],
+            "competence_before": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "competence_after": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.02400000000000002,
+                0.0
+              ],
+              [
+                0.08448,
+                0.0
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 2,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.35
+            ],
+            "reward": 0.35,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.35
+            ],
+            "competence_before": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.904,
+                0.2775000000000001
+              ],
+              [
+                0.38047999999999993,
+                0.24
+              ]
+            ],
+            "competence_after": [
+              [
+                0.904,
+                0.2775000000000001
+              ],
+              [
+                0.38047999999999993,
+                0.24
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.12750000000000009
+              ],
+              [
+                0.0,
+                0.03999999999999998
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 3,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.5175000000000001
+            ],
+            "reward": 0.5175000000000001,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.18249999999999988
+            ],
+            "competence_before": [
+              [
+                0.904,
+                0.2775000000000001
+              ],
+              [
+                0.38047999999999993,
+                0.24
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.904,
+                0.3858750000000001
+              ],
+              [
+                0.38047999999999993,
+                0.278
+              ]
+            ],
+            "competence_after": [
+              [
+                0.904,
+                0.3858750000000001
+              ],
+              [
+                0.38047999999999993,
+                0.278
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.108375
+              ],
+              [
+                0.0,
+                0.038000000000000034
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          }
+        ]
+      },
+      "B": {
+        "value": 3.0935,
+        "visited_states": 120085,
+        "teaching_count": 0,
+        "teaching_actions": [],
+        "periods": [
+          {
+            "period": 0,
+            "problem_id": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.05,
+              0.0
+            ],
+            "reward": 1.0500000000000003,
+            "success": true,
+            "deficits": [
+              0.0,
+              0.0
+            ],
+            "competence_before": [
+              [
+                0.85,
+                0.15
+              ],
+              [
+                0.2,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "competence_after": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.030000000000000027,
+                0.0
+              ],
+              [
+                0.09599999999999992,
+                0.0
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 1,
+            "problem_id": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.176,
+              0.0
+            ],
+            "reward": 1.1759999999999997,
+            "success": true,
+            "deficits": [
+              0.0,
+              0.0
+            ],
+            "competence_before": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "competence_after": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.02400000000000002,
+                0.0
+              ],
+              [
+                0.08448,
+                0.0
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 2,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.35
+            ],
+            "reward": 0.35,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.35
+            ],
+            "competence_before": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.904,
+                0.2775000000000001
+              ],
+              [
+                0.38047999999999993,
+                0.24
+              ]
+            ],
+            "competence_after": [
+              [
+                0.904,
+                0.2775000000000001
+              ],
+              [
+                0.38047999999999993,
+                0.24
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.12750000000000009
+              ],
+              [
+                0.0,
+                0.03999999999999998
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 3,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.5175000000000001
+            ],
+            "reward": 0.5175000000000001,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.18249999999999988
+            ],
+            "competence_before": [
+              [
+                0.904,
+                0.2775000000000001
+              ],
+              [
+                0.38047999999999993,
+                0.24
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.904,
+                0.3858750000000001
+              ],
+              [
+                0.38047999999999993,
+                0.278
+              ]
+            ],
+            "competence_after": [
+              [
+                0.904,
+                0.3858750000000001
+              ],
+              [
+                0.38047999999999993,
+                0.278
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.108375
+              ],
+              [
+                0.0,
+                0.038000000000000034
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          }
+        ]
+      },
+      "delta_B_minus_A": 0.0,
+      "zero_efficacy_B_value": 3.0935,
+      "runtime_seconds_descriptive": {
+        "A": 0.6524927499704063,
+        "B": 12.604864249937236
+      }
+    },
+    {
+      "p": 1,
+      "q": 3,
+      "horizon": 4,
+      "action_counts_per_period": {
+        "A": [
+          36,
+          36,
+          36,
+          36
+        ],
+        "B": [
+          72,
+          72,
+          72,
+          72
+        ]
+      },
+      "enumerated_sequence_upper_bounds": {
+        "A": 1679616,
+        "B": 26873856
+      },
+      "A": {
+        "value": 2.5813750000000004,
+        "visited_states": 6977,
+        "teaching_count": 0,
+        "teaching_actions": [],
+        "periods": [
+          {
+            "period": 0,
+            "problem_id": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.05,
+              0.0
+            ],
+            "reward": 1.0500000000000003,
+            "success": true,
+            "deficits": [
+              0.0,
+              0.0
+            ],
+            "competence_before": [
+              [
+                0.85,
+                0.15
+              ],
+              [
+                0.2,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "competence_after": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.030000000000000027,
+                0.0
+              ],
+              [
+                0.09599999999999992,
+                0.0
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 1,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.35
+            ],
+            "reward": 0.35,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.35
+            ],
+            "competence_before": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.88,
+                0.2775000000000001
+              ],
+              [
+                0.29599999999999993,
+                0.24
+              ]
+            ],
+            "competence_after": [
+              [
+                0.88,
+                0.2775000000000001
+              ],
+              [
+                0.29599999999999993,
+                0.24
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.12750000000000009
+              ],
+              [
+                0.0,
+                0.03999999999999998
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 2,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.5175000000000001
+            ],
+            "reward": 0.5175000000000001,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.18249999999999988
+            ],
+            "competence_before": [
+              [
+                0.88,
+                0.2775000000000001
+              ],
+              [
+                0.29599999999999993,
+                0.24
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.88,
+                0.3858750000000001
+              ],
+              [
+                0.29599999999999993,
+                0.278
+              ]
+            ],
+            "competence_after": [
+              [
+                0.88,
+                0.3858750000000001
+              ],
+              [
+                0.29599999999999993,
+                0.278
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.108375
+              ],
+              [
+                0.0,
+                0.038000000000000034
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 3,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.6638750000000001
+            ],
+            "reward": 0.663875,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.03612499999999985
+            ],
+            "competence_before": [
+              [
+                0.88,
+                0.3858750000000001
+              ],
+              [
+                0.29599999999999993,
+                0.278
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.88,
+                0.4779937500000001
+              ],
+              [
+                0.29599999999999993,
+                0.31410000000000005
+              ]
+            ],
+            "competence_after": [
+              [
+                0.88,
+                0.4779937500000001
+              ],
+              [
+                0.29599999999999993,
+                0.31410000000000005
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.09211875000000003
+              ],
+              [
+                0.0,
+                0.03610000000000002
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          }
+        ]
+      },
+      "B": {
+        "value": 2.5813750000000004,
+        "visited_states": 120085,
+        "teaching_count": 0,
+        "teaching_actions": [],
+        "periods": [
+          {
+            "period": 0,
+            "problem_id": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.05,
+              0.0
+            ],
+            "reward": 1.0500000000000003,
+            "success": true,
+            "deficits": [
+              0.0,
+              0.0
+            ],
+            "competence_before": [
+              [
+                0.85,
+                0.15
+              ],
+              [
+                0.2,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "competence_after": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.030000000000000027,
+                0.0
+              ],
+              [
+                0.09599999999999992,
+                0.0
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 1,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.35
+            ],
+            "reward": 0.35,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.35
+            ],
+            "competence_before": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.88,
+                0.2775000000000001
+              ],
+              [
+                0.29599999999999993,
+                0.24
+              ]
+            ],
+            "competence_after": [
+              [
+                0.88,
+                0.2775000000000001
+              ],
+              [
+                0.29599999999999993,
+                0.24
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.12750000000000009
+              ],
+              [
+                0.0,
+                0.03999999999999998
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 2,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.5175000000000001
+            ],
+            "reward": 0.5175000000000001,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.18249999999999988
+            ],
+            "competence_before": [
+              [
+                0.88,
+                0.2775000000000001
+              ],
+              [
+                0.29599999999999993,
+                0.24
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.88,
+                0.3858750000000001
+              ],
+              [
+                0.29599999999999993,
+                0.278
+              ]
+            ],
+            "competence_after": [
+              [
+                0.88,
+                0.3858750000000001
+              ],
+              [
+                0.29599999999999993,
+                0.278
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.108375
+              ],
+              [
+                0.0,
+                0.038000000000000034
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 3,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.6638750000000001
+            ],
+            "reward": 0.663875,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.03612499999999985
+            ],
+            "competence_before": [
+              [
+                0.88,
+                0.3858750000000001
+              ],
+              [
+                0.29599999999999993,
+                0.278
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.88,
+                0.4779937500000001
+              ],
+              [
+                0.29599999999999993,
+                0.31410000000000005
+              ]
+            ],
+            "competence_after": [
+              [
+                0.88,
+                0.4779937500000001
+              ],
+              [
+                0.29599999999999993,
+                0.31410000000000005
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.09211875000000003
+              ],
+              [
+                0.0,
+                0.03610000000000002
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          }
+        ]
+      },
+      "delta_B_minus_A": 0.0,
+      "zero_efficacy_B_value": 2.5813750000000004,
+      "runtime_seconds_descriptive": {
+        "A": 0.6624903748743236,
+        "B": 12.642811500001699
+      }
+    },
+    {
+      "p": 3,
+      "q": 1,
+      "horizon": 4,
+      "action_counts_per_period": {
+        "A": [
+          36,
+          36,
+          36,
+          36
+        ],
+        "B": [
+          72,
+          72,
+          72,
+          72
+        ]
+      },
+      "enumerated_sequence_upper_bounds": {
+        "A": 1679616,
+        "B": 26873856
+      },
+      "A": {
+        "value": 3.86048,
+        "visited_states": 6977,
+        "teaching_count": 0,
+        "teaching_actions": [],
+        "periods": [
+          {
+            "period": 0,
+            "problem_id": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.05,
+              0.0
+            ],
+            "reward": 1.0500000000000003,
+            "success": true,
+            "deficits": [
+              0.0,
+              0.0
+            ],
+            "competence_before": [
+              [
+                0.85,
+                0.15
+              ],
+              [
+                0.2,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "competence_after": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.030000000000000027,
+                0.0
+              ],
+              [
+                0.09599999999999992,
+                0.0
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 1,
+            "problem_id": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.176,
+              0.0
+            ],
+            "reward": 1.1759999999999997,
+            "success": true,
+            "deficits": [
+              0.0,
+              0.0
+            ],
+            "competence_before": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "competence_after": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.02400000000000002,
+                0.0
+              ],
+              [
+                0.08448,
+                0.0
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 2,
+            "problem_id": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.2844799999999998,
+              0.0
+            ],
+            "reward": 1.2844799999999998,
+            "success": true,
+            "deficits": [
+              0.0,
+              0.0
+            ],
+            "competence_before": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.9232,
+                0.15
+              ],
+              [
+                0.45482239999999996,
+                0.2
+              ]
+            ],
+            "competence_after": [
+              [
+                0.9232,
+                0.15
+              ],
+              [
+                0.45482239999999996,
+                0.2
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.019199999999999995,
+                0.0
+              ],
+              [
+                0.07434240000000003,
+                0.0
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 3,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.35
+            ],
+            "reward": 0.35,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.35
+            ],
+            "competence_before": [
+              [
+                0.9232,
+                0.15
+              ],
+              [
+                0.45482239999999996,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.9232,
+                0.2775000000000001
+              ],
+              [
+                0.45482239999999996,
+                0.24
+              ]
+            ],
+            "competence_after": [
+              [
+                0.9232,
+                0.2775000000000001
+              ],
+              [
+                0.45482239999999996,
+                0.24
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.12750000000000009
+              ],
+              [
+                0.0,
+                0.03999999999999998
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          }
+        ]
+      },
+      "B": {
+        "value": 3.86048,
+        "visited_states": 120085,
+        "teaching_count": 0,
+        "teaching_actions": [],
+        "periods": [
+          {
+            "period": 0,
+            "problem_id": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.05,
+              0.0
+            ],
+            "reward": 1.0500000000000003,
+            "success": true,
+            "deficits": [
+              0.0,
+              0.0
+            ],
+            "competence_before": [
+              [
+                0.85,
+                0.15
+              ],
+              [
+                0.2,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "competence_after": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.030000000000000027,
+                0.0
+              ],
+              [
+                0.09599999999999992,
+                0.0
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 1,
+            "problem_id": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.176,
+              0.0
+            ],
+            "reward": 1.1759999999999997,
+            "success": true,
+            "deficits": [
+              0.0,
+              0.0
+            ],
+            "competence_before": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "competence_after": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.02400000000000002,
+                0.0
+              ],
+              [
+                0.08448,
+                0.0
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 2,
+            "problem_id": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.2844799999999998,
+              0.0
+            ],
+            "reward": 1.2844799999999998,
+            "success": true,
+            "deficits": [
+              0.0,
+              0.0
+            ],
+            "competence_before": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.9232,
+                0.15
+              ],
+              [
+                0.45482239999999996,
+                0.2
+              ]
+            ],
+            "competence_after": [
+              [
+                0.9232,
+                0.15
+              ],
+              [
+                0.45482239999999996,
+                0.2
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.019199999999999995,
+                0.0
+              ],
+              [
+                0.07434240000000003,
+                0.0
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 3,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.35
+            ],
+            "reward": 0.35,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.35
+            ],
+            "competence_before": [
+              [
+                0.9232,
+                0.15
+              ],
+              [
+                0.45482239999999996,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.9232,
+                0.2775000000000001
+              ],
+              [
+                0.45482239999999996,
+                0.24
+              ]
+            ],
+            "competence_after": [
+              [
+                0.9232,
+                0.2775000000000001
+              ],
+              [
+                0.45482239999999996,
+                0.24
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.12750000000000009
+              ],
+              [
+                0.0,
+                0.03999999999999998
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          }
+        ]
+      },
+      "delta_B_minus_A": 0.0,
+      "zero_efficacy_B_value": 3.86048,
+      "runtime_seconds_descriptive": {
+        "A": 0.6803348329849541,
+        "B": 12.736150417011231
+      }
+    },
+    {
+      "p": 2,
+      "q": 3,
+      "horizon": 5,
+      "action_counts_per_period": {
+        "A": [
+          36,
+          36,
+          36,
+          36,
+          36
+        ],
+        "B": [
+          72,
+          72,
+          72,
+          72,
+          72
+        ]
+      },
+      "enumerated_sequence_upper_bounds": {
+        "A": 60466176,
+        "B": 1934917632
+      },
+      "A": {
+        "value": 3.757375,
+        "visited_states": 19181,
+        "teaching_count": 0,
+        "teaching_actions": [],
+        "periods": [
+          {
+            "period": 0,
+            "problem_id": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.05,
+              0.0
+            ],
+            "reward": 1.0500000000000003,
+            "success": true,
+            "deficits": [
+              0.0,
+              0.0
+            ],
+            "competence_before": [
+              [
+                0.85,
+                0.15
+              ],
+              [
+                0.2,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "competence_after": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.030000000000000027,
+                0.0
+              ],
+              [
+                0.09599999999999992,
+                0.0
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 1,
+            "problem_id": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.176,
+              0.0
+            ],
+            "reward": 1.1759999999999997,
+            "success": true,
+            "deficits": [
+              0.0,
+              0.0
+            ],
+            "competence_before": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "competence_after": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.02400000000000002,
+                0.0
+              ],
+              [
+                0.08448,
+                0.0
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 2,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.35
+            ],
+            "reward": 0.35,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.35
+            ],
+            "competence_before": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.904,
+                0.2775000000000001
+              ],
+              [
+                0.38047999999999993,
+                0.24
+              ]
+            ],
+            "competence_after": [
+              [
+                0.904,
+                0.2775000000000001
+              ],
+              [
+                0.38047999999999993,
+                0.24
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.12750000000000009
+              ],
+              [
+                0.0,
+                0.03999999999999998
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 3,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.5175000000000001
+            ],
+            "reward": 0.5175000000000001,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.18249999999999988
+            ],
+            "competence_before": [
+              [
+                0.904,
+                0.2775000000000001
+              ],
+              [
+                0.38047999999999993,
+                0.24
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.904,
+                0.3858750000000001
+              ],
+              [
+                0.38047999999999993,
+                0.278
+              ]
+            ],
+            "competence_after": [
+              [
+                0.904,
+                0.3858750000000001
+              ],
+              [
+                0.38047999999999993,
+                0.278
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.108375
+              ],
+              [
+                0.0,
+                0.038000000000000034
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 4,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.6638750000000001
+            ],
+            "reward": 0.663875,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.03612499999999985
+            ],
+            "competence_before": [
+              [
+                0.904,
+                0.3858750000000001
+              ],
+              [
+                0.38047999999999993,
+                0.278
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.904,
+                0.4779937500000001
+              ],
+              [
+                0.38047999999999993,
+                0.31410000000000005
+              ]
+            ],
+            "competence_after": [
+              [
+                0.904,
+                0.4779937500000001
+              ],
+              [
+                0.38047999999999993,
+                0.31410000000000005
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.09211875000000003
+              ],
+              [
+                0.0,
+                0.03610000000000002
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          }
+        ]
+      },
+      "B": {
+        "value": 3.757375,
+        "visited_states": 654665,
+        "teaching_count": 0,
+        "teaching_actions": [],
+        "periods": [
+          {
+            "period": 0,
+            "problem_id": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.05,
+              0.0
+            ],
+            "reward": 1.0500000000000003,
+            "success": true,
+            "deficits": [
+              0.0,
+              0.0
+            ],
+            "competence_before": [
+              [
+                0.85,
+                0.15
+              ],
+              [
+                0.2,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "competence_after": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.030000000000000027,
+                0.0
+              ],
+              [
+                0.09599999999999992,
+                0.0
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 1,
+            "problem_id": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.176,
+              0.0
+            ],
+            "reward": 1.1759999999999997,
+            "success": true,
+            "deficits": [
+              0.0,
+              0.0
+            ],
+            "competence_before": [
+              [
+                0.88,
+                0.15
+              ],
+              [
+                0.29599999999999993,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "competence_after": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.02400000000000002,
+                0.0
+              ],
+              [
+                0.08448,
+                0.0
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 2,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.35
+            ],
+            "reward": 0.35,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.35
+            ],
+            "competence_before": [
+              [
+                0.904,
+                0.15
+              ],
+              [
+                0.38047999999999993,
+                0.2
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.904,
+                0.2775000000000001
+              ],
+              [
+                0.38047999999999993,
+                0.24
+              ]
+            ],
+            "competence_after": [
+              [
+                0.904,
+                0.2775000000000001
+              ],
+              [
+                0.38047999999999993,
+                0.24
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.12750000000000009
+              ],
+              [
+                0.0,
+                0.03999999999999998
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 3,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.5175000000000001
+            ],
+            "reward": 0.5175000000000001,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.18249999999999988
+            ],
+            "competence_before": [
+              [
+                0.904,
+                0.2775000000000001
+              ],
+              [
+                0.38047999999999993,
+                0.24
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.904,
+                0.3858750000000001
+              ],
+              [
+                0.38047999999999993,
+                0.278
+              ]
+            ],
+            "competence_after": [
+              [
+                0.904,
+                0.3858750000000001
+              ],
+              [
+                0.38047999999999993,
+                0.278
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.108375
+              ],
+              [
+                0.0,
+                0.038000000000000034
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          },
+          {
+            "period": 4,
+            "problem_id": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.6638750000000001
+            ],
+            "reward": 0.663875,
+            "success": false,
+            "deficits": [
+              0.0,
+              0.03612499999999985
+            ],
+            "competence_before": [
+              [
+                0.904,
+                0.3858750000000001
+              ],
+              [
+                0.38047999999999993,
+                0.278
+              ]
+            ],
+            "competence_after_mis": [
+              [
+                0.904,
+                0.4779937500000001
+              ],
+              [
+                0.38047999999999993,
+                0.31410000000000005
+              ]
+            ],
+            "competence_after": [
+              [
+                0.904,
+                0.4779937500000001
+              ],
+              [
+                0.38047999999999993,
+                0.31410000000000005
+              ]
+            ],
+            "mis_increment": [
+              [
+                0.0,
+                0.09211875000000003
+              ],
+              [
+                0.0,
+                0.03610000000000002
+              ]
+            ],
+            "transfer_increment": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "productive_effort": 2.0,
+            "teaching_resource": 0.0,
+            "total_resource": 2.0,
+            "unused_resource": 0.0
+          }
+        ]
+      },
+      "delta_B_minus_A": 0.0,
+      "zero_efficacy_B_value": 3.757375,
+      "runtime_seconds_descriptive": {
+        "A": 2.235219791997224,
+        "B": 93.50310433399864
+      }
+    }
+  ],
+  "independent_enumeration_validation": {
+    "p": 1,
+    "q": 2,
+    "bellman_A": 1.9175000000000004,
+    "exhaustive_A": 1.9175000000000004,
+    "bellman_B": 1.9175000000000004,
+    "exhaustive_B": 1.9175000000000004,
+    "sequence_counts": {
+      "A": 1679616,
+      "B": 26873856
+    },
+    "matches": true
+  },
+  "scope_note": "Only predeclared neighboring p/q configurations; no physical parameters were tuned. Added one sequential extension p=2, q=3 after the prior point's runtime check."
+}

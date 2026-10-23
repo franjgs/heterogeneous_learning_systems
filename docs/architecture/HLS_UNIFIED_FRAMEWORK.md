@@ -7,9 +7,13 @@ superior.
 
 This document supplies a common mathematical vocabulary for the completed
 scenario studies. It preserves their differing action spaces, reward models,
-information contracts, and evidence limits. The existing three-level
-ontology—scenario, mechanisms, organization—remains the conceptual index; this
-formulation does not prescribe a software refactor.
+information contracts, and evidence limits. The formulation separates
+**(A) the system model**, **(B) the problem and organizational modality**, and
+**(C) the decision architecture**. This is a scientific distinction, not a
+software refactor or a claim that one algorithm is universal. The earlier
+scenario/mechanism/organization vocabulary is retained for historical
+traceability; mechanisms are represented as system dynamics and/or
+decision-side estimation according to what they actually change.
 
 ## 1. What HLS is, and is not
 
@@ -56,6 +60,90 @@ yet a validated general selection procedure; **(D)** a unique HLS organization
 is not the project claim and is inconsistent with the scenario-specific
 policies studied.
 
+### 1.1 Three distinct levels of description
+
+| Level | Defines | Examples and boundary |
+|---|---|---|
+| **A — System model** | Agents `I`, task types `K`, true capabilities `C_t`, environment state `Z_t`, demand `D_t`, resources, capability/reward dynamics, and observation law. It declares what is known, latent, static, exogenous, or action-dependent. | MIS-v2 changes physical competence after executed work; exogenous regimes change competence independently of assignments; a bandit estimator changes decision-side information, not agent competence. |
+| **B — Problem and organizational modality** | Decision objects, eligible participants, coverage, feasible-action set, dependencies among decisions, and objective. It says what must be decided, not how the answer is computed. | Select one agent for one request; jointly assign agents and tasks; or make period decisions coupled by budget or action-dependent future state. |
+| **C — Decision architecture** | Rules/components that estimate unknown quantities, select feasible actions, and optionally plan over future consequences. | Bandit index, exact assignment optimizer, Bellman planner, or an explicitly specified composition. No module is mandated by a scenario label. |
+
+The system model and organizational modality define an instantiated decision
+problem; the architecture is evaluated against that contract, including its
+information, action, and resource constraints. Matching is neither the
+definition of organization nor a property of every HLS system: it is an exact
+optimization tool only for a suitable assignment structure.
+
+### 1.2 Organizational modalities (non-exhaustive)
+
+Let `u_t` denote the general decision variable. B1–B3 are useful structures,
+not an exhaustive taxonomy.
+
+**B1 — Individual selection.** One task/request is handled by one eligible
+agent: `u_t=a_t∈I_t`, where `I_t` is the candidate set. No matching is
+required. Unknown, exogenously changing reward/competence with selected-action
+feedback gives the individual-choice S3b modality; bandit algorithms are
+candidates only under their specific assumptions.
+
+**B2 — Combinatorial assignment.** Several agents and tasks are allocated
+jointly: `u_t=X_t∈𝒳(S_t,D_t)`. Here `X_t` is the assignment matrix; for
+additive bipartite rewards, a specialization
+is
+
+\[
+\max_{X_t} \sum_{i,k} w_{ik,t}x_{ik,t},\qquad
+\sum_kx_{ik,t}\leq1,\quad
+\sum_ix_{ik,t}\leq D_{kt},\quad x_{ik,t}\in\{0,1\}.
+\]
+
+When the feasible set has this structure, maximum-weight bipartite matching
+is an exact optimizer. Other combinatorial modalities—multi-capacity,
+coupled, precedence-constrained, coalition, or nonlinear problems—need not
+reduce to bipartite matching. The solver is a component of an architecture,
+not a synonym for organization.
+
+**B3 — Intertemporal planning.** The organization still chooses a feasible
+period action `u_t` at each time; its policy optimizes consequences over a
+horizon because actions couple periods, for example through a shared
+nonrenewing budget or endogenous capability transition. For a known finite
+model, a representative recursion is
+
+\[
+V_t(s)=\max_{u\in\mathcal U(s,d_t)}\left\{
+ r(s,d_t,u)+\mathbb E[V_{t+1}(S_{t+1})\mid s,d_t,u]\right\}.
+\]
+
+Planning is not a single batch action or a required feature of every HLS
+organization. It matters when the model contains temporal coupling; S2a is
+separable under its assumptions, whereas S2b and S4 contain different forms
+of coupling.
+
+Other modalities—subset selection, multi-capacity assignment, coalitions,
+task precedence, parallel execution, or hierarchical decisions—are
+recognized as possible problem structures, not as already modeled or
+validated capabilities.
+
+### 1.3 Optional functions within a decision architecture
+
+An architecture may combine, but need not contain, three functions:
+
+1. **Estimation / decision-side learning:** infer unknown capability,
+   reward, or state from permitted observations. EXP3, LinUCB, UCB1, SW-UCB,
+   and D-UCB update policy-side selection information; they do not thereby
+   develop the agents' physical competencies.
+2. **Organization / feasible-action optimization:** choose or construct a
+   feasible action under the modality's constraints. Exact matching is one
+   optimizer for its bipartite linear-assignment contract.
+3. **Planning / adaptation:** account for future consequences of current
+   decisions or changing conditions. Bellman planning is an exact reference
+   for the small known finite models used in S2b/S4, not a mandated general
+   architecture.
+
+Physical competence development (e.g. MIS-v2) belongs to the system's
+action-dependent transition; it is distinct from learning a policy estimate.
+An architecture may model or anticipate that transition, but the two forms
+of learning must not be conflated.
+
 ## 2. Common system model
 
 Let agents be `i ∈ I={1,…,N}`, task types be `k ∈ K={1,…,K}`, and decision
@@ -65,10 +153,11 @@ to exist in every HLS model.
 
 ### 2.1 Real system state and exogenous inputs
 
-Write the evaluator's real state as
+Write the evaluator's real system state as `S_t` (reserving historical `X_t`
+for an assignment matrix) and let
 
 \[
-X_t=(C_t,H_t,B_t,Q_t,Z_t,\Theta_t),
+S_t=(C_t,H_t,B_t,Q_t,Z_t,\Theta_t),
 \]
 
 where:
@@ -94,8 +183,10 @@ or future disturbances are known, unknown, or random.
 
 ### 2.2 Actions and constraints
 
-An organization chooses a feasible joint action `A_t ∈ 𝒜(X_t,D_t)`. In the
-canonical matching cases this can be represented by binary assignment
+An organization chooses a feasible decision `u_t ∈ 𝒰(S_t,D_t)`. The notation
+`u_t` is modality-neutral; in historical matching implementations it may be
+the assignment matrix `X_t` (or its entries `x[i,k,t]`). In the canonical
+matching cases the decision can be represented by binary assignment
 variables `x[i,k,t]` with agent capacity
 
 \[
@@ -123,7 +214,7 @@ budget
 \]
 
 or per-period capacity, effort, eligibility, and task coverage constraints.
-The set `𝒜` states whether assignments may be partial; one must not infer
+The set `𝒰` states whether assignments may be partial; one must not infer
 mandatory coverage from a solver's name.
 
 ### 2.3 Reward, competence, and observations
@@ -131,8 +222,8 @@ mandatory coverage from a solver's name.
 Let the realized collective outcome be `Y_t` with conditional law
 
 \[
-Y_t\sim P(\cdot\mid X_t,D_t,A_t,\Theta_t),\qquad
-R_t=\rho(X_t,D_t,A_t,Y_t)-g(X_t,A_t).
+Y_t\sim P(\cdot\mid S_t,D_t,u_t,\Theta_t),\qquad
+R_t=\rho(S_t,D_t,u_t,Y_t)-g(S_t,u_t).
 \]
 
 Here `g` is included only if that scenario explicitly values a cost in the
@@ -145,16 +236,19 @@ output, reward, and effort/cost are different measurements unless a model
 explicitly defines an aggregation.
 
 The organization receives observations `O_{t+1}` from a declared observation
-kernel
+kernel (the PI's compact notation is `Y_t^{obs}∼O(·|S_t,u_t)`; here `O` names
+the observation variable so it is not confused with the realized collective
+outcome `Y_t`):
 
 \[
-O_{t+1}\sim G(\cdot\mid X_t,D_t,A_t,Y_t,X_{t+1}).
+O_{t+1}\sim G(\cdot\mid S_t,D_t,u_t,Y_t,S_{t+1}).
 \]
 
 Its information is a filtration `𝓘_t^π` generated by permitted current inputs,
 past actions and observations, plus any declared prior/model knowledge. A
 policy must be measurable with respect to that information and select only
-`𝒜(X_t,D_t)`-feasible actions. Real state, policy observation, estimate/belief,
+`𝒰(S_t,D_t)`-feasible actions, i.e. `u_t=π_t(𝓘_t^π)` for its declared
+information filtration. Real state, policy observation, estimate/belief,
 and evaluator-only diagnostics must remain distinct. In particular, no policy
 gets future realized demand, unselected-pair outcomes, or oracle assignments
 unless the comparison explicitly labels a full-information reference.
@@ -164,7 +258,7 @@ unless the comparison explicitly labels a full-information reference.
 The general state transition can be factored as
 
 \[
-X_{t+1}=F(X_t,D_t,A_t,W_{t+1};\,\mathcal M),
+S_{t+1}=F(S_t,D_t,u_t,W_{t+1};\,\mathcal M),
 \]
 
 where mechanism bundle `𝓜` specifies the applicable transition laws. For
@@ -177,24 +271,27 @@ C_{t+1}=F_C^{exo}(C_t,W_{t+1})\quad\text{(exogenous; action-independent)},
 from
 
 \[
-C_{t+1}=F_C^{endo}(C_t,H_t,A_t,W_{t+1})\quad\text{(endogenous; action-dependent)}.
+C_{t+1}=F_C^{endo}(C_t,H_t,u_t,W_{t+1})\quad\text{(endogenous; action-dependent)}.
 \]
 
 A model may combine both only if explicitly defined; none of S1–S4 combines
 them. Belief/estimator state is updated separately, e.g.
-`M_{t+1}=U(M_t,A_t,O_{t+1})`; this is learning about state/reward or a policy,
+`M_{t+1}=U(M_t,u_t,O_{t+1})`; this is learning about state/reward or a policy,
 not physical competence learning. The six canonical scenarios do not all
 contain a belief process.
 
 For a finite-horizon organization `π`, the collective objective is
 
 \[
-J(π\mid X_0,\mathcal I_0)=
-\mathbb E_π\!\left[\sum_{t=0}^{T-1}R_t+R_T^{term}\right],
+J(π\mid S_0,\mathcal I_0)=
+\mathbb E_π\!\left[\sum_{t=0}^{T-1}R(S_t,u_t,D_t)+R_T^{term}\right],
 \]
 
-with optional terminal reward only where defined. The admissible policy class,
-model knowledge, observations, and randomization must accompany any value
+with optional terminal reward only where defined. The general optimization
+problem is `max_{π∈Π} J(π | S_0, 𝓘_0)`, where `Π` is the declared admissible
+policy class. The policy may use only its observed information and declared
+prior/model knowledge, not evaluator-only real state. Model knowledge,
+observations, and randomization must accompany any value
 comparison. An exact full-information dynamic program is a reference for its
 specified model and policy class, not evidence that a practical policy knows
 the model or can scale to a large state space.
@@ -208,13 +305,13 @@ instances remain instance evidence.
 
 ### 3.1 Temporal separability
 
-If `𝒜(X_t,D_t)=𝒜_t` is independent across periods, state/reward do not depend
+If `𝒰(S_t,D_t)=𝒰_t` is independent across periods, state/reward do not depend
 on prior actions, there is no shared intertemporal resource, and total reward
 is additive, then
 
 \[
-\max_{a_0\in 𝒜_0,\ldots,a_{T-1}\in 𝒜_{T-1}}\sum_t R_t(a_t)
-=\sum_t\max_{a_t\in 𝒜_t}R_t(a_t).
+\max_{u_0\in 𝒰_0,\ldots,u_{T-1}\in 𝒰_{T-1}}\sum_t R_t(u_t)
+=\sum_t\max_{u_t\in 𝒰_t}R_t(u_t).
 \]
 
 This proves why S2a needs no temporal planner. It does not apply when actions
@@ -222,12 +319,12 @@ share budget, alter later state, or affect pending work.
 
 ### 3.2 Shared resources and endogenous consequences
 
-When `B_{t+1}=B_t−m(A_t)+b_t^{replenish}` couples periods, or when
-`C_{t+1}` depends on `A_t`, the action at `t` changes the continuation problem.
+When `B_{t+1}=B_t−m(u_t)+b_t^{replenish}` couples periods, or when
+`C_{t+1}` depends on `u_t`, the action at `t` changes the continuation problem.
 For a known finite-state model the Bellman equation is
 
 \[
-V_t(X)=\max_{a\in𝒜(X,D_t)}\{r(X,D_t,a)+\mathbb E[V_{t+1}(X')\mid X,D_t,a]\}.
+V_t(S)=\max_{u\in𝒰(S,D_t)}\{r(S,D_t,u)+\mathbb E[V_{t+1}(S')\mid S,D_t,u]\}.
 \]
 
 S2b and S4 each verify a strict planning gap in a constructed small instance,
@@ -265,11 +362,14 @@ guarantee.
   their computational and resource costs; and how conclusions scale beyond
   the small exact models.
 
-## 4. Six scenarios as specializations
+## 4. Reference scenarios as system regimes
 
-The following are reductions of the common model, not six claims of one
-uniform implementation. `C` denotes known expected reward/competence where
-that is the scenario's declared reward model.
+S1–S4 are reference regimes, not a rigid hierarchy of complexity and not
+unique organizational modalities. Their properties may be combined in a
+justified instance without creating a new named scenario for every
+combination. The following reductions preserve historical experiments; they
+do not imply one uniform implementation. `C` denotes known expected
+reward/competence where that is the scenario's declared reward model.
 
 ### S1 — static assignment
 
@@ -412,6 +512,29 @@ check that only executed pairs develop. This supports existence and a narrow
 controlled regime, not general prevalence, realism, scalability, or universal
 necessity of MIS-v2.
 
+### 4.1 System regimes do not determine a unique modality
+
+S1–S4 label regimes of system dynamics and temporal structure. They do not
+universally prescribe one organizational modality or decision architecture.
+The following mappings describe the completed instances only:
+
+| Scenario/configuration | A — System regime | B — Modality | C — Architecture actually evaluated / evidence boundary |
+|---|---|---|---|
+| S1 | Static, known competence/reward and demand | B2, one-period bipartite assignment | SciPy `linear_sum_assignment` exact solver vs greedy and independent enumeration; canonical optimum `2.60`, greedy `1.80`. |
+| S2a | Known constant competence, changing demand, renewed resources, no interperiod coupling | Repeated B2 per period | Exact matching per period equals exhaustive horizon optimum `8.00`; this is separability under assumptions. |
+| S2b | Same known system plus a shared nonrenewing horizon budget | B3 with B2 period actions | Exact myopic vs Bellman DP and independent enumeration; binding-budget example `.90` vs `1.00`, while sufficient-budget control ties at `1.90`. |
+| S3a (D0/D1/D2) | Exogenous changing competence/reward; current competence observable in the base setting | B2 simultaneous assignment | Reactive exact matching; at perfect observation it equals the declared period oracle (`634.150`, `614.450`, `679.150`). Selector learning was not necessary in that mapping. |
+| S3b-B1 | Unknown, exogenously changing Bernoulli arm means; one selected arm and selected-arm feedback | B1 individual selection | UCB1, D-UCB, SW-UCB reproduction of the Garivier–Moulines abrupt-change setup; expected dynamic regrets `669.146`, `600.720`, `288.092`. This bandit reproduction is distinct from the HLS matching instance. |
+| S3b-B2 | Unknown, exogenous, changing pair means; Bernoulli outcomes and semi-bandit feedback | B2 simultaneous 3×3 assignment | Per-pair UCB1/D-UCB/SW-UCB indices plus exact matching; expected regrets `224.403`, `2085.502`, `393.563`, respectively. These are a different instance and horizon/protocol from B1; regrets are not directly comparable. Matching alone has not been isolated as the cause of the ranking. |
+| S4 | Known deterministic demand; action-dependent MIS-v2 competence learning | B3 with B2 period actions | Exact myopic, tie-aware BEST-MYOPIC, Bellman, and independent enumeration. A narrow controlled family establishes an instance-level strict planning gap; not general prevalence or scalability. |
+
+S3b-B1 and S3b-B2 are descriptive identifiers introduced by this
+formalization. They do not rename or alter historical code, result, or test
+artifacts. Both share the S3b system regime; the decision object, feasible
+set, feedback structure and resulting architecture composition differ. The
+recorded regrets come from distinct evaluated instances and must not be
+compared numerically as if they shared a common benchmark.
+
 ## 5. Decision architecture as a function of structure
 
 The scenarios support a conditional selection principle, not a single HLS
@@ -512,6 +635,11 @@ first state the unresolved claim, its evidence requirement, and why existing
 artifacts do not answer it; this is a research-state record, not authorization
 to implement.
 
+**Chronological amendment (2026-10-21):** this statement records the status
+at consolidation. The PI subsequently approved planning for S3b-E1, as
+recorded in §9; implementation and execution remain unauthorized until a
+later instruction.
+
 ## 8. Provenance and unresolved metadata
 
 The event entries in the execution register date the S1–S4 scenario work and
@@ -522,3 +650,38 @@ used as a semantic source; repository evidence available here does not
 establish whether that label is a future planned date, a metadata error, or a
 later-file timestamp. This inconsistency is not silently resolved by
 backdating or rewriting prior entries.
+
+## 9. PI decision and S3b-E1 research state (2026-10-21)
+
+The PI approved the current three-level framework and set the scientific
+priority order **S3b (estimation, adaptation, organization), S4 (endogenous
+competence development), S2b (intertemporal resources)**. S1, S2a, and S3a
+remain references. This is not a complexity ranking. Combinations of system
+properties are permitted when scientifically justified; they do not each
+require a new scenario identifier. No new HLS policy, broad scenario
+expansion, repeated S4 demonstration, or general refactor is authorized here.
+
+S3b-E1 is approved for specification, not yet implementation or execution.
+Its question is why UCB1 and SW-UCB change relative ranking between individual
+selection and combinatorial assignment, and how feedback and memory
+contribute. The motivating regrets (B1: `669.146` vs `288.092`; B2 matching:
+`224.403` vs `393.563`) come from different instances and cannot establish
+that matching intrinsically benefits one method or harms the other.
+
+The revised design holds the 3-agent/3-task exogenous Bernoulli competency
+system common, compares B1 single-pair selection with B2 complete matching,
+and adds a B2 feedback-only control (semi-bandit feedback versus one executed
+pair outcome per period). It also predeclares a reference and longer SW-UCB
+window. The full pre-implementation specification—including the fixed
+competency matrix/change times, seeds, calibration, feedback-selection rule,
+estimators, oracles, metrics, hypotheses, and design limitations—is recorded
+in the chronological [engineering decision register](../engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md).
+The initial methods are UCB1 and SW-UCB only; D-UCB and GLR-CUCB remain prior
+context, not E1 arms. H1–H5 in the register remain hypotheses, and none is
+confirmed by the prior cross-instance ranking.
+
+For precision, the motivating B1 result is the earlier three-arm published-
+problem reproduction, whereas E1's common-system B1 arm set is the nine
+agent-task pairs. E1 is therefore not an exact replay of that three-arm
+benchmark. In both B1 and B2, UCB1-vs-SW-UCB is interpreted within modality;
+absolute rewards/regrets across B1 and B2 are not a superiority comparison.

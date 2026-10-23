@@ -1,6 +1,8 @@
 # HLS ontology v0.1 — 23 October 2026
 
-**Status:** consolidated semantic reference; not a simulator redesign.
+**Status:** consolidated semantic reference with a conceptual clarification
+dated 2026-10-21; not a simulator redesign. The filename and title metadata
+are preserved as historical provenance.
 **Scope:** concepts and distinctions already used in HLS theory and code, with
 particular attention to N×K/MIS-v2, directed teaching, demand, observation and
 decision policies. This document describes current semantics; it does not
@@ -313,13 +315,18 @@ authorization to modify code or conduct experiments.
 
 ## 11. Cross-scenario formulation and boundary (consolidation note)
 
-This section connects the existing A/B/C ontology to the S1–S4 scientific
-scenarios; it does not replace the N×K definitions above. For the detailed
-common state/action/observation model, scenario reductions, evidence status,
-and research questions, see the [HLS unified scientific formulation](HLS_UNIFIED_FRAMEWORK.md).
+This section originally connected the scenario/mechanism/organization
+vocabulary to S1–S4; its historical labels and examples are retained. The
+2026-10-21 clarification below separates system, modality, and architecture
+without changing any N×K definition or experiment. For the detailed common
+state/action/observation model, scenario reductions, evidence status, and
+research questions, see the [HLS unified scientific formulation](HLS_UNIFIED_FRAMEWORK.md).
 
-The scenario portfolio uses one conceptual decomposition but **not one
-homogeneous implementation contract**:
+The following A/B/C bullets preserve the earlier scenario/mechanisms/
+organization mapping for historical traceability; they are not the clarified
+system/modality/architecture labels introduced in §12. The earlier portfolio
+used one conceptual decomposition but **not one homogeneous implementation
+contract**:
 
 - **A — Scenario/system:** agent/task sets, demand, true capability state,
   exogenous environment, reward law, resources and feasible action set.
@@ -353,3 +360,140 @@ strict-gap family was verified.
 while the consolidation note is recorded on 2026-10-21. That ordering is
 retained rather than silently corrected; available repository evidence does
 not establish whether the original date is prospective metadata or an error.
+
+## 12. Clarification dated 2026-10-21: system, modality, architecture
+
+This clarification refines the conceptual levels used going forward. It does
+not rewrite historical experiment labels, code interfaces, or conclusions.
+Older register entries may call A/B/C “scenario/mechanisms/organization”;
+those labels remain traceable to their date. In the clarified formulation,
+mechanisms are located by function: physical capability changes belong to
+system dynamics, while estimation updates belong to decision-side learning.
+
+### A — System model
+
+An instantiated system declares agent set `I`, task set `K`, true capability
+state `C_t`, environment state `Z_t`, demand `D_t`, resources/capacities,
+reward and observation laws, and the applicable dynamics. It declares
+separately whether capability/reward state is known or unknown, static or
+dynamic, exogenous or action-dependent, and fully or partially observed.
+True state, observation, estimate/belief, and evaluator-only information are
+distinct objects. A reward observation is not competence itself.
+
+### B — Problem and organizational modality
+
+The modality defines the decision object `u_t`, eligible participants,
+required coverage, feasible set `𝒰(S_t,D_t)`, constraints/dependencies, and
+objective. It does not prescribe the algorithm.
+
+- **B1, individual selection:** `u_t=a_t∈I_t`; one eligible agent handles one
+  task/request. No matching is required.
+- **B2, combinatorial assignment:** `u_t=X_t`; a joint allocation obeys
+  capacity/coverage restrictions. For additive one-to-one bipartite rewards,
+  maximum-weight matching is appropriate; arbitrary combinatorial allocation
+  need not reduce to matching.
+- **B3, intertemporal planning:** the organization still selects a period
+  action `u_t`, but optimizes its consequences over time where budget, backlog,
+  or action-dependent capability transitions couple periods.
+- Other modalities (subset selection, multi-capacity allocation, coalitions,
+  precedence, parallel or hierarchical decisions) are recognized as possible
+  generalizations, not asserted current capabilities.
+
+The modality's objective and constraints are part of the problem contract;
+comparisons must state their information, action catalog, resources, horizon,
+and objective.
+
+### C — Decision architecture
+
+An architecture is a concrete policy or composition evaluated for one
+system/modality pair. Its optional functions are:
+
+1. **Estimation / learning:** infer hidden capability, reward, or state from
+   permitted observations. EXP3, LinUCB, UCB1, SW-UCB, and D-UCB learn
+   decision-side selection information; they do not update agent competence.
+2. **Organization / optimization:** choose a feasible action. Matching is a
+   solver for the B2 structure above, not an organizational theory.
+3. **Planning / adaptation:** account for future state/reward consequences or
+   changing regimes. It is needed only when the problem structure and
+   evaluation question warrant it.
+
+These functions may be composed, but none is mandatory in all configurations.
+For a modality-neutral model, let `u_t∈𝒰(S_t,D_t)` and
+
+\[
+S_{t+1}=F(S_t,D_t,u_t,\xi_{t+1}),\qquad
+O_{t+1}\sim G(\cdot\mid S_t,D_t,u_t,Y_t,S_{t+1}),
+\]
+
+with policy `π` measurable with respect to its declared information
+`𝓘_t^π`. The finite-horizon objective is
+
+\[
+\max_{\pi\in\Pi}\;\mathbb E_\pi\!\left[
+  \sum_{t=0}^{T-1}R(S_t,u_t,D_t) + R_T^{term}
+\right],
+\]
+
+where terminal reward is omitted if not defined. Capability dynamics may be
+exogenous, `C_{t+1}=F_C^{exo}(C_t,ξ_{t+1})`, or endogenous,
+`C_{t+1}=F_C^{endo}(C_t,u_t,ξ_{t+1})`. Estimator state is updated separately
+from either physical transition. Historical assignment notation `X_t` and
+`x[i,k,t]` remains valid for B2.
+
+### Relation to scenario identifiers and S3b evidence
+
+S1–S4 characterize system/time regimes, not universal modalities. S1 and
+S2a instantiate B2; S2b uses B3 with period assignment actions; S3a's
+completed D0/D1/D2 setting is observable-state B2; S4 is B3 with B2 period
+actions and endogenous MIS-v2 competence. S3b supports two descriptive
+configurations without changing historical artifact names:
+
+| Identifier | System regime | Modality | Recorded expected dynamic regret |
+|---|---|---|---:|
+| S3b-B1 | Unknown, exogenously changing Bernoulli arm rewards; selected-arm feedback | Individual choice `a_t` | UCB1 `669.146`; D-UCB `600.720`; SW-UCB `288.092` in the Garivier–Moulines-inspired bandit reproduction. |
+| S3b-B2 | Unknown, exogenously changing Bernoulli pair rewards; semi-bandit feedback | Simultaneous 3×3 assignment `X_t` | UCB1+matching `224.403`; D-UCB+matching `2085.502`; SW-UCB+matching `393.563` in a separate HLS instance. |
+
+The two S3b rows are different instances and their regrets are not directly
+comparable. The results do not isolate matching as the cause of the changed
+ranking, do not identify a universally optimal S3b architecture, and leave
+the S3b research line open. Matching in B2 is justified by that instance's
+feasible set, not required by HLS or S3b generally.
+
+The PI-approved S3b-E1 specification compares these organizations on a common
+3×3 system. Its B1 version selects among nine agent-task pairs, so it is not
+an exact replay of the historical three-arm B1 reproduction. E1 is currently
+specified only; no implementation or result is recorded.
+
+**Methodological principle.** HLS provides a common framework to represent
+heterogeneous-agent systems, formulate different organizational modalities,
+and study decision architectures appropriate to each configuration. The
+general framework presupposes neither one modality nor a universal algorithm.
+Research claims belong to a specified configuration, where problem
+properties are analyzed, architectures are selected or proposed, and
+performance is evaluated against relevant references. This is a framework
+for comparative research, not a validated universal theory or algorithm.
+
+## 13. PI decision and S3b-E1 status (2026-10-21)
+
+The PI approved the A/B/C levels as **A system**, **B organizational
+modality**, and **C decision architecture**. S1–S4 remain reference regimes,
+not a hierarchy; their properties may be combined when justified without
+creating a new named scenario for every combination. Priorities are S3b,
+then S4, then S2b; S1, S2a, and S3a remain references.
+
+For information discipline, the modality-neutral contract is
+`u_t∈𝒰(S_t,D_t)` with observation `Y_t^{obs}∼O(·|S_t,u_t)` and system
+transition `S_{t+1}=F(S_t,D_t,u_t,ξ_{t+1})`. The policy is measurable only
+with respect to declared observations/history and prior/model knowledge;
+true state and evaluator-only values are not policy inputs. Here
+`Y_t^{obs}` names the observation to distinguish it from the N×K/experiment
+notation for realized production outcome. Estimator updates (S3b) and
+action-dependent capability development (S4/MIS-v2) remain distinct.
+
+S3b-E1 is **specified for planning, not implemented or executed**. It compares
+UCB1 and SW-UCB in individual selection and 3×3 assignment, adds a feedback-
+only comparison within matching, and includes a predeclared longer SW window.
+The historical cross-instance regret rankings motivate the question but do
+not establish a matching effect. See the [unified framework](HLS_UNIFIED_FRAMEWORK.md)
+and [chronological decision register](../engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md)
+for the design and its evidence boundaries.

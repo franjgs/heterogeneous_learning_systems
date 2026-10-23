@@ -1,0 +1,506 @@
+{
+  "experiment": "HLS-S2b-shared-intertemporal-budget",
+  "matrix_C_agent_by_task": [
+    [
+      1.0,
+      0.9,
+      0.0
+    ],
+    [
+      0.9,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.8,
+      0.8
+    ]
+  ],
+  "agents": [
+    "a0",
+    "a1",
+    "a2"
+  ],
+  "tasks": [
+    "t0",
+    "t1",
+    "t2"
+  ],
+  "demands": [
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      1,
+      0,
+      0
+    ]
+  ],
+  "per_period_agent_capacity": 1,
+  "global_resource_budget_nonrenewing": true,
+  "competence_constant": true,
+  "cases": {
+    "A_sufficient_budget": {
+      "budget": 3,
+      "myopic": {
+        "name": "A_sufficient_budget",
+        "initial_budget": 3,
+        "periods": [
+          {
+            "period": 0,
+            "demand_by_task": {
+              "t0": 0,
+              "t1": 1,
+              "t2": 0
+            },
+            "budget_before": 3,
+            "assignments": [
+              {
+                "agent": "a0",
+                "task": "t1",
+                "unit": "t1_unit0"
+              }
+            ],
+            "reward": 0.9,
+            "immediate_optimum_given_budget": 0.9,
+            "units_executed": 1,
+            "budget_after": 2,
+            "demand_satisfied": {
+              "t0": 0,
+              "t1": 1,
+              "t2": 0
+            },
+            "demand_unserved": {
+              "t0": 0,
+              "t1": 0,
+              "t2": 0
+            }
+          },
+          {
+            "period": 1,
+            "demand_by_task": {
+              "t0": 1,
+              "t1": 0,
+              "t2": 0
+            },
+            "budget_before": 2,
+            "assignments": [
+              {
+                "agent": "a0",
+                "task": "t0",
+                "unit": "t0_unit0"
+              }
+            ],
+            "reward": 1.0,
+            "immediate_optimum_given_budget": 1.0,
+            "units_executed": 1,
+            "budget_after": 1,
+            "demand_satisfied": {
+              "t0": 1,
+              "t1": 0,
+              "t2": 0
+            },
+            "demand_unserved": {
+              "t0": 0,
+              "t1": 0,
+              "t2": 0
+            }
+          }
+        ],
+        "reward": 1.9,
+        "budget_consumed": 2,
+        "budget_remaining": 1,
+        "solver_seconds_descriptive": 7.054186426103115e-05
+      },
+      "bellman": {
+        "reward": 1.9,
+        "budget_consumed": 2,
+        "budget_remaining": 1,
+        "periods": [
+          {
+            "period": 0,
+            "demand_by_task": {
+              "t0": 0,
+              "t1": 1,
+              "t2": 0
+            },
+            "budget_before": 3,
+            "assignments": [
+              {
+                "agent": "a0",
+                "task": "t1",
+                "unit": "t1_unit0"
+              }
+            ],
+            "reward": 0.9,
+            "units_executed": 1,
+            "budget_after": 2,
+            "demand_satisfied": {
+              "t0": 0,
+              "t1": 1,
+              "t2": 0
+            },
+            "demand_unserved": {
+              "t0": 0,
+              "t1": 0,
+              "t2": 0
+            }
+          },
+          {
+            "period": 1,
+            "demand_by_task": {
+              "t0": 1,
+              "t1": 0,
+              "t2": 0
+            },
+            "budget_before": 2,
+            "assignments": [
+              {
+                "agent": "a0",
+                "task": "t0",
+                "unit": "t0_unit0"
+              }
+            ],
+            "reward": 1.0,
+            "units_executed": 1,
+            "budget_after": 1,
+            "demand_satisfied": {
+              "t0": 1,
+              "t1": 0,
+              "t2": 0
+            },
+            "demand_unserved": {
+              "t0": 0,
+              "t1": 0,
+              "t2": 0
+            }
+          }
+        ],
+        "reachable_dp_states": 6
+      },
+      "global_exhaustive": {
+        "reward": 1.9,
+        "plan": [
+          {
+            "period": 0,
+            "reward": 0.9,
+            "edges": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "period": 1,
+            "reward": 1.0,
+            "edges": [
+              [
+                0,
+                0
+              ]
+            ]
+          }
+        ],
+        "cartesian_sequences_examined": 16,
+        "budget_feasible_sequences": 16
+      },
+      "bellman_minus_myopic": 0.0,
+      "bellman_minus_enumeration": 0.0
+    },
+    "B_shared_budget_binding": {
+      "budget": 1,
+      "myopic": {
+        "name": "B_shared_budget_binding",
+        "initial_budget": 1,
+        "periods": [
+          {
+            "period": 0,
+            "demand_by_task": {
+              "t0": 0,
+              "t1": 1,
+              "t2": 0
+            },
+            "budget_before": 1,
+            "assignments": [
+              {
+                "agent": "a0",
+                "task": "t1",
+                "unit": "t1_unit0"
+              }
+            ],
+            "reward": 0.9,
+            "immediate_optimum_given_budget": 0.9,
+            "units_executed": 1,
+            "budget_after": 0,
+            "demand_satisfied": {
+              "t0": 0,
+              "t1": 1,
+              "t2": 0
+            },
+            "demand_unserved": {
+              "t0": 0,
+              "t1": 0,
+              "t2": 0
+            }
+          },
+          {
+            "period": 1,
+            "demand_by_task": {
+              "t0": 1,
+              "t1": 0,
+              "t2": 0
+            },
+            "budget_before": 0,
+            "assignments": [],
+            "reward": 0.0,
+            "immediate_optimum_given_budget": 0.0,
+            "units_executed": 0,
+            "budget_after": 0,
+            "demand_satisfied": {
+              "t0": 0,
+              "t1": 0,
+              "t2": 0
+            },
+            "demand_unserved": {
+              "t0": 1,
+              "t1": 0,
+              "t2": 0
+            }
+          }
+        ],
+        "reward": 0.9,
+        "budget_consumed": 1,
+        "budget_remaining": 0,
+        "solver_seconds_descriptive": 2.150004729628563e-05
+      },
+      "bellman": {
+        "reward": 1.0,
+        "budget_consumed": 1,
+        "budget_remaining": 0,
+        "periods": [
+          {
+            "period": 0,
+            "demand_by_task": {
+              "t0": 0,
+              "t1": 1,
+              "t2": 0
+            },
+            "budget_before": 1,
+            "assignments": [],
+            "reward": 0,
+            "units_executed": 0,
+            "budget_after": 1,
+            "demand_satisfied": {
+              "t0": 0,
+              "t1": 0,
+              "t2": 0
+            },
+            "demand_unserved": {
+              "t0": 0,
+              "t1": 1,
+              "t2": 0
+            }
+          },
+          {
+            "period": 1,
+            "demand_by_task": {
+              "t0": 1,
+              "t1": 0,
+              "t2": 0
+            },
+            "budget_before": 1,
+            "assignments": [
+              {
+                "agent": "a0",
+                "task": "t0",
+                "unit": "t0_unit0"
+              }
+            ],
+            "reward": 1.0,
+            "units_executed": 1,
+            "budget_after": 0,
+            "demand_satisfied": {
+              "t0": 1,
+              "t1": 0,
+              "t2": 0
+            },
+            "demand_unserved": {
+              "t0": 0,
+              "t1": 0,
+              "t2": 0
+            }
+          }
+        ],
+        "reachable_dp_states": 5
+      },
+      "global_exhaustive": {
+        "reward": 1.0,
+        "plan": [
+          {
+            "period": 0,
+            "reward": 0,
+            "edges": []
+          },
+          {
+            "period": 1,
+            "reward": 1.0,
+            "edges": [
+              [
+                0,
+                0
+              ]
+            ]
+          }
+        ],
+        "cartesian_sequences_examined": 16,
+        "budget_feasible_sequences": 7
+      },
+      "bellman_minus_myopic": 0.09999999999999998,
+      "bellman_minus_enumeration": 0.0
+    },
+    "zero_budget_control": {
+      "budget": 0,
+      "myopic": {
+        "name": "zero_budget_control",
+        "initial_budget": 0,
+        "periods": [
+          {
+            "period": 0,
+            "demand_by_task": {
+              "t0": 0,
+              "t1": 1,
+              "t2": 0
+            },
+            "budget_before": 0,
+            "assignments": [],
+            "reward": 0.0,
+            "immediate_optimum_given_budget": 0.0,
+            "units_executed": 0,
+            "budget_after": 0,
+            "demand_satisfied": {
+              "t0": 0,
+              "t1": 0,
+              "t2": 0
+            },
+            "demand_unserved": {
+              "t0": 0,
+              "t1": 1,
+              "t2": 0
+            }
+          },
+          {
+            "period": 1,
+            "demand_by_task": {
+              "t0": 1,
+              "t1": 0,
+              "t2": 0
+            },
+            "budget_before": 0,
+            "assignments": [],
+            "reward": 0.0,
+            "immediate_optimum_given_budget": 0.0,
+            "units_executed": 0,
+            "budget_after": 0,
+            "demand_satisfied": {
+              "t0": 0,
+              "t1": 0,
+              "t2": 0
+            },
+            "demand_unserved": {
+              "t0": 1,
+              "t1": 0,
+              "t2": 0
+            }
+          }
+        ],
+        "reward": 0.0,
+        "budget_consumed": 0,
+        "budget_remaining": 0,
+        "solver_seconds_descriptive": 0.0
+      },
+      "bellman": {
+        "reward": 0.0,
+        "budget_consumed": 0,
+        "budget_remaining": 0,
+        "periods": [
+          {
+            "period": 0,
+            "demand_by_task": {
+              "t0": 0,
+              "t1": 1,
+              "t2": 0
+            },
+            "budget_before": 0,
+            "assignments": [],
+            "reward": 0,
+            "units_executed": 0,
+            "budget_after": 0,
+            "demand_satisfied": {
+              "t0": 0,
+              "t1": 0,
+              "t2": 0
+            },
+            "demand_unserved": {
+              "t0": 0,
+              "t1": 1,
+              "t2": 0
+            }
+          },
+          {
+            "period": 1,
+            "demand_by_task": {
+              "t0": 1,
+              "t1": 0,
+              "t2": 0
+            },
+            "budget_before": 0,
+            "assignments": [],
+            "reward": 0,
+            "units_executed": 0,
+            "budget_after": 0,
+            "demand_satisfied": {
+              "t0": 0,
+              "t1": 0,
+              "t2": 0
+            },
+            "demand_unserved": {
+              "t0": 1,
+              "t1": 0,
+              "t2": 0
+            }
+          }
+        ],
+        "reachable_dp_states": 3
+      },
+      "global_exhaustive": {
+        "reward": 0,
+        "plan": [
+          {
+            "period": 0,
+            "reward": 0,
+            "edges": []
+          },
+          {
+            "period": 1,
+            "reward": 0,
+            "edges": []
+          }
+        ],
+        "cartesian_sequences_examined": 16,
+        "budget_feasible_sequences": 1
+      },
+      "bellman_minus_myopic": 0.0,
+      "bellman_minus_enumeration": 0.0
+    }
+  },
+  "assumptions": {
+    "demand_sequence_known_to_both_policies": true,
+    "myopic_rule_uses_current_period_only": true,
+    "both_use_same_public_C_and_per_period_feasible_actions": true,
+    "no_learning_transfer_switching_cost_or_other_temporal_constraint": true
+  }
+}

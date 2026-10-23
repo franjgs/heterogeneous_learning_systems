@@ -1,0 +1,2401 @@
+{
+  "experiment": "S7 characterization of organizational preparation under uncertain Markov demand",
+  "date": "2026-10-22",
+  "design_principle": "One mechanism-derived opportunity case, plus a short-horizon control and a no-future-need control; no broad parameter search.",
+  "physical_laws": "Unchanged CES, MIS-v2, directed transfer, resource validation and complete existing feasible action catalogs.",
+  "demand_information": "Current demand is observed; exact Bellman knows the C5 transition law but not future realizations.",
+  "cases": {
+    "opportunity": {
+      "design": {
+        "horizon": 4,
+        "initial_competence": [
+          [
+            0.05,
+            0.9
+          ],
+          [
+            0.3,
+            0.0
+          ]
+        ],
+        "initial_demand": "task-x",
+        "initial_probabilities": [
+          1.0,
+          0.0
+        ],
+        "transition_probabilities": [
+          [
+            0.1,
+            0.9
+          ],
+          [
+            0.05,
+            0.95
+          ]
+        ],
+        "demand_requirements": [
+          [
+            0.35,
+            0.0
+          ],
+          [
+            0.0,
+            0.95
+          ]
+        ],
+        "efficacy_A_to_B_y": 0.8,
+        "teaching_effort": 0.25,
+        "MIS_eta": [
+          [
+            0.2,
+            0.15
+          ],
+          [
+            0.12,
+            0.05
+          ]
+        ],
+        "transfer_rate": 0.4,
+        "full_action_catalog_counts": {
+          "without_transfer": 36,
+          "with_transfer": 72
+        }
+      },
+      "exact_values": {
+        "J_A_bellman_without_transfer": 3.1628653621000002,
+        "J_B_bellman_transfer_optional": 3.1743777327025406,
+        "J_M_reactive_without_transfer": 3.0346209871000003,
+        "J_M_reactive_transfer_optional": 3.0346209871000003,
+        "planning_value_without_transfer": 0.12824437499999997,
+        "transfer_value_over_no_transfer_bellman": 0.0115123706025404,
+        "planning_value_with_transfer": 0.13975674560254037
+      },
+      "initial_actions": {
+        "bellman_without_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "bellman_transfer_optional": {
+          "production": [
+            [
+              0.5,
+              0.0
+            ],
+            [
+              0.5,
+              0.0
+            ]
+          ],
+          "teaching": {
+            "teacher_id": "A",
+            "learner_id": "B",
+            "skill_id": "y",
+            "effort": 0.25
+          }
+        },
+        "reactive_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        }
+      },
+      "bellman_policy_traces": {
+        "x_then_y_persistent_with_transfer": [
+          {
+            "period": 0,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  0.5,
+                  0.0
+                ],
+                [
+                  0.5,
+                  0.0
+                ]
+              ],
+              "teaching": {
+                "teacher_id": "A",
+                "learner_id": "B",
+                "skill_id": "y",
+                "effort": 0.25
+              }
+            },
+            "outputs": [
+              0.175,
+              0.0
+            ],
+            "ces_reward": 0.17500000000000002,
+            "functional_success": false,
+            "competence_before": [
+              [
+                0.05,
+                0.9
+              ],
+              [
+                0.3,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.15029416855007993,
+                0.9
+              ],
+              [
+                0.34334179362471984,
+                0.08000000000000002
+              ]
+            ],
+            "production_effort": 1.0,
+            "teaching_resource_cost": 0.5,
+            "total_resource_used": 1.5
+          },
+          {
+            "period": 1,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.98
+            ],
+            "ces_reward": 0.9800000000000001,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.15029416855007993,
+                0.9
+              ],
+              [
+                0.34334179362471984,
+                0.08000000000000002
+              ]
+            ],
+            "competence_after": [
+              [
+                0.15029416855007993,
+                0.915
+              ],
+              [
+                0.34334179362471984,
+                0.1260000000000001
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 2,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              1.0410000000000001
+            ],
+            "ces_reward": 1.0410000000000004,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.15029416855007993,
+                0.915
+              ],
+              [
+                0.34334179362471984,
+                0.1260000000000001
+              ]
+            ],
+            "competence_after": [
+              [
+                0.15029416855007993,
+                0.9277500000000001
+              ],
+              [
+                0.34334179362471984,
+                0.16970000000000018
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 3,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              1.0974500000000003
+            ],
+            "ces_reward": 1.0974500000000003,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.15029416855007993,
+                0.9277500000000001
+              ],
+              [
+                0.34334179362471984,
+                0.16970000000000018
+              ]
+            ],
+            "competence_after": [
+              [
+                0.15029416855007993,
+                0.9385875
+              ],
+              [
+                0.34334179362471984,
+                0.21121500000000026
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          }
+        ],
+        "x_stays_x_then_y_with_transfer": [
+          {
+            "period": 0,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  0.5,
+                  0.0
+                ],
+                [
+                  0.5,
+                  0.0
+                ]
+              ],
+              "teaching": {
+                "teacher_id": "A",
+                "learner_id": "B",
+                "skill_id": "y",
+                "effort": 0.25
+              }
+            },
+            "outputs": [
+              0.175,
+              0.0
+            ],
+            "ces_reward": 0.17500000000000002,
+            "functional_success": false,
+            "competence_before": [
+              [
+                0.05,
+                0.9
+              ],
+              [
+                0.3,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.15029416855007993,
+                0.9
+              ],
+              [
+                0.34334179362471984,
+                0.08000000000000002
+              ]
+            ],
+            "production_effort": 1.0,
+            "teaching_resource_cost": 0.5,
+            "total_resource_used": 1.5
+          },
+          {
+            "period": 1,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.49363596217479977,
+              0.0
+            ],
+            "ces_reward": 0.49363596217479977,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.15029416855007993,
+                0.9
+              ],
+              [
+                0.34334179362471984,
+                0.08000000000000002
+              ]
+            ],
+            "competence_after": [
+              [
+                0.32023533484006395,
+                0.9
+              ],
+              [
+                0.4221407783897535,
+                0.08000000000000002
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 2,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.98
+            ],
+            "ces_reward": 0.9800000000000001,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.32023533484006395,
+                0.9
+              ],
+              [
+                0.4221407783897535,
+                0.08000000000000002
+              ]
+            ],
+            "competence_after": [
+              [
+                0.32023533484006395,
+                0.915
+              ],
+              [
+                0.4221407783897535,
+                0.1260000000000001
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 3,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              1.0410000000000001
+            ],
+            "ces_reward": 1.0410000000000004,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.32023533484006395,
+                0.915
+              ],
+              [
+                0.4221407783897535,
+                0.1260000000000001
+              ]
+            ],
+            "competence_after": [
+              [
+                0.32023533484006395,
+                0.9277500000000001
+              ],
+              [
+                0.4221407783897535,
+                0.16970000000000018
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          }
+        ],
+        "x_then_y_persistent_without_transfer": [
+          {
+            "period": 0,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.35,
+              0.0
+            ],
+            "ces_reward": 0.35,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.05,
+                0.9
+              ],
+              [
+                0.3,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 1,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.9
+            ],
+            "ces_reward": 0.8999999999999999,
+            "functional_success": false,
+            "competence_before": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.915
+              ],
+              [
+                0.384,
+                0.050000000000000044
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 2,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.9650000000000001
+            ],
+            "ces_reward": 0.9650000000000002,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.24,
+                0.915
+              ],
+              [
+                0.384,
+                0.050000000000000044
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9277500000000001
+              ],
+              [
+                0.384,
+                0.09750000000000003
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 3,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              1.0252500000000002
+            ],
+            "ces_reward": 1.0252500000000002,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.24,
+                0.9277500000000001
+              ],
+              [
+                0.384,
+                0.09750000000000003
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9385875
+              ],
+              [
+                0.384,
+                0.1426250000000001
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          }
+        ]
+      },
+      "reactive_policy_traces": {
+        "x_then_y_persistent_with_transfer": [
+          {
+            "period": 0,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.35,
+              0.0
+            ],
+            "ces_reward": 0.35,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.05,
+                0.9
+              ],
+              [
+                0.3,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 1,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.9
+            ],
+            "ces_reward": 0.8999999999999999,
+            "functional_success": false,
+            "competence_before": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.915
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 1.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 1.0
+          },
+          {
+            "period": 2,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.915
+            ],
+            "ces_reward": 0.9150000000000001,
+            "functional_success": false,
+            "competence_before": [
+              [
+                0.24,
+                0.915
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9277500000000001
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 1.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 1.0
+          },
+          {
+            "period": 3,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.9277500000000001
+            ],
+            "ces_reward": 0.9277500000000002,
+            "functional_success": false,
+            "competence_before": [
+              [
+                0.24,
+                0.9277500000000001
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9385875
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 1.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 1.0
+          }
+        ],
+        "x_then_y_persistent_without_transfer": [
+          {
+            "period": 0,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.35,
+              0.0
+            ],
+            "ces_reward": 0.35,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.05,
+                0.9
+              ],
+              [
+                0.3,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 1,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.9
+            ],
+            "ces_reward": 0.8999999999999999,
+            "functional_success": false,
+            "competence_before": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.915
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 1.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 1.0
+          },
+          {
+            "period": 2,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.915
+            ],
+            "ces_reward": 0.9150000000000001,
+            "functional_success": false,
+            "competence_before": [
+              [
+                0.24,
+                0.915
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9277500000000001
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 1.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 1.0
+          },
+          {
+            "period": 3,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.9277500000000001
+            ],
+            "ces_reward": 0.9277500000000002,
+            "functional_success": false,
+            "competence_before": [
+              [
+                0.24,
+                0.9277500000000001
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9385875
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 1.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 1.0
+          }
+        ]
+      },
+      "solver_diagnostics": {
+        "bellman_states_without_transfer": 300,
+        "bellman_states_with_transfer": 1778,
+        "dominated_actions_pruned_without_transfer": 8100,
+        "dominated_actions_pruned_with_transfer": 97790,
+        "runtime_seconds_descriptive": 6.061800125055015
+      }
+    },
+    "short_horizon": {
+      "design": {
+        "horizon": 3,
+        "initial_competence": [
+          [
+            0.05,
+            0.9
+          ],
+          [
+            0.3,
+            0.0
+          ]
+        ],
+        "initial_demand": "task-x",
+        "initial_probabilities": [
+          1.0,
+          0.0
+        ],
+        "transition_probabilities": [
+          [
+            0.1,
+            0.9
+          ],
+          [
+            0.05,
+            0.95
+          ]
+        ],
+        "demand_requirements": [
+          [
+            0.35,
+            0.0
+          ],
+          [
+            0.0,
+            0.95
+          ]
+        ],
+        "efficacy_A_to_B_y": 0.8,
+        "teaching_effort": 0.25,
+        "MIS_eta": [
+          [
+            0.2,
+            0.15
+          ],
+          [
+            0.12,
+            0.05
+          ]
+        ],
+        "transfer_rate": 0.4,
+        "full_action_catalog_counts": {
+          "without_transfer": 36,
+          "with_transfer": 72
+        }
+      },
+      "exact_values": {
+        "J_A_bellman_without_transfer": 2.1650542,
+        "J_B_bellman_transfer_optional": 2.1650542,
+        "J_M_reactive_without_transfer": 2.1223042000000003,
+        "J_M_reactive_transfer_optional": 2.1223042000000003,
+        "planning_value_without_transfer": 0.042749999999999844,
+        "transfer_value_over_no_transfer_bellman": 0.0,
+        "planning_value_with_transfer": 0.042749999999999844
+      },
+      "initial_actions": {
+        "bellman_without_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "bellman_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "reactive_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        }
+      },
+      "bellman_policy_traces": {
+        "x_then_y_persistent_with_transfer": [
+          {
+            "period": 0,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.35,
+              0.0
+            ],
+            "ces_reward": 0.35,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.05,
+                0.9
+              ],
+              [
+                0.3,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 1,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.9
+            ],
+            "ces_reward": 0.8999999999999999,
+            "functional_success": false,
+            "competence_before": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.915
+              ],
+              [
+                0.384,
+                0.050000000000000044
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 2,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.9650000000000001
+            ],
+            "ces_reward": 0.9650000000000002,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.24,
+                0.915
+              ],
+              [
+                0.384,
+                0.050000000000000044
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9277500000000001
+              ],
+              [
+                0.384,
+                0.09750000000000003
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          }
+        ],
+        "x_stays_x_then_y_with_transfer": [
+          {
+            "period": 0,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.35,
+              0.0
+            ],
+            "ces_reward": 0.35,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.05,
+                0.9
+              ],
+              [
+                0.3,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 1,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.624,
+              0.0
+            ],
+            "ces_reward": 0.6239999999999999,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.3919999999999999,
+                0.9
+              ],
+              [
+                0.45792,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 2,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.45792,
+              0.9
+            ],
+            "ces_reward": 0.8999999999999999,
+            "functional_success": false,
+            "competence_before": [
+              [
+                0.3919999999999999,
+                0.9
+              ],
+              [
+                0.45792,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.3919999999999999,
+                0.915
+              ],
+              [
+                0.5229695999999999,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          }
+        ],
+        "x_then_y_persistent_without_transfer": [
+          {
+            "period": 0,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.35,
+              0.0
+            ],
+            "ces_reward": 0.35,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.05,
+                0.9
+              ],
+              [
+                0.3,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 1,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.9
+            ],
+            "ces_reward": 0.8999999999999999,
+            "functional_success": false,
+            "competence_before": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.915
+              ],
+              [
+                0.384,
+                0.050000000000000044
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 2,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.9650000000000001
+            ],
+            "ces_reward": 0.9650000000000002,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.24,
+                0.915
+              ],
+              [
+                0.384,
+                0.050000000000000044
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9277500000000001
+              ],
+              [
+                0.384,
+                0.09750000000000003
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          }
+        ]
+      },
+      "reactive_policy_traces": {
+        "x_then_y_persistent_with_transfer": [
+          {
+            "period": 0,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.35,
+              0.0
+            ],
+            "ces_reward": 0.35,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.05,
+                0.9
+              ],
+              [
+                0.3,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 1,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.9
+            ],
+            "ces_reward": 0.8999999999999999,
+            "functional_success": false,
+            "competence_before": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.915
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 1.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 1.0
+          },
+          {
+            "period": 2,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.915
+            ],
+            "ces_reward": 0.9150000000000001,
+            "functional_success": false,
+            "competence_before": [
+              [
+                0.24,
+                0.915
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9277500000000001
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 1.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 1.0
+          }
+        ],
+        "x_then_y_persistent_without_transfer": [
+          {
+            "period": 0,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.35,
+              0.0
+            ],
+            "ces_reward": 0.35,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.05,
+                0.9
+              ],
+              [
+                0.3,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 1,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.9
+            ],
+            "ces_reward": 0.8999999999999999,
+            "functional_success": false,
+            "competence_before": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.915
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 1.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 1.0
+          },
+          {
+            "period": 2,
+            "observed_demand": "task-y",
+            "action": {
+              "production": [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.0,
+              0.915
+            ],
+            "ces_reward": 0.9150000000000001,
+            "functional_success": false,
+            "competence_before": [
+              [
+                0.24,
+                0.915
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9277500000000001
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 1.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 1.0
+          }
+        ]
+      },
+      "solver_diagnostics": {
+        "bellman_states_without_transfer": 80,
+        "bellman_states_with_transfer": 300,
+        "dominated_actions_pruned_without_transfer": 2160,
+        "dominated_actions_pruned_with_transfer": 16500,
+        "runtime_seconds_descriptive": 1.0788007501978427
+      }
+    },
+    "no_future_need": {
+      "design": {
+        "horizon": 4,
+        "initial_competence": [
+          [
+            0.05,
+            0.9
+          ],
+          [
+            0.3,
+            0.0
+          ]
+        ],
+        "initial_demand": "task-x",
+        "initial_probabilities": [
+          1.0,
+          0.0
+        ],
+        "transition_probabilities": [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ],
+        "demand_requirements": [
+          [
+            0.35,
+            0.0
+          ],
+          [
+            0.0,
+            0.95
+          ]
+        ],
+        "efficacy_A_to_B_y": 0.8,
+        "teaching_effort": 0.25,
+        "MIS_eta": [
+          [
+            0.2,
+            0.15
+          ],
+          [
+            0.12,
+            0.05
+          ]
+        ],
+        "transfer_rate": 0.4,
+        "full_action_catalog_counts": {
+          "without_transfer": 36,
+          "with_transfer": 72
+        }
+      },
+      "exact_values": {
+        "J_A_bellman_without_transfer": 2.8604895999999997,
+        "J_B_bellman_transfer_optional": 2.8604895999999997,
+        "J_M_reactive_without_transfer": 2.8604895999999997,
+        "J_M_reactive_transfer_optional": 2.8604895999999997,
+        "planning_value_without_transfer": 0.0,
+        "transfer_value_over_no_transfer_bellman": 0.0,
+        "planning_value_with_transfer": 0.0
+      },
+      "initial_actions": {
+        "bellman_without_transfer": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "bellman_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        },
+        "reactive_transfer_optional": {
+          "production": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "teaching": null
+        }
+      },
+      "bellman_policy_traces": {
+        "x_absorbing_with_transfer_optional": [
+          {
+            "period": 0,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.35,
+              0.0
+            ],
+            "ces_reward": 0.35,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.05,
+                0.9
+              ],
+              [
+                0.3,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 1,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.624,
+              0.0
+            ],
+            "ces_reward": 0.6239999999999999,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.3919999999999999,
+                0.9
+              ],
+              [
+                0.45792,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 2,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.8499199999999999,
+              0.0
+            ],
+            "ces_reward": 0.8499199999999998,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.3919999999999999,
+                0.9
+              ],
+              [
+                0.45792,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.5135999999999998,
+                0.9
+              ],
+              [
+                0.5229695999999999,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 3,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.0365695999999998,
+              0.0
+            ],
+            "ces_reward": 1.0365696,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.5135999999999998,
+                0.9
+              ],
+              [
+                0.5229695999999999,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.6108799999999999,
+                0.9
+              ],
+              [
+                0.580213248,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          }
+        ]
+      },
+      "reactive_policy_traces": {
+        "x_absorbing_with_transfer_optional": [
+          {
+            "period": 0,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.35,
+              0.0
+            ],
+            "ces_reward": 0.35,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.05,
+                0.9
+              ],
+              [
+                0.3,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 1,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.624,
+              0.0
+            ],
+            "ces_reward": 0.6239999999999999,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.24,
+                0.9
+              ],
+              [
+                0.384,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.3919999999999999,
+                0.9
+              ],
+              [
+                0.45792,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 2,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              0.8499199999999999,
+              0.0
+            ],
+            "ces_reward": 0.8499199999999998,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.3919999999999999,
+                0.9
+              ],
+              [
+                0.45792,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.5135999999999998,
+                0.9
+              ],
+              [
+                0.5229695999999999,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          },
+          {
+            "period": 3,
+            "observed_demand": "task-x",
+            "action": {
+              "production": [
+                [
+                  1.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "teaching": null
+            },
+            "outputs": [
+              1.0365695999999998,
+              0.0
+            ],
+            "ces_reward": 1.0365696,
+            "functional_success": true,
+            "competence_before": [
+              [
+                0.5135999999999998,
+                0.9
+              ],
+              [
+                0.5229695999999999,
+                0.0
+              ]
+            ],
+            "competence_after": [
+              [
+                0.6108799999999999,
+                0.9
+              ],
+              [
+                0.580213248,
+                0.0
+              ]
+            ],
+            "production_effort": 2.0,
+            "teaching_resource_cost": 0.0,
+            "total_resource_used": 2.0
+          }
+        ]
+      },
+      "solver_diagnostics": {
+        "bellman_states_without_transfer": 300,
+        "bellman_states_with_transfer": 1778,
+        "dominated_actions_pruned_without_transfer": 8100,
+        "dominated_actions_pruned_with_transfer": 97790,
+        "runtime_seconds_descriptive": 6.09137058397755
+      }
+    }
+  },
+  "independent_validation_horizon_2": {
+    "False": {
+      "bellman": 1.2224,
+      "independent_tree_enumeration": 1.2224,
+      "unpruned_bellman": 1.2224,
+      "absolute_difference": 0.0
+    },
+    "True": {
+      "bellman": 1.2224,
+      "independent_tree_enumeration": 1.2224,
+      "unpruned_bellman": 1.2224,
+      "absolute_difference": 0.0
+    }
+  },
+  "interpretation": {
+    "A_physical_preparation_opportunity": "A\u2192B teaching of y is feasible at t=0, consumes resources and raises B/y by 0.08 under the unchanged transfer equation; only future y-demand can yield the gain.",
+    "B_planning_changes_decision": "The opportunity case's Bellman-with-transfer action at t=0 is teaching plus partial x production; the reactive rule chooses full x production without teaching.",
+    "C_planning_improves_collective_objective": "Exact expected CES is higher for the Bellman policy than for the reactive policy under the same demand law.",
+    "D_transfer_additional_value": "Optional transfer raises the exact Bellman value over MIS-v2-only in the opportunity case; this increment is zero in both controls.",
+    "scope": "Exact oracle result for three small configurations; not a general policy guarantee and not a closed-loop P0/P1/P2 evaluation under hidden state."
+  }
+}
