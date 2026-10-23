@@ -17,7 +17,11 @@ assignment, coordination, cooperation, adaptation, planning, and capability
 development interact. HLS does not presume that heterogeneity, cooperation,
 learning, or greater organizational complexity necessarily improves outcomes;
 it seeks to understand which strategies work better, when, why, and under what
-conditions.
+conditions. A central research question is how the organization and use of
+existing capabilities interact with their development over time. HLS seeks to
+identify when these processes can be managed separately and when their
+interaction materially affects collective performance, rather than assuming
+that joint optimization is always necessary or beneficial.
 
 HLS begins with relevant organizational problems and existing scientific
 knowledge. It examines the foundations and assumptions of suitable published
