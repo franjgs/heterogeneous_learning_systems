@@ -1,0 +1,10 @@
+{
+  "analysis_git_head": "63ae6f574db827872f3388c1d2ce21a95692e073",
+  "analysis_script_sha256": "c4c7f6c968cc98292f3b8ec579db7d556275e0b20a4b68ba5297119340171b22",
+  "assignment_utilities_by_seed_sha256": "2053b5ed9276e39d041f44cd895c4e915fa60a1cf6c88e166d7f45f3e549cc3e",
+  "command": "python experiments/synthetic/analyze_hls_ce03_h3_diagnostic.py",
+  "diagnostic_analysis_sha256": "d3df98312b1416c271b07e937523ed00f2c8129b1925e77b4df98a849ccfdb16",
+  "diagnostic_by_seed_sha256": "0e53069d624592135d0e07af28091ab72a09a5a222a6db5ebad09dd217b30ec2",
+  "models_trained_or_invoked": false,
+  "source_results_sha256": "73f69998bd86f988808bccc5477dfbf4abbde59f772424b90cab9b4d735401bb"
+}

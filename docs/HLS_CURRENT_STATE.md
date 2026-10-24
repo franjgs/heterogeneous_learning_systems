@@ -36,6 +36,12 @@ instance. Reorganization changed two responsibilities in one seed and its
 paired C2−C1 interval also includes zero. HLS-CE-01 and HLS-CE-02 remain
 closed under PI-06. See the [HLS-CE-03 results](research/HLS_CE_03_H3_CAMPAIGN_RESULTS.md)
 and the preserved [raw campaign records](../results/experiments/hls_ce03_h3_transfer/results.json).
+The read-only diagnostic found a large A3-over-A1 T3 validation gap (+22.43
+pp), but A1 was refit on T3 labels already present in its pooled initial
+training data. O0 assigned A1 to T1 in 18/20 seeds, so transfer-related
+non-target changes can affect fixed-team performance; O1 changed the
+assignment in one seed only. Donor T3 test performance is available only for
+the 18 seeds where O0 selected A3 for T3. See the [diagnostic](research/HLS_CE_03_H3_FIRST_CAMPAIGN_DIAGNOSTIC.md).
 
 The earlier same-day [HLS-CE-01 deliberation mission](research/HLS_CE_01_DYNAMIC_DELIBERATION_2026-10-24.md)
 and its paired-data and interaction assessments remain historical, bounded

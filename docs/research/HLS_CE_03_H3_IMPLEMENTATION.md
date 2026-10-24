@@ -4,6 +4,8 @@
 
 This document records the executable implementation of E3's proposed refutatory H3 protocol. The campaign results and interpretation are in the [campaign report](HLS_CE_03_H3_CAMPAIGN_RESULTS.md); the raw records and hashes are retained in the linked result directory.
 
+A later read-only analysis of the first campaign is documented in the [diagnostic report](HLS_CE_03_H3_FIRST_CAMPAIGN_DIAGNOSTIC.md); it reuses saved records only and does not rerun models.
+
 ## Hypothesis and primary contrasts
 
 H3 requires both an individual benefit to A1 on T3 **versus the hard-label refit without distillation** and a collective accuracy loss under the unchanged initial organization O0. The comparison with the original A1 is retained as a separate descriptive contrast. Reorganization is a secondary contrast: the post-transfer validation-selected organization O1 is evaluated on the same reserved test sets. Effects are summarized across seeds; the seed, not each query, is the independent unit for the specified seed-level confidence interval.

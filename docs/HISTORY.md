@@ -1476,3 +1476,19 @@ direction. In-sample donor probabilities and machine-dependent millisecond
 timings remain limitations. See the [campaign report](research/HLS_CE_03_H3_CAMPAIGN_RESULTS.md),
 [raw results](../results/experiments/hls_ce03_h3_transfer/results.json), and
 [derived per-seed contrasts](../results/experiments/hls_ce03_h3_transfer/paired_contrasts_by_seed.csv).
+
+## 2026-10-24 — HLS-CE-03 read-only first-campaign diagnosis
+
+The first campaign's existing 20-seed records were analyzed without model
+training or inference. A3 exceeded initial A1 on T3 validation by 22.43 pp
+(paired 95% CI [20.60,24.26]); donor test metrics are available only for the
+18 seeds whose validation-selected O0 assigned A3 to T3. A1 had already seen
+the pooled T3 labels later reused for distillation. O0 assigned A1 to T1 in
+18 seeds, where task-only refitting could alter the collective's deployed
+T1 capability. Assignment O1 differed from O0 only in seed 3; the average
+best-versus-runner-up validation margin was 6.52 pp before and 7.23 pp after
+transfer. These are diagnostic explanations compatible with the records,
+not causal demonstrations. The report and derived tables preserve per-seed
+evidence; no raw campaign record was altered. See the
+[diagnostic report](research/HLS_CE_03_H3_FIRST_CAMPAIGN_DIAGNOSTIC.md) and
+[diagnostic artifacts](../results/experiments/hls_ce03_h3_transfer/diagnostic_analysis.json).
