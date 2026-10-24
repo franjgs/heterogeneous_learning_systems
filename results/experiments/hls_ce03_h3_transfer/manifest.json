@@ -1,0 +1,36 @@
+{
+  "config_sha256": "e8644f5f3f5930404558970c8b6c707e34416d1eca3d1feee55e094890954aec",
+  "environment": {
+    "numpy": "1.26.4",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.11.9",
+    "scikit_learn": "1.5.2",
+    "scipy": "1.13.1"
+  },
+  "git_head": "8a7b5e8212e7e1fb3d2e902af219bd2b45af32ab",
+  "result_sha256": "73f69998bd86f988808bccc5477dfbf4abbde59f772424b90cab9b4d735401bb",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "source_sha256": "639e05bc8127e275924b6cc52240df47570ac3de26ce0346bb496209c6e0622e",
+  "training_or_inference_models": "scikit-learn synthetic classifiers only"
+}

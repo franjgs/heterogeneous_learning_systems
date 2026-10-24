@@ -1,8 +1,8 @@
 # HLS-CE-03 — H3 Pilot Implementation
 
-**Status: IMPLEMENTED; FUNCTIONAL TESTS ONLY; CAMPAIGN NOT RUN**
+**Status: IMPLEMENTED; 20-SEED CAMPAIGN EXECUTED**
 
-This document records the executable implementation of E3's proposed refutatory H3 protocol. It contains no experimental outcome. The 20-seed campaign remains unexecuted; this task is limited to functional tests before that campaign.
+This document records the executable implementation of E3's proposed refutatory H3 protocol. The campaign results and interpretation are in the [campaign report](HLS_CE_03_H3_CAMPAIGN_RESULTS.md); the raw records and hashes are retained in the linked result directory.
 
 ## Hypothesis and primary contrasts
 
@@ -35,6 +35,6 @@ For each seed the output schema records the individual A1 T3 contrast against th
 
 ## Functional verification and current limits
 
-Only the focused test file is to be run at this stage. Tests exercise deterministic task construction, shapes and binary labels, weighted soft-target encoding, assignment enumeration and tie-breaking, invalid-input handling, a small fit/control fixture, paired-seed summaries, and the guard that fixes campaign seeds to 0–19. They do not invoke the full campaign.
+The focused tests exercise deterministic task construction, shapes and binary labels, weighted soft-target encoding, assignment enumeration and tie-breaking, invalid-input handling, a small fit/control fixture, paired-seed summaries, and the guard that fixes campaign seeds to 0–19. The separate campaign was run only after explicit CE authorization.
 
-The implementation uses in-sample A3 probabilities on T3 training examples, as the protocol requests probabilities on T3 training examples. This can transmit teacher overfit and must be acknowledged when interpreting eventual outcomes. The synthetic tasks and equal-task-weight objective establish an executable controlled instance, not external validity. Wall-clock measurements are machine-dependent; the output records them but does not equate time with monetary or energy cost. No empirical H3 conclusion, assignment matrix, campaign result, or confidence interval exists until the separately authorized campaign is run.
+The implementation uses in-sample A3 probabilities on T3 training examples, as the protocol requests probabilities on T3 training examples. This can transmit teacher overfit and must be acknowledged when interpreting the observed outcomes. The synthetic tasks and equal-task-weight objective establish an executable controlled instance, not external validity. Wall-clock measurements are machine-dependent; the output records them but does not equate time with monetary or energy cost. The observed point signs match H3, but the paired 95% intervals do not support either required effect conclusively; see the [campaign report](HLS_CE_03_H3_CAMPAIGN_RESULTS.md).

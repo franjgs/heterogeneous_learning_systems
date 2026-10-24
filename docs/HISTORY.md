@@ -1449,3 +1449,30 @@ campaign, or new algorithm; no model, result, or historical record was
 changed. The prior CE-01/CE-02 closures remain in force. See the
 [CE-03 operational mission](research/HLS_CE_03_TRANSFER_COLLECTIVE_PERFORMANCE_2026-10-24.md)
 and [canonical current state](HLS_CURRENT_STATE.md).
+
+## 2026-10-24 — HLS-CE-03 H3 first authorized campaign
+
+**Scientific execution date:** 2026-10-24. **Run commit:**
+`8a7b5e8212e7e1fb3d2e902af219bd2b45af32ab`. The PI-authorized protocol was
+executed for exactly seeds 0–19. The campaign did not alter tasks, models,
+data-generation settings, hyperparameters or transfer operations. Raw
+per-seed records and their manifest are preserved under
+`results/experiments/hls_ce03_h3_transfer/`; the raw results SHA-256 is
+`73f69998bd86f988808bccc5477dfbf4abbde59f772424b90cab9b4d735401bb`.
+
+The paired point estimates had H3's expected signs: A1 distilled minus the
+hard-label refit control on T3 was +0.155 percentage points (95% CI
+[−0.897,+1.207]); fixed-organization collective C1−C0 was −0.917 pp (95% CI
+[−3.958,+2.124]). Both intervals include zero, so H3 is **not statistically
+supported** by this campaign. Reorganization C2−C1 was +0.418 pp (95% CI
+[−0.457,+1.294]); O1 changed two responsibilities in one seed only. C2−C0
+was −0.498 pp (95% CI [−3.693,+2.696]). C3 was retained as an alias of C2,
+not counted as a second observation. Measured fit timings showed distillation
+student fitting averaged 2.428 ms versus 1.047 ms for the hard-label refit;
+effective computational-cost equivalence is not claimed.
+
+The conclusion is limited to the declared synthetic tasks and this transfer
+direction. In-sample donor probabilities and machine-dependent millisecond
+timings remain limitations. See the [campaign report](research/HLS_CE_03_H3_CAMPAIGN_RESULTS.md),
+[raw results](../results/experiments/hls_ce03_h3_transfer/results.json), and
+[derived per-seed contrasts](../results/experiments/hls_ce03_h3_transfer/paired_contrasts_by_seed.csv).

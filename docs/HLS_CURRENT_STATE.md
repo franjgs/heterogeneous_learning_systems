@@ -27,8 +27,15 @@ performance, framed by HLS-H3: transfer may improve recipient capability yet
 harm collective performance by changing complementarity or specialization.
 The PI authorized a six-week exploratory phase with an initial review after
 two weeks; continuation depends on evidence. No new algorithm is authorized.
-This activation is for problem framing and reuse assessment, not an
-experimental campaign. HLS-CE-01 and HLS-CE-02 remain closed under PI-06.
+At activation, authorization covered framing and reuse assessment, not an
+experimental campaign. A subsequent PI authorization allowed the first
+20-seed HLS-H3 campaign, executed on 24 October. Its two primary point
+contrasts have the hypothesized signs, but both paired 95% confidence
+intervals include zero; H3 is not statistically supported in this synthetic
+instance. Reorganization changed two responsibilities in one seed and its
+paired C2−C1 interval also includes zero. HLS-CE-01 and HLS-CE-02 remain
+closed under PI-06. See the [HLS-CE-03 results](research/HLS_CE_03_H3_CAMPAIGN_RESULTS.md)
+and the preserved [raw campaign records](../results/experiments/hls_ce03_h3_transfer/results.json).
 
 The earlier same-day [HLS-CE-01 deliberation mission](research/HLS_CE_01_DYNAMIC_DELIBERATION_2026-10-24.md)
 and its paired-data and interaction assessments remain historical, bounded
@@ -36,9 +43,10 @@ work; they are not reopened or treated as the active priority. HLS-CE-01's
 archived MMLU material lacks answer-conditioned review `D(x,F(x))`, and its
 independent-answer complementarity analysis does not establish deliberation
 value. The [CE-03 mission](research/HLS_CE_03_TRANSFER_COLLECTIVE_PERFORMANCE_2026-10-24.md)
-maps existing transfer/teaching and exact-reference components, identifies
-the missing comparison definitions, and records that no campaign or algorithm
-has yet been authorized.
+maps the reused transfer/teaching and exact-reference components; the
+[implementation record](research/HLS_CE_03_H3_IMPLEMENTATION.md) and
+[campaign report](research/HLS_CE_03_H3_CAMPAIGN_RESULTS.md) document the
+first executed H3 test. No new algorithm has been authorized or developed.
 
 **HLS-CE-02 AI-aging pilot — CLOSED, NO-GO (CE decision, 24 October 2026):**
 the exact three-classifier error-pattern distributions A and B supplied by
