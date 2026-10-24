@@ -107,6 +107,8 @@ For the current research:
    established, what has been ruled out, and what remains open.
 6. [Repository Guide](docs/REPOSITORY_GUIDE.md) — repository authority,
    provenance, and implementation map.
+7. [Research Governance](docs/HLS_RESEARCH_GOVERNANCE.md) — primary research
+   responsibilities and the process for explicit changes.
 
 For technical depth:
 

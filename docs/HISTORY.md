@@ -1355,3 +1355,24 @@ identify a causal dependence-only effect with fixed marginal risks. No data
 were downloaded, no tests or model inference were run, and no historical
 artifact changed. Overall CE-02 status is **PARTIAL** pending the exact E2
 distribution/intervention specification. See [preflight report](research/HLS_CE_02_AI_AGING_PREFLIGHT.md).
+
+## 2026-10-24 — CE research-responsibility decision and HLS-CE-02 update
+
+**Authority:** Chief Engineer. **Decision date and record date:** 2026-10-24.
+The CE assigned primary responsibilities as follows: E1 — theory; E2 — state
+of the art; E3 — experimentation; Codex — software engineering; CE — scientific
+direction and coordination, prioritization, and GO/NO-GO decisions. A primary
+responsibility may change only through an explicit CE decision documented in
+the repository. Collaboration does not automatically change ownership. See
+[HLS Research Governance](HLS_RESEARCH_GOVERNANCE.md). This organizational
+decision does not change HLS philosophy or architecture.
+
+E3 subsequently communicated that synthetic distributions A and B had been
+identified, the control validated, eight tests passed, and mathematical
+results verified. The current worktree contains corresponding code, tests,
+and JSON output as untracked files; these artifacts are not integrated or
+independently verified by this record. Code integration remains pending.
+Wild-Time Yearbook remains in PREFLIGHT; real-model inference is unauthorized
+and scientific originality has not been demonstrated. The earlier preflight
+entry and its report describe the state at their reviewed commit and are
+retained unchanged. No historical experimental result was modified.

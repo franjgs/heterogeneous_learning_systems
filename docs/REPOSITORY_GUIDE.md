@@ -18,6 +18,7 @@ The principal documents have distinct jobs:
 | [HLS Ontology](hls_ontology.md) | Canonical semantic and mapping layer. |
 | [Research Questions](research_questions.md) | Official research-question authority. |
 | [HLS Current State](HLS_CURRENT_STATE.md) | Canonical current scientific-state authority. |
+| [HLS Research Governance](HLS_RESEARCH_GOVERNANCE.md) | CE decision assigning primary research responsibilities and requiring documented changes. |
 | [HLS-CE-01 Dynamic Deliberation](research/HLS_CE_01_DYNAMIC_DELIBERATION_2026-10-24.md) | Scoped feasibility-planning mission associated with the PI's 2026-10-24 strategic proposal; not a ratified research priority or experiment authorization. |
 | [Nembhard Oracle Router](engineering/HLS_NEMBHARD_ORACLE_ROUTER.md) | Contract and limits of the perfect-information Nembhard assignment baseline. |
 | [Nembhard Adaptive Router](engineering/HLS_NEMBHARD_ADAPTIVE_ROUTER.md) | Observation-based productivity estimates, reproducible exploration, decision boundary, and limits. |
@@ -75,6 +76,7 @@ classification.
 | [hls_ontology.md](hls_ontology.md) | Semantic infrastructure | CANONICAL | Terms, dimensional consistency, and cross-theory mappings. | A closed universal model or current-results ledger. |
 | [research_questions.md](research_questions.md) | Official question record | CANONICAL | Active RQ0 and its scope. | Historical questions or theory proofs. |
 | [HLS_CURRENT_STATE.md](HLS_CURRENT_STATE.md) | Scientific-status summary | CANONICAL | Established, scoped, open, and deliberately unclaimed results. | Detailed derivations or protocol chronology. |
+| [HLS_RESEARCH_GOVERNANCE.md](HLS_RESEARCH_GOVERNANCE.md) | Research responsibilities | CURRENT / ORGANIZATIONAL DECISION | Primary responsibilities, collaboration rule, and explicit CE change process. | Scientific results, authority changes not recorded by CE, or experiment authorization. |
 | [HLS_LAB_ARCHITECTURE_2026-10-17.md](engineering/HLS_LAB_ARCHITECTURE_2026-10-17.md) | Implemented architecture map | CURRENT / AUDIT | Actual component contracts, mechanism boundaries, and comparison limits as of 2026-10-17. | Current results, a campaign protocol, or a claim that separate routes are fully integrated. |
 | [HLS_COMMON_EXPERIMENT_CONTRACT.md](engineering/HLS_COMMON_EXPERIMENT_CONTRACT.md) | Common run/result envelope | IMPLEMENTED / SCOPED | `hls-experiment-run/1.0`, event/metric/unit/provenance representation, route adapters, JSON serialization and limits. | A shared simulator, metric conversion, historical serialization replacement, or evidence of cross-route comparability. |
 | [HLS_LAB_ADAPTIVE_CAPABILITY_VALIDATION.md](experiments/HLS_LAB_ADAPTIVE_CAPABILITY_VALIDATION.md) | Bounded integrated capability validation | VALIDATED / SCOPED | Reproducible S0–S4 evidence for existing environment/runner, competence, estimation, policy and trace paths; machine-readable registry at `results/analysis/hls_lab_validation/capability_registry.json`. | Policy superiority, online latent-regime inference, population-level Markov behavior, or complete literature reproduction. |
