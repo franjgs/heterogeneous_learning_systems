@@ -18,6 +18,15 @@ formal equivalence, literature comparison, and decision. S3b-E1 is the sole
 priority alternative for further originality positioning, not an open or
 authorized campaign. No historical result was changed.
 
+**Strategic proposal — 24 October 2026 (pending PI ratification):** the PI has
+proposed prioritizing (1) dynamic organization of fast and deliberative
+capabilities, (2) selective cooperation among heterogeneous capabilities, and
+(3) organizational learning and emergent specialization, in that order. The
+CE considers this direction suitable for a feasibility assessment. The
+documentary mission [HLS-CE-01](research/HLS_CE_01_DYNAMIC_DELIBERATION_2026-10-24.md)
+is in planning/feasibility only: no new campaign, algorithm, or manuscript is
+authorized. This proposal does not redefine HLS or reopen closed studies.
+
 ## Executive status
 
 HLS is a general scientific programme for studying, designing, and evaluating

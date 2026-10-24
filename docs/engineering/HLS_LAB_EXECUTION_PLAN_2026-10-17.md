@@ -8064,3 +8064,29 @@ focalizadas de S2a/S3b/S4/PEF/complementariedad/routing/MMLU/DCS-LA y
 `git diff --check`; enlaces relativos del snapshot y roadmap comprobados.
 La situación de integración y publicación debe verificarse contra el remoto
 después del commit, no inferirse de esta entrada documental.
+
+## 2026-10-24 — PI strategic proposal and HLS-CE-01 feasibility mission
+
+**Event date:** 2026-10-24, the date of the PI's strategic proposal. **CE interpretation:** 2026-10-24, feasibility planning only. **Document record date:** 2026-10-24. The Git commit date is the record-publication date and must not be used to infer when the scientific proposal or interpretation occurred.
+
+The PI proposed three priorities, in order: (1) dynamic organization of fast and deliberative capabilities, (2) selective cooperation among heterogeneous capabilities, and (3) organizational learning and emergent specialization. The proposed objective is to assess a first publishable contribution within twelve months, with moderate compute and concrete problem focus. The priorities are pending ratification and do not define HLS.
+
+### HLS-CE-01 — planning/feasibility proposal
+
+This is a scoped addition to the existing plan, not a new general plan or replacement calendar. The CE considers a feasibility assessment appropriate. The working question is: **When does activating additional deliberative capability add value compared with accepting a fast decision?** Initial hypothesis: incremental deliberation value may differ substantially from what confidence, estimated difficulty, or individual capability performance predicts. It remains untested and no originality is claimed.
+
+The assessment is to compare prior work on routing, cascades, value of computation, metareasoning, adaptive computation, decision-focused learning, and budgeted allocation. It should reuse, without reopening, bounded HLS evidence from META-VOC/Campaign 3, budgeted routing, MMLU, DCS-LA, and work on information and collective decisions. A design-only minimum experiment concept should compare fast and deliberative capabilities on common problems, measuring initial/final quality, realized incremental benefit, complete cost/latency, predictive signal value, and collective performance at matched budgets. It must include strong static/adaptive comparators and distinguish non-deployable oracles from policies using operational information. No execution is authorized.
+
+| Target date | Proposed activity | Status boundary |
+|---|---|---|
+| 26 Oct | Delimit problem, falsifiable hypothesis, and reusable HLS evidence. | Proposed planning target. |
+| 27 Oct | Compare prior work on routing, cascades, metareasoning, and adaptive deliberation. | Documentary comparison only. |
+| 28 Oct | Analyze incremental deliberation benefit, predictive signals, uncertainty, and costs. | No experiment. |
+| 29 Oct | Design the minimum decisive experiment, comparators, controls, metrics, data, and stopping criteria. | Design only; no execution. |
+| 30 Oct | Interim feasibility report and GO / REVISE / NO-GO recommendation. | No automatic campaign authorization. |
+| 2–6 Nov | Resolve specific remaining uncertainties and prepare the final report. | **Proposed dates; not ratified.** |
+| 9–13 Nov | Optional extension only for a specific justified pending check. | **Proposed dates; not ratified.** |
+
+Deliverable: a concise feasibility report with the question, hypothesis, evidence map, prior-art comparison, minimal design, comparators, metrics, stopping criteria, risks, and recommendation. The CE leads/integrates the scientific assessment; Codex provides technical and documentary support under CE instructions; strategic ratification remains with the PI. No personal task assignment or role acceptance for E1/E2/E3 is implied.
+
+**Current status:** planning/feasibility only. No new campaign, algorithm, or manuscript is authorized. No code, scenarios, mechanisms, or historical results were modified. See [`HLS_CE_01_DYNAMIC_DELIBERATION_2026-10-24.md`](../research/HLS_CE_01_DYNAMIC_DELIBERATION_2026-10-24.md).

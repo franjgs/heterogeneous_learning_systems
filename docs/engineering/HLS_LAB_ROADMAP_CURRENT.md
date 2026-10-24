@@ -543,3 +543,20 @@ inicia otra campaña ni decide la prioridad científica posterior.
 [registro acumulativo](HLS_LAB_EXECUTION_PLAN_2026-10-17.md); resultados en
 [results.json](../../results/experiments/hls_s3b_memory_replay_diagnostic/results.json).
 **Estado:** E1 cerrado; S3b general no se declara cerrada por esta ejecución.
+
+## 19. PI strategic proposal and HLS-CE-01 (24 Oct 2026)
+
+The PI proposed three strategic priorities in this order: dynamic organization
+of fast and deliberative capabilities; selective cooperation among
+heterogeneous capabilities; and organizational learning with emergent
+specialization. This is a **proposal pending ratification**, not a change to
+HLS's general identity and not authorization to open campaigns. The CE considers
+a feasibility assessment appropriate, with a proposed goal of a publishable
+contribution within twelve months and moderate compute.
+
+**HLS-CE-01** is the documentary mission for that assessment. Its status is
+planning/feasibility: no campaign, algorithm, or manuscript is authorized. Its
+question and hypothesis remain preliminary. The October targets supplement
+the original calendar; November dates are proposals, not ratified schedule.
+See the [HLS-CE-01 mission](../research/HLS_CE_01_DYNAMIC_DELIBERATION_2026-10-24.md)
+and the new [cumulative-plan entry](HLS_LAB_EXECUTION_PLAN_2026-10-17.md).

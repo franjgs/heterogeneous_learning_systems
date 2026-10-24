@@ -18,6 +18,7 @@ The principal documents have distinct jobs:
 | [HLS Ontology](hls_ontology.md) | Canonical semantic and mapping layer. |
 | [Research Questions](research_questions.md) | Official research-question authority. |
 | [HLS Current State](HLS_CURRENT_STATE.md) | Canonical current scientific-state authority. |
+| [HLS-CE-01 Dynamic Deliberation](research/HLS_CE_01_DYNAMIC_DELIBERATION_2026-10-24.md) | Scoped feasibility-planning mission associated with the PI's 2026-10-24 strategic proposal; not a ratified research priority or experiment authorization. |
 | [Nembhard Oracle Router](engineering/HLS_NEMBHARD_ORACLE_ROUTER.md) | Contract and limits of the perfect-information Nembhard assignment baseline. |
 | [Nembhard Adaptive Router](engineering/HLS_NEMBHARD_ADAPTIVE_ROUTER.md) | Observation-based productivity estimates, reproducible exploration, decision boundary, and limits. |
 | [MixLLM-inspired Router Contract](engineering/HLS_MIXLLM_ROUTER_CONTRACT.md) | Normative v0.1 contextual quality/cost prediction and selected-only feedback contract; not a MixLLM reproduction. |
