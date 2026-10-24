@@ -598,3 +598,17 @@ development (12,246 records), 1995–2013 confirmation (8,365), without
 outcome-based selection.
 
 See the [updated CE-02 report](../research/HLS_CE_02_AI_AGING_PREFLIGHT.md).
+
+## 22. HLS-CE-02 scientific closure (24 Oct 2026)
+
+The CE closed CE-02 as **NO-GO** for an independent contribution, on
+originality and real-data-feasibility grounds documented in
+[HLS_CURRENT_STATE.md](../HLS_CURRENT_STATE.md) and the
+[dated execution record](HLS_LAB_EXECUTION_PLAN_2026-10-17.md). This does not
+invalidate the exact synthetic control: that control is validated as
+mathematics for the supplied PMFs, not as empirical evidence of AI aging.
+The Yearbook work remains a partial preflight; no Yearbook checkpoint was
+available, and no real-model inference or wall-clock measurement was made.
+The closure neither declares the phenomenon irrelevant nor prohibits future
+research on AI aging. No further CE-02 experiment or algorithm is authorized
+by this record.

@@ -1,7 +1,8 @@
 # HLS-CE-02 — AI Aging Refutatory Pilot: Exact Control and Yearbook Preflight
 
 **Record date:** 2026-10-24
-**Status:** **PARTIAL — exact synthetic control implemented; real-model inference blocked**
+**Technical status:** **PARTIAL — exact synthetic control validated; real-model inference blocked**
+**Scientific candidate status:** **CLOSED — NO-GO (CE decision, 2026-10-24)**
 **Branch reviewed:** `feature/hls-laboratory-v1`
 **Initial preflight HEAD:** `5d307bb0423c40a6e58a1f013eb73e687f8ba2f0`
 **Initial integration HEAD:** `6fc68a9203e56e44991cb2ec44cf8e3afa5b9ded`
@@ -299,3 +300,25 @@ The Yearbook artifact and official implementation disagree with the published
 OOD aggregate by the boundary-year count (828); this remains a documented
 source inconsistency. Checkpoint absence and wall-clock latency remain
 unresolved; they were not filled with assumptions.
+
+## 7. Subsequent scientific closure — 2026-10-24
+
+After the technical preflight recorded above, the CE closed HLS-CE-02 as
+**NO-GO** for an independent scientific contribution. The decision records
+that collective degradation under constant individual performance is known;
+dependence-change identifiability is covered by established statistical
+theory; detection under partial observation and information cost has solid
+antecedents; no HLS-specific property warranting an independent contribution
+was identified; and no verified real experimental configuration offsets
+the originality risk.
+
+This closure concerns the present contribution candidate, not the relevance
+of the phenomenon in general. It does not invalidate the exact mathematical
+control or the completed portions of the Yearbook preflight. The distinctions
+remain: **synthetic control validated** against the supplied PMFs;
+**temporal data preflight partial**; **real-model inference not executed**;
+**originality not established**. No experiment, model training, inference, or
+algorithm development followed from the decision, and historical results are
+unchanged. The decision and project-level rationale are recorded in
+[HLS_CURRENT_STATE.md](../HLS_CURRENT_STATE.md) and the append-only
+[HISTORY.md](../HISTORY.md).

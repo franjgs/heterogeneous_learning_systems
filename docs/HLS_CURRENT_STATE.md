@@ -42,30 +42,35 @@ mechanisms/controls with close prior work. Its REVISE recommendation is an
 assessment, not a new campaign authorization or a change to HLS's scientific
 identity.
 
-**HLS-CE-02 AI-aging pilot — 24 October 2026:** the exact three-classifier
-error-pattern distributions A and B supplied by the CE are implemented in
-`experiments/synthetic/ai_aging_control.py` with exact rational arithmetic.
-Each marginal error rate is 1/5; pairwise covariance is 3/50 under A and 4/25
-under B; majority-error risk is 3/10 and 1/5, respectively. Linear mixture
-`P_lambda=(1-lambda)P_A+lambda P_B` preserves marginals and interpolates the
-joint dependence and majority risk. Fifteen focused tests pass, and the exact
-JSON result is recorded under `results/experiments/hls_ce02_ai_aging/`.
-These are mathematical control results, not empirical evidence of AI aging;
-no E2 source code was found or represented as integrated.
+**HLS-CE-02 AI-aging pilot — CLOSED, NO-GO (CE decision, 24 October 2026):**
+the exact three-classifier error-pattern distributions A and B supplied by
+the CE are implemented in `experiments/synthetic/ai_aging_control.py` with
+exact rational arithmetic. Each marginal error rate is 1/5; pairwise
+covariance is 3/50 under A and 4/25 under B; majority-error risk is 3/10 and
+1/5. The linear mixture `P_lambda=(1-lambda)P_A+lambda P_B` preserves
+marginals and changes joint dependence and majority risk. Fifteen focused
+tests pass, and the exact JSON result is under
+`results/experiments/hls_ce02_ai_aging/`. This **validated synthetic control**
+is a mathematical result, not empirical evidence of AI aging; no E2 source
+code was found or represented as integrated.
 
-The Yearbook preflight downloaded and hashed the official processed file and
-verified 37,189 annual records, unique image-content hashes, and a disjoint
-mode-0/mode-1 partition of mode 2. For Eval-Fix, the inspected data/code imply
-14,901 ID-train, 1,677 ID-test, and 20,611 OOD examples; the published OOD
-aggregate differs by the boundary-year count. The advertised checkpoint
-folder contains 50 FMoW archives and no Yearbook checkpoint. Thus label/output
-semantics are documented but actual checkpoint outputs and wall-clock
-inference cost remain blocked. No model was trained or run; no real-model
-inference is authorized. Wild-Time can support descriptive temporal error
-dependence, not by itself a causal dependence-only claim at fixed marginals.
-The [updated preflight report](research/HLS_CE_02_AI_AGING_PREFLIGHT.md)
-records the exact results, counts, checksums, and remaining blockers.
-Scientific originality is **not demonstrated**.
+The Yearbook temporal preflight is **PARTIAL**: the processed dataset,
+chronological counts/partitions, and artifact-scoped content-ID/duplicate
+checks were audited, but the public checkpoint folder had no Yearbook model.
+Consequently **real-model inference was not executed**, output-to-label
+pairing could not be tested, and wall-clock inference was not measured. The
+preflight also records a source count discrepancy. The CE closed this
+candidate as **NO-GO** because collective degradation under constant
+marginals, dependence identifiability, and partial-observation detection have
+substantial existing statistical literature; no HLS-specific property or
+verified real-data configuration justifies an independent contribution at
+this stage. This is a judgment about the present publication candidate: it
+does not declare the phenomenon irrelevant or foreclose future AI-aging
+research. Preserve the valid control and partial preflight as evidence. The
+[CE-02 report](research/HLS_CE_02_AI_AGING_PREFLIGHT.md) and the dated
+[closure record](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md) contain
+the reasons and technical limits. No new experiment or algorithm is
+authorized by this closure.
 
 Governance responsibilities and the CE decision recorded on 2026-10-24 are
 defined in [HLS Research Governance](HLS_RESEARCH_GOVERNANCE.md).

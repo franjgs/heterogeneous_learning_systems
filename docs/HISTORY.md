@@ -1403,3 +1403,24 @@ by absent compatible checkpoints. No historical results were changed. See
 [the updated CE-02 report](research/HLS_CE_02_AI_AGING_PREFLIGHT.md),
 [execution-plan entry](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md), and
 [current roadmap](engineering/HLS_LAB_ROADMAP_CURRENT.md).
+
+## 2026-10-24 — HLS-CE-02 scientific closure (NO-GO)
+
+The CE closed HLS-CE-02 as **NO-GO** for an independent scientific
+contribution. The decision is based on the existing statistical literature on
+collective degradation under constant individual performance, identification
+of dependence changes, and detection with partial/informative observation;
+the work did not establish an HLS-specific property warranting a standalone
+contribution, and no verified real-model configuration was available to
+mitigate the originality risk.
+
+This decision preserves the valid exact synthetic control and the partial
+Yearbook preflight. The control is mathematical validation of the supplied
+PMFs, not evidence that real systems exhibit AI aging. Yearbook data and
+partitions were audited, but compatible checkpoints were absent; real-model
+inference and wall-clock measurement were not performed. The closure does not
+claim that AI aging is irrelevant or that future research on it cannot be
+valuable. No historical outcomes were changed and no new experiment or
+algorithm was initiated. See the [current scientific status](HLS_CURRENT_STATE.md),
+[CE-02 report](research/HLS_CE_02_AI_AGING_PREFLIGHT.md), and
+[cumulative execution record](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md).

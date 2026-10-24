@@ -8198,3 +8198,31 @@ the source contains no original portrait IDs. Checkpoint availability,
 model-output pairing, and wall-clock inference: **BLOCKED**. No campaign,
 training, inference, or historical-artifact change occurred. Report:
 [`HLS_CE_02_AI_AGING_PREFLIGHT.md`](../research/HLS_CE_02_AI_AGING_PREFLIGHT.md).
+
+## 2026-10-24 — HLS-CE-02 scientific closure (NO-GO)
+
+**Decision:** the CE closed HLS-CE-02 as **NO-GO** for a standalone
+publication contribution. The reasons recorded are: (1) collective
+degradation with constant individual performance is already known; (2)
+identifiability of dependence changes is explained by established statistical
+theory; (3) detection under partial observation and information cost has
+substantial prior work; (4) no HLS-specific property supporting an
+independent contribution was identified; and (5) no verified real experimental
+configuration offsets the originality risk.
+
+**Evidence retained:** the exact synthetic control remains valid and its 15
+focused tests passed. It verifies the supplied distributions and the
+marginal-preserving `P_lambda` contrast only; it does not establish empirical
+AI aging or originality. The Wild-Time Yearbook work remains a partial data
+preflight: counts, artifact-scoped content IDs, and partitions were checked,
+but the advertised checkpoint inventory had no Yearbook model. No real-model
+inference or wall-clock measurement was performed. Preserve the source-count
+discrepancy and all other limitations in the
+[CE-02 report](../research/HLS_CE_02_AI_AGING_PREFLIGHT.md).
+
+**Scope of closure:** NO-GO applies to CE-02 as the current independent
+contribution candidate. It does not assert that AI aging is irrelevant or
+rule out all future work on it. No historical result was modified; no new
+experiment or algorithm was run or authorized. The canonical status is in
+[HLS_CURRENT_STATE.md](../HLS_CURRENT_STATE.md), with chronology in
+[HISTORY.md](../HISTORY.md).
