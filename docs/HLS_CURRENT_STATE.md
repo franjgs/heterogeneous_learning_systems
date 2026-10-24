@@ -25,7 +25,12 @@ capabilities, (2) selective cooperation among heterogeneous capabilities, and
 CE considers this direction suitable for a feasibility assessment. The
 documentary mission [HLS-CE-01](research/HLS_CE_01_DYNAMIC_DELIBERATION_2026-10-24.md)
 is in planning/feasibility only: no new campaign, algorithm, or manuscript is
-authorized. This proposal does not redefine HLS or reopen closed studies.
+authorized. This proposal does not redefine HLS or reopen closed studies. The
+focused [existing-data assessment](research/HLS_CE_01_EXISTING_DATA_ASSESSMENT.md)
+found paired independent MMLU outputs and recorded independent-answer
+cascade results, but no answer-conditioned review output `D(x,F(x))`; the
+existing artifacts therefore cannot estimate the incremental effect of
+showing a fast answer to a deliberative capability.
 
 ## Executive status
 

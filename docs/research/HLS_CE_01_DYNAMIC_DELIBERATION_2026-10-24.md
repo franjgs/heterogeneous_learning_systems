@@ -50,6 +50,8 @@ The following studies are closed or scoped evidence. Reuse their data, conclusio
 
 These results motivate questions about incremental benefit, signal quality, costs and collective allocation. They do not establish that deliberation is novel or generally beneficial.
 
+The repository-data check is recorded in [HLS-CE-01 existing-data assessment](HLS_CE_01_EXISTING_DATA_ASSESSMENT.md). Existing MMLU artifacts permit paired analysis of independent `F(x)` and `D(x)` outputs and of the already evaluated independent-answer cascade, but contain no answer-conditioned `D(x,F(x))` response. META-VOC decision trajectories have different synthetic semantics and do not fill that data gap.
+
 ## F. Minimum experiment concept — design only
 
 The feasibility work may specify a comparison of fast and deliberative capabilities on common problems. The design should measure:
