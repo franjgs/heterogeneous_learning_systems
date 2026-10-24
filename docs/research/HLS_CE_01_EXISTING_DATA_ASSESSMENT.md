@@ -120,3 +120,7 @@ potential outcome `D(x,F(x))` is absent. Any claim about the incremental value
 of *reviewing the first answer* therefore requires additional, paired
 conditional-review data. This assessment authorizes no such inference or
 campaign.
+
+The query-paired FAST/DEEP correction and interference rates, confidence-signal
+analysis, and retrospective best-of-pair bound are reported separately in
+[HLS-CE-01 complementarity analysis](HLS_CE_01_COMPLEMENTARITY_ANALYSIS.md).

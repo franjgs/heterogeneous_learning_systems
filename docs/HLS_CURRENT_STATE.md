@@ -31,6 +31,10 @@ found paired independent MMLU outputs and recorded independent-answer
 cascade results, but no answer-conditioned review output `D(x,F(x))`; the
 existing artifacts therefore cannot estimate the incremental effect of
 showing a fast answer to a deliberative capability.
+The follow-up [complementarity analysis](research/HLS_CE_01_COMPLEMENTARITY_ANALYSIS.md)
+quantifies independent-answer overlap and finds no reliable ranking signal
+from FAST confidence for the two event types in the archived test; its
+best-of-pair oracle remains retrospective, not an executable policy.
 
 ## Executive status
 
