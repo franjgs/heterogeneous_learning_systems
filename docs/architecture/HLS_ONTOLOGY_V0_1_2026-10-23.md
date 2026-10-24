@@ -8,6 +8,12 @@ particular attention to N×K/MIS-v2, directed teaching, demand, observation and
 decision policies. This document describes current semantics; it does not
 authorize model changes or an experiment.
 
+The ontology distinguishes organization/use concepts from
+development/evolution concepts where that distinction is useful for semantic
+precision. It does not establish USE/DEVELOP as foundational HLS pillars or
+require that every scenario contain capability development; see the current
+[HLS philosophy](../HLS_PHILOSOPHY.md).
+
 Evidence labels: **FACT** means an equation, code path, test contract, or
 recorded result was inspected; **INTERPRETATION** means a consequence or
 classification of those facts; **OPEN** means the repository does not settle
@@ -17,9 +23,9 @@ the issue. Tests establish software contracts, not scientific validity.
 
 The ontology remains plural: an HLS is not required to use every concept below
 or to implement one universal state/action interface. The canonical
-[ontology](../hls_ontology.md) separates organization/use from
-development/evolution and does not equate source-specific quantities by
-terminology alone.
+[ontology](../hls_ontology.md) distinguishes organization/use from
+development/evolution where relevant and does not equate source-specific
+quantities by terminology alone.
 
 | Concept | v0.1 definition | N×K / related realization and boundary |
 |---|---|---|

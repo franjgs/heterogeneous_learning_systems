@@ -242,9 +242,17 @@ The ontology therefore permits deliberate competence development as well as comp
 
 ---
 
-## 3. Organization, use, and development decisions
+## 3. Organization, use, and capability development
 
-The HLS philosophy distinguishes two foundational questions:
+Organization/use and capability development are distinct questions that may
+be relevant to an HLS problem; they are not foundational pillars or a
+mandatory decomposition of the programme. Depending on the scenario, a study
+may include either, both, or neither as explicit decisions. When both are
+present, their interaction is an empirical or theoretical property to
+investigate, not an ontological assumption. See the
+[HLS philosophy](HLS_PHILOSOPHY.md).
+
+Two useful questions in scenarios that include these decisions are:
 
 ```text
 Who should do what?
@@ -475,19 +483,22 @@ Ontology growth should follow scientific need, not source vocabulary.
 
 ---
 
-## 9. Relationship to the two HLS beams
+## 9. Organization and capability change as research dimensions
 
-The ontology supports the two foundational beams defined by the HLS philosophy.
+The ontology can represent both the organization and use of existing
+capabilities and processes that develop or change capabilities. This is a
+useful semantic distinction, not a pair of foundational HLS pillars or a
+required decomposition of every study.
 
-### Beam 1 — Organization / use of competences
+Organization and use can be represented through tasks, competences,
+organization, roles, work, performance, value, resources, capacity, and
+latency without prescribing one organizational mechanism. Capability change
+can be represented through experience, development interventions, learning,
+transfer, retention, forgetting, interference, and competence evolution
+without prescribing one learning mechanism.
 
-The ontology provides objects for representing tasks, competences, organization, roles, work, performance, value, resources, capacity, and latency without prescribing one particular organizational mechanism.
-
-### Beam 2 — Development / evolution of competences
-
-The ontology provides objects for representing experience, development interventions, learning, transfer, retention, forgetting, interference, and competence evolution without prescribing one particular learning mechanism.
-
-The ontology also permits the two beams to interact:
+When a particular problem includes an interaction, the ontology can express
+relationships such as:
 
 ```text
 organization/use
@@ -496,7 +507,10 @@ organization/use
       -> future organization/use
 ```
 
-Whether those interactions require integrated management is not an ontological assumption. It is a scientific question.
+Whether these processes interact in a particular system, and whether they
+require integrated management, are scientific questions rather than
+ontological assumptions. Many HLS investigations need not include capability
+change at all.
 
 ---
 

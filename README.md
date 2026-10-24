@@ -1,68 +1,40 @@
 # Heterogeneous Learning Systems
 
-**Heterogeneous Learning Systems (HLS)** studies how a collective of
-heterogeneous, limited, and evolvable learning agents can organize and develop
-its competences to solve changing problems effectively and efficiently.
+**Heterogeneous Learning Systems (HLS)** is a general scientific framework
+for studying, designing, and evaluating how heterogeneous capabilities are
+organized, used, combined, and evolved to solve relevant problems. It seeks
+generalizable knowledge within clearly stated classes and assumptions, and
+effective solutions grounded in the integration of knowledge across
+disciplines. HLS does not assume that heterogeneity, cooperation, learning,
+adaptation, or organizational complexity is always beneficial.
 
-The starting point is simple: problems change. New problems appear, others
-disappear, and their requirements, frequency, and importance evolve. No single
-agent needs to possess all the competences required by the system.
+Problems may change, remain stable, or impose different demands across
+applications. No single component needs to possess every capability required
+by a system. HLS therefore studies collectives of people, agents, models, or
+other components whose capabilities and operating constraints can differ.
 
-The fundamental object of study is therefore not an isolated learning model,
-but a **system of agents with heterogeneous competences whose organization,
-use, and development can change over time**.
+## The four-level HLS architecture
 
-<p align="center">
-  <img src="docs/images/hls_concept.png" alt="Heterogeneous Learning Systems conceptual overview" width="850">
-</p>
+HLS organizes scientific inquiry around four conceptual and experimental
+levels. They distinguish responsibilities without requiring four software
+modules or a rigid execution sequence:
 
-## Two fundamental questions
+1. **Scenarios** define systems, capabilities, tasks, environment, resources,
+   information, uncertainty, and relevant dynamics.
+2. **Organizational schemes** define how capabilities and responsibilities
+   are arranged and used, through selection, assignment, cooperation,
+   coordination, specialization, or other forms.
+3. **Models** represent, analyze, implement, and solve scenarios and
+   organizational problems, using mathematical models, estimators,
+   optimizers, policies, learning methods, or integrated mechanisms.
+4. **Performance measures** evaluate outcomes and compare alternatives using
+   measures relevant to the problem. HLS-PEF supports this level; it is not a
+   universal objective.
 
-HLS distinguishes two closely related but conceptually different problems:
-
-### 1. Organization and use of competences
-
-> **Who should do what?**
-
-Given the competences currently available in the system, how should agents be
-organized and used to solve the problems that arise?
-
-This includes mechanisms such as task allocation, specialization,
-collaboration, delegation, escalation, team formation, redundancy, and
-resource allocation.
-
-### 2. Development and evolution of competences
-
-> **Who should learn what, how, and from whom?**
-
-How should the competence portfolio of the system evolve as problems and needs
-change?
-
-This includes learning from experience, training, teaching, knowledge
-transfer, retention, forgetting, interference, specialization, and deliberate
-competence development.
-
-These two questions are distinct, but they need not be independent:
-
-```text
-organization / use
-        |
-        v
- operational experience
-        |
-        v
-learning / competence evolution
-        |
-        v
- future competence portfolio
-        |
-        v
- future organization / use
-```
-
-Understanding when this interaction matters, when it can be separated, and
-when existing theories are sufficient to manage it is a central scientific
-challenge of the programme.
+These levels are related but not forced into a one-to-one mapping. See
+[HLS Philosophy](docs/HLS_PHILOSOPHY.md) for the programme's stable scientific
+identity and [HLS Current State](docs/HLS_CURRENT_STATE.md) for scoped
+evidence.
 
 ## Research approach
 
@@ -80,14 +52,15 @@ map them into a common ontology
         ->
 integrate compatible mechanisms
         ->
-develop new theory only where necessary
+develop theory, mechanisms, or solutions where justified
         ->
 test the resulting system and its boundaries
 ```
 
-Novelty is therefore sought at the level where it actually occurs: the system,
-its organization, the interaction among its components, or the consequences
-of treating heterogeneous and evolving competences collectively.
+An original contribution may arise from a new result or mechanism, or from an
+integration of known components that produces an identifiable capability,
+property, explanation, or improvement. Integration alone does not establish
+novelty; claims must be positioned against relevant work.
 
 Existing theory is a foundation, not an obstacle.
 

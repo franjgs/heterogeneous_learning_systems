@@ -70,7 +70,7 @@ classification.
 | --- | --- | --- | --- | --- |
 | [README.md](../README.md) | Repository front door | CURRENT | Programme orientation and reading path. | Detailed status, theory, or evidence. |
 | [RESEARCH_DOCTRINE.md](../RESEARCH_DOCTRINE.md) | Research methodology | CANONICAL | Claim discipline, theory import, `WORLD != POLICY`, and anti-drift rules. | Defining HLS or reporting current results. |
-| [HLS_PHILOSOPHY.md](HLS_PHILOSOPHY.md) | HLS compass | CANONICAL | HLS's purpose, collective perspective, and two beams. | RQ0 mechanics, protocols, or current evidence. |
+| [HLS_PHILOSOPHY.md](HLS_PHILOSOPHY.md) | HLS scientific philosophy | CANONICAL | HLS's identity, interdisciplinary purpose, four-level conceptual architecture, scientific principles, and compass. | Formal model-specific results, protocols, or current evidence. |
 | [hls_ontology.md](hls_ontology.md) | Semantic infrastructure | CANONICAL | Terms, dimensional consistency, and cross-theory mappings. | A closed universal model or current-results ledger. |
 | [research_questions.md](research_questions.md) | Official question record | CANONICAL | Active RQ0 and its scope. | Historical questions or theory proofs. |
 | [HLS_CURRENT_STATE.md](HLS_CURRENT_STATE.md) | Scientific-status summary | CANONICAL | Established, scoped, open, and deliberately unclaimed results. | Detailed derivations or protocol chronology. |
@@ -120,25 +120,34 @@ classification.
 
 ## Scientific architecture map
 
-This is a compact navigation aid, not a restatement of theory.
+HLS's conceptual and experimental architecture has four levels:
 
 ```text
-HLS
-├── Beam 1 — organization/use of current competences
-│   └── T0–T3 — STATIC HLS (consolidated)
-│       └── G1 — canonical static computational ground truth
-└── Beam 2 / dynamic interaction
-    └── T4–T6 — DYNAMIC HLS (consolidated working foundation)
-        └── G2 — canonical minimal constructive/null ground truth
+Scenarios
+    ↓
+Organizational schemes
+    ↓
+Models
+    ↓
+Performance measures
 ```
+
+The arrows indicate relationships to analyze, not a rigid execution pipeline.
+The research themes and theory records below are scoped bodies of work within
+this architecture; static/dynamic and use/development are possible analytical
+dimensions, not foundational HLS beams. The [unified framework](architecture/HLS_UNIFIED_FRAMEWORK.md)
+uses a three-part formalization (system model, problem and organizational
+modality, decision architecture) for specified decision problems. That
+mathematical view coexists with the four-level conceptual architecture and
+does not replace it.
 
 T0--T3 are consolidated in [HLS Static Theory](theory/HLS_STATIC_THEORY.md).
 T4--T6 form the scoped dynamic working foundation in
 [HLS Dynamic Theory](theory/HLS_DYNAMIC_THEORY.md), with G2 as its minimal
 constructive/null reference. Its D0/D1/D2 identities have deterministic
 computational validation and instantiate the cascade's structural controls.
-Neither document claims a universal dynamic model,
-irreducible joint management, or validation beyond that scope.
+Neither document claims a universal dynamic model, irreducible joint
+management, or validation beyond that scope.
 
 RQ0 is a specific open dynamic research question, not the definition of HLS.
 G0 is a policy-neutral synthetic instrument for controlled RQ0 work, not a
@@ -269,7 +278,7 @@ protocol, pilot, or historical section of
 3. [HLS Laboratory v1](experiments/HLS_LAB_V1.md) — active milestone and
    implementation acceptance criteria.
 4. This guide — resolve document authority and provenance as needed.
-5. [HLS Philosophy](HLS_PHILOSOPHY.md) — programme compass and two beams.
+5. [HLS Philosophy](HLS_PHILOSOPHY.md) — scientific identity, four-level architecture, and programme compass.
 6. [Research Doctrine](../RESEARCH_DOCTRINE.md) — claim discipline and method.
 7. [HLS Ontology](hls_ontology.md) — semantic mapping discipline.
 8. [Research Questions](research_questions.md) — official active question.

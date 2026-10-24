@@ -20,12 +20,19 @@ authorized campaign. No historical result was changed.
 
 ## Executive status
 
-HLS is a research laboratory and a parameterized family of heterogeneous
-organizational problems, not a single algorithm. Its scientific frame remains
-the system / organizational modality / decision architecture distinction in
-the [unified framework](architecture/HLS_UNIFIED_FRAMEWORK.md) and
-[ontology v0.1](architecture/HLS_ONTOLOGY_V0_1_2026-10-23.md). Operationally,
-experiments also declare evaluation independently through
+HLS is a general scientific programme for studying, designing, and evaluating
+the organization, use, combination, and evolution of heterogeneous
+capabilities. The [HLS philosophy](HLS_PHILOSOPHY.md) defines its identity
+through a conceptual and experimental architecture of four levels: scenarios,
+organizational schemes, models, and performance measures. This identity does
+not require a particular mechanism, a dynamic system, or a USE/DEVELOP
+decomposition. The [unified framework](architecture/HLS_UNIFIED_FRAMEWORK.md)
+provides a compatible three-part mathematical formulation of specified
+decision problems (system model, problem and organizational modality,
+decision architecture); it is a formal view within the broader architecture,
+not a competing conceptual architecture. The [ontology v0.1](architecture/HLS_ONTOLOGY_V0_1_2026-10-23.md)
+supports semantic mappings. Operationally, experiments also declare
+evaluation independently through
 [HLS-PEF](architecture/HLS_PERFORMANCE_EVALUATION_FRAMEWORK.md). Scenario
 labels identify problem regimes; they are not maturity levels. The notation
 `S1`–`S7` names scenario families, whereas `TR-PR`, `TR-PM`, `TR-G`, `TR-J`,
@@ -1034,6 +1041,13 @@ of the investigation.
 
 The programme is returning to a more foundational level after an intensive
 analysis of one specific organization/development question.
+
+**Historical terminology note:** the following decision-time discussion uses
+“Beam 1” and “Beam 2” for a local organization/allocation versus
+capability-development decomposition. These labels record that research
+decision and its scope; they are not the current conceptual architecture or
+foundational divisions of HLS. See the current [HLS philosophy](HLS_PHILOSOPHY.md)
+and the compatibility note in the [unified framework](architecture/HLS_UNIFIED_FRAMEWORK.md).
 
 ### Current scientific orientation and experimental strategy
 

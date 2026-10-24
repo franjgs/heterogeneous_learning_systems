@@ -7,19 +7,25 @@ superior.
 
 This document supplies a common mathematical vocabulary for the completed
 scenario studies. It preserves their differing action spaces, reward models,
-information contracts, and evidence limits. The formulation separates
-**(A) the system model**, **(B) the problem and organizational modality**, and
-**(C) the decision architecture**. This is a scientific distinction, not a
-software refactor or a claim that one algorithm is universal. The earlier
+information contracts, and evidence limits. Its formal decision-problem
+formulation separates **(A) the system model**, **(B) the problem and
+organizational modality**, and **(C) the decision architecture**. This
+three-part formulation is a useful mathematical view of specified problems,
+not a replacement for HLS's broader four-level conceptual architecture
+(scenarios, organizational schemes, models, and performance measures), a
+software refactor, or a claim that one algorithm is universal. The earlier
 scenario/mechanism/organization vocabulary is retained for historical
 traceability; mechanisms are represented as system dynamics and/or
 decision-side estimation according to what they actually change.
 
 ## 1. What HLS is, and is not
 
-The evidence supports treating HLS as **a parameterized family of heterogeneous
-organization problems and an experimental methodology for matching decision
-architectures to problem structure**. It is not one organizational algorithm.
+For the purposes of this mathematical formulation, the completed studies
+support representing HLS instances as **a parameterized family of heterogeneous
+organization problems evaluated through decision architectures matched to
+problem structure**. This model-scoped characterization does not replace the
+broader scientific identity stated in the [HLS philosophy](../HLS_PHILOSOPHY.md).
+HLS is not one organizational algorithm.
 Its common object is a system with heterogeneous agents and task-relevant
 capabilities, an environment that supplies work and constraints, mechanisms
 that may change capabilities or beliefs, and one or more organizations that
@@ -73,6 +79,27 @@ problem; the architecture is evaluated against that contract, including its
 information, action, and resource constraints. Matching is neither the
 definition of organization nor a property of every HLS system: it is an exact
 optimization tool only for a suitable assignment structure.
+
+### Relation to the four-level HLS conceptual architecture
+
+The three formal layers above and the four conceptual levels answer different
+questions and coexist without a one-to-one mapping:
+
+| Conceptual level | Relation to this formalization |
+|---|---|
+| **Scenario** | Supplies the system, environment, entities, conditions, and dynamics represented principally in the system model. A mathematical model may describe only selected aspects of a scenario. |
+| **Organizational scheme** | Specifies how capabilities and responsibilities are arranged and used. It informs the organizational modality, but is broader than the feasible decision variable or its constraints. |
+| **Model** | Includes the system model, formal decision problem, and decision architecture, as well as estimation, transition, and computational models. The word “model” at this conceptual level is therefore not identical to layer A. |
+| **Performance measures** | Explicitly define how outcomes and alternatives are evaluated. They apply across the scenario, organizational scheme, and models; they are not an additional state or decision layer in the three-part formulation. |
+
+In particular, a system model can contribute to specifying both a scenario's
+physical dynamics and a decision problem's consequences. Performance
+evaluation remains scientifically explicit even when reward appears inside a
+formal optimization problem: the optimized reward is not automatically a
+complete or universal measure of performance. The conceptual architecture
+therefore does not alter this document's mathematical decomposition, and the
+mathematical decomposition does not exhaust the conceptual architecture. See
+the [HLS philosophy](../HLS_PHILOSOPHY.md) for the programme-level account.
 
 ### 1.2 Organizational modalities (non-exhaustive)
 

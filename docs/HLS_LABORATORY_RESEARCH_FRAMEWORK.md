@@ -6,6 +6,12 @@ multiple HLS investigations. This is an audit and roadmap, not a claim of
 scientific novelty, not a campaign registration, and not implementation
 authorization. HLS Laboratory v1 remains **PARTIAL**.
 
+> **Scope note (2026-10-24):** this dated framework records a particular
+> laboratory design and its research framing. Its questions about current
+> organization/use and competence development are scoped research questions,
+> not defining pillars of HLS. The programme-level identity and four-level
+> conceptual architecture are set out in [HLS Philosophy](HLS_PHILOSOPHY.md).
+
 ## 1. Scope and design principle
 
 HLS studies how heterogeneous collectives organize, coordinate, and develop
