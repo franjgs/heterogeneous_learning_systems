@@ -14,33 +14,31 @@ as joint policies under explicit common-information, synchronization,
 feasibility, and computation assumptions. Existing HLS results remain
 bounded evidence, not a general claim that joint management is necessary. The
 [research note](research/HLS_USE_DEVELOP_SEPARABILITY_NOTE.md) records the
-formal equivalence, literature comparison, and decision. S3b-E1 is the sole
-priority alternative for further originality positioning, not an open or
-authorized campaign. No historical result was changed.
+formal equivalence, literature comparison, and decision. The earlier note
+identified S3b-E1 as an alternative for originality positioning; it did not
+authorize reopening that closed study. The subsequent PI resolution and
+current priority are recorded below; no historical result was changed.
 
-**Strategic proposal — 24 October 2026 (pending PI ratification):** the PI has
-proposed prioritizing (1) dynamic organization of fast and deliberative
-capabilities, (2) selective cooperation among heterogeneous capabilities, and
-(3) organizational learning and emergent specialization, in that order. The
-CE considers this direction suitable for a feasibility assessment. The
-documentary mission [HLS-CE-01](research/HLS_CE_01_DYNAMIC_DELIBERATION_2026-10-24.md)
-is in planning/feasibility only: no new campaign, algorithm, or manuscript is
-authorized. This proposal does not redefine HLS or reopen closed studies. The
-focused [existing-data assessment](research/HLS_CE_01_EXISTING_DATA_ASSESSMENT.md)
-found paired independent MMLU outputs and recorded independent-answer
-cascade results, but no answer-conditioned review output `D(x,F(x))`; the
-existing artifacts therefore cannot estimate the incremental effect of
-showing a fast answer to a deliberative capability.
-The follow-up [complementarity analysis](research/HLS_CE_01_COMPLEMENTARITY_ANALYSIS.md)
-quantifies independent-answer overlap and finds no reliable ranking signal
-from FAST confidence for the two event types in the archived test; its
-best-of-pair oracle remains retrospective, not an executable policy.
-The [interaction-hypotheses assessment](research/HLS_CE_01_INTERACTION_HYPOTHESES.md)
-prioritizes testing the marginal value of information exchanged between
-heterogeneous capabilities, while treating correction and anchoring as
-mechanisms/controls with close prior work. Its REVISE recommendation is an
-assessment, not a new campaign authorization or a change to HLS's scientific
-identity.
+**PI strategic resolution and HLS-CE-03 — 24 October 2026:** the PI approved
+PI-01, PI-02, PI-03, PI-04, PI-06 and PI-07 as recorded in the
+[CE-03 mission](research/HLS_CE_03_TRANSFER_COLLECTIVE_PERFORMANCE_2026-10-24.md).
+The active scientific priority is competence transfer and collective
+performance, framed by HLS-H3: transfer may improve recipient capability yet
+harm collective performance by changing complementarity or specialization.
+The PI authorized a six-week exploratory phase with an initial review after
+two weeks; continuation depends on evidence. No new algorithm is authorized.
+This activation is for problem framing and reuse assessment, not an
+experimental campaign. HLS-CE-01 and HLS-CE-02 remain closed under PI-06.
+
+The earlier same-day [HLS-CE-01 deliberation mission](research/HLS_CE_01_DYNAMIC_DELIBERATION_2026-10-24.md)
+and its paired-data and interaction assessments remain historical, bounded
+work; they are not reopened or treated as the active priority. HLS-CE-01's
+archived MMLU material lacks answer-conditioned review `D(x,F(x))`, and its
+independent-answer complementarity analysis does not establish deliberation
+value. The [CE-03 mission](research/HLS_CE_03_TRANSFER_COLLECTIVE_PERFORMANCE_2026-10-24.md)
+maps existing transfer/teaching and exact-reference components, identifies
+the missing comparison definitions, and records that no campaign or algorithm
+has yet been authorized.
 
 **HLS-CE-02 AI-aging pilot — CLOSED, NO-GO (CE decision, 24 October 2026):**
 the exact three-classifier error-pattern distributions A and B supplied by

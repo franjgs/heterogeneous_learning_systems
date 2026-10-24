@@ -1424,3 +1424,28 @@ valuable. No historical outcomes were changed and no new experiment or
 algorithm was initiated. See the [current scientific status](HLS_CURRENT_STATE.md),
 [CE-02 report](research/HLS_CE_02_AI_AGING_PREFLIGHT.md), and
 [cumulative execution record](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md).
+
+## 2026-10-24 — PI strategic resolution and activation of HLS-CE-03
+
+**Resolution date:** 2026-10-24, as communicated by the PI. **Documentary
+record:** this entry and the linked mission are recorded in the current commit;
+the Git timestamp dates publication, not the decision itself.
+
+The PI approved PI-01 (LLM-assisted literature audits are not exclusionary
+filters on their own), PI-02 (study competence transfer and collective
+performance), PI-03 (six-week exploratory phase with an initial review after
+two weeks), PI-04 (no new algorithm yet), PI-06 (HLS-CE-01 and HLS-CE-02 stay
+closed), and PI-07 (continuation is evidence-dependent). The resolution
+specifies HLS-H3: transfer may improve the receiver's individual performance
+while harming collective performance by changing complementarity or
+specialization.
+
+HLS-CE-03 is active for framing, existing-evidence reuse, and feasibility
+work. Its initial comparison is fixed organization, readapted organization,
+and an optimal reference, with transfer and organization effects to be
+separated. Operational definitions and reference information privileges
+remain to be specified. This activation does **not** authorize an experiment,
+campaign, or new algorithm; no model, result, or historical record was
+changed. The prior CE-01/CE-02 closures remain in force. See the
+[CE-03 operational mission](research/HLS_CE_03_TRANSFER_COLLECTIVE_PERFORMANCE_2026-10-24.md)
+and [canonical current state](HLS_CURRENT_STATE.md).
