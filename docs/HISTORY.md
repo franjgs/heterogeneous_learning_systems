@@ -1335,3 +1335,23 @@ Using only the archived corrected MMLU test scores, paired the independent SmolL
 **Documentary analysis date:** 2026-10-24. **Publication date:** recorded by Git; no independent time of scientific decision is inferred.
 
 Distinguished candidate-answer verification/correction, anchoring to an erroneous FAST answer, and transfer of additional FAST evidence/justification to DEEP. A focused primary-literature check found close prior work on answer visibility and advice integration, self-correction harms/gating, and multi-agent proposal/critique. The assessment prioritizes information-transfer value as the potentially broader HLS question, while treating correction and anchoring as mechanism contrasts. It proposes one randomized four-arm design (`D(x)`, `D(x,F(x))`, `D(x,J_F)`, `D(x,F(x),J_F)`) with paired outcomes and cost controls. The recommendation is **REVISE** before a publication-level claim because originality is unresolved. No experiment, inference, code, or algorithm was performed or authorized. See [interaction hypotheses](research/HLS_CE_01_INTERACTION_HYPOTHESES.md).
+
+## 2026-10-24 — HLS-CE-02 AI-aging preflight: synthetic control blocked
+
+The repository was inspected on `feature/hls-laboratory-v1` at
+`5d307bb0423c40a6e58a1f013eb73e687f8ba2f0`; the worktree was clean. No exact
+E2 source for the required two joint error distributions was found. The
+existing three-expert complementarity pilot is a different model and was not
+reused as a substitute. CE-02 Phase 1 is **BLOCKED**, and no synthetic
+distribution or analysis code was invented.
+
+A bounded audit of official Wild-Time sources identified Yearbook as a
+possible descriptive temporal benchmark, with binary labels and annual
+timestamps, but also found a published total-count discrepancy (project page
+versus supplement) and no stable per-example IDs in the shown preprocessing
+output. The benchmark could describe temporal marginal and joint error
+changes on paired examples after ID/version validation; it cannot by itself
+identify a causal dependence-only effect with fixed marginal risks. No data
+were downloaded, no tests or model inference were run, and no historical
+artifact changed. Overall CE-02 status is **PARTIAL** pending the exact E2
+distribution/intervention specification. See [preflight report](research/HLS_CE_02_AI_AGING_PREFLIGHT.md).

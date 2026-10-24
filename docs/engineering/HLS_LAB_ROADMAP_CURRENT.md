@@ -560,3 +560,19 @@ question and hypothesis remain preliminary. The October targets supplement
 the original calendar; November dates are proposals, not ratified schedule.
 See the [HLS-CE-01 mission](../research/HLS_CE_01_DYNAMIC_DELIBERATION_2026-10-24.md)
 and the new [cumulative-plan entry](HLS_LAB_EXECUTION_PLAN_2026-10-17.md).
+
+## 20. HLS-CE-02 AI-aging refutatory pilot preflight (24 Oct 2026)
+
+The exact two joint error distributions attributed to E2 were not present in
+the inspected repository. The synthetic control is therefore **BLOCKED**;
+the distinct three-expert complementarity pilot is not a valid substitute.
+The documentary Wild-Time preflight identifies Yearbook as a conditional
+candidate for descriptive paired temporal-error analysis, but not as a
+marginal-preserving causal intervention. Published Yearbook counts disagree
+between the project page and appendix, and stable per-portrait IDs are not
+retained by the shown processed format. No implementation, tests, data
+download, inference, or campaign was performed. The next prerequisite is
+E2's exact distribution/intervention specification and subsequent resolution
+of Yearbook release/ID alignment before any protocol freeze. See the
+[CE-02 preflight report](../research/HLS_CE_02_AI_AGING_PREFLIGHT.md) and
+[cumulative execution-plan record](HLS_LAB_EXECUTION_PLAN_2026-10-17.md).

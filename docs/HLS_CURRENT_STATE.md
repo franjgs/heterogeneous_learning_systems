@@ -1,6 +1,6 @@
 # HLS Current State
 
-> **Current scientific snapshot — 23 October 2026.** This section is the
+> **Current scientific snapshot — 24 October 2026.** This section is the
 > authoritative entry point for the PI. The dated records and artifacts linked
 > here remain the source of detail; older material below is retained for
 > historical traceability and must not override this snapshot where dates
@@ -41,6 +41,18 @@ heterogeneous capabilities, while treating correction and anchoring as
 mechanisms/controls with close prior work. Its REVISE recommendation is an
 assessment, not a new campaign authorization or a change to HLS's scientific
 identity.
+
+**HLS-CE-02 AI-aging pilot preflight — 24 October 2026:** the requested exact
+E2 joint error distributions were not located, so the synthetic-control
+implementation is **BLOCKED** and no substitute distributions were invented.
+The bounded Wild-Time review identifies Yearbook as a possible descriptive
+temporal benchmark, but flags an official count/version discrepancy and the
+absence of stable example IDs in the shown processed format. It cannot alone
+identify a causal dependence-only effect with fixed marginal error rates.
+No code, tests, data, model inference, or campaign was added/run. See the
+[CE-02 preflight report](research/HLS_CE_02_AI_AGING_PREFLIGHT.md). The pilot
+remains partial pending E2's exact distribution and intervention
+specification; real-model inference is not authorized by this preflight.
 
 ## Executive status
 

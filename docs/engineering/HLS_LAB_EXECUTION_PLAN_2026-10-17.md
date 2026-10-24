@@ -8116,3 +8116,42 @@ Deliverable: a concise feasibility report with the question, hypothesis, evidenc
 **Assessment:** answer correction and anchoring are already close to published work and should not be claimed as contributions by themselves. Complementary information transfer is the most promising HLS framing, conditional on defining auditable information and contrasting it with answer-only exposure, independent solving, and communication/compute costs. A four-arm randomized within-query design is proposed: `D(x)`, `D(x,F(x))`, `D(x,J_F)`, and `D(x,F(x),J_F)`. It separates the answer, evidence, and interaction effects; it is not executed or authorized here.
 
 **Recommendation:** REVISE the publication-level claim pending a direct originality comparison with multi-agent information exchange and value-of-information work. See [HLS-CE-01 interaction hypotheses](../research/HLS_CE_01_INTERACTION_HYPOTHESES.md). No inference, model execution, campaign, algorithm, or historical-result modification occurred.
+
+## 2026-10-24 — HLS-CE-02 AI-aging refutatory pilot preflight
+
+**Repository and specification check.** The worktree was clean on
+`feature/hls-laboratory-v1` at reviewed HEAD
+`5d307bb0423c40a6e58a1f013eb73e687f8ba2f0`. A targeted inspection of
+research/experiment documentation, source, scripts, tests, and repository
+history found no exact E2 specification for the two joint error
+distributions. The existing three-expert common-uniform complementarity
+exercise is a different model and was not substituted.
+
+**Status and decision.** CE-02 Phase 1 is **BLOCKED**; the overall task is
+**PARTIAL**. No synthetic distributions, intervention, or analysis code was
+invented. No tests can be claimed for the missing distribution contract.
+
+**Wild-Time preflight.** Official sources describe Yearbook binary
+male/female-label classification from 32×32 grayscale portraits, with
+Eval-Fix ID years 1930–1970 and OOD years 1971–2013. The supplement's
+five-year-bin table totals 14,901 ID-train, 1,677 ID-test and 21,439 OOD-test
+examples (38,017 altogether), while the project page states 33,431 examples
+for 1930–2013. The mismatch is unresolved. The public preprocessing code
+stores per-year images and labels but drops raw filenames; stable paired
+alignment therefore needs a verified, hashed ID manifest. The repository
+advertises Eval-Fix baseline checkpoints, but their individual contents,
+hashes and availability were not verified. Yearbook could support descriptive
+temporal paired error/dependence analysis; it cannot alone identify a causal
+effect of dependence while holding all marginal error rates fixed.
+
+**Work not performed.** No dataset/checkpoint download, model inference,
+campaign, code change, or test execution. Historical results were untouched.
+`git diff --check` and documentary link checks were performed for this
+record. The blocker, evidence, limitations and exact information required
+from E2 are documented in [HLS-CE-02 preflight](../research/HLS_CE_02_AI_AGING_PREFLIGHT.md).
+
+**Next prerequisite.** E2 must provide/identify the complete probability mass
+or exact generative specification for both distributions, error-bit
+convention, marginal rates, intervention parameters, and predicted pairwise
+and collective-risk quantities. Only then can the prescribed synthetic
+control and its tests be implemented without inventing the target.
