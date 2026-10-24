@@ -576,3 +576,25 @@ E2's exact distribution/intervention specification and subsequent resolution
 of Yearbook release/ID alignment before any protocol freeze. See the
 [CE-02 preflight report](../research/HLS_CE_02_AI_AGING_PREFLIGHT.md) and
 [cumulative execution-plan record](HLS_LAB_EXECUTION_PLAN_2026-10-17.md).
+
+## 21. HLS-CE-02 exact-control integration and Yearbook preflight (24 Oct 2026)
+
+The CE supplied the exact endpoint distributions. Their exact-rational
+implementation and linear `P_lambda` transition are complete; 15 focused
+tests pass and the result JSON is stored under
+`results/experiments/hls_ce02_ai_aging/`. No E2 code was available, so this
+integrates the specified mathematics, not original source code.
+
+The official processed Yearbook file was inspected from temporary storage:
+37,189 records across 84 annual slices; 0 duplicate image-content hashes;
+mode 0 and mode 1 form an exact disjoint partition of mode 2. Eval-Fix counts
+derived from data plus official code are 14,901 ID train, 1,677 ID test, and
+20,611 OOD (1971–2013). The appendix's 21,439 OOD aggregate differs by the
+boundary-year count of 828. The public checkpoint directory lists 50 FMoW
+checkpoints and no Yearbook checkpoint. Consequently, temporal model analysis
+and wall-clock inference estimates are **BLOCKED**; no training or inference
+was run. A calendar split is recorded for any future analysis: 1971–1994
+development (12,246 records), 1995–2013 confirmation (8,365), without
+outcome-based selection.
+
+See the [updated CE-02 report](../research/HLS_CE_02_AI_AGING_PREFLIGHT.md).

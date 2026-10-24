@@ -1,0 +1,256 @@
+{
+  "campaign_executed": false,
+  "classifier_count": 3,
+  "dependence_definition": "pairwise covariance of binary error indicators; correlations reported only as derived quantities",
+  "distributions": {
+    "A": {
+      "individual_error_rates": [
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "joint_pmf": {
+        "000": "7/10",
+        "001": "0",
+        "010": "0",
+        "011": "1/10",
+        "100": "0",
+        "101": "1/10",
+        "110": "1/10",
+        "111": "0"
+      },
+      "majority_error_risk": "3/10",
+      "pairwise_correlation": {
+        "12": "3/8",
+        "13": "3/8",
+        "23": "3/8"
+      },
+      "pairwise_covariance": {
+        "12": "3/50",
+        "13": "3/50",
+        "23": "3/50"
+      },
+      "pairwise_joint_error": {
+        "12": "1/10",
+        "13": "1/10",
+        "23": "1/10"
+      }
+    },
+    "B": {
+      "individual_error_rates": [
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "joint_pmf": {
+        "000": "4/5",
+        "001": "0",
+        "010": "0",
+        "011": "0",
+        "100": "0",
+        "101": "0",
+        "110": "0",
+        "111": "1/5"
+      },
+      "majority_error_risk": "1/5",
+      "pairwise_correlation": {
+        "12": "1",
+        "13": "1",
+        "23": "1"
+      },
+      "pairwise_covariance": {
+        "12": "4/25",
+        "13": "4/25",
+        "23": "4/25"
+      },
+      "pairwise_joint_error": {
+        "12": "1/5",
+        "13": "1/5",
+        "23": "1/5"
+      }
+    }
+  },
+  "error_encoding": "pattern e1e2e3; 1 means classifier error and 0 means correct",
+  "experiment": "HLS-CE-02 exact synthetic AI-aging dependence control",
+  "limitations": [
+    "The synthetic construction establishes a mathematical contrast only; it is not empirical evidence of AI aging.",
+    "P_lambda is the declared linear interpolation between the supplied endpoint distributions."
+  ],
+  "risk_definition": "probability of error; majority rule errs when at least two of three classifiers err",
+  "source_status": "implemented from exact probabilities supplied in the CE task; no E2 source code was available or integrated",
+  "transition": "P_lambda=(1-lambda)P_A+lambda P_B; lambda in [0,1]",
+  "transition_grid": {
+    "0": {
+      "individual_error_rates": [
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "joint_pmf": {
+        "000": "7/10",
+        "001": "0",
+        "010": "0",
+        "011": "1/10",
+        "100": "0",
+        "101": "1/10",
+        "110": "1/10",
+        "111": "0"
+      },
+      "majority_error_risk": "3/10",
+      "pairwise_correlation": {
+        "12": "3/8",
+        "13": "3/8",
+        "23": "3/8"
+      },
+      "pairwise_covariance": {
+        "12": "3/50",
+        "13": "3/50",
+        "23": "3/50"
+      },
+      "pairwise_joint_error": {
+        "12": "1/10",
+        "13": "1/10",
+        "23": "1/10"
+      }
+    },
+    "1": {
+      "individual_error_rates": [
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "joint_pmf": {
+        "000": "4/5",
+        "001": "0",
+        "010": "0",
+        "011": "0",
+        "100": "0",
+        "101": "0",
+        "110": "0",
+        "111": "1/5"
+      },
+      "majority_error_risk": "1/5",
+      "pairwise_correlation": {
+        "12": "1",
+        "13": "1",
+        "23": "1"
+      },
+      "pairwise_covariance": {
+        "12": "4/25",
+        "13": "4/25",
+        "23": "4/25"
+      },
+      "pairwise_joint_error": {
+        "12": "1/5",
+        "13": "1/5",
+        "23": "1/5"
+      }
+    },
+    "1/2": {
+      "individual_error_rates": [
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "joint_pmf": {
+        "000": "3/4",
+        "001": "0",
+        "010": "0",
+        "011": "1/20",
+        "100": "0",
+        "101": "1/20",
+        "110": "1/20",
+        "111": "1/10"
+      },
+      "majority_error_risk": "1/4",
+      "pairwise_correlation": {
+        "12": "11/16",
+        "13": "11/16",
+        "23": "11/16"
+      },
+      "pairwise_covariance": {
+        "12": "11/100",
+        "13": "11/100",
+        "23": "11/100"
+      },
+      "pairwise_joint_error": {
+        "12": "3/20",
+        "13": "3/20",
+        "23": "3/20"
+      }
+    },
+    "1/4": {
+      "individual_error_rates": [
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "joint_pmf": {
+        "000": "29/40",
+        "001": "0",
+        "010": "0",
+        "011": "3/40",
+        "100": "0",
+        "101": "3/40",
+        "110": "3/40",
+        "111": "1/20"
+      },
+      "majority_error_risk": "11/40",
+      "pairwise_correlation": {
+        "12": "17/32",
+        "13": "17/32",
+        "23": "17/32"
+      },
+      "pairwise_covariance": {
+        "12": "17/200",
+        "13": "17/200",
+        "23": "17/200"
+      },
+      "pairwise_joint_error": {
+        "12": "1/8",
+        "13": "1/8",
+        "23": "1/8"
+      }
+    },
+    "3/4": {
+      "individual_error_rates": [
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "joint_pmf": {
+        "000": "31/40",
+        "001": "0",
+        "010": "0",
+        "011": "1/40",
+        "100": "0",
+        "101": "1/40",
+        "110": "1/40",
+        "111": "3/20"
+      },
+      "majority_error_risk": "9/40",
+      "pairwise_correlation": {
+        "12": "27/32",
+        "13": "27/32",
+        "23": "27/32"
+      },
+      "pairwise_covariance": {
+        "12": "27/200",
+        "13": "27/200",
+        "23": "27/200"
+      },
+      "pairwise_joint_error": {
+        "12": "7/40",
+        "13": "7/40",
+        "23": "7/40"
+      }
+    }
+  },
+  "validation": {
+    "all_transition_marginals_equal_one_fifth": true,
+    "both_distributions_exactly_normalized": true,
+    "both_distributions_nonnegative": true,
+    "dependency_changes_across_endpoints": true,
+    "exact_rational_arithmetic": true
+  }
+}

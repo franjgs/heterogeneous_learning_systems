@@ -1376,3 +1376,30 @@ Wild-Time Yearbook remains in PREFLIGHT; real-model inference is unauthorized
 and scientific originality has not been demonstrated. The earlier preflight
 entry and its report describe the state at their reviewed commit and are
 retained unchanged. No historical experimental result was modified.
+
+## 2026-10-24 — HLS-CE-02 exact control integration and Yearbook data audit
+
+Following the CE's exact probability specification, implemented A and B and
+the linear `P_lambda` mixture with exact rational arithmetic. All three
+marginal error rates equal 1/5; pairwise covariance is 3/50 under A and 4/25
+under B; majority-error risk is 3/10 and 1/5. Fifteen focused tests passed
+and an exact JSON artifact was generated. No E2 original source was found or
+claimed as integrated.
+
+Downloaded the official 1,828,532,864-byte Yearbook processed file to
+temporary storage, restricted-unpickled NumPy arrays, verified 84 annual
+slices / 37,189 images, zero exact pixel duplicates, and exact disjoint
+mode-0/mode-1 reconstruction of mode-2. SHA-256 is recorded in the CE-02
+report. Eval-Fix counts are 14,901 ID train, 1,677 ID test and 20,611 OOD
+(1971–2013); the published appendix OOD aggregate is 828 greater and includes
+the split boundary year. The public checkpoint folder contains 50 FMoW
+archives and no Yearbook checkpoint. A chronological development/confirmation
+split is specified without outcome-based selection. No checkpoint was
+downloaded, no model was trained or run, and no inference was executed.
+
+CE-02 is **PARTIAL**: the exact mathematical control is complete; a
+Yearbook-based model analysis and wall-clock inference estimate remain blocked
+by absent compatible checkpoints. No historical results were changed. See
+[the updated CE-02 report](research/HLS_CE_02_AI_AGING_PREFLIGHT.md),
+[execution-plan entry](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md), and
+[current roadmap](engineering/HLS_LAB_ROADMAP_CURRENT.md).

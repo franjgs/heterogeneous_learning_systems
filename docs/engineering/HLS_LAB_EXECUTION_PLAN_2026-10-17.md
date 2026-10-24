@@ -8155,3 +8155,46 @@ or exact generative specification for both distributions, error-bit
 convention, marginal rates, intervention parameters, and predicted pairwise
 and collective-risk quantities. Only then can the prescribed synthetic
 control and its tests be implemented without inventing the target.
+
+## 2026-10-24 — HLS-CE-02 exact control and Wild-Time Yearbook preflight
+
+**Synthetic control.** The CE supplied `P_A(000)=.7`, each of `110/101/011=.1`,
+and `P_B(000)=.8`, `P_B(111)=.2`, with all other atoms zero. Implemented the
+specified three-error-bit PMFs and `P_lambda=(1-lambda)P_A+lambda P_B` in
+`experiments/synthetic/ai_aging_control.py`, using exact rational arithmetic.
+All three marginals remain .20; each pair covariance changes from .06 to .16;
+majority-error risk changes from .30 to .20. Fifteen focused tests passed.
+Generated `results/experiments/hls_ce02_ai_aging/synthetic_control.json`.
+No original E2 code was found or claimed as integrated. The result is a
+mathematical control, not empirical evidence of AI aging.
+
+**Yearbook data and partition audit.** The official processed file was
+downloaded to temporary storage under the stated MIT terms, inspected with a
+restricted NumPy unpickler, hashed, and deleted after analysis. SHA-256:
+`dc59f02d63c0ef6a5d0444f6237fe3bfed76ca82ab043b0235cf15388b04da6c`;
+1,828,532,864 bytes. It contains 37,189 records in 84 annual slices. Content
+hashing found 37,189 unique images, no exact pixel duplicates, and verified
+mode-0/mode-1 as a disjoint exact partition of mode-2 per year. Eval-Fix
+counts from this artifact and source semantics are 14,901 ID train, 1,677 ID
+test, and 20,611 OOD records for 1971–2013. The published appendix OOD total
+is 21,439, 828 higher because its 1970 boundary count is included; the
+project-page 33,431 equals the mode-0 count across all years, not the total
+full records. Exact five-year counts and the discrepancy are in the
+[preflight report](../research/HLS_CE_02_AI_AGING_PREFLIGHT.md).
+
+**Models, split, and cost.** The public checkpoint folder listed 50 archives,
+all FMoW (39 A-GEM, 3 DeepCORAL, 3 ERM-LISA, 3 ERM-Mixup, 2 ERM), and no
+Yearbook checkpoint. Labels map `M→0`, `F→1`; the network returns two logits
+and official evaluation uses softmax/argmax. No actual checkpoint outputs
+were available to pair. A pre-outcome chronological split is recorded:
+1971–1994 development (12,246) and 1995–2013 confirmation (8,365). For three
+YearbookNet copies, the architecture implies 61,833 image-model evaluations
+and about 246.18 GMAC; no wall-clock estimate is defensible without compatible
+checkpoints and measured target hardware. No model was trained or run.
+
+**Status.** Exact mathematical control: complete. Yearbook data and
+identifier preflight: complete for this artifact, with content-derived IDs;
+the source contains no original portrait IDs. Checkpoint availability,
+model-output pairing, and wall-clock inference: **BLOCKED**. No campaign,
+training, inference, or historical-artifact change occurred. Report:
+[`HLS_CE_02_AI_AGING_PREFLIGHT.md`](../research/HLS_CE_02_AI_AGING_PREFLIGHT.md).
