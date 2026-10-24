@@ -52,6 +52,8 @@ These results motivate questions about incremental benefit, signal quality, cost
 
 The repository-data check is recorded in [HLS-CE-01 existing-data assessment](HLS_CE_01_EXISTING_DATA_ASSESSMENT.md). Existing MMLU artifacts permit paired analysis of independent `F(x)` and `D(x)` outputs and of the already evaluated independent-answer cascade, but contain no answer-conditioned `D(x,F(x))` response. META-VOC decision trajectories have different synthetic semantics and do not fill that data gap.
 
+The follow-up [interaction-hypotheses assessment](HLS_CE_01_INTERACTION_HYPOTHESES.md) distinguishes candidate-answer correction, anchoring, and information transfer. It prioritizes information transfer as a potentially broader HLS question while recommending **REVISE** before any publication-level claim, given close prior work on answer visibility, self-revision, and multi-agent debate. The four-arm design is a proposal only; no inference or campaign is authorized.
+
 ## F. Minimum experiment concept — design only
 
 The feasibility work may specify a comparison of fast and deliberative capabilities on common problems. The design should measure:

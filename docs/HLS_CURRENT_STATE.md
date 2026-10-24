@@ -35,6 +35,12 @@ The follow-up [complementarity analysis](research/HLS_CE_01_COMPLEMENTARITY_ANAL
 quantifies independent-answer overlap and finds no reliable ranking signal
 from FAST confidence for the two event types in the archived test; its
 best-of-pair oracle remains retrospective, not an executable policy.
+The [interaction-hypotheses assessment](research/HLS_CE_01_INTERACTION_HYPOTHESES.md)
+prioritizes testing the marginal value of information exchanged between
+heterogeneous capabilities, while treating correction and anchoring as
+mechanisms/controls with close prior work. Its REVISE recommendation is an
+assessment, not a new campaign authorization or a change to HLS's scientific
+identity.
 
 ## Executive status
 
