@@ -3,18 +3,30 @@
 **Inspection date:** 2026-10-26
 **Inspected branch / baseline:** `feature/hls-laboratory-v1` /
 `c8d5cd71fdeaca2ed59589c8a780bbca15b0c238`
+**Updated documentary status:** 2026-10-26, after the CE supplied E1, E2, E3
+and E3 addendum originals. The assessment below now records their contents
+and decision differences; its code inventory remains based on the stated
+baseline.
 **Result:** PARTIAL — substantial components can be reused, but CE-04's
 event-driven semantics and five unclosed specifications are not implemented.
 
 ## Source and reports
 
-The CE instruction reports that the Mega PI authorized CE-04 and that E1, E2,
-E3 and an E3 addendum were received on 2026-10-26. None of those original
-reports or a CE-04 protocol file is present in the inspected branch. Their
-contents are not reconstructed here. The decision record and pre-freeze
-protocol contain only the decisions and parameter values explicitly supplied
-by the CE. See [CE decisions](05_CE_DECISIONS.md) and
-[consolidated protocol](06_CE04_CONSOLIDATED_PROTOCOL.md).
+The first technical inspection found no expert originals in the branch or
+conversation context then available. On 2026-10-26, the CE supplied all four
+original texts, now incorporated verbatim in files 01–04. The decision record
+and consolidated protocol distinguish those proposals from CE-approved
+decisions; the originals have not been rewritten. See [CE decisions](05_CE_DECISIONS.md)
+and [consolidated protocol](06_CE04_CONSOLIDATED_PROTOCOL.md) for the explicit
+discrepancy record.
+
+In particular, E3's first H0/H1/H2 profiles with match/mismatch accuracies
+0.90/0.65 do not equal mean competence per task family. The CE adopted E1's
+equal-per-task-mean criterion; E3's addendum later refers to E1's generator,
+but E1 gives a possible parameterization rather than exact profiles/values.
+Those remain pending. E3's first protocol has three policies and 27 cells;
+the CE adopted four policy roles and 36 cells, consistent with E3's addendum.
+The details of these differences are documented in [05_CE_DECISIONS.md](05_CE_DECISIONS.md).
 
 ## Component inventory
 
@@ -23,7 +35,7 @@ by the CE. See [CE decisions](05_CE_DECISIONS.md) and
 | Agent/competence representation | [`hls_lab_nk_geometry.py`](../../../src/hls/hls_lab_nk_geometry.py), `OrganizationConfigNK` / `OrganizationStateNK`, lines 48–126: arbitrary N×K IDs and competence matrices in [0,1], estimates, individual effort limits and shared budget; no worker busy/availability state. | **REUTILIZABLE** for competence arrays; service state needs adaptation. |
 | Task representation/generation | [`hls_lab_nk_geometry.py`](../../../src/hls/hls_lab_nk_geometry.py), `ProblemSpecNK`, lines 165–201; [`hls_lab_nk_environment.py`](../../../src/hls/hls_lab_nk_environment.py), finite `DemandRegimeNK` and categorical process, lines 32–100, 170–198. Emits one task per discrete period. | **ADAPTABLE** for four family descriptors and phased proportions; not a Poisson workload generator. |
 | Discrete-event execution | [`hls_lab_nk_execution.py`](../../../src/hls/hls_lab_nk_execution.py), `run_nk_production_sequence`, lines 274 onward, iterates frozen problems by period. | **NO DISPONIBLE** for arrival/service/completion event queues. |
-| Queue, worker availability, deadlines | Search of Python sources found no FCFS queue, service-time event, busy-worker state, individual deadline or tardiness implementation. | **NO DISPONIBLE**. |
+| Queue, worker availability, deadlines | Search of Python sources found no FCFS queue, service-time event, busy-worker state, individual deadline or tardiness implementation. E2 recommends SimPy, but it is not declared in `pyproject.toml` and no CE-04 SimPy runner exists. | **NO DISPONIBLE**. |
 | Static assignment | [`hls_lab_nk_assignment.py`](../../../src/hls/hls_lab_nk_assignment.py), `HungarianAssignmentOptimizerNK.optimize`, lines 59–112: static one-to-one unit assignment from supplied scores. N×K joint action enumeration in [`hls_lab_nk_geometry.py`](../../../src/hls/hls_lab_nk_geometry.py), lines 237–279, has M(K)^N catalog growth. | **ADAPTABLE** as static assignment baseline; not as a scheduler. General enumeration is unsuitable for N=12/24/48. |
 | Competence estimation | [`hls_lab_nk_estimation.py`](../../../src/hls/hls_lab_nk_estimation.py), posterior initialization and production-observation assimilation, lines 25–114; observed-work productivity estimator in [`hls_lab_nk_nembhard_adaptive.py`](../../../src/hls/hls_lab_nk_nembhard_adaptive.py), lines 121–302. | **ADAPTABLE** after CE defines observed task outcome, estimator target and noise model. |
 | Contextual policy | [`linucb.py`](../../../src/hls/linucb.py), `LinUCBDisjoint`, lines 11–95; [`hls_lab_nk_linucb_assignment.py`](../../../src/hls/hls_lab_nk_linucb_assignment.py), pair-score/selected-feedback adapter, lines 10–61. Nembhard adaptation is based on observed productivity with optional epsilon exploration, not CE-04 queue context. | **ADAPTABLE** primitives only; CE-04 P3 is not implemented. |
@@ -41,6 +53,10 @@ by the CE. See [CE decisions](05_CE_DECISIONS.md) and
 | C. P2/P3 observed-results estimator | **ADAPTABLE** | Existing estimators learn from production observations or selected-work outputs, not a CE-04-defined result likelihood. |
 | D. Contextual adaptive P3 | **ADAPTABLE** | LinUCB primitives and pairwise matching adapter exist; no full arrival/queue-aware P3, context, parameters or cadence. |
 | E. Common P1/P2 decision function | **NO DISPONIBLE** | No shared competence + expected service time + load + deadline function. Existing P0/P1/P2 rank a different production/teaching action space. |
+
+The CE dispositions do not close these five specifications. The consolidated
+protocol records the CE-approved workload/factorial conditions and separately
+labels the expert-original proposals that were not adopted.
 
 ## Protocol compatibility and limits
 
@@ -84,8 +100,8 @@ solver where mathematically applicable, observed-feedback primitives,
 ExperimentRun/HLS-PEF and existing statistical helpers. It must add the
 missing discrete-event queue/service model and event-level task records; these
 are not incremental changes to the fixed-period runner. A defensible effort
-estimate in person-days is not possible until the expert originals and open
-specifications are incorporated.
+estimate in person-days is not possible until the five open specifications
+and operational semantics are closed.
 
 The CE must close: (1) H0/H1/H2 construction and parameters; (2) the observation
 model shared by P2/P3; (3) P3 method, context, parameters and cadence; (4) the

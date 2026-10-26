@@ -1,9 +1,11 @@
 # CE-04 — Consolidated Protocol (Pre-freeze)
 
-**Status: NOT FROZEN.** This document consolidates only values and decisions
-provided by the CE on 2026-10-26. It does not reconstruct E1/E2/E3 reports.
-The five open specifications in §7 and unresolved operational semantics in
-§8 prohibit implementation or execution until the CE closes them.
+**Status: NOT FROZEN.** The original E1, E2, E3 and E3 addendum are now
+incorporated verbatim in files 01–04. This document records CE-approved
+conditions separately from expert proposals and unresolved items; it does not
+silently merge conflicting definitions. The five open specifications in §7
+and unresolved operational semantics in §8 prohibit implementation or
+execution until the CE closes them.
 
 ## 1. Scientific scope and conditions
 
@@ -112,12 +114,59 @@ These do not authorize Codex to select defaults: the interpretation of
 t=150 and t=300; continuous/discrete time and service-duration semantics;
 queue discipline and deadline completion boundary; exact resource scaling;
 cost accounting; decision tie-breaking; and the resampling unit/contrast
-family for paired bootstrap, Holm and TOST. The CE should resolve these while
-incorporating the expert originals and closing the five specifications.
+family for paired bootstrap, Holm and TOST. The CE must resolve these and close the five specifications before the
+protocol can be frozen.
 
 ## 9. Freeze gate
 
-Do not implement or run the pilot until all expert originals and addendum are
-incorporated, §§7–8 are resolved, policy information/actions/objectives are
+The expert originals and addendum are incorporated. Do not implement or run
+the pilot until §§7–8 are resolved, policy information/actions/objectives are
 consistent, and the CE records a dated protocol-freeze decision. The full
 campaign remains separately gated by CE authorization.
+
+## 10. Expert proposals and CE dispositions
+
+The source reports are preserved verbatim in
+[`01_E1_MATHEMATICAL_MODEL.md`](01_E1_MATHEMATICAL_MODEL.md),
+[`02_E2_ASSIGNMENT_POLICIES.md`](02_E2_ASSIGNMENT_POLICIES.md),
+[`03_E3_EXPERIMENTAL_PROTOCOL.md`](03_E3_EXPERIMENTAL_PROTOCOL.md) and
+[`04_E3_PROTOCOL_ADDENDUM.md`](04_E3_PROTOCOL_ADDENDUM.md). Their proposals
+are not all equivalent to the CE-approved protocol:
+
+- **Composition:** E1 requires mean competence to match separately by task
+  family and offers `q_ik(H)=μ_k+α_H s_ik` only as one possible
+  parameterization; it supplies no fixed profiles or parameter values. E3's
+  initial primary-family compositions and 0.90/0.65 match/mismatch success
+  rates do not preserve task-specific means across H0/H1/H2. For N=12, their
+  implied T1 means are .90/.775/.7125, while T2 means are
+  .65/.691666…/.7125. That initial E3 condition is not adopted. The CE adopts
+  E1's equal-mean criterion; E3's addendum subsequently reflects it by
+  requiring the E1 generator and numerical verification. The actual generator
+  and parameter values remain pending.
+- **Policies:** E3 initially defines three policies (random feasible, highest
+  competence, and probability of success × probability of on-time completion)
+  and a 27-cell design. E2 proposes P0 expected workload, Min-Min plus a
+  stronger success/load/deadline baseline, contextual Thompson Sampling, and
+  an estimated-competence P1 contrast. The CE adopts four policy roles and
+  36 cells: P0 least expected load; P1 true competence, service time and
+  deadline; P2 the same function with estimated competence; P3 an established
+  contextual method. E3's addendum reflects those four roles. The CE has not
+  adopted E2's named policy algorithms verbatim; the exact P3 and common
+  P1/P2 decision function remain pending.
+- **Cooperation:** E1 defines operational cooperative advantage `κ` for a
+  pair. E2 recommends disabling cooperation, and the CE adopts one agent per
+  task with cooperation disabled. Thus this campaign does not directly
+  estimate `κ` or establish cooperative-complementarity effects.
+- **Scale and execution:** E2 recommends starting at N=24 under non-saturated
+  load, while the CE-approved design uses N=12/24/48 in the factorial pilot
+  after freeze. E3's original 810-run campaign follows its 27-condition,
+  three-policy design; the CE-approved full design is 36 conditions × 30
+  seeds = 1,080 runs, subject to a later campaign authorization.
+- **Queue simulator:** E2 recommends SimPy as an existing discrete-event
+  mechanism. The inspected project does not declare SimPy in `pyproject.toml`
+  or contain a CE-04 queue runner. This recommendation is not evidence of an
+  already implemented or installed CE-04 simulator.
+
+These dispositions preserve the history of the design and make the reason for
+the unresolved items explicit. No expert original has been edited to match the
+CE decision record.

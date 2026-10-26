@@ -1573,3 +1573,37 @@ remain open. No source code or historical result was changed; no pilot or
 campaign was run. The four expert-report files are placeholders marked
 PENDING INCORPORATION, not reconstructed reports. See the
 [CE-04 document directory](research/CE-04/).
+
+
+## 2026-10-26 — CE-04 expert originals incorporated
+
+**Expert report dates:** 2026-10-26, as printed in the supplied originals.
+**Incorporation event:** the CE supplied the four original texts in a
+subsequent instruction dated 2026-10-26. **Documentary registration:** this
+entry is being added after receipt; the Git commit date records publication,
+not the decision or report time. No hour is inferred.
+
+The four texts are now incorporated verbatim in
+[01_E1_MATHEMATICAL_MODEL.md](research/CE-04/01_E1_MATHEMATICAL_MODEL.md),
+[02_E2_ASSIGNMENT_POLICIES.md](research/CE-04/02_E2_ASSIGNMENT_POLICIES.md),
+[03_E3_EXPERIMENTAL_PROTOCOL.md](research/CE-04/03_E3_EXPERIMENTAL_PROTOCOL.md)
+and [04_E3_PROTOCOL_ADDENDUM.md](research/CE-04/04_E3_PROTOCOL_ADDENDUM.md).
+The source originals have not been rewritten to match CE decisions.
+
+The CE's earlier decisions remain controlling. E1's criterion of equal mean
+competence by task family was adopted because E3's initial primary-family
+composition with match/mismatch accuracy 0.90/0.65 does not satisfy that
+criterion. For N=12, those initial means differ across H0/H1/H2 by task
+family. The CE also adopted four policy roles; E3 initially proposed three,
+and its addendum reflects the later four-policy design. E2's proposed named
+methods are not all adopted verbatim. Cooperation remains disabled, so the
+campaign does not directly test E1's pairwise cooperative-complementarity
+quantity κ.
+
+The five specifications remain open: H0/H1/H2 generator; exact heterogeneity
+parameters; P2/P3 estimator; contextual P3 configuration; and common P1/P2
+decision function. The protocol is not frozen. No code or historical result
+was changed and no experiment was run. See the
+[CE decision/discrepancy log](research/CE-04/05_CE_DECISIONS.md),
+[consolidated protocol](research/CE-04/06_CE04_CONSOLIDATED_PROTOCOL.md) and
+[technical readiness](research/CE-04/07_TECHNICAL_READINESS.md).
