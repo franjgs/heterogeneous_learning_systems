@@ -27,6 +27,7 @@ __pycache__/
 **/.cache/
 **/cache/
 /results/experiments/hls_ce04_causal_pilot/replicas.jsonl.gz
+/results/experiments/hls_ce04_causal_confirmatory/replicas.jsonl.gz
 
 # C extensions
 *.so
