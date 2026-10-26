@@ -1,0 +1,1185 @@
+{
+  "canonical_configuration": {
+    "admission_threshold": 0.5,
+    "arrivals": {
+      "horizon": 400.0,
+      "lambda_per_agent": 0.55,
+      "phases": [
+        [
+          0.0,
+          150.0,
+          [
+            0.4,
+            0.2,
+            0.2,
+            0.2
+          ]
+        ],
+        [
+          150.0,
+          300.0,
+          [
+            0.1,
+            0.4,
+            0.4,
+            0.1
+          ]
+        ],
+        [
+          300.0,
+          400.0,
+          [
+            0.25,
+            0.25,
+            0.25,
+            0.25
+          ]
+        ]
+      ]
+    },
+    "compositions": [
+      "H0",
+      "H1",
+      "H2"
+    ],
+    "deadline_slack": 3.0,
+    "n_agents": [
+      12,
+      24,
+      48
+    ],
+    "p2_prior": "Beta(1,1)",
+    "p3": {
+      "algorithm": "disjoint LinUCB",
+      "alpha": 2.3581015157406195,
+      "context": "F_i * one_hot(task_family)",
+      "delayed_reward": "correct and on-time; zero at deadline otherwise"
+    },
+    "pilot_seeds": [
+      0,
+      1,
+      2
+    ],
+    "policies": [
+      "P0",
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "q": {
+      "alpha": {
+        "H0": 0.0,
+        "H1": 0.1,
+        "H2": 0.2
+      },
+      "base": 0.775,
+      "s_other": -0.25,
+      "s_primary": 0.75
+    },
+    "queues": "one FCFS queue; one active service; no preemption",
+    "service": {
+      "cv": 0.3,
+      "distribution": "lognormal",
+      "mean": 1.25
+    },
+    "stats": {
+      "holm": true,
+      "replicate_bootstrap_resamples": 10000,
+      "tost_margin": 0.02
+    },
+    "tie": "replicate-level independent random agent priority"
+  },
+  "code_commit_at_execution": "3071de45889dedeffa5e0d09edec54bcfa4dde0e",
+  "config_sha256": "c72bdca82906daa2118b415d3ba76d1fbfac87c47a1c3ee72fea7677e4b8a1b5",
+  "environment": {
+    "numpy": "1.26.4",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.11.9 (main, Apr 19 2024, 11:43:47) [Clang 14.0.6 ]",
+    "scipy": "1.13.1",
+    "simpy": "4.1.2"
+  },
+  "matrix": [
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 0
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 1
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 12,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 24,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H0",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H1",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P0",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P1",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P2",
+      "probability_method": "two_moment",
+      "seed": 2
+    },
+    {
+      "composition": "H2",
+      "convolution_step": 0.002,
+      "decision_alpha": 2.3581015157406195,
+      "horizon": 400.0,
+      "n_agents": 48,
+      "policy": "P3",
+      "probability_method": "two_moment",
+      "seed": 2
+    }
+  ],
+  "validator_commit": "3071de45889dedeffa5e0d09edec54bcfa4dde0e"
+}

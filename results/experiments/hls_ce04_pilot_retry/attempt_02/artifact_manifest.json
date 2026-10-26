@@ -1,0 +1,39 @@
+{
+  "attempt": "attempt_02",
+  "environment": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.11.9 (main, Apr 19 2024, 11:43:47) [Clang 14.0.6 ]"
+  },
+  "execution_commit": "3071de45889dedeffa5e0d09edec54bcfa4dde0e",
+  "files": {
+    "config.json": {
+      "bytes": 28294,
+      "git_publication": "tracked",
+      "sha256": "a7fa0b360dcff986f982ff313125b6f3858cb70e2170d0701c2591adf126a50c"
+    },
+    "replica_metrics.csv": {
+      "bytes": 32393,
+      "git_publication": "tracked",
+      "sha256": "a003f7b13d96b4205ca0ba60e8d899a783379bbdc4d69254030b9412d5e32eff"
+    },
+    "replicas.experiment_runs.jsonl.gz": {
+      "bytes": 41564272,
+      "git_publication": "local-only; excluded due size",
+      "sha256": "676fa549eb680a237a2e62dace03b760baaffec2348c7014411a5a33bc6e8c40"
+    },
+    "validation.json": {
+      "bytes": 563,
+      "git_publication": "tracked",
+      "sha256": "1df1727019f860e038e537d32dc409108b4a4ae930e4e606b588ed22398bccd3"
+    }
+  },
+  "science_configuration_sha256": "c72bdca82906daa2118b415d3ba76d1fbfac87c47a1c3ee72fea7677e4b8a1b5",
+  "source_sha256": {
+    "pyproject.toml": "10b6ad60ed7604faa95e8341bbaa9c4c1f0f7744de22febdd9c263f1acf4449e",
+    "src/hls/ce04.py": "632b8869c734f244bafe7f962cdd285098d9e0a42314591848277623243abbbb",
+    "src/hls/ce04_validation.py": "f48c812ec3a203eded7c46e3f609b0224ca8d66ad613d36c93cbc38b9c633d77",
+    "src/hls/linucb.py": "20b0f91f183ba103811592cfc3293ae940f02ed1f05dc658d7bfd330bcfe250b"
+  },
+  "status": "108/108 validated",
+  "study": "HLS-CE-04 technical pilot rerun"
+}

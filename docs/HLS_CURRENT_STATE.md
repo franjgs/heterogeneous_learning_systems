@@ -6,6 +6,22 @@
 > historical traceability and must not override this snapshot where dates
 > differ.
 
+**Latest CE-04 status — 26 October 2026:** the CE-04.5 technical pilot first
+stopped at a validator false positive, because a logged P3 reward event was
+mistaken for an effective LinUCB update. CE-04.6 corrected the validation
+only, verified effective P0–P3 update behavior and feedback timing, then
+completed all 108 pilot replicas (N=12/24/48, H0/H1/H2, P0–P3, seeds 0–2).
+All replica validations passed with the frozen scientific configuration hash
+`c72bdca82906daa2118b415d3ba76d1fbfac87c47a1c3ee72fea7677e4b8a1b5`.
+The run is **APTO as a technical pilot only**; it is not evidence of policy
+superiority and does not authorize or constitute the full campaign (seeds
+1000–1029). The original stop and a separate CSV-writer incident during the
+rerun are preserved in the [pilot report](research/CE-04/10_TECHNICAL_PILOT_REPORT.md).
+Lightweight metrics, configuration and validation artifacts are indexed in
+[`attempt_02`](../results/experiments/hls_ce04_pilot_retry/attempt_02/artifact_manifest.json);
+the 41 MB task-level ExperimentRun gzip remains local-only and is identified
+by its SHA-256 there.
+
 **USE/DEVELOP status — 23 October 2026:** the focused grounding phase ended
 with an initial **REFRAME**; the subsequent originality assessment concludes
 **NO-GO as an immediate standalone publication candidate**. Unrestricted,

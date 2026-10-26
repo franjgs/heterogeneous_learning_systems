@@ -1693,3 +1693,34 @@ performance metrics or task log were persisted for that attempt; no campaign
 seed was used and no code/protocol parameter was changed. See the
 [technical pilot report](research/CE-04/10_TECHNICAL_PILOT_REPORT.md) and the
 [small failure diagnostic](../results/experiments/hls_ce04_pilot/pilot_failure.json).
+
+## 2026-10-26 — CE-04.6 validator correction and technical pilot rerun
+
+The CE ordered a focused correction of the validation false positive and
+authorized repeating only the 108 pilot configurations. The original CE-04.5
+stop record remains unchanged. Inspection confirmed that `p3_reward_observed_at`
+records an observable diagnostic event, while an effective LinUCB update is
+the guarded `p3.observe(...)` call used only by P3. Validation now traces the
+actual Beta array writes and LinUCB calls, checks policy-exclusive updates and
+feedback timing, and replays the common admission rule without feeding audit
+information to policies. No simulator or scientific algorithm was modified.
+
+Focused regression and contract tests passed (53). The rerun used seeds 0–2,
+N=12/24/48, H0/H1/H2 and P0–P3, exactly 108 replicas; every replica passed
+the CE-04.5 validation checks. The canonical scientific configuration hash
+remained `c72bdca82906daa2118b415d3ba76d1fbfac87c47a1c3ee72fea7677e4b8a1b5`.
+Wall time was 185.90 s; summed simulation CPU time was 114.24 s; process peak
+RSS was 277,544,960 bytes on macOS. The result is **APTO for technical
+execution only**, not a scientific claim. The full campaign (seeds 1000–1029)
+was not run.
+
+An initial rerun launcher attempt stopped after one replica passed validation
+because its CSV field list omitted RunConfig columns. That runner-only
+serialization incident is retained separately under
+`results/experiments/hls_ce04_pilot_retry/attempt_01/`; the successful clean
+rerun is `attempt_02/`. Lightweight metrics/configuration/validation metadata
+are indexed by the
+[artifact manifest](../results/experiments/hls_ce04_pilot_retry/attempt_02/artifact_manifest.json).
+The 41 MB compressed task-level ExperimentRun log is retained locally and
+excluded from Git; its digest is recorded in the manifest. See the updated
+[technical pilot report](research/CE-04/10_TECHNICAL_PILOT_REPORT.md).
