@@ -1941,3 +1941,18 @@ pilot results do not establish a confirmatory effect or a causal queueing
 pathway. No 30-seed campaign was run. The pilot is technically complete, but
 the confirmatory campaign is not authorized by this entry. See the [pilot
 report](research/CE-07/02_TECHNICAL_PILOT.md) and [result artifacts](../results/experiments/hls_ce07_technical_pilot/).
+
+## 2026-10-26 — CE-07.4 audit of CE-07.3 tie-break records
+
+Using only the CE-07.3 report and six existing run records, the audit
+classified 6,196 exact P1 ties: 3,859 in A and 2,337 in B. In every tie set,
+all candidates had the same current-task competence; the logged score divided
+by that competence implies the same deadline factor (approximately 0.999123).
+The exact candidate sets and chosen slot are recorded, and the choice matches
+the minimum CE-04 tie-priority rank in all records. Individual queue/service
+states are absent, so the audit cannot independently verify each deadline
+probability or identify downstream effects of a different tie winner. The
+paired per-seed profile permutation is judged adequate as a label-bias control
+for the A/B comparison if preserved in the confirmatory campaign; it does not
+estimate a separate causal effect of tie-breaking. No simulation was run and
+no confirmatory inference was made. See the [CE-07.4 tie-break audit](research/CE-07/03_TIE_BREAK_AUDIT.md).
