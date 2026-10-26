@@ -1676,3 +1676,20 @@ implementation checks only. **No pilot or campaign was executed**; each still
 requires subsequent CE authorization. Implementation commit:
 `ce700f9854532638793021e8f3fb97bb04412951` (2026-10-26). See
 [technical readiness](research/CE-04/07_TECHNICAL_READINESS.md).
+
+## 2026-10-26 — CE-04.5 technical pilot stopped at validation gate
+
+**CE authorization date:** 2026-10-26. The CE authorized only the 108-cell
+technical pilot, seeds 0–2, and instructed provisional exclusion of the
+undefined recovery measure. Preflight verified the branch/reference, clean
+tracked tree, exact factorial and dependency versions; 45 focused tests
+passed. The pilot stopped at its first condition (`N=12, H0, P0, seed=0`)
+when the validation wrapper interpreted diagnostic P3-reward fields as an
+actual P3 model update. Source inspection shows that the LinUCB update is
+executed only under the P3 policy condition. The assertion was overbroad, but
+the CE's stop-on-failure rule was followed: one replica was attempted, none
+was accepted as pilot evidence, and 107 conditions were not executed. No
+performance metrics or task log were persisted for that attempt; no campaign
+seed was used and no code/protocol parameter was changed. See the
+[technical pilot report](research/CE-04/10_TECHNICAL_PILOT_REPORT.md) and the
+[small failure diagnostic](../results/experiments/hls_ce04_pilot/pilot_failure.json).

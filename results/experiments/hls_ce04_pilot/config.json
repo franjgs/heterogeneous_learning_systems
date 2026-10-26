@@ -1,0 +1,117 @@
+{
+  "canonical_configuration": {
+    "n_agents": [
+      12,
+      24,
+      48
+    ],
+    "compositions": [
+      "H0",
+      "H1",
+      "H2"
+    ],
+    "policies": [
+      "P0",
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "pilot_seeds": [
+      0,
+      1,
+      2
+    ],
+    "q": {
+      "base": 0.775,
+      "s_primary": 0.75,
+      "s_other": -0.25,
+      "alpha": {
+        "H0": 0.0,
+        "H1": 0.1,
+        "H2": 0.2
+      }
+    },
+    "arrivals": {
+      "lambda_per_agent": 0.55,
+      "horizon": 400.0,
+      "phases": [
+        [
+          0.0,
+          150.0,
+          [
+            0.4,
+            0.2,
+            0.2,
+            0.2
+          ]
+        ],
+        [
+          150.0,
+          300.0,
+          [
+            0.1,
+            0.4,
+            0.4,
+            0.1
+          ]
+        ],
+        [
+          300.0,
+          400.0,
+          [
+            0.25,
+            0.25,
+            0.25,
+            0.25
+          ]
+        ]
+      ]
+    },
+    "deadline_slack": 3.0,
+    "admission_threshold": 0.5,
+    "service": {
+      "distribution": "lognormal",
+      "mean": 1.25,
+      "cv": 0.3
+    },
+    "p2_prior": "Beta(1,1)",
+    "p3": {
+      "algorithm": "disjoint LinUCB",
+      "context": "F_i * one_hot(task_family)",
+      "alpha": 2.3581015157406195,
+      "delayed_reward": "correct and on-time; zero at deadline otherwise"
+    },
+    "tie": "replicate-level independent random agent priority",
+    "queues": "one FCFS queue; one active service; no preemption",
+    "stats": {
+      "replicate_bootstrap_resamples": 10000,
+      "holm": true,
+      "tost_margin": 0.02
+    }
+  },
+  "config_sha256": "c72bdca82906daa2118b415d3ba76d1fbfac87c47a1c3ee72fea7677e4b8a1b5",
+  "config_hash_serialization": "UTF-8 JSON sorted keys, compact separators",
+  "code_commit": "707573abd551620b05ca82bf470a0e02da1afdce",
+  "code_sha256": "632b8869c734f244bafe7f962cdd285098d9e0a42314591848277623243abbbb",
+  "protocol_sha256": "39cd594131d302d67116fcc6faf622574969be40702567cd3e733756a50b0aa5",
+  "environment": {
+    "python": "3.11.9 (main, Apr 19 2024, 11:43:47) [Clang 14.0.6 ]",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "simpy": "4.1.2",
+    "platform": "macOS-27.0.1-arm64-arm-64bit"
+  },
+  "pilot_matrix": {
+    "configured_replicas": 108,
+    "attempted_replicas": 1,
+    "validated_replicas": 0,
+    "unrun_replicas": 107,
+    "first_condition": {
+      "seed": 0,
+      "n_agents": 12,
+      "composition": "H0",
+      "policy": "P0"
+    }
+  },
+  "provenance_note": "Configuration record reconstructed after the fail-safe stop from the exact canonical payload used to compute the pre-run hash; it is not a completed-run manifest."
+}

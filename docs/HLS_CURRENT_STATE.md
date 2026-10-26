@@ -76,7 +76,7 @@ with an explicit dependency; 45 focused and contract tests passed. The delayed
 feedback adapter extends LinUCB without changing its original selection and
 immediate-feedback behavior. Fenton–Wilkinson's maximum absolute error was 0.003856 on the
 two fixed validation states near the 0.50 cutoff, within the 0.01 tolerance.
-Implementation commit on `feature/hls-laboratory-v1`:
+At the CE-04.4 update, no pilot or campaign had been run. Implementation commit on `feature/hls-laboratory-v1`:
 `ce700f9854532638793021e8f3fb97bb04412951`.
 The original E1–E3 documents remain intact. This validates implementation and
 the numerical approximation only: **no CE-04 pilot or campaign was executed**.
@@ -2027,3 +2027,16 @@ configuration identify the law, equation, exposure convention and parameters.
 This addendum clarifies the 20:59 Phase 5A record without rewriting it or the
 historical G3 ground truth. No code, equation, parameter or result changed;
 HLS Laboratory remains **PARTIAL**.
+
+**HLS-CE-04.5 technical pilot attempt — 26 October 2026:** the CE authorized
+only the 108-replica pilot (N=12/24/48, H0/H1/H2, P0–P3, seeds 0–2) and
+provisionally excluded the undefined recovery metric. Execution stopped after
+the first configured replica at a validation assertion that treated logged
+P3-reward instrumentation as a P3 model update for P0. Source inspection shows
+that the LinUCB update is guarded by `policy == P3`; the assertion was therefore
+overbroad, but the fail-safe gate was honored. One replica ran in memory,
+zero passed as a validated pilot replica, and the other 107 were not run. No
+pilot metrics were retained and no campaign seeds were used. This does not
+change CE-04 parameters or constitute experimental evidence. See the
+[stopped-pilot report](research/CE-04/10_TECHNICAL_PILOT_REPORT.md) and its
+[diagnostic artifact](../results/experiments/hls_ce04_pilot/pilot_failure.json).

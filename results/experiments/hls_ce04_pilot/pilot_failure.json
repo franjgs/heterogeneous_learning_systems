@@ -1,0 +1,14 @@
+{
+  "condition": {
+    "seed": 0,
+    "n_agents": 12,
+    "composition": "H0",
+    "policy": "P0",
+    "horizon": 400.0,
+    "decision_alpha": 2.3581015157406195,
+    "probability_method": "two_moment",
+    "convolution_step": 0.002
+  },
+  "error": "AssertionError('non-P3 got P3 update')",
+  "completed_replicas": 0
+}
