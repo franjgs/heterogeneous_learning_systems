@@ -1917,3 +1917,27 @@ changing P1. CE-04 has no interface for an end-to-end simultaneous identity
 rename. Therefore the pilot is **not yet ready to freeze or execute** pending
 CE disposition of that control and assignment of three seed IDs. No experiment,
 pilot, or campaign was run. See the [CE-07.2 validation report](research/CE-07/01_STRUCTURE_PROTOCOL_VALIDATION.md).
+
+## 2026-10-26 — CE-07.3 matched technical pilot
+
+**Execution/event date:** 2026-10-26, under the CE-07.3 order. **Documentary
+record:** this entry records the completed pilot on 2026-10-26; the Git commit
+date records publication, not a separate scientific decision time. No hour is
+inferred.
+
+The authorized six simulations completed: A/B × seeds 30010–30012, N=12,
+with the unchanged CE-04 P1. A reproducible profile-to-slot permutation from
+an independent stream was generated per seed and shared between each A/B
+pair. The same demand and task-agent service/correctness-potential table were
+used within pairs. P1's exact tie helper was instrumented by a transparent
+wrapper that logged ties and delegated each choice to the original function;
+CE-04 source and P1 were not modified. All six runs passed the CE-07 runtime
+checks, and nine focused tests passed.
+
+Descriptively, B−A success-on-time differences were +18.31, +17.14, and
++18.57 percentage points for the three matched seeds. Exact score ties were
+recorded in both organizations. No inferential analysis was performed; these
+pilot results do not establish a confirmatory effect or a causal queueing
+pathway. No 30-seed campaign was run. The pilot is technically complete, but
+the confirmatory campaign is not authorized by this entry. See the [pilot
+report](research/CE-07/02_TECHNICAL_PILOT.md) and [result artifacts](../results/experiments/hls_ce07_technical_pilot/).

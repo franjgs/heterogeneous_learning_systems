@@ -1,0 +1,86 @@
+{
+  "artifact_sha256": {
+    "configuration.json": "3fd1feded5d0de5c34b8e4a4729958225a2f113cf6accde4f466b72a211f19ff",
+    "exact_tie_decisions.json": "aa01291abb2ef452134791a878eee380a8d4104e4c71dfd69e01def69ae54736",
+    "paired_validation.json": "f14de9c8f41e0f56eab76dbd4bb573fe00137c886096af513a10a368648f49eb",
+    "replica_results.json": "8376b8f3edf5270c888f949d2ec6eccbfd85cb6d6347e67475e52a73954277b2"
+  },
+  "base_commit": "b6e17cdab4d2a41e7e93c63e4eb8f566d90a8801",
+  "configuration_sha256": "1f64ab3b3675adb0a65b3a538f7610bbb86efaabfa8f8c64a8cde6a41bc09770",
+  "document_sha256": {
+    "docs/research/CE-07/02_TECHNICAL_PILOT.md": "71bfbb052145342bdcce4a15c24d43e28f2ae8ded789f0fe0fa599e81c3aa1c6"
+  },
+  "environment": {
+    "numpy": "1.26.4",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.11.9 (main, Apr 19 2024, 11:43:47) [Clang 14.0.6 ]",
+    "scipy": "1.13.1",
+    "simpy": "4.1.2"
+  },
+  "execution_base_commit": "b6e17cdab4d2a41e7e93c63e4eb8f566d90a8801",
+  "full_simulation_replay_performed": false,
+  "p1_source_unchanged_from_base": true,
+  "permutations_by_seed": {
+    "30010": [
+      3,
+      8,
+      1,
+      6,
+      9,
+      0,
+      5,
+      2,
+      11,
+      4,
+      10,
+      7
+    ],
+    "30011": [
+      9,
+      8,
+      10,
+      1,
+      5,
+      3,
+      4,
+      6,
+      2,
+      7,
+      11,
+      0
+    ],
+    "30012": [
+      4,
+      1,
+      2,
+      6,
+      8,
+      0,
+      10,
+      3,
+      9,
+      5,
+      11,
+      7
+    ]
+  },
+  "replay_note": "Not repeated to honor exactly six authorized simulations; deterministic seed streams, task/permutation/potential hashes and result hashes are recorded.",
+  "source_sha256": {
+    "experiments/run_hls_ce07_technical_pilot.py": "71cf6d8bc8630511de3dc3432a904921d7cc043f38aa2bfdd22f897c1322fbe5",
+    "src/hls/ce04.py": "2ac84e7c1c152f03da1cf139194c83bf0add783bdd028ae4608c5eec8bf47adb",
+    "src/hls/ce04_validation.py": "02e1c9e9781c04412d6b423b473e9c2d9f043c93a39bf4007a814b8e56acdd7c",
+    "src/hls/ce07_pilot.py": "3b0e8019e7b68386336ee6556c6246d25dd283c8604f5ea14161bb7871fc9ae9",
+    "src/hls/ce07_structure.py": "5c0cd8ddb70be0c994055cd836318b77345b2f3d77d6538b9734887f23cbf5ed",
+    "tests/test_ce07_pilot.py": "db064d2f85783e17f7506a21745cfa42b1dc64c0eafbecbdf24449ab97625ba1",
+    "tests/test_ce07_structure.py": "7a8c32ffbab1ebf60bed6fed92d3711ec2b198bca41b56428ef2731d399ef59f"
+  },
+  "status": "6/6 simulations validated; descriptive technical pilot only",
+  "study": "HLS-CE-07.3 technical pilot",
+  "validation": {
+    "focus_tests": "9 passed",
+    "full_simulation_replay_performed": false,
+    "rejections": 0.0,
+    "simulations": "6/6"
+  },
+  "working_tree_execution_sources": true
+}
