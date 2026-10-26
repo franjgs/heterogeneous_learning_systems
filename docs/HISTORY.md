@@ -1607,3 +1607,26 @@ was changed and no experiment was run. See the
 [CE decision/discrepancy log](research/CE-04/05_CE_DECISIONS.md),
 [consolidated protocol](research/CE-04/06_CE04_CONSOLIDATED_PROTOCOL.md) and
 [technical readiness](research/CE-04/07_TECHNICAL_READINESS.md).
+
+
+## 2026-10-26 — CE-04.2 specification-closure review prepared
+
+**Assessment date:** 2026-10-26, as stated in the CE instruction. The
+documentary registration and eventual Git commit record publication, not a
+separate scientific decision time.
+
+Codex evaluated the CE's proposed mean-preserving H0–H2 competence matrix,
+independent lognormal service times, the common P1/P2 score, a Beta–Bernoulli
+competence estimator, and candidate contextual policies. The review derives
+the task-wise means, competence ranges and variances, nominal utilization,
+and a clearly assumption-scoped M/G/1 queueing diagnostic. It recommends a
+published logistic contextual Thompson Sampling formulation for CE review
+because the primary reward is binary, and distinguishes it from both the
+existing linear LinUCB implementation and the linear-payoff Gaussian TS
+reference cited by E2.
+
+This is a technical proposal, not a CE disposition: none of the five pending
+specifications is recorded as closed, the protocol is not frozen, and no
+code, pilot or campaign was run. Queue/admission, deadline/censoring and
+information-visibility semantics remain explicit blockers. See the
+[CE-04.2 review](research/CE-04/08_SPECIFICATION_CLOSURE_REVIEW.md).
