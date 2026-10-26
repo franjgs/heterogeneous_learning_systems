@@ -3,7 +3,7 @@ import pytest
 
 import hls.ce04 as ce04
 from hls.ce04 import RunConfig, Task
-from hls.ce04_validation import run_replica_traced, validate_replica
+from hls.ce04_validation import run_replica_traced, validate_admission_replay, validate_replica
 
 
 def one_task_config(policy):
@@ -30,6 +30,34 @@ def test_observable_reward_field_can_be_logged_without_any_policy_update(monkeyp
     assert trace.beta_updates == []
     assert trace.linucb_updates == []
     validate_replica(result, config, tasks, trace)
+
+
+def test_p1_uses_true_competence_without_updating_estimators(monkeypatch):
+    fixed_outcomes(monkeypatch, duration=.5, correct=True)
+    config, tasks = one_task_config("P1"), one_task()
+    result, trace = run_replica_traced(config, tasks)
+    assert trace.beta_updates == []
+    assert trace.linucb_updates == []
+    assert result["records"][0]["p2_label_observed_at"] is None
+    validate_replica(result, config, tasks, trace)
+
+
+def test_common_admission_rule_is_replayed_from_decision_time_queue(monkeypatch):
+    fixed_outcomes(monkeypatch, duration=.5, correct=True)
+    result, _ = run_replica_traced(one_task_config("P0"), one_task())
+    validate_admission_replay(result)
+
+    result["records"][0]["f_selected"] = .49
+    with pytest.raises(AssertionError, match="differs from common rule|threshold"):
+        validate_admission_replay(result)
+
+
+def test_validator_rejects_false_rejection_when_agent_is_admissible(monkeypatch):
+    fixed_outcomes(monkeypatch, duration=.5, correct=True)
+    result, _ = run_replica_traced(one_task_config("P0"), one_task())
+    result["records"][0]["selected_agent"] = None
+    with pytest.raises(AssertionError, match="rejected despite"):
+        validate_admission_replay(result)
 
 
 def test_p2_updates_only_beta_after_correctness_is_observed(monkeypatch):

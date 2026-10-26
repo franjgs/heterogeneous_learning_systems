@@ -163,6 +163,8 @@ def validate_replica(result: dict, config, tasks, trace: UpdateTrace) -> None:
         if rec["selected_agent"] is None and (rec["completion"] is not None or rec["correct"] is not None):
             raise AssertionError("rejected task was executed or labelled")
 
+    validate_admission_replay(result)
+
     for agent in range(config.n_agents):
         queue = sorted((r for r in admitted if r["selected_agent"] == agent),
                        key=lambda r: r["arrival"])
@@ -186,6 +188,41 @@ def validate_replica(result: dict, config, tasks, trace: UpdateTrace) -> None:
     if not _finite(result):
         raise AssertionError("non-finite metric or result field")
     validate_update_trace(result, trace)
+
+
+def validate_admission_replay(result: dict) -> None:
+    """Reconstruct each decision-time queue and verify the common F cutoff.
+
+    This is a retrospective audit only. It reads the task log after execution;
+    it is never called by a policy or made available to the simulator.
+    """
+    config = result["config"]
+    records = result["records"]
+    for current in records:
+        now = current["arrival"]
+        f_values = []
+        for agent in range(config["n_agents"]):
+            prior = [r for r in records if r["selected_agent"] == agent and r["arrival"] < now]
+            active = [r for r in prior if r["service_start"] <= now < r["completion"]]
+            if len(active) > 1:
+                raise AssertionError("reconstructed worker state violates single-service capacity")
+            waiting = sum(1 for r in prior if r["service_start"] > now)
+            age = None if not active else now - active[0]["service_start"]
+            if config["probability_method"] == "two_moment":
+                f = ce04.deadline_probability_two_moment(age, waiting, current["deadline"] - now)
+            else:
+                f = ce04.deadline_probability_convolution(
+                    age, waiting, current["deadline"] - now, config["convolution_step"])
+            f_values.append(f)
+        selected = current["selected_agent"]
+        if selected is None:
+            if any(f >= ce04.ADMISSION_THRESHOLD for f in f_values):
+                raise AssertionError("task rejected despite a common-admissible agent")
+        else:
+            if abs(f_values[selected] - current["f_selected"]) > 1e-10:
+                raise AssertionError("selected deadline probability differs from common rule")
+            if f_values[selected] < ce04.ADMISSION_THRESHOLD:
+                raise AssertionError("selected agent does not satisfy common admission threshold")
 
 
 def _finite(value) -> bool:
