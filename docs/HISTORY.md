@@ -1824,3 +1824,74 @@ mediation; the pilot is technical, not confirmatory. No simulator or P1
 decision logic was modified, and no confirmatory campaign was run. See the
 [CE-06 report](research/CE-06/01_HETEROGENEITY_DIAGNOSTICS.md) and
 [pilot artifacts](../results/experiments/hls_ce06_heterogeneity_pilot/).
+
+## 2026-10-26 — CE-05 review, CE-06 design sequence, and CE-07 proposal
+
+**Event date:** 2026-10-26, as specified in the CE records. **Documentary
+record:** this entry is being added after the events; the Git commit date
+records publication only. No event or documentation hour is inferred.
+
+### CE-05 — literature/mathematical review and course correction
+
+CE-05 reviewed prior literature and mathematical analyses. O1 was discarded
+in its initial formulation. The resulting correction of direction is that HLS
+studies the effects, capabilities, and limits of different structures and
+distributions of heterogeneous capabilities; immediate novelty seeking is not
+the research objective. This is a scoped research-direction correction, not a
+claim that originality is unimportant to eventual scientific contributions
+and not a replacement for the canonical HLS philosophy.
+
+### CE-06.1–06.2 — from complementarity proposal to isolated dimension
+
+The initial CE-06 proposal focused on complementarity. The design was then
+simplified to isolate heterogeneity before adding interactions: compare H0,
+H1, and H2 at N=24 under fixed P1, with individual competencies held constant
+and both learning and cooperation disabled. These are design decisions for
+the bounded CE-06 question; they do not establish that one heterogeneity
+structure is universally preferable.
+
+### CE-06.3 — existing record
+
+CE-06.3's reconstruction of 90 historical replicas and three-seed technical
+pilot are already recorded in the preceding
+[CE-06.3 entry](#2026-10-26--ce-063-isolated-heterogeneity-diagnostics-and-technical-pilot)
+and its [diagnostic report](research/CE-06/01_HETEROGENEITY_DIAGNOSTICS.md).
+This entry does not duplicate those results.
+
+### CE-06.4 — interpretation of historical diagnostics
+
+The CE-06.4 review records, for the 90 historical P1/N=24 replicas, success
+on time of **77.39/82.86/89.09%** for H0/H1/H2; mean competence of the selected
+agents **0.7750/0.8438/0.9134**; assignment Gini **0.1969/0.1227/0.1235**;
+mean wait **0.0106/0.2746/0.3100**; and late admitted tasks per replica
+**5.9/89.6/117.6**.
+
+The incremental-specialization capture is **91.7% for H1** and **92.3% for
+H2**, approximately, defined as
+`(mean selected competence − 0.775) / (maximum family competence − 0.775)`.
+It is the fraction of the available competence gain above the common mean
+that P1 captured on its selected assignments in this parameterization; it is
+not the percentage of tasks assigned to specialists, nor a general efficiency
+measure. For H0 the denominator is zero, so this ratio is undefined.
+
+The wait and late-task differences accompany the allocation/performance
+patterns, but these records do not identify congestion as a causal mediator.
+The report therefore treats them as descriptive associations, not as a
+causal explanation of H0–H2 performance differences.
+
+### Methodological principle recorded with CE-06
+
+Heterogeneity is not an absolute quality: capability structures and
+distributions vary, and their effects depend on the scenario, organization,
+tasks, and constraints. Study dimensions separately before adding
+interactions, and do not generalize a result from one parameterization to all
+forms of heterogeneity. This is a methodological principle consistent with
+the incremental-research guidance already recorded in
+[Research Doctrine](../RESEARCH_DOCTRINE.md); it does not alter
+[HLS Philosophy](HLS_PHILOSOPHY.md).
+
+### CE-07 — pending proposal
+
+CE-07 is recorded **only as a proposal pending design and authorization**.
+No protocol is frozen, no implementation or experiment is authorized by this
+record, and no result is claimed.
