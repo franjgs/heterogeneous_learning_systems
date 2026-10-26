@@ -1793,3 +1793,16 @@ configuration SHA-256 is
 Three-seed metrics are descriptive only; the 240-replica confirmatory study
 was not run. Full implementation, checks, pilot means, resource use and
 artifact digests are in the [CE-04.11 report](research/CE-04/14_CAUSAL_PILOT_REPORT.md).
+
+## 2026-10-26 — CE-04.12 P2 causal-diagnostic confirmatory campaign
+
+After verifying the CE-04.11 frozen-design hash and passing 33 focused CE-04
+tests, the authorized campaign ran 240/240 replicas: H2, N=12/48,
+B00/B10/B01/B11, and seeds 20000–20029. All replicas passed run-level and
+paired-outcome validation. Paired bootstrap analysis used 10,000 resamples,
+Holm adjustment and ±2 pp TOST separately by scale. Calibration (B10−B00)
+improved success-on-time by 5.27 pp (95% CI [4.53,6.07]) at N=12 and 8.68 pp
+([8.28,9.08]) at N=48; load-only and interaction effects were equivalent
+within ±2 pp at both scales. These are scenario-specific H2 results, not
+general claims. The task log remains local-only and is identified by SHA-256
+in the campaign manifest. See the [CE-04.12 report](research/CE-04/15_CAUSAL_RESULTS.md).

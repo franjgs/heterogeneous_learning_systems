@@ -1,0 +1,30 @@
+{
+  "all_validated": true,
+  "b10_b11_calibration_shared": true,
+  "conditions_per_block": 4,
+  "duration_wall_seconds": 477.60191920772195,
+  "execution_sha256": "b8603648a81b1c476af3f166bf3d904c95324e00cfb192d9488d3a009d652d99",
+  "frozen_design_sha256": "0f99dee0b7f1e81e4c768dcac977f9cafe0091b934c69467ce27097408d588c0",
+  "git_revision": "3f770dbb4d2966bb0266c015e45ee2b82edd31b2",
+  "local_only_raw_log": "replicas.jsonl.gz",
+  "paired_seed_scale_blocks": 60,
+  "pairing_validation": "matching workload, competence, and keyed-outcome-basis SHA-256 in each block",
+  "raw_log_sha256": "9784916461f6adf47e3f723d93a4aeda5bbbf31656d92024fb52b6240a9d5b17",
+  "replicas": 240,
+  "runtime_versions": {
+    "numpy": "1.26.4",
+    "python": "3.11.9 (main, Apr 19 2024, 11:43:47) [Clang 14.0.6 ]",
+    "scipy": "1.13.1",
+    "simpy": "4.1.2"
+  },
+  "tracked_sha256": {
+    "confirmatory_analysis.json": "643bfb962fb4dfca2ad05382fd963d289b6229b982b5848ed0dd933e49dba598",
+    "execution_config.json": "d3a78a8ca1be6a9e928bbb1b3dfb9bfdee6fca710b34b906be53a678828e02cf",
+    "replica_metrics.csv": "d626441cf7464ef7aca7ab6627d9beff376c183f70acc74e95c0bed5aa4d4e2f"
+  },
+  "unique_calibration_observations": {
+    "N12": 28800,
+    "N48": 115200
+  },
+  "validated_replica_count": 240
+}

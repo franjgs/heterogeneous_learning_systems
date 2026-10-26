@@ -6,17 +6,28 @@
 > historical traceability and must not override this snapshot where dates
 > differ.
 
-**Latest CE-04 status — P2 causal-diagnostic technical pilot, 26 October
-2026:** the optional 2×2 P2 implementation completed 24/24 validated pilot
-replicas (H2; N=12/48; seeds 20030–20032; B00/B10/B01/B11). The frozen
-configuration hash is
-`0f99dee0b7f1e81e4c768dcac977f9cafe0091b934c69467ce27097408d588c0`.
-Pilot means are diagnostic only (three seeds), not confirmatory evidence.
-B10 and B11 shared calibration observations; common admission and keyed
-potential outcomes were preserved. The 240-replica confirmatory study has not
-been run. See the [pilot report](research/CE-04/14_CAUSAL_PILOT_REPORT.md),
+**Latest CE-04 status — P2 causal-diagnostic confirmatory campaign, 26 October
+2026:** 240/240 replicas passed validation for H2, N=12/48, B00/B10/B01/B11
+and seeds 20000–20029. The frozen-design hash
+`0f99dee0b7f1e81e4c768dcac977f9cafe0091b934c69467ce27097408d588c0` was
+verified. External calibration improved success-on-time by +5.27 pp at N=12
+and +8.68 pp at N=48; both paired bootstrap CIs exclude zero and the
+prespecified paired tests remain significant after Holm adjustment. The
+load-only effect and calibration×load
+interaction were within the ±2 pp TOST equivalence margin at both scales.
+These conclusions are restricted to H2 and this synthetic scenario. The
+[results report](research/CE-04/15_CAUSAL_RESULTS.md), execution
+[configuration](../results/experiments/hls_ce04_causal_confirmatory/execution_config.json)
+and [campaign manifest](../results/experiments/hls_ce04_causal_confirmatory/campaign_manifest.json)
+contain analysis and provenance; the large task log is local-only.
+
+**Prior CE-04.11 technical pilot — 26 October 2026:** the optional 2×2 P2
+implementation completed 24/24 validated pilot replicas (H2; N=12/48; seeds
+20030–20032). Pilot means were diagnostic only. B10 and B11 shared
+calibration observations; common admission and keyed potential outcomes were
+preserved. See the [pilot report](research/CE-04/14_CAUSAL_PILOT_REPORT.md),
 [configuration](../results/experiments/hls_ce04_causal_pilot/frozen_config.json)
-and [artifact manifest](../results/experiments/hls_ce04_causal_pilot/pilot_manifest.json).
+and [manifest](../results/experiments/hls_ce04_causal_pilot/pilot_manifest.json).
 
 **CE-04 confirmatory campaign — 26 October 2026:** following
 the technically successful 108-replica pilot, the authorized campaign ran
