@@ -59,21 +59,29 @@ per-seed records, derived contrasts, configuration, code, and hashes. V1
 results remain unchanged. No V3 or further campaign is authorized by this
 record.
 
-**HLS-CE-04 — technical planning authorized, protocol not frozen (26 October
-2026): the CE reports Mega PI authorization and receipt of E1, E2, E3 and an
-E3 addendum. All four original texts have now been incorporated verbatim in
+**HLS-CE-04 — initial technical planning status, 26 October 2026 (historical):**
+the CE reported Mega PI authorization and receipt of E1, E2, E3 and an E3
+addendum. All four original texts were incorporated verbatim in
 [`docs/research/CE-04/`](research/CE-04/01_E1_MATHEMATICAL_MODEL.md), files
-01–04. The CE adopted E1's equal-mean-per-task composition criterion and four
-policy roles consistent with E2; E3's initial unmatched-mean compositions and
-three-policy design remain preserved as historical proposals, with E3's
-addendum recording the later alignment. The technical inspection found the
-existing N×K model, estimators, assignment, LinUCB primitives,
-ExperimentRun/HLS-PEF and study-specific statistics reusable only in part; no
-event-driven Poisson/FCFS/deadline simulator is implemented. Five
-specifications remain unclosed, the protocol is not frozen, and no pilot or
-campaign has run. See the [CE decisions](research/CE-04/05_CE_DECISIONS.md),
-[pre-freeze protocol](research/CE-04/06_CE04_CONSOLIDATED_PROTOCOL.md) and
-[technical readiness inspection](research/CE-04/07_TECHNICAL_READINESS.md).
+01–04. At that point five specifications remained open and the protocol was
+not frozen. The later CE-04.4 disposition below supersedes that status without
+altering the expert originals or this historical record.
+
+**HLS-CE-04.4 — protocol closed and implementation validated (26 October
+2026):** the CE approved the mean-preserving H0–H2 values, lognormal service
+and FCFS queues, common competence-blind deadline admission, P0–P3 including
+delayed-reward disjoint LinUCB, paired random streams, metrics and statistical
+analysis. The SimPy implementation is in [`src/hls/ce04.py`](../src/hls/ce04.py)
+with an explicit dependency; 45 focused and contract tests passed. The delayed
+feedback adapter extends LinUCB without changing its original selection and
+immediate-feedback behavior. Fenton–Wilkinson's maximum absolute error was 0.003856 on the
+two fixed validation states near the 0.50 cutoff, within the 0.01 tolerance.
+The original E1–E3 documents remain intact. This validates implementation and
+the numerical approximation only: **no CE-04 pilot or campaign was executed**.
+The 108-replica pilot and 1,080-replica campaign still require later CE
+authorization. See [decisions](research/CE-04/05_CE_DECISIONS.md), the
+[approved protocol](research/CE-04/06_CE04_CONSOLIDATED_PROTOCOL.md) and
+[technical readiness](research/CE-04/07_TECHNICAL_READINESS.md).
 
 **PI operational research directive — 26 October 2026:** HLS experiments are
 to study dimensions incrementally before interactions, use an organization

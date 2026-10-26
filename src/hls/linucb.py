@@ -94,6 +94,27 @@ class LinUCBDisjoint:
         self._b[arm] += reward * context
         self._pending = None
 
+    def observe_delayed(self, arm: int, context: Sequence[float], reward: float) -> None:
+        """Apply the same selected-arm update when feedback arrives later.
+
+        The caller must retain the originally selected arm/context and call
+        this only when that action's reward is observable. This additive
+        method supports asynchronous environments without changing the
+        existing select/observe_reward contract.
+        """
+        if isinstance(arm, bool) or not isinstance(arm, int) or not 0 <= arm < self.n_arms:
+            raise ValueError("arm must be a valid arm index")
+        vector = np.asarray(context, dtype=float)
+        if vector.shape != (self.n_features,) or not np.all(np.isfinite(vector)):
+            raise ValueError("context must be a finite vector of n_features")
+        if isinstance(reward, bool) or not isinstance(reward, (int, float)):
+            raise ValueError("reward must be a scalar in [0, 1]")
+        reward = float(reward)
+        if not math.isfinite(reward) or not 0.0 <= reward <= 1.0:
+            raise ValueError("reward must be finite and in [0, 1]")
+        self._A[arm] += np.outer(vector, vector)
+        self._b[arm] += reward * vector
+
 
 def alpha_from_delta(delta: float) -> float:
     """Confidence coefficient from Li et al. (2010), Eq. (4)."""

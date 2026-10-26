@@ -1,8 +1,9 @@
 # CE-04 — Chief Engineer Decisions
 
 **Decision record date:** 2026-10-26
-**Status:** decisions recorded; five implementation specifications remain
-open; protocol not frozen.
+**Current status:** CE-04.4 operational specifications approved; implementation
+and focused validation complete; no pilot/campaign authorized or executed.
+The earlier entries below preserve their status at the time they were made.
 
 The following decisions are adopted by the CE as stated in the instruction
 received on 2026-10-26. They are distinct from the expert reports, whose
@@ -98,3 +99,40 @@ These are resolved differences in experimental direction, not evidence that
 the expert originals were internally identical. The CE-approved conditions
 and pending specifications are recorded separately in
 [06_CE04_CONSOLIDATED_PROTOCOL.md](06_CE04_CONSOLIDATED_PROTOCOL.md).
+
+## CE-04.4 operational disposition — 2026-10-26
+
+This disposition supersedes the earlier statements above that the five
+specifications or operational semantics remained open. It records the CE's
+later approvals; it does not alter the verbatim expert originals.
+
+- **Heterogeneity:** `q_ik=0.775+α_H s_ik`; primary `s=+0.75`, other
+  families `s=−0.25`; `α={0,0.10,0.20}` for H0/H1/H2; four equally sized
+  primary groups. Task-family means are 0.775.
+- **Service and queues:** lognormal mean 1.25/CV 0.30, independent of
+  competence and composition; one FCFS queue and one service per agent, no
+  preemption.
+- **Arrivals and horizon:** continuous Poisson total rate `0.55N` on
+  `[0,400)`, three half-open demand phases, deadlines at arrival+3; drain
+  admitted work after the final arrival without new requests.
+- **Admission:** common competence-blind set `A={i:F_i≥0.50}`; reject when
+  empty. Fenton–Wilkinson includes the conditional active-service residual
+  and passed deterministic convolution validation (2 near-threshold cases;
+  maximum absolute error 0.003856 ≤ 0.01).
+- **Policies:** P0 least expected pending workload; P1/P2 share `q×F` with
+  true versus Beta(1,1) estimated competence; P3 is disjoint LinUCB with
+  context `F e_k`, `α=alpha_from_delta(0.05)` and delayed binary on-time
+  reward. A zero logged at deadline is not revised by later correctness.
+  Tie priority is deterministic per replicate and independent of policy and
+  composition.
+- **Analysis:** seed-level replica is the independent unit; paired bootstrap
+  10,000 resamples, Holm correction and paired TOST ±2 percentage points.
+- **Implementation:** CE-04-specific SimPy runner uses the existing
+  `ExperimentRun` contract. No contract or HLS-PEF metric definition was
+  changed. Focused tests pass; no factorial replica was run.
+
+Protocol approval and implementation validation are not experimental
+evidence. The pilot (108 replicas) and full campaign (1,080 replicas) remain
+unexecuted and require later CE authorization. See the [consolidated
+protocol](06_CE04_CONSOLIDATED_PROTOCOL.md) and [technical readiness
+report](07_TECHNICAL_READINESS.md).

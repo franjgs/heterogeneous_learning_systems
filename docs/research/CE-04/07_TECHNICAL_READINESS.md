@@ -111,3 +111,74 @@ cost units, and statistical contrast/resampling definitions. No defaults are
 chosen here. See the [pre-freeze protocol](06_CE04_CONSOLIDATED_PROTOCOL.md).
 
 No code, experiment, pilot, or campaign was run as part of this inspection.
+
+## CE-04.4 implementation status — 2026-10-26
+
+**Current result:** IMPLEMENTED; focused validation passed; protocol approved;
+**pilot and campaign not run**. This section supersedes the earlier readiness
+blockers, which remain a record of the pre-CE-04.4 state.
+
+### Implemented components
+
+| Requirement | Implementation | Verification status |
+|---|---|---|
+| Mean-preserving H0–H2 competence matrices | `src/hls/ce04.py`, `competency_matrix` | Exact analytical construction; tests at N=12/24/48 check task-wise means 0.775, bounds and increasing variance. |
+| Continuous-time demand and phase marks | `generate_workload` | Seeded Poisson rate 0.55N, arrivals in `[0,400)`, half-open phases, stable task IDs. |
+| Potential service/correctness outcomes | `potential_service`, `potential_correct` | Keyed by replicate, N, task and agent with distinct stream IDs; repeatability tested. |
+| FCFS event simulation | `run_replica`, SimPy resources | One resource per agent, one active task, FIFO requests, completion drain; focused arrival/conservation/non-overlap checks. |
+| Common deadline admission | `deadline_probability_*`, `run_replica` | Same F and 0.50 cut for all policies; competence excluded from admission. |
+| P0–P3 | `run_replica`, `_DelayedDisjointLinUCB`; additive `LinUCBDisjoint.observe_delayed` | Load, q×F, Beta(1,1) posterior and existing disjoint LinUCB equations with four-dimensional `F e_k` context/delayed reward. The original select/observe contract is unchanged. |
+| Replica records | `to_experiment_run`, `run_factorial` | Existing `ExperimentRun` schema; task-level events and provenance; writer refuses to overwrite an existing output file. |
+| Paired inference helpers | `paired_bootstrap`, `paired_contrast`, `holm_adjust`, `tost_equivalence`, `analyze_factorial` | Fixed 10,000 replicate-level bootstrap resamples; Holm and ±2 pp TOST are implemented. No inferential results have been produced. |
+
+SimPy 4.1.2 is an explicit dependency in `pyproject.toml`. The existing
+LinUCB production contract and HLS-PEF metric registry were not changed. The
+current HLS-PEF success metric has different fixed semantics, so CE-04's
+event-level success-on-time measure is stored in ExperimentRun and is not
+misrepresented as a PEF metric.
+
+### Deadline-probability numerical check
+
+The fixed 25-case battery includes idle queues and active-service ages and
+queue lengths around the admission boundary. The deterministic reference is
+probability-mass convolution with 0.001 time-unit bins. Two reference cases
+fall in `[0.45,0.55]`; their maximum absolute difference from the
+conditional-residual two-moment lognormal approximation is **0.0038559621**.
+The approved tolerance is **0.01**. The approximation therefore passes and
+remains the runtime method. This is a numerical method check, not an HLS
+performance experiment.
+
+### Tests and execution boundary
+
+Executed:
+
+```text
+PYTHONPATH=.:src pytest -q tests/test_ce04.py tests/test_linucb.py tests/test_hls_common_experiment_contract.py tests/test_hls_performance_evaluation.py
+45 passed
+```
+
+The tests cover composition means/ranges, demand and stream reproducibility,
+probability validation, delayed LinUCB feedback, queue non-overlap/order,
+arrival preservation, admission threshold, delayed reward immutability,
+ExperimentRun serialization and factorial sizes; existing ExperimentRun,
+HLS-PEF and LinUCB checks also passed. No pilot or full-factorial
+configuration was executed. No historical result or expert original was
+modified.
+
+### Remaining boundary
+
+The approved primary protocol is implementable. E3's original text also
+mentions post-demand-change “recovery” but does not operationally define its
+stable reference; CE-04.4 did not provide that reference. No recovery value is
+therefore emitted or used to tune policies. If retained as a confirmatory
+measure, its reference needs CE clarification before the pilot; it is not a
+blocker for the approved primary/confirmatory outcomes. The pilot itself still
+requires separate CE authorization; the full campaign remains separately
+gated. LinUCB has no random exploration draw, so its approved exploration
+seed namespace is recorded as reserved/unused.
+
+The pilot workload is about 665,280 arrivals and 23.95 million agent
+admissibility evaluations, plus about 5.99 million P3 candidate score
+calculations. A provisional runtime estimate is **10–40 minutes on the
+workspace host (Apple M2 Max)**, derived from operation counts, not benchmarked
+execution; no campaign or pilot timing was performed.

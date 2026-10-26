@@ -2,6 +2,7 @@ import math
 import random
 from types import SimpleNamespace
 
+import numpy as np
 import pytest
 
 from hls.linucb import LinUCBDisjoint, alpha_from_delta
@@ -79,6 +80,15 @@ def test_only_chosen_arm_feedback_is_accepted():
         policy.observe_reward((1.0, 0.0, 0.0))
     with pytest.raises(RuntimeError, match="before selecting again"):
         policy.select(same_context_for_all(1))
+
+
+def test_delayed_feedback_update_is_same_disjoint_linucb_update():
+    policy = LinUCBDisjoint(2, 2, alpha=0.5)
+    context = (0.25, 0.75)
+    policy.observe_delayed(1, context, 1)
+    assert np.asarray(policy.design_matrices[1]) == pytest.approx(np.asarray(((1.0625, 0.1875), (0.1875, 1.5625))))
+    assert policy.response_vectors[1] == pytest.approx((0.25, 0.75))
+    assert policy.design_matrices[0] == ((1.0, 0.0), (0.0, 1.0))
 
 
 @pytest.mark.parametrize("reward", [-0.1, 1.1, float("nan"), float("inf")])

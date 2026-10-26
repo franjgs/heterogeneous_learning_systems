@@ -1653,3 +1653,26 @@ feedback/tie semantics need CE disposition, the numerical approximation must
 meet its stated accuracy check, and operational items in the consolidated
 protocol §8 remain open. This is a proposal only. No code or experiments were
 run. See [CE-04.3 operational specification](research/CE-04/09_OPERATIONAL_SPECIFICATION.md).
+
+## 2026-10-26 — CE-04.4 protocol closure and implementation
+
+**CE decision date:** 2026-10-26, as stated in the instruction. The CE
+approved the five formerly open specifications and the remaining operational
+semantics, then authorized implementation and focused validation only. The
+protocol now records mean-preserving H0–H2, lognormal service, FCFS queues,
+common 0.50 competence-blind admission, P0–P3, delayed LinUCB reward,
+independent keyed potential outcomes, replicate-paired statistics and the
+explicit arrival/drain horizon. The adopted decisions and protocol are
+recorded in [05](research/CE-04/05_CE_DECISIONS.md) and
+[06](research/CE-04/06_CE04_CONSOLIDATED_PROTOCOL.md); the original E1–E3
+reports remain unchanged.
+
+Codex implemented a CE-04-specific SimPy simulator and ExperimentRun adapter
+in `src/hls/ce04.py`, declared SimPy in `pyproject.toml`, and added focused
+tests. The fixed convolution comparison included two probability cases near
+the 0.50 admission boundary; Fenton–Wilkinson's maximum absolute error was
+0.003856 against the 0.01 tolerance. Focused tests passed. This establishes
+implementation checks only. **No pilot or campaign was executed**; each still
+requires subsequent CE authorization. The implementation commit identifier
+will be recorded here in a follow-up documentary commit. See
+[technical readiness](research/CE-04/07_TECHNICAL_READINESS.md).
