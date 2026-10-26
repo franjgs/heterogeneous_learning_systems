@@ -1895,3 +1895,25 @@ the incremental-research guidance already recorded in
 CE-07 is recorded **only as a proposal pending design and authorization**.
 No protocol is frozen, no implementation or experiment is authorized by this
 record, and no result is claimed.
+
+## 2026-10-26 — CE-07.2 structure implementation and pre-pilot validation
+
+**Event/authorization date:** 2026-10-26, as specified by the CE. **Documentary
+record:** this entry records the implementation and checks on 2026-10-26; the
+Git commit date records publication only. No hour is inferred.
+
+Added an isolated CE-07 structure module and tests without modifying the CE-04
+simulator or P1. The approved A/B matrices have exact rational function
+marginals `27/40 = 0.675`, equal per-function maxima 0.9, and distinct
+agent-profile multisets. Existing CE-04 demand and keyed service/correctness
+streams support matched structure comparisons.
+
+The P1 tie rule is invariant to a consistent renaming of all agent-indexed
+objects, including the tie-priority vector and potential outcomes. A matrix-only
+row rename with priority fixed to numeric slots can change the physical winner
+on exact score ties; the report documents a minimal example and proposes a
+predeclared, matched row-label randomization control for the pilot, without
+changing P1. CE-04 has no interface for an end-to-end simultaneous identity
+rename. Therefore the pilot is **not yet ready to freeze or execute** pending
+CE disposition of that control and assignment of three seed IDs. No experiment,
+pilot, or campaign was run. See the [CE-07.2 validation report](research/CE-07/01_STRUCTURE_PROTOCOL_VALIDATION.md).
