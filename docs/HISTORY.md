@@ -1630,3 +1630,26 @@ specifications is recorded as closed, the protocol is not frozen, and no
 code, pilot or campaign was run. Queue/admission, deadline/censoring and
 information-visibility semantics remain explicit blockers. See the
 [CE-04.2 review](research/CE-04/08_SPECIFICATION_CLOSURE_REVIEW.md).
+
+
+## 2026-10-26 — CE-04.3 operational specification reviewed
+
+**Assessment date:** 2026-10-26, as stated in the CE instruction. The
+documentary registration and Git commit record publication, not a separate
+scientific decision time.
+
+Codex evaluated a common 0.50 deadline-chance admission screen, calculation
+of completion probability from FCFS queue state and the approved lognormal
+service law, delayed labels, and contextual P3. The note recommends a
+Fenton–Wilkinson moment-matched lognormal approximation subject to a
+pre-freeze accuracy check near the admission cutoff. It recommends disjoint
+LinUCB for P3 because the on-time binary reward has a direct linear contextual
+form `E[Y|i,k,state]=q_ik F_i`; this is a model-based justification, not a
+choice based merely on code availability. PG-TS was judged unnecessary for
+that formulation.
+
+The note recommends **NO CONGELAR**: the admission threshold and delayed
+feedback/tie semantics need CE disposition, the numerical approximation must
+meet its stated accuracy check, and operational items in the consolidated
+protocol §8 remain open. This is a proposal only. No code or experiments were
+run. See [CE-04.3 operational specification](research/CE-04/09_OPERATIONAL_SPECIFICATION.md).
