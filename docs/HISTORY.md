@@ -1766,3 +1766,17 @@ approximately symmetric C1/C2 baselines under this design. They do not
 identify mediation or explain why P2/P3 behave as observed; the report states
 these limits and distinguishes observed patterns from interpretations:
 [CE-04.8 mechanism diagnostics](research/CE-04/12_MECHANISM_DIAGNOSTICS.md).
+
+## 2026-10-26 — CE-04.10 P2 causal-diagnostic feasibility assessment
+
+Codex assessed, without code changes or simulation, the proposed P2 2×2
+diagnostic (external calibration and a load cap) against the frozen CE-04
+protocol and existing campaign logs. Existing records support retrospective
+analysis of competence estimates on P2's realized observation trajectory, but
+cannot identify policy-level effects under changed assignments and queues.
+The design is technically feasible only conditionally: the hard load cap can
+leave no candidate in the shared deadline-admissible set, and calibration-cost
+accounting, the load statistic, and new seed IDs remain unresolved. The E3
+design is documented as a proposal, not approved for execution. No code was
+modified, no simulation was run, and the experiment was not frozen. See the
+[CE-04.10 assessment](research/CE-04/13_CAUSAL_DIAGNOSTIC_DESIGN.md).
