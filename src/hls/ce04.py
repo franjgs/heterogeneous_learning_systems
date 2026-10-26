@@ -263,13 +263,67 @@ def _choose_with_tie(scores: Iterable[float], admissible: list[int], tie_rank: n
     return min(admissible, key=lambda i: (-scores[i], int(tie_rank[i])))
 
 
-def run_replica(config: RunConfig, tasks: tuple[Task, ...] | None = None) -> dict:
+def expected_pending_workload(agent: _Agent, now: float) -> float:
+    """Observable expected work ahead: residual active service plus queued jobs."""
+    residual = (0.0 if agent.active_started is None else
+                _residual_moments(max(0.0, now - agent.active_started))[0])
+    return float(residual + SERVICE_MEAN * len(agent.waiting))
+
+
+def filter_candidates_by_cutoff(admissible: list[int], loads: Iterable[float],
+                                cutoff: float) -> tuple[list[int], bool]:
+    """Filter an admissible set and defensively restore it if filtering empties it."""
+    if not admissible:
+        return [], False
+    values = np.asarray(tuple(loads), dtype=float)
+    if values.ndim != 1 or not np.all(np.isfinite(values)) or max(admissible) >= len(values):
+        raise ValueError("loads must be finite and cover every admissible agent")
+    kept = [i for i in admissible if values[i] <= cutoff]
+    if not kept:
+        return list(admissible), True
+    return kept, False
+
+
+def filter_admissible_by_load(admissible: list[int], loads: Iterable[float],
+                              allowance: float = 1.25) -> tuple[list[int], float | None, bool]:
+    """Apply the causal pilot's median-plus-allowance cap within A."""
+    if not admissible:
+        return [], None, False
+    values = np.asarray(tuple(loads), dtype=float)
+    if values.ndim != 1 or not np.all(np.isfinite(values)) or max(admissible) >= len(values):
+        raise ValueError("loads must be finite and cover every admissible agent")
+    cutoff = float(np.median(values[admissible]) + allowance)
+    kept, fallback = filter_candidates_by_cutoff(admissible, values, cutoff)
+    return kept, cutoff, fallback
+
+
+def run_replica(config: RunConfig, tasks: tuple[Task, ...] | None = None, *,
+                p2_initial_successes: np.ndarray | None = None,
+                p2_initial_failures: np.ndarray | None = None,
+                p2_load_filter: bool = False) -> dict:
     """Run one policy/composition/scale/seed; not invoked by unit tests as a campaign."""
     if config.policy not in POLICIES:
         raise ValueError(f"unknown policy {config.policy}")
     if config.probability_method not in ("two_moment", "convolution"):
         raise ValueError("unknown probability method")
     q, _primary_hidden = competency_matrix(config.n_agents, config.composition, config.seed)
+    if (p2_initial_successes is None) != (p2_initial_failures is None):
+        raise ValueError("P2 initial successes and failures must be supplied together")
+    if p2_initial_successes is not None:
+        if config.policy != "P2":
+            raise ValueError("external calibration is defined only for P2")
+        p2_s_initial = np.asarray(p2_initial_successes, dtype=int)
+        p2_f_initial = np.asarray(p2_initial_failures, dtype=int)
+        if (p2_s_initial.shape != q.shape or p2_f_initial.shape != q.shape or
+                np.any(p2_s_initial < 0) or np.any(p2_f_initial < 0)):
+            raise ValueError("P2 initial counts must be nonnegative N×4 matrices")
+    else:
+        # Plain arrays keep the existing validation tracer's two zeros_like
+        # allocations reserved for the live success/failure accumulators.
+        p2_s_initial = np.zeros(q.shape, dtype=int)
+        p2_f_initial = np.zeros(q.shape, dtype=int)
+    if p2_load_filter and config.policy != "P2":
+        raise ValueError("the causal load filter is defined only for P2")
     tasks = generate_workload(config.seed, config.n_agents, config.horizon) if tasks is None else tasks
     env = simpy.Environment()
     agents = [_Agent(simpy.Resource(env, capacity=1), []) for _ in range(config.n_agents)]
@@ -277,9 +331,12 @@ def run_replica(config: RunConfig, tasks: tuple[Task, ...] | None = None) -> dic
     np.random.default_rng(_seed(config.seed, config.n_agents, 5)).shuffle(rank)
     p2_s = np.zeros_like(q, dtype=int)
     p2_f = np.zeros_like(q, dtype=int)
+    np.copyto(p2_s, p2_s_initial)
+    np.copyto(p2_f, p2_f_initial)
     p3 = _DelayedDisjointLinUCB(config.n_agents, config.decision_alpha)
     records: list[TaskRecord] = []
     feedback_events: list[dict] = []
+    causal_decisions: list[dict] = []
     decision_seconds = 0.0
     decision_cpu_seconds = 0.0
     decision_latencies: list[float] = []
@@ -365,6 +422,13 @@ def run_replica(config: RunConfig, tasks: tuple[Task, ...] | None = None) -> dic
                 decision_latencies.append(decision_elapsed)
                 decision_cpu_seconds += time.process_time() - decision_cpu_start
                 continue
+            selection_set = admissible
+            if p2_load_filter:
+                loads = [expected_pending_workload(agent, env.now) for agent in agents]
+                selection_set, cutoff, fallback = filter_admissible_by_load(admissible, loads)
+                causal_decisions.append({"task_id": task.task_id, "admissible": list(admissible),
+                                         "loads": loads, "cutoff": cutoff,
+                                         "candidates": list(selection_set), "fallback": fallback})
             if config.policy == "P0":
                 loads = []
                 for i in range(config.n_agents):
@@ -372,18 +436,18 @@ def run_replica(config: RunConfig, tasks: tuple[Task, ...] | None = None) -> dic
                     residual = (0.0 if state.active_started is None else
                                 _residual_moments(max(0.0, env.now - state.active_started))[0])
                     loads.append(residual + SERVICE_MEAN * len(state.waiting))
-                selected = _choose_with_tie([-float(x) for x in loads], admissible, rank)
+                selected = _choose_with_tie([-float(x) for x in loads], selection_set, rank)
             elif config.policy in ("P1", "P2"):
                 scores = [float((q[i, task.family] if config.policy == "P1" else
                                  (1 + p2_s[i, task.family]) / (2 + p2_s[i, task.family] + p2_f[i, task.family]))
                                  * f_values[i]) for i in range(config.n_agents)]
-                selected = _choose_with_tie(scores, admissible, rank)
+                selected = _choose_with_tie(scores, selection_set, rank)
             else:
                 contexts = []
                 for i in range(config.n_agents):
                     x = np.zeros(4); x[task.family] = f_values[i]; contexts.append(x)
                 scores = p3.scores(contexts)
-                selected = _choose_with_tie(scores, admissible, rank)
+                selected = _choose_with_tie(scores, selection_set, rank)
             decision_elapsed = time.perf_counter() - decision_start
             decision_seconds += decision_elapsed
             decision_latencies.append(decision_elapsed)
@@ -416,7 +480,7 @@ def run_replica(config: RunConfig, tasks: tuple[Task, ...] | None = None) -> dic
     by_phase = [sum(1 for r in records if r.phase == phase and r.on_time and r.correct)
                 for phase in range(3)]
     arrivals_by_phase = [sum(1 for t in tasks if t.phase == phase) for phase in range(3)]
-    return {
+    result = {
         "config": asdict(config), "n_arrivals": all_arrivals,
         "n_rejected": all_arrivals - scheduled,
         "simulation_drain_end": float(env.now),
@@ -446,6 +510,9 @@ def run_replica(config: RunConfig, tasks: tuple[Task, ...] | None = None) -> dic
         "p3_feedback_events": feedback_events,
         "task_ids": [t.task_id for t in tasks],
     }
+    if p2_load_filter:
+        result["causal_load_decisions"] = causal_decisions
+    return result
 
 
 def to_experiment_run(result: dict):

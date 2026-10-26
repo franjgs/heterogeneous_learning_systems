@@ -1780,3 +1780,16 @@ accounting, the load statistic, and new seed IDs remain unresolved. The E3
 design is documented as a proposal, not approved for execution. No code was
 modified, no simulation was run, and the experiment was not frozen. See the
 [CE-04.10 assessment](research/CE-04/13_CAUSAL_DIAGNOSTIC_DESIGN.md).
+
+## 2026-10-26 — CE-04.11 P2 causal-diagnostic technical pilot
+
+The optional P2 calibration/load factors were implemented and the focused
+CE-04 regression set passed (31 tests). B00 retained P2's original behavior;
+the common admission screen and seed-keyed potential outcomes were preserved.
+The technical pilot ran 24/24 replicas at N=12/48, H2, seeds 20030–20032,
+across B00/B10/B01/B11. Every replica passed validation. The frozen
+configuration SHA-256 is
+`0f99dee0b7f1e81e4c768dcac977f9cafe0091b934c69467ce27097408d588c0`.
+Three-seed metrics are descriptive only; the 240-replica confirmatory study
+was not run. Full implementation, checks, pilot means, resource use and
+artifact digests are in the [CE-04.11 report](research/CE-04/14_CAUSAL_PILOT_REPORT.md).

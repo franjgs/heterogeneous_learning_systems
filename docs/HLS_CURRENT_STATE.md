@@ -6,7 +6,19 @@
 > historical traceability and must not override this snapshot where dates
 > differ.
 
-**Latest CE-04 status — confirmatory campaign, 26 October 2026:** following
+**Latest CE-04 status — P2 causal-diagnostic technical pilot, 26 October
+2026:** the optional 2×2 P2 implementation completed 24/24 validated pilot
+replicas (H2; N=12/48; seeds 20030–20032; B00/B10/B01/B11). The frozen
+configuration hash is
+`0f99dee0b7f1e81e4c768dcac977f9cafe0091b934c69467ce27097408d588c0`.
+Pilot means are diagnostic only (three seeds), not confirmatory evidence.
+B10 and B11 shared calibration observations; common admission and keyed
+potential outcomes were preserved. The 240-replica confirmatory study has not
+been run. See the [pilot report](research/CE-04/14_CAUSAL_PILOT_REPORT.md),
+[configuration](../results/experiments/hls_ce04_causal_pilot/frozen_config.json)
+and [artifact manifest](../results/experiments/hls_ce04_causal_pilot/pilot_manifest.json).
+
+**CE-04 confirmatory campaign — 26 October 2026:** following
 the technically successful 108-replica pilot, the authorized campaign ran
 all 1,080 conditions (30 seeds 1000–1029 × N=12/24/48 × H0/H1/H2 × P0–P3).
 All replicas passed the pilot validation checks; the scientific configuration

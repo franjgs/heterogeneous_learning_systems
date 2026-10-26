@@ -76,10 +76,10 @@ def capture_effective_updates() -> Iterator[UpdateTrace]:
         ce04.LinUCBDisjoint.observe_delayed = original_observe
 
 
-def run_replica_traced(config, tasks):
+def run_replica_traced(config, tasks, **run_kwargs):
     """Execute one replica with an independent trace of effective updates."""
     with capture_effective_updates() as trace:
-        result = ce04.run_replica(config, tasks)
+        result = ce04.run_replica(config, tasks, **run_kwargs)
     return result, trace
 
 

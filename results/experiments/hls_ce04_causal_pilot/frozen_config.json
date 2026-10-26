@@ -1,0 +1,30 @@
+{
+  "configuration": {
+    "calibration_observations_per_agent_family": 20,
+    "calibration_rng_stream": 6,
+    "composition": "H2",
+    "conditions": [
+      "B00",
+      "B10",
+      "B01",
+      "B11"
+    ],
+    "expected_replicas": 24,
+    "load_rule": "A={i:F_i>=0.50}; load=residual expected service+1.25*queued; median(load[A]); retain load<=median+1.25; empty result falls back to A",
+    "p2_online_updates": "correctness at executed-task completion only",
+    "potential_outcomes": "keyed by seed,N,task_id,agent_id,stream_id",
+    "protocol": "CE-04 \u00a7\u00a74\u20137; causal factors as specified by CE-04.11",
+    "scales": [
+      12,
+      48
+    ],
+    "seeds": [
+      20030,
+      20031,
+      20032
+    ],
+    "shared_admission_unchanged": true,
+    "study": "HLS-CE-04.11 causal diagnostic technical pilot"
+  },
+  "sha256": "0f99dee0b7f1e81e4c768dcac977f9cafe0091b934c69467ce27097408d588c0"
+}
