@@ -1525,3 +1525,23 @@ were left unchanged. See the [V2 campaign report](research/HLS_CE_03_H3_V2_CAMPA
 [raw per-seed results](../results/experiments/hls_ce03_h3_transfer_v2/results.json),
 [derived contrasts](../results/experiments/hls_ce03_h3_transfer_v2/paired_contrasts_by_seed.csv),
 and [manifest](../results/experiments/hls_ce03_h3_transfer_v2/manifest.json).
+
+## 2026-10-26 — PI incremental research-design directive
+
+The PI directed HLS research to isolate dimensions before interactions,
+size organizations for the phenomenon being studied, favor simple and
+scalable relevant scenarios, use competitive baselines, measure individual
+and collective outcomes/costs as appropriate, preserve negative findings,
+and justify complexity by scientific need. This is an operational research
+principle, complementary to the canonical philosophy and recorded in
+[Research Doctrine](../RESEARCH_DOCTRINE.md); `HLS_PHILOSOPHY.md` was not
+changed.
+
+Codex prepared one bounded proposal to study cross-skill dependence in the
+collective capability profile using a 12-worker/two-task matching instance,
+with identical skill marginals and paired conditions. It is explicitly a
+proposal pending PI decision: no code was implemented and no experiment was
+authorized or executed. The proposal identifies the prior-art reduction risk
+and a criterion for treating it only as a calibration/control if it yields no
+useful HLS-level characterization. See the [proposal](research/HLS_INITIAL_DIMENSION_EXPERIMENT_PROPOSAL.md)
+and [current scientific state](HLS_CURRENT_STATE.md).

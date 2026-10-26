@@ -59,6 +59,19 @@ per-seed records, derived contrasts, configuration, code, and hashes. V1
 results remain unchanged. No V3 or further campaign is authorized by this
 record.
 
+**PI operational research directive — 26 October 2026:** HLS experiments are
+to study dimensions incrementally before interactions, use an organization
+large enough for the target collective phenomenon, prefer simple and scalable
+scientifically relevant scenarios, compare competitive baselines, measure
+individual/collective performance and relevant costs, preserve negative
+results, and avoid complexity without a scientific need. This complements
+the [Research Doctrine](../RESEARCH_DOCTRINE.md); it does not change
+[HLS_PHILOSOPHY.md](HLS_PHILOSOPHY.md). A single-dimension static matching
+proposal on cross-skill dependence in a 12-worker pool is recorded
+[here](research/HLS_INITIAL_DIMENSION_EXPERIMENT_PROPOSAL.md). It is pending
+PI decision and authorizes no implementation or execution; it does not
+silently replace the active scientific priority or reopen a closed line.
+
 The earlier same-day [HLS-CE-01 deliberation mission](research/HLS_CE_01_DYNAMIC_DELIBERATION_2026-10-24.md)
 and its paired-data and interaction assessments remain historical, bounded
 work; they are not reopened or treated as the active priority. HLS-CE-01's

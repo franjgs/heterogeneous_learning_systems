@@ -334,6 +334,30 @@ HLS research does not, however, require every result to demonstrate an
 improvement. Equality, reducibility, impossibility, sufficiency, boundary, and
 negative results may themselves be substantive scientific contributions.
 
+### Incremental research and adequate experimental scale
+
+Study one scientifically relevant dimension at a time before testing its
+interactions with other dimensions. This ordering helps identify each
+dimension's effect on individual and collective performance; it does not
+assume that the dimensions are physically independent or that their effects
+will remain additive when combined.
+
+Choose an organization large enough to contain the phenomenon under study.
+Three workers can be appropriate for code checks, mathematical examples, or
+elementary mechanism verification, but are not by themselves an adequate
+organization for claims about collective phenomena. There is no universal
+minimum size: justify the chosen population, roles, task structure, and
+independent experimental units in relation to the claim.
+
+Prefer scenarios that are simple enough to interpret, scalable enough to test
+the relevant organizational scale, and significant enough to represent a real
+HLS question. Hold other dimensions fixed when isolating an effect, and add
+complexity only when the scientific question requires it. Compare against
+competitive alternatives under matched information, actions, resources, and
+evaluation. Measure individual outcomes, collective performance, and costs
+when relevant; preserve null and negative results. Do not presume that HLS,
+heterogeneity, or a more complex mechanism should win.
+
 ---
 
 ## 8. Return to the scientific problem
