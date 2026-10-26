@@ -3,7 +3,8 @@ import pytest
 
 from hls import ce04
 from hls.ce04_causal import (
-    CONDITIONS, calibration_outcomes, calibration_summary, configuration_hash,
+    CONDITIONS, CONFIRMATORY_SEEDS, analyze_causal_campaign, calibration_outcomes,
+    calibration_summary, configuration_hash, confirmatory_configuration,
     run_causal_replica,
 )
 from hls.ce04_validation import run_replica_traced
@@ -113,3 +114,28 @@ def test_causal_condition_reproducibility(condition):
     b = run_causal_replica(20030, 12, condition, tasks, "H2", calibration)
     assert a["records"] == b["records"]
     assert a["success_on_time_rate"] == b["success_on_time_rate"]
+
+
+def test_confirmatory_configuration_uses_authorized_seed_range_and_240_runs():
+    config = confirmatory_configuration()
+    assert CONFIRMATORY_SEEDS == tuple(range(20000, 20030))
+    assert config["expected_replicas"] == 240
+    assert config["frozen_design_sha256"] == "0f99dee0b7f1e81e4c768dcac977f9cafe0091b934c69467ce27097408d588c0"
+
+
+def test_confirmatory_analysis_uses_paired_factorial_contrasts_only():
+    rows = []
+    for n in (12, 48):
+        for seed in CONFIRMATORY_SEEDS:
+            for condition, rate in (("B00", .50), ("B10", .52),
+                                    ("B01", .49), ("B11", .54)):
+                rows.append({"seed": seed, "n_agents": n, "condition": condition,
+                             "success_on_time_rate": rate})
+    result = analyze_causal_campaign(rows)
+    at_12 = result["by_scale"]["12"]
+    assert list(at_12) == ["delta_I_B10_minus_B00", "delta_C_B01_minus_B00", "delta_IC_interaction"]
+    assert at_12["delta_I_B10_minus_B00"]["mean"] == pytest.approx(2.0)
+    assert at_12["delta_C_B01_minus_B00"]["mean"] == pytest.approx(-1.0)
+    assert at_12["delta_IC_interaction"]["mean"] == pytest.approx(3.0)
+    assert all(row["bootstrap_resamples"] == 10000 for row in at_12.values())
+    assert all(row["tost"]["margin"] == 2.0 for row in at_12.values())
