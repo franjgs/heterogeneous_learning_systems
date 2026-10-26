@@ -6,7 +6,25 @@
 > historical traceability and must not override this snapshot where dates
 > differ.
 
-**Latest CE-04 status — 26 October 2026:** the CE-04.5 technical pilot first
+**Latest CE-04 status — confirmatory campaign, 26 October 2026:** following
+the technically successful 108-replica pilot, the authorized campaign ran
+all 1,080 conditions (30 seeds 1000–1029 × N=12/24/48 × H0/H1/H2 × P0–P3).
+All replicas passed the pilot validation checks; the scientific configuration
+hash is unchanged. Prespecified C1–C5 effects and adjacent-scale comparisons
+were analyzed over paired seeds with 10,000-resample bootstrap intervals,
+Holm adjustment and ±2 pp TOST. Within this synthetic setting, true-competence
+assignment P1 substantially outperformed load-only P0 under H2; mean-preserving
+heterogeneity H2 outperformed H0 under P1; estimated-competence P2 lagged P1;
+and P3's incremental benefit over P2 was most evident at N=48. A positive
+H2×P3-vs-P0 interaction appeared at all scales. These findings are bounded to
+this single-agent-per-task synthetic scenario; they do not establish general
+superiority of HLS, cooperation, or any policy. Full results, uncertainty,
+scale contrasts and limitations are in the [confirmatory report](research/CE-04/11_CONFIRMATORY_RESULTS.md).
+The metrics, analysis, validation record and hashes are in the
+[campaign manifest](../results/experiments/hls_ce04_campaign/artifact_manifest.json);
+the large task-level log remains local-only and is hash-identified there.
+
+**CE-04 pilot status — superseded by the confirmatory campaign above:** the CE-04.5 technical pilot first
 stopped at a validator false positive, because a logged P3 reward event was
 mistaken for an effective LinUCB update. CE-04.6 corrected the validation
 only, verified effective P0–P3 update behavior and feedback timing, then

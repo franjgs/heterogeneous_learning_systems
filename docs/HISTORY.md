@@ -1724,3 +1724,30 @@ are indexed by the
 The 41 MB compressed task-level ExperimentRun log is retained locally and
 excluded from Git; its digest is recorded in the manifest. See the updated
 [technical pilot report](research/CE-04/10_TECHNICAL_PILOT_REPORT.md).
+
+## 2026-10-26 — CE-04.7 confirmatory campaign completed
+
+Following the CE's explicit authorization, the confirmatory factorial ran all
+1,080 replicas: N=12/24/48, H0/H1/H2, P0–P3, and seeds 1000–1029. The frozen
+scientific configuration hash remained
+`c72bdca82906daa2118b415d3ba76d1fbfac87c47a1c3ee72fea7677e4b8a1b5`. All
+1,080 replicas passed the CE-04 pilot validation checks; no campaign validation
+failed and no warnings were recorded. Wall time was 1,820.88 s, summed replica
+CPU time 1,114.69 s, and process peak RSS 287,866,880 bytes on macOS. Recovery
+after demand changes remained excluded. The full results and prespecified
+C1–C5 analysis, paired-seed bootstrap intervals, Holm adjustment and ±2 pp
+TOST are documented in the
+[confirmatory results report](research/CE-04/11_CONFIRMATORY_RESULTS.md).
+
+In this specified synthetic scenario, the confirmatory analysis found large
+positive H2−H0 and P1−P0 effects, a negative P2−P1 effect, scale-dependent
+P3−P2 effects, and a positive H2-by-P3-vs-P0 interaction. These are bounded
+scenario-specific findings; they do not demonstrate universal superiority
+of heterogeneity or HLS and involve no cooperative execution. Lightweight
+replica metrics, exact configuration, validation, analysis, pairing audit,
+and hashes are indexed in the
+[campaign artifact manifest](../results/experiments/hls_ce04_campaign/artifact_manifest.json).
+The 396 MB task-level ExperimentRun gzip remains local-only and is identified
+by its recorded digest. Scientific interpretation and any decision about
+further work remain with the CE/PI; no follow-on campaign is authorized by
+this history entry.

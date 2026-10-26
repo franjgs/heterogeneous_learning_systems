@@ -1,0 +1,49 @@
+{
+  "environment": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.11.9 (main, Apr 19 2024, 11:43:47) [Clang 14.0.6 ]"
+  },
+  "execution_commit": "70d1f95cd5d0a19ca998c5d996cd673530262e95",
+  "files": {
+    "config.json": {
+      "bytes": 2644,
+      "publication": "tracked lightweight artifact",
+      "sha256": "decfd2ce1183cd4308f23ea0be2533c6fa8174f1c55924c8452ba5b22a7fb4df"
+    },
+    "confirmatory_analysis.json": {
+      "bytes": 57484,
+      "publication": "tracked lightweight artifact",
+      "sha256": "b0c5f5551c790d5d294b1685bc6183c04566a863193ae6eb98229e83635fe3ce"
+    },
+    "pairing_audit.json": {
+      "bytes": 223,
+      "publication": "tracked lightweight artifact",
+      "sha256": "8afa5f0dfe857b5d17056814552bde81263b90fa9d7bf4e44f0866d8749c61e3"
+    },
+    "replica_metrics.csv": {
+      "bytes": 324496,
+      "publication": "tracked lightweight artifact",
+      "sha256": "9295c4a652a9d1b1b2f1ef49b8d586db26ec3b08108a7c0131e8e140408a880b"
+    },
+    "replicas.experiment_runs.jsonl.gz": {
+      "bytes": 415656840,
+      "publication": "local-only; large task-level records",
+      "sha256": "4b85a240e2206be6e2f00a7bbd72fce2fca8df33007865124ab9bbe923f6f249"
+    },
+    "validation.json": {
+      "bytes": 8102,
+      "publication": "tracked lightweight artifact",
+      "sha256": "f3dcef77cdc517b069f6f154c88ff309c1259ecab742a4634ae561165270593e"
+    }
+  },
+  "scientific_config_sha256": "c72bdca82906daa2118b415d3ba76d1fbfac87c47a1c3ee72fea7677e4b8a1b5",
+  "source_sha256": {
+    "experiments/analyze_hls_ce04_confirmatory.py": "e467665583caa3758b97cb42ff8db987c3965202917ba40a2afd4eab766859b3",
+    "pyproject.toml": "10b6ad60ed7604faa95e8341bbaa9c4c1f0f7744de22febdd9c263f1acf4449e",
+    "src/hls/ce04.py": "632b8869c734f244bafe7f962cdd285098d9e0a42314591848277623243abbbb",
+    "src/hls/ce04_validation.py": "f48c812ec3a203eded7c46e3f609b0224ca8d66ad613d36c93cbc38b9c633d77",
+    "src/hls/linucb.py": "20b0f91f183ba103811592cfc3293ae940f02ed1f05dc658d7bfd330bcfe250b"
+  },
+  "status": "1080/1080 validated; confirmatory analysis complete",
+  "study": "HLS-CE-04 confirmatory campaign"
+}
