@@ -197,9 +197,9 @@ def test_replay_serialization_and_frozen_state_are_deterministic():
     first = run_nk_production_sequence(config, problems, **kwargs)
     second = run_nk_production_sequence(config, problems, **kwargs)
     assert serialize_nk_production_result(first) == serialize_nk_production_result(second)
-    assert hashlib.sha256(serialize_nk_production_result(first).encode()).hexdigest() == hashlib.sha256(
-        serialize_nk_production_result(second).encode()
-    ).hexdigest()
+    assert hashlib.sha256(serialize_nk_production_result(first).encode()).hexdigest() == (
+        "957b748589b9b58db2aab2dad2080316188d208b878aead120a8e1f8fb571566"
+    )
     assert all(row.competence_before == row.competence_after for row in first.records)
     assert first.records[0].individual_effort_limits == (1.0, 1.0)
     different_estimate = _organization(2, 2, competence=config.competence_initial,

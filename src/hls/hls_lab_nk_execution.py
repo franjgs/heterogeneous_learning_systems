@@ -1294,26 +1294,40 @@ def _run_nk_nembhard_direct_sequence(
     )
 
 
+_SerializableNKResult = (
+    NKProductionRunResult
+    | NKLearningRunResult
+    | NKTeachingRunResult
+    | NKInformationRunResult
+    | NKNembhardDirectRunResult
+)
+
+
+def _serialize_nk_result(result: _SerializableNKResult) -> str:
+    """Encode an N×K result using the shared replay-stable JSON contract."""
+    return json.dumps(asdict(result), sort_keys=True, separators=(",", ":"), allow_nan=False)
+
+
 def serialize_nk_production_result(result: NKProductionRunResult) -> str:
     """Stable JSON serialization for exact deterministic replay checks."""
-    return json.dumps(asdict(result), sort_keys=True, separators=(",", ":"), allow_nan=False)
+    return _serialize_nk_result(result)
 
 
 def serialize_nk_learning_result(result: NKLearningRunResult) -> str:
     """Stable JSON serialization for MIS-v2 ON trajectories."""
-    return json.dumps(asdict(result), sort_keys=True, separators=(",", ":"), allow_nan=False)
+    return _serialize_nk_result(result)
 
 
 def serialize_nk_teaching_result(result: NKTeachingRunResult) -> str:
     """Stable JSON serialization for explicit N×K joint-action trajectories."""
-    return json.dumps(asdict(result), sort_keys=True, separators=(",", ":"), allow_nan=False)
+    return _serialize_nk_result(result)
 
 
 def serialize_nk_information_result(result: NKInformationRunResult) -> str:
     """Stable JSON serialization for explicit perfect/imperfect-information runs."""
-    return json.dumps(asdict(result), sort_keys=True, separators=(",", ":"), allow_nan=False)
+    return _serialize_nk_result(result)
 
 
 def serialize_nk_nembhard_direct_result(result: NKNembhardDirectRunResult) -> str:
     """Stable JSON serialization for Nembhard Direct adapted trajectories."""
-    return json.dumps(asdict(result), sort_keys=True, separators=(",", ":"), allow_nan=False)
+    return _serialize_nk_result(result)
