@@ -10,6 +10,7 @@ from __future__ import annotations
 from collections import Counter
 from contextlib import contextmanager
 from dataclasses import dataclass, field
+from bisect import bisect_left, bisect_right
 import math
 from typing import Iterator
 
@@ -198,16 +199,25 @@ def validate_admission_replay(result: dict) -> None:
     """
     config = result["config"]
     records = result["records"]
+    by_agent = [[] for _ in range(config["n_agents"])]
+    for record in records:
+        if record["selected_agent"] is not None:
+            by_agent[record["selected_agent"]].append(record)
+    for assigned in by_agent:
+        assigned.sort(key=lambda r: r["arrival"])
+    arrival_times = [[r["arrival"] for r in assigned] for assigned in by_agent]
+    start_times = [[r["service_start"] for r in assigned] for assigned in by_agent]
     for current in records:
         now = current["arrival"]
         f_values = []
-        for agent in range(config["n_agents"]):
-            prior = [r for r in records if r["selected_agent"] == agent and r["arrival"] < now]
-            active = [r for r in prior if r["service_start"] <= now < r["completion"]]
-            if len(active) > 1:
-                raise AssertionError("reconstructed worker state violates single-service capacity")
-            waiting = sum(1 for r in prior if r["service_start"] > now)
-            age = None if not active else now - active[0]["service_start"]
+        for assigned, arrivals, starts in zip(by_agent, arrival_times, start_times):
+            prior_count = bisect_left(arrivals, now)
+            started_count = bisect_right(starts, now, 0, prior_count)
+            active_record = (assigned[started_count - 1]
+                             if started_count and assigned[started_count - 1]["completion"] > now
+                             else None)
+            waiting = prior_count - started_count
+            age = None if active_record is None else now - active_record["service_start"]
             if config["probability_method"] == "two_moment":
                 f = ce04.deadline_probability_two_moment(age, waiting, current["deadline"] - now)
             else:
