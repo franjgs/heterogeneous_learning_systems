@@ -1545,3 +1545,31 @@ authorized or executed. The proposal identifies the prior-art reduction risk
 and a criterion for treating it only as a calibration/control if it yields no
 useful HLS-level characterization. See the [proposal](research/HLS_INITIAL_DIMENSION_EXPERIMENT_PROPOSAL.md)
 and [current scientific state](HLS_CURRENT_STATE.md).
+
+## 2026-10-26 — HLS-CE-04 authorization and technical documentation
+
+**Scientific/administrative event date:** 2026-10-26, as stated in the CE
+instruction. **Documentary registration:** this entry is being added after
+the inspection; the eventual Git commit date records publication, not the
+decision time. No hour is inferred.
+
+The CE reports that the Mega PI authorized CE-04 and that E1's mathematical
+model, E2's assignment-policy report, E3's experimental protocol and E3's
+addendum were received on this date. The original report texts were not
+available in the conversation context and are absent from the inspected
+branch; this is recorded as a repository/documentation gap, not as missing
+scientific content. The CE's subsequent instruction adopted the scope and
+conditions recorded in the [CE decision log](research/CE-04/05_CE_DECISIONS.md)
+and requested the [consolidated pre-freeze protocol](research/CE-04/06_CE04_CONSOLIDATED_PROTOCOL.md).
+
+Codex inspected the available N×K representation, fixed-period execution,
+assignment, estimators, LinUCB/Nembhard adaptation, HLS-PEF and reproducibility
+contracts. The [technical readiness report](research/CE-04/07_TECHNICAL_READINESS.md)
+records partial reuse and the missing event-driven Poisson/FCFS/deadline
+semantics. H0/H1/H2 composition, heterogeneity parameters, the P2/P3 estimator,
+P3 configuration and the shared P1/P2 decision function remain explicitly
+unfrozen. Operational interpretations and resource/statistical details also
+remain open. No source code or historical result was changed; no pilot or
+campaign was run. The four expert-report files are placeholders marked
+PENDING INCORPORATION, not reconstructed reports. See the
+[CE-04 document directory](research/CE-04/).

@@ -59,6 +59,22 @@ per-seed records, derived contrasts, configuration, code, and hashes. V1
 results remain unchanged. No V3 or further campaign is authorized by this
 record.
 
+**HLS-CE-04 — technical planning authorized, protocol not frozen (26 October
+2026):** the CE reports Mega PI authorization and receipt of E1, E2, E3 and an
+E3 addendum. The original expert reports were not present in the inspected
+repository branch or available conversation context and remain pending
+incorporation; no contents have been reconstructed. The CE's recorded scope is
+capability heterogeneity and organization at N=12/24/48 with four task
+families, fixed competence, one agent per task, and policies P0–P3. The
+technical inspection found the existing N×K model, estimators, assignment,
+LinUCB primitives, ExperimentRun/HLS-PEF and study-specific statistics
+reusable only in part; an event-driven Poisson/FCFS/deadline simulator is not
+available. Five specifications remain unclosed and no implementation, pilot
+or campaign is authorized until protocol freeze. See the
+[CE-04 decisions](research/CE-04/05_CE_DECISIONS.md),
+[pre-freeze protocol](research/CE-04/06_CE04_CONSOLIDATED_PROTOCOL.md) and
+[technical readiness inspection](research/CE-04/07_TECHNICAL_READINESS.md).
+
 **PI operational research directive — 26 October 2026:** HLS experiments are
 to study dimensions incrementally before interactions, use an organization
 large enough for the target collective phenomenon, prefer simple and scalable
