@@ -251,9 +251,15 @@ defined in [HLS Research Governance](HLS_RESEARCH_GOVERNANCE.md).
 
 ## Earlier executive status record (historical snapshot)
 
-The material in this section is retained from an earlier status snapshot.
-Use the dated current snapshot at the top of this document for present status;
-the text below remains useful for its original context and source links.
+The current snapshot above is the sole status summary. The accumulated
+records below are retained for historical context and source links; they are
+not a current task list or an alternate status authority. Use [HISTORY.md](HISTORY.md)
+for chronology, the [scientific registry](registry/hls_scientific_registry.jsonl)
+for the structured investigation/result index, and the linked primary sources
+for scientific evidence.
+
+<details>
+<summary>Open preserved historical snapshots and supporting records</summary>
 
 HLS is a general scientific programme for studying, designing, and evaluating
 the organization, use, combination, and evolution of heterogeneous
@@ -2151,3 +2157,5 @@ pilot metrics were retained and no campaign seeds were used. This does not
 change CE-04 parameters or constitute experimental evidence. See the
 [stopped-pilot report](research/CE-04/10_TECHNICAL_PILOT_REPORT.md) and its
 [diagnostic artifact](../results/experiments/hls_ce04_pilot/pilot_failure.json).
+
+</details>

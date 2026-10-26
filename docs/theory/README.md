@@ -1,61 +1,44 @@
-# HLS Theory Registry
+# Theory Index
 
-This directory contains formal results and scoped models. It is not the
-current-state document and does not replace the ontology or research
-doctrine.
+This index locates formal results and scoped models. The [scientific
+registry](../registry/hls_scientific_registry.jsonl) links these sources to
+investigations and result records; it does not replace proofs or define
+scientific conclusions. For current programme status, see [HLS Current
+State](../HLS_CURRENT_STATE.md).
 
-## Current canonical theory
+## Programme-level foundations
 
--   [Campaign 3 theoretical specification](CAMPAIGN_3_THEORETICAL_SPECIFICATION.md):
-    authoritative C3.0 conceptual specification for sequential prospective
-    adaptation, its epistemic boundaries, design gates, and operational order.
-    Status: **C3.0 — CONCEPTUALLY CLOSED; NUMERICAL DESIGN PENDING**. It defines
-    no implemented Campaign 3 mechanism and reports no Campaign 3 result.
--   [Pre-experiment HLS foundation
-    specification](HLS_FOUNDATION_SPECIFICATION.md): consolidated executable
-    specification for the current CES/DISCOVER/MIS-v2/problem-geometry/Small
-    Problem World laboratory before G00--G08 execution. It is authoritative
-    for that declared model scope, not a replacement for programme-level
-    T0--T6 theory or the current-state ledger.
--   [Static HLS theoretical foundation ---
-    T0--T3](HLS_STATIC_THEORY.md): consolidated static scaffold for
-    feasible capability, collective expansion, organizational
-    sufficiency, and organizational realization.
--   [G1 static experimental ground
-    truth](HLS_G1_STATIC_EXPERIMENTAL_GROUND_TRUTH.md): canonical
-    fixed-competence null/reference baseline.
--   [Dynamic HLS theoretical foundation ---
-    T4--T6](HLS_DYNAMIC_THEORY.md): consolidated minimal dynamic
-    scaffold: reachability, development value, and
-    organization--development coupling.
--   [G2 dynamic ground truth](HLS_G2_DYNAMIC_GROUND_TRUTH.md): canonical
-    2×2×2 constructive/null reference for T4--T6.
--   [RQ0 routing integration
-    boundaries](rq0_routing_integration_boundaries.md): policy-class
-    inclusion, global reducibility, local routing-as-teaching, and the
-    exact C(alpha) existence construction.
+- [Static HLS theory, T0–T3](HLS_STATIC_THEORY.md): feasible capability,
+  collective capability expansion, organizational sufficiency, and
+  organizational realization under the stated static model.
+- [Dynamic HLS theory, T4–T6](HLS_DYNAMIC_THEORY.md): dynamic capability,
+  development value, and organization–development coupling within stated
+  assumptions.
+- [G1 static ground truth](HLS_G1_STATIC_EXPERIMENTAL_GROUND_TRUTH.md) and
+  [G2 dynamic ground truth](HLS_G2_DYNAMIC_GROUND_TRUTH.md): exact finite
+  reference constructions and their limits.
+- [RQ0 routing integration boundaries](rq0_routing_integration_boundaries.md):
+  formalization and scoped policy-class results for RQ0; RQ0 is one research
+  question within HLS, not the definition of the programme.
 
-T0--T6 remain the programme's shared structural language, scoped results, and
-boundaries.  They do not entail that Beam 1 × Beam 2 must culminate in a new
-HLS-specific mathematical integration mechanism; the current
-characterization/assembly position is recorded in
-[HLS Current State](../HLS_CURRENT_STATE.md).
+## Model- and campaign-specific theory
 
-## Supporting formal models
+- [Pre-experiment foundation specification](HLS_FOUNDATION_SPECIFICATION.md):
+  executable foundation for its declared laboratory scope, not a universal
+  HLS model or experimental result.
+- [Campaign 3 theoretical specification](CAMPAIGN_3_THEORETICAL_SPECIFICATION.md):
+  sequential prospective adaptation and its epistemic boundaries.
+- [Minimal HLS model](minimal_hls_model.md): reduced dynamic propositions and
+  boundary results under its assumptions.
+- [Operational-development opportunity value](operational_development_opportunity_value.md):
+  model-scoped identities and bounds.
+- [Campaign 2 theoretical specification](CAMPAIGN_2_THEORETICAL_SPECIFICATION.md):
+  assumptions and formal model used by that campaign.
 
--   [Minimal HLS model](minimal_hls_model.md): scoped dynamic
-    equivalence, separability, coordination, and boundary results;
-    supporting constraints for T4--T6, not the general dynamic
-    foundation.
--   [Operational-development opportunity
-    value](operational_development_opportunity_value.md): model-scoped
-    opportunity-value identities and portfolio extensions.
+## Interpretation
 
-Cross-domain theory import is governed by the [Research
-Doctrine](../../RESEARCH_DOCTRINE.md), while semantic mappings and
-compatibility judgments belong to the [HLS
-ontology](../hls_ontology.md).
-
-The M0/M0.1 specifications remain supporting model material because
-their executable checks still use their equations. They are not part of
-the canonical T0--T6 foundation.
+These sources do not establish a universal HLS theory or imply that one
+organizational form is generally superior. Results retain the assumptions,
+scope, and proof status stated in their primary source. Imported theory and
+semantic mappings are governed by the [Research Doctrine](../../RESEARCH_DOCTRINE.md)
+and [HLS Ontology](../hls_ontology.md).
