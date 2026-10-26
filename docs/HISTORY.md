@@ -1956,3 +1956,42 @@ paired per-seed profile permutation is judged adequate as a label-bias control
 for the A/B comparison if preserved in the confirmatory campaign; it does not
 estimate a separate causal effect of tie-breaking. No simulation was run and
 no confirmatory inference was made. See the [CE-07.4 tie-break audit](research/CE-07/03_TIE_BREAK_AUDIT.md).
+
+
+## 2026-10-26 — CE-07.5 initial execution (superseded; protocol deviation)
+
+An initial 60-run attempt used CE-04's phase-dependent family marks instead
+of CE-07's stationary equiprobable families. Although its A/B pairs were
+matched, it did not implement the authorized demand condition and its numeric
+results are excluded from confirmatory evidence. Artifacts are preserved under
+`results/experiments/hls_ce07_confirmatory/attempt_01_nonstationary_ce04_demand/`;
+the adjacent deviation record states the actual family probabilities. This
+entry is retained to document the execution incident, not as a result.
+
+## 2026-10-26 — CE-07.5 confirmatory campaign and protocol-deviation correction
+
+The first 60-run attempt reused the CE-04 workload generator, whose task-family
+probabilities vary across three time segments. This did not meet CE-07's
+stationary equiprobable-family condition. Those outputs were preserved in the
+campaign artifact directory with an explicit invalid-for-confirmatory status
+and excluded from inference. The CE-07 runner was corrected only at workload
+family marking: it retained the keyed Poisson arrival stream and used iid
+uniform marks across all four task families; neither CE-04 nor P1 changed.
+The CE-07.3 pilot used the same CE-04 phased family generator, so it is not
+used as a stationarity validation; its historical record remains unaltered.
+
+The corrected, protocol-conforming campaign then completed 60/60 replicas:
+A/B at N=12, seeds 30100–30129, with 30 unique profile-to-slot permutations
+shared within each matched pair. All 30 pairs had matched arrivals, service and
+correctness potential tables and passed validation. B−A success-on-time was
++21.52 pp (paired bootstrap 95% CI [+21.12,+21.92]); B exceeded A in 30/30
+pairs. TOST did not establish equivalence within ±2 pp. Secondary metrics are
+descriptive, and no mediator was identified. The finding is specific to these
+two structures, stationary demand and P1; CE-04/06 remain distinct but
+complementary evidence about other compositions, policies and demand settings.
+There were 62,430 exact tie records; these do not identify tie-breaking as a
+cause. Configuration SHA-256:
+`b5ab97c31e937e590ded4c99e861345c60dfd18d850edb8788c283752f6c2907`.
+See the [CE-07.5 report](research/CE-07/04_CONFIRMATORY_RESULTS.md), [valid
+artifacts](../results/experiments/hls_ce07_confirmatory/) and preserved
+[nonconforming attempt](../results/experiments/hls_ce07_confirmatory/attempt_01_nonstationary_ce04_demand/).

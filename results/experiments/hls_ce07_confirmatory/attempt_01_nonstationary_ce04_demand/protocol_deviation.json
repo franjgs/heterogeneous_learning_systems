@@ -1,0 +1,11 @@
+{
+  "status": "invalid for CE-07 confirmatory claims; retained as execution history",
+  "declared_configuration_field": "demand_stationary=true",
+  "actual_generator": "ce04.generate_workload",
+  "actual_task_family_probabilities_by_time_segment": {
+    "0-150": [0.4, 0.2, 0.2, 0.2],
+    "150-300": [0.1, 0.4, 0.4, 0.1],
+    "300-400": [0.25, 0.25, 0.25, 0.25]
+  },
+  "disposition": "excluded from all CE-07.5 confirmatory analyses; corrected stationary workload was then used for the valid 60-replica campaign"
+}

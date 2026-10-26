@@ -1,0 +1,38 @@
+{
+  "artifact_sha256": {
+    "configuration.json": "d1ba21be43a279fa0fcc6cdd9358693a6cdbec385eb85c1d915183e22d73c79e",
+    "confirmatory_analysis.json": "67417fddc0635e008a470aac8534e87db0790acaf2fc298ce6ed6738607053f5",
+    "exact_tie_decisions.json.gz": "29f3db05f780991d7df794672bdc25b39b24cc3610386262ffba1b0531f4a453",
+    "paired_validation.json": "d6d7c445b48f6cbb83daa1e7b1772df5db86760f4529de4ea4e1b80dff21306c",
+    "protocol_deviation.json": "5f6a511e480743ac720a828009c48df3e83dcfd0a7d8ddaa8cf01ffdf0169ab1",
+    "replica_results.json": "ea5ee30b9ec67d1bcbffa601e4e5fc677a5d9132198c5f1fa6153845f41958d6"
+  },
+  "base_commit": "6be35daa0ad9db25104ff739706eeba86bf7dcf5",
+  "campaign_process_cpu_seconds": 42.763431,
+  "campaign_wall_seconds": 42.846455624792725,
+  "ce04_source_unchanged": true,
+  "configuration_sha256": "a2cfe3cf8d137e686463d7b24be0a0508c0fd9c1a004fdf0fbed87ce064ff713",
+  "environment": {
+    "numpy": "1.26.4",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.11.9 (main, Apr 19 2024, 11:43:47) [Clang 14.0.6 ]",
+    "scipy": "1.13.1",
+    "simpy": "4.1.2"
+  },
+  "execution_head_before_campaign": "6be35daa0ad9db25104ff739706eeba86bf7dcf5",
+  "peak_rss_unit": "platform-native resource.getrusage ru_maxrss",
+  "process_peak_rss": 465960960,
+  "protocol_deviation": "The first 60-run attempt reused ce04.generate_workload, which assigns family probabilities (0.4,0.2,0.2,0.2), (0.1,0.4,0.4,0.1), and (0.25,0.25,0.25,0.25) by time phase. These artifacts are preserved but excluded from CE-07.5 confirmatory analysis.",
+  "replicas": 60,
+  "seed_pairs": 30,
+  "source_sha256": {
+    "experiments/run_hls_ce07_confirmatory.py": "6511f9f43c3b23d48504ddc0ab0a824661b09e391e821cb4b158c58098f02cae",
+    "src/hls/ce04.py": "2ac84e7c1c152f03da1cf139194c83bf0add783bdd028ae4608c5eec8bf47adb",
+    "src/hls/ce07_pilot.py": "3b0e8019e7b68386336ee6556c6246d25dd283c8604f5ea14161bb7871fc9ae9",
+    "src/hls/ce07_structure.py": "5c0cd8ddb70be0c994055cd836318b77345b2f3d77d6538b9734887f23cbf5ed"
+  },
+  "status": "INVALID FOR CE-07 CONFIRMATORY CLAIMS: CE-04 three-phase task-family probabilities were used instead of CE-07 stationary equiprobable family marks",
+  "study": "HLS-CE-07.5 confirmatory campaign",
+  "tie_records": 60945,
+  "unique_permutations": 30
+}
