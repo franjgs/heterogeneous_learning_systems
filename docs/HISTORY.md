@@ -1751,3 +1751,18 @@ The 396 MB task-level ExperimentRun gzip remains local-only and is identified
 by its recorded digest. Scientific interpretation and any decision about
 further work remain with the CE/PI; no follow-on campaign is authorized by
 this history entry.
+
+## 2026-10-26 — CE-04.8 post-campaign mechanism diagnostics
+
+Using only the completed campaign artifacts, Codex documented absolute
+performance by composition and scale, admission/correctness/deadline rates,
+task-family outcomes, assignment/load distributions, retrospective P2
+Beta-posterior coverage and RMSE trajectories, P3 reward timing and temporal
+cohort performance, and the algebraic relationship between C1 and C2. No
+simulation was run and no additional inferential contrast was introduced.
+The diagnostics find highly concentrated P2 observations (with increasing
+unobserved agent×family cells at larger N), near-complete admission, and
+approximately symmetric C1/C2 baselines under this design. They do not
+identify mediation or explain why P2/P3 behave as observed; the report states
+these limits and distinguishes observed patterns from interpretations:
+[CE-04.8 mechanism diagnostics](research/CE-04/12_MECHANISM_DIAGNOSTICS.md).
