@@ -1806,3 +1806,21 @@ improved success-on-time by 5.27 pp (95% CI [4.53,6.07]) at N=12 and 8.68 pp
 within ±2 pp at both scales. These are scenario-specific H2 results, not
 general claims. The task log remains local-only and is identified by SHA-256
 in the campaign manifest. See the [CE-04.12 report](research/CE-04/15_CAUSAL_RESULTS.md).
+
+## 2026-10-26 — CE-06.3 isolated heterogeneity diagnostics and technical pilot
+
+The CE-04 task-level ExperimentRun artifact was reused to reconstruct
+competence-max/selection gaps, assignment concentration, utilization, waiting,
+late work, rejection, and family/phase outcomes for the 90 historical P1,
+N=24 replicas (H0/H1/H2 × 30 seeds). No CE-04 simulation was repeated. A
+separate CE-06 pilot then ran the authorized nine P1/N=24 cells (H0/H1/H2 ×
+seeds 30000–30002), validating each replica, preserving the same demand within
+seed across compositions, checking mean competence 0.775 per task family, and
+repeating one run for record-level reproducibility. Descriptively, success on
+time increased with heterogeneity while mean utilization stayed comparable;
+selected competence approached the family maxima, with increased waiting and
+late admitted tasks in H1/H2. These diagnostics do not identify causal
+mediation; the pilot is technical, not confirmatory. No simulator or P1
+decision logic was modified, and no confirmatory campaign was run. See the
+[CE-06 report](research/CE-06/01_HETEROGENEITY_DIAGNOSTICS.md) and
+[pilot artifacts](../results/experiments/hls_ce06_heterogeneity_pilot/).

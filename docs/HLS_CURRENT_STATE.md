@@ -21,6 +21,18 @@ These conclusions are restricted to H2 and this synthetic scenario. The
 and [campaign manifest](../results/experiments/hls_ce04_causal_confirmatory/campaign_manifest.json)
 contain analysis and provenance; the large task log is local-only.
 
+**CE-06.3 isolated heterogeneity diagnostics — 26 October 2026:** existing
+CE-04 per-task records were reused to reconstruct diagnostics for the 90
+matched P1/N=24 replicas (30 seeds each for H0/H1/H2); no historical runs were
+repeated. A separate technical pilot completed nine new P1/N=24 replicas
+(H0/H1/H2 × seeds 30000–30002), all validated. In both sets, success-on-time
+rose across H0/H1/H2 while mean utilization remained comparable; P1 selected
+competencies near family maxima, alongside higher waits and late completions
+in heterogeneous compositions. These are descriptive, scenario-specific
+patterns; the three-seed pilot is not confirmatory and does not identify
+mediation. No CE-06 confirmatory campaign was run. See the [CE-06 report](research/CE-06/01_HETEROGENEITY_DIAGNOSTICS.md)
+and [lightweight diagnostics and hashes](../results/experiments/hls_ce06_heterogeneity_pilot/).
+
 **Prior CE-04.11 technical pilot — 26 October 2026:** the optional 2×2 P2
 implementation completed 24/24 validated pilot replicas (H2; N=12/48; seeds
 20030–20032). Pilot means were diagnostic only. B10 and B11 shared
