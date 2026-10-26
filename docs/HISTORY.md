@@ -1673,6 +1673,6 @@ tests. The fixed convolution comparison included two probability cases near
 the 0.50 admission boundary; Fenton–Wilkinson's maximum absolute error was
 0.003856 against the 0.01 tolerance. Focused tests passed. This establishes
 implementation checks only. **No pilot or campaign was executed**; each still
-requires subsequent CE authorization. The implementation commit identifier
-will be recorded here in a follow-up documentary commit. See
+requires subsequent CE authorization. Implementation commit:
+`ce700f9854532638793021e8f3fb97bb04412951` (2026-10-26). See
 [technical readiness](research/CE-04/07_TECHNICAL_READINESS.md).

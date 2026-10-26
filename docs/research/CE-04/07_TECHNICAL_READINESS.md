@@ -118,6 +118,9 @@ No code, experiment, pilot, or campaign was run as part of this inspection.
 **pilot and campaign not run**. This section supersedes the earlier readiness
 blockers, which remain a record of the pre-CE-04.4 state.
 
+**Implementation commit:** `ce700f9854532638793021e8f3fb97bb04412951`
+(2026-10-26; branch `feature/hls-laboratory-v1`).
+
 ### Implemented components
 
 | Requirement | Implementation | Verification status |

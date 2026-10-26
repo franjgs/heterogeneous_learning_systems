@@ -76,6 +76,8 @@ with an explicit dependency; 45 focused and contract tests passed. The delayed
 feedback adapter extends LinUCB without changing its original selection and
 immediate-feedback behavior. Fenton–Wilkinson's maximum absolute error was 0.003856 on the
 two fixed validation states near the 0.50 cutoff, within the 0.01 tolerance.
+Implementation commit on `feature/hls-laboratory-v1`:
+`ce700f9854532638793021e8f3fb97bb04412951`.
 The original E1–E3 documents remain intact. This validates implementation and
 the numerical approximation only: **no CE-04 pilot or campaign was executed**.
 The 108-replica pilot and 1,080-replica campaign still require later CE
