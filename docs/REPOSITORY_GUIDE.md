@@ -16,7 +16,7 @@ The principal documents have distinct jobs:
 | [HLS Philosophy](HLS_PHILOSOPHY.md) | Programme philosophy and scientific compass: WHAT, WHY, and WHAT FOR. |
 | [Research Doctrine](../RESEARCH_DOCTRINE.md) | Canonical methodological rules. |
 | [HLS Ontology](hls_ontology.md) | Canonical semantic and mapping layer. |
-| [Research Questions](research_questions.md) | Official research-question authority. |
+| [Research Questions](research_questions.md) | Official research-question authority; RQ0 is a specific open question within HLS, not its definition. |
 | [HLS Current State](HLS_CURRENT_STATE.md) | Canonical current scientific-state authority. |
 | [HLS Research Governance](HLS_RESEARCH_GOVERNANCE.md) | CE decision assigning primary research responsibilities and requiring documented changes. |
 | [HLS-CE-01 Dynamic Deliberation](research/HLS_CE_01_DYNAMIC_DELIBERATION_2026-10-24.md) | Scoped feasibility-planning mission associated with the PI's 2026-10-24 strategic proposal; not a ratified research priority or experiment authorization. |
@@ -152,7 +152,10 @@ computational validation and instantiate the cascade's structural controls.
 Neither document claims a universal dynamic model, irreducible joint
 management, or validation beyond that scope.
 
-RQ0 is a specific open dynamic research question, not the definition of HLS.
+RQ0 is a specific open dynamic research question, not the definition of HLS;
+its USE/DEVELOP framing is one analytical decomposition, not a programme
+requirement. The SOC is a priority application, not the general HLS
+architecture. Application-level claims require domain-specific evidence.
 G0 is a policy-neutral synthetic instrument for controlled RQ0 work, not a
 universal HLS model. See [Research Questions](research_questions.md),
 [RQ0 theory](theory/rq0_routing_integration_boundaries.md), and

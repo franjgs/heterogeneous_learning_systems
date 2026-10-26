@@ -36,6 +36,12 @@ These levels are related but not forced into a one-to-one mapping. See
 identity and [HLS Current State](docs/HLS_CURRENT_STATE.md) for scoped
 evidence.
 
+RQ0 is the currently registered open research question, not the definition
+of HLS or a requirement that every study use a USE/DEVELOP decomposition.
+The Security Operations Center (SOC) is a priority application for the first
+article; it does not define the general HLS architecture, and synthetic HLS
+results are not evidence about real SOC operations.
+
 ## Research approach
 
 HLS is not intended to replace established theories of learning, allocation,

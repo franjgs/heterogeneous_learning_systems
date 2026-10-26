@@ -9,10 +9,12 @@
 
 **Status:** OPEN. RQ0 is currently the sole official research question.
 
-RQ0 investigates a structural question arising from the two foundational
-beams of HLS: whether the organization/use of current competences and the
-development/evolution of future competences have system-level interactions
-that make their joint consideration valuable.
+RQ0 is a specific research question within the broader HLS programme. It
+investigates whether, and under what conditions, the organization and use of
+current competences interact with the development and evolution of future
+competences in ways that affect system-level value. USE/DEVELOP is one
+analytical decomposition relevant to this question; it is not a required
+structure for HLS research and does not define the programme.
 
 A scientifically useful answer need not establish universal superiority of
 joint management. The programme seeks to characterize conditions for:
@@ -32,7 +34,8 @@ The current exact routing/development formalization is one instantiation of
 RQ0, not its definition. Its present results and open structural questions are
 recorded in [HLS_CURRENT_STATE.md](HLS_CURRENT_STATE.md).
 
-RQ0 is itself not the definition of HLS. It is the programme's current first
-structural question about the interaction between organization/use and
-development/evolution. The broader scientific motivation and scope of HLS are
-defined in [HLS_PHILOSOPHY.md](HLS_PHILOSOPHY.md).
+RQ0 is not the definition of HLS. It is the sole question currently listed as
+official in this registry, with status OPEN. Its status does not make it a
+programme-wide priority for every study. The broader scientific identity,
+scope, and four-level conceptual architecture of HLS are defined in
+[HLS_PHILOSOPHY.md](HLS_PHILOSOPHY.md).

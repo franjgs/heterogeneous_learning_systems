@@ -6,6 +6,39 @@
 > historical traceability and must not override this snapshot where dates
 > differ.
 
+HLS is a general scientific programme on the organization, use, combination,
+and evolution of heterogeneous capabilities. Its conceptual architecture is
+**Scenarios → Organizational Schemes → Models → Performance Measures**.
+USE/DEVELOP is one possible analytical decomposition, and RQ0 is one specific
+open research question; neither defines the programme. The SOC is a priority
+application, not HLS's general objective or architecture. No claim about real
+SOC operations follows from the synthetic results below.
+
+The latest strategic correction recorded for 26 October is the CE-05 review:
+the initial O1 formulation was discarded, and the research direction was
+restated as studying the effects, capabilities, and limits of different
+structures and distributions of heterogeneous capabilities. Immediate
+novelty seeking was not set as the research objective; this does not waive the
+requirement to establish originality for a scientific contribution. The
+documented CE-05 record is in [HISTORY.md](HISTORY.md); no separate CE-05
+report is present in the repository. This is a framing decision, not an
+authorization for a new campaign or a change to the official RQ0 entry.
+
+**Evidence and authorization status:**
+
+| Class | Current record |
+|---|---|
+| Confirmatory | CE-04 completed 1,080/1,080 synthetic simulations; its separate H2 causal diagnostic completed 240/240. CE-07.5 completed 60/60 valid confirmatory simulations: B exceeded A by **21.52 pp** in success-on-time (paired bootstrap 95% CI **[21.12, 21.92]**, 30/30 pairs positive). This is limited to the two stated competence structures, N=12, stationary equiprobable task families, and fixed P1; it does not identify a mediator or establish a general heterogeneity effect. See [CE-04 results](research/CE-04/11_CONFIRMATORY_RESULTS.md), [CE-04 causal results](research/CE-04/15_CAUSAL_RESULTS.md), and [CE-07.5 results](research/CE-07/04_CONFIRMATORY_RESULTS.md). |
+| Exploratory / diagnostic | CE-06 reuses 90 CE-04 replicas and adds nine technical-pilot replicas; the reanalysis is not independent replication, the pilot is not confirmatory, and neither identifies congestion as a mediator. CE-03 V1/V2 are bounded synthetic transfer studies; V1 has a training-label leakage issue, and V2's main paired intervals include zero. See [CE-06](research/CE-06/01_HETEROGENEITY_DIAGNOSTICS.md), [CE-03 V1](research/HLS_CE_03_H3_CAMPAIGN_RESULTS.md), and [CE-03 V2](research/HLS_CE_03_H3_V2_CAMPAIGN_RESULTS.md). |
+| Negative / inconclusive | CE-02 is closed NO-GO as an immediate publication candidate: the exact synthetic dependence control is valid, the temporal preflight is partial, and no real-model inference ran. Campaign 3 has a bounded META-VOC versus RANDOM result but no demonstrated production advantage on held-out G3/G4 and no reliable opportunity detector; MMLU cascades and DCS-LA likewise do not establish a general advantage. See the [CE-02 record](research/HLS_CE_02_AI_AGING_PREFLIGHT.md), [Campaign 3 report](experiments/CAMPAIGN_3_META_VOC_CONFIRMATORY_RESULTS.md), and [DCS-LA report](experiments/HLS_CONTEXTUAL_CAPACITY_SELECTION.md). |
+| Closed / no further run authorized by these records | CE-01 and CE-02 are closed; CE-03 V2 does not support H3 and no V3 is authorized; CE-07.5 is complete and does not authorize CE-08. These are line-specific dispositions, not declarations that the wider phenomena are unimportant. |
+| Proposal, not authorization | [The initial-dimension proposal](research/HLS_INITIAL_DIMENSION_EXPERIMENT_PROPOSAL.md) remains pending PI decision. No pilot or campaign follows from its presence. The CE-07.5 result is a completed, separate design and does not retroactively approve that proposal. |
+| Evidence unavailable in a clean Git checkout | The forensic audit records CE-04 task-level and causal raw logs, and CE-07 replica-metrics CSV, as local-only/ignored; reports and selected manifests/aggregates are tracked. A local Nembhard completion claim is untracked. Do not describe those local-only artifacts as GitHub-accessible or independently replayable. See the [provenance ledger](research/audits/HLS_PROVENANCE_AND_INCIDENT_LEDGER_2026-10-26.csv). |
+
+No later record establishes a new authorized campaign priority after the
+CE-05 framing correction and CE-07.5 completion. The status here therefore
+records outcomes and existing authorizations without selecting the next line.
+
 **Latest CE-04 status — P2 causal-diagnostic confirmatory campaign, 26 October
 2026:** 240/240 replicas passed validation for H2, N=12/48, B00/B10/B01/B11
 and seeds 20000–20029. The frozen-design hash
@@ -85,17 +118,21 @@ bounded evidence, not a general claim that joint management is necessary. The
 [research note](research/HLS_USE_DEVELOP_SEPARABILITY_NOTE.md) records the
 formal equivalence, literature comparison, and decision. The earlier note
 identified S3b-E1 as an alternative for originality positioning; it did not
-authorize reopening that closed study. The subsequent PI resolution and
-current priority are recorded below; no historical result was changed.
+authorize reopening that closed study. The subsequent time-bounded CE-03
+authorization and later CE-05 framing correction are recorded below; no
+historical result was changed.
 
-**PI strategic resolution and HLS-CE-03 — 24 October 2026:** the PI approved
+**PI strategic resolution and HLS-CE-03 — 24 October 2026 (historical
+authorization and experiment record):** the PI approved
 PI-01, PI-02, PI-03, PI-04, PI-06 and PI-07 as recorded in the
 [CE-03 mission](research/HLS_CE_03_TRANSFER_COLLECTIVE_PERFORMANCE_2026-10-24.md).
-The active scientific priority is competence transfer and collective
-performance, framed by HLS-H3: transfer may improve recipient capability yet
-harm collective performance by changing complementarity or specialization.
-The PI authorized a six-week exploratory phase with an initial review after
-two weeks; continuation depends on evidence. No new algorithm is authorized.
+At that time, the PI authorized a six-week exploratory phase on competence
+transfer and collective performance, framed by HLS-H3: transfer may improve
+recipient capability yet harm collective performance by changing
+complementarity or specialization. The authorization set an initial review
+after two weeks, with continuation depending on evidence; it did not make
+HLS-H3 the definition or permanent priority of HLS. No new algorithm was
+authorized.
 At activation, authorization covered framing and reuse assessment, not an
 experimental campaign. A subsequent PI authorization allowed the first
 20-seed HLS-H3 campaign, executed on 24 October. Its two primary point
@@ -165,7 +202,8 @@ the [Research Doctrine](../RESEARCH_DOCTRINE.md); it does not change
 proposal on cross-skill dependence in a 12-worker pool is recorded
 [here](research/HLS_INITIAL_DIMENSION_EXPERIMENT_PROPOSAL.md). It is pending
 PI decision and authorizes no implementation or execution; it does not
-silently replace the active scientific priority or reopen a closed line.
+establish a current active priority or reopen a closed line. The later CE-07.5
+campaign is documented separately and does not approve this proposal.
 
 The earlier same-day [HLS-CE-01 deliberation mission](research/HLS_CE_01_DYNAMIC_DELIBERATION_2026-10-24.md)
 and its paired-data and interaction assessments remain historical, bounded
@@ -211,7 +249,11 @@ authorized by this closure.
 Governance responsibilities and the CE decision recorded on 2026-10-24 are
 defined in [HLS Research Governance](HLS_RESEARCH_GOVERNANCE.md).
 
-## Executive status
+## Earlier executive status record (historical snapshot)
+
+The material in this section is retained from an earlier status snapshot.
+Use the dated current snapshot at the top of this document for present status;
+the text below remains useful for its original context and source links.
 
 HLS is a general scientific programme for studying, designing, and evaluating
 the organization, use, combination, and evolution of heterogeneous
