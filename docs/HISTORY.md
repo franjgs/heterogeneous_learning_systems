@@ -1492,3 +1492,36 @@ not causal demonstrations. The report and derived tables preserve per-seed
 evidence; no raw campaign record was altered. See the
 [diagnostic report](research/HLS_CE_03_H3_FIRST_CAMPAIGN_DIAGNOSTIC.md) and
 [diagnostic artifacts](../results/experiments/hls_ce03_h3_transfer/diagnostic_analysis.json).
+
+## 2026-10-26 — HLS-CE-03 H3 second campaign (V2)
+
+**Scientific execution date:** 2026-10-26. **Documentary record:** this
+entry and the linked report are being added after execution; the Git commit
+date records publication of the documentation and artifacts, not a decision
+date.
+
+The V2 C3 negative control was checked before execution: it receives the same
+new T3 inputs as C2, retains the exact donor-probability multiset, permutes
+the input/probability correspondence with a seed-specific deterministic
+stream, and records both the stream seed and permutation. Tests confirmed
+that C1–C3 share the configured architecture, initialization, examples,
+weighted-row workload and optimizer settings; realized iterations and time
+remain separately measured rather than treated as equal compute. The
+focused suite passed 26 tests, then the authorized 20-seed campaign (0–19)
+completed without changing the protocol.
+
+On T3, A1 C2−C1 accuracy was +0.18 pp (paired 95% CI [−1.06,+1.42]) and
+C2−C3 was +0.59 pp ([−0.43,+1.61]); neither interval excludes zero. Under
+fixed O0, C2−C0 collective accuracy was −0.34 pp ([−1.61,+0.93]); C1−C0
+was +3.00 pp ([−6.38,+0.38]). Fixed-team C1−C2 favored C1 by +3.34 pp
+([+0.07,+6.62]), but it contrasts true-label learning with teacher-target
+distillation and does not identify a pure transfer effect. O1 differed from
+O0 in only 2–3 seeds per updated condition; all O1−O0 test intervals include
+zero. The directional H3 pattern appears in the C2−C0 point estimates, but
+both primary effects are statistically inconclusive, so H3 is not supported.
+These results are bounded to this synthetic design, are not a claim of
+originality, and do not authorize V3. The first campaign and its artifacts
+were left unchanged. See the [V2 campaign report](research/HLS_CE_03_H3_V2_CAMPAIGN_RESULTS.md),
+[raw per-seed results](../results/experiments/hls_ce03_h3_transfer_v2/results.json),
+[derived contrasts](../results/experiments/hls_ce03_h3_transfer_v2/paired_contrasts_by_seed.csv),
+and [manifest](../results/experiments/hls_ce03_h3_transfer_v2/manifest.json).

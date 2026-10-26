@@ -1,0 +1,121 @@
+{
+  "experiment_id": "HLS-CE-03-H3-transfer-v2-information-protocol",
+  "status": "campaign executed 2026-10-26; frozen protocol parameters unchanged",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "preserved_from_v1": {
+    "tasks": [
+      "T1_linear",
+      "T2_nonlinear",
+      "T3_interactions"
+    ],
+    "features": 10,
+    "examples_per_task": {
+      "initial_train": 2000,
+      "validation": 500,
+      "test": 1000
+    },
+    "initial_models": {
+      "A1_logistic": {
+        "architecture": "sklearn LogisticRegression",
+        "C": 1.0,
+        "solver": "lbfgs",
+        "max_iter": 500
+      },
+      "A2_random_forest": {
+        "architecture": "sklearn RandomForestClassifier",
+        "n_estimators": 100,
+        "n_jobs": 1
+      },
+      "A3_mlp": {
+        "architecture": "sklearn MLPClassifier",
+        "hidden_layer_sizes": [
+          32
+        ],
+        "max_iter": 400,
+        "alpha": 0.0001,
+        "learning_rate_init": 0.001
+      }
+    },
+    "organization": "enumerate the same six one-agent-per-task assignments; equal-task-weight validation error; lexicographic tie-break",
+    "evaluation": [
+      "accuracy",
+      "log_loss"
+    ],
+    "test_selection": "test data are evaluation-only; O0 and all readapted assignments use validation"
+  },
+  "information_protocol_v2": {
+    "new_examples": 1000,
+    "task": "T3_interactions",
+    "split_stream": "same deterministic seed derivation as v1 with T3 split index 3; disjoint from original train, validation and test streams",
+    "excluded_from": [
+      "initial training of A1",
+      "initial training of A2",
+      "initial training of A3",
+      "validation",
+      "test"
+    ],
+    "conditions": {
+      "C0_no_update": "initial A1 unchanged",
+      "C1_direct_labels": "warm-start A1 refit on the new T3 inputs with true labels",
+      "C2_A3_distillation": "warm-start A1 refit on the same inputs with A3 soft probabilities only",
+      "C3_permuted_A3_distillation": "warm-start A1 refit on the same inputs with A3 soft probabilities permuted across examples"
+    },
+    "optimizer_budget": {
+      "same_A1_initialization": true,
+      "same_original_examples_per_C1_C2_C3": 1000,
+      "same_weighted_rows_per_pass": 2000,
+      "same_logistic_architecture_solver_C_and_max_iter_cap": true,
+      "target_encoding": "each original example expanded to two weighted class rows for all three updates; per-example weights sum to one",
+      "realized_iterations_and_wall_time": "recorded; may differ due to convergence and input weights"
+    },
+    "interpretation_caveat": "C2-C1 compares teacher-derived soft targets with true labels. By itself it does not identify positive or negative transfer because the information supplied differs."
+  },
+  "organization": {
+    "O0": "initial-model validation optimum, held fixed under C0-C3",
+    "readapted": "validation optimum for each updated condition C1-C3; C0 aliases O0 without duplicating its observation",
+    "recorded_assignment_values": "all six validation utilities per condition",
+    "recorded_test_metrics": "complete agent-by-task accuracy and log-loss matrices for C0-C3"
+  },
+  "statistics": {
+    "unit": "seed; 20 paired seeds",
+    "summaries": [
+      "mean",
+      "median",
+      "sample standard deviation",
+      "95% paired Student-t interval",
+      "sign counts"
+    ],
+    "contrasts": "all pairwise treatment differences for individual A1 task outcomes and collective fixed/readapted outcomes; readapted-minus-fixed within C1-C3"
+  },
+  "runtime": {
+    "dependencies": [
+      "numpy",
+      "scipy",
+      "scikit-learn"
+    ],
+    "campaign_command": "python experiments/synthetic/hls_ce03_h3_transfer_v2.py --run-campaign",
+    "campaign_run_in_this_phase": false,
+    "results_directory": "results/experiments/hls_ce03_h3_transfer_v2"
+  }
+}

@@ -1,6 +1,6 @@
 # HLS Current State
 
-> **Current scientific snapshot — 24 October 2026.** This section is the
+> **Current scientific snapshot — 26 October 2026.** This section is the
 > authoritative entry point for the PI. The dated records and artifacts linked
 > here remain the source of detail; older material below is retained for
 > historical traceability and must not override this snapshot where dates
@@ -42,6 +42,22 @@ training data. O0 assigned A1 to T1 in 18/20 seeds, so transfer-related
 non-target changes can affect fixed-team performance; O1 changed the
 assignment in one seed only. Donor T3 test performance is available only for
 the 18 seeds where O0 selected A3 for T3. See the [diagnostic](research/HLS_CE_03_H3_FIRST_CAMPAIGN_DIAGNOSTIC.md).
+
+**HLS-CE-03 V2 — 26 October 2026:** after C3 passed focused checks for shared
+inputs, preservation of the A3 probability multiset, seed-specific recorded
+permutations, and matched configured optimization settings, the authorized
+20-seed campaign completed. C2−C1 individual T3 accuracy was +0.18 pp (paired
+95% CI [−1.06,+1.42]); C2−C3 was +0.59 pp ([−0.43,+1.61]). Under fixed O0,
+C2−C0 collective accuracy was −0.34 pp ([−1.61,+0.93]); all these intervals
+include zero. C1 exceeded C2 in fixed-team accuracy by 3.34 pp ([+0.07,+6.62]),
+but C1 uses true new labels while C2 uses donor probabilities, so this does
+not isolate a transfer effect. Readaptation was infrequent and its paired
+intervals include zero. The V2 outcomes do not statistically support H3;
+they are limited to this synthetic setup and do not establish originality.
+The [V2 report](research/HLS_CE_03_H3_V2_CAMPAIGN_RESULTS.md) links complete
+per-seed records, derived contrasts, configuration, code, and hashes. V1
+results remain unchanged. No V3 or further campaign is authorized by this
+record.
 
 The earlier same-day [HLS-CE-01 deliberation mission](research/HLS_CE_01_DYNAMIC_DELIBERATION_2026-10-24.md)
 and its paired-data and interaction assessments remain historical, bounded
