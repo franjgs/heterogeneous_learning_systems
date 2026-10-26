@@ -13,7 +13,7 @@
   "configuration_sha256": "b5ab97c31e937e590ded4c99e861345c60dfd18d850edb8788c283752f6c2907",
   "demand_stationarity_audit": "Reconstructed the keyed CE-07 workload for all 30 seeds (generation only, no simulation); all digests matched paired records.",
   "document_sha256": {
-    "docs/research/CE-07/04_CONFIRMATORY_RESULTS.md": "82f21deb4ba426928ae525ca245cb70e88221fb024918c86ba33661976579ac8"
+    "docs/research/CE-07/04_CONFIRMATORY_RESULTS.md": "36a6253d384cae0862564ee30f7d51c5705529449586b6674e4f6dec48b51a9c"
   },
   "environment": {
     "numpy": "1.26.4",
