@@ -39,8 +39,16 @@ model's own semantics rather than forcing one-to-one mappings.
 
 ## Navigate implementation and evidence
 
-- [`src/hls/`](../src/hls/): reusable and model-specific HLS implementations.
-- [`experiments/`](../experiments/): runnable experiment code and drivers.
+- [`src/hls/`](../src/hls/): scientific implementations. Shared run metadata
+  and validation live in `experiment_contract.py`; common evaluation records
+  live in `performance_evaluation.py`; timing instrumentation lives in
+  `experiment_timing.py`. The model modules remain separate where their
+  assumptions, state transitions, or objectives differ. `synthetic/` contains
+  model-specific components and downstream PEF adapters; an adapter translates
+  evidence and does not make the underlying models equivalent.
+- [`experiments/`](../experiments/): experiment-specific drivers and analyses,
+  grouped by foundation, confirmation, pilot, or synthetic campaign. A runner
+  is part of its experiment's provenance, not a disposable wrapper.
 - [`tests/`](../tests/): implementation and scientific-contract checks.
 - [`results/`](../results/): tracked result artifacts, manifests, and
   provenance. Some large or ignored artifacts are local-only; consult the
@@ -54,6 +62,23 @@ model's own semantics rather than forcing one-to-one mappings.
 Do not infer completed execution from code or protocol presence. Distinguish
 proposed, implemented, executed, evaluated, and validated work using the
 primary record.
+
+### Historical and active implementation boundary
+
+Treat an implementation as frozen when a primary result, manifest, protocol,
+or test binds it to a source/configuration hash or requires its historical
+command. Do not edit that source to share helpers, refresh its hash, or move
+its path. First check the relevant result manifest, runner, tests, and Git
+history. Put a justified new implementation in an independent active module
+only when an actual current consumer needs it; historical experiments continue
+to use their original source. This boundary is determined by provenance and
+consumers, not by a blanket directory split or by filenames alone.
+
+Reusable infrastructure must remain semantic-neutral. The run envelope,
+evaluation records, and timing logger provide traceability and common
+measurement plumbing; scenario generation, policies, transition rules, and
+scientific estimands remain owned by each model or experiment. Share a helper
+only when its behavior is equivalent and tests can establish that equivalence.
 
 ## Validate registry structure and references
 
