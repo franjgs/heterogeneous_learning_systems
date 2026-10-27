@@ -72,6 +72,7 @@ The catalog uses typed edges. Current canonical relation names and their domain/
 | from_study | result → study | Result provenance points to the study; it does not substitute for primary evidence. |
 | belongs_to | theoretical_result → study | The theory record is scoped to that study. |
 | supports | experiment → theoretical_result | The experiment provides evidence relevant to the theory record, not necessarily a proof. |
+| informed_by | scenario → study/result/theoretical_result; study → study/result/theoretical_result/model | A prior source motivates or constrains the design. It does not assert direct evidence for the target scenario, implementation reuse, equivalence, or validation. |
 
 Edges must target existing identifiers, must not self-reference, and must respect the domain/range table. Stronger claims such as equivalence, causation or generalization require explicit evidence and cannot be inferred from an edge called uses.
 

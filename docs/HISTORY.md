@@ -49,3 +49,9 @@ Evidence references: archive docs/research/CE-04/11_CONFIRMATORY_RESULTS.md, doc
 The active branch was reconstructed as a compact scientific core rather than as a copy of historical campaign directories. This was a repository and semantic decision, not a new scientific result: the historical branch remains the archive, while the active branch retains two small exact model implementations, tests and a structured catalog. The present consolidation adds canonical philosophy, doctrine, ontology, literature, bibliography and scientific chronology; it does not alter historical results or infer new experiment dates.
 
 Record date: 2026-10-27, verified from the current work session. The final commit records publication time separately and is not used as the date of an earlier scientific event.
+
+## 2026-10-27 — SOC selected as proposed first application testbed
+
+The research programme designated a simplified Security Operations Center as its first application testbed, with initial alert triage (L1) and deeper alert analysis (L2) represented as distinct processes. The first research dimension is competence heterogeneity: characterization, utilization, development, adaptation, benefits, costs and limitations. This records a research direction and scenario sketch only. No experiment, algorithm, client-specific workflow, competence dataset, or operational claim was approved or established. Existing synthetic HLS results are linked as conceptual precedents, not as SOC validation. The accessible historical material does not verify SOCTRA fields or provide an AIAI 2026 result demonstrating organizational-learning benefits.
+
+Evidence references: this dated research instruction; active catalog entities `scenario.soc_alert_operations` and `study.soc_competence_heterogeneity_testbed`; literature sources [@kersten2025tier1] and [@yang2024socalerts] describe other specific SOC studies and do not validate the proposed client testbed.

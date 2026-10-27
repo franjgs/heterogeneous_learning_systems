@@ -42,6 +42,12 @@ Fast/slow computation also has direct precedent in hybrid planning systems. Syst
 
 Human organization and AI routing are not semantically equivalent merely because both assign tasks to heterogeneous workers/models. Human learning, workload, accountability, job quality, privacy and social welfare may require additional constructs and evidence. The HLS framework permits these applications but provides no empirical validation of any real SOC or human organization in the current branch.
 
+### SOC alert work and the proposed HLS testbed
+
+Two primary studies help delimit, rather than validate, the proposed SOC application. Kersten et al. studied Tier-1 alert investigations with think-aloud work in one collaborating commercial SOC; their small cohorts showed that investigation processes varied across analysts and alert types, and evaluated a support tool in that setting [@kersten2025tier1]. Yang et al. analyzed four years of alert logs and attack ground truth from one real SOC, documenting that alert labels and operational outcomes are not reducible to a simple “true/false alert” distinction [@yang2024socalerts]. These are setting-specific studies; neither supplies the present testbed's client data, competence matrix, L1 decision semantics, L2 handoff, or outcome model.
+
+Candidate mechanisms can be drawn from established work on organizational learning and task allocation with training or transfer [@argote2011organizational; @baccara2023task; @nembhard2015selection]. For this application, they motivate separately testable constructs: experience-based updating, deliberate development, cross-analyst transfer, and assignment to tasks under workload constraints. The literature does not establish that any of these mechanisms occurs in the target SOC or improves its collective performance. A study must measure individual competence separately from experience and evaluate effects and costs at both individual and collective levels.
+
 ## What is established, and what remains open for HLS
 
 The literature already contains mature theories for information comparison, sequential decisions, resource allocation, queues, coordination, learning and contextual routing. HLS's current distinctive role is integrative and question-forming: requiring explicit links among scenario, organization, model and evaluation, and preserving distinctions between attainable capability and realized performance. That semantic organization is useful, but is not by itself a scientific discovery.

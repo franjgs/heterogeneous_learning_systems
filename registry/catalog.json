@@ -17,6 +17,19 @@
       "literature": "docs/LITERATURE.md",
       "research": "docs/RESEARCH.md",
       "history": "docs/HISTORY.md"
+    },
+    "first_research_dimension": {
+      "name": "Competence heterogeneity",
+      "scope": [
+        "characterization",
+        "utilization",
+        "development",
+        "adaptation",
+        "benefits",
+        "costs",
+        "limitations"
+      ],
+      "qualification": "A research priority; increased heterogeneity is not assumed to improve performance and does not redefine HLS."
     }
   },
   "entities": [
@@ -3591,6 +3604,152 @@
       "ontology_class": "result",
       "bibliography_refs": [],
       "evidence_maturity": "historical_documentary"
+    },
+    {
+      "id": "scenario.soc_alert_operations",
+      "type": "scenario",
+      "name": "SOC alert triage and deep analysis testbed",
+      "definition": "A proposed simplified application scenario for studying how heterogeneous human cyberanalyst competences are characterized, used and potentially developed across initial alert triage (L1) and deeper alert analysis (L2). It is a research specification, not a verified description of a particular client SOC.",
+      "scope": "Multi-client security operations are in scope as an application context; new clients, technologies and threats are possible future conditions. No operational dataset or client-specific process has been verified.",
+      "assumptions": [
+        "L1 and L2 are distinct conceptual processes supplied for this testbed; their workflow, authority, handoff and decision order in any real SOC remain unverified.",
+        "Analysts may differ in experience, knowledge and competence, but no individual competence values, distributions or validated measurement instruments are supplied.",
+        "Experience is not treated as a competence measurement or as evidence of learning.",
+        "Learning by doing, deliberate development, knowledge transfer, specialization and adaptation are candidate mechanisms, not established properties or guaranteed benefits.",
+        "Workload, alert classes, client mix, service times, deadlines, outcomes, costs, access rights and resource constraints require application-specific evidence or explicit future assumptions."
+      ],
+      "relationships": [
+        {
+          "kind": "informed_by",
+          "target": "study.static_allocation"
+        },
+        {
+          "kind": "informed_by",
+          "target": "theoretical_result.crossed_specialization_gain"
+        },
+        {
+          "kind": "informed_by",
+          "target": "result.mean_preserving_composition_effect"
+        },
+        {
+          "kind": "informed_by",
+          "target": "result.joint_structure_effect"
+        },
+        {
+          "kind": "informed_by",
+          "target": "study.dynamic_competence_development"
+        },
+        {
+          "kind": "informed_by",
+          "target": "result.transfer_effect_inconclusive"
+        },
+        {
+          "kind": "informed_by",
+          "target": "study.joint_competence_structure"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "proposed",
+      "scenario_contract": {
+        "agents": "Human cyberanalysts; heterogeneity in experience, knowledge and task-conditioned competence is part of the proposed scenario, but no individual data or distributions are available.",
+        "tasks": "L1 initial alert triage with two decisions (escalate or not; report or not); L2 deeper investigation of alerts designated for deeper analysis. Decision ordering and task taxonomy are unspecified.",
+        "capabilities": "Individual competence and capability must be operationalized separately; no competence values or measurement model are supplied. Collective attainable capability and realized collective performance are distinct targets.",
+        "dynamics": "The application may include multiple/new clients, technologies and threats. Arrival, client-mix, threat, learning, development, transfer and adaptation dynamics are unspecified.",
+        "constraints": "Real SOC staffing, authority, client contracts, tools, privacy/security rules, queue discipline, deadlines/SLA, resource limits and escalation/reporting procedures are not verified; they must be specified before modeling.",
+        "uncertainty": "Alert truth/outcomes, competence, workload, service duration, client context and threat novelty may be uncertain or partially observed; distributions and observation processes are not supplied."
+      },
+      "processes": [
+        {
+          "id": "L1",
+          "name": "Initial alert triage",
+          "description": "For an alert entering initial triage, represent the supplied decisions “escalate or not” and “report or not”. The relation and timing between the decisions must be specified for each future study; this is not asserted as the client’s real procedure."
+        },
+        {
+          "id": "L2",
+          "name": "Deep alert analysis",
+          "description": "Represent investigation of alerts requiring deeper analysis. Entry criteria, outputs, staffing and handoff from L1 are unresolved modeling choices, not verified client facts."
+        }
+      ],
+      "provenance_status": "Scenario scope comes from the 2026-10-27 research instruction. Historical repository audit material did not verify SOCTRA fields or client-level operational data; no AIAI 2026 organizational-learning result is available as evidence for this scenario.",
+      "ontology_class": "scenario",
+      "bibliography_refs": [
+        "kersten2025tier1",
+        "yang2024socalerts",
+        "argote2011organizational",
+        "baccara2023task",
+        "nembhard2015selection"
+      ],
+      "evidence_maturity": "not_independently_verified"
+    },
+    {
+      "id": "study.soc_competence_heterogeneity_testbed",
+      "type": "study",
+      "name": "Competence heterogeneity in SOC alert operations: proposed testbed",
+      "definition": "A proposed application testbed to investigate characterization and use of heterogeneous competencies in initial alert triage and deeper alert analysis, with possible later questions about development, adaptation, costs and limitations.",
+      "scope": "Proposal only. No model, protocol, data, experiment, result or real-SOC validation has been approved or executed.",
+      "assumptions": [
+        "The scenario contract and operational facts must be established before a study model or experiment is specified."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.soc_alert_operations"
+        },
+        {
+          "kind": "informed_by",
+          "target": "model.static_allocation"
+        },
+        {
+          "kind": "informed_by",
+          "target": "model.two_period_competence_development"
+        },
+        {
+          "kind": "informed_by",
+          "target": "study.dynamic_competence_development"
+        },
+        {
+          "kind": "informed_by",
+          "target": "result.mean_preserving_composition_effect"
+        },
+        {
+          "kind": "informed_by",
+          "target": "result.joint_structure_effect"
+        },
+        {
+          "kind": "informed_by",
+          "target": "result.transfer_effect_inconclusive"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "proposed",
+      "execution_status": "PROPOSED",
+      "scientific_outcome": "NOT_EVALUATED",
+      "start_date": null,
+      "completion_date": null,
+      "proposal_date": "2026-10-27",
+      "research_question": "How should competence heterogeneity among cyberanalysts be characterized, and under what evidenced workload, organizational and resource conditions does its utilization or development affect individual and collective performance across L1 triage and L2 analysis?",
+      "hypothesis": null,
+      "first_research_dimension": "Competence heterogeneity: characterization, utilization, development, adaptation, benefits, costs and limitations; no direction of effect is presumed.",
+      "planned_mechanisms": [
+        "task allocation",
+        "learning by doing",
+        "deliberate competence development",
+        "knowledge transfer",
+        "specialization",
+        "adaptation to clients, technologies and threats"
+      ],
+      "mechanism_status": "Candidates for future, separately specified research; none is claimed to describe actual client procedures or to improve performance.",
+      "ontology_class": "study",
+      "bibliography_refs": [
+        "kersten2025tier1",
+        "yang2024socalerts",
+        "argote2011organizational",
+        "baccara2023task",
+        "nembhard2015selection"
+      ],
+      "evidence_maturity": "not_independently_verified"
     }
   ],
   "aliases": {
@@ -3894,6 +4053,12 @@
         "scenario.fixed_model_candidate_queries"
       ],
       "kind": "historical_benchmark_alias"
+    },
+    "SOC testbed": {
+      "targets": [
+        "scenario.soc_alert_operations"
+      ],
+      "resolution": "Descriptive application alias for the proposed SOC alert operations scenario; not an active architecture name."
     }
   },
   "bibliography": {

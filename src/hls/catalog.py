@@ -22,6 +22,12 @@ RELATION_RANGES = {
     "from_study": {"result": {"study"}},
     "belongs_to": {"theoretical_result": {"study"}},
     "supports": {"experiment": {"theoretical_result"}},
+    # Contextual lineage: a precedent informs a proposal without asserting
+    # that the precedent is reused, equivalent, or direct evidence for it.
+    "informed_by": {
+        "scenario": {"study", "result", "theoretical_result"},
+        "study": {"study", "result", "theoretical_result", "model"},
+    },
 }
 
 

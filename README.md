@@ -10,6 +10,10 @@ The active core is deliberately small: two exact finite mathematical models with
 
 **Not demonstrated:** a universal benefit of heterogeneity, a general HLS algorithm, real-world SOC performance, general transfer or learning benefits, or the originality of the programme's broad framing. Read [the research record](docs/RESEARCH.md) for scope, evidence quality and limits.
 
+## First application testbed: SOC
+
+The proposed first application testbed is a simplified Security Operations Center with two distinct processes: initial alert triage (L1: escalate/report decisions) and deeper alert analysis (L2). It is a proposal, not a validated account of a particular client SOC. No client-level workflow, competence data, or operational dataset is currently verified. The first research dimension is competence heterogeneity and its characterization, utilization, development, adaptation, benefits and costs; increased heterogeneity is not presumed beneficial. See the [proposed study](docs/RESEARCH.md#competence-heterogeneity-in-soc-alert-operations-proposed-testbed) and [catalog entry](registry/catalog.json).
+
 ## Repository map
 
 | Path | Purpose |

@@ -57,6 +57,27 @@ def test_catalog_rejects_invalid_relation_domain_and_bibliography_key():
     assert any("unknown bibliography key" in issue for issue in issues)
 
 
+def test_informed_by_links_context_without_claiming_direct_reuse():
+    catalog = load_catalog(ROOT / "registry/catalog.json")
+    scenario = next(item for item in catalog["entities"] if item["id"] == "scenario.soc_alert_operations")
+    assert any(
+        relation == {"kind": "informed_by", "target": "result.mean_preserving_composition_effect"}
+        for relation in scenario["relationships"]
+    )
+    assert validate_catalog(catalog, ROOT) == []
+
+
+def test_soc_testbed_is_a_proposal_with_separate_l1_and_l2_processes():
+    catalog = load_catalog(ROOT / "registry/catalog.json")
+    entities = {item["id"]: item for item in catalog["entities"]}
+    scenario = entities["scenario.soc_alert_operations"]
+    study = entities["study.soc_competence_heterogeneity_testbed"]
+    assert [process["id"] for process in scenario["processes"]] == ["L1", "L2"]
+    assert study["execution_status"] == "PROPOSED"
+    assert study["scientific_outcome"] == "NOT_EVALUATED"
+    assert study["hypothesis"] is None
+
+
 def test_catalog_exposes_all_canonical_knowledge_documents():
     catalog = load_catalog(ROOT / "registry/catalog.json")
     assert set(catalog["program"]["documents"]) == {

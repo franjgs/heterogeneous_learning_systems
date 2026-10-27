@@ -30,6 +30,19 @@ These are open questions, not approved priorities or claims of originality.
 
 ## Retained studies
 
+### Competence heterogeneity in SOC alert operations: proposed testbed
+
+- **Stable ID:** `study.soc_competence_heterogeneity_testbed`; **application scenario:** `scenario.soc_alert_operations`.
+- **Proposal date:** 2026-10-27. No start or completion date; no experiment has been implemented or run.
+- **Question:** how should analyst competence heterogeneity be characterized, and under what evidenced workload, organizational and resource conditions does its utilization or development affect individual and collective performance across initial triage (L1) and deeper analysis (L2)?
+- **Scope:** L1 represents the supplied “escalate or not” and “report or not” decisions; L2 represents deeper investigation of alerts requiring it. The decision sequence, referral rules and outcomes are unspecified. The scenario concerns human cyberanalysts serving multiple clients, with possible new clients, technologies and threats; these are testbed scope, not facts about a verified client.
+- **First research dimension:** competence heterogeneity—characterization, utilization, development, adaptation, benefits, costs and limitations. No beneficial direction is presumed. Experience is not a competence measure; learning is not assumed to improve performance.
+- **Candidate mechanisms:** task allocation, learning by doing, deliberate development, knowledge transfer, specialization and adaptation. These are possible future constructs, not observed SOC procedures or validated effects.
+- **Evidence and reusable context:** exact finite allocation and development results, plus synthetic queue results on mean-preserving competence profiles and joint competence structure, may inform question formation. They are not SOC evidence and do not establish real-world benefits. Relevant SOC studies describe setting-specific Tier-1 investigation variation and alert-data interpretation [@kersten2025tier1; @yang2024socalerts]. General mechanisms have prior literature [@argote2011organizational; @baccara2023task; @nembhard2015selection].
+- **Status/outcome:** PROPOSED / NOT_EVALUATED.
+- **Limitations and prerequisites:** no client operational facts, dataset, SOCTRA schema, individual competence observations, validated measures, workload/process rates, deadlines, outcome adjudication, cost model, or learning/transfer transition has been verified. These must be established or explicitly modeled before protocol design. No AIAI 2026 result in the accessible repository demonstrates organizational learning benefits.
+- **Evidence maturity:** proposed testbed only; no empirical validation or reproducible experiment.
+
 ### Static allocation under task-dependent competence
 
 - **Stable ID:** `study.static_allocation`; **historical aliases:** G1, G1.1, G1.2.
