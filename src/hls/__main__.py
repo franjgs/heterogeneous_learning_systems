@@ -5,7 +5,7 @@ import argparse
 import json
 from pathlib import Path
 
-from hls.catalog import load_catalog, validate_catalog
+from hls.catalog import bibliography_keys, load_catalog, validate_catalog
 
 
 def main() -> int:
@@ -27,7 +27,8 @@ def main() -> int:
         counts = {}
         for item in data["entities"]:
             counts[item["type"]] = counts.get(item["type"], 0) + 1
-        print(json.dumps({"valid": True, "entities": len(data["entities"]), "by_type": counts}, sort_keys=True))
+        bib_keys, _ = bibliography_keys(path.parent.parent / data["bibliography"]["path"])
+        print(json.dumps({"valid": True, "entities": len(data["entities"]), "bibliography_entries": len(bib_keys), "by_type": counts}, sort_keys=True))
         return 0
     text = (args.text or "").casefold()
     hits = []

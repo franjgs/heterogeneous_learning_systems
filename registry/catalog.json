@@ -8,7 +8,16 @@
       "organization",
       "model",
       "performance evaluation"
-    ]
+    ],
+    "documents": {
+      "philosophy": "docs/PHILOSOPHY.md",
+      "doctrine": "docs/RESEARCH_DOCTRINE.md",
+      "ontology": "docs/ONTOLOGY.md",
+      "theory": "docs/THEORY.md",
+      "literature": "docs/LITERATURE.md",
+      "research": "docs/RESEARCH.md",
+      "history": "docs/HISTORY.md"
+    }
   },
   "entities": [
     {
@@ -31,7 +40,10 @@
         "dynamics": "Static; no learning",
         "constraints": "Compare a common agent across tasks against taskwise access",
         "uncertainty": "No stochastic outcome mechanism required; expected effectiveness is evaluated."
-      }
+      },
+      "ontology_class": "scenario",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "scenario.static_effectiveness_resource",
@@ -53,7 +65,10 @@
         "dynamics": "Static",
         "constraints": "Resource budget; time-sharing only where explicitly admissible",
         "uncertainty": "No stochastic outcome mechanism required."
-      }
+      },
+      "ontology_class": "scenario",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "scenario.two_period_competence_change",
@@ -75,7 +90,10 @@
         "dynamics": "Action-dependent deterministic competence increment",
         "constraints": "Terminal assignment among four allocations",
         "uncertainty": "None in the retained exact construction."
-      }
+      },
+      "ontology_class": "scenario",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "scenario.deadline_task_queue",
@@ -97,7 +115,10 @@
         "dynamics": "Poisson arrivals; service completion and queues",
         "constraints": "FCFS, one service per agent, deadline arrival+3, common admission rule",
         "uncertainty": "Poisson arrivals and lognormal service/correctness outcomes."
-      }
+      },
+      "ontology_class": "scenario",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "scenario.stationary_competence_structure_queue",
@@ -119,7 +140,10 @@
         "dynamics": "Stationary arrivals and service",
         "constraints": "P1 assignment, FCFS and deadline law inherited from queue scenario",
         "uncertainty": "Paired synthetic simulation across 30 seeds."
-      }
+      },
+      "ontology_class": "scenario",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "scenario.sequential_problem_belief",
@@ -141,7 +165,10 @@
         "dynamics": "Belief/history and computation state evolve by observations",
         "constraints": "Compute cost and stop/continue decisions",
         "uncertainty": "Frozen finite problem-belief domains and observation innovations."
-      }
+      },
+      "ontology_class": "scenario",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "scenario.prospective_adaptation_world",
@@ -163,7 +190,10 @@
         "dynamics": "Policy-dependent action and counterfactual continuation",
         "constraints": "Finite action/resource/information conditions",
         "uncertainty": "Finite synthetic worlds; reference population is not full state space."
-      }
+      },
+      "ontology_class": "scenario",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "organization.single_agent_for_all_tasks",
@@ -182,7 +212,10 @@
       ],
       "implementation": [],
       "evidence": [],
-      "status": "reusable"
+      "status": "reusable",
+      "ontology_class": "organization",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "organization.taskwise_agent_access",
@@ -201,7 +234,10 @@
       ],
       "implementation": [],
       "evidence": [],
-      "status": "reusable"
+      "status": "reusable",
+      "ontology_class": "organization",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "organization.fixed_competence_matrix",
@@ -215,7 +251,10 @@
       "relationships": [],
       "implementation": [],
       "evidence": [],
-      "status": "reusable"
+      "status": "reusable",
+      "ontology_class": "organization",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "organization.serial_agent_queues",
@@ -234,7 +273,10 @@
       ],
       "implementation": [],
       "evidence": [],
-      "status": "historical"
+      "status": "historical",
+      "ontology_class": "organization",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "organization.paired_specialist_vs_generalist",
@@ -253,7 +295,10 @@
       ],
       "implementation": [],
       "evidence": [],
-      "status": "historical"
+      "status": "historical",
+      "ontology_class": "organization",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "model.static_allocation",
@@ -280,7 +325,12 @@
       "status": "reusable",
       "mathematical_object": "2x2 fixed effectiveness matrix and task-1 demand probability in [0,1]",
       "inputs": "Four assignment expected-effectiveness values, same-agent/taskwise maxima, and their difference",
-      "outputs": "Finite deterministic expected-effectiveness optimization."
+      "outputs": "Finite deterministic expected-effectiveness optimization.",
+      "ontology_class": "model",
+      "bibliography_refs": [
+        "almeida2019multiskill"
+      ],
+      "evidence_maturity": "implementation_reference_present"
     },
     {
       "id": "model.resource_constrained_allocation",
@@ -307,7 +357,12 @@
       "status": "reusable",
       "mathematical_object": "2x2 effectiveness/resource pairs, task demand probability, resource budget",
       "inputs": "Feasible policy points, efficient hulls, and best effectiveness under budget",
-      "outputs": "Finite bicriterion allocation with optional convexified time-sharing."
+      "outputs": "Finite bicriterion allocation with optional convexified time-sharing.",
+      "ontology_class": "model",
+      "bibliography_refs": [
+        "almeida2019multiskill"
+      ],
+      "evidence_maturity": "implementation_reference_present"
     },
     {
       "id": "model.two_period_competence_development",
@@ -334,7 +389,14 @@
       "status": "reusable",
       "mathematical_object": "2x2 initial competence matrix, action-dependent increments, selected agent, future task mixture",
       "inputs": "Post-action competence, terminal assignment outcomes/frontier, immediate/future/total value differences",
-      "outputs": "Deterministic two-period finite transition and terminal allocation."
+      "outputs": "Deterministic two-period finite transition and terminal allocation.",
+      "ontology_class": "model",
+      "bibliography_refs": [
+        "puterman1994mdp",
+        "bertsekas2017dynamic",
+        "march1991exploration"
+      ],
+      "evidence_maturity": "implementation_reference_present"
     },
     {
       "id": "model.dynamic_deadline_allocation",
@@ -356,7 +418,13 @@
       "status": "historical",
       "mathematical_object": "Task arrivals, queue state, competence matrix or estimates, service-time law, deadlines and policy state",
       "inputs": "Agent choice/admission, task completion correctness/timing, collective on-time success and costs",
-      "outputs": "Discrete-event queue model with one FCFS queue per agent."
+      "outputs": "Discrete-event queue model with one FCFS queue per agent.",
+      "ontology_class": "model",
+      "bibliography_refs": [
+        "little1961proof",
+        "almeida2019multiskill"
+      ],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "model.sequential_computation_selection",
@@ -378,7 +446,13 @@
       "status": "historical",
       "mathematical_object": "Finite problem belief/history, computation options, signals, compute cost and stopping choices",
       "inputs": "Computation selection, terminal answer, physical reward and compute use",
-      "outputs": "Sequential decision model; not worker competence allocation."
+      "outputs": "Sequential decision model; not worker competence allocation.",
+      "ontology_class": "model",
+      "bibliography_refs": [
+        "puterman1994mdp",
+        "howard1966information"
+      ],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "model.prospective_information_development",
@@ -400,7 +474,13 @@
       "status": "historical",
       "mathematical_object": "Finite state/belief, available information, action-dependent state changes and continuation conditions",
       "inputs": "Action choice, counterfactual branch outcomes and model-specific current/future value",
-      "outputs": "Finite policy and counterfactual models; study-specific state populations."
+      "outputs": "Finite policy and counterfactual models; study-specific state populations.",
+      "ontology_class": "model",
+      "bibliography_refs": [
+        "blackwell1951comparison",
+        "puterman1994mdp"
+      ],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "evaluation.exact_finite_comparison",
@@ -414,7 +494,10 @@
       "relationships": [],
       "implementation": [],
       "evidence": [],
-      "status": "reusable"
+      "status": "reusable",
+      "ontology_class": "evaluation",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "evaluation.paired_seed_bootstrap",
@@ -428,7 +511,12 @@
       "relationships": [],
       "implementation": [],
       "evidence": [],
-      "status": "reusable"
+      "status": "reusable",
+      "ontology_class": "evaluation",
+      "bibliography_refs": [
+        "auer2002finite"
+      ],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "evaluation.on_time_collective_success",
@@ -442,7 +530,12 @@
       "relationships": [],
       "implementation": [],
       "evidence": [],
-      "status": "historical"
+      "status": "historical",
+      "ontology_class": "evaluation",
+      "bibliography_refs": [
+        "little1961proof"
+      ],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "study.static_allocation",
@@ -487,7 +580,10 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "experiment.crossed_specialization_control",
@@ -521,7 +617,10 @@
         }
       ],
       "evidence": [],
-      "status": "reproducible"
+      "status": "reproducible",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "implementation_reference_present"
     },
     {
       "id": "result.crossed_specialization_gain",
@@ -555,7 +654,10 @@
       ],
       "evidence_type": "exact_computation",
       "scientific_outcome": "POSITIVE",
-      "evidence_availability": "active_exact_model_available"
+      "evidence_availability": "active_exact_model_available",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
     },
     {
       "id": "study.dynamic_competence_development",
@@ -605,7 +707,14 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [
+        "baccara2023task",
+        "nembhard2015selection",
+        "argote2011organizational"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "experiment.frontier_null_control",
@@ -631,7 +740,10 @@
         }
       ],
       "evidence": [],
-      "status": "reproducible"
+      "status": "reproducible",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "implementation_reference_present"
     },
     {
       "id": "experiment.future_value_reversal_control",
@@ -657,7 +769,10 @@
         }
       ],
       "evidence": [],
-      "status": "reproducible"
+      "status": "reproducible",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "implementation_reference_present"
     },
     {
       "id": "result.state_change_without_frontier_change",
@@ -689,7 +804,10 @@
       ],
       "evidence_type": "exact_computation",
       "scientific_outcome": "NULL",
-      "evidence_availability": "active_exact_model_available"
+      "evidence_availability": "active_exact_model_available",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
     },
     {
       "id": "result.future_value_can_reverse_immediate_choice",
@@ -721,7 +839,10 @@
       ],
       "evidence_type": "exact_computation",
       "scientific_outcome": "POSITIVE",
-      "evidence_availability": "active_exact_model_available"
+      "evidence_availability": "active_exact_model_available",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
     },
     {
       "id": "study.joint_separated_policy_boundary",
@@ -755,7 +876,13 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [
+        "puterman1994mdp",
+        "malone1987coordination"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "theoretical_result.separated_policy_inclusion",
@@ -779,7 +906,10 @@
           "path": "docs/THEORY.md"
         }
       ],
-      "status": "conditional"
+      "status": "conditional",
+      "ontology_class": "theoretical_result",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "study.sequential_computation_selection",
@@ -833,7 +963,13 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [
+        "saha2025systemone",
+        "howard1966information"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.sequential_compute_vs_random",
@@ -867,7 +1003,10 @@
       ],
       "evidence_type": "confirmatory",
       "scientific_outcome": "AMBIGUOUS",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.joint_error_dependence",
@@ -910,7 +1049,10 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.error_dependence_changes_majority_risk",
@@ -942,7 +1084,10 @@
       ],
       "evidence_type": "exact_computation",
       "scientific_outcome": "POSITIVE",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.transfer_collective_effect",
@@ -993,7 +1138,13 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [
+        "nembhard2015selection",
+        "argote2011organizational"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.transfer_effect_inconclusive",
@@ -1025,7 +1176,10 @@
       ],
       "evidence_type": "inconclusive",
       "scientific_outcome": "INCONCLUSIVE",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.deadline_constrained_collective_allocation",
@@ -1092,7 +1246,13 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [
+        "little1961proof",
+        "almeida2019multiskill"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "experiment.deadline_queue_factorial",
@@ -1125,7 +1285,10 @@
       ],
       "implementation": [],
       "evidence": [],
-      "status": "historical_report_only"
+      "status": "historical_report_only",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "result.mean_preserving_composition_effect",
@@ -1157,7 +1320,10 @@
       ],
       "evidence_type": "confirmatory",
       "scientific_outcome": "POSITIVE",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.estimated_competence_penalty",
@@ -1189,7 +1355,10 @@
       ],
       "evidence_type": "confirmatory",
       "scientific_outcome": "NEGATIVE",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.competence_information_and_load",
@@ -1232,7 +1401,13 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [
+        "li2010contextual",
+        "little1961proof"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.external_calibration_effect",
@@ -1264,7 +1439,10 @@
       ],
       "evidence_type": "confirmatory",
       "scientific_outcome": "POSITIVE",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.composition_selection_diagnostics",
@@ -1307,7 +1485,10 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.joint_competence_structure",
@@ -1362,7 +1543,13 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [
+        "garicano2000hierarchies",
+        "almeida2019multiskill"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "experiment.matched_joint_structure_comparison",
@@ -1379,7 +1566,10 @@
       ],
       "implementation": [],
       "evidence": [],
-      "status": "historical_report_only"
+      "status": "historical_report_only",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "result.joint_structure_effect",
@@ -1413,7 +1603,10 @@
       ],
       "evidence_type": "confirmatory",
       "scientific_outcome": "POSITIVE",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.assignment_opportunity_value",
@@ -1456,7 +1649,10 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.prospective_adaptation",
@@ -1510,7 +1706,13 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [
+        "baccara2023task",
+        "puterman1994mdp"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "theoretical_result.static_feasible_outcome_set",
@@ -1534,7 +1736,10 @@
           "path": "docs/THEORY.md"
         }
       ],
-      "status": "conditional"
+      "status": "conditional",
+      "ontology_class": "theoretical_result",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "theoretical_result.crossed_specialization_gain",
@@ -1558,7 +1763,10 @@
           "path": "docs/THEORY.md"
         }
       ],
-      "status": "conditional"
+      "status": "conditional",
+      "ontology_class": "theoretical_result",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "theoretical_result.frontier_nonimplication",
@@ -1582,7 +1790,10 @@
           "path": "docs/THEORY.md"
         }
       ],
-      "status": "conditional"
+      "status": "conditional",
+      "ontology_class": "theoretical_result",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "theoretical_result.future_value_relevance",
@@ -1606,7 +1817,13 @@
           "path": "docs/THEORY.md"
         }
       ],
-      "status": "conditional"
+      "status": "conditional",
+      "ontology_class": "theoretical_result",
+      "bibliography_refs": [
+        "puterman1994mdp",
+        "bertsekas2017dynamic"
+      ],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "theoretical_result.current_future_value_decomposition",
@@ -1630,7 +1847,10 @@
           "path": "docs/THEORY.md"
         }
       ],
-      "status": "conditional"
+      "status": "conditional",
+      "ontology_class": "theoretical_result",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "theoretical_result.joint_class_value_inclusion",
@@ -1654,7 +1874,12 @@
           "path": "docs/THEORY.md"
         }
       ],
-      "status": "conditional"
+      "status": "conditional",
+      "ontology_class": "theoretical_result",
+      "bibliography_refs": [
+        "puterman1994mdp"
+      ],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "theoretical_result.equal_marginals_not_equal_collective_risk",
@@ -1678,7 +1903,10 @@
           "path": "docs/THEORY.md"
         }
       ],
-      "status": "conditional"
+      "status": "conditional",
+      "ontology_class": "theoretical_result",
+      "bibliography_refs": [],
+      "evidence_maturity": "not_independently_verified"
     },
     {
       "id": "scenario.finite_opportunity_decision_process",
@@ -1709,7 +1937,10 @@
         "dynamics": "Finite state transitions and continuation values",
         "constraints": "Model-specific action, information and resource feasibility",
         "uncertainty": null
-      }
+      },
+      "ontology_class": "scenario",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "model.assignment_opportunity_analysis",
@@ -1740,7 +1971,13 @@
       ],
       "mathematical_object": "Finite assignment state/action alternatives, transition and continuation values",
       "inputs": "Local ranking and root-level policy value comparisons",
-      "outputs": "Finite Bellman analysis; local inversion alone is insufficient."
+      "outputs": "Finite Bellman analysis; local inversion alone is insufficient.",
+      "ontology_class": "model",
+      "bibliography_refs": [
+        "puterman1994mdp",
+        "bertsekas2017dynamic"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.persistence_interaction_boundary",
@@ -1774,7 +2011,10 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.competence_priority_statistic",
@@ -1803,7 +2043,10 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.published_mechanism_reproductions",
@@ -1832,7 +2075,13 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [
+        "crowston1997coordination",
+        "garicano2000hierarchies"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.portfolio_learning_interference",
@@ -1861,7 +2110,13 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [
+        "march1991exploration",
+        "argote2011organizational"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.dynamic_model_selection",
@@ -1899,7 +2154,13 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [
+        "li2010contextual",
+        "wang2025mixllm"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.budgeted_model_routing",
@@ -1933,7 +2194,13 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [
+        "li2010contextual",
+        "wang2025mixllm"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.classifier_fusion_dependence",
@@ -1971,7 +2238,10 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.model_specific_execution_contracts",
@@ -2000,7 +2270,10 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.production_learning_integration",
@@ -2029,7 +2302,13 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [
+        "argote2011organizational",
+        "sutton2018reinforcement"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.empirical_vehicle_feasibility",
@@ -2058,7 +2337,10 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.state_discrimination_gates",
@@ -2087,7 +2369,10 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.counterfactual_engine_equivalence",
@@ -2116,7 +2401,10 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.persistence_fixture_boundary",
@@ -2149,7 +2437,10 @@
       ],
       "evidence_type": "exact_computation",
       "scientific_outcome": "NULL",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.priority_statistic_not_universal",
@@ -2182,7 +2473,10 @@
       ],
       "evidence_type": "exact_computation",
       "scientific_outcome": "NEGATIVE",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.bounded_mechanism_checks",
@@ -2215,7 +2509,10 @@
       ],
       "evidence_type": "technical_validation",
       "scientific_outcome": "NOT_EVALUATED",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.portfolio_compatibility_and_interference",
@@ -2248,7 +2545,10 @@
       ],
       "evidence_type": "exploratory",
       "scientific_outcome": "AMBIGUOUS",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.dynamic_selection_small_comparison",
@@ -2281,7 +2581,10 @@
       ],
       "evidence_type": "inconclusive",
       "scientific_outcome": "INCONCLUSIVE",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.budgeted_routing_cell_limited",
@@ -2314,7 +2617,10 @@
       ],
       "evidence_type": "exploratory",
       "scientific_outcome": "AMBIGUOUS",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.synthetic_fusion_dependence",
@@ -2347,7 +2653,10 @@
       ],
       "evidence_type": "exact_computation",
       "scientific_outcome": "POSITIVE",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.execution_contract_validation",
@@ -2380,7 +2689,10 @@
       ],
       "evidence_type": "technical_validation",
       "scientific_outcome": "NOT_EVALUATED",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.production_learning_evidence_incomplete",
@@ -2413,7 +2725,10 @@
       ],
       "evidence_type": "not_verified",
       "scientific_outcome": "INCONCLUSIVE",
-      "evidence_availability": "incomplete_historical_record"
+      "evidence_availability": "incomplete_historical_record",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "incomplete"
     },
     {
       "id": "result.empirical_vehicle_screen_only",
@@ -2446,7 +2761,10 @@
       ],
       "evidence_type": "technical_validation",
       "scientific_outcome": "NOT_EVALUATED",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.state_support_gate",
@@ -2479,7 +2797,10 @@
       ],
       "evidence_type": "technical_validation",
       "scientific_outcome": "NOT_EVALUATED",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.counterfactual_engine_gate_failed",
@@ -2512,7 +2833,10 @@
       ],
       "evidence_type": "technical_validation",
       "scientific_outcome": "NEGATIVE",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.contextual_capacity_selection",
@@ -2547,7 +2871,13 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [
+        "auer2002finite",
+        "li2010contextual"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.contextual_selection_cell_specific",
@@ -2581,7 +2911,10 @@
       ],
       "evidence_type": "exploratory",
       "scientific_outcome": "AMBIGUOUS",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.finite_assignment_comparison",
@@ -2623,7 +2956,10 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.finite_assignment_comparison_reported_values",
@@ -2657,7 +2993,10 @@
       ],
       "evidence_type": "exact_computation",
       "scientific_outcome": "POSITIVE",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.shared_budget_temporal_optimization",
@@ -2691,7 +3030,10 @@
       "start_date": null,
       "completion_date": null,
       "research_question": null,
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.shared_budget_temporal_optimization_reported_values",
@@ -2725,7 +3067,10 @@
       ],
       "evidence_type": "exact_computation",
       "scientific_outcome": "POSITIVE",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "policy.load_only_queue_dispatch",
@@ -2750,7 +3095,12 @@
           "availability": "source-branch-only",
           "role": "primary"
         }
-      ]
+      ],
+      "ontology_class": "policy",
+      "bibliography_refs": [
+        "little1961proof"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "policy.known_competence_deadline_dispatch",
@@ -2775,7 +3125,13 @@
           "availability": "source-branch-only",
           "role": "primary"
         }
-      ]
+      ],
+      "ontology_class": "policy",
+      "bibliography_refs": [
+        "almeida2019multiskill",
+        "little1961proof"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "policy.estimated_competence_deadline_dispatch",
@@ -2800,7 +3156,13 @@
           "availability": "source-branch-only",
           "role": "primary"
         }
-      ]
+      ],
+      "ontology_class": "policy",
+      "bibliography_refs": [
+        "li2010contextual",
+        "auer2002finite"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "policy.contextual_deadline_dispatch",
@@ -2825,7 +3187,13 @@
           "availability": "source-branch-only",
           "role": "primary"
         }
-      ]
+      ],
+      "ontology_class": "policy",
+      "bibliography_refs": [
+        "li2010contextual",
+        "sutton2018reinforcement"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "policy.same_agent_task_assignment",
@@ -2850,7 +3218,10 @@
           "availability": "source-branch-only",
           "role": "primary"
         }
-      ]
+      ],
+      "ontology_class": "policy",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "policy.taskwise_competence_assignment",
@@ -2875,7 +3246,10 @@
           "availability": "source-branch-only",
           "role": "primary"
         }
-      ]
+      ],
+      "ontology_class": "policy",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "policy.prospective_computation_selection",
@@ -2900,7 +3274,13 @@
           "availability": "source-branch-only",
           "role": "primary"
         }
-      ]
+      ],
+      "ontology_class": "policy",
+      "bibliography_refs": [
+        "howard1966information",
+        "blackwell1951comparison"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "scenario.synthetic_joint_classifier_errors",
@@ -2931,7 +3311,10 @@
         "dynamics": "Static joint error draw",
         "constraints": "Majority aggregation",
         "uncertainty": "Two exact joint probability laws."
-      }
+      },
+      "ontology_class": "scenario",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "scenario.synthetic_transfer_tasks",
@@ -2962,7 +3345,10 @@
         "dynamics": "Initial training, then one recipient update on task 3",
         "constraints": "Paired seeds; held-out test; no hyperparameter change after test",
         "uncertainty": "Synthetic data generation and model initialization."
-      }
+      },
+      "ontology_class": "scenario",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "scenario.fixed_model_candidate_queries",
@@ -2993,7 +3379,10 @@
         "dynamics": "Static candidates; contextual selection per query",
         "constraints": "Held-out query evaluation; no deployable retrospective oracle",
         "uncertainty": "Observed latency and query-specific outcomes."
-      }
+      },
+      "ontology_class": "scenario",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "scenario.budgeted_model_query_routing",
@@ -3024,7 +3413,10 @@
         "dynamics": "Per-query routing under a budget",
         "constraints": "Declared pilot budget and candidate set",
         "uncertainty": "Predictor error and task/candidate outcomes."
-      }
+      },
+      "ontology_class": "scenario",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "model.joint_error_risk",
@@ -3055,7 +3447,10 @@
           "role": "primary"
         }
       ],
-      "mathematical_object": "Joint distribution over binary classifier error indicators and a decision aggregation rule"
+      "mathematical_object": "Joint distribution over binary classifier error indicators and a decision aggregation rule",
+      "ontology_class": "model",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "model.transfer_distillation_comparison",
@@ -3086,7 +3481,10 @@
           "role": "primary"
         }
       ],
-      "mathematical_object": "Synthetic task examples, labels, donor probability outputs and recipient model update conditions"
+      "mathematical_object": "Synthetic task examples, labels, donor probability outputs and recipient model update conditions",
+      "ontology_class": "model",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "model.fixed_candidate_quality_latency",
@@ -3117,7 +3515,13 @@
           "role": "primary"
         }
       ],
-      "mathematical_object": "Held-out queries, fixed candidate outputs, quality labels/metrics and measured latency"
+      "mathematical_object": "Held-out queries, fixed candidate outputs, quality labels/metrics and measured latency",
+      "ontology_class": "model",
+      "bibliography_refs": [
+        "li2010contextual",
+        "wang2025mixllm"
+      ],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "study.finite_service_assignment_solver_checks",
@@ -3146,7 +3550,10 @@
       "start_date": null,
       "completion_date": null,
       "research_question": "How do service assumptions, assignment rules and tie handling affect finite solver comparisons?",
-      "hypothesis": null
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     },
     {
       "id": "result.finite_solver_tie_sensitivity",
@@ -3180,7 +3587,10 @@
       ],
       "evidence_type": "exact_computation",
       "scientific_outcome": "AMBIGUOUS",
-      "evidence_availability": "historical_summary_only"
+      "evidence_availability": "historical_summary_only",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "historical_documentary"
     }
   ],
   "aliases": {
@@ -3485,5 +3895,10 @@
       ],
       "kind": "historical_benchmark_alias"
     }
+  },
+  "bibliography": {
+    "path": "references/hls.bib",
+    "format": "BibTeX",
+    "document": "docs/LITERATURE.md"
   }
 }

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -10,6 +11,59 @@ REQUIRED = {"id", "type", "name", "definition", "scope", "assumptions", "relatio
 EXECUTION_STATUSES = {"PROPOSED", "IMPLEMENTED", "EXECUTED", "EVALUATED", "VALIDATED", "CLOSED", "SUSPENDED", "INVALIDATED", "PENDING"}
 SCIENTIFIC_OUTCOMES = {"POSITIVE", "NEGATIVE", "NULL", "AMBIGUOUS", "INCONCLUSIVE", "INVALID", "NOT_EVALUATED"}
 EVIDENCE_TYPES = {"formal_proof", "exact_computation", "confirmatory", "exploratory", "negative", "inconclusive", "technical_validation", "not_verified"}
+EVIDENCE_MATURITY = {"current_reproducible", "historical_documentary", "incomplete", "implementation_reference_present", "not_independently_verified"}
+RELATION_RANGES = {
+    "uses": {"study": {"scenario", "organization", "model"}, "model": {"scenario"}, "experiment": {"policy"}},
+    "evaluated_by": {"study": {"evaluation"}},
+    "evaluated_in": {"organization": {"scenario"}},
+    "compares": {"study": {"policy"}},
+    "study": {"experiment": {"study"}, "result": {"study"}, "theoretical_result": {"study"}},
+    "from": {"result": {"experiment"}},
+    "from_study": {"result": {"study"}},
+    "belongs_to": {"theoretical_result": {"study"}},
+    "supports": {"experiment": {"theoretical_result"}},
+}
+
+
+def bibliography_keys(path: str | Path) -> tuple[set[str], list[str]]:
+    """Read citation keys from a deliberately small, brace-balanced BibTeX file."""
+    source = Path(path).read_text(encoding="utf-8")
+    keys: set[str] = set()
+    issues: list[str] = []
+    cursor = 0
+    pattern = re.compile(r"@([A-Za-z]+)\s*\{")
+    while match := pattern.search(source, cursor):
+        depth, quoted, escaped, end = 1, False, False, match.end()
+        while end < len(source) and depth:
+            char = source[end]
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == '"':
+                quoted = not quoted
+            elif not quoted and char == "{":
+                depth += 1
+            elif not quoted and char == "}":
+                depth -= 1
+            end += 1
+        if depth:
+            issues.append(f"unclosed BibTeX entry at character {match.start()}")
+            break
+        body = source[match.end():end - 1]
+        key = body.split(",", 1)[0].strip()
+        if not key or not re.fullmatch(r"[A-Za-z0-9:_-]+", key):
+            issues.append(f"invalid BibTeX key at character {match.start()}")
+        elif key in keys:
+            issues.append(f"duplicate BibTeX key {key}")
+        else:
+            keys.add(key)
+        cursor = end
+    if not keys:
+        issues.append("bibliography contains no BibTeX entries")
+    if re.search(r"(?m)^\s*@\w+\s*\(", source):
+        issues.append("BibTeX parenthesized entries are unsupported; use braces")
+    return keys, issues
 
 
 def load_catalog(path: str | Path) -> dict[str, Any]:
@@ -27,6 +81,20 @@ def validate_catalog(data: dict[str, Any], repository_root: str | Path) -> list[
     if not isinstance(entities, list):
         return ["entities must be a list"]
     ids: set[str] = set()
+    bibliography = data.get("bibliography", {})
+    bib_path = root / bibliography.get("path", "") if isinstance(bibliography, dict) else root / "__missing_bibliography__"
+    if not isinstance(bibliography, dict) or not bibliography.get("path") or not bib_path.is_file():
+        issues.append("catalog bibliography path is missing")
+        bib_keys: set[str] = set()
+    else:
+        bib_keys, bib_issues = bibliography_keys(bib_path)
+        issues.extend(bib_issues)
+        if bibliography.get("format") != "BibTeX":
+            issues.append("catalog bibliography format must be BibTeX")
+        document = bibliography.get("document")
+        if not isinstance(document, str) or not (root / document).is_file():
+            issues.append("catalog literature document is missing")
+    types_by_id = {item.get("id"): item.get("type") for item in entities if isinstance(item, dict)}
     for index, item in enumerate(entities):
         if not isinstance(item, dict):
             issues.append(f"entities[{index}] must be an object")
@@ -37,6 +105,17 @@ def validate_catalog(data: dict[str, Any], repository_root: str | Path) -> list[
             continue
         if item["type"] not in ENTITY_TYPES:
             issues.append(f"{item['id']}: unknown type {item['type']}")
+        if item.get("ontology_class") != item["type"]:
+            issues.append(f"{item['id']}: ontology_class must match its catalog entity type")
+        if item.get("evidence_maturity") not in EVIDENCE_MATURITY:
+            issues.append(f"{item['id']}: invalid or missing evidence_maturity")
+        refs = item.get("bibliography_refs", [])
+        if not isinstance(refs, list):
+            issues.append(f"{item['id']}: bibliography_refs must be a list")
+        else:
+            for key in refs:
+                if key not in bib_keys:
+                    issues.append(f"{item['id']}: unknown bibliography key {key}")
         if not isinstance(item["id"], str) or not item["id"].startswith(item["type"] + "."):
             issues.append(f"{item['id']}: primary id must be descriptive and type-prefixed")
         if item["id"] in ids:
@@ -79,6 +158,10 @@ def validate_catalog(data: dict[str, Any], repository_root: str | Path) -> list[
                 issues.append(f"{item['id']}: malformed relationship")
             elif relation["target"] == item["id"]:
                 issues.append(f"{item['id']}: self-reference is not allowed")
+            elif relation["kind"] not in RELATION_RANGES:
+                issues.append(f"{item['id']}: unknown relationship type {relation['kind']}")
+            elif item["type"] not in RELATION_RANGES[relation["kind"]] or types_by_id.get(relation["target"]) not in RELATION_RANGES[relation["kind"]].get(item["type"], set()):
+                issues.append(f"{item['id']}: invalid domain/range for {relation['kind']} -> {relation['target']}")
         for field in ("implementation", "evidence"):
             for ref in item.get(field, []):
                 if ref.get("kind") == "local":
@@ -118,4 +201,8 @@ def validate_catalog(data: dict[str, Any], repository_root: str | Path) -> list[
         issues.append("unsupported catalog version")
     if not isinstance(data.get("program"), dict) or not isinstance(data["program"].get("conceptual_levels"), list):
         issues.append("program conceptual levels are missing")
+    documents = data.get("program", {}).get("documents", {})
+    for name, path in documents.items():
+        if not isinstance(path, str) or not (root / path).is_file():
+            issues.append(f"program document {name} is missing: {path}")
     return issues

@@ -1,7 +1,7 @@
 from pathlib import Path
 import re
 
-from hls.catalog import load_catalog, validate_catalog
+from hls.catalog import bibliography_keys, load_catalog, validate_catalog
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -35,3 +35,42 @@ def test_active_implementation_paths_use_scientific_names():
     for base in (ROOT / "src", ROOT / "studies", ROOT / "tests"):
         for path in base.rglob("*"):
             assert not historical.search(path.relative_to(ROOT).as_posix()), path
+
+
+def test_every_literature_citation_resolves_to_bibtex_key():
+    keys, issues = bibliography_keys(ROOT / "references/hls.bib")
+    assert issues == []
+    text = "\n".join(path.read_text() for path in (ROOT / "docs").glob("*.md"))
+    citations = set(re.findall(r"@([A-Za-z0-9:_-]+)", text))
+    assert citations
+    assert citations <= keys
+
+
+def test_catalog_rejects_invalid_relation_domain_and_bibliography_key():
+    catalog = load_catalog(ROOT / "registry/catalog.json")
+    model = next(item for item in catalog["entities"] if item["type"] == "model")
+    policy = next(item for item in catalog["entities"] if item["type"] == "policy")
+    model["relationships"].append({"kind": "compares", "target": policy["id"]})
+    model["bibliography_refs"].append("missing_reference")
+    issues = validate_catalog(catalog, ROOT)
+    assert any("invalid domain/range" in issue for issue in issues)
+    assert any("unknown bibliography key" in issue for issue in issues)
+
+
+def test_catalog_exposes_all_canonical_knowledge_documents():
+    catalog = load_catalog(ROOT / "registry/catalog.json")
+    assert set(catalog["program"]["documents"]) == {
+        "philosophy", "doctrine", "ontology", "theory",
+        "literature", "research", "history",
+    }
+    assert all((ROOT / path).is_file() for path in catalog["program"]["documents"].values())
+
+
+def test_canonical_markdown_local_links_resolve():
+    documents = [ROOT / "README.md", *sorted((ROOT / "docs").glob("*.md"))]
+    for source in documents:
+        for target in re.findall(r"\]\(([^)]+)\)", source.read_text()):
+            target = target.split("#", 1)[0].split("?", 1)[0]
+            if not target or re.match(r"^[a-zA-Z][a-zA-Z0-9+.-]*:", target):
+                continue
+            assert (source.parent / target).exists(), f"{source.relative_to(ROOT)} -> {target}"

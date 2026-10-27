@@ -1,8 +1,32 @@
 # Research record
 
-This is the compact scientific record for the rebuilt branch. The catalog in `registry/catalog.json` is the machine-readable index; this document explains what the retained evidence supports and what it does not. Source path and commit references point to the preserved historical branch `feature/hls-laboratory-v1` at `c81def3b5280b0f59d6dcbfd3e25df8805f5013c`. A statement in this record is not independently reproducible unless its listed active implementation and small evidence are retained here.
+This is the evidence-oriented account of what HLS investigated and learned, not an activity log. The catalog in registry/catalog.json is the machine-readable index; this document records scope, conclusions and limitations. Historical source citations refer to feature/hls-laboratory-v1 at commit c81def3b5280b0f59d6dcbfd3e25df8805f5013c unless a different source is stated. The current branch has directly executable evidence only where an active implementation, fixture and test are identified. A documented historical summary is not equivalent to replayable raw data.
 
-**Execution status** describes work performed. **Outcome** describes the scientific finding. A closed study may have a valid positive, negative, null, or inconclusive result. Unknown dates remain unknown; no date is inferred from a commit.
+Execution status describes work performed; scientific outcome describes what the evidence supports. Closed does not mean positive, validated or universal. Unknown dates remain unknown; commit time is not substituted for experiment time. Each entry gives its stable catalog ID, question, model/scenario, evidence, conclusion, status, limits and source path. Hypotheses absent from the primary record are not reconstructed as preregistered hypotheses.
+
+## Programme-level account
+
+HLS has investigated finite static allocation, action-dependent competence change, assignment and continuation value, information-sensitive decisions, sequential computation, joint error dependence, transfer, contextual selection, dynamic deadline allocation and matched-marginal competence structures. Across these settings, the most defensible recurring lesson is conditional: individual competence distributions do not determine realized collective performance without the task distribution, feasible organization, policy information, dynamics and evaluation contract.
+
+Two exact finite model families are runnable in this branch: static task allocation and two-period competence development. Their code and tests support those specific constructions. Most empirical-looking campaign numbers below are results from synthetic simulations in the historical source branch. Their reports survive as documentary summaries, while raw traces and campaign runners do not; do not call them independently reproduced in this branch.
+
+The record includes favorable finite/synthetic contrasts and important non-results: a registered persistence interaction campaign was not executed; the initial transfer result is inconclusive; a corrected small model-selection comparison is inconclusive; the first CE-07 attempt had a nonstationary-demand protocol deviation and is excluded; and the surviving matched-marginal CE-07 result is limited to one synthetic scenario and policy. These outcomes constrain the claims; none establishes general HLS superiority.
+
+## What can be reused
+
+- Exact finite static and dynamic constructions can be run with the active Python package and are useful for checking derivations or creating small counterexamples.
+- The normalized scenario/organization/model/evaluation distinctions and catalog validator can support a new study semantic and provenance checks.
+- Historical queue, bandit, routing, learning, transfer and sequential-computation results are design precedents only in this branch: their scientific meanings and reported findings are summarized, but their old implementations and raw outputs are not reusable executables here.
+- A reader may use a historical report as documentary evidence, but any claim needing raw reanalysis requires recovery from the archive or a new, separately specified study.
+
+## Open research questions suggested by the record
+
+1. Under what formal conditions does a compact representation of individual capabilities preserve the decision value of a richer representation across a declared class of organizational constraints?
+2. Which mechanisms explain when equal marginal competence distributions but different joint structures change collective performance, beyond the single synthetic queue/P1 contrast?
+3. How should experience-driven competence change, observation cost and organizational reassignment be jointly evaluated when the states and feedback are endogenous?
+
+These are open questions, not approved priorities or claims of originality.
+
 
 ## Retained studies
 

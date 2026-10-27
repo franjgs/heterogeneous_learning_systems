@@ -96,6 +96,8 @@ Here \(ND\) retains Pareto-nondominated outcomes. The definitions distinguish fe
 
 **Organizational realization:** describes how an admissible organization/policy selects actions that realize outcomes in the feasible set. It is a mapping, not an additional performance guarantee.
 
+**Policy-class inclusion proposition.** If \(\Pi_{SEP}\subseteq\Pi_{HLS}\), both classes are evaluated under the same state/world, feasible constraints, information, outcome functional and objective, then \(\sup_{\pi\in\Pi_{SEP}}J(\pi)\leq\sup_{\pi\in\Pi_{HLS}}J(\pi)\). This is the standard supremum-over-subset inequality. If both maxima are attained, equality holds exactly when at least one HLS-maximizing policy belongs to \(\Pi_{SEP}\): one direction follows because such a policy attains the HLS maximum in SEP; in the other direction, an SEP maximizer attaining the common maximum is also HLS-optimal. Without the common evaluation contract or attainment, this iff statement does not follow as written. This result says nothing about how often strict inequality occurs or whether a particular organization can implement the larger class.
+
 ### Exact finite static allocation results
 
 The retained two-agent/two-task cases are exact finite constructions. For crossed specialization with task success/effectiveness matrix \((y_{11},y_{12};y_{21},y_{22})\), and \(p=P(q_1)\), the best one-agent policy is compared with task-wise routing. If strict crossed advantage holds, let \(A_1=|y_{11}-y_{21}|\), \(A_2=|y_{12}-y_{22}|\). Then:
@@ -142,6 +144,12 @@ The retained deterministic two-agent × two-task × two-period model with a spec
 
 The source theory and exact finite derivations were at source commit `c81def3b5280b0f59d6dcbfd3e25df8805f5013c` on `feature/hls-laboratory-v1`. The static/dynamic definitions, finite allocation and competence-development calculations, and the conditional policy-inclusion proof are reproduced in this file. The two retained finite model computations have active exact implementations and tests in `src/hls/`. Other source proofs or model-specific propositions not reproduced here remain historical source-branch evidence; do not call them independently reproduced by this compact branch.
 
-## 7. Open theoretical questions
+## 7. Relationship to established theory
+
+The finite allocation comparisons are instances of constrained assignment and Pareto analysis; their class-inclusion inequalities follow from feasible-set inclusion, not a new general optimization principle. The dynamic recursion and continuation terms are standard dynamic-programming objects [@puterman1994mdp; @bertsekas2017dynamic]. The value of acquiring decision-relevant information connects to value-of-information theory and comparison of experiments [@howard1966information; @blackwell1951comparison; @blackwell1953equivalent]. Queueing and deadline results require queue-specific assumptions; the classical long-run queue identity is not a deadline-success theorem [@little1961proof]. Task allocation with endogenous training and organizational learning is also established prior work [@baccara2023task; @nembhard2015selection]. These connections interpret the retained constructions and do not extend their scope.
+
+The active exact implementations are in src/hls/static_assignment.py and src/hls/dynamic_development.py, with small study runners and contract tests. Historical source commit c81def3b5280b0f59d6dcbfd3e25df8805f5013c contains derivations at the paths recorded in docs/RESEARCH.md and registry/catalog.json. Only results whose arguments are reproduced here are presented as independently checked in this branch; remaining source propositions are historical and unverified here.
+
+## 8. Open theoretical questions
 
 The retained source identifies, but does not solve generally: sufficient information for collective decisions under changing organizational constraints; conditions for a strict root-level joint/separated value gap; conditions under which learning changes an efficient frontier rather than only an individual state; predictive value of competence development across environments; causal pathways from organization to collective performance; and transferability of finite results across task/demand structures. These are open questions, not established HLS laws.
