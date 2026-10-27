@@ -15,12 +15,19 @@ def test_every_foundation_result_has_consistent_manifest():
     result_dirs = sorted(
         path.parent for path in RESULTS.glob("*/metrics.json")
     )
-    assert len(result_dirs) == 11
+    assert len(result_dirs) == 12
+    unmanifested = {path.name for path in result_dirs if not (path / "manifest.json").exists()}
+    assert unmanifested == {"b13_joint_value"}
 
     for result_dir in result_dirs:
         metrics = json.loads((result_dir / "metrics.json").read_text())
         manifest_path = result_dir / "manifest.json"
-        assert manifest_path.exists(), result_dir
+        if not manifest_path.exists():
+            # B13 predates the manifest contract; do not invent provenance
+            # metadata or treat its metrics as covered by another manifest.
+            assert result_dir.name == "b13_joint_value"
+            assert metrics["experiment_id"] == "B13"
+            continue
         manifest = json.loads(manifest_path.read_text())
 
         assert manifest["schema_version"] == 1

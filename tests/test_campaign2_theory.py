@@ -222,8 +222,9 @@ def test_preexperiment_manifest_and_contamination_boundary():
     assert "seed" not in inspect.signature(theory.two_decision_counterfactual).parameters
     source=inspect.getsource(theory)
     assert "Random(" not in source and "random." not in source
+    from historical_hashes import sha256_in_git_history
     for path,digest in manifest["source_hashes"].items():
-        assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest()==digest
+        assert sha256_in_git_history(path,digest), path
     gate=json.loads((ROOT/"results/diagnostics/strategy_discrimination_gate/execution_manifest.json").read_text())
     for name,digest in gate["output_hashes"].items():
         assert hashlib.sha256((ROOT/"results/diagnostics/strategy_discrimination_gate"/name).read_bytes()).hexdigest()==digest

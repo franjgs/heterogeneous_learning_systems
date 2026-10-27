@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 
 import torch
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 PATH = ROOT / "experiments/foundations/b4_protected_development/run.py"
@@ -35,6 +36,13 @@ def test_zero_epsilon_acceptance_uses_f0_reference():
     assert not b4.accept_block(reference, local, "photo")
 
 
+def test_protection_seed_is_stable_and_cell_specific():
+    first=b4.protection_seed(0,"photo",1,42)
+    assert first==b4.protection_seed(0,"photo",1,42)
+    assert len(first)==32
+    assert first!=b4.protection_seed(0,"photo",0,42)
+
+
 def test_rejected_block_restores_model_and_optimizer_bitwise():
     torch.manual_seed(1)
     model = torch.nn.Linear(3, 2)
@@ -50,6 +58,10 @@ def test_rejected_block_restores_model_and_optimizer_bitwise():
 
 
 def test_protection_manifest_is_train_only_balanced_and_deterministic():
+    from historical_hashes import missing_recorded_artifacts
+    for manifest in (b4.DEFAULT_B23_OUTPUT/"run_manifest.json", b4.DEFAULT_B24_OUTPUT/"run_manifest.json"):
+        if missing:=missing_recorded_artifacts(manifest):
+            pytest.skip(f"historical B2.3/B2.4 artifacts are not present locally: {missing[0]}")
     first = b4.build_protection_manifest(b4.DEFAULT_MANIFEST, b4.DEFAULT_B23_OUTPUT, b4.DEFAULT_B24_OUTPUT)
     second = b4.build_protection_manifest(b4.DEFAULT_MANIFEST, b4.DEFAULT_B23_OUTPUT, b4.DEFAULT_B24_OUTPUT)
     assert first["manifest_sha256"] == second["manifest_sha256"]

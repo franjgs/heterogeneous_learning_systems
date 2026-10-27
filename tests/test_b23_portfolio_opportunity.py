@@ -330,6 +330,16 @@ def test_genealogy_metadata_rejects_sequential_parent_by_exact_hash(tmp_path):
     assert manifest.valid_file("Fi", {"artifact_type": "singleton", "parent_f0_sha256": "another-derived-state"}) is None
 
 
+def test_checkpoint_record_validation_uses_exact_fixture_hash(tmp_path):
+    path=tmp_path/"fixture.pt"
+    torch.save({"evaluation_split":"validation","test_used":False},path)
+    record={"artifact_type":"F0","status":"complete","path":str(path),"sha256":b23.sha256_file(path)}
+    assert analysis.validate_checkpoint_record(record,"fixture-F0","F0")["evaluation_split"]=="validation"
+    path.write_bytes(path.read_bytes()+b"changed")
+    with pytest.raises(RuntimeError,match="missing or corrupt artifact"):
+        analysis.validate_checkpoint_record(record,"fixture-F0","F0")
+
+
 def test_dry_run_and_analyze_only_guards_never_train_or_query_teacher(monkeypatch, tmp_path):
     called = []
     assert b23.execute_training(False, lambda: called.append("trained")) is None

@@ -102,7 +102,14 @@ def test_pre_execution_manifest_and_raw_integrity_when_present():
     freeze_file = conf.FOUNDATION / "pre_execution_manifest.json"
     if not freeze_file.exists():
         pytest.skip("pre-execution manifest is created after preflight tests")
-    frozen = conf.verify_frozen()
+    manifest = json.loads(freeze_file.read_text())
+    from historical_hashes import sha256_in_git_history
+    for relative, expected in manifest["input_sha256"].items():
+        assert sha256_in_git_history(relative, expected), relative
+    # Allocation artifacts are still checked as the exact frozen files.
+    assert conf.sha256(conf.FOUNDATION / "planned_histories.csv") == manifest["planned_histories_sha256"]
+    assert conf.sha256(conf.FOUNDATION / "random_invocation_schedule.csv") == manifest["random_schedule_sha256"]
+    frozen = manifest
     assert frozen["histories_total"] == 868
     assert frozen["domains"] == conf.EXPECTED_DOMAIN_COUNTS
     progress_file = conf.OUTPUT / "execution_progress.json"

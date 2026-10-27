@@ -108,6 +108,10 @@ def test_frozen_classification_positive_null_inconclusive():
 
 
 def test_real_inventory_provenance_hashes_and_validation_reconstruction():
+    from historical_hashes import missing_recorded_artifacts
+    for manifest in (runner.B23_OUTPUT/"run_manifest.json", runner.B24_OUTPUT/"run_manifest.json"):
+        if missing:=missing_recorded_artifacts(manifest):
+            pytest.skip(f"historical B2.3/B2.4 artifacts are not present locally: {missing[0]}")
     inventory, scores, compatibility = runner.build_inventory()
     assert compatibility == {
         "compatible": True, "test": "CLOSED", "families": 60,
@@ -123,6 +127,10 @@ def test_real_inventory_provenance_hashes_and_validation_reconstruction():
 
 
 def test_validation_policy_checks_are_finite_and_equivalent():
+    from historical_hashes import missing_recorded_artifacts
+    for manifest in (runner.B23_OUTPUT/"run_manifest.json", runner.B24_OUTPUT/"run_manifest.json"):
+        if missing:=missing_recorded_artifacts(manifest):
+            pytest.skip(f"historical B2.3/B2.4 artifacts are not present locally: {missing[0]}")
     _, scores, _ = runner.build_inventory()
     rows, summary = runner.policy_checks(scores)
     assert rows

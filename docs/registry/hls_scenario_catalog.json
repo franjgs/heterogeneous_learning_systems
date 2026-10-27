@@ -1,6 +1,7 @@
 {
   "schema_version": "1.0",
   "catalog_type": "hls_scientific_scenario_catalog",
+  "description": "Catalog of source-identified scientific scenarios only. Research without a verified scenario is not given a placeholder; the component graph retains all research and result traceability. Four result records therefore remain linked to their studies without scenario attribution.",
   "domains": [
     {
       "domain_id": "structure_of_capabilities",
@@ -82,8 +83,7 @@
         "SCN_S3B_CONTEXTUAL_CAPACITY_SELECTION_STATES",
         "SCN_SYNTHETIC_DYNAMIC_TASK_QUEUES_DEADLINES_THREE_SCALES_AND_FOUR_TASK_FAM",
         "SCN_SYNTHETIC_N_12_K_4_STATIONARY_EQUIPROBABLE_TASK_FAMILIES",
-        "SCN_THREE_SYNTHETIC_BINARY_CLASSIFICATION_TASKS_T1T3",
-        "UNRESOLVED_MINIMAL_HLS_OPV"
+        "SCN_THREE_SYNTHETIC_BINARY_CLASSIFICATION_TASKS_T1T3"
       ]
     },
     {
@@ -116,8 +116,7 @@
         "SCN_S3B_CONTEXTUAL_CAPACITY_SELECTION_STATES",
         "SCN_SYNTHETIC_DYNAMIC_TASK_QUEUES_DEADLINES_THREE_SCALES_AND_FOUR_TASK_FAM",
         "SCN_THREE_SYNTHETIC_BINARY_CLASSIFICATION_TASKS_T1T3",
-        "SCN_TR_PROBLEM_HISTORY_ENVIRONMENTS",
-        "UNRESOLVED_MINIMAL_HLS_OPV"
+        "SCN_TR_PROBLEM_HISTORY_ENVIRONMENTS"
       ]
     },
     {
@@ -138,8 +137,7 @@
         "SCN_FINITE_S4_AND_S7_FIXTURES_WITH_DISTINCT_COMPLIANCE_SEMANTICS",
         "SCN_NK_ALLOCATION_AND_NEMBHARD_INSPIRED_PRODUCTIVITY_SETTINGS",
         "SCN_SYNTHETIC_N_12_K_4_STATIONARY_EQUIPROBABLE_TASK_FAMILIES",
-        "SCN_THREE_SYNTHETIC_BINARY_CLASSIFICATION_TASKS_T1T3",
-        "UNRESOLVED_MINIMAL_HLS_OPV"
+        "SCN_THREE_SYNTHETIC_BINARY_CLASSIFICATION_TASKS_T1T3"
       ]
     },
     {
@@ -223,9 +221,7 @@
         "SCN_SYNTHETIC_DYNAMIC_TASK_QUEUES_DEADLINES_THREE_SCALES_AND_FOUR_TASK_FAM",
         "SCN_SYNTHETIC_N_12_K_4_STATIONARY_EQUIPROBABLE_TASK_FAMILIES",
         "SCN_THREE_SYNTHETIC_BINARY_CLASSIFICATION_TASKS_T1T3",
-        "SCN_TR_PROBLEM_HISTORY_ENVIRONMENTS",
-        "UNRESOLVED_CE05_COURSE_CORRECTION",
-        "UNRESOLVED_EXPERIMENTRUN_HLSPEF"
+        "SCN_TR_PROBLEM_HISTORY_ENVIRONMENTS"
       ]
     }
   ],
@@ -293,7 +289,10 @@
         "CE01"
       ],
       "missing_dimensions": [
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -302,7 +301,10 @@
       ],
       "experiment_families": [
         "CE-01 deliberation"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_BOUNDED_SOURCE_MECHANISM_TEST_SETTINGS",
@@ -370,7 +372,10 @@
         "tasks",
         "capabilities",
         "dynamics",
-        "constraints"
+        "constraints",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -379,7 +384,10 @@
       ],
       "experiment_families": [
         "B1/B2/B12 cross-domain foundations"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_BOUNDED_SYNTHETIC_FAILURE_FREQUENCY_QUALITY_GAP_SETTINGS",
@@ -451,7 +459,10 @@
         "tasks",
         "capabilities",
         "dynamics",
-        "constraints"
+        "constraints",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -460,7 +471,10 @@
       ],
       "experiment_families": [
         "M0/M0.1-H1-CR-CIV"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_BUDGETED_LLM_QUERY_ROUTING_DATA_AND_EVALUATION_SPLITS",
@@ -524,7 +538,10 @@
       "reusability": "not_established",
       "reusability_evidence": [],
       "missing_dimensions": [
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -533,7 +550,10 @@
       ],
       "experiment_families": [
         "Budgeted LLM routing"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_CAMPAIGN_0_DISCRIMINATIVE_CAPACITY_SCENARIOS",
@@ -593,7 +613,10 @@
         "capabilities",
         "dynamics",
         "constraints",
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -602,7 +625,10 @@
       ],
       "experiment_families": [
         "Campaign 0 and test-range gates"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_CE_04_SYNTHETIC_H2_SCENARIO_AT_N_12_AND_N_48",
@@ -680,15 +706,22 @@
         "CE04_CAUSAL",
         "CE06"
       ],
-      "missing_dimensions": [],
-      "documentation_status": "documented",
+      "missing_dimensions": [
+        "uncertainty",
+        "parameters",
+        "evaluation"
+      ],
+      "documentation_status": "partial",
       "theory_ledger_refs": [],
       "research_refs": [
         "CE04_CAUSAL"
       ],
       "experiment_families": [
         "CE-04 causal"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_CE_04_SYNTHETIC_N_24_WORKLOAD_NINE_ADDITIONAL_TECHNICAL_PILOT_REPLICAT",
@@ -777,7 +810,10 @@
         "CE06"
       ],
       "missing_dimensions": [
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -786,7 +822,10 @@
       ],
       "experiment_families": [
         "CE-06"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_COUNTERFACTUAL_OPPORTUNITY_VALUE_CAMPAIGN_PREPARATION",
@@ -845,7 +884,10 @@
         "capabilities",
         "dynamics",
         "constraints",
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -854,7 +896,10 @@
       ],
       "experiment_families": [
         "Campaign 4"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_EXACT_SYNTHETIC_JOINT_ERROR_LAWS_AND_PARTIAL_YEARBOOK_PREFLIGHT",
@@ -934,7 +979,10 @@
         "capabilities",
         "dynamics",
         "constraints",
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [
@@ -945,7 +993,10 @@
       ],
       "experiment_families": [
         "CE-02 AI-aging"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_FINITE_DYNAMIC_CAPABILITY_STATES_AND_HORIZONS",
@@ -1059,7 +1110,10 @@
       "reusability_evidence": [],
       "missing_dimensions": [
         "agents",
-        "tasks"
+        "tasks",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [
@@ -1073,7 +1127,10 @@
       ],
       "experiment_families": [
         "T4-T6 and G2"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_FINITE_IMAGE_TASK_PILOTS_AND_REPLAY_SETTINGS",
@@ -1146,7 +1203,10 @@
         "capabilities",
         "dynamics",
         "constraints",
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -1155,7 +1215,10 @@
       ],
       "experiment_families": [
         "PACS B2.1-B2.4 and B3-B5"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_FINITE_ORGANIZATIONAL_ASSIGNMENT_AND_FUTURE_OPPORTUNITY_CONSTRUCTIONS",
@@ -1228,7 +1291,10 @@
         "tasks",
         "capabilities",
         "dynamics",
-        "constraints"
+        "constraints",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [
@@ -1239,7 +1305,10 @@
       ],
       "experiment_families": [
         "G3/G3-H"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_FINITE_PROBLEM_BELIEF_GEOMETRIES_AND_FROZEN_G1G4_DOMAINS",
@@ -1329,7 +1398,10 @@
       "reusability_evidence": [],
       "missing_dimensions": [
         "agents",
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -1338,7 +1410,10 @@
       ],
       "experiment_families": [
         "Campaign 3 / META-VOC"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_FINITE_ROUTING_AS_TEACHING_DECISION_PROCESSES",
@@ -1461,7 +1536,10 @@
         "tasks",
         "capabilities",
         "dynamics",
-        "constraints"
+        "constraints",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [
@@ -1476,7 +1554,10 @@
       ],
       "experiment_families": [
         "RQ0 policy boundaries and C(alpha)"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_FINITE_S1_ASSIGNMENT_AND_S2A_S2B_TEMPORAL_INSTANCES",
@@ -1568,7 +1649,10 @@
         "tasks",
         "capabilities",
         "constraints",
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [
@@ -1579,7 +1663,10 @@
       ],
       "experiment_families": [
         "S1/S2a/S2b"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_FINITE_S4_AND_S7_FIXTURES_WITH_DISTINCT_COMPLIANCE_SEMANTICS",
@@ -1662,7 +1749,10 @@
         "agents",
         "tasks",
         "capabilities",
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [
@@ -1673,7 +1763,10 @@
       ],
       "experiment_families": [
         "S4/S7"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_FINITE_STATIC_AND_DYNAMIC_MECHANISM_FIXTURES",
@@ -1736,7 +1829,10 @@
         "agents",
         "tasks",
         "capabilities",
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -1745,7 +1841,10 @@
       ],
       "experiment_families": [
         "A1a-c, G0, C1-C6"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_FINITE_STATIC_CAPABILITY_MATRICES_AND_BUDGETS",
@@ -1871,7 +1970,10 @@
       "reusability_evidence": [],
       "missing_dimensions": [
         "agents",
-        "tasks"
+        "tasks",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [
@@ -1886,7 +1988,10 @@
       ],
       "experiment_families": [
         "T0-T3 and G1"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_FINITE_SYNTHETIC_JOINT_ERROR_DISTRIBUTIONS",
@@ -1956,7 +2061,10 @@
         "capabilities",
         "dynamics",
         "constraints",
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -1965,7 +2073,10 @@
       ],
       "experiment_families": [
         "Classifier fusion"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_FIXED_COMPETENCE_STATIONARY_EQUAL_MARGINAL_FIXTURE",
@@ -2042,7 +2153,10 @@
         "capabilities",
         "dynamics",
         "constraints",
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [
@@ -2053,7 +2167,10 @@
       ],
       "experiment_families": [
         "Q1/Q1-R"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_MMLU_QUESTION_SET_AND_DOCUMENTED_EVALUATION_SPLIT",
@@ -2124,7 +2241,10 @@
         "tasks",
         "capabilities",
         "dynamics",
-        "constraints"
+        "constraints",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -2133,7 +2253,10 @@
       ],
       "experiment_families": [
         "MMLU dynamic selection and DCS-LA"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_NK_ALLOCATION_AND_NEMBHARD_INSPIRED_PRODUCTIVITY_SETTINGS",
@@ -2200,7 +2323,10 @@
         "capabilities",
         "dynamics",
         "constraints",
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -2209,7 +2335,10 @@
       ],
       "experiment_families": [
         "N x K lab and Nembhard"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_OFFICE_HOME_BENCHMARK_AND_SPRINT0_GATES",
@@ -2269,7 +2398,10 @@
       "missing_dimensions": [
         "agents",
         "capabilities",
-        "dynamics"
+        "dynamics",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -2278,7 +2410,10 @@
       ],
       "experiment_families": [
         "B0 Office-Home and Sprint0 gates"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_PROSPECTIVE_ADAPTATION_HISTORIES_AND_PREREGISTERED_CONFIGURATIONS",
@@ -2365,7 +2500,10 @@
         "capabilities",
         "dynamics",
         "constraints",
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -2374,7 +2512,10 @@
       ],
       "experiment_families": [
         "Campaign 2"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_S3A_S3B_INFORMATION_AND_CONTEXTUAL_SELECTION_SETTINGS",
@@ -2444,7 +2585,10 @@
         "capabilities",
         "dynamics",
         "constraints",
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -2453,7 +2597,10 @@
       ],
       "experiment_families": [
         "S3a/S3b"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_S3B_CONTEXTUAL_CAPACITY_SELECTION_STATES",
@@ -2533,7 +2680,10 @@
         "capabilities",
         "dynamics",
         "constraints",
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -2542,7 +2692,10 @@
       ],
       "experiment_families": [
         "S3b and S3b-E1"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_SYNTHETIC_DYNAMIC_TASK_QUEUES_DEADLINES_THREE_SCALES_AND_FOUR_TASK_FAM",
@@ -2633,15 +2786,22 @@
       ],
       "reusability": "not_established",
       "reusability_evidence": [],
-      "missing_dimensions": [],
-      "documentation_status": "documented",
+      "missing_dimensions": [
+        "uncertainty",
+        "parameters",
+        "evaluation"
+      ],
+      "documentation_status": "partial",
       "theory_ledger_refs": [],
       "research_refs": [
         "CE04"
       ],
       "experiment_families": [
         "CE-04"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_SYNTHETIC_N_12_K_4_STATIONARY_EQUIPROBABLE_TASK_FAMILIES",
@@ -2730,15 +2890,22 @@
       ],
       "reusability": "not_established",
       "reusability_evidence": [],
-      "missing_dimensions": [],
-      "documentation_status": "documented",
+      "missing_dimensions": [
+        "uncertainty",
+        "parameters",
+        "evaluation"
+      ],
+      "documentation_status": "partial",
       "theory_ledger_refs": [],
       "research_refs": [
         "CE07"
       ],
       "experiment_families": [
         "CE-07"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_THREE_SYNTHETIC_BINARY_CLASSIFICATION_TASKS_T1T3",
@@ -2853,7 +3020,10 @@
       "reusability": "not_established",
       "reusability_evidence": [],
       "missing_dimensions": [
-        "code/protocol mapping"
+        "code/protocol mapping",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -2862,7 +3032,10 @@
       ],
       "experiment_families": [
         "CE-03 V1/V2"
-      ]
+      ],
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     },
     {
       "scenario_id": "SCN_TR_PROBLEM_HISTORY_ENVIRONMENTS",
@@ -2932,7 +3105,10 @@
         "tasks",
         "capabilities",
         "dynamics",
-        "constraints"
+        "constraints",
+        "uncertainty",
+        "parameters",
+        "evaluation"
       ],
       "documentation_status": "partial",
       "theory_ledger_refs": [],
@@ -2941,218 +3117,10 @@
       ],
       "experiment_families": [
         "Campaign 1"
-      ]
-    },
-    {
-      "scenario_id": "UNRESOLVED_CE05_COURSE_CORRECTION",
-      "label": "No scenario reference documented for CE-05 literature/mathematical review and course correction",
-      "classification": "unresolved_reference",
-      "relationship_to_other_scenarios": "unresolved",
-      "variant_of": null,
-      "registry_scenario_ref": null,
-      "definition": null,
-      "agents": null,
-      "tasks": null,
-      "capabilities": null,
-      "dynamics": null,
-      "constraints": null,
-      "organizations": [],
-      "models": [],
-      "policies": [],
-      "result_refs": [],
-      "evidence_kinds": [],
-      "evidence_availability": [],
-      "limitations": [
-        "The scientific registry does not identify a scenario; do not infer one from the investigation name."
       ],
-      "source_refs": [
-        {
-          "path": "docs/HISTORY.md",
-          "role": "primary",
-          "section": "2026-10-26 — CE-05 review, CE-06 design sequence, and CE-07 proposal; subsection CE-05"
-        },
-        {
-          "path": "docs/HLS_CURRENT_STATE.md",
-          "role": "supporting",
-          "section": "Current scientific snapshot"
-        }
-      ],
-      "code_and_protocol_refs": [],
-      "reusability": "not_assessed",
-      "reusability_evidence": [],
-      "documentation_status": "unresolved",
-      "missing_dimensions": [
-        "scenario identity",
-        "definition",
-        "agents",
-        "tasks",
-        "capabilities",
-        "dynamics",
-        "constraints",
-        "code/protocol mapping"
-      ],
-      "research_refs": [
-        "CE05_COURSE_CORRECTION"
-      ],
-      "experiment_families": []
-    },
-    {
-      "scenario_id": "UNRESOLVED_EXPERIMENTRUN_HLSPEF",
-      "label": "No scenario reference documented for ExperimentRun/HLS-PEF/lab integration",
-      "classification": "unresolved_reference",
-      "relationship_to_other_scenarios": "unresolved",
-      "variant_of": null,
-      "registry_scenario_ref": null,
-      "definition": null,
-      "agents": null,
-      "tasks": null,
-      "capabilities": null,
-      "dynamics": null,
-      "constraints": null,
-      "organizations": [],
-      "models": [
-        "ExperimentRun and HLS-PEF evaluation contracts"
-      ],
-      "policies": [],
-      "result_refs": [
-        "EXPERIMENTRUN_HLSPEF_AUDIT_SUMMARY"
-      ],
-      "evidence_kinds": [
-        "exploratory"
-      ],
-      "evidence_availability": [
-        "tracked"
-      ],
-      "limitations": [
-        "The scientific registry does not identify a scenario; do not infer one from the investigation name."
-      ],
-      "source_refs": [
-        {
-          "path": "docs/architecture/HLS_PERFORMANCE_EVALUATION_FRAMEWORK.md",
-          "role": "primary",
-          "section": "Document-level source; subsection not verified"
-        },
-        {
-          "path": "docs/research/HLS_LABORATORY_CAPABILITY_ASSESSMENT_2026-10-19.md",
-          "role": "primary",
-          "section": "Document-level source; subsection not verified"
-        },
-        {
-          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
-          "role": "audit",
-          "section": "Row: ExperimentRun/HLS-PEF/lab integration"
-        },
-        {
-          "path": "docs/HISTORY.md",
-          "role": "supporting",
-          "section": "Chronological project record; specific entry must be followed"
-        }
-      ],
-      "code_and_protocol_refs": [
-        "docs/engineering/HLS_COMMON_EXPERIMENT_CONTRACT.md",
-        "src/hls/experiment_contract.py"
-      ],
-      "reusability": "not_assessed",
-      "reusability_evidence": [],
-      "documentation_status": "unresolved",
-      "missing_dimensions": [
-        "scenario identity",
-        "definition",
-        "agents",
-        "tasks",
-        "capabilities",
-        "dynamics",
-        "constraints",
-        "code/protocol mapping"
-      ],
-      "research_refs": [
-        "EXPERIMENTRUN_HLSPEF"
-      ],
-      "experiment_families": [
-        "ExperimentRun/HLS-PEF/lab integration"
-      ]
-    },
-    {
-      "scenario_id": "UNRESOLVED_MINIMAL_HLS_OPV",
-      "label": "No scenario reference documented for Minimal HLS model and OPV",
-      "classification": "unresolved_reference",
-      "relationship_to_other_scenarios": "unresolved",
-      "variant_of": null,
-      "registry_scenario_ref": null,
-      "definition": null,
-      "agents": null,
-      "tasks": null,
-      "capabilities": null,
-      "dynamics": null,
-      "constraints": null,
-      "organizations": [],
-      "models": [
-        "minimal HLS model",
-        "operational development opportunity value"
-      ],
-      "policies": [
-        "finite Bellman decision policies"
-      ],
-      "result_refs": [
-        "MINIMAL_HLS_OPV_AUDIT_SUMMARY",
-        "TH_MINIMAL_HLS_PROPS_1_5",
-        "TH_OPV_PROPS_1_9"
-      ],
-      "evidence_kinds": [
-        "exact_computation",
-        "formal_proof"
-      ],
-      "evidence_availability": [
-        "tracked"
-      ],
-      "limitations": [
-        "The scientific registry does not identify a scenario; do not infer one from the investigation name."
-      ],
-      "source_refs": [
-        {
-          "path": "docs/theory/minimal_hls_model.md",
-          "role": "primary",
-          "section": "Document-level source; subsection not verified"
-        },
-        {
-          "path": "docs/theory/operational_development_opportunity_value.md",
-          "role": "primary",
-          "section": "Document-level source; subsection not verified"
-        },
-        {
-          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
-          "role": "audit",
-          "section": "Row: Minimal HLS model and OPV"
-        },
-        {
-          "path": "docs/HISTORY.md",
-          "role": "supporting",
-          "section": "Chronological project record; specific entry must be followed"
-        }
-      ],
-      "code_and_protocol_refs": [
-        "docs/theory/minimal_hls_model.md",
-        "src/hls/development_opportunity_value.py"
-      ],
-      "reusability": "not_assessed",
-      "reusability_evidence": [],
-      "documentation_status": "unresolved",
-      "missing_dimensions": [
-        "scenario identity",
-        "definition",
-        "agents",
-        "tasks",
-        "capabilities",
-        "dynamics",
-        "constraints",
-        "code/protocol mapping"
-      ],
-      "research_refs": [
-        "MINIMAL_HLS_OPV"
-      ],
-      "experiment_families": [
-        "Minimal HLS model and OPV"
-      ]
+      "uncertainty": null,
+      "parameters": null,
+      "evaluation": null
     }
   ]
 }

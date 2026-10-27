@@ -12,6 +12,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[2]
 REGISTRY = ROOT / "docs/registry/hls_scientific_registry.jsonl"
 CATALOG = ROOT / "docs/registry/hls_scenario_catalog.json"
+COMPONENTS = ROOT / "docs/registry/hls_component_catalog.json"
 VALIDATOR = ROOT / "docs/registry/validate_hls_scientific_registry.py"
 _SPEC = importlib.util.spec_from_file_location("hls_registry_validator", VALIDATOR)
 assert _SPEC and _SPEC.loader
@@ -45,9 +46,9 @@ def validate_catalog(catalog: dict, research: list[dict], results: list[dict]) -
     classification_values = {
         "independent_scenario", "scenario_family", "scenario_suite",
         "parametric_variant", "benchmark", "composite_reference",
-        "scenario_reference", "unresolved_reference",
+        "scenario_reference",
     }
-    documentation_values = {"documented", "partial", "unresolved"}
+    documentation_values = {"documented", "partial"}
     scenario_by_id: dict[str, dict] = {}
     for scenario in scenarios:
         sid = scenario.get("scenario_id")
@@ -68,6 +69,11 @@ def validate_catalog(catalog: dict, research: list[dict], results: list[dict]) -
         for field in ("research_refs", "experiment_families", "result_refs", "source_refs", "models", "organizations", "policies", "limitations", "reusability_evidence", "missing_dimensions"):
             if not isinstance(scenario.get(field), list):
                 errors.append(f"{sid}: {field} must be an array")
+        for field in ("uncertainty", "parameters", "evaluation"):
+            if field not in scenario:
+                errors.append(f"{sid}: {field} must be explicit or null")
+            if scenario.get(field) is None and field not in scenario.get("missing_dimensions", []):
+                errors.append(f"{sid}: unknown {field} must be listed as missing")
         for rid in scenario.get("research_refs", []):
             if rid not in research_by_id:
                 errors.append(f"{sid}: unknown experiment/research reference {rid}")
@@ -119,10 +125,7 @@ def validate_catalog(catalog: dict, research: list[dict], results: list[dict]) -
     for rid in research_by_id:
         if not domain_cover[rid]:
             errors.append(f"research missing domain classification: {rid}")
-    scenario_research = Counter(rid for s in scenarios for rid in s.get("research_refs", []))
     for rid in research_by_id:
-        if not scenario_research[rid]:
-            errors.append(f"research missing scenario or explicit unresolved record: {rid}")
         source_refs = research_by_id[rid].get("scenario_refs") or []
         catalog_refs = {
             s.get("registry_scenario_ref") for s in scenarios
@@ -138,10 +141,10 @@ def validate_catalog(catalog: dict, research: list[dict], results: list[dict]) -
                 errors.append(f"duplicate registry scenario reference {ref!r}: {refs_seen[ref]} and {sid}")
             refs_seen[ref] = sid
     catalog_results = [result_id for s in scenarios for result_id in s.get("result_refs", [])]
-    expected = set(result_by_id)
+    expected = {rid for s in scenarios for rid in s.get("result_refs", [])}
     observed = set(catalog_results)
     if observed != expected:
-        errors.append(f"result coverage mismatch: missing={sorted(expected-observed)}, unknown={sorted(observed-expected)}")
+        errors.append(f"scenario result coverage mismatch: missing={sorted(expected-observed)}, unknown={sorted(observed-expected)}")
     duplicates = sorted(result_id for result_id, count in Counter(catalog_results).items() if count > 1)
     if duplicates:
         errors.append(f"results linked more than once; review scenario decomposition: {duplicates}")
@@ -155,7 +158,7 @@ def report() -> dict:
     if not base["valid"]:
         errors.extend(base["summary"]["errors"])
     scenarios = catalog["scenarios"]
-    documented = [s for s in scenarios if s["classification"] != "unresolved_reference"]
+    documented = scenarios
     completeness = Counter(s.get("documentation_status", "missing") for s in scenarios)
     classifications = Counter(s.get("classification", "missing") for s in scenarios)
     models = {m for r in research for m in (r.get("model_refs") or [])}
@@ -165,7 +168,7 @@ def report() -> dict:
         "summary": {
             "scenario_records": len(scenarios),
             "documented_scenarios_or_suites": len(documented),
-            "unresolved_scenario_associations": len(scenarios) - len(documented),
+            "research_without_scenario": sorted({r["id"] for r in research} - {rid for s in scenarios for rid in s["research_refs"]}),
             "scenario_documentation_status": dict(sorted(completeness.items())),
             "scenario_classification": dict(sorted(classifications.items())),
             "incompletely_documented_scenarios": [
@@ -177,12 +180,103 @@ def report() -> dict:
             "domains": {d["domain_id"]: len(d["research_refs"]) for d in catalog["domains"]},
             "research_covered": len({r for s in scenarios for r in s["research_refs"]}),
             "research_total": len(research),
-            "results_covered": len(set(x for s in scenarios for x in s["result_refs"])),
+            "results_covered_by_scenarios": len(set(x for s in scenarios for x in s["result_refs"])),
             "results_total": len(results),
             "base_registry": base["summary"],
             "errors": errors,
         },
     }
+
+
+def validate_component_catalog(data: dict, research: list[dict], results: list[dict], scenarios: list[dict]) -> list[str]:
+    errors: list[str] = []
+    if data.get("schema_version") != "1.0" or data.get("catalog_type") != "hls_component_graph":
+        errors.append("unsupported component-catalog schema or catalog_type")
+    nodes = data.get("nodes")
+    edges = data.get("edges")
+    if not isinstance(nodes, list) or not isinstance(edges, list):
+        return errors + ["component catalog nodes and edges must be arrays"]
+    node_ids = [n.get("id") for n in nodes]
+    if len(node_ids) != len(set(node_ids)):
+        errors.append("duplicate component node id")
+    by_id = {n.get("id"): n for n in nodes}
+    allowed_kinds = {"research", "result", "scenario", "organization", "model", "policy", "evaluation", "protocol", "experiment", "theory", "application"}
+    for node in nodes:
+        if node.get("kind") not in allowed_kinds:
+            errors.append(f"{node.get('id')}: unknown component kind")
+        for path in node.get("source_refs", []):
+            if not (ROOT / path).is_file():
+                errors.append(f"{node.get('id')}: missing source {path}")
+        if node.get("kind") == "result" and node.get("research_id") not in {r["id"] for r in research}:
+            errors.append(f"{node.get('id')}: missing research parent")
+    for edge in edges:
+        if edge.get("source") not in by_id or edge.get("target") not in by_id:
+            errors.append(f"edge has unknown endpoint: {edge}")
+    expected_research = {f"research:{r['id']}" for r in research}
+    expected_results = {f"result:{r['id']}" for r in results}
+    expected_scenarios = {f"scenario:{s['scenario_id']}" for s in scenarios}
+    for kind, expected in (("research", expected_research), ("result", expected_results), ("scenario", expected_scenarios)):
+        observed = {n["id"] for n in nodes if n.get("kind") == kind}
+        if observed != expected:
+            errors.append(f"{kind} node coverage mismatch: missing={sorted(expected-observed)}, extra={sorted(observed-expected)}")
+    edge_pairs = {(e.get("source"), e.get("relation"), e.get("target")) for e in edges}
+    scenario_by_ref = {s.get("registry_scenario_ref"): s["scenario_id"] for s in scenarios if s.get("registry_scenario_ref")}
+    for record in research:
+        rid = record["id"]
+        research_node = by_id.get(f"research:{rid}", {})
+        for field in ("research_status", "evidence_status", "question", "hypotheses", "limitations"):
+            if research_node.get(field) != record.get(field):
+                errors.append(f"research:{rid}: graph field {field} differs from registry")
+        for sid in record.get("scenario_refs") or []:
+            scenario_id = scenario_by_ref.get(sid)
+            if scenario_id is None or (f"research:{rid}", "uses_scenario", f"scenario:{scenario_id}") not in edge_pairs:
+                errors.append(f"research:{rid}: missing scenario edge {sid}")
+        for field, rel, kind in (("model_refs", "uses_model", "model"), ("organization_refs", "uses_organization", "organization"), ("policy_refs", "uses_policy", "policy"), ("protocol_refs", "uses_protocol", "protocol"), ("audit_experiment_families", "contains_experiment_family", "experiment"), ("theory_ledger_refs", "references_theory_result", "theory"), ("application_refs", "potential_application", "application")):
+            for label in record.get(field) or []:
+                target = next((n["id"] for n in nodes if n.get("kind") == kind and n.get("label") == label), None)
+                if target is None or (f"research:{rid}", rel, target) not in edge_pairs:
+                    errors.append(f"research:{rid}: missing {kind} edge for {label}")
+        for result_id in record.get("result_refs") or []:
+            if (f"research:{rid}", "has_result", f"result:{result_id}") not in edge_pairs:
+                errors.append(f"research:{rid}: missing result edge {result_id}")
+    for result in results:
+        if (f"result:{result['id']}", "evidence_for", f"research:{result['research_id']}") not in edge_pairs:
+            errors.append(f"result:{result['id']}: missing research evidence edge")
+        result_node = by_id.get(f"result:{result['id']}", {})
+        for field in ("result_kind", "outcome_class", "estimand", "value", "uncertainty", "conditions", "artifact_availability", "raw_artifact_status", "artifact_refs"):
+            if result_node.get(field) != result.get(field):
+                errors.append(f"result:{result['id']}: graph field {field} differs from registry")
+        if result_node.get("limitations") != result.get("scope_and_nonclaims"):
+            errors.append(f"result:{result['id']}: graph limitations differ from registry")
+        for label in result.get("theory_ledger_refs") or []:
+            target = next((n["id"] for n in nodes if n.get("kind") == "theory" and n.get("label") == label), None)
+            if target is None or (f"result:{result['id']}", "supported_by_theory_reference", target) not in edge_pairs:
+                errors.append(f"result:{result['id']}: missing theory-reference edge for {label}")
+    expected_experiments = {x for r in research for x in (r.get("audit_experiment_families") or [])}
+    expected_theory = {x for r in research + results for x in (r.get("theory_ledger_refs") or [])}
+    expected_applications = {x for r in research for x in (r.get("application_refs") or [])}
+    for kind, expected in (("experiment", expected_experiments), ("theory", expected_theory), ("application", expected_applications)):
+        observed = {n.get("label") for n in nodes if n.get("kind") == kind}
+        if observed != expected:
+            errors.append(f"{kind} reference coverage mismatch: missing={sorted(expected-observed)}, extra={sorted(observed-expected)}")
+    for kind, field in (("model", "model_refs"), ("organization", "organization_refs"), ("policy", "policy_refs"), ("protocol", "protocol_refs")):
+        expected = {label for r in research for label in (r.get(field) or [])}
+        observed = {n.get("label") for n in nodes if n.get("kind") == kind}
+        if observed != expected:
+            errors.append(f"{kind} reference coverage mismatch: missing={sorted(expected-observed)}, extra={sorted(observed-expected)}")
+    expected_evaluations = {r.get("estimand") for r in results if r.get("estimand") is not None}
+    observed_evaluations = {n.get("label") for n in nodes if n.get("kind") == "evaluation"}
+    if observed_evaluations != expected_evaluations:
+        errors.append(f"evaluation reference coverage mismatch: missing={sorted(expected_evaluations-observed_evaluations)}, extra={sorted(observed_evaluations-expected_evaluations)}")
+    actual_counts = Counter(n.get("kind") for n in nodes)
+    if data.get("counts") != dict(sorted(actual_counts.items())):
+        errors.append("component counts do not match nodes")
+    for scenario in scenarios:
+        node = by_id.get(f"scenario:{scenario['scenario_id']}", {})
+        for field in ("classification", "definition", "agents", "tasks", "capabilities", "dynamics", "constraints", "uncertainty", "parameters", "evaluation", "organizations", "models", "policies", "experiment_families", "result_refs", "evidence_kinds", "evidence_availability", "limitations", "reusability", "reusability_evidence", "documentation_status", "missing_dimensions"):
+            if node.get(field) != scenario.get(field):
+                errors.append(f"scenario:{scenario['scenario_id']}: graph field {field} differs from scenario catalog")
+    return errors
 
 
 def query(args: argparse.Namespace) -> dict:
@@ -203,11 +297,14 @@ def query(args: argparse.Namespace) -> dict:
             raise SystemExit(f"unknown domain {args.domain!r}; choices: {', '.join(sorted(domains))}")
         ids = set(domains[args.domain]["scenario_refs"])
         matched_scenarios = [s for s in matched_scenarios if s["scenario_id"] in ids]
-    research_ids = {rid for s in matched_scenarios for rid in s["research_refs"]}
+    research_ids = ({rid for s in matched_scenarios for rid in s["research_refs"]}
+                    if args.scenario or args.domain else set(research_by_id))
     if args.experiment:
         research_ids &= {rid for rid in research_by_id if args.experiment.lower() in (rid+" "+research_by_id[rid]["name"]+" "+" ".join(research_by_id[rid].get("audit_experiment_families", []))).lower()}
     if args.model:
         research_ids = {rid for rid in research_ids if any(args.model.lower() in m.lower() for m in (research_by_id[rid].get("model_refs") or []))}
+    if getattr(args, "organization", None):
+        research_ids = {rid for rid in research_ids if any(args.organization.lower() in o.lower() for o in (research_by_id[rid].get("organization_refs") or []))}
     result_ids = {x["id"] for x in results if x["research_id"] in research_ids}
     if args.result:
         result_ids = {rid for rid in result_ids if args.result.lower() in (rid+" "+next(x["claim"] for x in results if x["id"]==rid)).lower()}
@@ -219,21 +316,39 @@ def query(args: argparse.Namespace) -> dict:
     }
 
 
+def component_query(text: str) -> dict:
+    graph = json.loads(COMPONENTS.read_text(encoding="utf-8"))
+    hits = [n for n in graph["nodes"] if text.lower() in (n["id"] + " " + n["label"]).lower()]
+    ids = {n["id"] for n in hits}
+    return {"components": hits, "relations": [e for e in graph["edges"] if e["source"] in ids or e["target"] in ids]}
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--validate", action="store_true", help="validate catalog plus the canonical research/result registry")
+    parser.add_argument("--validate", action="store_true", help="validate scenario/component catalogs and canonical research/result registry")
     parser.add_argument("--domain", help="filter by one of the six scientific domains")
     parser.add_argument("--scenario", help="case-insensitive scenario ID or label substring")
     parser.add_argument("--model", help="case-insensitive model-reference substring")
+    parser.add_argument("--organization", help="case-insensitive organization-reference substring")
     parser.add_argument("--experiment", help="research ID or name substring")
     parser.add_argument("--result", help="result ID or claim substring")
+    parser.add_argument("--component", help="case-insensitive component ID or label in the cross-reference graph")
     args = parser.parse_args(argv)
     if args.validate:
         result = report()
-    elif any((args.domain,args.scenario,args.model,args.experiment,args.result)):
+    elif any((args.domain,args.scenario,args.model,args.organization,args.experiment,args.result,args.component)):
         result = query(args)
     else:
         parser.error("use --validate or at least one query filter")
+    if args.validate:
+        component_data = json.loads(COMPONENTS.read_text(encoding="utf-8"))
+        _, research, results = load()
+        result["summary"]["component_catalog_errors"] = validate_component_catalog(component_data, research, results, json.loads(CATALOG.read_text(encoding="utf-8"))["scenarios"])
+        result["summary"]["component_catalog_counts"] = component_data["counts"]
+        result["summary"]["results_without_named_estimand"] = sorted(r["id"] for r in results if r.get("estimand") is None)
+        result["valid"] = result["valid"] and not result["summary"]["component_catalog_errors"]
+    elif getattr(args, "component", None):
+        result = component_query(args.component)
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 0 if not args.validate or result["valid"] else 1
 

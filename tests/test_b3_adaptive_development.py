@@ -39,6 +39,10 @@ def test_delta_zero_and_kappa_identity():
 
 
 def test_real_provenance_and_validation_only_tables():
+    from historical_hashes import missing_recorded_artifacts
+    b23_manifest=b3.B23_OUTPUT/"run_manifest.json"
+    if missing:=missing_recorded_artifacts(b23_manifest):
+        pytest.skip(f"historical B2.3 artifacts are not present locally: {missing[0]}")
     scores, audit = b3.audit_and_load()
     assert audit["states_found"] == audit["states_required"] == 190
     assert audit["provenance_mismatches"] == 0
@@ -52,6 +56,22 @@ def test_real_provenance_and_validation_only_tables():
     assert len(choices) == 300
     assert len(surface) == 1200
     assert surface.isna().sum().sum() == 0
+
+
+def test_analysis_tables_run_on_small_in_memory_validation_fixture():
+    scores={}
+    for seed in b3.SEEDS:
+        for domain_i,domain in enumerate(b3.DOMAINS):
+            for n in b3.N_VALUES:
+                base={d:0.55+0.01*i+0.001*seed for i,d in enumerate(b3.DOMAINS)}
+                deep={d:0.60+0.01*i for i,d in enumerate(b3.DOMAINS)}
+                for state,delta in (("F0",0.0),("D",0.0),("STD",0.01),("O50",0.02),("REP",0.03)):
+                    scores[(state,seed,n,domain)]=dict((d,v+delta) for d,v in (base.items() if state!="D" else deep.items()))
+    values=b3.action_value_table(scores)
+    assert len(values)==1200 and values.test_metrics_used.eq(False).all()
+    choices=b3.adaptive_choice_table(values,scores)
+    assert len(choices)==300
+    assert len(b3.adaptive_surface(choices))==1200
 
 
 def test_source_has_no_training_or_test_metric_input():

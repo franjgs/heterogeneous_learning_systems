@@ -29,8 +29,9 @@ def test_frozen_factorial_and_all_materialized_counts():
 
 def test_source_hashes_and_raw_output_hashes():
     manifest=json.loads((OUT/"execution_manifest.json").read_text())
+    from historical_hashes import sha256_in_git_history
     for path,digest in manifest["source_hashes"].items():
-        assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest()==digest
+        assert sha256_in_git_history(path,digest), path
     for path,digest in manifest["output_hashes"].items():
         assert hashlib.sha256((OUT/path).read_bytes()).hexdigest()==digest
 

@@ -16,6 +16,7 @@ protocols, and result artifacts provide the evidence.
 | Present findings, limitations, and authorizations | [HLS Current State](HLS_CURRENT_STATE.md) |
 | Dated decisions and milestones | [History](HISTORY.md) |
 | Research/result index and validator | [Registry](registry/hls_scientific_registry.jsonl) · [validator](registry/validate_hls_scientific_registry.py) |
+| Cross-links among components and evidence | [Component graph](registry/hls_component_catalog.json) · [query tool](registry/query_hls_catalog.py) |
 
 Philosophy defines the programme; doctrine governs research practice.
 Current State is the current-status summary, History is chronological, and the
@@ -63,6 +64,42 @@ Do not infer completed execution from code or protocol presence. Distinguish
 proposed, implemented, executed, evaluated, and validated work using the
 primary record.
 
+The registry separates the investigation lifecycle (`research_status`) from
+evidence types (`evidence_status`) and result-level classification
+(`result_kind`, `outcome_class`, and claim scope). A closed investigation can
+contain valid results; a proposed or active investigation does not imply
+evaluated evidence. The registry does not currently assert a separate
+execution-stage value for every investigation; consult its dated primary
+record when that distinction matters.
+
+## Add an application or research component
+
+1. Define the application and its real problem setting; do not infer the
+   setting from a synthetic benchmark.
+2. Identify or specify the scenario, including agents, tasks, demand,
+   environment, information, resources, uncertainty, and constraints that
+   matter to the question.
+3. Query the [component graph](registry/hls_component_catalog.json) and
+   follow source records for candidate scenarios, organizations, models,
+   policies, protocols, and evaluation tools.
+4. Check semantic compatibility and record mappings as equivalent, related,
+   incompatible, or unresolved. Similar labels do not establish equivalence.
+5. Select or define organizations and models, with assumptions and the
+   information each decision rule can access.
+6. Specify performance measures, comparators, costs, statistical unit, and
+   protocol before execution.
+7. Identify missing components; reuse or adapt published methods first, and
+   develop a new component only for a stated scientific need.
+8. Validate implementations and protocol controls separately from scientific
+   evaluation; execute only under the relevant authorization.
+9. Register the investigation and each distinguishable result, linking exact
+   source files, configurations, code versions, artifacts, and limitations.
+10. Record closure, suspension, or continuation in the current-status and
+    chronology sources without changing prior evidence.
+
+SOC and LLM work can be used to test whether this process is usable across
+applications, but neither defines the general HLS architecture.
+
 ### Historical and active implementation boundary
 
 Treat an implementation as frozen when a primary result, manifest, protocol,
@@ -96,7 +133,7 @@ The [scenario/domain catalogue](registry/hls_scenario_catalog.json) links
 scenario records to investigations, results, models, organizations, and
 source references. Scenario records are distinct from research investigations,
 experiment-family labels, and parameterized conditions. Validate its
-cross-links and the underlying registry with:
+cross-links, the component graph, and the underlying registry with:
 
 ```bash
 python3 docs/registry/query_hls_catalog.py --validate
@@ -110,11 +147,14 @@ python3 docs/registry/query_hls_catalog.py --scenario CE-04
 python3 docs/registry/query_hls_catalog.py --model "CE-04 discrete-event model"
 python3 docs/registry/query_hls_catalog.py --experiment CE07
 python3 docs/registry/query_hls_catalog.py --result CE07_CONFIRMATORY_EFFECT
+python3 docs/registry/query_hls_catalog.py --organization "fixed"
+python3 docs/registry/query_hls_catalog.py --component "CE-07"
 ```
 
 Use `--help` for the complete filter syntax. Scenario records preserve the
-registry's original scenario references; entries marked unresolved are gaps
-in the source documentation, not inferred scenarios.
+registry's original scenario references. An investigation without a verified
+scenario remains in the research registry and component graph; it is not
+represented by a placeholder scenario.
 
 ## History and retained material
 

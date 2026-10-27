@@ -2020,3 +2020,27 @@ integrity test needs the deleted raw opportunity-landscape gzip. These tests
 remain useful integrity checks; their failures were not masked by weakening
 assertions or changing hashes. Recreate the named artifacts before using those
 tests to validate their associated historical runs.
+
+## 2026-10-27 — Scientific component graph and test-contract alignment
+
+Added a structured component graph linking the 33 registered investigations
+and 112 results to 30 source-identified scenario records, model, organization,
+policy, protocol, and explicitly named evaluation references. Removed three
+placeholder scenario fiches that represented investigations with no verified
+scenario; their research and results remain in the scientific registry and
+component graph without an inferred scenario. The graph preserves unknown
+component definitions as null. Added query and validation support and expanded
+the ontology's common vocabulary and cross-model notation rules.
+
+Aligned historical tests with their documented provenance contracts: frozen
+source digests are checked against Git history, the legacy B13 result without a
+manifest is identified explicitly rather than assigned invented provenance,
+and the one absent Campaign 2 raw landscape artifact is not claimed as locally
+available. Five B3/B4/B5/RQ0 integration checks now skip only when their
+manifested local B2.3/B2.4 artifacts are absent; small fixture and numerical
+tests continue to exercise the checkpoint hash contract and downstream
+analysis. No scientific source code, historical hash, result, protocol, or
+state classification was changed. Final validation: 1,901 passed and 5
+artifact-dependent integration tests skipped. Removed 63 generated Python/
+pytest cache directories and four empty local directories (12,794,677 bytes
+of generated/cache material); no scientific data or tracked source was deleted.

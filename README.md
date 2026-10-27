@@ -35,6 +35,10 @@ for its semantic vocabulary.
   cross-links scenarios, research domains, investigations, models,
   organizations, results, and source files. Query it with
   `python3 docs/registry/query_hls_catalog.py --help`.
+- [Component graph](docs/registry/hls_component_catalog.json): structured
+  links among all registered investigations and results, plus identified
+  scenarios, models, organizations, policies, protocols, and named estimands.
+  Blank definitions remain explicitly unnormalized rather than inferred.
 - [History](docs/HISTORY.md): dated decisions and project chronology.
 - [Research questions](docs/research_questions.md): registered questions.
 - [Theory index](docs/theory/README.md): formal results and model-scoped

@@ -553,4 +553,48 @@ This scaffold is intentionally more general than any current RQ0 model, G0 imple
 
 The ontology should be extended only when a scientifically relevant HLS phenomenon cannot be represented faithfully with its existing semantic objects.
 
+## 11. Shared vocabulary and notation discipline
+
+The following terms provide a navigation vocabulary, not a claim that every
+model contains every object or uses an identical mathematical representation.
+
+| Term | Working meaning | Keep distinct from |
+| --- | --- | --- |
+| **Agent** | An entity that can hold or exercise one or more capabilities. | Model, worker, analyst, or service are source-specific labels; map them explicitly. |
+| **Capability** | A potential ability or resource that can contribute to a task. | **Competence**, which is a model's representation or measurement of that ability. |
+| **Competence** | A state, parameter, or distribution used to represent capability relevant to a task. | Realized performance and observed outcome. |
+| **Experience** | Information-producing exposure or operational history. | Training data or competence change unless the model defines that link. |
+| **Learning** | A specified transition in knowledge, competence, or policy from information. | Adaptation in general; adaptation can change decisions without learning. |
+| **Task** | A unit of work or decision presented to the system. | Demand, which describes task arrival, composition, or intensity. |
+| **Environment / context** | Conditions that affect tasks, agents, information, transitions, or outcomes. | A scenario, which is a complete model-specific problem specification. |
+| **Organization** | An arrangement of roles, capabilities, responsibilities, or decision rights. | A policy or algorithm that selects actions within an organization. |
+| **Model** | A formal or computational representation with declared assumptions. | Its implementation, which is code that realizes some model semantics. |
+| **Policy** | A rule mapping available information and state to a decision. | An organization, benchmark, or optimizer unless explicitly defined as one. |
+| **State / transition** | A represented condition and its model-defined change over time or events. | Observation; only some state variables may be available to a decision-maker. |
+| **Individual performance** | Outcome quality or success for one agent-task execution under stated conditions. | Competence, expected performance, and collective performance. |
+| **Collective performance** | A system-level outcome aggregated under a stated task population and objective. | An unqualified average of individual performance. |
+| **Resource, capacity, cost** | Consumed input, available limit, and valuation of consumption, respectively. | Each other; their relationship is model- and application-specific. |
+| **Constraint** | A feasibility condition on decisions, resources, time, information, or structure. | A performance measure or preference. |
+| **Uncertainty** | A modelled or acknowledged lack of certainty about states, outcomes, or parameters. | Randomness alone; uncertainty may be epistemic, aleatory, or unspecified. |
+
+### 11.1 Cross-model notation
+
+Existing symbols retain the meanings assigned in their primary model. For new
+descriptions, use descriptive subscripts and define the sample space, units,
+conditioning information, and time index locally. The ontology's `M`, `Q`,
+`K`, `S`, `Qbar`, `W`, `Y`, `R`, `B`, `C`, `L`, and `E` are convenient
+semantic placeholders, not mandatory shared variable names. In particular,
+do not equate performance matrices, competence matrices, task values, reward
+signals, service times, and costs across models merely because they have
+similar shapes or labels. A cross-model correspondence must be recorded as
+`EQUIVALENT`, `RELATED`, `INCOMPATIBLE`, or `UNRESOLVED` with its assumptions
+and any transformation; historical equations remain unchanged.
+
+The scientific registry records research status separately from result
+evidence type. `closed` does not mean invalid, and `active` does not imply
+confirmation. Result kinds such as `confirmatory`, `exploratory`,
+`formal_proof`, `exact_computation`, `negative`, and `inconclusive` describe
+the evidence record; outcome classes and claim scope remain separately
+specified in each result record.
+
 It should not be changed merely to accommodate alternative notation, source-specific modeling preferences, or the needs of a single experiment.
