@@ -7,9 +7,10 @@
 ## Design and data provenance
 
 The CE-04 campaign already contains the exact task-level records required for
-post-hoc diagnostics: [per-task ExperimentRun records](../../../results/experiments/hls_ce04_campaign/replicas.experiment_runs.jsonl.gz).
-Its [artifact manifest](../../../results/experiments/hls_ce04_campaign/artifact_manifest.json)
-identifies the file as local-only, SHA-256
+post-hoc diagnostics: the per-task ExperimentRun records were local-only at
+analysis time and were deleted on 2026-10-27; they must be regenerated for a
+record-level replay. The [artifact manifest](../../../results/experiments/hls_ce04_campaign/artifact_manifest.json)
+retains the historical SHA-256
 `4b85a240e2206be6e2f00a7bbd72fce2fca8df33007865124ab9bbe923f6f249`.
 We streamed the records and selected only P1, N=24, H0/H1/H2: 90 replicas
 (30 seeds per composition). No CE-04 simulations were repeated. Derived

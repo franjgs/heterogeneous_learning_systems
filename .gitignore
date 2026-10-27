@@ -250,3 +250,8 @@ docs/literature/**/*.pdf
 
 # HLS: experimental traces
 results/experiments/**/period_traces.jsonl.gz
+
+# Regenerable raw replica traces and local-only diagnostics.
+/results/experiments/**/replicas*.jsonl.gz
+/results/experiments/hls_ce07_confirmatory/replica_metrics.csv
+/results/foundations/minimal_reference_validation/worlds.csv

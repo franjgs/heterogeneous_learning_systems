@@ -33,7 +33,7 @@ authorization for a new campaign or a change to the official RQ0 entry.
 | Negative / inconclusive | CE-02 is closed NO-GO as an immediate publication candidate: the exact synthetic dependence control is valid, the temporal preflight is partial, and no real-model inference ran. Campaign 3 has a bounded META-VOC versus RANDOM result but no demonstrated production advantage on held-out G3/G4 and no reliable opportunity detector; MMLU cascades and DCS-LA likewise do not establish a general advantage. See the [CE-02 record](research/HLS_CE_02_AI_AGING_PREFLIGHT.md), [Campaign 3 report](experiments/CAMPAIGN_3_META_VOC_CONFIRMATORY_RESULTS.md), and [DCS-LA report](experiments/HLS_CONTEXTUAL_CAPACITY_SELECTION.md). |
 | Closed / no further run authorized by these records | CE-01 and CE-02 are closed; CE-03 V2 does not support H3 and no V3 is authorized; CE-07.5 is complete and does not authorize CE-08. These are line-specific dispositions, not declarations that the wider phenomena are unimportant. |
 | Proposal, not authorization | [The initial-dimension proposal](research/HLS_INITIAL_DIMENSION_EXPERIMENT_PROPOSAL.md) remains pending PI decision. No pilot or campaign follows from its presence. The CE-07.5 result is a completed, separate design and does not retroactively approve that proposal. |
-| Evidence unavailable in a clean Git checkout | The forensic audit records CE-04 task-level and causal raw logs, and CE-07 replica-metrics CSV, as local-only/ignored; reports and selected manifests/aggregates are tracked. A local Nembhard completion claim is untracked. Do not describe those local-only artifacts as GitHub-accessible or independently replayable. See the [provenance ledger](research/audits/HLS_PROVENANCE_AND_INCIDENT_LEDGER_2026-10-26.csv). |
+| Evidence unavailable in a clean Git checkout | On 2026-10-27, ignored CE-04 task-level/causal logs, CE-07 replica metrics, regenerable S3b traces, generated caches and local Nembhard run outputs were deleted. Reports, compact metrics, configurations and selected manifests remain tracked. Record-level replay of deleted raw outputs requires regeneration; the local Nembhard 1,016-run observation was unverified and its files are no longer present. The 26 October provenance ledger remains a dated snapshot of the earlier local state. |
 
 No later record establishes a new authorized campaign priority after the
 CE-05 framing correction and CE-07.5 completion. The status here therefore
@@ -52,7 +52,8 @@ These conclusions are restricted to H2 and this synthetic scenario. The
 [results report](research/CE-04/15_CAUSAL_RESULTS.md), execution
 [configuration](../results/experiments/hls_ce04_causal_confirmatory/execution_config.json)
 and [campaign manifest](../results/experiments/hls_ce04_causal_confirmatory/campaign_manifest.json)
-contain analysis and provenance; the large task log is local-only.
+contain analysis and provenance; the large task log was deleted on 2026-10-27
+and must be regenerated for record-level replay.
 
 **CE-06.3 isolated heterogeneity diagnostics — 26 October 2026:** existing
 CE-04 per-task records were reused to reconstruct diagnostics for the 90
@@ -90,7 +91,8 @@ superiority of HLS, cooperation, or any policy. Full results, uncertainty,
 scale contrasts and limitations are in the [confirmatory report](research/CE-04/11_CONFIRMATORY_RESULTS.md).
 The metrics, analysis, validation record and hashes are in the
 [campaign manifest](../results/experiments/hls_ce04_campaign/artifact_manifest.json);
-the large task-level log remains local-only and is hash-identified there.
+the large task-level log was deleted on 2026-10-27; its historical hash remains
+in the report/manifest, and the raw log must be regenerated for replay.
 
 **CE-04 pilot status — superseded by the confirmatory campaign above:** the CE-04.5 technical pilot first
 stopped at a validator false positive, because a logged P3 reward event was
@@ -105,8 +107,9 @@ superiority and does not authorize or constitute the full campaign (seeds
 rerun are preserved in the [pilot report](research/CE-04/10_TECHNICAL_PILOT_REPORT.md).
 Lightweight metrics, configuration and validation artifacts are indexed in
 [`attempt_02`](../results/experiments/hls_ce04_pilot_retry/attempt_02/artifact_manifest.json);
-the 41 MB task-level ExperimentRun gzip remains local-only and is identified
-by its SHA-256 there.
+the 41 MB task-level ExperimentRun gzip was deleted on 2026-10-27; its
+historical SHA-256 and compact validation artifacts remain, but the raw log
+must be regenerated for replay.
 
 **USE/DEVELOP status — 23 October 2026:** the focused grounding phase ended
 with an initial **REFRAME**; the subsequent originality assessment concludes
@@ -553,12 +556,12 @@ execution CLI, common-contract result adapter, and post-run analysis in
 `src/hls/nembhard_campaign.py`. The registry contains 1,016 unique
 configurations after reuse of two identity diagnostics. HLS-E1 execution was
 started and interrupted; the earlier tracked incident record counted 29
-valid completed episodes and 987 pending. A later read-only inspection of the
-current local result tree validates 1,016 complete episodes and zero pending;
-the result directory and analysis file are untracked/unpublished in this
-worktree, so this discrepancy is recorded rather than silently treating the
-local files as repository-published evidence. Neither record is changed by
-the adaptive-capability validation below. Resume validates all three result
+valid completed episodes and 987 pending. A later local inspection reported
+1,016 complete episodes and zero pending, but those untracked files were never
+published as evidence and were deleted on 2026-10-27. The local observation
+remains unverified and would require regeneration; it does not replace the
+interrupted tracked incident. Neither record is changed by the
+adaptive-capability validation below. Resume validates all three result
 files and requires an explicit command/token. See the [runner record](engineering/HLS_NEMBHARD_CAMPAIGN_RUNNER.md),
 [execution plan](engineering/HLS_LAB_EXECUTION_PLAN_2026-10-17.md), and
 [history](HISTORY.md).

@@ -91,9 +91,11 @@ frozen source manifests supply physics/inference/policy hashes.
 `closed_loop_runs.csv`, `closed_loop_trajectories.csv.gz`, `reference_states.csv`,
 `policy_evaluations.csv`, `counterfactual_results.csv`, and
 `counterfactual_branches.csv.gz` preserve raw records distributed with the
-repository. The large `opportunity_landscapes.csv.gz` raw artifact is retained
-outside Git to avoid repository bloat; its exact SHA256 remains recorded in
-`raw_completion.json`, `provenance.json`, and `validation_summary.json`.
+repository. The large `opportunity_landscapes.csv.gz` raw artifact was retained
+outside Git at the time of the campaign and deleted as regenerable data on
+2026-10-27. Its historical SHA256 remains recorded in `raw_completion.json`,
+`provenance.json`, and `validation_summary.json`; regenerate it if raw landscape
+records are needed.
 `actions.csv` maps action IDs to exact canonical allocations. Missing
 first-problem C/N and terminal-only diagnostics are explicit empty CSV fields.
 `raw_completion.json` binds raw tables by SHA256; final provenance binds derived

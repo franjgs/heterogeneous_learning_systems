@@ -1995,3 +1995,28 @@ cause. Configuration SHA-256:
 See the [CE-07.5 report](research/CE-07/04_CONFIRMATORY_RESULTS.md), [valid
 artifacts](../results/experiments/hls_ce07_confirmatory/) and preserved
 [nonconforming attempt](../results/experiments/hls_ce07_confirmatory/attempt_01_nonstationary_ce04_demand/).
+
+## 2026-10-27 — Regenerable storage cleanup
+
+Removed 4,438 ignored local files (9,478,352,601 bytes), including generated
+model/data caches, temporary Python/test artifacts, local logs, raw per-run
+Nembhard outputs, CE-04/CE-07 raw records, and S3b period traces. These files
+were regenerable or their scientific summaries and provenance were preserved
+in tracked reports, metrics and manifests. Record-level replay of deleted raw
+outputs now requires regeneration; historical numerical claims were not
+changed. Removed the generated `minimal_reference_validation/worlds.csv` from
+version control; its deterministic runner, summary, manifest and recorded
+historical hash remain, and the CSV can be regenerated. Added ignore rules for
+regenerable raw outputs to prevent accidental re-addition. The 26 October
+inventory and provenance ledger remain dated snapshots of the earlier local
+state, not descriptions of current storage.
+
+Validation: the registry/catalog/minimal-reference focused suite passed 27/27.
+The full suite completed with 1,890 passed and 11 failed. Five failures match
+the previously known inventory/frozen-source hash failures. Six are expected
+artifact-availability failures after the authorized cleanup: five B3/B4/B5/RQ0
+audits need deleted ignored B23/B24 checkpoints, and the Campaign 2 artifact
+integrity test needs the deleted raw opportunity-landscape gzip. These tests
+remain useful integrity checks; their failures were not masked by weakening
+assertions or changing hashes. Recreate the named artifacts before using those
+tests to validate their associated historical runs.

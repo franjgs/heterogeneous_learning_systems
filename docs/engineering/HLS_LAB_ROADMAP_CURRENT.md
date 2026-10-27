@@ -508,8 +508,9 @@ modelo S3b evaluado no define costes, producción ni requisitos funcionales.
 **Artefactos:** [runner](../../experiments/run_hls_s3b_observability_recovery.py),
 [adaptador](../../src/hls/synthetic/s3b_pef_adapter.py),
 [resultados](../../results/experiments/hls_s3b_observability_recovery/results.json),
-[trazas](../../results/experiments/hls_s3b_observability_recovery/period_traces.jsonl.gz),
 [pruebas](../../tests/test_hls_s3b_observability_recovery.py).
+Las trazas gzip por periodo se eliminaron el 2026-10-27 como datos regenerables;
+si se necesitan para replay, deben generarse de nuevo con el runner.
 
 **Estado:** esta ejecución está cerrada; S3b sigue abierta. El PI decidirá
 si continúa la investigación. No se inició otra campaña ni se tocaron otros
