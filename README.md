@@ -31,6 +31,10 @@ for its semantic vocabulary.
 - [Scientific registry](docs/registry/hls_scientific_registry.jsonl):
   structured index of investigations and results; follow its sources for
   evidence and do not treat registry entries as independent evidence.
+- [Scenario and domain catalogue](docs/registry/hls_scenario_catalog.json):
+  cross-links scenarios, research domains, investigations, models,
+  organizations, results, and source files. Query it with
+  `python3 docs/registry/query_hls_catalog.py --help`.
 - [History](docs/HISTORY.md): dated decisions and project chronology.
 - [Research questions](docs/research_questions.md): registered questions.
 - [Theory index](docs/theory/README.md): formal results and model-scoped

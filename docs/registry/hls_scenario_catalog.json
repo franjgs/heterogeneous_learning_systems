@@ -1,0 +1,3158 @@
+{
+  "schema_version": "1.0",
+  "catalog_type": "hls_scientific_scenario_catalog",
+  "domains": [
+    {
+      "domain_id": "structure_of_capabilities",
+      "label": "Structure Of Capabilities",
+      "research_refs": [
+        "A1_G0_C1_C6",
+        "CE03",
+        "CE04",
+        "CE04_CAUSAL",
+        "CE06",
+        "CE07",
+        "CLASSIFIER_FUSION",
+        "G1_STATIC_T0_T3",
+        "G2_DYNAMIC_T4_T6",
+        "G3_G3H",
+        "M0_M01_H1_CR_CIV",
+        "NXK_NEMBHARD",
+        "Q1_Q1R",
+        "S1_S2",
+        "S3A_S3B",
+        "S4_S7"
+      ],
+      "scenario_refs": [
+        "SCN_BOUNDED_SYNTHETIC_FAILURE_FREQUENCY_QUALITY_GAP_SETTINGS",
+        "SCN_CE_04_SYNTHETIC_H2_SCENARIO_AT_N_12_AND_N_48",
+        "SCN_CE_04_SYNTHETIC_N_24_WORKLOAD_NINE_ADDITIONAL_TECHNICAL_PILOT_REPLICAT",
+        "SCN_FINITE_DYNAMIC_CAPABILITY_STATES_AND_HORIZONS",
+        "SCN_FINITE_ORGANIZATIONAL_ASSIGNMENT_AND_FUTURE_OPPORTUNITY_CONSTRUCTIONS",
+        "SCN_FINITE_S1_ASSIGNMENT_AND_S2A_S2B_TEMPORAL_INSTANCES",
+        "SCN_FINITE_S4_AND_S7_FIXTURES_WITH_DISTINCT_COMPLIANCE_SEMANTICS",
+        "SCN_FINITE_STATIC_AND_DYNAMIC_MECHANISM_FIXTURES",
+        "SCN_FINITE_STATIC_CAPABILITY_MATRICES_AND_BUDGETS",
+        "SCN_FINITE_SYNTHETIC_JOINT_ERROR_DISTRIBUTIONS",
+        "SCN_FIXED_COMPETENCE_STATIONARY_EQUAL_MARGINAL_FIXTURE",
+        "SCN_NK_ALLOCATION_AND_NEMBHARD_INSPIRED_PRODUCTIVITY_SETTINGS",
+        "SCN_S3A_S3B_INFORMATION_AND_CONTEXTUAL_SELECTION_SETTINGS",
+        "SCN_SYNTHETIC_DYNAMIC_TASK_QUEUES_DEADLINES_THREE_SCALES_AND_FOUR_TASK_FAM",
+        "SCN_SYNTHETIC_N_12_K_4_STATIONARY_EQUIPROBABLE_TASK_FAMILIES",
+        "SCN_THREE_SYNTHETIC_BINARY_CLASSIFICATION_TASKS_T1T3"
+      ]
+    },
+    {
+      "domain_id": "organization_and_assignment",
+      "label": "Organization And Assignment",
+      "research_refs": [
+        "B1_B2_B12",
+        "BUDGETED_LLM_ROUTING",
+        "CE03",
+        "CE04",
+        "CE04_CAUSAL",
+        "CE06",
+        "CE07",
+        "G1_STATIC_T0_T3",
+        "G2_DYNAMIC_T4_T6",
+        "G3_G3H",
+        "MINIMAL_HLS_OPV",
+        "NXK_NEMBHARD",
+        "PACS_B21_B24_B3_B5",
+        "RQ0",
+        "S1_S2",
+        "S3A_S3B",
+        "S3B_S3BE1",
+        "S4_S7"
+      ],
+      "scenario_refs": [
+        "SCN_BOUNDED_SOURCE_MECHANISM_TEST_SETTINGS",
+        "SCN_BUDGETED_LLM_QUERY_ROUTING_DATA_AND_EVALUATION_SPLITS",
+        "SCN_CE_04_SYNTHETIC_H2_SCENARIO_AT_N_12_AND_N_48",
+        "SCN_CE_04_SYNTHETIC_N_24_WORKLOAD_NINE_ADDITIONAL_TECHNICAL_PILOT_REPLICAT",
+        "SCN_FINITE_DYNAMIC_CAPABILITY_STATES_AND_HORIZONS",
+        "SCN_FINITE_IMAGE_TASK_PILOTS_AND_REPLAY_SETTINGS",
+        "SCN_FINITE_ORGANIZATIONAL_ASSIGNMENT_AND_FUTURE_OPPORTUNITY_CONSTRUCTIONS",
+        "SCN_FINITE_ROUTING_AS_TEACHING_DECISION_PROCESSES",
+        "SCN_FINITE_S1_ASSIGNMENT_AND_S2A_S2B_TEMPORAL_INSTANCES",
+        "SCN_FINITE_S4_AND_S7_FIXTURES_WITH_DISTINCT_COMPLIANCE_SEMANTICS",
+        "SCN_FINITE_STATIC_CAPABILITY_MATRICES_AND_BUDGETS",
+        "SCN_NK_ALLOCATION_AND_NEMBHARD_INSPIRED_PRODUCTIVITY_SETTINGS",
+        "SCN_S3A_S3B_INFORMATION_AND_CONTEXTUAL_SELECTION_SETTINGS",
+        "SCN_S3B_CONTEXTUAL_CAPACITY_SELECTION_STATES",
+        "SCN_SYNTHETIC_DYNAMIC_TASK_QUEUES_DEADLINES_THREE_SCALES_AND_FOUR_TASK_FAM",
+        "SCN_SYNTHETIC_N_12_K_4_STATIONARY_EQUIPROBABLE_TASK_FAMILIES",
+        "SCN_THREE_SYNTHETIC_BINARY_CLASSIFICATION_TASKS_T1T3",
+        "UNRESOLVED_MINIMAL_HLS_OPV"
+      ]
+    },
+    {
+      "domain_id": "learning_and_evolution",
+      "label": "Learning And Evolution",
+      "research_refs": [
+        "CAMPAIGN_1",
+        "CAMPAIGN_2",
+        "CAMPAIGN_3_METAVOC",
+        "CAMPAIGN_4",
+        "CE03",
+        "CE04",
+        "G2_DYNAMIC_T4_T6",
+        "G3_G3H",
+        "MINIMAL_HLS_OPV",
+        "NXK_NEMBHARD",
+        "S3A_S3B",
+        "S3B_S3BE1",
+        "S4_S7"
+      ],
+      "scenario_refs": [
+        "SCN_COUNTERFACTUAL_OPPORTUNITY_VALUE_CAMPAIGN_PREPARATION",
+        "SCN_FINITE_DYNAMIC_CAPABILITY_STATES_AND_HORIZONS",
+        "SCN_FINITE_ORGANIZATIONAL_ASSIGNMENT_AND_FUTURE_OPPORTUNITY_CONSTRUCTIONS",
+        "SCN_FINITE_PROBLEM_BELIEF_GEOMETRIES_AND_FROZEN_G1G4_DOMAINS",
+        "SCN_FINITE_S4_AND_S7_FIXTURES_WITH_DISTINCT_COMPLIANCE_SEMANTICS",
+        "SCN_NK_ALLOCATION_AND_NEMBHARD_INSPIRED_PRODUCTIVITY_SETTINGS",
+        "SCN_PROSPECTIVE_ADAPTATION_HISTORIES_AND_PREREGISTERED_CONFIGURATIONS",
+        "SCN_S3A_S3B_INFORMATION_AND_CONTEXTUAL_SELECTION_SETTINGS",
+        "SCN_S3B_CONTEXTUAL_CAPACITY_SELECTION_STATES",
+        "SCN_SYNTHETIC_DYNAMIC_TASK_QUEUES_DEADLINES_THREE_SCALES_AND_FOUR_TASK_FAM",
+        "SCN_THREE_SYNTHETIC_BINARY_CLASSIFICATION_TASKS_T1T3",
+        "SCN_TR_PROBLEM_HISTORY_ENVIRONMENTS",
+        "UNRESOLVED_MINIMAL_HLS_OPV"
+      ]
+    },
+    {
+      "domain_id": "complementarity_and_cooperation",
+      "label": "Complementarity And Cooperation",
+      "research_refs": [
+        "CE03",
+        "CE07",
+        "G3_G3H",
+        "MINIMAL_HLS_OPV",
+        "NXK_NEMBHARD",
+        "PACS_B21_B24_B3_B5",
+        "S4_S7"
+      ],
+      "scenario_refs": [
+        "SCN_FINITE_IMAGE_TASK_PILOTS_AND_REPLAY_SETTINGS",
+        "SCN_FINITE_ORGANIZATIONAL_ASSIGNMENT_AND_FUTURE_OPPORTUNITY_CONSTRUCTIONS",
+        "SCN_FINITE_S4_AND_S7_FIXTURES_WITH_DISTINCT_COMPLIANCE_SEMANTICS",
+        "SCN_NK_ALLOCATION_AND_NEMBHARD_INSPIRED_PRODUCTIVITY_SETTINGS",
+        "SCN_SYNTHETIC_N_12_K_4_STATIONARY_EQUIPROBABLE_TASK_FAMILIES",
+        "SCN_THREE_SYNTHETIC_BINARY_CLASSIFICATION_TASKS_T1T3",
+        "UNRESOLVED_MINIMAL_HLS_OPV"
+      ]
+    },
+    {
+      "domain_id": "adaptation_and_uncertainty",
+      "label": "Adaptation And Uncertainty",
+      "research_refs": [
+        "BUDGETED_LLM_ROUTING",
+        "CAMPAIGN_1",
+        "CAMPAIGN_2",
+        "CAMPAIGN_3_METAVOC",
+        "CAMPAIGN_4",
+        "CE01",
+        "CE02",
+        "CE03",
+        "CE04",
+        "CE04_CAUSAL",
+        "G2_DYNAMIC_T4_T6",
+        "G3_G3H",
+        "MMLU_DCSLA",
+        "RQ0",
+        "S3A_S3B",
+        "S3B_S3BE1"
+      ],
+      "scenario_refs": [
+        "SCN_ARCHIVED_MMLU_FAST_DEEP_DATA_NO_ANSWER_CONDITIONED_REVIEW_OBSERVATIONS",
+        "SCN_BUDGETED_LLM_QUERY_ROUTING_DATA_AND_EVALUATION_SPLITS",
+        "SCN_CE_04_SYNTHETIC_H2_SCENARIO_AT_N_12_AND_N_48",
+        "SCN_COUNTERFACTUAL_OPPORTUNITY_VALUE_CAMPAIGN_PREPARATION",
+        "SCN_EXACT_SYNTHETIC_JOINT_ERROR_LAWS_AND_PARTIAL_YEARBOOK_PREFLIGHT",
+        "SCN_FINITE_DYNAMIC_CAPABILITY_STATES_AND_HORIZONS",
+        "SCN_FINITE_ORGANIZATIONAL_ASSIGNMENT_AND_FUTURE_OPPORTUNITY_CONSTRUCTIONS",
+        "SCN_FINITE_PROBLEM_BELIEF_GEOMETRIES_AND_FROZEN_G1G4_DOMAINS",
+        "SCN_FINITE_ROUTING_AS_TEACHING_DECISION_PROCESSES",
+        "SCN_MMLU_QUESTION_SET_AND_DOCUMENTED_EVALUATION_SPLIT",
+        "SCN_PROSPECTIVE_ADAPTATION_HISTORIES_AND_PREREGISTERED_CONFIGURATIONS",
+        "SCN_S3A_S3B_INFORMATION_AND_CONTEXTUAL_SELECTION_SETTINGS",
+        "SCN_S3B_CONTEXTUAL_CAPACITY_SELECTION_STATES",
+        "SCN_SYNTHETIC_DYNAMIC_TASK_QUEUES_DEADLINES_THREE_SCALES_AND_FOUR_TASK_FAM",
+        "SCN_THREE_SYNTHETIC_BINARY_CLASSIFICATION_TASKS_T1T3",
+        "SCN_TR_PROBLEM_HISTORY_ENVIRONMENTS"
+      ]
+    },
+    {
+      "domain_id": "evaluation_and_methodology",
+      "label": "Evaluation And Methodology",
+      "research_refs": [
+        "B0_OFFICE_HOME_SPRINT0",
+        "BUDGETED_LLM_ROUTING",
+        "CAMPAIGN_0",
+        "CAMPAIGN_1",
+        "CAMPAIGN_2",
+        "CAMPAIGN_3_METAVOC",
+        "CAMPAIGN_4",
+        "CE01",
+        "CE02",
+        "CE03",
+        "CE04",
+        "CE04_CAUSAL",
+        "CE05_COURSE_CORRECTION",
+        "CE06",
+        "CE07",
+        "EXPERIMENTRUN_HLSPEF",
+        "MMLU_DCSLA",
+        "PACS_B21_B24_B3_B5",
+        "Q1_Q1R"
+      ],
+      "scenario_refs": [
+        "SCN_ARCHIVED_MMLU_FAST_DEEP_DATA_NO_ANSWER_CONDITIONED_REVIEW_OBSERVATIONS",
+        "SCN_BUDGETED_LLM_QUERY_ROUTING_DATA_AND_EVALUATION_SPLITS",
+        "SCN_CAMPAIGN_0_DISCRIMINATIVE_CAPACITY_SCENARIOS",
+        "SCN_CE_04_SYNTHETIC_H2_SCENARIO_AT_N_12_AND_N_48",
+        "SCN_CE_04_SYNTHETIC_N_24_WORKLOAD_NINE_ADDITIONAL_TECHNICAL_PILOT_REPLICAT",
+        "SCN_COUNTERFACTUAL_OPPORTUNITY_VALUE_CAMPAIGN_PREPARATION",
+        "SCN_EXACT_SYNTHETIC_JOINT_ERROR_LAWS_AND_PARTIAL_YEARBOOK_PREFLIGHT",
+        "SCN_FINITE_IMAGE_TASK_PILOTS_AND_REPLAY_SETTINGS",
+        "SCN_FINITE_PROBLEM_BELIEF_GEOMETRIES_AND_FROZEN_G1G4_DOMAINS",
+        "SCN_FIXED_COMPETENCE_STATIONARY_EQUAL_MARGINAL_FIXTURE",
+        "SCN_MMLU_QUESTION_SET_AND_DOCUMENTED_EVALUATION_SPLIT",
+        "SCN_OFFICE_HOME_BENCHMARK_AND_SPRINT0_GATES",
+        "SCN_PROSPECTIVE_ADAPTATION_HISTORIES_AND_PREREGISTERED_CONFIGURATIONS",
+        "SCN_SYNTHETIC_DYNAMIC_TASK_QUEUES_DEADLINES_THREE_SCALES_AND_FOUR_TASK_FAM",
+        "SCN_SYNTHETIC_N_12_K_4_STATIONARY_EQUIPROBABLE_TASK_FAMILIES",
+        "SCN_THREE_SYNTHETIC_BINARY_CLASSIFICATION_TASKS_T1T3",
+        "SCN_TR_PROBLEM_HISTORY_ENVIRONMENTS",
+        "UNRESOLVED_CE05_COURSE_CORRECTION",
+        "UNRESOLVED_EXPERIMENTRUN_HLSPEF"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario_id": "SCN_ARCHIVED_MMLU_FAST_DEEP_DATA_NO_ANSWER_CONDITIONED_REVIEW_OBSERVATIONS",
+      "label": "archived MMLU FAST/DEEP data; no answer-conditioned review observations",
+      "classification": "parametric_variant",
+      "relationship_to_other_scenarios": "variant",
+      "variant_of": "SCN_MMLU_QUESTION_SET_AND_DOCUMENTED_EVALUATION_SPLIT",
+      "registry_scenario_ref": "archived MMLU FAST/DEEP data; no answer-conditioned review observations",
+      "definition": "Archived MMLU FAST/DEEP independent-answer records; no observations of answer-conditioned review D(x,F(x)) exist.",
+      "agents": "FAST and DEEP models as recorded in source artifacts.",
+      "tasks": "MMLU questions in documented split.",
+      "capabilities": "Stored independent predictions/scores only.",
+      "dynamics": "Per-question selection analysis.",
+      "constraints": "Independent answers are not conditional review evidence.",
+      "organizations": [],
+      "models": [
+        "FAST/DEEP deliberation analysis"
+      ],
+      "policies": [
+        "independent answers and proposed answer-conditioned review; latter not observed"
+      ],
+      "result_refs": [
+        "CE01_AUDIT_SUMMARY"
+      ],
+      "evidence_kinds": [
+        "exploratory",
+        "not_verified",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "Closed; no causal revision evidence"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/research/HLS_CE_01_INTERACTION_HYPOTHESES.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/HLS_CE_01_EXISTING_DATA_ASSESSMENT.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: CE-01 deliberation"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "verified_reused",
+      "reusability_evidence": [
+        "MMLU_DCSLA",
+        "CE01"
+      ],
+      "missing_dimensions": [
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "CE01"
+      ],
+      "experiment_families": [
+        "CE-01 deliberation"
+      ]
+    },
+    {
+      "scenario_id": "SCN_BOUNDED_SOURCE_MECHANISM_TEST_SETTINGS",
+      "label": "bounded source-mechanism test settings",
+      "classification": "scenario_reference",
+      "relationship_to_other_scenarios": "relationship_unverified",
+      "variant_of": null,
+      "registry_scenario_ref": "bounded source-mechanism test settings",
+      "definition": "bounded source-mechanism test settings",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "source-specific reproductions of published mechanisms"
+      ],
+      "policies": [
+        "B1/B2/B12 mechanisms as individually documented"
+      ],
+      "result_refs": [
+        "B1_B2_B12_AUDIT_SUMMARY"
+      ],
+      "evidence_kinds": [
+        "exploratory",
+        "not_verified",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "Name similarity is not faithful reproduction; no end-to-end HLS result"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/engineering/HLS_SCIENTIFIC_MODEL_DOSSIER.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/literature/README.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: B1/B2/B12 cross-domain foundations"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        }
+      ],
+      "code_and_protocol_refs": [
+        "docs/literature/audits"
+      ],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "B1_B2_B12"
+      ],
+      "experiment_families": [
+        "B1/B2/B12 cross-domain foundations"
+      ]
+    },
+    {
+      "scenario_id": "SCN_BOUNDED_SYNTHETIC_FAILURE_FREQUENCY_QUALITY_GAP_SETTINGS",
+      "label": "bounded synthetic failure-frequency/quality-gap settings",
+      "classification": "scenario_suite",
+      "relationship_to_other_scenarios": "suite_of_cases",
+      "variant_of": null,
+      "registry_scenario_ref": "bounded synthetic failure-frequency/quality-gap settings",
+      "definition": "bounded synthetic failure-frequency/quality-gap settings",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [
+        "heterogeneous capability allocation"
+      ],
+      "models": [
+        "M0/M0.1 diagnostic models"
+      ],
+      "policies": [
+        "diagnostic prioritization rules"
+      ],
+      "result_refs": [
+        "M0_M01_H1_CR_CIV_AUDIT_SUMMARY"
+      ],
+      "evidence_kinds": [
+        "exact_computation",
+        "formal_proof",
+        "inconclusive",
+        "not_verified"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "Diagnostic antecedents only; no validated selector"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/theory/minimal_hls_model.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/HLS_MATHEMATICAL_ANALYSIS_2026-10-22.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: M0/M0.1-H1-CR-CIV"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        }
+      ],
+      "code_and_protocol_refs": [
+        "docs/models/model_M0.md",
+        "src/hls/m0.py"
+      ],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "M0_M01_H1_CR_CIV"
+      ],
+      "experiment_families": [
+        "M0/M0.1-H1-CR-CIV"
+      ]
+    },
+    {
+      "scenario_id": "SCN_BUDGETED_LLM_QUERY_ROUTING_DATA_AND_EVALUATION_SPLITS",
+      "label": "budgeted LLM query-routing data and evaluation splits",
+      "classification": "benchmark",
+      "relationship_to_other_scenarios": "benchmark_setting",
+      "variant_of": null,
+      "registry_scenario_ref": "budgeted LLM query-routing data and evaluation splits",
+      "definition": "Budgeted LLM query-routing records and evaluation splits documented by the associated audit and manifests.",
+      "agents": "Candidate model/LLM endpoints as specified by the routing artifacts.",
+      "tasks": "Queries and answer tasks in the documented dataset.",
+      "capabilities": "Observed model response quality and cost fields where recorded.",
+      "dynamics": "Per-query model selection under a budget.",
+      "constraints": "Use only documented splits and available information.",
+      "organizations": [],
+      "models": [
+        "routing predictor and constrained selection formulation"
+      ],
+      "policies": [
+        "audited predictor, constant/logistic baselines, and documented ILP policy"
+      ],
+      "result_refs": [
+        "BUDGETED_LLM_ROUTING_AUDIT_SUMMARY",
+        "ROUTING_PREDICTOR_RESULTS"
+      ],
+      "evidence_kinds": [
+        "exploratory",
+        "inconclusive",
+        "negative"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "Applies only to the stated design and population.",
+        "Optimizer and predictor separate; no general ILP superiority"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/experiments/HLS_BUDGETED_LLM_ROUTING_CONSOLIDATED_REPORT.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: Budgeted LLM routing"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/experiments/HLS_BUDGETED_LLM_ROUTING_CONSOLIDATED_REPORT.md",
+          "role": "primary",
+          "section": "Predictor evaluation and baseline comparison"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "BUDGETED_LLM_ROUTING"
+      ],
+      "experiment_families": [
+        "Budgeted LLM routing"
+      ]
+    },
+    {
+      "scenario_id": "SCN_CAMPAIGN_0_DISCRIMINATIVE_CAPACITY_SCENARIOS",
+      "label": "Campaign 0 discriminative-capacity scenarios",
+      "classification": "scenario_suite",
+      "relationship_to_other_scenarios": "suite_of_cases",
+      "variant_of": null,
+      "registry_scenario_ref": "Campaign 0 discriminative-capacity scenarios",
+      "definition": "Campaign 0 discriminative-capacity scenarios",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "Campaign 0 evaluation pipeline"
+      ],
+      "policies": [],
+      "result_refs": [
+        "CAMPAIGN_0_AUDIT_SUMMARY"
+      ],
+      "evidence_kinds": [
+        "exploratory",
+        "not_verified",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "Gates, not confirmatory policy effects"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/experiments/CAMPAIGN_0_DISCRIMINATIVE_CAPACITY.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: Campaign 0 and test-range gates"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints",
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "CAMPAIGN_0"
+      ],
+      "experiment_families": [
+        "Campaign 0 and test-range gates"
+      ]
+    },
+    {
+      "scenario_id": "SCN_CE_04_SYNTHETIC_H2_SCENARIO_AT_N_12_AND_N_48",
+      "label": "CE-04 synthetic H2 scenario at N=12 and N=48",
+      "classification": "parametric_variant",
+      "relationship_to_other_scenarios": "variant",
+      "variant_of": "SCN_SYNTHETIC_DYNAMIC_TASK_QUEUES_DEADLINES_THREE_SCALES_AND_FOUR_TASK_FAM",
+      "registry_scenario_ref": "CE-04 synthetic H2 scenario at N=12 and N=48",
+      "definition": "CE-04 H2 workload restricted to N=12 and N=48 for the 2×2 P2 causal diagnostic.",
+      "agents": "N=12 and N=48",
+      "tasks": "Four CE-04 task families",
+      "capabilities": "H2 competence structure",
+      "dynamics": "Inherited CE-04 demand, service, queues, deadlines and outcome streams.",
+      "constraints": "B00/B10/B01/B11 diagnostic conditions; same CE-04 common admission.",
+      "organizations": [
+        "H2 competence structure"
+      ],
+      "models": [
+        "CE-04 P2 causal diagnostic"
+      ],
+      "policies": [
+        "B00/B10/B01/B11"
+      ],
+      "result_refs": [
+        "CE04_CAUSAL_AUDIT_SUMMARY",
+        "CE04_CAUSAL_CALIBRATION",
+        "CE04_CAUSAL_INTERACTION",
+        "CE04_CAUSAL_LOAD_ONLY"
+      ],
+      "evidence_kinds": [
+        "confirmatory",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "partially_tracked"
+      ],
+      "limitations": [
+        "Acquisition cost not monetized; specific H2 and scales; diagnostics overhead in timing",
+        "Intervention-specific to the synthetic H2 scenario; external-label acquisition costs are not monetized.",
+        "Restricted to the specified synthetic H2 setting and calibration intervention."
+      ],
+      "source_refs": [
+        {
+          "path": "docs/research/CE-04/15_CAUSAL_RESULTS.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: CE-04 causal"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/research/CE-04/15_CAUSAL_RESULTS.md",
+          "role": "primary",
+          "section": "Confirmatory contrasts; descriptive mechanism and cost diagnostics"
+        },
+        {
+          "path": "docs/research/CE-04/15_CAUSAL_RESULTS.md",
+          "role": "primary",
+          "section": "Confirmatory contrasts"
+        }
+      ],
+      "code_and_protocol_refs": [
+        "src/hls/ce04_causal.py"
+      ],
+      "reusability": "verified_reused",
+      "reusability_evidence": [
+        "CE04",
+        "CE04_CAUSAL",
+        "CE06"
+      ],
+      "missing_dimensions": [],
+      "documentation_status": "documented",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "CE04_CAUSAL"
+      ],
+      "experiment_families": [
+        "CE-04 causal"
+      ]
+    },
+    {
+      "scenario_id": "SCN_CE_04_SYNTHETIC_N_24_WORKLOAD_NINE_ADDITIONAL_TECHNICAL_PILOT_REPLICAT",
+      "label": "CE-04 synthetic N=24 workload; nine additional technical-pilot replications",
+      "classification": "parametric_variant",
+      "relationship_to_other_scenarios": "variant",
+      "variant_of": "SCN_SYNTHETIC_DYNAMIC_TASK_QUEUES_DEADLINES_THREE_SCALES_AND_FOUR_TASK_FAM",
+      "registry_scenario_ref": "CE-04 synthetic N=24 workload; nine additional technical-pilot replications",
+      "definition": "CE-04 N=24/P1 workload reused for diagnostic analysis plus a separate nine-replication technical pilot.",
+      "agents": "N=24",
+      "tasks": "Four CE-04 task families",
+      "capabilities": "H0/H1/H2",
+      "dynamics": "CE-04 workload; historical records reused for analysis.",
+      "constraints": "Diagnostic reanalysis is not an independent replication; pilot is technical, not confirmatory.",
+      "organizations": [
+        "H0/H1/H2"
+      ],
+      "models": [
+        "CE-04 P1 assignment; diagnostic reanalysis"
+      ],
+      "policies": [
+        "P1"
+      ],
+      "result_refs": [
+        "CE06_ASSIGNMENT_GINI",
+        "CE06_AUDIT_SUMMARY",
+        "CE06_HISTORICAL_REANALYSIS",
+        "CE06_LATE_TASKS",
+        "CE06_MEAN_WAIT",
+        "CE06_PILOT_VALIDATION",
+        "CE06_SELECTED_COMPETENCE"
+      ],
+      "evidence_kinds": [
+        "exploratory",
+        "not_verified",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "not_verified",
+        "partially_tracked",
+        "tracked"
+      ],
+      "limitations": [
+        "Descriptive reanalysis of existing CE-04 data; no independent replication and no causal identification of congestion mediation.",
+        "Descriptive reanalysis, not independent replication; correlations do not identify congestion or mediation.",
+        "Reanalysis not replication; pilot nonconfirmatory; no causal mediation",
+        "Technical validation only; not confirmatory evidence and not independent replication of the reused CE-04 analysis."
+      ],
+      "source_refs": [
+        {
+          "path": "docs/research/CE-06/01_HETEROGENEITY_DIAGNOSTICS.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: CE-06"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/research/CE-06/01_HETEROGENEITY_DIAGNOSTICS.md",
+          "role": "primary",
+          "section": "Existing CE-04 results (30 seeds per composition); new technical pilot"
+        },
+        {
+          "path": "docs/research/CE-06/01_HETEROGENEITY_DIAGNOSTICS.md",
+          "role": "primary",
+          "section": "New technical pilot (three seeds per composition)"
+        },
+        {
+          "path": "docs/research/CE-06/01_HETEROGENEITY_DIAGNOSTICS.md",
+          "role": "primary",
+          "section": "Existing CE-04 results (30 seeds per composition)"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "verified_reused",
+      "reusability_evidence": [
+        "CE04",
+        "CE04_CAUSAL",
+        "CE06"
+      ],
+      "missing_dimensions": [
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "CE06"
+      ],
+      "experiment_families": [
+        "CE-06"
+      ]
+    },
+    {
+      "scenario_id": "SCN_COUNTERFACTUAL_OPPORTUNITY_VALUE_CAMPAIGN_PREPARATION",
+      "label": "counterfactual opportunity-value campaign preparation",
+      "classification": "scenario_reference",
+      "relationship_to_other_scenarios": "relationship_unverified",
+      "variant_of": null,
+      "registry_scenario_ref": "counterfactual opportunity-value campaign preparation",
+      "definition": "counterfactual opportunity-value campaign preparation",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "Campaign 4 engine and bounded reconstruction checks"
+      ],
+      "policies": [],
+      "result_refs": [
+        "CAMPAIGN_4_AUDIT_SUMMARY"
+      ],
+      "evidence_kinds": [
+        "not_verified",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "No scientific C4 outcome run"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/experiments/CAMPAIGN_4_ENGINE_VERIFICATION.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: Campaign 4"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints",
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "CAMPAIGN_4"
+      ],
+      "experiment_families": [
+        "Campaign 4"
+      ]
+    },
+    {
+      "scenario_id": "SCN_EXACT_SYNTHETIC_JOINT_ERROR_LAWS_AND_PARTIAL_YEARBOOK_PREFLIGHT",
+      "label": "exact synthetic joint error laws and partial Yearbook preflight",
+      "classification": "composite_reference",
+      "relationship_to_other_scenarios": "composite_source_reference",
+      "variant_of": null,
+      "registry_scenario_ref": "exact synthetic joint error laws and partial Yearbook preflight",
+      "definition": "exact synthetic joint error laws and partial Yearbook preflight",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "three-classifier dependence control"
+      ],
+      "policies": [
+        "majority voting"
+      ],
+      "result_refs": [
+        "CE02_AUDIT_SUMMARY",
+        "TH_CLASSIFIER_FUSION_AND_AI_AGING_CONTROL"
+      ],
+      "evidence_kinds": [
+        "exact_computation",
+        "negative",
+        "not_verified",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "Mathematical possibility, not a novel general theorem or real temporal evidence",
+        "Mathematical synthetic control only; NO-GO immediate originality; no real temporal aging evidence"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/research/HLS_CE_02_AI_AGING_PREFLIGHT.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: CE-02 AI-aging"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/research/HLS_CE_02_AI_AGING_PREFLIGHT.md",
+          "role": "primary",
+          "section": "Exact synthetic-control results"
+        },
+        {
+          "path": "docs/research/HLS_CE_02_AI_AGING_PREFLIGHT.md",
+          "role": "primary",
+          "section": "Exact synthetic probability control; limitations"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: Classifier fusion and AI-aging control"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints",
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [
+        "Classifier fusion and AI-aging control"
+      ],
+      "research_refs": [
+        "CE02"
+      ],
+      "experiment_families": [
+        "CE-02 AI-aging"
+      ]
+    },
+    {
+      "scenario_id": "SCN_FINITE_DYNAMIC_CAPABILITY_STATES_AND_HORIZONS",
+      "label": "finite dynamic capability states and horizons",
+      "classification": "scenario_family",
+      "relationship_to_other_scenarios": "family_or_parameter_set",
+      "variant_of": null,
+      "registry_scenario_ref": "finite dynamic capability states and horizons",
+      "definition": "Finite dynamic capability states and horizons used for T4-T6/G2 analysis.",
+      "agents": null,
+      "tasks": null,
+      "capabilities": "Dynamic capacity/use/development states under the specified laws.",
+      "dynamics": "Finite state and horizon; model-specific transition laws.",
+      "constraints": "Do not conflate distinct G2 learning laws.",
+      "organizations": [
+        "use/development choices under stated dynamics"
+      ],
+      "models": [
+        "T4–T6 dynamic theory; G2 D0/D1/D2"
+      ],
+      "policies": [],
+      "result_refs": [
+        "G2_DYNAMIC_T4_T6_AUDIT_SUMMARY",
+        "TH_G2_D0_D1_D2",
+        "TH_T4_DYNAMIC_CAPABILITY",
+        "TH_T5_DEVELOPMENT_VALUE",
+        "TH_T6_ORGANIZATION_DEVELOPMENT_COUPLING"
+      ],
+      "evidence_kinds": [
+        "exact_computation",
+        "formal_proof",
+        "not_verified"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "D2 positive witness; not universal development benefit",
+        "Exact only for declared states/actions/horizon; no broad theorem",
+        "G2 D1 null and D2 positive finite construction",
+        "Not a universal requirement for joint management; finite construction",
+        "Small constructed worlds; standard dynamic programming structures"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/theory/HLS_DYNAMIC_THEORY.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: T4-T6 and G2"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/theory/HLS_DYNAMIC_THEORY.md",
+          "role": "primary",
+          "section": "§4; T4 Dynamic capability"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: T4 Dynamic capability"
+        },
+        {
+          "path": "docs/theory/HLS_DYNAMIC_THEORY.md",
+          "role": "primary",
+          "section": "§5; T5 Development value"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: T5 Development value"
+        },
+        {
+          "path": "docs/theory/HLS_DYNAMIC_THEORY.md",
+          "role": "primary",
+          "section": "§6; T6 Organization-development coupling"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: T6 Organization-development coupling"
+        },
+        {
+          "path": "docs/theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md",
+          "role": "primary",
+          "section": "docs/theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: G2 D0/D1/D2"
+        }
+      ],
+      "code_and_protocol_refs": [
+        "docs/theory/HLS_DYNAMIC_THEORY.md",
+        "src/hls/g2_dynamic.py"
+      ],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [
+        "G2 D0/D1/D2",
+        "T4 Dynamic capability",
+        "T5 Development value",
+        "T6 Organization-development coupling"
+      ],
+      "research_refs": [
+        "G2_DYNAMIC_T4_T6"
+      ],
+      "experiment_families": [
+        "T4-T6 and G2"
+      ]
+    },
+    {
+      "scenario_id": "SCN_FINITE_IMAGE_TASK_PILOTS_AND_REPLAY_SETTINGS",
+      "label": "finite image/task pilots and replay settings",
+      "classification": "scenario_suite",
+      "relationship_to_other_scenarios": "suite_of_cases",
+      "variant_of": null,
+      "registry_scenario_ref": "finite image/task pilots and replay settings",
+      "definition": "finite image/task pilots and replay settings",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "PACS B2.1–B2.4 and B3–B5"
+      ],
+      "policies": [
+        "opportunity-value and interference variants as protocol-specific"
+      ],
+      "result_refs": [
+        "PACS_B21_B24_B3_B5_AUDIT_SUMMARY"
+      ],
+      "evidence_kinds": [
+        "exploratory",
+        "inconclusive",
+        "not_verified",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "Not an end-to-end validation of selective training"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/experimental_foundations/B22_PROTOCOL.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/HLS_CURRENT_STATE.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: PACS B2.1-B2.4 and B3-B5"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/HLS_CURRENT_STATE.md",
+          "role": "primary",
+          "section": "Scenario inventory (S1/S2); dated scientific snapshot"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints",
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "PACS_B21_B24_B3_B5"
+      ],
+      "experiment_families": [
+        "PACS B2.1-B2.4 and B3-B5"
+      ]
+    },
+    {
+      "scenario_id": "SCN_FINITE_ORGANIZATIONAL_ASSIGNMENT_AND_FUTURE_OPPORTUNITY_CONSTRUCTIONS",
+      "label": "finite organizational assignment and future-opportunity constructions",
+      "classification": "scenario_suite",
+      "relationship_to_other_scenarios": "suite_of_cases",
+      "variant_of": null,
+      "registry_scenario_ref": "finite organizational assignment and future-opportunity constructions",
+      "definition": "finite organizational assignment and future-opportunity constructions",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "G3/G3-H propositions and counterexamples"
+      ],
+      "policies": [],
+      "result_refs": [
+        "G3_G3H_AUDIT_SUMMARY",
+        "TH_G3_G3_H"
+      ],
+      "evidence_kinds": [
+        "exact_computation",
+        "formal_proof",
+        "not_verified"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "C1 claim falsified; C2 reduces to look-ahead/DP; finite assumptions",
+        "No general planner, training policy or empirical validation"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/experimental_foundations/HLS_G3_ORGANIZATIONAL_VALUE_GROUND_TRUTH.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: G3/G3-H"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/experimental_foundations/HLS_G3_ORGANIZATIONAL_VALUE_GROUND_TRUTH.md",
+          "role": "primary",
+          "section": "docs/experimental_foundations/HLS_G3_ORGANIZATIONAL_VALUE_GROUND_TRUTH.md"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: G3/G3-H"
+        }
+      ],
+      "code_and_protocol_refs": [
+        "docs/experimental_foundations/HLS_G3_ORGANIZATIONAL_VALUE_GROUND_TRUTH.md"
+      ],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [
+        "G3/G3-H"
+      ],
+      "research_refs": [
+        "G3_G3H"
+      ],
+      "experiment_families": [
+        "G3/G3-H"
+      ]
+    },
+    {
+      "scenario_id": "SCN_FINITE_PROBLEM_BELIEF_GEOMETRIES_AND_FROZEN_G1G4_DOMAINS",
+      "label": "finite problem-belief geometries and frozen G1–G4 domains",
+      "classification": "scenario_suite",
+      "relationship_to_other_scenarios": "suite_of_cases",
+      "variant_of": null,
+      "registry_scenario_ref": "finite problem-belief geometries and frozen G1–G4 domains",
+      "definition": "Finite problem-belief geometries and separately frozen G1-G4 evaluation domains used in Campaign 3.",
+      "agents": null,
+      "tasks": "Finite problems and demand states as specified by campaign artifacts.",
+      "capabilities": "Belief-state representations over future problems.",
+      "dynamics": "Metareasoning over finite horizons/domains.",
+      "constraints": "Held-out G3/G4 results are domain-specific.",
+      "organizations": [],
+      "models": [
+        "META-VOC predictor and metareasoning setting"
+      ],
+      "policies": [
+        "META-VOC and preregistered baselines"
+      ],
+      "result_refs": [
+        "CAMPAIGN3_COMPUTE_TIME",
+        "CAMPAIGN3_G3_GENERALIZATION",
+        "CAMPAIGN3_G4_GENERALIZATION",
+        "CAMPAIGN3_METAVOC_RANDOM",
+        "CAMPAIGN3_RIDGE_AUC",
+        "CAMPAIGN_3_METAVOC_AUDIT_SUMMARY"
+      ],
+      "evidence_kinds": [
+        "confirmatory",
+        "exploratory",
+        "inconclusive",
+        "not_verified",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "not_verified",
+        "tracked"
+      ],
+      "limitations": [
+        "Does not establish production advantage on held-out G3/G4 or a general opportunity detector.",
+        "Post-development primary designation; unequal invocation counts; predictor AUC .624; no informed policy comparison",
+        "The domain-specific interval includes zero; the global equal-domain contrast does not establish production advantage on held-out team geometries.",
+        "The realized DEEP invocation budgets were not exactly matched; this joint frozen-rule comparison does not isolate pure efficiency at equal calls.",
+        "This audits the predictor in the specified C3.2-matched setting; it does not establish general failure of adaptive computation policies."
+      ],
+      "source_refs": [
+        {
+          "path": "docs/experiments/CAMPAIGN_3_META_VOC_CONFIRMATORY_RESULTS.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/paper/META_VOC_SCIENTIFIC_RECORD.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: Campaign 3 / META-VOC"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/experiments/CAMPAIGN_3_META_VOC_CONFIRMATORY_RESULTS.md",
+          "role": "primary",
+          "section": "Primary paired comparison: META-VOC-50 minus RANDOM-50"
+        },
+        {
+          "path": "docs/experiments/META_VOC_PREDICTOR_VALIDITY_REPORT.md",
+          "role": "primary",
+          "section": "Equal-domain pooled; predictor validity findings"
+        },
+        {
+          "path": "docs/experiments/CAMPAIGN_3_META_VOC_CONFIRMATORY_RESULTS.md",
+          "role": "primary",
+          "section": "Frozen generalization domains"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "CAMPAIGN_3_METAVOC"
+      ],
+      "experiment_families": [
+        "Campaign 3 / META-VOC"
+      ]
+    },
+    {
+      "scenario_id": "SCN_FINITE_ROUTING_AS_TEACHING_DECISION_PROCESSES",
+      "label": "finite routing-as-teaching decision processes",
+      "classification": "scenario_family",
+      "relationship_to_other_scenarios": "family_or_parameter_set",
+      "variant_of": null,
+      "registry_scenario_ref": "finite routing-as-teaching decision processes",
+      "definition": "finite routing-as-teaching decision processes",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "RQ0 policy inclusion, strong-SEP and C(alpha) analyses"
+      ],
+      "policies": [
+        "joint and separated policy classes"
+      ],
+      "result_refs": [
+        "RQ0_AUDIT_SUMMARY",
+        "TH_RQ0_C_ALPHA",
+        "TH_RQ0_LOCAL_OPPORTUNITY_IDENTITY",
+        "TH_RQ0_POLICY_INCLUSION",
+        "TH_RQ0_STRONG_SEP_CRITERION",
+        "TH_UNPROVED_OPEN_CLAIMS"
+      ],
+      "evidence_kinds": [
+        "exact_computation",
+        "formal_proof",
+        "not_verified"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "Does not establish prevalence, robustness or empirical relevance",
+        "Inclusion inequality standard; no prevalence or universal irreducibility",
+        "Must satisfy reachability and optimal-policy support conditions",
+        "Remain hypotheses/open questions, not results",
+        "Requires exact policy class, info, feasibility and finite attainment definitions",
+        "Standard class-inclusion result, not original as written in HLS terms"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/theory/rq0_routing_integration_boundaries.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: RQ0 policy boundaries and C(alpha)"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/theory/rq0_routing_integration_boundaries.md",
+          "role": "primary",
+          "section": "§3; RQ0 policy inclusion"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: RQ0 policy inclusion"
+        },
+        {
+          "path": "docs/theory/rq0_routing_integration_boundaries.md",
+          "role": "primary",
+          "section": "§§4,8; strong-SEP criterion"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: RQ0 strong-SEP criterion"
+        },
+        {
+          "path": "docs/theory/rq0_routing_integration_boundaries.md",
+          "role": "primary",
+          "section": "§§5–6; local opportunity identity"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: RQ0 local opportunity identity"
+        },
+        {
+          "path": "docs/theory/rq0_routing_integration_boundaries.md",
+          "role": "primary",
+          "section": "§§11–14; C(alpha)"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: RQ0 C(alpha)"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "primary",
+          "section": "Row: Unproved/open claims"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: Unproved/open claims"
+        }
+      ],
+      "code_and_protocol_refs": [
+        "docs/theory/rq0_routing_integration_boundaries.md"
+      ],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [
+        "RQ0 C(alpha)",
+        "RQ0 local opportunity identity",
+        "RQ0 policy inclusion",
+        "RQ0 strong-SEP criterion",
+        "Unproved/open claims"
+      ],
+      "research_refs": [
+        "RQ0"
+      ],
+      "experiment_families": [
+        "RQ0 policy boundaries and C(alpha)"
+      ]
+    },
+    {
+      "scenario_id": "SCN_FINITE_S1_ASSIGNMENT_AND_S2A_S2B_TEMPORAL_INSTANCES",
+      "label": "finite S1 assignment and S2a/S2b temporal instances",
+      "classification": "scenario_suite",
+      "relationship_to_other_scenarios": "suite_of_cases",
+      "variant_of": null,
+      "registry_scenario_ref": "finite S1 assignment and S2a/S2b temporal instances",
+      "definition": "A suite of distinct finite assignment and temporal decision instances; S1, S2a, and S2b remain separate cases, not one scenario.",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": "S1 static finite assignment; S2a/S2b temporal variants as defined in their primary sources.",
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "exact assignment and Bellman models"
+      ],
+      "policies": [
+        "exact, greedy, myopic and sufficient-budget comparators"
+      ],
+      "result_refs": [
+        "S1_EXACT_ASSIGNMENT",
+        "S1_S2_AUDIT_SUMMARY",
+        "S2A_EXACT",
+        "S2B_BELLMAN",
+        "TH_S1_S2_EXACT_OPTIMIZATION"
+      ],
+      "evidence_kinds": [
+        "exact_computation",
+        "formal_proof",
+        "not_verified"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "Applies only to the stated design and population.",
+        "Specific constructed instances; standard combinatorial/dynamic optimization",
+        "Specific instances and objective"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/HLS_CURRENT_STATE.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/experiments/HLS_DYNAMIC_CAPACITY_ORGANIZATION_CORRECTED.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: S1/S2a/S2b"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/HLS_CURRENT_STATE.md",
+          "role": "primary",
+          "section": "Scenario inventory (S1/S2); dated scientific snapshot"
+        },
+        {
+          "path": "docs/experiments/HLS_DYNAMIC_CAPACITY_ORGANIZATION_CORRECTED.md",
+          "role": "primary",
+          "section": "Results; finite scenario outcomes"
+        },
+        {
+          "path": "docs/HLS_CURRENT_STATE.md",
+          "role": "primary",
+          "section": "Scenario inventory, S1/S2a/S2b"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: S1-S2 exact optimization"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "constraints",
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [
+        "S1-S2 exact optimization"
+      ],
+      "research_refs": [
+        "S1_S2"
+      ],
+      "experiment_families": [
+        "S1/S2a/S2b"
+      ]
+    },
+    {
+      "scenario_id": "SCN_FINITE_S4_AND_S7_FIXTURES_WITH_DISTINCT_COMPLIANCE_SEMANTICS",
+      "label": "finite S4 and S7 fixtures with distinct compliance semantics",
+      "classification": "scenario_suite",
+      "relationship_to_other_scenarios": "suite_of_cases",
+      "variant_of": null,
+      "registry_scenario_ref": "finite S4 and S7 fixtures with distinct compliance semantics",
+      "definition": "Two distinct finite fixtures: S4 transfer planning and S7 uncertain-demand branching. Their compliance semantics are explicitly different.",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": "Finite horizon; S7 has uncertain demand branches, S4 deterministic finite transfer cases.",
+      "constraints": "Do not treat S4 and S7 as equivalent scenarios.",
+      "organizations": [],
+      "models": [
+        "MIS-v2 and finite solver models"
+      ],
+      "policies": [
+        "Bellman, transfer, myopic and tie-break controls"
+      ],
+      "result_refs": [
+        "S4_S7_AUDIT_SUMMARY",
+        "S7_BELLMAN_BASELINE",
+        "S7_BELLMAN_TRANSFER",
+        "S7_BEST_MYOPIC_TIE",
+        "S7_MYOPIC",
+        "TH_S4_S7_FINITE_SOLVER_CHECKS"
+      ],
+      "evidence_kinds": [
+        "exact_computation",
+        "formal_proof",
+        "not_verified"
+      ],
+      "evidence_availability": [
+        "not_verified",
+        "tracked"
+      ],
+      "limitations": [
+        "CES and service compliance differ; alternative tie rules change apparent planner gap",
+        "Exact only for the declared finite fixture; CES is not functional service compliance.",
+        "Objectives diverge; tie-breaking changes gap; exact finite cases only"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/experiments/HLS_S7_MYOPIC_TIEBREAK_AUDIT.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/experiments/HLS_S7_ANTICIPATORY_SELECTION_AUDIT.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: S4/S7"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/experiments/HLS_S7_MYOPIC_TIEBREAK_AUDIT.md",
+          "role": "primary",
+          "section": "Finite solver values and tie-break audit tables"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: S4/S7 finite solver checks"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [
+        "S4/S7 finite solver checks"
+      ],
+      "research_refs": [
+        "S4_S7"
+      ],
+      "experiment_families": [
+        "S4/S7"
+      ]
+    },
+    {
+      "scenario_id": "SCN_FINITE_STATIC_AND_DYNAMIC_MECHANISM_FIXTURES",
+      "label": "finite static and dynamic mechanism fixtures",
+      "classification": "scenario_suite",
+      "relationship_to_other_scenarios": "suite_of_cases",
+      "variant_of": null,
+      "registry_scenario_ref": "finite static and dynamic mechanism fixtures",
+      "definition": "A1a-c, G0, and C1-C6 are separate finite mechanism fixtures; the registry groups them for navigation only.",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": "Static and dynamic cases vary by fixture.",
+      "constraints": "No single shared dynamics or model is implied.",
+      "organizations": [],
+      "models": [
+        "A1a–c, G0, C1–C6"
+      ],
+      "policies": [],
+      "result_refs": [
+        "A1_G0_C1_C6_AUDIT_SUMMARY"
+      ],
+      "evidence_kinds": [
+        "exploratory",
+        "not_verified",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "Finite worlds; no prevalence/external validity"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/experiments/G0.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/experiments/HLS_G0_C6_EXPLORATORY_REPORT_2026-10-19.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: A1a-c, G0, C1-C6"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "A1_G0_C1_C6"
+      ],
+      "experiment_families": [
+        "A1a-c, G0, C1-C6"
+      ]
+    },
+    {
+      "scenario_id": "SCN_FINITE_STATIC_CAPABILITY_MATRICES_AND_BUDGETS",
+      "label": "finite static capability matrices and budgets",
+      "classification": "scenario_family",
+      "relationship_to_other_scenarios": "family_or_parameter_set",
+      "variant_of": null,
+      "registry_scenario_ref": "finite static capability matrices and budgets",
+      "definition": "Finite static capability matrices and resource budgets used for T0-T3/G1 theory and exact ground truth.",
+      "agents": null,
+      "tasks": null,
+      "capabilities": "Capability matrices under stated static assumptions.",
+      "dynamics": "Static within each instance.",
+      "constraints": "Conclusions are instance/model-scoped.",
+      "organizations": [
+        "homogeneous, dominance, and specialization structures"
+      ],
+      "models": [
+        "T0–T3 static theory; G1 ground truth"
+      ],
+      "policies": [],
+      "result_refs": [
+        "G1_STATIC_T0_T3_AUDIT_SUMMARY",
+        "TH_G1",
+        "TH_T0_FEASIBLE_CAPABILITY",
+        "TH_T1_STATIC_COLLECTIVE_CAPABILITY_EXPANSION",
+        "TH_T2_ORGANIZATIONAL_SUFFICIENCY",
+        "TH_T3_ORGANIZATIONAL_REALIZATION"
+      ],
+      "evidence_kinds": [
+        "exact_computation",
+        "formal_proof",
+        "not_verified"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "Analytical/enumeration checks for stated matrices and budgets",
+        "Baseline-sensitive; additive separable cases reduce to allocation/resource theory",
+        "Distinguishes accessible capability and action; scoped formulation",
+        "G1 supplies homogeneous/dominance nulls and positive finite cases; no universal superiority",
+        "Mathematical scaffold; reductions to attainable-set/Pareto theory possible; no standalone novelty claim",
+        "Static finite scope; reduces substantially to allocation/frontier theory"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/theory/HLS_STATIC_THEORY.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/theory/HLS_G1_STATIC_EXPERIMENTAL_GROUND_TRUTH.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: T0-T3 and G1"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/theory/HLS_STATIC_THEORY.md",
+          "role": "primary",
+          "section": "§§2–4; T0 Feasible Capability"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: T0 Feasible Capability"
+        },
+        {
+          "path": "docs/theory/HLS_STATIC_THEORY.md",
+          "role": "primary",
+          "section": "§5; T1 Static Collective Capability Expansion"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: T1 Static Collective Capability Expansion"
+        },
+        {
+          "path": "docs/theory/HLS_STATIC_THEORY.md",
+          "role": "primary",
+          "section": "§6; T2 Organizational Sufficiency"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: T2 Organizational Sufficiency"
+        },
+        {
+          "path": "docs/theory/HLS_STATIC_THEORY.md",
+          "role": "primary",
+          "section": "§7; T3 Organizational Realization"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: T3 Organizational Realization"
+        },
+        {
+          "path": "docs/theory/HLS_G1_STATIC_EXPERIMENTAL_GROUND_TRUTH.md",
+          "role": "primary",
+          "section": "docs/theory/HLS_G1_STATIC_EXPERIMENTAL_GROUND_TRUTH.md"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: G1"
+        }
+      ],
+      "code_and_protocol_refs": [
+        "docs/theory/HLS_STATIC_THEORY.md",
+        "src/hls/g1_static.py"
+      ],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [
+        "G1",
+        "T0 Feasible Capability",
+        "T1 Static Collective Capability Expansion",
+        "T2 Organizational Sufficiency",
+        "T3 Organizational Realization"
+      ],
+      "research_refs": [
+        "G1_STATIC_T0_T3"
+      ],
+      "experiment_families": [
+        "T0-T3 and G1"
+      ]
+    },
+    {
+      "scenario_id": "SCN_FINITE_SYNTHETIC_JOINT_ERROR_DISTRIBUTIONS",
+      "label": "finite synthetic joint error distributions",
+      "classification": "independent_scenario",
+      "relationship_to_other_scenarios": "independent_scenario",
+      "variant_of": null,
+      "registry_scenario_ref": "finite synthetic joint error distributions",
+      "definition": "finite synthetic joint error distributions",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "three-classifier majority/fusion exact probability control"
+      ],
+      "policies": [
+        "majority aggregation"
+      ],
+      "result_refs": [
+        "CLASSIFIER_FUSION_AUDIT_SUMMARY",
+        "CLASSIFIER_FUSION_DEPENDENCE"
+      ],
+      "evidence_kinds": [
+        "exact_computation",
+        "exploratory",
+        "inconclusive",
+        "negative"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "Exploratory synthetic check; consistent with ensembles; no novelty claim",
+        "Mathematical possibility only; not real temporal evidence or a general theorem."
+      ],
+      "source_refs": [
+        {
+          "path": "docs/research/HLS_CE_02_AI_AGING_PREFLIGHT.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: Classifier fusion"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/research/HLS_CE_02_AI_AGING_PREFLIGHT.md",
+          "role": "primary",
+          "section": "Exact synthetic-control results"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints",
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "CLASSIFIER_FUSION"
+      ],
+      "experiment_families": [
+        "Classifier fusion"
+      ]
+    },
+    {
+      "scenario_id": "SCN_FIXED_COMPETENCE_STATIONARY_EQUAL_MARGINAL_FIXTURE",
+      "label": "fixed-competence stationary equal-marginal fixture",
+      "classification": "scenario_reference",
+      "relationship_to_other_scenarios": "relationship_unverified",
+      "variant_of": null,
+      "registry_scenario_ref": "fixed-competence stationary equal-marginal fixture",
+      "definition": "fixed-competence stationary equal-marginal fixture",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "Q1 and Q1-R analytical fixture"
+      ],
+      "policies": [],
+      "result_refs": [
+        "Q1_Q1R_AUDIT_SUMMARY",
+        "TH_Q1_R"
+      ],
+      "evidence_kinds": [
+        "exact_computation",
+        "formal_proof",
+        "not_verified"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "960-run Q1 campaign NO-GO as registered and not executed",
+        "Does not rescue Q1 registered 24-period estimand or prove universal null"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/theory/HLS_Q1R_ANALYTICAL_VERIFICATION.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/experiments/HLS_Q1_PREFLIGHT.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: Q1/Q1-R"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/theory/HLS_Q1R_ANALYTICAL_VERIFICATION.md",
+          "role": "primary",
+          "section": "docs/theory/HLS_Q1R_ANALYTICAL_VERIFICATION.md"
+        },
+        {
+          "path": "docs/research/audits/HLS_THEORETICAL_RESULTS_LEDGER_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: Q1-R"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints",
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [
+        "Q1-R"
+      ],
+      "research_refs": [
+        "Q1_Q1R"
+      ],
+      "experiment_families": [
+        "Q1/Q1-R"
+      ]
+    },
+    {
+      "scenario_id": "SCN_MMLU_QUESTION_SET_AND_DOCUMENTED_EVALUATION_SPLIT",
+      "label": "MMLU question set and documented evaluation split",
+      "classification": "benchmark",
+      "relationship_to_other_scenarios": "benchmark_setting",
+      "variant_of": null,
+      "registry_scenario_ref": "MMLU question set and documented evaluation split",
+      "definition": "MMLU question set and documented evaluation split",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "dynamic model selector DCS-LA"
+      ],
+      "policies": [
+        "fixed, static per-subject and dynamic selection"
+      ],
+      "result_refs": [
+        "DCS_LA_LATENCY",
+        "MMLU_DCSLA_AUDIT_SUMMARY",
+        "MMLU_DYNAMIC_SELECTOR"
+      ],
+      "evidence_kinds": [
+        "exploratory",
+        "inconclusive",
+        "negative"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "Applies only to the stated design and population.",
+        "Initial latency inversion; code hash mismatch; small test; retrospective oracle not deployable"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/experiments/HLS_CONTEXTUAL_CAPACITY_SELECTION.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: MMLU dynamic selection and DCS-LA"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/experiments/HLS_CONTEXTUAL_CAPACITY_SELECTION.md",
+          "role": "primary",
+          "section": "Results; paired differences; cost and conclusion"
+        }
+      ],
+      "code_and_protocol_refs": [
+        "src/hls/contextual_capacity_selection.py"
+      ],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "MMLU_DCSLA"
+      ],
+      "experiment_families": [
+        "MMLU dynamic selection and DCS-LA"
+      ]
+    },
+    {
+      "scenario_id": "SCN_NK_ALLOCATION_AND_NEMBHARD_INSPIRED_PRODUCTIVITY_SETTINGS",
+      "label": "N×K allocation and Nembhard-inspired productivity settings",
+      "classification": "scenario_family",
+      "relationship_to_other_scenarios": "family_or_parameter_set",
+      "variant_of": null,
+      "registry_scenario_ref": "N×K allocation and Nembhard-inspired productivity settings",
+      "definition": "N×K allocation and Nembhard-inspired productivity settings",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "direct-experience productivity curve and adaptive allocation runner"
+      ],
+      "policies": [
+        "Nembhard-inspired allocation modes"
+      ],
+      "result_refs": [
+        "NXK_NEMBHARD_AUDIT_SUMMARY"
+      ],
+      "evidence_kinds": [
+        "exploratory",
+        "not_verified",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "partially_tracked"
+      ],
+      "limitations": [
+        "No confirmed completed Nembhard campaign; model meanings distinct"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/engineering/HLS_NEMBHARD_CAMPAIGN_RUNNER.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/experiments/HLS_NEMBHARD_ADAPTIVE_ALLOCATION_PROTOCOL.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: N x K lab and Nembhard"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints",
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "NXK_NEMBHARD"
+      ],
+      "experiment_families": [
+        "N x K lab and Nembhard"
+      ]
+    },
+    {
+      "scenario_id": "SCN_OFFICE_HOME_BENCHMARK_AND_SPRINT0_GATES",
+      "label": "Office-Home benchmark and Sprint0 gates",
+      "classification": "composite_reference",
+      "relationship_to_other_scenarios": "composite_source_reference",
+      "variant_of": null,
+      "registry_scenario_ref": "Office-Home benchmark and Sprint0 gates",
+      "definition": "Office-Home image benchmark plus associated Sprint0 technical/competence gates.",
+      "agents": null,
+      "tasks": "Image classification benchmark tasks/domains.",
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": "Benchmark and gate protocols differ; artifacts establish only their declared scope.",
+      "organizations": [],
+      "models": [
+        "B0 evaluation pipeline"
+      ],
+      "policies": [],
+      "result_refs": [
+        "B0_OFFICE_HOME_SPRINT0_AUDIT_SUMMARY"
+      ],
+      "evidence_kinds": [
+        "exploratory",
+        "not_verified",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "No empirical outcome validation"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/HISTORY.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/engineering/HLS_SCIENTIFIC_MODEL_DOSSIER.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: B0 Office-Home and Sprint0 gates"
+        }
+      ],
+      "code_and_protocol_refs": [
+        "docs/experimental_foundations/B0_OFFICEHOME_VEHICLE_GATE.md",
+        "experiments/pilots/b0_officehome_vehicle_gate"
+      ],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "capabilities",
+        "dynamics"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "B0_OFFICE_HOME_SPRINT0"
+      ],
+      "experiment_families": [
+        "B0 Office-Home and Sprint0 gates"
+      ]
+    },
+    {
+      "scenario_id": "SCN_PROSPECTIVE_ADAPTATION_HISTORIES_AND_PREREGISTERED_CONFIGURATIONS",
+      "label": "prospective adaptation histories and preregistered configurations",
+      "classification": "scenario_family",
+      "relationship_to_other_scenarios": "family_or_parameter_set",
+      "variant_of": null,
+      "registry_scenario_ref": "prospective adaptation histories and preregistered configurations",
+      "definition": "prospective adaptation histories and preregistered configurations",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "DISCOVER/DEVELOP adaptation study"
+      ],
+      "policies": [
+        "Q00/Q10/Q01/Q11 as documented"
+      ],
+      "result_refs": [
+        "CAMPAIGN2_Q01",
+        "CAMPAIGN2_Q01_REALIZED_RETURN",
+        "CAMPAIGN2_Q10_REALIZED_RETURN",
+        "CAMPAIGN2_Q11_REALIZED_RETURN",
+        "CAMPAIGN_2_AUDIT_SUMMARY"
+      ],
+      "evidence_kinds": [
+        "confirmatory",
+        "exploratory",
+        "inconclusive",
+        "negative"
+      ],
+      "evidence_availability": [
+        "not_verified",
+        "tracked"
+      ],
+      "limitations": [
+        "Applies only to the stated design and population.",
+        "Conditional on Q11-generated reference states and the frozen range/physics; not a full-policy or training-versus-no-training comparison.",
+        "Does not imply development is generally useless; applies to this preregistered estimand and reference-state population.",
+        "Frozen model/state population; not full policy value or train-vs-no-train effect",
+        "Q11 was the reference policy; this is a conditional state estimand, not an advantage over Q10."
+      ],
+      "source_refs": [
+        {
+          "path": "docs/experiments/CAMPAIGN_2_RESULTS.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/experiments/CAMPAIGN_2_PREREGISTRATION.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: Campaign 2"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/experiments/CAMPAIGN_2_RESULTS.md",
+          "role": "primary",
+          "section": "Confirmatory results; H4 — internal preference versus realized two-reward consequence"
+        },
+        {
+          "path": "docs/experiments/CAMPAIGN_2_RESULTS.md",
+          "role": "primary",
+          "section": "H4 — internal preference versus realized two-reward consequence"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints",
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "CAMPAIGN_2"
+      ],
+      "experiment_families": [
+        "Campaign 2"
+      ]
+    },
+    {
+      "scenario_id": "SCN_S3A_S3B_INFORMATION_AND_CONTEXTUAL_SELECTION_SETTINGS",
+      "label": "S3a/S3b information and contextual-selection settings",
+      "classification": "scenario_suite",
+      "relationship_to_other_scenarios": "suite_of_cases",
+      "variant_of": null,
+      "registry_scenario_ref": "S3a/S3b information and contextual-selection settings",
+      "definition": "S3a/S3b information and contextual-selection settings",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "partial-observation and contextual capacity models"
+      ],
+      "policies": [],
+      "result_refs": [
+        "S3A_S3B_AUDIT_SUMMARY"
+      ],
+      "evidence_kinds": [
+        "exploratory",
+        "not_verified",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "Different estimands not combinable"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/experiments/HLS_CONTEXTUAL_CAPACITY_SELECTION.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/HLS_CE_01_EXISTING_DATA_ASSESSMENT.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: S3a/S3b"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/experiments/HLS_CONTEXTUAL_CAPACITY_SELECTION.md",
+          "role": "primary",
+          "section": "Results; paired differences; cost and conclusion"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints",
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "S3A_S3B"
+      ],
+      "experiment_families": [
+        "S3a/S3b"
+      ]
+    },
+    {
+      "scenario_id": "SCN_S3B_CONTEXTUAL_CAPACITY_SELECTION_STATES",
+      "label": "S3b contextual capacity-selection states",
+      "classification": "scenario_family",
+      "relationship_to_other_scenarios": "family_or_parameter_set",
+      "variant_of": null,
+      "registry_scenario_ref": "S3b contextual capacity-selection states",
+      "definition": "S3b contextual capacity-selection states",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "S3b/S3b-E1"
+      ],
+      "policies": [
+        "WINDOW-FULL and documented selection comparators"
+      ],
+      "result_refs": [
+        "S3B_S3BE1_AUDIT_SUMMARY",
+        "S3B_WINDOW_FULL_REGRET"
+      ],
+      "evidence_kinds": [
+        "exploratory",
+        "not_verified",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "partially_tracked",
+        "tracked"
+      ],
+      "limitations": [
+        "Algorithms differ beyond memory; endogenous observation; not faithful UCB reproductions",
+        "Not transferable beyond the documented environment; see original protocol and result files."
+      ],
+      "source_refs": [
+        {
+          "path": "docs/HLS_CURRENT_STATE.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/experiments/HLS_CONTEXTUAL_CAPACITY_SELECTION.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: S3b and S3b-E1"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/HLS_CURRENT_STATE.md",
+          "role": "primary",
+          "section": "Scenario inventory (S1/S2); dated scientific snapshot"
+        },
+        {
+          "path": "docs/experiments/HLS_CONTEXTUAL_CAPACITY_SELECTION.md",
+          "role": "primary",
+          "section": "Results; paired differences; cost and conclusion"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints",
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "S3B_S3BE1"
+      ],
+      "experiment_families": [
+        "S3b and S3b-E1"
+      ]
+    },
+    {
+      "scenario_id": "SCN_SYNTHETIC_DYNAMIC_TASK_QUEUES_DEADLINES_THREE_SCALES_AND_FOUR_TASK_FAM",
+      "label": "synthetic dynamic task queues, deadlines, three scales and four task families",
+      "classification": "scenario_family",
+      "relationship_to_other_scenarios": "family_or_parameter_set",
+      "variant_of": null,
+      "registry_scenario_ref": "synthetic dynamic task queues, deadlines, three scales and four task families",
+      "definition": "Synthetic discrete-event workload with dynamic arrivals, deadlines, and four task families; N and H settings are configurations of this scenario family.",
+      "agents": "N=12, 24, and 48 in the CE-04 factorial",
+      "tasks": "Four task families",
+      "capabilities": "Mean-preserving H0/H1/H2 competence compositions",
+      "dynamics": "Poisson arrivals over three demand phases; FCFS queues; service completion and delayed feedback.",
+      "constraints": "One task in service per agent; common deadline admission; deadline +3; no cooperation; no individual learning or transfer.",
+      "organizations": [
+        "H0/H1/H2 mean-preserving competence structures"
+      ],
+      "models": [
+        "CE-04 discrete-event model"
+      ],
+      "policies": [
+        "P0–P3"
+      ],
+      "result_refs": [
+        "CE04_AUDIT_SUMMARY",
+        "CE04_C1_H2_H0_P1",
+        "CE04_C2_P1_P0_H2",
+        "CE04_C3_P2_P1_H2",
+        "CE04_C4_P3_P2_H2",
+        "CE04_C5_H2X_P3_P0",
+        "CE04_SCALE_C1_N24_N12",
+        "CE04_SCALE_C1_N48_N24",
+        "CE04_SCALE_C2_N24_N12",
+        "CE04_SCALE_C2_N48_N24",
+        "CE04_SCALE_C3_N24_N12",
+        "CE04_SCALE_C3_N48_N24",
+        "CE04_SCALE_C4_N24_N12",
+        "CE04_SCALE_C4_N48_N24",
+        "CE04_SCALE_C5_N24_N12",
+        "CE04_SCALE_C5_N48_N24"
+      ],
+      "evidence_kinds": [
+        "confirmatory",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "partially_tracked"
+      ],
+      "limitations": [
+        "Nominal bootstrap intervals are not multiplicity-adjusted; inferential scope is the frozen synthetic CE-04 scenario.",
+        "Scale inference is limited to proportional scaling in the frozen CE-04 synthetic scenario.",
+        "Single synthetic queue/deadline world, no learning/cooperation; P1 not global optimum; no mediation"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/research/CE-04/11_CONFIRMATORY_RESULTS.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: CE-04"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/research/CE-04/11_CONFIRMATORY_RESULTS.md",
+          "role": "primary",
+          "section": "2.1 C1–C5 at each scale; interpretation and limits"
+        },
+        {
+          "path": "docs/research/CE-04/11_CONFIRMATORY_RESULTS.md",
+          "role": "primary",
+          "section": "2.1 C1–C5 at each scale"
+        },
+        {
+          "path": "docs/research/CE-04/11_CONFIRMATORY_RESULTS.md",
+          "role": "primary",
+          "section": "2.2 Adjacent-scale contrasts"
+        }
+      ],
+      "code_and_protocol_refs": [
+        "src/hls/ce04.py"
+      ],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [],
+      "documentation_status": "documented",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "CE04"
+      ],
+      "experiment_families": [
+        "CE-04"
+      ]
+    },
+    {
+      "scenario_id": "SCN_SYNTHETIC_N_12_K_4_STATIONARY_EQUIPROBABLE_TASK_FAMILIES",
+      "label": "synthetic N=12, K=4, stationary equiprobable task families",
+      "classification": "independent_scenario",
+      "relationship_to_other_scenarios": "independent_scenario",
+      "variant_of": null,
+      "registry_scenario_ref": "synthetic N=12, K=4, stationary equiprobable task families",
+      "definition": "CE-07 discrete-event workload with 12 agents and four stationary, equiprobable task families.",
+      "agents": "12",
+      "tasks": "Four equiprobable task families",
+      "capabilities": "Two joint competence structures A/B with matched marginal competence per function; h=0.9, l=0.6.",
+      "dynamics": "Stationary task-family demand; CE-04 service and deadline semantics.",
+      "constraints": "One task per agent at a time; fixed P1; no learning or cooperation.",
+      "organizations": [
+        "two distinct joint competence structures A/B with matched function marginals"
+      ],
+      "models": [
+        "CE-04 discrete-event simulation with CE-07 workload"
+      ],
+      "policies": [
+        "fixed P1"
+      ],
+      "result_refs": [
+        "CE07_AB_MEAN_SUCCESS",
+        "CE07_AUDIT_SUMMARY",
+        "CE07_CONFIRMATORY_EFFECT",
+        "CE07_DESC_LATE_TASKS",
+        "CE07_DESC_SELECTED_COMPETENCE",
+        "CE07_DESC_UTILIZATION_GINI",
+        "CE07_DESC_WAIT_MEAN"
+      ],
+      "evidence_kinds": [
+        "confirmatory",
+        "exploratory",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "partially_tracked"
+      ],
+      "limitations": [
+        "Condition means and difference apply only to the two declared matrices and fixed P1.",
+        "Descriptive only; does not identify a causal mediator or general mechanism.",
+        "N12 and two structures only; secondary mechanisms descriptive; first attempt/pilot not stationary",
+        "Specific to the two declared competence structures and fixed P1; no mediator identified and no general law of specialization established."
+      ],
+      "source_refs": [
+        {
+          "path": "docs/research/CE-07/04_CONFIRMATORY_RESULTS.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/CE-07/03_TIE_BREAK_AUDIT.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: CE-07"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/research/CE-07/04_CONFIRMATORY_RESULTS.md",
+          "role": "primary",
+          "section": "3. Resultado principal; 4. Métricas secundarias; conclusión y limitaciones"
+        },
+        {
+          "path": "docs/research/CE-07/04_CONFIRMATORY_RESULTS.md",
+          "role": "primary",
+          "section": "3. Resultado principal"
+        },
+        {
+          "path": "docs/research/CE-07/04_CONFIRMATORY_RESULTS.md",
+          "role": "primary",
+          "section": "4. Métricas secundarias"
+        }
+      ],
+      "code_and_protocol_refs": [
+        "src/hls/ce07_structure.py"
+      ],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [],
+      "documentation_status": "documented",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "CE07"
+      ],
+      "experiment_families": [
+        "CE-07"
+      ]
+    },
+    {
+      "scenario_id": "SCN_THREE_SYNTHETIC_BINARY_CLASSIFICATION_TASKS_T1T3",
+      "label": "three synthetic binary-classification tasks T1–T3",
+      "classification": "independent_scenario",
+      "relationship_to_other_scenarios": "independent_scenario",
+      "variant_of": null,
+      "registry_scenario_ref": "three synthetic binary-classification tasks T1–T3",
+      "definition": "Three reproducible synthetic binary-classification tasks with common 10-dimensional input structure.",
+      "agents": "A1 logistic regression, A2 random forest, A3 one-hidden-layer MLP (models are not scenario agents in the CE-04 sense).",
+      "tasks": "T1 linear, T2 nonlinear boundary, T3 interaction structure",
+      "capabilities": "Model-specific task accuracies; transfer evaluated only in the stated protocol.",
+      "dynamics": "Static task datasets and transfer/refit conditions.",
+      "constraints": "20 paired seeds in V1/V2; synthetic evidence only.",
+      "organizations": [
+        "three agents, one agent per task"
+      ],
+      "models": [
+        "logistic regression, random forest, one-hidden-layer MLP"
+      ],
+      "policies": [
+        "fixed and validation-readapted assignment; V1/V2 transfer conditions"
+      ],
+      "result_refs": [
+        "CE03_AUDIT_SUMMARY",
+        "CE03_V1_H3",
+        "CE03_V2_C2_C0_T3",
+        "CE03_V2_C2_C1_T3",
+        "CE03_V2_C2_C3_T3",
+        "CE03_V2_COLLECTIVE_C2_C0",
+        "CE03_V2_REORGANIZATION_C2",
+        "CE03_V2_T1_RETENTION_C2_C0"
+      ],
+      "evidence_kinds": [
+        "exploratory",
+        "inconclusive",
+        "negative",
+        "technical_validation"
+      ],
+      "evidence_availability": [
+        "not_verified",
+        "tracked"
+      ],
+      "limitations": [
+        "Descriptive initial-model contrast; not an attributable transfer comparison.",
+        "Does not establish general retention or forgetting.",
+        "H3 unsupported; V1 label leakage; controls not identical information",
+        "Interval includes zero; bounded to the synthetic T3 training setup.",
+        "No statistically supported accuracy advantage; C1 uses true labels and C2 donor probabilities, so contrast is not a like-for-like transfer treatment.",
+        "No statistically supported collective deterioration; specific to this synthetic model and O0.",
+        "Test contrast evaluates the validation-selected procedure; not an oracle policy comparison.",
+        "V1 does not isolate the intended transfer effect."
+      ],
+      "source_refs": [
+        {
+          "path": "docs/research/HLS_CE_03_H3_CAMPAIGN_RESULTS.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/HLS_CE_03_H3_V2_CAMPAIGN_RESULTS.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: CE-03 V1/V2"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/research/HLS_CE_03_H3_CAMPAIGN_RESULTS.md",
+          "role": "primary",
+          "section": "Paired test-set contrasts; limitations"
+        },
+        {
+          "path": "docs/research/HLS_CE_03_H3_V2_CAMPAIGN_RESULTS.md",
+          "role": "primary",
+          "section": "Individual A1 performance; collective performance under fixed O0"
+        },
+        {
+          "path": "docs/research/HLS_CE_03_H3_FIRST_CAMPAIGN_DIAGNOSTIC.md",
+          "role": "primary",
+          "section": "Donor/receptor diagnostic; label leakage"
+        },
+        {
+          "path": "docs/research/HLS_CE_03_H3_V2_CAMPAIGN_RESULTS.md",
+          "role": "primary",
+          "section": "Individual A1 performance"
+        },
+        {
+          "path": "docs/research/HLS_CE_03_H3_V2_CAMPAIGN_RESULTS.md",
+          "role": "primary",
+          "section": "Retention and non-target behavior"
+        },
+        {
+          "path": "docs/research/HLS_CE_03_H3_V2_CAMPAIGN_RESULTS.md",
+          "role": "primary",
+          "section": "Collective performance under fixed O0"
+        },
+        {
+          "path": "docs/research/HLS_CE_03_H3_V2_CAMPAIGN_RESULTS.md",
+          "role": "primary",
+          "section": "Reorganization"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "code/protocol mapping"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "CE03"
+      ],
+      "experiment_families": [
+        "CE-03 V1/V2"
+      ]
+    },
+    {
+      "scenario_id": "SCN_TR_PROBLEM_HISTORY_ENVIRONMENTS",
+      "label": "TR-* problem-history environments",
+      "classification": "scenario_family",
+      "relationship_to_other_scenarios": "family_or_parameter_set",
+      "variant_of": null,
+      "registry_scenario_ref": "TR-* problem-history environments",
+      "definition": "TR-* problem-history environments",
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "prospective adaptation and counterfactual teaching models"
+      ],
+      "policies": [
+        "Campaign 1 frozen policy/configuration arms"
+      ],
+      "result_refs": [
+        "CAMPAIGN1_BRANCH_DELTA",
+        "CAMPAIGN_1_AUDIT_SUMMARY"
+      ],
+      "evidence_kinds": [
+        "exploratory",
+        "inconclusive",
+        "negative"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "64 paired state branches are selected counterfactual branches, not independent population replications; value is conditional on continuation policy and tested states.",
+        "Limited seeds/state branches; action granularity strands resources"
+      ],
+      "source_refs": [
+        {
+          "path": "docs/experiments/CAMPAIGN_1_RESULTS.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: Campaign 1"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        },
+        {
+          "path": "docs/experiments/CAMPAIGN_1_RESULTS.md",
+          "role": "primary",
+          "section": "Observed configuration × scenario range; Frozen controlled contrasts; Negative and null results"
+        }
+      ],
+      "code_and_protocol_refs": [
+        "experiments/synthetic/hls_campaign1/"
+      ],
+      "reusability": "not_established",
+      "reusability_evidence": [],
+      "missing_dimensions": [
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints"
+      ],
+      "documentation_status": "partial",
+      "theory_ledger_refs": [],
+      "research_refs": [
+        "CAMPAIGN_1"
+      ],
+      "experiment_families": [
+        "Campaign 1"
+      ]
+    },
+    {
+      "scenario_id": "UNRESOLVED_CE05_COURSE_CORRECTION",
+      "label": "No scenario reference documented for CE-05 literature/mathematical review and course correction",
+      "classification": "unresolved_reference",
+      "relationship_to_other_scenarios": "unresolved",
+      "variant_of": null,
+      "registry_scenario_ref": null,
+      "definition": null,
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [],
+      "policies": [],
+      "result_refs": [],
+      "evidence_kinds": [],
+      "evidence_availability": [],
+      "limitations": [
+        "The scientific registry does not identify a scenario; do not infer one from the investigation name."
+      ],
+      "source_refs": [
+        {
+          "path": "docs/HISTORY.md",
+          "role": "primary",
+          "section": "2026-10-26 — CE-05 review, CE-06 design sequence, and CE-07 proposal; subsection CE-05"
+        },
+        {
+          "path": "docs/HLS_CURRENT_STATE.md",
+          "role": "supporting",
+          "section": "Current scientific snapshot"
+        }
+      ],
+      "code_and_protocol_refs": [],
+      "reusability": "not_assessed",
+      "reusability_evidence": [],
+      "documentation_status": "unresolved",
+      "missing_dimensions": [
+        "scenario identity",
+        "definition",
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints",
+        "code/protocol mapping"
+      ],
+      "research_refs": [
+        "CE05_COURSE_CORRECTION"
+      ],
+      "experiment_families": []
+    },
+    {
+      "scenario_id": "UNRESOLVED_EXPERIMENTRUN_HLSPEF",
+      "label": "No scenario reference documented for ExperimentRun/HLS-PEF/lab integration",
+      "classification": "unresolved_reference",
+      "relationship_to_other_scenarios": "unresolved",
+      "variant_of": null,
+      "registry_scenario_ref": null,
+      "definition": null,
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "ExperimentRun and HLS-PEF evaluation contracts"
+      ],
+      "policies": [],
+      "result_refs": [
+        "EXPERIMENTRUN_HLSPEF_AUDIT_SUMMARY"
+      ],
+      "evidence_kinds": [
+        "exploratory"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "The scientific registry does not identify a scenario; do not infer one from the investigation name."
+      ],
+      "source_refs": [
+        {
+          "path": "docs/architecture/HLS_PERFORMANCE_EVALUATION_FRAMEWORK.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/HLS_LABORATORY_CAPABILITY_ASSESSMENT_2026-10-19.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: ExperimentRun/HLS-PEF/lab integration"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        }
+      ],
+      "code_and_protocol_refs": [
+        "docs/engineering/HLS_COMMON_EXPERIMENT_CONTRACT.md",
+        "src/hls/experiment_contract.py"
+      ],
+      "reusability": "not_assessed",
+      "reusability_evidence": [],
+      "documentation_status": "unresolved",
+      "missing_dimensions": [
+        "scenario identity",
+        "definition",
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints",
+        "code/protocol mapping"
+      ],
+      "research_refs": [
+        "EXPERIMENTRUN_HLSPEF"
+      ],
+      "experiment_families": [
+        "ExperimentRun/HLS-PEF/lab integration"
+      ]
+    },
+    {
+      "scenario_id": "UNRESOLVED_MINIMAL_HLS_OPV",
+      "label": "No scenario reference documented for Minimal HLS model and OPV",
+      "classification": "unresolved_reference",
+      "relationship_to_other_scenarios": "unresolved",
+      "variant_of": null,
+      "registry_scenario_ref": null,
+      "definition": null,
+      "agents": null,
+      "tasks": null,
+      "capabilities": null,
+      "dynamics": null,
+      "constraints": null,
+      "organizations": [],
+      "models": [
+        "minimal HLS model",
+        "operational development opportunity value"
+      ],
+      "policies": [
+        "finite Bellman decision policies"
+      ],
+      "result_refs": [
+        "MINIMAL_HLS_OPV_AUDIT_SUMMARY",
+        "TH_MINIMAL_HLS_PROPS_1_5",
+        "TH_OPV_PROPS_1_9"
+      ],
+      "evidence_kinds": [
+        "exact_computation",
+        "formal_proof"
+      ],
+      "evidence_availability": [
+        "tracked"
+      ],
+      "limitations": [
+        "The scientific registry does not identify a scenario; do not infer one from the investigation name."
+      ],
+      "source_refs": [
+        {
+          "path": "docs/theory/minimal_hls_model.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/theory/operational_development_opportunity_value.md",
+          "role": "primary",
+          "section": "Document-level source; subsection not verified"
+        },
+        {
+          "path": "docs/research/audits/HLS_EXPERIMENT_EVIDENCE_MATRIX_2026-10-26.csv",
+          "role": "audit",
+          "section": "Row: Minimal HLS model and OPV"
+        },
+        {
+          "path": "docs/HISTORY.md",
+          "role": "supporting",
+          "section": "Chronological project record; specific entry must be followed"
+        }
+      ],
+      "code_and_protocol_refs": [
+        "docs/theory/minimal_hls_model.md",
+        "src/hls/development_opportunity_value.py"
+      ],
+      "reusability": "not_assessed",
+      "reusability_evidence": [],
+      "documentation_status": "unresolved",
+      "missing_dimensions": [
+        "scenario identity",
+        "definition",
+        "agents",
+        "tasks",
+        "capabilities",
+        "dynamics",
+        "constraints",
+        "code/protocol mapping"
+      ],
+      "research_refs": [
+        "MINIMAL_HLS_OPV"
+      ],
+      "experiment_families": [
+        "Minimal HLS model and OPV"
+      ]
+    }
+  ]
+}

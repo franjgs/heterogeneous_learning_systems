@@ -92,6 +92,30 @@ python3 -m unittest discover -s tests -p 'test_hls_scientific_registry_validator
 The validator checks registry structure and source coverage. Passing it does
 not independently confirm a scientific claim.
 
+The [scenario/domain catalogue](registry/hls_scenario_catalog.json) links
+scenario records to investigations, results, models, organizations, and
+source references. Scenario records are distinct from research investigations,
+experiment-family labels, and parameterized conditions. Validate its
+cross-links and the underlying registry with:
+
+```bash
+python3 docs/registry/query_hls_catalog.py --validate
+```
+
+Query by domain, scenario, model, investigation, or result, for example:
+
+```bash
+python3 docs/registry/query_hls_catalog.py --domain organization_and_assignment
+python3 docs/registry/query_hls_catalog.py --scenario CE-04
+python3 docs/registry/query_hls_catalog.py --model "CE-04 discrete-event model"
+python3 docs/registry/query_hls_catalog.py --experiment CE07
+python3 docs/registry/query_hls_catalog.py --result CE07_CONFIRMATORY_EFFECT
+```
+
+Use `--help` for the complete filter syntax. Scenario records preserve the
+registry's original scenario references; entries marked unresolved are gaps
+in the source documentation, not inferred scenarios.
+
 ## History and retained material
 
 [History](HISTORY.md) records project chronology. Older protocols, closed
