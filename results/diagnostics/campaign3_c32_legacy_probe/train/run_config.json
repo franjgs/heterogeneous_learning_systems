@@ -1,7 +1,0 @@
-{
-  "allocation_sha256": "3fbb198c20da035d2b9417487f5e0320ec8395fb204eb7329815878beaa6e1d7",
-  "batch_size": 2,
-  "partition": "TRAIN",
-  "protocol": "campaign3_c32_data_v1",
-  "states": 6300
-}

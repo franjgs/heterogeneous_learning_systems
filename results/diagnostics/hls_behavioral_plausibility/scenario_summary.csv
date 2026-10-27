@@ -1,7 +1,0 @@
-scenario,horizon,efficacy,individual_learning,demand_change,initial_ces_delta,delta_v_h,initial_direct_teaching_gain,initial_production_effort_displaced,initial_residual_budget_teach
-S1_adequate,24,0.85,False,False,-0.9500000000000003,-0.4001562500000101,0.02390625,1.0,0.5
-S2_persistent_deficit_early_effective,24,0.85,False,False,-0.9000000000000001,0.8824999999999976,0.1275,1.0,0.5
-S3_short_horizon,8,0.85,False,False,-0.9000000000000001,-0.3575000000000008,0.1275,1.0,0.5
-S4_weak_teaching,24,0.1,False,False,-0.9000000000000001,-0.9000000000000001,0.015000000000000003,1.0,0.5
-S5_learning_by_doing_on,24,0.85,True,False,-0.9000000000000001,2.4444531521690065,0.1275,1.0,0.5
-S6_demand_regime_change,24,0.85,False,True,-0.9000000000000001,-0.04750000000000121,0.1275,1.0,0.5

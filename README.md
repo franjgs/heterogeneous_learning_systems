@@ -1,76 +1,17 @@
 # Heterogeneous Learning Systems
 
-Heterogeneous Learning Systems (HLS) is a general scientific programme for
-studying, designing, and evaluating how systems organize, use, combine, and
-develop heterogeneous capabilities. It seeks findings that generalize within
-stated classes and assumptions, and solutions grounded in relevant scientific
-knowledge. HLS does not presume that heterogeneity, cooperation, learning,
-adaptation, or organizational complexity is always beneficial.
+HLS is a research program studying how heterogeneous capabilities are distributed, organized, used, combined, and developed to solve problems under constraints. It is not one algorithm, simulator, or application.
 
-## Conceptual architecture
+The scientific work links four responsibilities: **scenarios** (problem and environment), **organizations** (entities and access/coordination), **models** (assumptions and outcome/state laws), and **performance evaluation** (metrics, comparisons, and uncertainty). These are conceptual levels, not a mandated software architecture.
 
-HLS organizes inquiry across four related levels:
+- [Theory and normalized concepts](docs/THEORY.md)
+- [Research record, evidence and limits](docs/RESEARCH.md)
+- [Machine-readable scientific catalog](registry/catalog.json)
 
-1. **Scenarios** describe systems, tasks, environments, information, resources,
-   uncertainty, and dynamics.
-2. **Organizations** describe how capabilities and responsibilities are
-   arranged and used.
-3. **Models** represent and analyze the problem and may include mathematical
-   models, policies, estimators, algorithms, or integrated mechanisms.
-4. **Performance measures** evaluate outcomes against relevant criteria.
+The catalog is the single index for scenarios, organizations, models, policies, evaluations, studies, experiments, results, and theoretical results. Historical labels are aliases/provenance only. Source reports and large campaign artifacts from the historical branch are not copied into this compact rebuild; the research record states exactly which historical summaries remain documentary rather than replayable.
 
-These are conceptual and experimental categories, not required software
-modules or a rigid execution sequence. See [HLS Philosophy](docs/HLS_PHILOSOPHY.md)
-for the programme's scientific identity and [HLS Ontology](docs/hls_ontology.md)
-for its semantic vocabulary.
+## Use the laboratory
 
-## Find research and evidence
+Install the small package and test extra with `python -m pip install -e '.[test]'`. Validate/query the catalog with `python -m hls validate` and `python -m hls query --type policy --text deadline`. Run the retained exact finite studies with `python studies/static_allocation.py` and `python studies/competence_development.py`. Run the test suite with `pytest`.
 
-- [Current scientific state](docs/HLS_CURRENT_STATE.md): current findings,
-  limitations, closures, and pending decisions.
-- [Scientific registry](docs/registry/hls_scientific_registry.jsonl):
-  structured index of investigations and results; follow its sources for
-  evidence and do not treat registry entries as independent evidence.
-- [Scenario and domain catalogue](docs/registry/hls_scenario_catalog.json):
-  cross-links scenarios, research domains, investigations, models,
-  organizations, results, and source files. Query it with
-  `python3 docs/registry/query_hls_catalog.py --help`.
-- [Component graph](docs/registry/hls_component_catalog.json): structured
-  links among all registered investigations and results, plus identified
-  scenarios, models, organizations, policies, protocols, and named estimands.
-  Blank definitions remain explicitly unnormalized rather than inferred.
-- [History](docs/HISTORY.md): dated decisions and project chronology.
-- [Research questions](docs/research_questions.md): registered questions.
-- [Theory index](docs/theory/README.md): formal results and model-scoped
-  derivations.
-- [Experiment index](docs/experiments/README.md): protocols and primary
-  experiment reports.
-- [Literature index](docs/literature/README.md): bibliography and source
-  provenance.
-
-The [repository guide](docs/REPOSITORY_GUIDE.md) maps scenarios, organizations,
-models, policies, evaluation, code, experiments, results, and applications.
-Primary reports, proofs, protocols, and result artifacts remain the evidence
-sources; navigation pages and the registry point to them.
-
-## Research method and applications
-
-[Research Doctrine](RESEARCH_DOCTRINE.md) describes methodological principles.
-HLS reuses established theories and components where appropriate, compares
-solutions against relevant alternatives, and states the conditions and limits
-of each claim. The [Security Operations Center (SOC)](projects/README.md) is a
-priority application area; it does not define HLS, and synthetic results are
-not evidence about real SOC operations.
-
-## Validate the scientific registry
-
-Using Python 3 and the standard library:
-
-```bash
-python3 docs/registry/validate_hls_scientific_registry.py
-python3 -m unittest discover -s tests -p 'test_hls_scientific_registry_validator.py'
-```
-
-The validator checks record structure, links, and coverage against the
-forensic-audit ledgers. Its generated summary describes registry coverage; it
-does not validate the scientific truth of the underlying claims.
+New work follows this sequence: define the question; select or define a scenario; select or define an organization; state the model and policy; define evaluation; check semantic compatibility; reuse or develop only necessary components; execute a registered protocol; preserve negative findings; update the catalog. Applications such as SOC or LLM systems must be modeled and validated as applications; they do not define HLS.

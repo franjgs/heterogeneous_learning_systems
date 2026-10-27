@@ -1,5 +1,3 @@
-"""Minimal computational components for Heterogeneous Learning Systems."""
+"""Small, model-specific scientific components for HLS."""
 
-from .m0 import M0Config, RegionM0
-
-__all__ = ["M0Config", "RegionM0"]
+__version__ = "0.2.0"

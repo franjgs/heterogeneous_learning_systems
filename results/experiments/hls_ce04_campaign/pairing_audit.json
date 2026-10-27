@@ -1,8 +1,0 @@
-{
-  "all_metrics_rows_aligned_to_full_run_matrix": true,
-  "conditions_per_block": 12,
-  "experiment_runs": 1080,
-  "same_task_ids_and_workload_hash_across_each_block": true,
-  "seed_scale_blocks": 90,
-  "status": "PASS"
-}

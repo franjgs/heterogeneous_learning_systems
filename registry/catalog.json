@@ -1,0 +1,3489 @@
+{
+  "version": 1,
+  "program": {
+    "name": "Heterogeneous Learning Systems",
+    "definition": "Study of distribution, organization, use, combination and development of heterogeneous capabilities under constraints.",
+    "conceptual_levels": [
+      "scenario",
+      "organization",
+      "model",
+      "performance evaluation"
+    ]
+  },
+  "entities": [
+    {
+      "id": "scenario.static_two_task_allocation",
+      "type": "scenario",
+      "name": "Finite static two-task allocation",
+      "definition": "Two task types with fixed per-agent effectiveness; demand probability p weights task 1.",
+      "scope": "Exact, finite, two agents and two task types; scalar effectiveness.",
+      "assumptions": [
+        "No learning or time evolution."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "scenario_contract": {
+        "agents": "Two agents",
+        "tasks": "Two task types with demand probability p for task 1",
+        "capabilities": "Fixed effectiveness matrix y_ik",
+        "dynamics": "Static; no learning",
+        "constraints": "Compare a common agent across tasks against taskwise access",
+        "uncertainty": "No stochastic outcome mechanism required; expected effectiveness is evaluated."
+      }
+    },
+    {
+      "id": "scenario.static_effectiveness_resource",
+      "type": "scenario",
+      "name": "Finite effectiveness–resource allocation",
+      "definition": "Two tasks and agent-specific effectiveness/resource pairs under a fixed resource budget.",
+      "scope": "Exact finite convexified time-sharing controls.",
+      "assumptions": [
+        "Linear mixing is admissible for the convexified cases."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "scenario_contract": {
+        "agents": "Two agents",
+        "tasks": "Two task types",
+        "capabilities": "Fixed effectiveness and resource pair per agent-task",
+        "dynamics": "Static",
+        "constraints": "Resource budget; time-sharing only where explicitly admissible",
+        "uncertainty": "No stochastic outcome mechanism required."
+      }
+    },
+    {
+      "id": "scenario.two_period_competence_change",
+      "type": "scenario",
+      "name": "Two-period competence development",
+      "definition": "Two agents, two task types and two decision periods; action-dependent change in one competence coordinate.",
+      "scope": "Deterministic finite analytical testbed.",
+      "assumptions": [
+        "Learning-by-doing transition and terminal routing exactly as specified in THEORY.md."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "scenario_contract": {
+        "agents": "Two agents",
+        "tasks": "Two task types over two decision periods",
+        "capabilities": "2x2 competence matrix",
+        "dynamics": "Action-dependent deterministic competence increment",
+        "constraints": "Terminal assignment among four allocations",
+        "uncertainty": "None in the retained exact construction."
+      }
+    },
+    {
+      "id": "scenario.deadline_task_queue",
+      "type": "scenario",
+      "name": "Synthetic deadline-constrained task queues",
+      "definition": "Poisson task arrivals, four task families, FCFS single-agent queues, lognormal service and a three-unit deadline.",
+      "scope": "Synthetic event-driven scenario; three scales and phase-varying demand in the confirmatory study.",
+      "assumptions": [
+        "No learning/cooperation; all conclusions are model-scoped."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "scenario_contract": {
+        "agents": "N in {12,24,48}",
+        "tasks": "Four task families arriving in continuous time",
+        "capabilities": "Correctness probabilities by agent and task family",
+        "dynamics": "Poisson arrivals; service completion and queues",
+        "constraints": "FCFS, one service per agent, deadline arrival+3, common admission rule",
+        "uncertainty": "Poisson arrivals and lognormal service/correctness outcomes."
+      }
+    },
+    {
+      "id": "scenario.stationary_competence_structure_queue",
+      "type": "scenario",
+      "name": "Stationary task-family queue with fixed competence matrix",
+      "definition": "Twelve agents and four equiprobable task families under a stationary arrival-mark distribution.",
+      "scope": "Synthetic paired simulation with N=12, fixed P1 and 30 paired seeds.",
+      "assumptions": [
+        "Two specified competence structures only; service/deadline law inherited from the queue model."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "scenario_contract": {
+        "agents": "12 agents",
+        "tasks": "Four equiprobable stationary task families",
+        "capabilities": "Two fixed 12x4 competence matrices with equal per-family means and maxima",
+        "dynamics": "Stationary arrivals and service",
+        "constraints": "P1 assignment, FCFS and deadline law inherited from queue scenario",
+        "uncertainty": "Paired synthetic simulation across 30 seeds."
+      }
+    },
+    {
+      "id": "scenario.sequential_problem_belief",
+      "type": "scenario",
+      "name": "Finite sequential problem-belief histories",
+      "definition": "Sequential FAST/DEEP computations and terminal decision over frozen finite problem-belief domains.",
+      "scope": "Synthetic confirmatory evaluation across frozen domains/histories.",
+      "assumptions": [
+        "Physical task and observation innovations paired; policy states evolve separately."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "scenario_contract": {
+        "agents": null,
+        "tasks": "Finite physical decision problems with sequential computations",
+        "capabilities": null,
+        "dynamics": "Belief/history and computation state evolve by observations",
+        "constraints": "Compute cost and stop/continue decisions",
+        "uncertainty": "Frozen finite problem-belief domains and observation innovations."
+      }
+    },
+    {
+      "id": "scenario.prospective_adaptation_world",
+      "type": "scenario",
+      "name": "Finite prospective adaptation histories",
+      "definition": "Finite histories with belief and capability state, policy-dependent decisions and counterfactual continuations.",
+      "scope": "Synthetic model and frozen reference-state population.",
+      "assumptions": [
+        "Reference-state population is not the full state space."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "scenario_contract": {
+        "agents": null,
+        "tasks": "Finite tasks/worlds in a reference-state population",
+        "capabilities": "Model-specific competence state and beliefs",
+        "dynamics": "Policy-dependent action and counterfactual continuation",
+        "constraints": "Finite action/resource/information conditions",
+        "uncertainty": "Finite synthetic worlds; reference population is not full state space."
+      }
+    },
+    {
+      "id": "organization.single_agent_for_all_tasks",
+      "type": "organization",
+      "name": "Single-agent task responsibility",
+      "definition": "One selected agent handles both task types.",
+      "scope": "Static assignment baseline.",
+      "assumptions": [
+        "Agent identity fixed across task types."
+      ],
+      "relationships": [
+        {
+          "kind": "evaluated_in",
+          "target": "scenario.static_two_task_allocation"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "reusable"
+    },
+    {
+      "id": "organization.taskwise_agent_access",
+      "type": "organization",
+      "name": "Task-wise agent access",
+      "definition": "A task may be assigned independently to an admissible agent for each type.",
+      "scope": "Static task routing class.",
+      "assumptions": [
+        "The allowed routing set and any time sharing must be declared."
+      ],
+      "relationships": [
+        {
+          "kind": "evaluated_in",
+          "target": "scenario.static_two_task_allocation"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "reusable"
+    },
+    {
+      "id": "organization.fixed_competence_matrix",
+      "type": "organization",
+      "name": "Fixed agent-by-task competence structure",
+      "definition": "Rows identify agents and columns task families; individual entries remain fixed during evaluation.",
+      "scope": "General structural representation used by finite and queue models.",
+      "assumptions": [
+        "Entry semantics are model-specific; may be probability or deterministic score."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "reusable"
+    },
+    {
+      "id": "organization.serial_agent_queues",
+      "type": "organization",
+      "name": "Independent FCFS agent queues",
+      "definition": "Each agent has one FCFS queue and at most one active task.",
+      "scope": "Synthetic deadline queue studies.",
+      "assumptions": [
+        "No task cooperation or interruption."
+      ],
+      "relationships": [
+        {
+          "kind": "evaluated_in",
+          "target": "scenario.deadline_task_queue"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical"
+    },
+    {
+      "id": "organization.paired_specialist_vs_generalist",
+      "type": "organization",
+      "name": "Paired generalist and specialist competence matrices",
+      "definition": "Structure A has three all-high/nine all-low profiles; structure B has three specialists per task family; per-family means/maxima match.",
+      "scope": "N=12, K=4, values h=.9/l=.6.",
+      "assumptions": [
+        "No claim beyond these two matrices."
+      ],
+      "relationships": [
+        {
+          "kind": "evaluated_in",
+          "target": "scenario.stationary_competence_structure_queue"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical"
+    },
+    {
+      "id": "model.static_allocation",
+      "type": "model",
+      "name": "Static task allocation under heterogeneous effectiveness",
+      "definition": "Finite model comparing same-agent assignment and task-wise routing for fixed effectiveness.",
+      "scope": "Two agents/two tasks exact model.",
+      "assumptions": [
+        "Scalar additive expectation over the task mixture."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.static_two_task_allocation"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/static_assignment.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "mathematical_object": "2x2 fixed effectiveness matrix and task-1 demand probability in [0,1]",
+      "inputs": "Four assignment expected-effectiveness values, same-agent/taskwise maxima, and their difference",
+      "outputs": "Finite deterministic expected-effectiveness optimization."
+    },
+    {
+      "id": "model.resource_constrained_allocation",
+      "type": "model",
+      "name": "Effectiveness–resource frontier allocation",
+      "definition": "Finite set of assignment points, with a resource budget and upper efficient convex hull.",
+      "scope": "Two agents/two tasks.",
+      "assumptions": [
+        "Convex hull interpretation requires admissible time-sharing and linear outcome/resource mixtures."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.static_effectiveness_resource"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/static_assignment.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "mathematical_object": "2x2 effectiveness/resource pairs, task demand probability, resource budget",
+      "inputs": "Feasible policy points, efficient hulls, and best effectiveness under budget",
+      "outputs": "Finite bicriterion allocation with optional convexified time-sharing."
+    },
+    {
+      "id": "model.two_period_competence_development",
+      "type": "model",
+      "name": "Two-period endogenous competence development",
+      "definition": "Action-dependent state transition followed by terminal task routing and demand-weighted future value.",
+      "scope": "Two agents, two tasks, two periods.",
+      "assumptions": [
+        "Deterministic bounded learning-by-doing; no noise, forgetting, or transfer."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.two_period_competence_change"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/dynamic_development.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "mathematical_object": "2x2 initial competence matrix, action-dependent increments, selected agent, future task mixture",
+      "inputs": "Post-action competence, terminal assignment outcomes/frontier, immediate/future/total value differences",
+      "outputs": "Deterministic two-period finite transition and terminal allocation."
+    },
+    {
+      "id": "model.dynamic_deadline_allocation",
+      "type": "model",
+      "name": "Dynamic deadline-constrained allocation",
+      "definition": "Queue state, service times, task correctness, deadline and assignment policy determine on-time collective success.",
+      "scope": "Synthetic simulator used for confirmatory queue studies.",
+      "assumptions": [
+        "The implementation/results are historical on this branch and not replayable from retained code."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.deadline_task_queue"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "mathematical_object": "Task arrivals, queue state, competence matrix or estimates, service-time law, deadlines and policy state",
+      "inputs": "Agent choice/admission, task completion correctness/timing, collective on-time success and costs",
+      "outputs": "Discrete-event queue model with one FCFS queue per agent."
+    },
+    {
+      "id": "model.sequential_computation_selection",
+      "type": "model",
+      "name": "Sequential computation allocation under belief state",
+      "definition": "Policy chooses whether to spend additional computation before a terminal decision.",
+      "scope": "Frozen finite sequential problem-belief design.",
+      "assumptions": [
+        "Different policies induce different histories; randomized baseline did not exactly match realized call counts."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.sequential_problem_belief"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "mathematical_object": "Finite problem belief/history, computation options, signals, compute cost and stopping choices",
+      "inputs": "Computation selection, terminal answer, physical reward and compute use",
+      "outputs": "Sequential decision model; not worker competence allocation."
+    },
+    {
+      "id": "model.prospective_information_development",
+      "type": "model",
+      "name": "Prospective information and development decision model",
+      "definition": "Finite belief/capability histories compare myopic and prospective choices with counterfactual continuation.",
+      "scope": "Frozen synthetic state/reference population.",
+      "assumptions": [
+        "Counterfactual value is model-derived, not an external causal variable."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.prospective_adaptation_world"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "mathematical_object": "Finite state/belief, available information, action-dependent state changes and continuation conditions",
+      "inputs": "Action choice, counterfactual branch outcomes and model-specific current/future value",
+      "outputs": "Finite policy and counterfactual models; study-specific state populations."
+    },
+    {
+      "id": "evaluation.exact_finite_comparison",
+      "type": "evaluation",
+      "name": "Exact finite model evaluation",
+      "definition": "Enumerate feasible actions/outcomes and compare exact values/frontiers.",
+      "scope": "Finite deterministic models.",
+      "assumptions": [
+        "No sampling uncertainty unless stochasticity is explicitly integrated."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "reusable"
+    },
+    {
+      "id": "evaluation.paired_seed_bootstrap",
+      "type": "evaluation",
+      "name": "Paired-replica evaluation",
+      "definition": "Differences are computed at the independent seed/replica level; bootstrap resamples whole paired replicas.",
+      "scope": "Simulation campaigns with coupled exogenous/potential outcomes.",
+      "assumptions": [
+        "Tasks inside a replica are not independent replications."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "reusable"
+    },
+    {
+      "id": "evaluation.on_time_collective_success",
+      "type": "evaluation",
+      "name": "Correct completion within deadline rate",
+      "definition": "Number of tasks both correct and completed by their deadline divided by all arrivals.",
+      "scope": "Queue/deadline studies.",
+      "assumptions": [
+        "Rejected, wrong, and late tasks count as failures."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical"
+    },
+    {
+      "id": "study.static_allocation",
+      "type": "study",
+      "name": "Static allocation under task-dependent competence",
+      "definition": "When does task-specific access to fixed competence improve attainable performance?",
+      "scope": "Finite exact static setting.",
+      "assumptions": [
+        "No learning or dynamics."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "model.static_allocation"
+        },
+        {
+          "kind": "evaluated_by",
+          "target": "evaluation.exact_finite_comparison"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/HLS_G1_STATIC_EXPERIMENTAL_GROUND_TRUTH.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        },
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/HLS_STATIC_THEORY.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "POSITIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "experiment.crossed_specialization_control",
+      "type": "experiment",
+      "name": "Crossed specialization exact control",
+      "definition": "Symmetric two-agent/two-task crossed effectiveness at equal demand.",
+      "scope": "p=.5; effectiveness entries 1.0 and .2.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.static_allocation"
+        },
+        {
+          "kind": "supports",
+          "target": "theoretical_result.crossed_specialization_gain"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.same_agent_task_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.taskwise_competence_assignment"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/static_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reproducible"
+    },
+    {
+      "id": "result.crossed_specialization_gain",
+      "type": "result",
+      "name": "Exact gain from task-wise allocation in crossed specialization",
+      "definition": "Task-wise routing obtains effectiveness 1.0 versus .6 for the best one-agent policy; difference .4.",
+      "scope": "Exact two-agent/two-task instance at p=.5.",
+      "assumptions": [
+        "Fixed effectiveness; scalar additive expected effectiveness."
+      ],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.crossed_specialization_control"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/HLS_G1_STATIC_EXPERIMENTAL_GROUND_TRUTH.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "POSITIVE",
+      "evidence_availability": "active_exact_model_available"
+    },
+    {
+      "id": "study.dynamic_competence_development",
+      "type": "study",
+      "name": "Dynamic competence change and future value",
+      "definition": "Can action-induced competence change affect the collective frontier, future value, and current choice?",
+      "scope": "Exact deterministic two-period testbed.",
+      "assumptions": [
+        "No empirical calibration."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "model.two_period_competence_development"
+        },
+        {
+          "kind": "evaluated_by",
+          "target": "evaluation.exact_finite_comparison"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        },
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/HLS_DYNAMIC_THEORY.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "dates": {
+        "start": null,
+        "completion": null,
+        "source_document_date": "2026-09-30"
+      },
+      "execution_status": "CLOSED",
+      "scientific_outcome": "POSITIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "experiment.frontier_null_control",
+      "type": "experiment",
+      "name": "Learning-induced state change with unchanged efficient frontier",
+      "definition": "Compare two action-induced terminal states under identical future demand.",
+      "scope": "Initial state ((.4,.8),(.8,.4)); learning rate (.1,0).",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.dynamic_competence_development"
+        },
+        {
+          "kind": "supports",
+          "target": "theoretical_result.frontier_nonimplication"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/competence_development.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reproducible"
+    },
+    {
+      "id": "experiment.future_value_reversal_control",
+      "type": "experiment",
+      "name": "Future-value reversal control",
+      "definition": "Compare current and future value differences in a finite two-period decision.",
+      "scope": "Initial state ((.7,.8),(.8,.6)); learning rate (.3,0); future task-1 probability .75.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.dynamic_competence_development"
+        },
+        {
+          "kind": "supports",
+          "target": "theoretical_result.future_value_relevance"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/competence_development.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reproducible"
+    },
+    {
+      "id": "result.state_change_without_frontier_change",
+      "type": "result",
+      "name": "State change need not alter efficient collective capability",
+      "definition": "The two resulting states differ but both frontiers equal {(0.8,0.8)} and future-value difference is zero.",
+      "scope": "Exact finite construction.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.frontier_null_control"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "NULL",
+      "evidence_availability": "active_exact_model_available"
+    },
+    {
+      "id": "result.future_value_can_reverse_immediate_choice",
+      "type": "result",
+      "name": "Future development value can reverse an immediate preference",
+      "definition": "At p=.75, immediate difference is -.1, future development value is +.15, and total difference is +.05.",
+      "scope": "Exact finite construction.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.future_value_reversal_control"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/HLS_G2_DYNAMIC_GROUND_TRUTH.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "POSITIVE",
+      "evidence_availability": "active_exact_model_available"
+    },
+    {
+      "id": "study.joint_separated_policy_boundary",
+      "type": "study",
+      "name": "Joint and separated policy-class boundary",
+      "definition": "Under what exact finite assumptions does joint operation/development outperform a restricted separated class?",
+      "scope": "Common-world finite policy comparison.",
+      "assumptions": [
+        "Common information, actions, rewards, resources and physics; finite attained optima for iff result."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.finite_opportunity_decision_process"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "pending",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/rq0_routing_integration_boundaries.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "PENDING",
+      "scientific_outcome": "INCONCLUSIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "theoretical_result.separated_policy_inclusion",
+      "type": "theoretical_result",
+      "name": "Separated policy-class inclusion",
+      "definition": "A separated class constrained to greedy routing is a subset of the unrestricted joint class; maximizing over a superset cannot lower value.",
+      "scope": "Common-world/common-information contract.",
+      "assumptions": [
+        "Same feasible world and objective."
+      ],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.joint_separated_policy_boundary"
+        }
+      ],
+      "implementation": [],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "docs/THEORY.md"
+        }
+      ],
+      "status": "conditional"
+    },
+    {
+      "id": "study.sequential_computation_selection",
+      "type": "study",
+      "name": "Sequential computation selection under performance-cost trade-offs",
+      "definition": "Does prospective computation selection improve cumulative task reward and computation cost in a frozen finite design?",
+      "scope": "Frozen synthetic problem-belief histories/domains.",
+      "assumptions": [
+        "No exactly matched realized invocation rate; timings machine-sensitive."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "model.sequential_computation_selection"
+        },
+        {
+          "kind": "uses",
+          "target": "scenario.sequential_problem_belief"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.prospective_computation_selection"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/CAMPAIGN_3_META_VOC_CONFIRMATORY_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        },
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/paper/META_VOC_SCIENTIFIC_RECORD.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "dates": {
+        "start": null,
+        "completion": null,
+        "source_report_date": "2026-10-26"
+      },
+      "execution_status": "CLOSED",
+      "scientific_outcome": "AMBIGUOUS",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "result.sequential_compute_vs_random",
+      "type": "result",
+      "name": "Scoped sequential computation trade-off",
+      "definition": "A prospective computation selector versus a nominally equal-rate randomized rule: +.1167 cumulative physical reward/history [0.0310,0.2013] and −.1924 seconds/history [−.3539,−.0228].",
+      "scope": "Confirmatory paired histories in the frozen design.",
+      "assumptions": [
+        "Intervals are paired history-level intervals as reported."
+      ],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.sequential_computation_selection"
+        }
+      ],
+      "implementation": [],
+      "status": "documented_only",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/CAMPAIGN_3_META_VOC_CONFIRMATORY_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "confirmatory",
+      "scientific_outcome": "AMBIGUOUS",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "study.joint_error_dependence",
+      "type": "study",
+      "name": "Joint error dependence and collective majority risk",
+      "definition": "Can joint error dependence change majority risk when individual error marginals are fixed?",
+      "scope": "Exact three-classifier probability laws.",
+      "assumptions": [
+        "No classifier model inference."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.synthetic_joint_classifier_errors"
+        },
+        {
+          "kind": "uses",
+          "target": "model.joint_error_risk"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/HLS_CE_02_AI_AGING_PREFLIGHT.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "dates": {
+        "start": null,
+        "completion": null,
+        "decision_date": "2026-10-24"
+      },
+      "execution_status": "CLOSED",
+      "scientific_outcome": "POSITIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "result.error_dependence_changes_majority_risk",
+      "type": "result",
+      "name": "Same error marginal, different majority risk",
+      "definition": "Both joint laws give individual error .20; majority risk is .30 under law A and .20 under law B.",
+      "scope": "Exact synthetic joint distributions.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.joint_error_dependence"
+        }
+      ],
+      "implementation": [],
+      "status": "documented_only",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/HLS_CE_02_AI_AGING_PREFLIGHT.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "POSITIVE",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "study.transfer_collective_effect",
+      "type": "study",
+      "name": "Transfer and fixed-organization collective performance",
+      "definition": "Does transfer improve an individual while reducing collective performance, and does reorganization recover it?",
+      "scope": "Three synthetic binary tasks; 20 paired seeds in second iteration.",
+      "assumptions": [
+        "V1 had target-label leakage; V2 intervals include zero."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.synthetic_transfer_tasks"
+        },
+        {
+          "kind": "uses",
+          "target": "model.transfer_distillation_comparison"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/HLS_CE_03_H3_CAMPAIGN_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        },
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/HLS_CE_03_H3_V2_CAMPAIGN_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "dates": {
+        "start": null,
+        "completion": null,
+        "documented_activity_start": "2026-10-24",
+        "documented_activity_end": "2026-10-26"
+      },
+      "execution_status": "CLOSED",
+      "scientific_outcome": "INCONCLUSIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "result.transfer_effect_inconclusive",
+      "type": "result",
+      "name": "Transfer advantage and collective effect not established",
+      "definition": "V2 C2−C1 +.18 pp [−1.06,1.42]; C2−C3 +.59 [−.43,1.61]; collective C2−C0 −.34 [−1.61,.93]; reorganization +.58 [−.74,1.89].",
+      "scope": "Twenty paired synthetic seeds.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.transfer_collective_effect"
+        }
+      ],
+      "implementation": [],
+      "status": "documented_only",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/HLS_CE_03_H3_V2_CAMPAIGN_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "inconclusive",
+      "scientific_outcome": "INCONCLUSIVE",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "study.deadline_constrained_collective_allocation",
+      "type": "study",
+      "name": "Competence structure, assignment policy and scale in deadline queues",
+      "definition": "How do mean-preserving competence profiles, allocation policy and scale relate to on-time collective task success?",
+      "scope": "Synthetic dynamic queue, N=12/24/48, four task families, 30 paired seeds.",
+      "assumptions": [
+        "One synthetic queue/service/deadline model; no learning/cooperation; P1 not globally optimal."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "model.dynamic_deadline_allocation"
+        },
+        {
+          "kind": "evaluated_by",
+          "target": "evaluation.on_time_collective_success"
+        },
+        {
+          "kind": "evaluated_by",
+          "target": "evaluation.paired_seed_bootstrap"
+        },
+        {
+          "kind": "uses",
+          "target": "scenario.deadline_task_queue"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.load_only_queue_dispatch"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.known_competence_deadline_dispatch"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.estimated_competence_deadline_dispatch"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.contextual_deadline_dispatch"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/CE-04/11_CONFIRMATORY_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "dates": {
+        "start": null,
+        "completion": null,
+        "event_date": "2026-10-26"
+      },
+      "execution_status": "CLOSED",
+      "scientific_outcome": "POSITIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "experiment.deadline_queue_factorial",
+      "type": "experiment",
+      "name": "Factorial deadline-queue comparison",
+      "definition": "Three competence compositions × four policies × three scales, 30 seeds; 1080 valid replicas.",
+      "scope": "Poisson arrivals; lognormal service; FCFS; deadline +3.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.deadline_constrained_collective_allocation"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.load_only_queue_dispatch"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.known_competence_deadline_dispatch"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.estimated_competence_deadline_dispatch"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.contextual_deadline_dispatch"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical_report_only"
+    },
+    {
+      "id": "result.mean_preserving_composition_effect",
+      "type": "result",
+      "name": "Mean-preserving profile contrast under information-complete assignment",
+      "definition": "H2−H0 under P1 was +11.19, +11.69, +11.55 pp at N=12,24,48; respective 95% paired intervals [10.89,11.50], [11.47,11.91], [11.42,11.68].",
+      "scope": "Thirty paired seeds per scale; synthetic model.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.deadline_queue_factorial"
+        }
+      ],
+      "implementation": [],
+      "status": "documented_only",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/CE-04/11_CONFIRMATORY_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "confirmatory",
+      "scientific_outcome": "POSITIVE",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "result.estimated_competence_penalty",
+      "type": "result",
+      "name": "Estimated competence lagged the information-complete reference",
+      "definition": "P2−P1 under H2 was −6.46, −7.42, −9.90 pp at N=12,24,48.",
+      "scope": "Thirty paired seeds per scale; synthetic model.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.deadline_queue_factorial"
+        }
+      ],
+      "implementation": [],
+      "status": "documented_only",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/CE-04/11_CONFIRMATORY_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "confirmatory",
+      "scientific_outcome": "NEGATIVE",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "study.competence_information_and_load",
+      "type": "study",
+      "name": "External competence calibration and load filtering",
+      "definition": "How do external calibration and an admissibility load filter affect P2?",
+      "scope": "Synthetic queue, H2, N=12 and N=48.",
+      "assumptions": [
+        "Results only for one model and selected scales."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.deadline_task_queue"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.estimated_competence_deadline_dispatch"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/CE-04/15_CAUSAL_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "dates": {
+        "start": null,
+        "completion": null,
+        "event_date": "2026-10-26"
+      },
+      "execution_status": "CLOSED",
+      "scientific_outcome": "POSITIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "result.external_calibration_effect",
+      "type": "result",
+      "name": "External calibration improved on-time success in the tested P2 setting",
+      "definition": "Calibration effect +5.266 pp at N=12 [4.531,6.073], +8.683 pp at N=48 [8.282,9.084].",
+      "scope": "Paired synthetic replicas.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.competence_information_and_load"
+        }
+      ],
+      "implementation": [],
+      "status": "documented_only",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/CE-04/15_CAUSAL_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "confirmatory",
+      "scientific_outcome": "POSITIVE",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "study.composition_selection_diagnostics",
+      "type": "study",
+      "name": "Descriptive diagnostics of composition effects",
+      "definition": "Reanalysis of selection, load and waiting metrics for the deadline-queue factorial.",
+      "scope": "Reuses 90 existing N=24/P1 replicas.",
+      "assumptions": [
+        "Not an independent replication and no causal mediation identification."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.deadline_task_queue"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.known_competence_deadline_dispatch"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/CE-06/01_HETEROGENEITY_DIAGNOSTICS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "dates": {
+        "start": null,
+        "completion": null,
+        "event_date": "2026-10-26"
+      },
+      "execution_status": "CLOSED",
+      "scientific_outcome": "AMBIGUOUS",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "study.joint_competence_structure",
+      "type": "study",
+      "name": "Joint competence structure under matched marginals",
+      "definition": "Do two distinct joint competence matrices with the same per-task mean and maximum differ under fixed allocation?",
+      "scope": "Stationary synthetic queue; N=12, K=4; 30 paired seeds.",
+      "assumptions": [
+        "Two matrices only; one policy/demand law; no causal mediator established."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.stationary_competence_structure_queue"
+        },
+        {
+          "kind": "uses",
+          "target": "organization.paired_specialist_vs_generalist"
+        },
+        {
+          "kind": "evaluated_by",
+          "target": "evaluation.on_time_collective_success"
+        },
+        {
+          "kind": "evaluated_by",
+          "target": "evaluation.paired_seed_bootstrap"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.known_competence_deadline_dispatch"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/CE-07/04_CONFIRMATORY_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "dates": {
+        "start": null,
+        "completion": null,
+        "event_date": "2026-10-26"
+      },
+      "execution_status": "CLOSED",
+      "scientific_outcome": "POSITIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "experiment.matched_joint_structure_comparison",
+      "type": "experiment",
+      "name": "Paired comparison of two matched-marginal competence structures",
+      "definition": "Two structures evaluated under the same seed-specific demand and potential outcomes; 60 valid simulation runs.",
+      "scope": "30 seed pairs; one N and fixed policy.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.joint_competence_structure"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical_report_only"
+    },
+    {
+      "id": "result.joint_structure_effect",
+      "type": "result",
+      "name": "Different joint structures yielded different performance at equal marginals",
+      "definition": "B−A success-on-time +21.52 pp, SD 1.13, paired bootstrap 95% interval [21.12,21.92], positive in 30/30 pairs.",
+      "scope": "Synthetic N=12 queue; 30 paired seeds.",
+      "assumptions": [
+        "Structures have per-family mean .675 and max .9."
+      ],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.matched_joint_structure_comparison"
+        }
+      ],
+      "implementation": [],
+      "status": "documented_only",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/CE-07/04_CONFIRMATORY_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "confirmatory",
+      "scientific_outcome": "POSITIVE",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "study.assignment_opportunity_value",
+      "type": "study",
+      "name": "Assignment sensitivity and future opportunity",
+      "definition": "Finite analyses of assignment, learning opportunity, and continuation value.",
+      "scope": "Constructed finite decision processes.",
+      "assumptions": [
+        "No empirical or general-planner validation."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "model.assignment_opportunity_analysis"
+        },
+        {
+          "kind": "uses",
+          "target": "scenario.finite_opportunity_decision_process"
+        }
+      ],
+      "implementation": [],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "docs/RESEARCH.md"
+        }
+      ],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experimental_foundations/HLS_G3_ORGANIZATIONAL_VALUE_GROUND_TRUTH.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "NEGATIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "study.prospective_adaptation",
+      "type": "study",
+      "name": "Prospective information and development anticipation",
+      "definition": "Finite adaptation studies compare prospective information/development decisions and realized return.",
+      "scope": "Frozen synthetic policy and state populations.",
+      "assumptions": [
+        "Conditional reference state bank; exact experiment-specific semantics."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "model.prospective_information_development"
+        },
+        {
+          "kind": "evaluated_by",
+          "target": "evaluation.paired_seed_bootstrap"
+        },
+        {
+          "kind": "uses",
+          "target": "scenario.prospective_adaptation_world"
+        }
+      ],
+      "implementation": [],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "docs/RESEARCH.md"
+        }
+      ],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/CAMPAIGN_1_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        },
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/CAMPAIGN_2_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "INCONCLUSIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "theoretical_result.static_feasible_outcome_set",
+      "type": "theoretical_result",
+      "name": "Static feasible outcome set",
+      "definition": "For fixed state, demand, constraints, and admissible policy class, the feasible outcome set is the outcomes induced by feasible policies.",
+      "scope": "Definition; static model scope.",
+      "assumptions": [
+        "Outcome map and feasibility set must be specified."
+      ],
+      "relationships": [
+        {
+          "kind": "belongs_to",
+          "target": "study.static_allocation"
+        }
+      ],
+      "implementation": [],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "docs/THEORY.md"
+        }
+      ],
+      "status": "conditional"
+    },
+    {
+      "id": "theoretical_result.crossed_specialization_gain",
+      "type": "theoretical_result",
+      "name": "Crossed-specialization gain formula",
+      "definition": "Under strict crossed advantage, routing gain is min(p A1,(1-p) A2), with maximum A1 A2/(A1+A2).",
+      "scope": "Two agents, two tasks, scalar additive effectiveness.",
+      "assumptions": [
+        "Fixed competence and equal-resource model; p is task-1 probability."
+      ],
+      "relationships": [
+        {
+          "kind": "belongs_to",
+          "target": "study.static_allocation"
+        }
+      ],
+      "implementation": [],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "docs/THEORY.md"
+        }
+      ],
+      "status": "conditional"
+    },
+    {
+      "id": "theoretical_result.frontier_nonimplication",
+      "type": "theoretical_result",
+      "name": "Competence-state change need not change efficient frontier",
+      "definition": "Different action-induced states may have identical efficient collective outcome frontiers.",
+      "scope": "Exact finite counterexample.",
+      "assumptions": [
+        "The frontier is computed from the same terminal routing set."
+      ],
+      "relationships": [
+        {
+          "kind": "belongs_to",
+          "target": "study.dynamic_competence_development"
+        }
+      ],
+      "implementation": [],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "docs/THEORY.md"
+        }
+      ],
+      "status": "conditional"
+    },
+    {
+      "id": "theoretical_result.future_value_relevance",
+      "type": "theoretical_result",
+      "name": "Future capability value depends on future conditions",
+      "definition": "Different future capabilities can have equal value; a future value difference can reverse an immediate ranking.",
+      "scope": "Two-period finite construction.",
+      "assumptions": [
+        "Future demand and objective are declared; values are model-specific."
+      ],
+      "relationships": [
+        {
+          "kind": "belongs_to",
+          "target": "study.dynamic_competence_development"
+        }
+      ],
+      "implementation": [],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "docs/THEORY.md"
+        }
+      ],
+      "status": "conditional"
+    },
+    {
+      "id": "theoretical_result.current_future_value_decomposition",
+      "type": "theoretical_result",
+      "name": "Current and continuation value decomposition",
+      "definition": "In the stated two-period decision, total difference equals current difference plus future development-value difference.",
+      "scope": "Two-period finite construction and standard continuation value.",
+      "assumptions": [
+        "Common objective and exact transition/value calculation."
+      ],
+      "relationships": [
+        {
+          "kind": "belongs_to",
+          "target": "study.dynamic_competence_development"
+        }
+      ],
+      "implementation": [],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "docs/THEORY.md"
+        }
+      ],
+      "status": "conditional"
+    },
+    {
+      "id": "theoretical_result.joint_class_value_inclusion",
+      "type": "theoretical_result",
+      "name": "Joint policy-class value inclusion",
+      "definition": "Under a common world/information contract, a separated policy class constrained to a subset of actions is contained in the joint class; its maximum value cannot be larger.",
+      "scope": "Finite common-world decision model.",
+      "assumptions": [
+        "Same feasible world, observations, rewards, resources, objective."
+      ],
+      "relationships": [
+        {
+          "kind": "belongs_to",
+          "target": "study.joint_separated_policy_boundary"
+        }
+      ],
+      "implementation": [],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "docs/THEORY.md"
+        }
+      ],
+      "status": "conditional"
+    },
+    {
+      "id": "theoretical_result.equal_marginals_not_equal_collective_risk",
+      "type": "theoretical_result",
+      "name": "Joint error law affects majority risk at fixed individual marginals",
+      "definition": "Two specified joint laws with marginal error .20 yield majority risks .30 and .20.",
+      "scope": "Exact three-classifier probability construction.",
+      "assumptions": [
+        "These are the supplied joint laws; not a general theorem about time or AI aging."
+      ],
+      "relationships": [
+        {
+          "kind": "belongs_to",
+          "target": "study.joint_error_dependence"
+        }
+      ],
+      "implementation": [],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "docs/THEORY.md"
+        }
+      ],
+      "status": "conditional"
+    },
+    {
+      "id": "scenario.finite_opportunity_decision_process",
+      "type": "scenario",
+      "name": "Finite opportunity-sensitive decisions",
+      "definition": "Finite state and action constructions in which present assignment can change future opportunity/value.",
+      "scope": "Synthetic finite decision process.",
+      "assumptions": [
+        "Model-specific transition, information, and continuation-value assumptions."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experimental_foundations/HLS_G3_ORGANIZATIONAL_VALUE_GROUND_TRUTH.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "scenario_contract": {
+        "agents": null,
+        "tasks": null,
+        "capabilities": "Model-specific state-dependent outcome map",
+        "dynamics": "Finite state transitions and continuation values",
+        "constraints": "Model-specific action, information and resource feasibility",
+        "uncertainty": null
+      }
+    },
+    {
+      "id": "model.assignment_opportunity_analysis",
+      "type": "model",
+      "name": "Assignment sensitivity and continuation value",
+      "definition": "A finite Bellman analysis connecting an assignment choice to opportunity-dependent continuation value.",
+      "scope": "Constructed finite states and actions.",
+      "assumptions": [
+        "Local ranking inversion alone does not establish a root-level value gap."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.finite_opportunity_decision_process"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experimental_foundations/HLS_G3_ORGANIZATIONAL_VALUE_GROUND_TRUTH.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "mathematical_object": "Finite assignment state/action alternatives, transition and continuation values",
+      "inputs": "Local ranking and root-level policy value comparisons",
+      "outputs": "Finite Bellman analysis; local inversion alone is insufficient."
+    },
+    {
+      "id": "study.persistence_interaction_boundary",
+      "type": "study",
+      "name": "Persistence interaction boundary analysis",
+      "definition": "A planned factorial asked whether architecture, demand persistence and learning interact; a separate fixed-competence fixture evaluated a restricted estimand.",
+      "scope": "The planned campaign was not run; the retained analytical fixtures are narrower.",
+      "assumptions": [
+        "The fixed-competence fixture does not estimate the unexecuted learning interaction."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.finite_opportunity_decision_process"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/HLS_Q1R_ANALYTICAL_VERIFICATION.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "NULL",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "study.competence_priority_statistic",
+      "type": "study",
+      "name": "Competence-improvement priority statistic checks",
+      "definition": "Exact checks examine whether failure frequency multiplied by quality gap is sufficient to rank improvement opportunities.",
+      "scope": "Model-specific thresholds, null cases and ranking reversals.",
+      "assumptions": [
+        "No universal priority rule is established."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/models/model_M0.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "NEGATIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "study.published_mechanism_reproductions",
+      "type": "study",
+      "name": "Bounded reproductions of published organization mechanisms",
+      "definition": "Selected published mechanisms were represented in bounded executable checks to assess correspondence and reuse.",
+      "scope": "Mechanism-specific bounded reproductions; distinct source mechanisms remain separate.",
+      "assumptions": [
+        "Passing a bounded check is not evidence of general HLS performance."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/engineering/HLS_SCIENTIFIC_MODEL_DOSSIER.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "NOT_EVALUATED",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "study.portfolio_learning_interference",
+      "type": "study",
+      "name": "Portfolio learning and interference pilots",
+      "definition": "Pilot studies examined portfolio learning, opportunity, interference and compatibility in distinct bounded settings.",
+      "scope": "Multiple protocols and task/data settings; pooled results are not a common estimand.",
+      "assumptions": [
+        "Some cross-protocol comparisons failed compatibility; no general training policy is established."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experimental_foundations/ADAPTIVE_ASSIGNMENT_LEARNING_TEACHING_SPECIFICATION.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "AMBIGUOUS",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "study.dynamic_model_selection",
+      "type": "study",
+      "name": "Contextual model selection under quality and latency",
+      "definition": "A small held-out comparison evaluated dynamic selection among fixed model candidates under quality and latency measurements.",
+      "scope": "160 held-out queries; corrected timing and provenance issues are documented.",
+      "assumptions": [
+        "A retrospective oracle is not deployable; small sample and timing limits apply."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.fixed_model_candidate_queries"
+        },
+        {
+          "kind": "uses",
+          "target": "model.fixed_candidate_quality_latency"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/HLS_DYNAMIC_CAPACITY_ORGANIZATION_CORRECTED.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "INCONCLUSIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "study.budgeted_model_routing",
+      "type": "study",
+      "name": "Model routing under an inference budget",
+      "definition": "A predictor and a budgeted optimizer were evaluated separately against declared baselines.",
+      "scope": "Specific predictor/optimizer pilot cells.",
+      "assumptions": [
+        "Predictor and optimizer effects are distinct; one cell does not establish general superiority."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.budgeted_model_query_routing"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/HLS_BUDGETED_LLM_ROUTING_CONSOLIDATED_REPORT.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "AMBIGUOUS",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "study.classifier_fusion_dependence",
+      "type": "study",
+      "name": "Classifier fusion under joint error dependence",
+      "definition": "Synthetic exact calculations examined coalition accuracy under specified dependence mixtures.",
+      "scope": "Constructed joint error laws and three-classifier majority examples.",
+      "assumptions": [
+        "No real model inference or general fusion result."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.synthetic_joint_classifier_errors"
+        },
+        {
+          "kind": "uses",
+          "target": "model.joint_error_risk"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/HLS_CE_02_AI_AGING_PREFLIGHT.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "POSITIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "study.model_specific_execution_contracts",
+      "type": "study",
+      "name": "Model-specific execution and evaluation contracts",
+      "definition": "Engineering checks tested bounded provenance-carrying execution/evaluation interfaces across selected model implementations.",
+      "scope": "Technical vertical slices and contract tests only.",
+      "assumptions": [
+        "Common serialization does not imply mathematical equivalence."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/engineering/HLS_COMMON_EXPERIMENT_CONTRACT.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "NOT_EVALUATED",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "study.production_learning_integration",
+      "type": "study",
+      "name": "Production, competence learning and teaching integration",
+      "definition": "Bounded model integrations examined production and learning/teaching components with distinct competence and productivity semantics.",
+      "scope": "Tracked records are incomplete; a larger local artifact was not published and a later campaign was interrupted.",
+      "assumptions": [
+        "Nembhard productivity is not interchangeable with competence; broad outcome is not verifiable."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "suspended",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/engineering/HLS_NEMBHARD_DIRECT_EXPERIENCE_MECHANISM.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "SUSPENDED",
+      "scientific_outcome": "INCONCLUSIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "study.empirical_vehicle_feasibility",
+      "type": "study",
+      "name": "Empirical data vehicle feasibility screening",
+      "definition": "Feasibility gates assessed whether candidate datasets could support required structural and competence measurements.",
+      "scope": "Screening only; no empirical validation.",
+      "assumptions": [
+        "No real-world performance claim."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experimental_foundations/B0_OFFICEHOME_VEHICLE_GATE.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "NOT_EVALUATED",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "study.state_discrimination_gates",
+      "type": "study",
+      "name": "State and trajectory discrimination checks",
+      "definition": "Exploratory gates evaluated whether generated state/trajectory populations had support and discrimination for later comparisons.",
+      "scope": "Technical diagnostics; not confirmatory policy evaluation.",
+      "assumptions": [
+        "No policy value estimand established."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "closed",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/CAMPAIGN_0_DISCRIMINATIVE_CAPACITY.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "NOT_EVALUATED",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "study.counterfactual_engine_equivalence",
+      "type": "study",
+      "name": "Counterfactual label and engine equivalence gate",
+      "definition": "A technical gate tested whether counterfactual labels and engine outputs supported a proposed larger comparison; the gate failed.",
+      "scope": "The planned larger campaign did not execute.",
+      "assumptions": [
+        "A negative gate is not a scientific policy-effect result."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "suspended",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/CAMPAIGN_4_ENGINE_VERIFICATION.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "SUSPENDED",
+      "scientific_outcome": "NEGATIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "result.persistence_fixture_boundary",
+      "type": "result",
+      "name": "Restricted persistence-interaction fixtures",
+      "definition": "The registered 960-run question was not executed; the fixed-competence stationary equal-marginal fixture has zero expected persistence interaction, while a separate finite fixture reports Θ(1)=−.003.",
+      "scope": "Analytical fixtures only.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "from_study",
+          "target": "study.persistence_interaction_boundary"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "documented_historical",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/HLS_Q1R_ANALYTICAL_VERIFICATION.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "NULL",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "result.priority_statistic_not_universal",
+      "type": "result",
+      "name": "Priority statistic lacks universal sufficiency",
+      "definition": "Exact checks include nulls, thresholds and ranking reversals; they do not validate failure-frequency times quality-gap as a universal selector.",
+      "scope": "Model-specific exact checks.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "from_study",
+          "target": "study.competence_priority_statistic"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "documented_historical",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/models/model_M0.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "NEGATIVE",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "result.bounded_mechanism_checks",
+      "type": "result",
+      "name": "Bounded mechanism correspondence checks",
+      "definition": "Selected published mechanisms received bounded executable checks; these do not establish end-to-end HLS performance or general reproduction fidelity.",
+      "scope": "Technical validation only.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "from_study",
+          "target": "study.published_mechanism_reproductions"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "documented_historical",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/engineering/HLS_SCIENTIFIC_MODEL_DOSSIER.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "technical_validation",
+      "scientific_outcome": "NOT_EVALUATED",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "result.portfolio_compatibility_and_interference",
+      "type": "result",
+      "name": "Portfolio compatibility and interference findings",
+      "definition": "Cross-model bridges include failed compatibility, inconclusive portfolio cases and bounded interference/replay findings; protocols do not share one estimand.",
+      "scope": "Multiple bounded pilots, reported separately in source records.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "from_study",
+          "target": "study.portfolio_learning_interference"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "documented_historical",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experimental_foundations/ADAPTIVE_ASSIGNMENT_LEARNING_TEACHING_SPECIFICATION.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "exploratory",
+      "scientific_outcome": "AMBIGUOUS",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "result.dynamic_selection_small_comparison",
+      "type": "result",
+      "name": "Small held-out model-selection comparison",
+      "definition": "Corrected comparison reports quality 46.25 versus 45.0 and latency 139.27 versus 141.61 ms; quality difference +1.25 with interval [−1.25,3.75].",
+      "scope": "160 held-out queries; timing/provenance corrections apply.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "from_study",
+          "target": "study.dynamic_model_selection"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "documented_historical",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/HLS_DYNAMIC_CAPACITY_ORGANIZATION_CORRECTED.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "inconclusive",
+      "scientific_outcome": "INCONCLUSIVE",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "result.budgeted_routing_cell_limited",
+      "type": "result",
+      "name": "Budgeted routing predictor and optimizer results",
+      "definition": "One predictor scored Brier .2698 versus constant .2314 and logistic .2174; a clear optimizer gain of +2.16 pp was reported in one cell.",
+      "scope": "Specific pilot configurations only.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "from_study",
+          "target": "study.budgeted_model_routing"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "documented_historical",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/HLS_BUDGETED_LLM_ROUTING_CONSOLIDATED_REPORT.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "exploratory",
+      "scientific_outcome": "AMBIGUOUS",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "result.synthetic_fusion_dependence",
+      "type": "result",
+      "name": "Synthetic classifier-fusion dependence calculations",
+      "definition": "Exact mixture check reports coalition accuracy .826 at correlation parameter 0, .700 at 1 and .7945 at .25; separate majority-law result is registered independently.",
+      "scope": "Constructed synthetic laws; not real inference.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "from_study",
+          "target": "study.classifier_fusion_dependence"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "documented_historical",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/HLS_CE_02_AI_AGING_PREFLIGHT.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "POSITIVE",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "result.execution_contract_validation",
+      "type": "result",
+      "name": "Bounded execution-contract validation",
+      "definition": "Selected technical vertical slices and tests passed without establishing a universal execution abstraction or model equivalence.",
+      "scope": "Technical validation only.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "from_study",
+          "target": "study.model_specific_execution_contracts"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "documented_historical",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/engineering/HLS_COMMON_EXPERIMENT_CONTRACT.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "technical_validation",
+      "scientific_outcome": "NOT_EVALUATED",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "result.production_learning_evidence_incomplete",
+      "type": "result",
+      "name": "Production-learning integration evidence incomplete",
+      "definition": "Twenty-nine tracked records were available; a reported 1,016-run local artifact was unpublished and a later campaign was interrupted.",
+      "scope": "No completed independently verifiable campaign.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "from_study",
+          "target": "study.production_learning_integration"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "documented_historical",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/engineering/HLS_NEMBHARD_DIRECT_EXPERIENCE_MECHANISM.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "not_verified",
+      "scientific_outcome": "INCONCLUSIVE",
+      "evidence_availability": "incomplete_historical_record"
+    },
+    {
+      "id": "result.empirical_vehicle_screen_only",
+      "type": "result",
+      "name": "Empirical vehicle feasibility screen only",
+      "definition": "The screening stopped at feasibility gates and produced no empirical outcome validation.",
+      "scope": "Candidate data feasibility only.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "from_study",
+          "target": "study.empirical_vehicle_feasibility"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "documented_historical",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experimental_foundations/B0_OFFICEHOME_VEHICLE_GATE.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "technical_validation",
+      "scientific_outcome": "NOT_EVALUATED",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "result.state_support_gate",
+      "type": "result",
+      "name": "State and trajectory support diagnostics",
+      "definition": "Finite gate diagnostics recorded support/discrimination limits; no confirmatory policy-value estimate was produced.",
+      "scope": "Technical gate only.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "from_study",
+          "target": "study.state_discrimination_gates"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "documented_historical",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/CAMPAIGN_0_DISCRIMINATIVE_CAPACITY.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "technical_validation",
+      "scientific_outcome": "NOT_EVALUATED",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "result.counterfactual_engine_gate_failed",
+      "type": "result",
+      "name": "Counterfactual engine equivalence gate failed",
+      "definition": "Control labels were not equivalent, so the proposed larger run received NO-GO and did not execute.",
+      "scope": "Technical negative; no policy-effect estimate.",
+      "assumptions": [],
+      "relationships": [
+        {
+          "kind": "from_study",
+          "target": "study.counterfactual_engine_equivalence"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "documented_historical",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/CAMPAIGN_4_ENGINE_VERIFICATION.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "technical_validation",
+      "scientific_outcome": "NEGATIVE",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "study.contextual_capacity_selection",
+      "type": "study",
+      "name": "Contextual selection under changing rewards and selective feedback",
+      "definition": "Studies contextual action selection under nonstationary outcomes, selective observations, memory and assignment.",
+      "scope": "Distinct simulation factors and estimands; source campaign records are not combined into one effect.",
+      "assumptions": [
+        "Reported algorithm variants are not all faithful implementations of named standard procedures.",
+        "Observation can be endogenous to assignment."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.prospective_adaptation_world"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/HLS_CONTEXTUAL_CAPACITY_SELECTION.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "AMBIGUOUS",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "result.contextual_selection_cell_specific",
+      "type": "result",
+      "name": "Selective-feedback contextual selection effects are cell-specific",
+      "definition": "In one shared-feedback infrequent-change cell, a windowed method had regret 184.88 versus 259.47 (difference −74.59, interval [−89.60,−59.58]); closed-loop intervals included zero.",
+      "scope": "Exploratory cell-specific comparisons; not pooled across distinct estimands.",
+      "assumptions": [
+        "The source record reports candidate algorithms that differ in more than memory."
+      ],
+      "relationships": [
+        {
+          "kind": "from_study",
+          "target": "study.contextual_capacity_selection"
+        }
+      ],
+      "implementation": [],
+      "status": "documented_historical",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/HLS_CONTEXTUAL_CAPACITY_SELECTION.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "exploratory",
+      "scientific_outcome": "AMBIGUOUS",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "study.finite_assignment_comparison",
+      "type": "study",
+      "name": "Static constrained assignment comparison",
+      "definition": "Exact finite comparison of task assignment choices under a static effectiveness objective.",
+      "scope": "Constructed finite allocation case; no temporal state transition.",
+      "assumptions": [
+        "Constructed finite objective, action set and resource semantics as stated by the historical source."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.static_two_task_allocation"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.same_agent_task_assignment"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.taskwise_competence_assignment"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/minimal_hls_model.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "POSITIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "result.finite_assignment_comparison_reported_values",
+      "type": "result",
+      "name": "Static constrained assignment comparison reported exact values",
+      "definition": "Reported S1 value comparison: 2.6 versus 1.8.",
+      "scope": "Historical finite constructions; detailed execution artifacts are not retained on this branch.",
+      "assumptions": [
+        "Values are scoped to their individual constructed cases."
+      ],
+      "relationships": [
+        {
+          "kind": "from_study",
+          "target": "study.finite_assignment_comparison"
+        }
+      ],
+      "implementation": [],
+      "status": "documented_historical",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/minimal_hls_model.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "POSITIVE",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "study.shared_budget_temporal_optimization",
+      "type": "study",
+      "name": "Shared-budget temporal optimization",
+      "definition": "Finite dynamic decisions with shared resource budgets and continuation value.",
+      "scope": "S2 cases are distinct constructions; Bellman and myopic values are not pooled into one estimator.",
+      "assumptions": [
+        "Constructed finite objective, action set and resource semantics as stated by the historical source."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.finite_opportunity_decision_process"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/operational_development_opportunity_value.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "POSITIVE",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": null,
+      "hypothesis": null
+    },
+    {
+      "id": "result.shared_budget_temporal_optimization_reported_values",
+      "type": "result",
+      "name": "Shared-budget temporal optimization reported exact values",
+      "definition": "Reported S2a exact 8 versus greedy 7.2; S2b Bellman 1 versus myopic .9 with sufficient budget 1.9.",
+      "scope": "Historical finite constructions; detailed execution artifacts are not retained on this branch.",
+      "assumptions": [
+        "Values are scoped to their individual constructed cases."
+      ],
+      "relationships": [
+        {
+          "kind": "from_study",
+          "target": "study.shared_budget_temporal_optimization"
+        }
+      ],
+      "implementation": [],
+      "status": "documented_historical",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/operational_development_opportunity_value.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "POSITIVE",
+      "evidence_availability": "historical_summary_only"
+    },
+    {
+      "id": "policy.load_only_queue_dispatch",
+      "type": "policy",
+      "name": "Load-only feasible queue dispatch",
+      "definition": "Selects an admissible agent using expected pending workload; ignores competence.",
+      "scope": "Historical model-specific policy; no claim of general optimality.",
+      "assumptions": [
+        "No competence information is used."
+      ],
+      "inputs": "Queue state, eligibility and estimated workload",
+      "outputs": "Agent assignment or rejection",
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/CE-04/04_E3_PROTOCOL_ADDENDUM.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "id": "policy.known_competence_deadline_dispatch",
+      "type": "policy",
+      "name": "Known-competence deadline dispatch",
+      "definition": "Ranks admissible agents by true task competence multiplied by estimated probability of on-time completion.",
+      "scope": "Historical model-specific policy; no claim of general optimality.",
+      "assumptions": [
+        "True competence is available only to the information-complete reference."
+      ],
+      "inputs": "Task type, true competence and observable workload/service/deadline state",
+      "outputs": "Agent assignment or rejection",
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/CE-04/04_E3_PROTOCOL_ADDENDUM.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "id": "policy.estimated_competence_deadline_dispatch",
+      "type": "policy",
+      "name": "Estimated-competence deadline dispatch",
+      "definition": "Uses the same competence-times-deadline score as the information-complete rule, substituting Beta-Bernoulli estimates updated on observed outcomes.",
+      "scope": "Historical model-specific policy; no claim of general optimality.",
+      "assumptions": [
+        "No hidden competence or future outcome is observed."
+      ],
+      "inputs": "Task type, prior observed task outcomes, and observable operational state",
+      "outputs": "Agent assignment or rejection",
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/CE-04/04_E3_PROTOCOL_ADDENDUM.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "id": "policy.contextual_deadline_dispatch",
+      "type": "policy",
+      "name": "Contextual deadline dispatch",
+      "definition": "Adapts dispatch choices using a disjoint linear upper-confidence policy with context equal to deadline feasibility times task-family indicator.",
+      "scope": "Historical model-specific policy; no claim of general optimality.",
+      "assumptions": [
+        "Feedback is updated only when its specified reward becomes observable."
+      ],
+      "inputs": "Observable context, delayed binary on-time-correct reward and feasibility state",
+      "outputs": "Agent assignment or rejection",
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/CE-04/04_E3_PROTOCOL_ADDENDUM.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "id": "policy.same_agent_task_assignment",
+      "type": "policy",
+      "name": "Same-agent multi-task assignment",
+      "definition": "Requires one agent identity to handle all task types in the static comparison.",
+      "scope": "Historical model-specific policy; no claim of general optimality.",
+      "assumptions": [
+        "No learning or time evolution."
+      ],
+      "inputs": "Fixed effectiveness matrix and task demand",
+      "outputs": "Selected common agent and expected effectiveness",
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/HLS_G1_STATIC_EXPERIMENTAL_GROUND_TRUTH.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "id": "policy.taskwise_competence_assignment",
+      "type": "policy",
+      "name": "Taskwise competence assignment",
+      "definition": "Allows the selected agent to vary by task type under the declared feasible access class.",
+      "scope": "Historical model-specific policy; no claim of general optimality.",
+      "assumptions": [
+        "Feasible assignment/access class is declared; any convexification is separate."
+      ],
+      "inputs": "Fixed effectiveness matrix and task demand",
+      "outputs": "Task-specific agent choices and expected effectiveness",
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/HLS_G1_STATIC_EXPERIMENTAL_GROUND_TRUTH.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "id": "policy.prospective_computation_selection",
+      "type": "policy",
+      "name": "Prospective computation selector",
+      "definition": "Selects additional computation from available prospective signals in a finite sequential problem-belief setting.",
+      "scope": "Historical model-specific policy; no claim of general optimality.",
+      "assumptions": [
+        "Observed call rates differ from nominal target in the confirmatory comparison."
+      ],
+      "inputs": "Belief/history features and computation costs",
+      "outputs": "Continue/stop or computation choice and terminal decision",
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/CAMPAIGN_3_META_VOC_CONFIRMATORY_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "id": "scenario.synthetic_joint_classifier_errors",
+      "type": "scenario",
+      "name": "Synthetic joint classifier error laws",
+      "definition": "Finite joint Bernoulli error distributions with specified marginals and dependence.",
+      "scope": "Three classifier variables; exact probability law; majority decision.",
+      "assumptions": [
+        "Constructed laws; no inference on real models."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/HLS_CE_02_AI_AGING_PREFLIGHT.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "scenario_contract": {
+        "agents": "Three binary classifiers",
+        "tasks": "One common classification instance abstracted to correctness/error",
+        "capabilities": "Marginal error probability .20 for each classifier in the specified laws",
+        "dynamics": "Static joint error draw",
+        "constraints": "Majority aggregation",
+        "uncertainty": "Two exact joint probability laws."
+      }
+    },
+    {
+      "id": "scenario.synthetic_transfer_tasks",
+      "type": "scenario",
+      "name": "Synthetic transfer and classification tasks",
+      "definition": "Three generated binary classification tasks with separate train/validation/test examples and one donor-to-recipient distillation comparison.",
+      "scope": "Task distributions and the train/test overlap defect in the first iteration are methodologically relevant.",
+      "assumptions": [
+        "V2 contrasts remain inconclusive; raw predictions are not retained."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/HLS_CE_03_H3_V2_CAMPAIGN_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "scenario_contract": {
+        "agents": "Donor classifier A3 and recipient classifier A1, with other baseline models",
+        "tasks": "Three synthetic binary classification tasks",
+        "capabilities": "Task-specific classifier performance and donor output probabilities",
+        "dynamics": "Initial training, then one recipient update on task 3",
+        "constraints": "Paired seeds; held-out test; no hyperparameter change after test",
+        "uncertainty": "Synthetic data generation and model initialization."
+      }
+    },
+    {
+      "id": "scenario.fixed_model_candidate_queries",
+      "type": "scenario",
+      "name": "Fixed candidate-model query evaluation",
+      "definition": "Held-out query set evaluated by a fixed set of model candidates with answer-quality and latency outputs.",
+      "scope": "Corrected held-out subset of 160 queries.",
+      "assumptions": [
+        "Timing is machine-sensitive; retrospective oracle is not deployable."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/HLS_DYNAMIC_CAPACITY_ORGANIZATION_CORRECTED.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "scenario_contract": {
+        "agents": "Fixed candidate predictive models",
+        "tasks": "Held-out queries",
+        "capabilities": "Candidate answer quality and latency",
+        "dynamics": "Static candidates; contextual selection per query",
+        "constraints": "Held-out query evaluation; no deployable retrospective oracle",
+        "uncertainty": "Observed latency and query-specific outcomes."
+      }
+    },
+    {
+      "id": "scenario.budgeted_model_query_routing",
+      "type": "scenario",
+      "name": "Budgeted model-query routing",
+      "definition": "Model candidate routing evaluated under a compute or latency budget with predictor and optimizer components.",
+      "scope": "Pilot cells and declared routing budgets.",
+      "assumptions": [
+        "Predictor quality and optimizer utility are distinct estimands."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/HLS_BUDGETED_LLM_ROUTING_CONSOLIDATED_REPORT.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "scenario_contract": {
+        "agents": "Fixed candidate language models",
+        "tasks": "Queries with output-quality and compute/latency budget",
+        "capabilities": "Predicted candidate outcome and measured costs",
+        "dynamics": "Per-query routing under a budget",
+        "constraints": "Declared pilot budget and candidate set",
+        "uncertainty": "Predictor error and task/candidate outcomes."
+      }
+    },
+    {
+      "id": "model.joint_error_risk",
+      "type": "model",
+      "name": "Joint error and majority-risk model",
+      "definition": "Maps a joint distribution over classifier error indicators to marginal and collective majority risk.",
+      "scope": "Finite binary error vector and deterministic majority aggregation.",
+      "assumptions": [
+        "Pairwise covariance does not determine a general higher-order joint law."
+      ],
+      "inputs": "Marginal errors, pair dependence and collective majority risk",
+      "outputs": "Exact finite probability model.",
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.synthetic_joint_classifier_errors"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/HLS_CE_02_AI_AGING_PREFLIGHT.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "mathematical_object": "Joint distribution over binary classifier error indicators and a decision aggregation rule"
+    },
+    {
+      "id": "model.transfer_distillation_comparison",
+      "type": "model",
+      "name": "Recipient update by supervised learning and distillation",
+      "definition": "Compares a recipient classifier after label-based refit, aligned donor distillation, and permuted-output control.",
+      "scope": "Synthetic binary classification tasks; paired seeds.",
+      "assumptions": [
+        "Comparison C2-C1 changes information target as well as transfer; estimates do not establish a pure transfer effect."
+      ],
+      "inputs": "Recipient performance under supervised, aligned-distillation and permuted-output controls",
+      "outputs": "Paired synthetic classification comparison.",
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.synthetic_transfer_tasks"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/research/HLS_CE_03_H3_V2_CAMPAIGN_RESULTS.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "mathematical_object": "Synthetic task examples, labels, donor probability outputs and recipient model update conditions"
+    },
+    {
+      "id": "model.fixed_candidate_quality_latency",
+      "type": "model",
+      "name": "Fixed candidate quality-latency comparison",
+      "definition": "Evaluates predicted/contextual choice among fixed candidate models using quality and latency outputs.",
+      "scope": "Corrected held-out query records.",
+      "assumptions": [
+        "Small held-out set; timing and code-provenance incidents are documented."
+      ],
+      "inputs": "Candidate selection, answer-quality score and latency",
+      "outputs": "Small held-out contextual candidate comparison.",
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.fixed_model_candidate_queries"
+        }
+      ],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/experiments/HLS_DYNAMIC_CAPACITY_ORGANIZATION_CORRECTED.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "mathematical_object": "Held-out queries, fixed candidate outputs, quality labels/metrics and measured latency"
+    },
+    {
+      "id": "study.finite_service_assignment_solver_checks",
+      "type": "study",
+      "name": "Finite service and assignment solver checks",
+      "definition": "Bounded finite solver checks compare assignment values/frontiers under model-specific service assumptions and tie rules.",
+      "scope": "Distinct finite formulations are retained as a family record only; their values are not pooled.",
+      "assumptions": [
+        "Service, tie-breaking and feasible planner classes are model-specific."
+      ],
+      "relationships": [],
+      "implementation": [],
+      "evidence": [],
+      "status": "historical",
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/CURRENT_POLICY_FORMAL_AUDIT.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "execution_status": "CLOSED",
+      "scientific_outcome": "AMBIGUOUS",
+      "start_date": null,
+      "completion_date": null,
+      "research_question": "How do service assumptions, assignment rules and tie handling affect finite solver comparisons?",
+      "hypothesis": null
+    },
+    {
+      "id": "result.finite_solver_tie_sensitivity",
+      "type": "result",
+      "name": "Finite solver values depend on service and tie semantics",
+      "definition": "Historical records report finite values/frontiers and tie-rule sensitivity; these are distinct model-specific checks, not a pooled effect.",
+      "scope": "Bounded exact solver cases.",
+      "assumptions": [
+        "No common cross-case estimand is asserted."
+      ],
+      "relationships": [
+        {
+          "kind": "from_study",
+          "target": "study.finite_service_assignment_solver_checks"
+        }
+      ],
+      "implementation": [],
+      "status": "documented_historical",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "historical_sources": [
+        {
+          "branch": "feature/hls-laboratory-v1",
+          "commit": "c81def3b5280b0f59d6dcbfd3e25df8805f5013c",
+          "path": "docs/theory/CURRENT_POLICY_FORMAL_AUDIT.md",
+          "availability": "source-branch-only",
+          "role": "primary"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "AMBIGUOUS",
+      "evidence_availability": "historical_summary_only"
+    }
+  ],
+  "aliases": {
+    "G1": {
+      "targets": [
+        "study.static_allocation"
+      ],
+      "kind": "historical_alias"
+    },
+    "G1.1": {
+      "targets": [
+        "study.static_allocation"
+      ],
+      "kind": "historical_alias"
+    },
+    "G1.2": {
+      "targets": [
+        "study.static_allocation"
+      ],
+      "kind": "historical_alias"
+    },
+    "G2": {
+      "targets": [
+        "study.dynamic_competence_development"
+      ],
+      "kind": "historical_alias"
+    },
+    "D0/D1/D2": {
+      "targets": [
+        "study.dynamic_competence_development"
+      ],
+      "kind": "historical_case_names"
+    },
+    "G3/G3-H": {
+      "targets": [
+        "study.assignment_opportunity_value"
+      ],
+      "kind": "historical_alias"
+    },
+    "RQ0": {
+      "targets": [
+        "study.joint_separated_policy_boundary"
+      ],
+      "kind": "research_question_alias"
+    },
+    "T0-T3": {
+      "targets": [
+        "study.static_allocation"
+      ],
+      "kind": "historical_theory_labels"
+    },
+    "T4-T6": {
+      "targets": [
+        "study.dynamic_competence_development"
+      ],
+      "kind": "historical_theory_labels"
+    },
+    "Campaign 1": {
+      "targets": [
+        "study.prospective_adaptation"
+      ],
+      "kind": "historical_alias"
+    },
+    "Campaign 2": {
+      "targets": [
+        "study.prospective_adaptation"
+      ],
+      "kind": "historical_alias"
+    },
+    "Campaign 3": {
+      "targets": [
+        "study.sequential_computation_selection"
+      ],
+      "kind": "historical_alias"
+    },
+    "META-VOC": {
+      "targets": [
+        "study.sequential_computation_selection"
+      ],
+      "kind": "historical_alias"
+    },
+    "CE-02": {
+      "targets": [
+        "study.joint_error_dependence"
+      ],
+      "kind": "historical_alias"
+    },
+    "CE-03": {
+      "targets": [
+        "study.transfer_collective_effect"
+      ],
+      "kind": "historical_alias"
+    },
+    "CE-04": {
+      "targets": [
+        "study.deadline_constrained_collective_allocation"
+      ],
+      "kind": "historical_alias"
+    },
+    "CE-04 causal": {
+      "targets": [
+        "study.competence_information_and_load"
+      ],
+      "kind": "historical_alias"
+    },
+    "CE-06": {
+      "targets": [
+        "study.composition_selection_diagnostics"
+      ],
+      "kind": "historical_alias"
+    },
+    "CE-07": {
+      "targets": [
+        "study.joint_competence_structure"
+      ],
+      "kind": "historical_alias"
+    },
+    "CE-05": {
+      "targets": [],
+      "kind": "strategy_decision_not_a_study",
+      "resolution": "No standalone scientific study entity retained."
+    },
+    "S3b": {
+      "targets": [
+        "study.contextual_capacity_selection"
+      ],
+      "kind": "historical_family_alias",
+      "resolution": "Pointer to the family-level study record only; the label spans non-equivalent algorithms and protocols."
+    },
+    "B2.3": {
+      "targets": [
+        "study.portfolio_learning_interference"
+      ],
+      "kind": "historical_family_alias"
+    },
+    "N×K": {
+      "targets": [],
+      "kind": "unresolved_legacy_identifier",
+      "resolution": "Historical family name not sufficient to identify a unique reusable model."
+    },
+    "M0/M01 CR-CIV": {
+      "targets": [
+        "study.competence_priority_statistic"
+      ],
+      "kind": "historical_alias"
+    },
+    "B1-B5/PACS": {
+      "targets": [
+        "study.portfolio_learning_interference"
+      ],
+      "kind": "historical_family_alias"
+    },
+    "office-home sprint": {
+      "targets": [
+        "study.empirical_vehicle_feasibility"
+      ],
+      "kind": "historical_alias"
+    },
+    "A1 variants": {
+      "targets": [
+        "study.dynamic_model_selection"
+      ],
+      "kind": "historical_family_alias"
+    },
+    "Campaign 0": {
+      "targets": [
+        "study.state_discrimination_gates"
+      ],
+      "kind": "historical_alias"
+    },
+    "Campaign 4": {
+      "targets": [
+        "study.counterfactual_engine_equivalence"
+      ],
+      "kind": "historical_alias"
+    },
+    "N×K / Nembhard": {
+      "targets": [
+        "study.production_learning_integration"
+      ],
+      "kind": "historical_family_alias"
+    },
+    "budgeted LLM routing": {
+      "targets": [
+        "study.budgeted_model_routing"
+      ],
+      "kind": "historical_alias"
+    },
+    "classifier fusion": {
+      "targets": [
+        "study.classifier_fusion_dependence"
+      ],
+      "kind": "historical_alias"
+    },
+    "Q1/Q1-R": {
+      "targets": [
+        "study.persistence_interaction_boundary"
+      ],
+      "kind": "historical_alias"
+    },
+    "S4/S7": {
+      "targets": [
+        "study.finite_service_assignment_solver_checks"
+      ],
+      "kind": "historical_family_alias",
+      "resolution": "Family-level pointer only; solver checks have different service semantics and are not treated as equivalent."
+    },
+    "CE-01": {
+      "targets": [],
+      "kind": "historical_activity_not_promoted",
+      "resolution": "Historical planning/data-assessment activity; no distinct completed study with a retained defensible result is promoted."
+    },
+    "CE-08": {
+      "targets": [],
+      "kind": "unresolved_historical_family",
+      "resolution": "No entity is created; no authorized study is established in source commit."
+    },
+    "B1/B2/B12": {
+      "targets": [
+        "study.published_mechanism_reproductions"
+      ],
+      "kind": "historical_family_alias",
+      "resolution": "A family-level pointer only; individual mechanisms remain distinct and are not represented as equivalent."
+    },
+    "B2.1-B2.5/B3-B5": {
+      "targets": [
+        "study.portfolio_learning_interference"
+      ],
+      "kind": "historical_family_alias",
+      "resolution": "A family-level pointer only; constituent protocols have distinct estimands and compatibility findings."
+    },
+    "PACS": {
+      "targets": [
+        "study.portfolio_learning_interference"
+      ],
+      "kind": "historical_alias"
+    },
+    "MMLU/DCS-LA": {
+      "targets": [
+        "study.dynamic_model_selection"
+      ],
+      "kind": "historical_alias"
+    },
+    "ExperimentRun/HLS-PEF": {
+      "targets": [
+        "study.model_specific_execution_contracts"
+      ],
+      "kind": "historical_alias"
+    },
+    "N×K/Nembhard": {
+      "targets": [
+        "study.production_learning_integration"
+      ],
+      "kind": "historical_alias"
+    },
+    "Sprint0": {
+      "targets": [
+        "study.empirical_vehicle_feasibility"
+      ],
+      "kind": "historical_alias"
+    },
+    "S3a/S3b": {
+      "targets": [
+        "study.contextual_capacity_selection"
+      ],
+      "kind": "historical_family_alias",
+      "resolution": "Pointer to the family-level study record only; constituent studies and estimands remain distinct."
+    },
+    "S1": {
+      "targets": [
+        "study.finite_assignment_comparison"
+      ],
+      "kind": "historical_alias"
+    },
+    "S2a": {
+      "targets": [
+        "study.shared_budget_temporal_optimization"
+      ],
+      "kind": "historical_alias"
+    },
+    "S2b": {
+      "targets": [
+        "study.shared_budget_temporal_optimization"
+      ],
+      "kind": "historical_alias"
+    },
+    "OPV": {
+      "targets": [
+        "study.shared_budget_temporal_optimization"
+      ],
+      "kind": "historical_alias"
+    },
+    "DCS-LA": {
+      "targets": [
+        "study.dynamic_model_selection"
+      ],
+      "kind": "historical_alias"
+    },
+    "MMLU": {
+      "targets": [
+        "scenario.fixed_model_candidate_queries"
+      ],
+      "kind": "historical_benchmark_alias"
+    }
+  }
+}

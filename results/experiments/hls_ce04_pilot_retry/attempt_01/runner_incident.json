@@ -1,8 +1,0 @@
-{
-  "status": "RUNNER_INTERRUPTED_AFTER_FIRST_REPLICA",
-  "scientific_validation": "The first replica completed and passed validate_replica.",
-  "cause": "The metrics CSV writer received RunConfig fields not included in its declared columns.",
-  "effect": "The first ExperimentRun had been appended; no 108-replica attempt was completed.",
-  "simulator_or_protocol_defect": false,
-  "action": "Preserved the partial artifact and restarted the 108-replica pilot in a separate attempt directory with corrected CSV field selection."
-}
