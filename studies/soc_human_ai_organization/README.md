@@ -7,7 +7,7 @@
 
 ## Purpose
 
-Prepare an independent application study of how heterogeneous cyberanalyst competencies are organized, used and potentially developed, with and without AI assistance. The intended long-term use is quantitative decision support for workforce organization under workload, time, resource and cost constraints. Sophistication is not presumed to improve outcomes.
+Prepare an independent application study of how heterogeneous cyberanalyst competencies are organized, used and potentially developed, with and without AI assistance. The intended long-term use is quantitative decision support for workforce organization under workload, time, resource and cost constraints. Sophistication is not presumed to improve outcomes. The study does not aim to reconstruct GMV-CERT's real organization, historical assignments or analyst careers; aggregate SOCTRA data anchor problem scale and structure only.
 
 The first research dimension is **competence heterogeneity**: its characterization, utilization, development, adaptation, benefits, costs and limitations. Experience is not a competence measure; learning is not assumed to improve performance. Individual competence, individual attainable capability, collective attainable capability and realized collective performance remain separate quantities.
 
@@ -25,7 +25,9 @@ No hypothesis, estimand, policy ranking or experiment has been frozen.
 
 ## Testbed boundary
 
-The proposed scenario distinguishes L1 initial alert triage (whether to escalate and whether to report) from L2 deeper investigation of alerts requiring further analysis. These process labels and decisions come from the project instruction; they are not verified procedures of a particular client. See [scenario and model boundary](MODEL_AND_SCENARIO.md).
+The proposed scenario distinguishes L1 initial alert triage (whether to escalate and whether to report) from L2 deeper investigation of alerts requiring further analysis. These process labels and decisions come from the project instruction; they are not verified procedures of a particular client. The study-level rationale, empirical boundary and provisional competence-matrix hypothesis are in the [scientific synthesis](MODEL_AND_SCENARIO.md).
+
+An aggregate-only characterization of the local alert snapshots proposes an empirical demand trace. It finds project concentration and substantial arrival variability, but does not identify staffing, service times or released analyst-hours. The PI authorized these aggregate study documents for this repository; this does not clear source data or establish permission for manuscript reuse. See [demand characterization and sizing proposal](DEMAND_CHARACTERIZATION.md).
 
 ## Relationship to HLS core
 
@@ -35,15 +37,18 @@ Potentially reusable HLS components are listed in [evidence and transfer candida
 
 ## Editorial target and AIAI 2026 relationship
 
-The Special Issue flyer welcomes expanded AIAI/EAAAI 2026 papers and specifies a minimum 50% increase for such expanded versions. The project instruction intends to extend an AIAI 2026 article, but **the specific article (title, author list, DOI/version and full text) was not identifiable in the accessible HLS core or historical archive**. Therefore eligibility, overlap and contribution differences are unresolved. The proposed extension dimensions—workforce organization, task assignment, competence development and training opportunity costs, changing clients/threats, and human–AI assistance—are intended comparison axes, not established novelty claims. See [literature and publication fit](LITERATURE.md) and the [manuscript outline](MANUSCRIPT_OUTLINE.md).
+The Special Issue flyer welcomes expanded AIAI/EAAAI 2026 papers and specifies a minimum 50% increase for such expanded versions. The published baseline is Lázaro et al., Springer AIAI 2026 chapter, DOI [10.1007/978-3-032-30805-4_11](https://doi.org/10.1007/978-3-032-30805-4_11). The [source analysis](AIAI_2026_ANALYSIS.md) separates the published L1 classifier, LSEnsemble as a distinct classification method, SOCTRA's demonstrated reduction in triage burden, and the proposed HLS organizational study. Neither classifier is an organizational policy. The amount of analyst time/capacity released is not quantified in the reviewed sources, so a simulation's release value must remain explicitly hypothetical unless measured. The candidate HLS contribution is how available capacity is organized and invested, including training costs, displaced work, service constraints and performance trade-offs—not another classifier.
 
 The task order received on 2026-10-27 authorizes this preparatory documentation, a tracking issue and a review PR. It does not authorize experiments, model implementation or a manuscript with results. Historical governance records do not identify a named PI; no identity is inferred here. Scientific decisions beyond this bounded preparation remain for PI review.
 
 ## Project files
 
+- [AIAI/SOCTRA source inventory and critical analysis](AIAI_2026_ANALYSIS.md)
 - [Literature, AIAI comparison and editorial requirements](LITERATURE.md)
-- [Scenario, model constructs and organization candidates](MODEL_AND_SCENARIO.md)
+- [Scientific synthesis: study question, evidence boundary and model hypothesis](MODEL_AND_SCENARIO.md)
 - [Protocol readiness and reproducibility](PROTOCOL_AND_REPRODUCIBILITY.md)
+- [Demand characterization and HLS sizing proposal](DEMAND_CHARACTERIZATION.md)
+- [Analyst identifier, experience and workload audit](ANALYST_EXPERIENCE_AUDIT.md)
 - [Evidence, limits and core-transfer candidates](EVIDENCE.md)
 - [Decision and research chronology](HISTORY.md)
 - [Future manuscript outline](MANUSCRIPT_OUTLINE.md)

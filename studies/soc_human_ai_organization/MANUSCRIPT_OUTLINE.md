@@ -5,7 +5,7 @@ This is a topic outline, not an approved claim or manuscript draft. Results sect
 
 1. **Title, authors and affiliations** — complete only after contribution and authorship review.
 2. **Abstract and keywords** — question, setting, method, principal results and limitations; write after evidence exists.
-3. **Introduction** — SOC decision problem, why competence distribution and organization matter, precise gap and contribution relative to prior SOC work and the exact AIAI 2026 paper.
+3. **Introduction** — SOC decision problem, why competence distribution and organization matter, precise gap and contribution relative to prior SOC work, the published AIAI 2026 L1-classification chapter, and the internal triage-manuscript snapshot; resolve overlap and editorial status before choosing a publication route.
 4. **Related work** — SOC analyst workflow/alert evidence; multi-skill allocation; competence measurement; learning/training and transfer; human–AI assistance; costs and workforce outcomes.
 5. **Scenario and data** — validated L1/L2 process, client/threat/task population, data provenance, privacy/ethics and inclusion criteria.
 6. **Model and hypotheses** — competence vs experience, organizational structures and policies, training/AI interventions, available information, constraints, candidate mechanisms and falsifiable hypotheses.
@@ -15,4 +15,4 @@ This is a topic outline, not an approved claim or manuscript draft. Results sect
 10. **Conclusions** — only claims supported by retained evidence.
 11. **Back matter** — supplementary materials; CRediT author contributions; funding; Data Availability Statement; acknowledgements; conflicts; ethics statements; references. Include software/code/model versions and any required disclosure of generative-AI use beyond superficial language editing.
 
-The Special Issue's expanded-conference-paper requirement makes a documented section-level and result-level delta against the AIAI article essential. That comparison cannot be completed until the article is identified. *Electronics* currently requires reproducible methodological detail and a Data Availability Statement; restricted SOC data must be described with the specific legal/privacy basis and an appropriate access statement. See [editorial requirements](LITERATURE.md#requirements-to-carry-into-any-submission).
+The Special Issue requires a substantive expansion of the AIAI chapter. A preliminary source comparison is in [AIAI_2026_ANALYSIS.md](AIAI_2026_ANALYSIS.md); a formal section/table/figure/result overlap map, author clearance and current status of the separate internal journal manuscript remain necessary. *Electronics* currently requires reproducible methodological detail and a Data Availability Statement; restricted SOC data must be described with the specific legal/privacy basis and an appropriate access statement. See [editorial requirements](LITERATURE.md#requirements-to-carry-into-any-submission).

@@ -2,9 +2,9 @@
 
 ## Project evidence state
 
-There are currently **no SOC/AIAI project experiments, observations, datasets, model outputs or results**. The testbed is proposed, not validated. Literature about other SOCs is contextual external evidence and must not be represented as evidence about the intended client.
+This HLS application project has **no experiments, data collection, organizational outcomes or validated results of its own**. It now records (i) the public AIAI 2026 classifier results, (ii) separate internal SOCTRA LSE experiments and operational descriptions, and (iii) HLS hypotheses. These categories are not interchangeable. The testbed is proposed, not validated.
 
-The historical archive audit at `feature/hls-laboratory-v1`, commit `c81def3b5280b0f59d6dcbfd3e25df8805f5013c`, reports that SOCTRA's schema was not verified for analyst-level competence, alert routes, analyst service times or training history. The same audit warns that mapping HLS agents/tasks/capabilities to analysts/alerts is an inference, not validation. No AIAI 2026 organizational-learning result was identifiable in the accessible HLS record. These are provenance limits, not claims that such data/results do not exist elsewhere.
+The historical archive audit at `feature/hls-laboratory-v1`, commit `c81def3b5280b0f59d6dcbfd3e25df8805f5013c`, reports that SOCTRA's schema was not verified for analyst-level competence, alert routes, analyst service times or training history. The same audit warns that mapping HLS agents/tasks/capabilities to analysts/alerts is an inference, not validation. Per PI clarification, SOCTRA demonstrated reduced operational triage burden from AI-assisted triage; this is distinct from a measured quantity of analyst time/capacity released. The reviewed sources do not quantify before/after analyst minutes, queue burden, staffing requirement or released capacity. A classifier metric or reduced false-alarm rate is not by itself a labor-time estimate. The public AIAI chapter contains classifier evaluation, not organizational-learning evidence. Internal SOCTRA artifacts include additional LSE classifier results and workflow context; their exact table-producing configuration and permission for release/reuse are unresolved. Any numerical capacity-release value used in a future simulation is hypothetical unless independently measured and documented.
 
 ## HLS components that may inform this application
 
@@ -24,3 +24,8 @@ No core organizational policy, AI mechanism, training estimator or SOC implement
 ## Evidence status labels for future entries
 
 When results arise, classify each as literature context, hypothesis, formal result, exact computation, simulation, exploratory/confirmatory empirical observation, technical validation, negative, null, ambiguous or inconclusive. Keep execution status separate from scientific outcome. Link all claims to protocol/configuration/data/code and retain adverse findings. Do not count historical CE-06 reanalysis as independent replication of CE-04.
+
+
+## AIAI/SOCTRA evidence boundary
+
+See [AIAI_2026_ANALYSIS.md](AIAI_2026_ANALYSIS.md) for the published article results, internal LSE results, operational source inventory, version differences and restrictions. Keep three levels separate: (1) classification methods and predictive performance; (2) the SOCTRA-demonstrated reduction in triage burden, distinct from a quantitative analyst-time/capacity estimate, which is unavailable in the reviewed sources; and (3) organizational policies for using capacity released in practice or assumed in simulation. The third level is the proposed HLS contribution; costs, service constraints and performance trade-offs must be explicit.

@@ -10,7 +10,7 @@ Protocol development has **not** begun beyond this preparation checklist. No sim
 2. Define L1/L2 task instances, decision order, labels, escalation/report consequences, ground truth and adjudication.
 3. Decide the population and unit of analysis: analysts, alerts, incidents, client-periods or another defensible unit; account for repeated observations and clustering.
 4. Operationalize competence with validated measures or outcome-linked estimates; track experience separately. Specify uncertainty, label noise and calibration.
-5. Specify workload, service time, availability, shifts, queues, deadlines/SLA, capacity, interruptions, handoffs and resource units.
+5. Specify workload, service time, availability, shifts, queues, deadlines/SLA, capacity, interruptions, handoffs and resource units. Record SOCTRA's demonstrated triage-burden reduction separately from any numerical time/capacity release used in a simulation; unless measured, the simulation value is an assumption and requires sensitivity analysis.
 6. Define training intervention, mentor involvement, time/cash cost, displaced work, expected persistence, transfer and a suitable no-training or alternative-training comparator.
 7. Define AI assistance: system/version, information access, recommendations, human authority, reliance/override, failure modes, exposure and cost.
 8. Separate fixed organization, assignment policy, training and AI effects before testing interactions; choose strong current-practice and literature-based comparators.
@@ -21,7 +21,7 @@ Protocol development has **not** begun beyond this preparation checklist. No sim
 
 If the PI later approves scientific execution, a defensible sequence could first characterize task/competence distributions and operational constraints; then test assignment under matched workload without training/AI changes; then evaluate a training intervention with opportunity cost; and only after isolated effects are understood test interactions with AI assistance or context shifts. This ordering is a methodological suggestion, not an authorized campaign or a frozen design. Real data, simulation, replay or controlled human study must be selected based on evidence and feasibility.
 
-Potential baselines include documented current practice, a strong fixed assignment rule, a dynamic rule under the same information constraints, and simple non-AI/AI-assisted alternatives. An oracle using future truth or latent competence is an unattainable upper reference, not an implementable policy. No baseline is selected here.
+Potential baselines include documented current practice, a strong fixed assignment rule, a dynamic rule under the same information constraints, and simple non-AI/AI-assisted alternatives. An oracle using future truth or latent competence is an unattainable upper reference, not an implementable policy. No baseline is selected here. A classifier’s improved false-alarm/detection metric cannot be directly converted into analyst-hours saved without a validated operational measurement model.
 
 ## Reproducibility and evidence records
 
