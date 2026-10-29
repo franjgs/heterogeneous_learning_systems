@@ -55,3 +55,15 @@ Record date: 2026-10-27, verified from the current work session. The final commi
 The research programme designated a simplified Security Operations Center as its first application testbed, with initial alert triage (L1) and deeper alert analysis (L2) represented as distinct processes. The first research dimension is competence heterogeneity: characterization, utilization, development, adaptation, benefits, costs and limitations. This records a research direction and scenario sketch only. No experiment, algorithm, client-specific workflow, competence dataset, or operational claim was approved or established. Existing synthetic HLS results are linked as conceptual precedents, not as SOC validation. The accessible historical material does not verify SOCTRA fields or provide an AIAI 2026 result demonstrating organizational-learning benefits.
 
 Evidence references: this dated research instruction; active catalog entities `scenario.soc_alert_operations` and `study.soc_competence_heterogeneity_testbed`; literature sources [@kersten2025tier1] and [@yang2024socalerts] describe other specific SOC studies and do not validate the proposed client testbed.
+
+## 2026-10-29 — deterministic sequential allocation benchmark implemented
+
+HLS-01's first bounded implementation adds a finite deterministic task-sequence model with fixed effectiveness, integer agent capacities, explicit rejection, a predeclared fixed mapping, a greedy online policy, and an exact offline enumeration oracle. Deterministic controls recover the retained static-allocation values under non-binding capacity and include a constructed case where greedy is below the offline optimum. This consolidates known static controls and validates behavior in small fixtures; it is not a new general theory, empirical finding, CE-04 reproduction, or stochastic campaign.
+
+Evidence references: `src/hls/sequential_allocation.py`, `tests/test_sequential_allocation.py`, `studies/sequential_task_allocation.py`, and the HLS-01 entry in `docs/RESEARCH.md`.
+
+## 2026-10-29 — temporal FCFS allocation controls implemented
+
+The next bounded study increment added deterministic temporal arrivals, recoverable single-server FCFS capacity and three matched routing rules. Six constructed controls show scenario-dependent trade-offs: workload-aware routing reduces response in concentrated-load cases, sometimes at lower deterministic effectiveness, while it makes no difference in separated and balanced-burst fixtures. These results are not SOCTRA measurements. A taskwise maximum-effectiveness rule's total-effectiveness upper-bound property follows pointwise under the explicit all-tasks-complete assumptions and is recorded as a scoped standard result, not a new discovery.
+
+Evidence references: `src/hls/temporal_allocation.py`, `tests/test_temporal_allocation.py`, `studies/temporal_task_allocation.py`, and the HLS-02 entry in `docs/RESEARCH.md`.

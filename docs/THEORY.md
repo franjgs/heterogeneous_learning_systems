@@ -108,6 +108,12 @@ This follows by choosing the better same-agent endpoint versus the independently
 
 The resource-constrained extension uses points \(z_{ab}=(R_{ab},Y_{ab})\) and convex time-sharing hulls for ONE and ROUTE. On their common feasible budget domain, class inclusion implies \(Y^*_{ROUTE}\ge Y^*_{ONE}\). This is an exact optimization property under the declared convexified feasible sets, not a novel general theorem. In a finite control with p=.5, the positive-gain budget region is (.25,.65), maximum gain .0625 at B=.40; another control has geometric area but zero efficient gain. Thus set expansion/area does not by itself imply value.
 
+### Deterministic temporal allocation: taskwise effectiveness upper bound
+
+In the active temporal FCFS model, let a finite sequence contain tasks \(k_1,\ldots,k_M\), let every task eventually complete, let all agents be eligible, and let each assigned task contribute fixed \(e_{i,k}\), unaffected by queue position or completion time. Then the policy choosing \(i_n\in\arg\max_i e_{i,k_n}\) at each arrival maximizes total effectiveness \(\sum_{n=1}^M e_{i_n,k_n}\) among all assignments. For any alternative assignment \(j_n\), each term satisfies \(e_{j_n,k_n}\leq\max_i e_{i,k_n}\); summing gives the result. This is separable pointwise maximization, not an empirical discovery or a novel theorem.
+
+The statement concerns effectiveness only. It does not imply minimum waiting, response time, makespan, or maximum throughput. A load-aware policy may obtain shorter queues or responses by assigning some tasks to lower-effectiveness agents. The result would cease to apply if tasks could remain unfinished at evaluation, agents had task-specific ineligibility, effectiveness changed with time/load, or completion altered the task contribution. The implementation and deterministic controls are recorded under `study.temporal_task_allocation_policy_comparison` in the catalog and in `docs/RESEARCH.md`.
+
 ## 5. Action-dependent state change and future development value
 
 The minimal endogenous dynamic boundary is an action-dependent state transition:
