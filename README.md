@@ -46,9 +46,10 @@ python studies/sequential_task_allocation.py
 python studies/temporal_task_allocation.py
 python studies/temporal_task_allocation.py --sensitivity
 python studies/temporal_task_allocation.py --focused-organizations
+python studies/soctra_demand_experiment.py --soctra-csv /path/to/authorized/dataset_20250919.csv --adaptive-organizational-strategies
 ~~~
 
-The study commands run small deterministic constructions, not historical campaigns. The sequential runner compares fixed, greedy online and exact offline allocation under non-replenishing capacity. The temporal runner compares fixed, effectiveness-only and effectiveness/load routing with one recoverable FCFS server per agent; its six fixtures, sensitivity grid and focused organization controls are hypothetical and are not SOCTRA outcomes. Neither runner reproduces CE-04. The catalog validator checks identifiers, typed relations, bibliography keys, statuses and local references; it does not validate scientific truth or prove semantic compatibility.
+The study commands run small deterministic constructions, not historical campaigns. The sequential runner compares fixed, greedy online and exact offline allocation under non-replenishing capacity. The temporal runner compares fixed, effectiveness-only and effectiveness/load routing with one recoverable FCFS server per agent; its six fixtures, sensitivity grid and focused organization controls are hypothetical and are not SOCTRA outcomes. The restricted-data replay commands require an authorized local SOCTRA snapshot and do not copy it into the repository. The S0-S4 organizational comparison uses alert records only as qualitative relative timing/class-pattern proxies; teams, service and effectiveness remain hypothetical. Neither runner reproduces CE-04. The catalog validator checks identifiers, typed relations, bibliography keys, statuses and local references; it does not validate scientific truth or prove semantic compatibility.
 
 ## Starting research
 

@@ -5,12 +5,92 @@ import pytest
 from hls.sequential_allocation import run_fixed_policy, run_greedy_online_policy
 from hls.static_assignment import StaticAllocationModel
 from hls.temporal_allocation import (
+    AdaptiveThresholds,
+    _adaptive_state_metrics,
+    _next_adaptive_state,
+    run_adaptive_temporal_policy,
     run_effectiveness_load_temporal_policy,
     run_fixed_temporal_policy,
     run_max_effectiveness_temporal_policy,
     run_lowest_workload_temporal_policy,
     run_specialist_backup_temporal_policy,
 )
+
+
+def test_s4_normalized_congestion_and_imbalance_metrics():
+    assert _adaptive_state_metrics((0.0, 0.0, 0.0, 0.0), 2.0) == (0.0, 0.0)
+    congestion, imbalance = _adaptive_state_metrics((2.0, 2.0, 2.0, 2.0), 2.0)
+    assert congestion == 1.0
+    assert imbalance == 0.0
+    congestion, imbalance = _adaptive_state_metrics((8.0, 0.0, 0.0, 0.0), 2.0)
+    assert congestion == 1.0
+    assert imbalance == 1.0
+
+
+def test_s4_hysteresis_state_transitions_and_threshold_boundaries():
+    thresholds = AdaptiveThresholds()
+    assert _next_adaptive_state("SPECIALIZATION", 0.0, 0.0, thresholds) == "SPECIALIZATION"
+    assert _next_adaptive_state("SPECIALIZATION", 0.25, 0.0, thresholds) == "BALANCED"
+    assert _next_adaptive_state("SPECIALIZATION", 0.0, 0.35, thresholds) == "BALANCED"
+    assert _next_adaptive_state("BALANCED", 1.0, 0.0, thresholds) == "LOAD_DISTRIBUTION"
+    assert _next_adaptive_state("LOAD_DISTRIBUTION", 0.75, 1.0, thresholds) == "LOAD_DISTRIBUTION"
+    assert _next_adaptive_state("LOAD_DISTRIBUTION", 0.749, 1.0, thresholds) == "BALANCED"
+    assert _next_adaptive_state("BALANCED", 0.149, 0.249, thresholds) == "SPECIALIZATION"
+    assert _next_adaptive_state("BALANCED", 0.15, 0.0, thresholds) == "BALANCED"
+
+
+def test_s4_uses_only_prefix_information_and_is_reproducible():
+    matrix, service = ((0.9, 0.2), (0.2, 0.9)), (1.0, 1.0)
+    prefix = ((0.0, 0), (0.0, 1), (0.2, 0))
+    left = run_adaptive_temporal_policy(prefix + ((0.3, 1),), matrix, service, 2.0)
+    right = run_adaptive_temporal_policy(prefix + ((0.7, 0), (0.9, 1)), matrix, service, 2.0)
+    assert left.allocation.decisions[:len(prefix)] == right.allocation.decisions[:len(prefix)]
+    assert left == run_adaptive_temporal_policy(prefix + ((0.3, 1),), matrix, service, 2.0)
+    assert sum(count for _, count in left.diagnostics.strategy_decision_counts) == 4
+    assert sum(sum(counts) for _, counts in left.diagnostics.state_counts_by_time_quartile) == 4
+
+
+def test_s4_state_to_strategy_mapping_matches_unchanged_policies():
+    arrivals = ((0.0, 0), (1.1, 0), (2.2, 0), (3.3, 0))
+    matrix, service = ((0.9,), (0.7,), (0.6,), (0.5,)), (1.0,)
+    specialization = run_adaptive_temporal_policy(
+        arrivals, matrix, service, 5.0,
+        AdaptiveThresholds(100.0, 200.0, 150.0, 50.0, 1.0, 0.5),
+    )
+    s1 = run_max_effectiveness_temporal_policy(arrivals, matrix, service, 5.0)
+    assert specialization.allocation.decisions == s1.decisions
+    assert specialization.diagnostics.strategy_decision_counts == (("S1", 4), ("S2", 0), ("S0", 0))
+
+    balanced = run_adaptive_temporal_policy(
+        ((0.0, 0),) * 4, matrix, service, 2.0,
+        AdaptiveThresholds(0.0, 200.0, 150.0, 0.0, 0.0, 0.0),
+    )
+    s2 = run_effectiveness_load_temporal_policy(((0.0, 0),) * 4, matrix, service, 2.0)
+    assert balanced.allocation.decisions == s2.decisions
+    assert balanced.diagnostics.strategy_decision_counts == (("S1", 0), ("S2", 4), ("S0", 0))
+
+    burst = ((0.0, 0),) * 4
+    load_controller = run_adaptive_temporal_policy(
+        burst, matrix, service, 2.0,
+        AdaptiveThresholds(0.0, 0.10, 0.05, 0.0, 0.0, 0.0),
+    )
+    s0 = run_lowest_workload_temporal_policy(burst, matrix, service, 2.0)
+    assert load_controller.allocation.decisions[1:] == s0.decisions[1:]
+    assert load_controller.diagnostics.strategy_decision_counts == (("S1", 0), ("S2", 1), ("S0", 3))
+
+
+def test_s4_requires_two_agents_for_normalized_imbalance():
+    with pytest.raises(ValueError, match="at least two agents"):
+        run_adaptive_temporal_policy(((0.0, 0),), ((0.8,),), (1.0,), 1.0)
+
+
+@pytest.mark.parametrize("thresholds", [
+    AdaptiveThresholds(0.8, 0.7, 0.6, 0.1, 0.5, 0.2),
+    AdaptiveThresholds(0.2, 1.0, 0.9, 0.1, 0.2, 0.3),
+])
+def test_s4_rejects_inconsistent_hysteresis_thresholds(thresholds):
+    with pytest.raises(ValueError):
+        run_adaptive_temporal_policy(((0.0, 0),), ((0.8,), (0.5,)), (1.0,), 1.0, thresholds)
 from studies.temporal_task_allocation import (
     FOCUSED_ORGANIZATIONS,
     SENSITIVITY_AGENT_COUNTS,

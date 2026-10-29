@@ -351,6 +351,48 @@ These are deterministic scenario outputs conditioned on alert-row proxies, outco
 
 **Reproduction:** `PYTHONPATH=src python studies/soctra_demand_experiment.py --soctra-csv /path/to/authorized/dataset_20250919.csv --organizational-strategies`. This runs 192 matched S0–S3 evaluations (4 windows × 4 organizations × 3 offered loads × 4 rules) plus 32 S3 sensitivity evaluations. The restricted CSV and row-level traces are not in Git; exact replay requires authorized access to the same snapshot. HLS-01 and the historical P0/P1/P2 replay are retained unchanged. This remains exploratory deterministic evidence, not a confirmatory inference or theoretical contribution.
 
+#### Adaptive state-based organization S4
+
+HLS-03 adds a deterministic adaptive controller to the same S0–S3 study. It is organizational switching, not learning: competencies/effectiveness, service requirements and team membership remain fixed. S4 computes only from observable predecision work `W_i(t)=max(0, queue_tail_i−t)`, total `W=Σ_i W_i`, concentration `B=max_i W_i/W` when `W>0` (otherwise 0), normalized imbalance `I=(N B−1)/(N−1)` when `W>0` (otherwise 0), and congestion `C=W/(N s_ref)`. Here `s_ref` is the arithmetic mean of the fixed class service-time vector, so `C` is a dimensionless average-backlog-to-reference-service ratio; it is not offered load or utilization.
+
+Initial state is SPECIALIZATION. Before each decision, `SPECIALIZATION` switches to `LOAD_DISTRIBUTION` if `C≥1`, otherwise to `BALANCED` if `C≥.25` or `I≥.35`; `BALANCED` switches to `LOAD_DISTRIBUTION` at `C≥1`, or returns to `SPECIALIZATION` only if `C<.15` and `I<.25`; `LOAD_DISTRIBUTION` returns to `BALANCED` only if `C<.75`. The selected unchanged rule is respectively S1 maximum effectiveness, S2 effectiveness/load ratio, or S0 minimum workload. Original S0–S3 formulas are untouched. All ties remain lowest-agent-index. These thresholds are an explicit, interpretable initial controller setting (quarter-reference intermediate backlog, one-reference high backlog, and separate exit bands), not values inferred or optimized from SOCTRA.
+
+The same four outcome-blind 28-day alert-proxy windows, four hypothetical organization matrices, and offered loads `.50/.90/1.20` were used. S4 sensitivity at `.90` used two predeclared threshold sets: lower `C_bal=.20, C_load=.80, C_load_exit=.60, C_spec_exit=.12, I_bal=.28, I_spec_exit=.20`; higher `.30, 1.20, .90, .18, .42, .30`. A no-hysteresis ablation equated entry and exit boundaries. The replay comprised 240 main runs (4 windows × 4 organizations × 3 loads × 5 policies), 32 threshold-sensitivity runs and 16 no-hysteresis runs. All policies shared exact arrivals, class order, matrix, service vector and horizon. Only aggregate state/strategy counts, four time-quartile counts and switch-time C/I summaries are retained; no alert-level S4 trace or source identifiers are written.
+
+At each load, values below are arithmetic means over the 16 matched window-by-organization cells. Effectiveness is mean over all assignments; completed is the fraction completed by `H`; response includes every assigned task, including post-horizon completion. They are deterministic conditional summaries, not statistical estimates.
+
+| ρ | Policy | Mean effectiveness | Mean response | Mean P95 response | Completed fraction | Mean completed-task effectiveness |
+|---:|---|---:|---:|---:|---:|---:|
+| .50 | S0 | .6112 | .00154 | .00709 | .9912 | .6113 |
+| .50 | S1 | .7875 | .27635 | .55851 | .7191 | .7875 |
+| .50 | S2 | .6876 | .00158 | .00694 | .9911 | .6874 |
+| .50 | S3 | .7116 | .00999 | .05324 | .9805 | .7102 |
+| .50 | S4 | .6613 | .00158 | .00712 | .9911 | .6619 |
+| .90 | S0 | .6021 | .02606 | .07401 | .9611 | .6021 |
+| .90 | S1 | .7875 | .77814 | 1.61120 | .5021 | .7875 |
+| .90 | S2 | .6800 | .02624 | .07515 | .9611 | .6795 |
+| .90 | S3 | .7203 | .17023 | .61795 | .8120 | .7037 |
+| .90 | S4 | .6127 | .02611 | .07407 | .9611 | .6137 |
+| 1.20 | S0 | .6004 | .12910 | .25006 | .8111 | .6006 |
+| 1.20 | S1 | .7875 | 1.17984 | 2.43477 | .4024 | .7875 |
+| 1.20 | S2 | .6890 | .13009 | .27930 | .8110 | .6847 |
+| 1.20 | S3 | .7345 | .40932 | 1.30927 | .6665 | .7059 |
+| 1.20 | S4 | .6023 | .12919 | .25014 | .8110 | .6029 |
+
+At `ρ=.90`, S4 used S0 for 85.9% of decisions, S2 for 12.4%, and S1 for 1.7%; thus the selected setting behaved predominantly as load distribution. Across the 16 cells its mean effectiveness exceeded S0 by .0106 with response higher by only .000057 normalized units, while it trailed S2 by .0674 effectiveness with virtually equal mean response (S4 was faster in 12 cells, slower in 2, tied in 2). It was faster than S1 and S3 in all 16 cells but with lower mean effectiveness. At `ρ=.50` the S4–S0 quality difference was +.0501; at `ρ=1.20` it was only +.0019. S4 therefore presents a small quality/response trade-off against S0 and does not jointly improve all metrics over S1–S3. The response P95 follows the same broad result: S4 is near S0/S2 and far below S1/S3 in these scenarios.
+
+At `.90`, pooled mean assignments by agent index were S0 `(1432.5,1378.0,1331.0,1282.8)` and S4 `(1424.1,1385.6,1327.4,1287.3)`; mean utilization vectors were S0 `(.914,.879,.849,.818)` and S4 `(.909,.883,.847,.822)`. S4 thus remained nearly as balanced as S0. By comparison, S1 assigned `(3897.3,1029.0,276.8,221.2)` tasks on average, with utilization `(.965,.493,.196,.154)`; S3 was intermediate at `(2385.7,1344.6,929.4,764.6)`, utilization `(.966,.821,.623,.514)`. These averages pool different window volumes and are descriptive; labels are anonymous index positions, not named analysts. At S4, mean per-agent pending counts were `(61.25,61.31,61.06,61.00)` versus `(2441.62,288.25,.25,.62)` for S1; remaining-work vectors were `(.035,.035,.035,.035)` and `(1.605,.186,0,0)`, respectively.
+
+At `.90`, S4 switched states 198.7 times on average across the 16 cells; window means were 171.5 usual, 417.0 peak, 120.3 mix-shift and 86.0 post-shift. Peak windows therefore induced more controller switching, but the high S0 decision fraction means this was not a sustained return to specialization. Sensitivity changed little in overall outcomes: relative to main thresholds, lower thresholds changed mean effectiveness by `−.00069`, mean response by `+0.000000075`, and averaged 217.6 switches; higher thresholds changed these by `+.00046`, `+.00000219`, and averaged 188.3 switches. No-hysteresis averaged 227.0 switches (14.1% more than the main controller), while mean effectiveness changed `+.00016`, response `+.00000164`, P95 `+.00000496`, and completion fraction did not change at displayed precision. Hysteresis reduced state changes in this diagnostic without a material aggregate performance difference; it has not been established to improve outcomes generally.
+
+The pooled fraction of decisions in `(SPECIALIZATION / BALANCED / LOAD_DISTRIBUTION)` by successive arrival-time quartile was: usual `(.007/.064/.929; .002/.020/.978; .007/.083/.910; .042/.185/.773)`; peak `(.080/.515/.405; .052/.361/.587; .028/.329/.643; 0/0/1)`; mix shift `(.001/.023/.975; 0/0/1; .024/.094/.882; .035/.303/.662)`; post-shift `(.026/.176/.798; .003/.021/.976; 0/0/1; .022/.145/.833)`. These are decision-time bins, not equal alert counts; the controller often reached the high-load state early and remained there for much of each normalized trace. Thus observed temporal mix change did not lead to sustained specialization under these thresholds.
+
+**Interpretation.** The large S1–S4 latency difference mainly reflects avoiding the index-tie concentration under homogeneous and partial profiles, and avoiding strict-dominance concentration under the dominant profile. The exact demand windows and their peaks modulate how often states switch, but do not validate that alerts are human tasks. S4’s small advantage over S0 in modeled quality comes from its brief S1/S2 assignments; once C crosses the high threshold it behaves as S0. It did not outperform S3 on both quality and response, and S2 was typically at least as fast while more effective. Threshold perturbations around this chosen design did not change the overall pattern, but are not an independent evaluation or a tuning-free robustness proof. No real analyst competence, actual service time, staffing, client event or SOC operational benefit is identified.
+
+**Evidence/status:** 240 primary plus 48 sensitivity/ablation deterministic evaluations were replayed from the restricted local snapshot on 2026-10-29. The adapter and rules are retained in `studies/soctra_demand_experiment.py` and `src/hls/temporal_allocation.py`, with tests in `tests/test_soctra_demand_experiment.py` and `tests/test_temporal_allocation.py`. The CSV remains outside Git, so exact reproduction requires authorized local access. The experiment is exploratory and conditional; S4 is implemented and tested, not established as an optimal or generally preferable strategy.
+
+**Reproduction:** `PYTHONPATH=src python studies/soctra_demand_experiment.py --soctra-csv /path/to/authorized/dataset_20250919.csv --adaptive-organizational-strategies`.
+
 ### Dynamic competence-state change and future value
 
 - **Stable ID:** `study.dynamic_competence_development`; **historical aliases:** G2, two-period control cases.

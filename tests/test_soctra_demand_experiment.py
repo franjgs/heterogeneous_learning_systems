@@ -12,6 +12,8 @@ from studies.soctra_demand_experiment import (
     _service_times,
     _row,
     format_organizational_report,
+    format_adaptive_organizational_report,
+    run_adaptive_organizational_comparison,
     run_organizational_strategy_comparison,
     load_soctra_demand,
 )
@@ -255,6 +257,37 @@ def test_s0_s1_s2_s3_comparison_is_paired_and_reproducible(tmp_path):
     assert result["load_sensitivity"] == run_organizational_strategy_comparison(path)["load_sensitivity"]
     report = format_organizational_report(result)
     assert "S0-S3" in report and "θ=0.5" in report and "θ=2.0" in report
+    assert "p-0" not in report and "id-" not in report
+
+
+def test_s0_s4_comparison_pairs_inputs_reports_aggregate_adaptation_and_repeats(tmp_path):
+    path = tmp_path / "small-window.csv"
+    rows = []
+    first = datetime(2024, 1, 1)
+    for day in range(84):
+        for event in range(2 if day % 7 == 0 else 1):
+            rows.append({
+                "id_alerta": f"id-{day}-{event}",
+                "@timestamp0": (first + timedelta(days=day, hours=event)).strftime("%Y-%m-%d %H:%M:%S"),
+                "proyecto": f"p-{(day // 14 + event) % 3}",
+            })
+    _write_csv(path, rows)
+    result = run_adaptive_organizational_comparison(path)
+    assert len(result["primary_rows"]) == 4 * 4 * 3 * 5
+    assert len(result["diagnostics"]) == 4 * 4 * 3
+    assert len(result["sensitivity_rows"]) == 4 * 4 * 2
+    assert len(result["no_hysteresis_rows"]) == 4 * 4
+    for window in ("usual_28d", "peak_28d", "mix_shift_28d", "post_mix_shift_28d"):
+        for profile in ("homogeneous", "specialized", "partially_polyvalent", "dominant_worker"):
+            cell = [r for r in result["primary_rows"] if r["trace"] == window and r["organization"] == profile and r["offered_load"] == 0.9]
+            assert {r["policy"] for r in cell} == {"S0", "S1", "S2", "S3", "S4"}
+            assert len({r["tasks"] for r in cell}) == 1
+            assert len({r["service_profile"] for r in cell}) == 1
+            assert all(r["tasks"] == r["completed_tasks"] + r["pending_tasks_count"] for r in cell)
+            assert all(0 <= r["effectiveness_mean"] <= 1 for r in cell)
+    assert result == run_adaptive_organizational_comparison(path)
+    report = format_adaptive_organizational_report(result)
+    assert "HLS-03" in report and "no hysteresis" in report.lower()
     assert "p-0" not in report and "id-" not in report
 
 

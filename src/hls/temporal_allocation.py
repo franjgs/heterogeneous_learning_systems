@@ -6,6 +6,7 @@ unbounded queue; service capacity becomes available again at completion.
 """
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import dataclass
 from math import ceil, fsum, isfinite
 from typing import Sequence
@@ -63,6 +64,133 @@ class TemporalAllocationResult:
     @property
     def pending_task_count(self) -> int:
         return sum(self.pending_task_count_by_agent)
+
+
+@dataclass(frozen=True)
+class AdaptiveThresholds:
+    """Congestion/imbalance thresholds for the rule-based S4 controller."""
+
+    congestion_balanced_enter: float = 0.25
+    congestion_load_enter: float = 1.0
+    congestion_load_exit: float = 0.75
+    congestion_specialization_exit: float = 0.15
+    imbalance_balanced_enter: float = 0.35
+    imbalance_specialization_exit: float = 0.25
+
+    def validate(self) -> None:
+        values = (
+            self.congestion_balanced_enter,
+            self.congestion_load_enter,
+            self.congestion_load_exit,
+            self.congestion_specialization_exit,
+            self.imbalance_balanced_enter,
+            self.imbalance_specialization_exit,
+        )
+        if any(isinstance(x, bool) or not isinstance(x, (int, float)) or not isfinite(x) for x in values):
+            raise ValueError("adaptive thresholds must be finite real numbers")
+        if not (
+            0 <= self.congestion_specialization_exit
+            <= self.congestion_balanced_enter
+            < self.congestion_load_enter
+            and self.congestion_balanced_enter
+            <= self.congestion_load_exit
+            <= self.congestion_load_enter
+        ):
+            raise ValueError("congestion thresholds must preserve ordered entry/exit bands")
+        if not (
+            0 <= self.imbalance_specialization_exit
+            <= self.imbalance_balanced_enter
+            <= 1
+        ):
+            raise ValueError("imbalance thresholds must lie in [0,1] with an exit margin")
+
+
+@dataclass(frozen=True)
+class AdaptivePolicyDiagnostics:
+    state_decision_counts: tuple[tuple[str, int], ...]
+    strategy_decision_counts: tuple[tuple[str, int], ...]
+    state_counts_by_time_quartile: tuple[tuple[str, tuple[int, int, int, int]], ...]
+    transition_counts: tuple[tuple[str, int], ...]
+    transition_congestion_mean: float | None
+    transition_congestion_min: float | None
+    transition_congestion_max: float | None
+    transition_imbalance_mean: float | None
+    transition_imbalance_min: float | None
+    transition_imbalance_max: float | None
+
+    @property
+    def transition_count(self) -> int:
+        return sum(count for _, count in self.transition_counts)
+
+
+@dataclass(frozen=True)
+class AdaptiveTemporalPolicyResult:
+    allocation: TemporalAllocationResult
+    diagnostics: AdaptivePolicyDiagnostics
+
+
+class _AdaptiveDiagnosticsAccumulator:
+    """Keep aggregates only; never retain an alert/task-level state trace."""
+
+    _states = ("SPECIALIZATION", "BALANCED", "LOAD_DISTRIBUTION")
+
+    def __init__(self) -> None:
+        self.state_counts: Counter[str] = Counter()
+        self.quartile_counts: dict[str, list[int]] = {
+            state: [0, 0, 0, 0] for state in self._states
+        }
+        self.transitions: Counter[str] = Counter()
+        self.transition_count = 0
+        self.congestion_sum = 0.0
+        self.congestion_min: float | None = None
+        self.congestion_max: float | None = None
+        self.imbalance_sum = 0.0
+        self.imbalance_min: float | None = None
+        self.imbalance_max: float | None = None
+
+    def record(
+        self,
+        arrival_time: float,
+        horizon: float,
+        old_state: str,
+        new_state: str,
+        congestion: float,
+        imbalance: float,
+    ) -> None:
+        self.state_counts[new_state] += 1
+        quartile = min(3, int(4 * arrival_time / horizon))
+        self.quartile_counts[new_state][quartile] += 1
+        if old_state != new_state:
+            self.transitions[f"{old_state}->{new_state}"] += 1
+            self.transition_count += 1
+            self.congestion_sum += congestion
+            self.congestion_min = congestion if self.congestion_min is None else min(self.congestion_min, congestion)
+            self.congestion_max = congestion if self.congestion_max is None else max(self.congestion_max, congestion)
+            self.imbalance_sum += imbalance
+            self.imbalance_min = imbalance if self.imbalance_min is None else min(self.imbalance_min, imbalance)
+            self.imbalance_max = imbalance if self.imbalance_max is None else max(self.imbalance_max, imbalance)
+
+    def snapshot(self) -> AdaptivePolicyDiagnostics:
+        c_mean = self.congestion_sum / self.transition_count if self.transition_count else None
+        i_mean = self.imbalance_sum / self.transition_count if self.transition_count else None
+        state_counts = tuple((state, self.state_counts[state]) for state in self._states)
+        strategy_for_state = {
+            "SPECIALIZATION": "S1",
+            "BALANCED": "S2",
+            "LOAD_DISTRIBUTION": "S0",
+        }
+        strategy_counts = tuple(
+            (strategy, self.state_counts[state])
+            for state, strategy in strategy_for_state.items()
+        )
+        return AdaptivePolicyDiagnostics(
+            state_counts,
+            strategy_counts,
+            tuple((state, tuple(self.quartile_counts[state])) for state in self._states),
+            tuple(sorted(self.transitions.items())),
+            c_mean, self.congestion_min, self.congestion_max,
+            i_mean, self.imbalance_min, self.imbalance_max,
+        )
 
 
 def run_fixed_temporal_policy(
@@ -147,6 +275,29 @@ def run_specialist_backup_temporal_policy(
     )
 
 
+def run_adaptive_temporal_policy(
+    arrivals: Sequence[ArrivalTask | tuple[float, int]],
+    effectiveness: Sequence[Sequence[float]],
+    service_times: Sequence[float],
+    arrival_horizon: float,
+    thresholds: AdaptiveThresholds = AdaptiveThresholds(),
+) -> AdaptiveTemporalPolicyResult:
+    """Run online S4, switching among unchanged S1/S2/S0 decision rules."""
+    thresholds.validate()
+    diagnostics = _AdaptiveDiagnosticsAccumulator()
+    allocation = _run(
+        "adaptive_state_controller",
+        arrivals,
+        effectiveness,
+        service_times,
+        arrival_horizon,
+        None,
+        adaptive_thresholds=thresholds,
+        adaptive_diagnostics=diagnostics,
+    )
+    return AdaptiveTemporalPolicyResult(allocation, diagnostics.snapshot())
+
+
 def _run(
     policy: str,
     arrivals: Sequence[ArrivalTask | tuple[float, int]],
@@ -156,11 +307,18 @@ def _run(
     type_to_agent: Sequence[int] | None,
     workload_threshold_multiplier: float = 1.0,
     minimum_backup_effectiveness: float = 0.5,
+    adaptive_thresholds: AdaptiveThresholds | None = None,
+    adaptive_diagnostics: _AdaptiveDiagnosticsAccumulator | None = None,
 ) -> TemporalAllocationResult:
     tasks, matrix, durations, horizon = _validate(
         arrivals, effectiveness, service_times, arrival_horizon
     )
     n_agents, n_types = len(matrix), len(durations)
+    if policy == "adaptive_state_controller":
+        if n_agents < 2:
+            raise ValueError("adaptive imbalance normalization requires at least two agents")
+        if adaptive_thresholds is None or adaptive_diagnostics is None:
+            raise ValueError("adaptive policy requires thresholds and an aggregate diagnostics sink")
     mapping: tuple[int, ...] | None = None
     if type_to_agent is not None:
         mapping = tuple(type_to_agent)
@@ -172,10 +330,39 @@ def _run(
     # Tail completion time is sufficient for a single-server FCFS queue.
     available_at = [0.0] * n_agents
     decisions: list[TemporalTaskDecision] = []
+    adaptive_state = "SPECIALIZATION"
     for index, task in enumerate(tasks):
         time, task_type = task.arrival_time, task.task_type
+        selected_adaptive_strategy: str | None = None
+        if policy == "adaptive_state_controller":
+            workloads = tuple(max(0.0, available_at[i] - time) for i in range(n_agents))
+            congestion, imbalance = _adaptive_state_metrics(
+                workloads, fsum(durations) / len(durations)
+            )
+            previous_state = adaptive_state
+            adaptive_state = _next_adaptive_state(
+                adaptive_state, congestion, imbalance, adaptive_thresholds
+            )
+            adaptive_diagnostics.record(
+                time, horizon, previous_state, adaptive_state, congestion, imbalance
+            )
+            selected_adaptive_strategy = {
+                "SPECIALIZATION": "S1",
+                "BALANCED": "S2",
+                "LOAD_DISTRIBUTION": "S0",
+            }[adaptive_state]
         if mapping is not None:
             agent = mapping[task_type]
+        elif policy == "adaptive_state_controller" and selected_adaptive_strategy == "S1":
+            agent = max(range(n_agents), key=lambda i: matrix[i][task_type])
+        elif policy == "adaptive_state_controller" and selected_adaptive_strategy == "S2":
+            agent = max(
+                range(n_agents),
+                key=lambda i: matrix[i][task_type]
+                / (max(0.0, available_at[i] - time) + durations[task_type]),
+            )
+        elif policy == "adaptive_state_controller":  # LOAD_DISTRIBUTION -> unchanged S0
+            agent = min(range(n_agents), key=lambda i: max(0.0, available_at[i] - time))
         elif policy == "max_effectiveness":
             agent = max(range(n_agents), key=lambda i: matrix[i][task_type])
         elif policy == "lowest_workload":
@@ -222,6 +409,60 @@ def _run(
         available_at[agent] = finish
 
     return _summarize(policy, decisions, horizon, n_agents)
+
+
+def _adaptive_state_metrics(
+    workloads: Sequence[float], reference_service_time: float
+) -> tuple[float, float]:
+    """Return normalized congestion C and imbalance I from pre-decision W_i."""
+    if (
+        not workloads
+        or isinstance(reference_service_time, bool)
+        or not isinstance(reference_service_time, (int, float))
+        or not isfinite(reference_service_time)
+        or reference_service_time <= 0
+        or any(not isfinite(value) or value < 0 for value in workloads)
+    ):
+        raise ValueError("workloads and reference service time must be finite and nonnegative/positive")
+    total = fsum(workloads)
+    if total == 0:
+        return 0.0, 0.0
+    concentration = max(workloads) / total
+    n_agents = len(workloads)
+    imbalance = (n_agents * concentration - 1.0) / (n_agents - 1)
+    congestion = total / (n_agents * reference_service_time)
+    return congestion, max(0.0, min(1.0, imbalance))
+
+
+def _next_adaptive_state(
+    current: str,
+    congestion: float,
+    imbalance: float,
+    thresholds: AdaptiveThresholds,
+) -> str:
+    """Apply deterministic three-state rule with separate entry/exit bands."""
+    if current not in {"SPECIALIZATION", "BALANCED", "LOAD_DISTRIBUTION"}:
+        raise ValueError(f"unknown adaptive state: {current}")
+    if not isfinite(congestion) or congestion < 0 or not isfinite(imbalance) or not 0 <= imbalance <= 1:
+        raise ValueError("adaptive state metrics are outside their valid domains")
+    thresholds.validate()
+    if current == "LOAD_DISTRIBUTION":
+        return "BALANCED" if congestion < thresholds.congestion_load_exit else current
+    if congestion >= thresholds.congestion_load_enter:
+        return "LOAD_DISTRIBUTION"
+    if current == "SPECIALIZATION":
+        return (
+            "BALANCED"
+            if congestion >= thresholds.congestion_balanced_enter
+            or imbalance >= thresholds.imbalance_balanced_enter
+            else current
+        )
+    if (
+        congestion < thresholds.congestion_specialization_exit
+        and imbalance < thresholds.imbalance_specialization_exit
+    ):
+        return "SPECIALIZATION"
+    return current
 
 
 def _validate(

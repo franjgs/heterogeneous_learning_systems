@@ -17,9 +17,11 @@ from pathlib import Path
 from statistics import fmean, pstdev
 
 from hls.temporal_allocation import (
+    AdaptiveThresholds,
     ArrivalTask,
     TemporalAllocationResult,
     run_effectiveness_load_temporal_policy,
+    run_adaptive_temporal_policy,
     run_fixed_temporal_policy,
     run_lowest_workload_temporal_policy,
     run_max_effectiveness_temporal_policy,
@@ -41,10 +43,17 @@ POLICY_RUNNERS = (
     ("P2", run_effectiveness_load_temporal_policy),
 )
 ORGANIZATIONAL_POLICY_NAMES = ("S0", "S1", "S2", "S3")
+ADAPTIVE_POLICY_NAMES = ("S0", "S1", "S2", "S3", "S4")
 ORGANIZATIONAL_WINDOW_DAYS = 28
 S3_PRIMARY_THRESHOLD = 1.0
 S3_THRESHOLD_SENSITIVITY = (0.5, 2.0)
 S3_BACKUP_EFFECTIVENESS_FLOOR = 0.50
+S4_PRIMARY_THRESHOLDS = AdaptiveThresholds()
+S4_THRESHOLD_SENSITIVITY = (
+    ("lower_thresholds", AdaptiveThresholds(0.20, 0.80, 0.60, 0.12, 0.28, 0.20)),
+    ("higher_thresholds", AdaptiveThresholds(0.30, 1.20, 0.90, 0.18, 0.42, 0.30)),
+)
+S4_NO_HYSTERESIS = AdaptiveThresholds(0.25, 1.0, 1.0, 0.25, 0.35, 0.35)
 
 
 @dataclass(frozen=True)
@@ -624,6 +633,81 @@ def run_organizational_strategy_comparison(path: str | Path) -> dict[str, object
     }
 
 
+def run_adaptive_organizational_comparison(path: str | Path) -> dict[str, object]:
+    """Matched S0-S4 replay with predeclared S4 thresholds and sensitivity.
+
+    The SOCTRA records supply qualitative relative arrival timing and opaque
+    class patterns only. The controller's ``s_ref`` is the arithmetic mean
+    of the scenario's fixed class service-time vector.
+    """
+    source = load_soctra_demand(path)
+    names = ("usual_28d", "peak_28d", "mix_shift_28d", "post_mix_shift_28d")
+    missing = [name for name in names if name not in source.traces]
+    if missing:
+        raise ValueError("missing predeclared demand windows: " + ", ".join(missing))
+    primary_rows: list[dict[str, object]] = []
+    sensitivity_rows: list[dict[str, object]] = []
+    no_hysteresis_rows: list[dict[str, object]] = []
+    diagnostics: list[dict[str, object]] = []
+    for window in names:
+        trace = source.traces[window]
+        arrivals = _ordered(trace.arrivals, "class_ascending")
+        n_types = max(task.task_type for task in arrivals) + 1
+        for profile in ORGANIZATIONS:
+            matrix = _organization(profile, n_types)
+            for load in OFFERED_LOADS:
+                service = _service_times(arrivals, load, "uniform")
+                baseline = {
+                    "S0": run_lowest_workload_temporal_policy(arrivals, matrix, service, trace.horizon),
+                    "S1": run_max_effectiveness_temporal_policy(arrivals, matrix, service, trace.horizon),
+                    "S2": run_effectiveness_load_temporal_policy(arrivals, matrix, service, trace.horizon),
+                    "S3": run_specialist_backup_temporal_policy(
+                        arrivals, matrix, service, trace.horizon,
+                        S3_PRIMARY_THRESHOLD, S3_BACKUP_EFFECTIVENESS_FLOOR,
+                    ),
+                }
+                adaptive = run_adaptive_temporal_policy(
+                    arrivals, matrix, service, trace.horizon, S4_PRIMARY_THRESHOLDS
+                )
+                all_results = {**baseline, "S4": adaptive.allocation}
+                for policy, result in all_results.items():
+                    row = _row(window, profile, load, "uniform", "class_ascending", policy, result)
+                    if len(result.decisions) != len(arrivals) or row["completed_tasks"] + row["pending_tasks_count"] != len(arrivals):
+                        raise AssertionError(f"{policy}: task conservation failed")
+                    primary_rows.append(row)
+                diagnostics.append({
+                    "trace": window,
+                    "organization": profile,
+                    "offered_load": load,
+                    "diagnostics": adaptive.diagnostics,
+                })
+                if load == 0.90:
+                    for label, thresholds in S4_THRESHOLD_SENSITIVITY:
+                        result = run_adaptive_temporal_policy(
+                            arrivals, matrix, service, trace.horizon, thresholds
+                        )
+                        row = _row(window, profile, load, "uniform", "class_ascending", "S4", result.allocation)
+                        row["threshold_set"] = label
+                        row["transition_count"] = result.diagnostics.transition_count
+                        row["strategy_decision_counts"] = result.diagnostics.strategy_decision_counts
+                        sensitivity_rows.append(row)
+                    no_hyst = run_adaptive_temporal_policy(
+                        arrivals, matrix, service, trace.horizon, S4_NO_HYSTERESIS
+                    )
+                    no_hyst_row = _row(window, profile, load, "uniform", "class_ascending", "S4", no_hyst.allocation)
+                    no_hyst_row["threshold_set"] = "no_hysteresis_ablation"
+                    no_hyst_row["transition_count"] = no_hyst.diagnostics.transition_count
+                    no_hyst_row["strategy_decision_counts"] = no_hyst.diagnostics.strategy_decision_counts
+                    no_hysteresis_rows.append(no_hyst_row)
+    return {
+        "source": source,
+        "primary_rows": tuple(primary_rows),
+        "sensitivity_rows": tuple(sensitivity_rows),
+        "no_hysteresis_rows": tuple(no_hysteresis_rows),
+        "diagnostics": tuple(diagnostics),
+    }
+
+
 def _row(
     trace: str,
     organization: str,
@@ -973,6 +1057,94 @@ def format_organizational_report(result: dict[str, object]) -> str:
     return "\n".join(lines)
 
 
+def format_adaptive_organizational_report(result: dict[str, object]) -> str:
+    """Compact S0-S4 matched results plus aggregate controller diagnostics."""
+    rows = result["primary_rows"]
+    lookup = {(r["trace"], r["organization"], r["offered_load"], r["policy"]): r for r in rows}
+    names = ("usual_28d", "peak_28d", "mix_shift_28d", "post_mix_shift_28d")
+    lines = [
+        "## HLS-03 adaptive organizational strategy S0-S4",
+        "",
+        "Demand windows are selected outcome-blind from SOCTRA alert records, used only as qualitative relative time and opaque class-pattern inputs. Team profiles, service times, and load scaling are hypothetical; this is not an estimate of GMV-CERT performance.",
+        "",
+        "S4 observes predecision work W_i=max(0, queue_tail_i-t), C=sum(W_i)/(N*s_ref), s_ref=arithmetic mean of fixed class service times, and I=(N*max(W_i)/sum(W_i)-1)/(N-1), with I=0 at zero work. It starts SPECIALIZATION (S1), moves to BALANCED (S2) at C≥0.25 or I≥0.35, to LOAD_DISTRIBUTION (S0) at C≥1; load exits below C=0.75 to BALANCED, and BALANCED exits to specialization only below C=0.15 and I=0.25. Parameters were fixed before replay.",
+        "",
+        "Each cell reports mean assigned effectiveness / mean response / P95 response / fraction completed by H. Response summarizes all assigned tasks; completion is separately evaluated at H.",
+        "",
+        "| Window | Organization | ρ | S0 | S1 | S2 | S3 | S4 |",
+        "|---|---|---:|---|---|---|---|---|",
+    ]
+    for window in names:
+        for profile in ORGANIZATIONS:
+            for load in OFFERED_LOADS:
+                cells = []
+                for policy in ADAPTIVE_POLICY_NAMES:
+                    row = lookup[(window, profile, load, policy)]
+                    cells.append(
+                        f"{row['effectiveness_mean']:.3f} / {row['response_mean']:.3f} / "
+                        f"{row['response_p95']:.3f} / {row['completed_fraction']:.3f}"
+                    )
+                lines.append(f"| {window} | {profile} | {load:.2f} | " + " | ".join(cells) + " |")
+    lines += [
+        "",
+        "At ρ=0.90, S4 controller diagnostics (state fractions are also the S1/S2/S0 decision fractions in corresponding order). Transition C/I summaries are mean [min,max] at state changes; no alert-level trace is retained.",
+        "",
+        "| Window | Organization | S1 fraction | S2 fraction | S0 fraction | Switches | Transition C | Transition I | Quartile state counts (spec/balanced/load) |",
+        "|---|---|---:|---:|---:|---:|---|---|---|",
+    ]
+    for item in result["diagnostics"]:
+        if item["offered_load"] != 0.90:
+            continue
+        diag = item["diagnostics"]
+        strategies = dict(diag.strategy_decision_counts)
+        n = sum(strategies.values())
+        fractions = [strategies.get(name, 0) / n for name in ("S1", "S2", "S0")]
+        state_quartiles = {name: counts for name, counts in diag.state_counts_by_time_quartile}
+        quartiles = ";".join(
+            "/".join(str(state_quartiles[state][q]) for state in ("SPECIALIZATION", "BALANCED", "LOAD_DISTRIBUTION"))
+            for q in range(4)
+        )
+        c = "NA" if diag.transition_congestion_mean is None else f"{diag.transition_congestion_mean:.3f} [{diag.transition_congestion_min:.3f},{diag.transition_congestion_max:.3f}]"
+        i = "NA" if diag.transition_imbalance_mean is None else f"{diag.transition_imbalance_mean:.3f} [{diag.transition_imbalance_min:.3f},{diag.transition_imbalance_max:.3f}]"
+        lines.append(
+            f"| {item['trace']} | {item['organization']} | "
+            f"{fractions[0]:.3f} | {fractions[1]:.3f} | {fractions[2]:.3f} | "
+            f"{diag.transition_count} | {c} | {i} | {quartiles} |"
+        )
+    lines += [
+        "",
+        "### Threshold sensitivity and hysteresis ablation at ρ=0.90",
+        "Each cell is mean effectiveness / mean response / P95 response / completed fraction; thresholds are fixed variants, not tuned on outcomes.",
+        "",
+        "| Window | Organization | Lower | Main | Higher | No hysteresis (switch count) |",
+        "|---|---|---|---|---|---|",
+    ]
+    main_lookup = {(r["trace"], r["organization"]): r for r in rows if r["offered_load"] == 0.90 and r["policy"] == "S4"}
+    sens_lookup = {(r["trace"], r["organization"], r["threshold_set"]): r for r in result["sensitivity_rows"]}
+    no_hyst_lookup = {(r["trace"], r["organization"]): r for r in result["no_hysteresis_rows"]}
+    for window in names:
+        for profile in ORGANIZATIONS:
+            cells = []
+            for label, row in (
+                ("lower_thresholds", sens_lookup[(window, profile, "lower_thresholds")]),
+                ("main", main_lookup[(window, profile)]),
+                ("higher_thresholds", sens_lookup[(window, profile, "higher_thresholds")]),
+            ):
+                cells.append(f"{row['effectiveness_mean']:.3f} / {row['response_mean']:.3f} / {row['response_p95']:.3f} / {row['completed_fraction']:.3f}")
+            no_hyst = no_hyst_lookup[(window, profile)]
+            cells.append(
+                f"{no_hyst['effectiveness_mean']:.3f} / {no_hyst['response_mean']:.3f} / "
+                f"{no_hyst['response_p95']:.3f} / {no_hyst['completed_fraction']:.3f} "
+                f"({no_hyst['transition_count']})"
+            )
+            lines.append(f"| {window} | {profile} | " + " | ".join(cells) + " |")
+    lines += [
+        "",
+        "All values are deterministic outputs under the declared normalized scenarios. S4 is a rule-based adaptive organization, not a learned policy. No statistical inference or operational SOC claim is made.",
+    ]
+    return "\n".join(lines)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--soctra-csv", required=True, help="path to an authorized local SOCTRA snapshot")
@@ -981,8 +1153,18 @@ def main() -> int:
         action="store_true",
         help="run the separately identified S0-S3 organization comparison",
     )
+    parser.add_argument(
+        "--adaptive-organizational-strategies",
+        action="store_true",
+        help="run the separately identified S0-S4 adaptive organization comparison",
+    )
     args = parser.parse_args()
-    if args.organizational_strategies:
+    if args.organizational_strategies and args.adaptive_organizational_strategies:
+        parser.error("choose one organizational comparison mode")
+    if args.adaptive_organizational_strategies:
+        result = run_adaptive_organizational_comparison(args.soctra_csv)
+        print(format_adaptive_organizational_report(result))
+    elif args.organizational_strategies:
         result = run_organizational_strategy_comparison(args.soctra_csv)
         print(format_organizational_report(result))
     else:

@@ -4355,7 +4355,7 @@
       "type": "study",
       "name": "Temporal workload effects in heterogeneous task allocation",
       "definition": "Deterministic study comparing fixed, maximum-effectiveness and effectiveness/load-ratio assignment under temporally varying arrivals, recoverable per-agent service capacity, and declared effectiveness/demand/load profiles.",
-      "scope": "Six original controls, paired 96-cell sensitivity grid, five-structure focused controls, simultaneous-order probe, and exact small P2 response counterexample on constructed inputs. A separate restricted local-data replay applies the same model to SOCTRA alert-record timestamps as arrival proxies, with hypothetical organizations/effectiveness/service and no claim of human workload validity. A separately identified S0-S3 organization comparison adds minimum-pending-work, reuses the unchanged P1/P2 rules, and adds thresholded specialist-backup routing over four qualitative demand-pattern windows.",
+      "scope": "Six original controls, paired 96-cell sensitivity grid, five-structure focused controls, simultaneous-order probe, and exact small P2 response counterexample on constructed inputs. A separate restricted local-data replay applies the same model to SOCTRA alert-record timestamps as arrival proxies, with hypothetical organizations/effectiveness/service and no claim of human workload validity. A separately identified S0-S3 organization comparison adds minimum-pending-work, reuses the unchanged P1/P2 rules, and adds thresholded specialist-backup routing over four qualitative demand-pattern windows. A subsequent rule-based adaptive S0-S4 comparison evaluates the unchanged four organizations on the same four 28-day demand-pattern windows and three normalized loads, with predeclared threshold sensitivity and aggregate-only controller diagnostics.",
       "assumptions": [
         "One deterministic service duration per task class, shared by all agents in the baseline.",
         "Every task is eventually completed; no deadlines or rejection.",
@@ -4366,7 +4366,8 @@
         "The restricted snapshot is not stored in Git; one alert row is treated only as a modeled arrival proxy, not a confirmed human task.",
         "Project labels define opaque task classes for the experiment; project identity is not competence.",
         "Timestamp meaning and timezone are not validated; exact stored order is used only under an explicit recorded-time assumption and simultaneous-order sensitivity.",
-        "Organization size, fixed effectiveness profiles, service durations, and offered-load levels are hypothetical and not calibrated to GMV-CERT staffing or analyst time."
+        "Organization size, fixed effectiveness profiles, service durations, and offered-load levels are hypothetical and not calibrated to GMV-CERT staffing or analyst time.",
+        "S4 observes only predecision queue workloads and fixed scenario service times; thresholds are declared before replay and are not optimized on demand outcomes."
       ],
       "relationships": [
         {
@@ -4416,6 +4417,10 @@
         {
           "kind": "compares",
           "target": "policy.temporal_specialist_with_idle_backup"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.adaptive_state_controller_s4"
         }
       ],
       "implementation": [
@@ -5058,6 +5063,137 @@
       "evidence_type": "exploratory",
       "scientific_outcome": "AMBIGUOUS",
       "evidence_availability": "The restricted CSV is not tracked. The runner, deterministic rules and aggregate findings are tracked; exact replay requires authorized access to the same snapshot.",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "incomplete"
+    },
+    {
+      "id": "policy.adaptive_state_controller_s4",
+      "type": "policy",
+      "name": "Adaptive specialization–balance–load rule",
+      "definition": "A deterministic online controller that selects the unchanged maximum-effectiveness, effectiveness/load, or minimum-work routing rule from observable normalized congestion and workload imbalance, with state-dependent hysteresis.",
+      "scope": "Four-agent SOC organizational scenarios in the HLS-03 restricted alert-proxy replay; no learned state or future arrivals.",
+      "assumptions": [
+        "Current work W_i=max(0,queue_tail_i-t) is observable at each arrival.",
+        "Reference service s_ref is the arithmetic mean of the fixed class service-time vector.",
+        "Thresholds are fixed before replay and not data-optimized.",
+        "The initial state is SPECIALIZATION; transition is evaluated before each assignment."
+      ],
+      "relationships": [],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/temporal_allocation.py"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "status": "reusable",
+      "inputs": "Current task class, current queue-tail workloads, current arrival time, fixed service-time vector and predeclared thresholds.",
+      "outputs": "Current organizational state and selected agent index.",
+      "ontology_class": "policy",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "experiment.adaptive_organizational_strategy_pattern_comparison",
+      "type": "experiment",
+      "name": "Matched adaptive organizational strategy comparison S0–S4",
+      "definition": "Compares minimum-work, maximum-effectiveness, effectiveness/load, specialist-backup and adaptive state-controlled routing on the four preselected 28-day qualitative alert-proxy patterns.",
+      "scope": "Four hypothetical organizations × four windows × offered loads .50/.90/1.20; 240 primary matched evaluations, plus 32 threshold-sensitivity and 16 no-hysteresis evaluations at .90. No row-level traces are retained in Git.",
+      "assumptions": [
+        "SOCTRA alert rows are qualitative arrival proxies, not confirmed human tasks.",
+        "Team profiles, service durations and offered-load scaling are hypothetical.",
+        "S4 thresholds are fixed before replay and sensitivity variants are not selected by outcome.",
+        "All compared policies receive identical ordered arrivals, class matrix, service times and horizon."
+      ],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.temporal_task_allocation_policy_comparison"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_minimum_pending_work"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_max_effectiveness_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_effectiveness_load_ratio"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_specialist_with_idle_backup"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.adaptive_state_controller_s4"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/soctra_demand_experiment.py"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_soctra_demand_experiment.py"
+        },
+        {
+          "kind": "local",
+          "path": "docs/RESEARCH.md"
+        }
+      ],
+      "status": "executed_restricted_data",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "incomplete"
+    },
+    {
+      "id": "result.adaptive_organization_tradeoffs_under_alert_proxy_patterns",
+      "type": "result",
+      "name": "Adaptive routing is mostly load-distribution behavior under the declared thresholds",
+      "definition": "At rho=.90 across 16 organization-window cells S4 selected S0 in 85.9% of arrival decisions, S2 in 12.4%, and S1 in 1.7%. Its mean effectiveness was .6127 and mean response .0261, versus .6021/.0261 for S0, .6800/.0262 for S2, .7203/.1702 for S3, and .7875/.7781 for S1. At rho=.50/.90/1.20, S4 completed fractions averaged .9911/.9611/.8110; its mean response was .0016/.0261/.1292 and assigned effectiveness .6613/.6127/.6023. These deterministic results are conditional on the selected windows and hypothetical teams/service.",
+      "scope": "Four deterministic SOCTRA alert-record proxy windows × four hypothetical organizations; normalized service and rho. The observed demand is qualitative pattern input only, not human workload or SOC policy validation.",
+      "assumptions": [
+        "Fixed S4 thresholds and transition order as recorded in docs/RESEARCH.md.",
+        "No randomization, statistical inference or causal claim about real SOC operations.",
+        "Effectiveness values are hypothetical deterministic contributions, not analyst competence or observed success."
+      ],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.adaptive_organizational_strategy_pattern_comparison"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "studies/soctra_demand_experiment.py"
+        },
+        {
+          "kind": "local",
+          "path": "docs/RESEARCH.md"
+        }
+      ],
+      "evidence_type": "exploratory",
+      "scientific_outcome": "AMBIGUOUS",
+      "evidence_availability": "Restricted local CSV required for exact demand replay; aggregate summary and runner retained, alert-level output not retained.",
       "ontology_class": "result",
       "bibliography_refs": [],
       "evidence_maturity": "incomplete"
