@@ -6,7 +6,7 @@ HLS is not a particular algorithm, simulator, application or agent architecture.
 
 ## What this laboratory contains
 
-The active core is deliberately small: two exact finite mathematical models with executable checks, a structured catalog and validator, and a record that distinguishes current runnable evidence from findings documented only in the historical archive. The finite constructions demonstrate model-scoped results: task-wise allocation can improve attainable outcomes in a crossed-specialization case, while state change need not change the efficient frontier and future value can reverse an immediate choice. Historical synthetic studies include both positive and inconclusive findings, but most campaign traces and runners are not in this branch.
+The active core is deliberately small: three exact finite mathematical models, a deterministic temporal FCFS allocation model, executable checks, a structured catalog and validator, and a record that distinguishes current runnable evidence from findings documented only in the historical archive. The finite constructions demonstrate model-scoped results: task-wise allocation can improve attainable outcomes in a crossed-specialization case, state change need not change the efficient frontier, future value can reverse an immediate choice, and a greedy online allocator can be suboptimal under a constructed finite-capacity case. The temporal fixtures show that workload-aware routing can trade effectiveness for response time under specified synthetic bursts. These are scoped controls, not universal claims. Historical synthetic studies include positive and inconclusive findings, but most campaign traces and runners are not in this branch.
 
 **Not demonstrated:** a universal benefit of heterogeneity, a general HLS algorithm, real-world SOC performance, general transfer or learning benefits, or the originality of the programme's broad framing. Read [the research record](docs/RESEARCH.md) for scope, evidence quality and limits.
 
@@ -42,9 +42,13 @@ hls query --type model --text allocation
 pytest
 python studies/static_allocation.py
 python studies/competence_development.py
+python studies/sequential_task_allocation.py
+python studies/temporal_task_allocation.py
+python studies/temporal_task_allocation.py --sensitivity
+python studies/temporal_task_allocation.py --focused-organizations
 ~~~
 
-The two study commands run small deterministic finite constructions, not historical campaigns. The catalog validator checks identifiers, typed relations, bibliography keys, statuses and local references; it does not validate scientific truth or prove semantic compatibility.
+The study commands run small deterministic constructions, not historical campaigns. The sequential runner compares fixed, greedy online and exact offline allocation under non-replenishing capacity. The temporal runner compares fixed, effectiveness-only and effectiveness/load routing with one recoverable FCFS server per agent; its six fixtures, sensitivity grid and focused organization controls are hypothetical and are not SOCTRA outcomes. Neither runner reproduces CE-04. The catalog validator checks identifiers, typed relations, bibliography keys, statuses and local references; it does not validate scientific truth or prove semantic compatibility.
 
 ## Starting research
 

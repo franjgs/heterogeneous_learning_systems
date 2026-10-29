@@ -55,3 +55,45 @@ Record date: 2026-10-27, verified from the current work session. The final commi
 The research programme designated a simplified Security Operations Center as its first application testbed, with initial alert triage (L1) and deeper alert analysis (L2) represented as distinct processes. The first research dimension is competence heterogeneity: characterization, utilization, development, adaptation, benefits, costs and limitations. This records a research direction and scenario sketch only. No experiment, algorithm, client-specific workflow, competence dataset, or operational claim was approved or established. Existing synthetic HLS results are linked as conceptual precedents, not as SOC validation. The accessible historical material does not verify SOCTRA fields or provide an AIAI 2026 result demonstrating organizational-learning benefits.
 
 Evidence references: this dated research instruction; active catalog entities `scenario.soc_alert_operations` and `study.soc_competence_heterogeneity_testbed`; literature sources [@kersten2025tier1] and [@yang2024socalerts] describe other specific SOC studies and do not validate the proposed client testbed.
+
+## 2026-10-29 — deterministic sequential allocation benchmark implemented
+
+HLS-01's first bounded implementation adds a finite deterministic task-sequence model with fixed effectiveness, integer agent capacities, explicit rejection, a predeclared fixed mapping, a greedy online policy, and an exact offline enumeration oracle. Deterministic controls recover the retained static-allocation values under non-binding capacity and include a constructed case where greedy is below the offline optimum. This consolidates known static controls and validates behavior in small fixtures; it is not a new general theory, empirical finding, CE-04 reproduction, or stochastic campaign.
+
+Evidence references: `src/hls/sequential_allocation.py`, `tests/test_sequential_allocation.py`, `studies/sequential_task_allocation.py`, and the HLS-01 entry in `docs/RESEARCH.md`.
+
+## 2026-10-29 — temporal FCFS allocation controls implemented
+
+The next bounded study increment added deterministic temporal arrivals, recoverable single-server FCFS capacity and three matched routing rules. Six constructed controls show scenario-dependent trade-offs: workload-aware routing reduces response in concentrated-load cases, sometimes at lower deterministic effectiveness, while it makes no difference in separated and balanced-burst fixtures. These results are not SOCTRA measurements. A taskwise maximum-effectiveness rule's total-effectiveness upper-bound property follows pointwise under the explicit all-tasks-complete assumptions and is recorded as a scoped standard result, not a new discovery.
+
+Evidence references: `src/hls/temporal_allocation.py`, `tests/test_temporal_allocation.py`, `studies/temporal_task_allocation.py`, and the HLS-02 entry in `docs/RESEARCH.md`.
+
+## 2026-10-29 — HLS-02 backlog metric clarification and deterministic sensitivity grid
+
+The HLS-02 horizon backlog was split into an integer pending-task count and pending service work in time units. Pending work is measured at the end of the arrival horizon and includes active residual service plus queued service; queues are then drained to compute completed-task response and makespan. The six original controls were retained, including the deliberate P0/P1 assignment matches. A deterministic paired grid varied fixed effectiveness structure, arrival timing/class mix, workforce size and horizon while keeping the three policies and within-cell inputs fixed. P2 reduced response in some constructed regimes, sometimes with lower effectiveness; the grid produced no general policy ranking and is not SOCTRA evidence.
+
+Evidence references: `src/hls/temporal_allocation.py`, `tests/test_temporal_allocation.py`, `studies/temporal_task_allocation.py`, the temporal allocation evaluation entry and HLS-02 section in `registry/catalog.json`, and the HLS-02 entry in `docs/RESEARCH.md`.
+
+## 2026-10-29 — HLS-02 policy sensitivity and response-time counterexample
+
+A follow-up deterministic analysis retained the existing 96-cell grid, identified five fixed-duty-roster cells where P0's mean response was lower than P2's, and compared five two-agent effectiveness structures under balanced and class-concentrated bursts. A three-task exact construction showed that the effectiveness-to-workload ratio can have greater mean and P95 response than P1, with equal service durations and with unequal class durations. This corrects any interpretation that P2 is generally response-optimal; it does not establish a general advantage of P1. Equal-time input order was also shown to affect P2 under FCFS.
+
+Evidence references: `studies/temporal_task_allocation.py`, `tests/test_temporal_allocation.py`, the temporal-policy findings in `docs/RESEARCH.md` and scoped counterexample in `docs/THEORY.md`.
+
+## 2026-10-29 — HLS-02 replay with restricted SOCTRA alert-record demand
+
+The latest locally available SOCTRA snapshot was found to contain parseable timestamps to the second and project labels, allowing a bounded demand replay under an explicit proxy assumption: each unique alert record was treated as a modeled arrival, not as verified human work. The unchanged temporal allocation engine compared fixed, maximum-effectiveness and effectiveness/load routing under four hypothetical team structures and normalized service loads. Historical time and project-mix variation informed demand; team size, effectiveness and service remained hypothetical. The deterministic outputs are exploratory and conditional, not validation of SOC analyst policies. Same-second ordering and class-to-specialist alignment were tested as sensitivities. The source CSV and per-record traces remain outside Git; exact reproduction requires authorized local access. No SOCTRA organization, staffing, competence or service-time inference was made.
+
+Evidence references: `studies/soctra_demand_experiment.py`, `tests/test_soctra_demand_experiment.py`, the HLS-02 demand-replay record in `docs/RESEARCH.md`, `registry/catalog.json`, and the locally restricted `dataset_20250919.csv` snapshot characterized in `studies/soc_human_ai_organization/DEMAND_CHARACTERIZATION.md`.
+
+## 2026-10-29 — scientific audit of the SOCTRA–HLS-02 replay
+
+The review verified the affine timestamp normalization and offered-load identity, and added replay-level regression checks for task conservation, per-agent FCFS capacity, horizon backlog, utilization and contribution totals. The analysis separated aggregate overload from queue concentration caused by allocation. It also quantified the P1 lowest-index tie effect in homogeneous and partially polyvalent profiles, contrasted it with strict dominance, and measured the already-declared timestamp-tie reversal. No HLS-02 model defect was found; the temporal engine and policies remain unchanged. Results remain deterministic and conditional on the SOCTRA alert-proxy interpretation and hypothetical organization/service assumptions.
+
+Evidence references: `studies/soctra_demand_experiment.py`, `tests/test_soctra_demand_experiment.py`, `tests/test_temporal_allocation.py`, and the audit additions to the SOCTRA replay section of `docs/RESEARCH.md`.
+
+## 2026-10-29 — matched organizational strategy comparison added to HLS-02
+
+A separate S0–S3 comparison was implemented using four outcome-blind 28-day demand-pattern windows from the restricted SOCTRA alert-record snapshot, four unchanged hypothetical effectiveness structures, and offered loads .50/.90/1.20. S0 minimizes observable pending work; S1/S2 reuse the exact prior P1/P2 rules; S3 uses a fixed specialist threshold and idle-backup floor. The existing P0/P1/P2 study remains unchanged. Deterministic results show conditional quality/response trade-offs and strong sensitivity to how maximum-effectiveness ties or dominance concentrate workload; no policy is established as universally superior, no actual GMV-CERT operation is validated, and no adaptive policy was designed. The alert data are used as a qualitative source of relative timing/class patterns, not as human workload measurements.
+
+Evidence references: `src/hls/temporal_allocation.py`, `studies/soctra_demand_experiment.py`, `tests/test_temporal_allocation.py`, `tests/test_soctra_demand_experiment.py`, the HLS-02 S0–S3 section of `docs/RESEARCH.md`, and new policy/experiment/result entities in `registry/catalog.json`. The restricted CSV remains outside Git.

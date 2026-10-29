@@ -33,7 +33,7 @@ These are open questions, not approved priorities or claims of originality.
 ### Competence heterogeneity in SOC alert operations: proposed testbed
 
 - **Stable ID:** `study.soc_competence_heterogeneity_testbed`; **application scenario:** `scenario.soc_alert_operations`.
-- **Proposal date:** 2026-10-27. No start or completion date; no experiment has been implemented or run.
+- **Proposal date:** 2026-10-27. This competence-heterogeneity testbed remains `PROPOSED / NOT_EVALUATED`; no competence or actual SOC organization experiment has been implemented or run. The separate HLS-02 replay below uses alert demand proxies and hypothetical effectiveness/service, and does not evaluate this proposed testbed's substantive competence questions.
 - **Question:** how should analyst competence heterogeneity be characterized, and under what evidenced workload, organizational and resource conditions does its utilization or development affect individual and collective performance across initial triage (L1) and deeper analysis (L2)?
 - **Scope:** L1 represents the supplied “escalate or not” and “report or not” decisions; L2 represents deeper investigation of alerts requiring it. The decision sequence, referral rules and outcomes are unspecified. The scenario concerns human cyberanalysts serving multiple clients, with possible new clients, technologies and threats; these are testbed scope, not facts about a verified client.
 - **First research dimension:** competence heterogeneity—characterization, utilization, development, adaptation, benefits, costs and limitations. No beneficial direction is presumed. Experience is not a competence measure; learning is not assumed to improve performance.
@@ -54,6 +54,302 @@ These are open questions, not approved priorities or claims of originality.
 - **Status/outcome:** CLOSED / POSITIVE finite constructions plus null controls. This is standard assignment/frontier mathematics in HLS terminology, not a novelty claim.
 - **Limitations:** two agents, two task types, constructed matrices and objectives; no learning or empirical application. Convexification assumes admissible linear time-sharing.
 - **Evidence:** exact model code `src/hls/static_assignment.py`, tests, and runner `studies/static_allocation.py`. Historical derivation was in source-branch `docs/theory/HLS_G1_STATIC_EXPERIMENTAL_GROUND_TRUTH.md` and `experiments/synthetic/g1/README.md`; numerical artifact directories are not carried over. The small runner independently evaluates a retained exact control.
+
+### Sequential deterministic allocation under finite capacity
+
+- **Stable ID:** `study.sequential_capacity_constrained_assignment`; **project alias:** HLS-01.
+- **Question:** how do a predeclared type-to-agent mapping and a greedy online rule compare with an exact offline allocation on a finite ordered task sequence when each assignment consumes one unit of fixed agent capacity?
+- **Model/scenario:** a non-empty finite sequence of task-type indices, fixed deterministic effectiveness matrix `e[i,k]` in `[0,1]`, and non-negative integer initial capacities. Each task is assigned once or rejected. Effectiveness contributes directly to the objective; it is not a latent competence, service time, or observed success. No queues, deadlines, learning, cooperation, replenishment, or uncertainty are modeled.
+- **Policies:** fixed mapping without reassignment; greedy online choice of the feasible agent with highest current-task effectiveness (ties by ascending agent index); exact offline enumeration with access to the complete sequence (agent indices ascending, rejection last for ties). Offline sums are compared exactly as rational values of the supplied numeric entries (for floats, their exact binary representations); displayed aggregates are floating-point summaries. The offline rule is a hindsight oracle for small instances, not an online policy.
+- **Controls and results:** with non-binding capacities, the runner recovers the existing `StaticAllocationModel` values for crossed specialization and two null controls (homogeneous effectiveness and taskwise dominance); these are compatibility checks, not new discoveries. In a separate two-task constructed case, greedy obtains total effectiveness 1.0 while offline enumeration obtains 1.7; this is an exact counterexample to greedy optimality in that instance, not an estimate of typical policy performance. A fixed mapping also demonstrates policy-induced rejection while another agent still has capacity, distinct from global saturation. The mean objective divides by all tasks received, including rejected tasks.
+- **Evidence status:** implementation and deterministic test/runner controls are present in `src/hls/sequential_allocation.py`, `tests/test_sequential_allocation.py`, and `studies/sequential_task_allocation.py`. The exhaustive small-instance test uses an independently written enumeration. No sampled or empirical evidence is produced.
+- **Conclusion and limits:** the benchmark makes information access and finite capacity explicit and provides a reproducible comparison scaffold. It does not establish general policy rankings, a theoretical novelty claim, or an application result. Offline enumeration grows exponentially and is restricted to small instances. Task order and effectiveness are constructed inputs; future extensions involving demand, AI assistance, deadlines, or learning require separate definitions and validation. CE-04 is historical context only and is neither reproduced nor validated by this benchmark.
+- **Open work:** extend only after review, with any sequential-demand assumptions, information boundaries, policy comparisons, and evaluation estimands specified separately.
+
+### Temporal workload effects in heterogeneous task allocation
+
+- **Stable ID:** `study.temporal_task_allocation_policy_comparison`; **project alias:** HLS-02.
+- **Question:** in a finite temporal arrival stream with one recoverable server and an FCFS queue per agent, how does routing by fixed effectiveness and observable workload trade collective effectiveness against waiting and response time?
+- **Model:** arrivals `(t_n,k_n)` in `[0,H)`, fixed `e[i,k]`, and positive deterministic class duration `s_k`, shared across agents. Each arrival joins one agent's FCFS queue; one task is served at a time; every task completes, including after the arrival horizon. There is no rejection, deadline, stochastic success, competence update, training, cooperation, or AI effect. Service units are synthetic and do not represent analyst time measured in SOCTRA.
+- **Policies:** P0 maps each class to an agent before evaluation; P1 selects maximum `e[i,k]`, ties by ascending index; P2 selects maximum `e[i,k]/(W_i+s_k)`, where `W_i=max(0, queue_tail_i-t_n)` is current pending service work. Both dynamic policies are online and use no future arrivals. P2 is a heuristic, not an optimum.
+- **Evaluation contract:** for `M` received tasks, total effectiveness is `E=Σ_n e[i_n,k_n]`; mean effectiveness is `E/M`, with all received tasks in the denominator. For each task, waiting is `start_n-t_n`, response is `completion_n-t_n`; means divide by `M`. P95 is the nearest-rank empirical quantile at rank `ceil(.95M)`. At the arrival horizon `H`, pending task count is the integer number of assigned tasks with completion time `>H`; a task completing exactly at `H` is complete. Pending work is the remaining service time at `H`: residual time of the task then in service plus full service times of queued tasks. It is measured in service-time units and may be fractional. Both are measured at `H`; simulation then drains queues so all tasks have final completion times for response and makespan. Per-agent utilization is service time overlapping `[0,H)` divided by `H`; individual effectiveness contribution is reported as per-agent sum and mean per assigned task, not as measured competence. Makespan is `max(completion_n)-min(t_n)`. Quality (effectiveness), congestion (wait/response/backlog), resource use (utilization) and elapsed span are kept separate; no scalar utility combines them.
+- **Exact property:** because all tasks eventually complete, all agents are eligible and `e[i,k]` is fixed and independent of workload, P1 maximizes total effectiveness task by task: `E_P1=Σ_n max_i e[i,k_n]`. This is pointwise separability, not an empirical discovery. It does not imply best response time. It is stated and scoped in `docs/THEORY.md`.
+- **Six deterministic controls:** all values below are generated by `studies/temporal_task_allocation.py`; time units, service durations and effectiveness profiles are constructed controls, not SOCTRA measurements. P0 and P1 produce identical assignments in these fixtures because each predeclared mapping was deliberately chosen to match P1's taskwise argmax (ties to agent 0); that is not a general equivalence.
+
+| Scenario | Mean effectiveness P1→P2 | Mean response P1→P2 | P95 response P1→P2 | Pending tasks P1→P2 | Pending work (time) P1→P2 | Utilization P1→P2 by agent |
+|---|---:|---:|---:|---:|---:|---|
+| S1 separated arrivals | 1.000→1.000 | 1.000→1.000 | 1.000→1.000 | 0→0 | 0→0 | (0.25,0.25)→(0.25,0.25) |
+| S2 balanced bursts | 1.000→1.000 | 1.500→1.500 | 2.000→2.000 | 2→2 | 2→2 | (1,1)→(1,1) |
+| S3 concentrated class burst | 1.000→0.867 | 6.500→4.833 | 12→10 | 11→10 | 11→10 | (1,0)→(1,1) |
+| S4 crossed specialization, block demand | 1.000→0.933 | 3.833→3.583 | 8→7 | 10→10 | 10→10 | (1,1)→(1,1) |
+| S5 homogeneous effectiveness | 0.550→0.550 | 3.800→1.900 | 6.6→2.8 | 6→5 | 6→4.2 | (1,0)→(1,0.9) |
+| S6 one agent dominates | 0.850→0.700 | 4.600→2.620 | 8.2→5.2 | 8→7 | 8→6.4 | (1,0)→(1,0.8) |
+
+In S3, S4 and S6, P2 reduces mean response by 25.64%, 6.52% and 43.04% relative to P1 while reducing mean effectiveness by 13.33%, 6.67% and 17.65%. In S5 it halves mean response with no effectiveness change. In S1 and S2 it changes neither metric. These are exact outputs for six small constructed sequences, not statistical evidence, SOC performance estimates or a general ranking.
+- **HLS-01 relation:** S1 recovers the crossed-specialization static allocation value under separated service; the temporal and static metrics are compatible there because no task waits. HLS-01's finite non-recovering capacity case is not a direct temporal control. Its implementation remains intact.
+- **SOCTRA boundary:** the active study includes a local-only adapter for historical alert timing/project labels; no dataset or row-level trace is tracked. Alert records are not validated human work episodes; no verified service duration, staffing availability or individual competence matrix exists. The 91 handler labels and stored sample weights are not converted into people, competence or `e[i,k]`.
+- **Evidence/status:** model, runner and tests are locally reproducible; six deterministic controls were evaluated on 2026-10-29. Study remains active, with no confirmatory population claim. No sampling inference or uncertainty interval is applicable to these fixed fixtures.
+- **Limitations/open work:** one server, unlimited queues, one duration per class shared by agents, no deadlines and no rejection. The load score's response/effectiveness trade-off depends on this formula and fixtures. SOCTRA-based arrival replay requires a defensible alert-to-human-task mapping; service/availability calibration requires operational evidence. Any such extension must keep the model assumptions and data permissions explicit.
+
+#### Deterministic sensitivity grid
+
+The same temporal model and unchanged P0/P1/P2 rules were evaluated on a deterministic paired grid of 96 cells: four effectiveness profiles × four arrival traces × `N∈{2,4}` × `H∈{24,48,96}`. Every cell contains 48 tasks, unit service times, and identical inputs across policies. All values are constructed controls; none are estimates from SOCTRA.
+
+- **Effectiveness profiles:** H0 gives every agent `(0.6,0.6)`; H1 uses `(0.8,0.4)` and `(0.4,0.8)`; H2 uses `(1.0,0.2)` and `(0.2,1.0)`. For N=4, H1/H2 repeat the two rows in alternating order, leaving one agent of each profile at indices 0/1 and 2/3; this avoids making the fixed `(0,1)` roster systematically mismatch one profile group. H3 is a separate dominance control: one agent has `(0.9,0.8)` and the others `(0.4,0.2)`; at N=4 only one agent is dominant. H3 does not preserve H0–H2 marginal means (means are `(0.65,0.5)` for N=2 and `(0.525,0.35)` for N=4), so it is not a pure heterogeneity contrast. Matrix entries are deterministic objective contributions, not success probabilities or measured competencies.
+- **Arrival traces:** D0 spreads task arrivals evenly and alternates classes; D1 puts balanced class arrivals into two bursts; D2 uses the same burst times but all 48 tasks are class 0; D3 spreads arrivals evenly and switches from class 0 to class 1 halfway through. All traces contain the same 48 tasks and total service demand (48 service-time units); class mix differs only where specified.
+- **Offered load:** `ρ = Σ_n s[k_n] / (N H)`, total offered service work divided by nominal server-work over `[0,H)`. This gives ρ from 0.125 to 1.0; descriptive bands are low (≤0.25), intermediate (>0.25 to 0.5), and high (>0.5). A separate peak-window offered ratio is the largest work arriving in any `H/12` interval divided by `N(H/12)`. It flags temporal overload (`>1`) in 40/96 cells. These are offered-load descriptors, not realized utilization; measured utilization remains each agent's busy time over `[0,H)` divided by `H`.
+- **Fixed P0 comparators:** each is frozen before evaluating a trace: (i) per-class responsibility, assigning each class to its highest-effectiveness agent (the homogeneous H0 tie uses agents 0 and 1); (ii) a fixed `(0,1)` duty roster; and (iii) one owner selected by the declared nominal class mix `(0.75,0.25)`. Identical mappings within a cell are computed once and labeled as aliases. These baselines add plausible fixed organizations to the six earlier controls; they do not use test-trace future information. The six original fixtures remain intact; their P0=P1 match was deliberately constructed and is not evidence that fixed and dynamic assignment generally coincide.
+
+**Grid results (descriptive cell counts, not independent statistical replicates):**
+
+| Contrast / grouping | Cells | Response faster / same / slower | Median relative response change | Effectiveness difference |
+|---|---:|---:|---:|---:|
+| P2−P1, all cells | 96 | 54 / 42 / 0 | −52.10% | range −0.3125 to 0 per task |
+| P2−P1, H0 | 24 | 16 / 8 / 0 | −67.74% | 0 throughout |
+| P2−P1, H1 | 24 | 11 / 13 / 0 | 0% | range −0.183 to 0 |
+| P2−P1, H2 | 24 | 11 / 13 / 0 | 0% | range −0.267 to 0 |
+| P2−P1, H3 | 24 | 16 / 8 / 0 | −59.45% | range −0.312 to 0 |
+| P2−P1, D0 distributed | 24 | 4 / 20 / 0 | 0% | range −0.229 to 0 |
+| P2−P1, D1 balanced bursts | 24 | 18 / 6 / 0 | −60.71% | range −0.279 to 0 |
+| P2−P1, D2 class-concentrated bursts | 24 | 24 / 0 / 0 | −67.64% | range −0.312 to 0 |
+| P2−P1, D3 mixture shift | 24 | 8 / 16 / 0 | 0% | range −0.267 to 0 |
+
+Across P2−P1 cells, 25 showed faster response without an effectiveness loss; 29 were faster with lower effectiveness; 42 had no response change and none of those lost effectiveness. No cell made P2 slower than P1. That is a result of this finite parameter grid, not a guarantee about the rule. At offered-load `ρ=1` (N=2,H=24), P2 was faster in 12/16 cells; at lower global load it still often reduced response when arrivals were bursty, showing why aggregate `ρ` alone does not characterize peaks. With H=48 or 96, response differences were less frequent, consistent with greater capacity relative to the fixed 48-task trace. These are deterministic cross-scenario patterns, not statistical trends.
+
+| Fixed baseline | P1−P0 effectiveness higher / equal | P1−P0 response range | P2−P0 response faster / same / slower | P2−P0 effectiveness lower / same / higher |
+|---|---:|---:|---:|---:|
+| Per-class responsibility | 0 / 96 | 0 to +11.96 | 49 / 47 / 0 | 29 / 67 / 0 |
+| Fixed duty roster | 18 / 78 | 0 to +11.96 | 44 / 47 / 5 | 19 / 59 / 18 |
+| Nominal-mix single owner | 36 / 60 | −11.96 to 0 | 64 / 32 / 0 | 27 / 33 / 36 |
+
+P1's per-task argmax ensures it cannot have lower deterministic effectiveness than any fixed assignment under the same eligibility and completed-task assumptions; observed strict gains depend on matrix and mapping. Response ranges above are absolute time units (P1−P0); P2/P0 response counts are paired per cell. Relative to P0, P2 effectiveness could be lower, equal, or higher depending on the fixed comparator, because P2 is allowed to trade the P1 taskwise maximum for workload balance. P2 was slower than the fixed duty roster in 5/96 cells, a different comparison from P2−P1. No scalar score combines quality and time.
+
+The runner reports all paired contrasts per cell, including P1−P0 and P2−P0 for each frozen P0 mapping, and P2−P1 once per cell. It also prints exact metric rows, pending task count separately from pending service-time work, utilization by agent and makespan. Reproduce the grid with `PYTHONPATH=src python studies/temporal_task_allocation.py --sensitivity`; the default command continues to run only the six original controls. No sampling inference is applied to the constructed grid. The result does not establish a general policy ranking, SOC-level service values, or an effect of AI.
+
+#### Focused organizational controls and policy counterexample
+
+The 96-cell grid's five cases where the fixed duty-roster P0 has lower mean response than P2 are all H3 dominance cases, with mapping `(0,1)`. P0's class split keeps class-1 work off the dominant class-0 worker, while P2's score continues to favor the dominant worker for both classes; the weak worker only receives selected tasks after the dominant queue has grown. P2 therefore leaves some load on one worker and can have longer responses than the deliberately split fixed roster. P1 maximizes effectiveness by sending every task to the dominant worker, causing the largest queues.
+
+| H3 cell | Policy | Effect mean / total | Response mean / P95 | Tasks per agent | Pending tasks / work | Utilization by agent |
+|---|---|---:|---:|---|---:|---|
+| D0, N=2, H=24 | P0 `(0,1)` | .5500 / 26.4 | 1.0000 / 1.0 | (24,24) | 2 / 1.00 | (.9896,.9688) |
+|  | P1 | .8500 / 40.8 | 12.7500 / 23.5 | (48,0) | 25 / 24.25 | (.9896,0) |
+|  | P2 | .6208 / 29.8 | 1.7500 / 2.5 | (26,22) | 4 / 2.50 | (.9896,.9063) |
+| D0, N=4, H=24 | P0 `(0,1)` | .5500 / 26.4 | 1.0000 / 1.0 | (24,24,0,0) | 2 / 1.00 | (.9896,.9688,0,0) |
+|  | P1 | .8500 / 40.8 | 12.7500 / 23.5 | (48,0,0,0) | 25 / 24.25 | (.9896,0,0,0) |
+|  | P2 | .6208 / 29.8 | 1.7500 / 2.5 | (26,22,0,0) | 4 / 2.50 | (.9896,.9063,0,0) |
+| D1, N=2, H=24 | P0 `(0,1)` | .5500 / 26.4 | 5.5833 / 10.1667 | (24,24) | 8 / 6.1667 | (.8733,.8698) |
+|  | P1 | .8500 / 40.8 | 17.5417 / 32.25 | (48,0) | 28 / 27.0417 | (.8733,0) |
+|  | P2 | .6833 / 32.8 | 7.8368 / 16.3333 | (32,16) | 13 / 11.0833 | (.8733,.6649) |
+| D1, N=2, H=48 | P0 `(0,1)` | .5500 / 26.4 | 4.6667 / 8.3333 | (24,24) | 0 / 0 | (.5000,.5000) |
+|  | P1 | .8500 / 40.8 | 10.5833 / 19.3333 | (48,0) | 7 / 6.0833 | (.8733,0) |
+|  | P2 | .6833 / 32.8 | 5.3611 / 11.5 | (32,16) | 0 / 0 | (.6667,.3333) |
+| D1, N=2, H=96 | P0 `(0,1)` | .5500 / 26.4 | 2.8333 / 4.6667 | (24,24) | 0 / 0 | (.2500,.2500) |
+|  | P1 | .8500 / 40.8 | 8.6667 / 15.6667 | (48,0) | 0 / 0 | (.5000,0) |
+|  | P2 | .6625 / 31.8 | 3.4028 / 7.0 | (30,18) | 0 / 0 | (.3125,.1875) |
+
+Within the five cells P0's response is lower than P2's by 0.57–2.25 time units in the listed rows. For N=4, the three weak agents have identical profiles; lowest-index tie-breaking selects agent 1 and leaves agents 2–3 idle in these outcomes. Thus headcount alone does not guarantee effective use of nominal capacity under this policy and tie rule. These are the exact cases found by contrast against the fixed duty-roster variant; other P0 mappings need not have the same ordering.
+
+A separate focal set uses five two-agent structures and two 24-task simultaneous-arrival traces, all with H=24 and unit service times. The fixed map is selected before routing: R1 splits `(0,1)` to avoid reducing the equivalent-worker control to P1's tie-to-zero rule; R2/R3/R5 assign each class to its best agent; R4 maps both classes to the dominant agent. The table gives mean effectiveness and response mean/P95 as P0/P1/P2; task split and utilization are shown for P2. Pending task count and work are zero in all these cells at H=24.
+
+| Structure | Demand | Effect mean P0/P1/P2 | Response mean P0/P1/P2 | Response P95 P0/P1/P2 | P2 tasks by agent | P2 utilization |
+|---|---|---:|---:|---:|---:|---:|
+| R1 equivalent `(.7,.7)/(.7,.7)` | balanced | .700/.700/.700 | 6.50/12.50/6.50 | 12/23/12 | (12,12) | (.50,.50) |
+| R1 equivalent | class-0 burst | .700/.700/.700 | 12.50/12.50/6.50 | 23/23/12 | (12,12) | (.50,.50) |
+| R2 crossed `(.9,.3)/(.3,.9)` | balanced | .900/.900/.900 | 6.50/6.50/6.50 | 12/12/12 | (12,12) | (.50,.50) |
+| R2 crossed | class-0 burst | .900/.900/.750 | 12.50/12.50/8.00 | 23/23/17 | (18,6) | (.75,.25) |
+| R3 moderate `(.8,.55)/(.55,.8)` | balanced | .800/.800/.800 | 6.50/6.50/6.50 | 12/12/12 | (12,12) | (.50,.50) |
+| R3 moderate | class-0 burst | .800/.800/.696 | 12.50/12.50/6.67 | 23/23/13 | (14,10) | (.58,.42) |
+| R4 dominant `(.9,.8)/(.4,.3)` | balanced | .850/.850/.704 | 12.50/12.50/7.54 | 23/23/16 | (17,7) | (.71,.29) |
+| R4 dominant | class-0 burst | .900/.900/.754 | 12.50/12.50/7.54 | 23/23/16 | (17,7) | (.71,.29) |
+| R5 partial polyvalence `(.8,.72)/(.45,.85)` | balanced | .825/.825/.825 | 6.50/6.50/6.50 | 12/12/12 | (12,12) | (.50,.50) |
+| R5 partial polyvalence | class-0 burst | .800/.800/.683 | 12.50/12.50/7.17 | 23/23/15 | (16,8) | (.67,.33) |
+
+The focal controls suggest a conditional mechanism: redistribution is useful for response when one worker's queue would otherwise accumulate and another can accept work, but effectiveness falls when the receiving agent contributes less. Under balanced demand and crossed or moderate specialization, the expertise-based assignment already balances the work, leaving P2 unchanged. Homogeneous workers allow load balancing with no modeled effectiveness loss. A dominant generalist can still induce a response/effectiveness trade-off because P2's score trades off the two quantities task by task. These are exact scenario outcomes, not an optimization result or recommendation for real analysts.
+
+**Counterexample to response-optimality of P2:** the smallest counterexample found in the bounded searches used two agents, two classes, three tasks, matrix `((.2,.2),(.2,.4))`, arrivals `((0,0),(.5,0),(.5,1))`, and service `(1,1)` or `(1,2)`. P1 assigns `(0,0,1)`; with unit service its responses are `(1,1.5,1)`, mean `1.1667`, P95 `1.5`; P2 assigns `(0,1,1)` with responses `(1,1,2)`, mean `1.3333`, P95 `2.0`. Both have total effectiveness `.8`. P2 moves the second equal-effectiveness class-0 task to idle agent 1; the next class-1 task then waits behind it. With service `(1,2)`, assignments remain the same; mean responses are `1.5` for P1 versus `1.6667` for P2 (P95 `2` versus `3`). The finite searches checked N=2, K=2, effectiveness entries from `{.2,.4,.6,.8,1}`, nondecreasing arrivals from `{0,.5,1}`, and one to three tasks, with equal service `(1,1)` and separately unequal service `(1,2)` or `(2,1)`; they found no smaller counterexample in those discrete domains. They do not establish a global minimum over continuous parameter spaces.
+
+**Simultaneous-arrival order:** in R2 with 12 tasks, equal class totals and all arrivals at zero, alternating class order gives P2 mean response `3.5`, P95 `6`; blocked order (six class 0 followed by six class 1) gives `3.5833`, P95 `7`, with lower mean effectiveness (`.85` versus `.90`). P1's response is unchanged at `3.5` and P95 `6` because class-to-specialist assignments split the queues. FCFS preserves the supplied order; it does not canonicalize ties. Therefore the event sequence is part of the scenario specification whenever equal-time tasks can share an agent.
+
+The existing metric set was sufficient: per-task effectiveness, waiting/response distributions, per-agent task/effectiveness contributions, horizon pending count/work, utilization and makespan explain these controls. No new composite utility or extra metric was introduced. Reproduce the focused table with `PYTHONPATH=src python studies/temporal_task_allocation.py --focused-organizations`; reproduce the P2>P1 counterexample using the regression test `test_p2_can_have_higher_mean_and_p95_response_than_p1`.
+
+#### Restricted SOCTRA alert-record demand replay
+
+- **Question:** under which hypothetical team-effectiveness structures and relative service loads do the unchanged P0/P1/P2 rules trade deterministic effectiveness against response when driven by the historical timing and project mix of SOCTRA alert records?
+- **Feasibility:** **FEASIBLE WITH ASSUMPTIONS.** The local `dataset_20250919.csv` has 214,739 unique alert identifiers and a parseable timestamp field stored to seconds, across 993 dates and 27 non-empty project labels. All dates in the recorded interval and all 24 hour values occur; the source is timezone-naive, and timestamp semantics are not defined by an accessible data dictionary. Recorded order can be replayed, but hour-of-day is not interpreted as a local shift and the sequence cannot be claimed as a validated human-task arrival stream.
+- **Selection and classification limits:** this is the latest cumulative snapshot, not a random sample or a validated census of all SOC work. Inclusion, filtering, censoring and extraction rules remain incompletely specified; the AIAI article's filtered 63,410-alert analysis set is a distinct population and was not substituted. `use_case_name`, `use_case_id`, `alert_name` and `fuente` lack a reviewed task/technology taxonomy, so they are not used to define classes. Escalation/report labels are also not modeled as task outcomes.
+- **Demand transformation:** each unique row is used as one *modeled arrival proxy*, not asserted to be a human task. Its opaque project class is the task type; projects are not interpreted as capabilities. Timestamps are normalized to a unit horizon within each trace while preserving recorded order. No arrival times are synthesized for SOCTRA rows. Same-second ties are ordered by opaque class rank and checked in reverse order; the engine still processes equal-time events sequentially, so this remains a modeling convention.
+- **Demand evidence:** source characterization reports complete-day mean 216.1 alerts (CV .412), complete-month mean 6,514.4 (CV .183), and project concentration of 17.89% for the largest label and 59.23% for the top five. Two complete 12-month windows (calendar year 2023 and September 2024–August 2025) are compared with the full observed date range to expose temporal and project-mix changes. The full-record and selected-window counts and mix summaries are produced by the local-only runner; no project labels, identifiers or row-level artifacts are retained.
+- **Hypothetical organization and service:** four agents are an illustrative model choice, not a staffing estimate. Four fixed effectiveness matrices represent homogeneous workers, unique project-class specialists, partial polyvalence and one dominant generalist. Their per-class mean contribution is held at .60; individual values differ by structure and are deterministic objective contributions, not competence measurements or success probabilities. Opaque class ranks are ordered by SHA-256 of the local project label under the code's fixed namespace; the hypothetical specialist owner is `class_rank mod 4`. P0 uses this predeclared round-robin class responsibility map. With `H=1`, uniform service is `s=ρ·N/M`; class-dependent service multiplies it by `.5`, `1`, or `1.5` according to `class_rank mod 3`, then rescales the durations so `Σ_n s[k_n]/(N·H)=ρ` remains fixed. These mappings and durations are hypothetical experimental assignments, not measured or inferred from project semantics or counts. Neither `ρ` nor simulated duration is analyst utilization, working time or a SOCTRA measurement.
+- **Controls:** the comparison is paired over the same event timestamps, task-class mapping, service vector, four-agent organization and horizon for each policy. Additional controls compare (i) the observed trace with a synthetic balanced class sequence on the same timestamps, (ii) a fully balanced synthetic trace with equal spacing and balanced classes, (iii) two complete-year SOCTRA-derived windows, (iv) four cyclic class-to-specialist alignments, (v) ascending versus descending class order within exact timestamp ties, and (vi) uniform versus class-dependent hypothetical service. These are deterministic scenario sensitivities, not independent replicates or statistical tests.
+- **Evaluation:** existing HLS-02 metrics are reused unchanged: total/mean deterministic effectiveness, mean/P95 wait and response, pending task count and pending service work at the horizon, per-agent utilization and contributions, and makespan. The estimand is a within-scenario deterministic contrast; there is no population-level uncertainty interval. P1's taskwise maximum effectiveness remains a mathematical property under fixed `e[i,k]` and completion of all tasks, not an empirical finding.
+- **Reproducibility and provenance:** run `PYTHONPATH=src python studies/soctra_demand_experiment.py --soctra-csv /path/to/authorized/dataset_20250919.csv`. The source CSV, identifiers, class mapping, and per-task outputs are not in Git. The runner emits only aggregate summaries. Reproducing the exact results requires authorized access to the same local snapshot; the tracked code alone is insufficient for independent replay.
+- **Evidence status:** exploratory deterministic simulation anchored only in recorded alert timing/project-class aggregates. It does not validate policies on a SOC, estimate analyst workload/capacity, reconstruct GMV-CERT organization, or establish that a row is human work. Timestamp timezone/operational meaning, project/task-class correspondence and data disclosure remain limitations.
+
+**Execution:** 192 deterministic policy evaluations on 2026-10-29; approximately 104.5 seconds on the local workstation. No statistical inference was performed. The 192 evaluations include overlapping controls and are not independent replications.
+
+| Demand window | Alert proxies | Project classes active | Largest-class share | Top-five share | Daily mean / CV / peak | Project-mix distance from 2023 |
+|---|---:|---:|---:|---:|---:|---:|
+| Full observed date extent | 214,739 | 27 | .179 | .592 | 216.3 / .415 / 574 | — |
+| 2023 calendar year | 81,910 | 22 | .239 | .612 | 224.4 / .386 / 574 | 0 |
+| 2024-09 through 2025-08 | 71,559 | 27 | .132 | .577 | 196.1 / .442 / 529 | .279 |
+
+Project-mix distance is total-variation distance between anonymized project-label shares (`0` identical, `1` disjoint support). Both comparison windows span 12 complete months; only 2023 is a calendar year. The full-extent row includes partial edge dates. The stored timestamp string has second-level resolution, but it is timezone-naive and its operational meaning remains unverified. There were 9,748 exact-timestamp tie groups containing 25,289 records (largest group 59), so ordering was treated as a sensitivity, not known simultaneity semantics.
+
+Full-extent outcomes under uniform hypothetical service and ascending class order. Each triple is P0/P1/P2; `ρ` is offered work divided by four-server work over normalized horizon `[0,1)`. Effectiveness is deterministic contribution, not success probability. All metrics divide or aggregate over the 214,739 received proxies as defined in the existing HLS-02 evaluation contract.
+
+| Organization | ρ | Mean effectiveness P0/P1/P2 | Response mean (P0/P1/P2) | Response P95 (P0/P1/P2) | Pending tasks (P0/P1/P2) |
+|---|---:|---|---|---|---|
+| Homogeneous | .50 | .600/.600/.600 | .00355/.50999/.00004 | .01866/.93687/.00017 | 1,141/107,500/13 |
+| Homogeneous | .90 | .600/.600/.600 | .12597/1.30984/.00211 | .30774/2.45683/.00645 | 35,293/155,153/2,808 |
+| Homogeneous | 1.20 | .600/.600/.600 | .26633/1.90982/.11325 | .66482/3.59682/.18128 | 65,457/170,048/36,593 |
+| Specialized | .50 | .900/.900/.777 | .00355/.00355/.00004 | .01866/.01866/.00017 | 1,141/1,141/13 |
+| Specialized | .90 | .900/.900/.790 | .12597/.12597/.00212 | .30774/.30774/.00747 | 35,293/35,293/2,808 |
+| Specialized | 1.20 | .900/.900/.822 | .26633/.26633/.11411 | .66482/.66482/.21884 | 65,457/65,457/36,593 |
+| Partially polyvalent | .50 | .750/.750/.716 | .00355/.01694/.00004 | .01866/.06742/.00017 | 1,141/8,944/14 |
+| Partially polyvalent | .90 | .750/.750/.733 | .12597/.25607/.00212 | .30774/.67211/.00695 | 35,293/65,708/2,808 |
+| Partially polyvalent | 1.20 | .750/.750/.749 | .26633/.48245/.11326 | .66482/1.20639/.19232 | 65,457/95,348/36,593 |
+| Dominant worker | .50 | .637/.900/.660 | .00355/.50999/.00004 | .01866/.93687/.00017 | 1,141/107,500/13 |
+| Dominant worker | .90 | .637/.900/.609 | .12597/1.30984/.00212 | .30774/2.45683/.00736 | 35,293/155,153/2,809 |
+| Dominant worker | 1.20 | .637/.900/.609 | .26633/1.90982/.11471 | .66482/3.59682/.25242 | 65,457/170,048/36,594 |
+
+At `ρ=.90`, P0/P1/P2 mean wait was respectively `.12596/1.30982/.00210` for homogeneous and `.12596/.12596/.00210` for specialized; for partial polyvalence it was `.12596/.25606/.00210`, and for the dominant worker `.12596/1.30982/.00211`. Pending work at the horizon for those same policy triples was `.59164/2.60105/.04705`, `.59164/.59164/.04706`, `.59164/1.10154/.04706`, and `.59164/2.60105/.04706`. Makespan at `ρ=.90` was `1.30829/3.60007/1.01078` (homogeneous), `1.30829/1.30829/1.01317` (specialized), `1.30829/1.79129/1.01080` (partial), and `1.30829/3.60007/1.01666` (dominant). These are normalized-time units.
+
+At `ρ=.90`, per-agent utilization, assignments and summed effectiveness contributions (agent-index order) were:
+
+| Organization | P0: utilization; assignments; contribution | P1: utilization; assignments; contribution | P2: utilization; assignments; contribution |
+|---|---|---|---|
+| Homogeneous | (.956,.998,.504,.550); (73,486,78,001,30,073,33,179); (44,091.6,46,800.6,18,043.8,19,907.4) | (.999,0,0,0); (214,739,0,0,0); (128,843.4,0,0,0) | (.926,.901,.874,.851); (55,962,54,441,52,862,51,474); (33,577.2,32,664.6,31,717.2,30,884.4) |
+| Specialized | (.956,.998,.504,.550); (73,486,78,001,30,073,33,179); (66,137.4,70,200.9,27,065.7,29,861.1) | Same as P0 | (.901,.898,.880,.874); (54,603,54,395,52,944,52,797); (46,576.3,47,426.7,37,575.6,37,987.7) |
+| Partially polyvalent | (.956,.998,.504,.550); (73,486,78,001,30,073,33,179); (55,114.5,58,500.8,22,554.8,24,884.3) | (.996,.998,.504,0); (106,665,78,001,30,073,0); (79,998.8,58,500.8,22,554.8,0) | (.902,.899,.889,.863); (54,525,54,343,53,704,52,167); (40,259.0,40,573.7,39,720.9,36,806.9) |
+| Dominant worker | (.956,.998,.504,.550); (73,486,78,001,30,073,33,179); (66,137.4,39,000.5,15,036.5,16,589.5) | (.999,0,0,0); (214,739,0,0,0); (193,265.1,0,0,0) | (.965,.888,.861,.840); (58,604,53,530,51,926,50,679); (52,743.6,26,765.0,25,963.0,25,339.5) |
+
+**Interpretation.** In the 12 full-extent organization/load cells, P2 had lower mean response than P1 in every cell; its mean effectiveness was equal in the three homogeneous cells and lower in the other nine. This is conditional on the tested load score and profiles. It does not override the exact HLS-02 counterexample where P2 is slower than P1, nor establish a general policy ranking. P0 matched P1 exactly for the unique-specialist profile because its predeclared class mapping deliberately assigned every class to that class's specialist. Under homogeneous effectiveness, P0 preserved quality but distributed work better than P1's lowest-index tie rule, which routed every task to agent 0. Under partial polyvalence, P1's deterministic tie rule left agent 3 idle in the primary alignment; its response exceeded P0 despite equal effectiveness. Under dominance, P1 gained effectiveness but overloaded the dominant worker. P2 reduced queue imbalance by routing to other workers, at effectiveness losses of about 12.3% (specialized), 2.3% (partial), and 32.3% (dominant) versus P1 at `ρ=.90`.
+
+**Demand and service sensitivities.** At `ρ=.90`, P0 mean response was `.16721` in the 2023 window and `.06483` in the later full-year window, while P2 response was about `.0043` and `.0063`; the same normalized offered load therefore did not erase temporal-pattern differences. In matched controls, P0 response on observed timestamps fell from `.12597` to `.00291` when project classes were replaced with a balanced cyclic sequence, and to `.00002` when timestamps were also evenly spaced. This implicates the interaction of the constructed fixed class roster with the observed class mix and recorded temporal pattern; it is not an estimate of a real SOC policy effect. Across four cyclic class-to-profile alignments, partial-polyvalence P1 response ranged `.13309–.56014` (P95 `.30774–1.41385`), and dominant-worker P0 mean effectiveness ranged `.55602–.64529`; hence arbitrary project-to-profile alignment materially limits interpretation. A class-dependent hypothetical service profile, rescaled to preserve offered work, changed P2 mean effectiveness by `−.01321` to `+.00208`, mean response by `−.00355` to `+.00099`, and response P95 by `−.02404` to `+.00580` versus uniform service. Reversing class order within timestamp ties changed mean effectiveness by at most `8.4×10⁻⁶`, response mean by at most `1.2×10⁻¹⁰`, and response P95 by at most `3.4×10⁻⁷` in the tested scenario. These sensitivity checks cover only the declared class profiles/rotations and not all possible organizations or tie semantics.
+
+**Boundaries.** The time scale is normalized per trace; none of the times, service durations, team size or `ρ` values represent analyst-hours, shifts, staffing or measured SOC capacity. SOCTRA contributes only its recorded alert-timestamp order and project-label mix under the stated proxy assumption. The row-to-human-task mapping, timezone, timestamp meaning, current portfolio representativeness, employee competence, organization, availability and service durations are not identified. Project names and row-level data are omitted; the exact CSV is not tracked, so the aggregate result cannot be independently regenerated from Git alone. The additional derived aggregates are for the authorized research context and are not external publication clearance. No AIAI/SOCTRA classifier result, handler weight or escalation/report label is interpreted as an organizational outcome.
+
+#### Audit of time scale, work conservation and capacity
+
+For each selected window the runner defines `t₀` as midnight at the start date and `D` as the interval to midnight after its last date, then maps each stored timestamp `tₙ` to `uₙ=(tₙ−t₀)/D` with `H=1`. This affine map preserves order and every pairwise gap up to the same factor `1/D`; it does not impute timestamps. Numerical check on the full trace: `D=85,795,200 s`; an observed 4,421-second gap maps to `5.15296893066×10⁻⁵ H`, and multiplying by `D` recovers 4,421 seconds. A fixture also verifies 6-hour and 12-hour gaps map to .25H and .50H for a one-day window. The simulator's time unit is therefore a fraction of this normalized horizon. An interval without arrivals is idle time unless a queue remains; no task is inserted into a gap. Same-timestamp records are processed sequentially in a declared class-rank order, and the reverse order is a sensitivity, not a random tie model.
+
+For `M` records, uniform hypothetical service uses `s=ρNH/M`. Thus `Σₙs/(NH)=ρ` by construction. At `N=4,H=1`, total offered work is 2.0, 3.6 and 4.8 normalized time units at `ρ=.50,.90,1.20`; at `.90`, each task uses `1.67645374×10⁻⁵` normalized units. This is total offered work divided by aggregate horizon capacity; it is not an agent's utilization or any individual queue's load. At `.50` and `.90` aggregate offered work is below the four-unit capacity, but bursts and routing can still create pending work. At `1.20`, offered work exceeds aggregate capacity by at least .8 units before accounting for idle intervals induced by arrival timing. Utilization is busy time clipped to `[0,H]`; pending work at `H` is remaining service of active plus queued tasks. A task completing exactly at `H` is completed, not pending. Every arrival is assigned once and eventually processed; consequently `completed_by_H + pending_at_H = M`.
+
+For the apparently extreme result at `ρ=.90`, P1's response mean is `1.30984H` versus P2's `0.002115H` in the homogeneous profile. The common normalization and service scale do not by themselves create the difference: P1 routes all 214,739 equal-effectiveness tasks to index 0, leaving the other three servers idle; P2 routes roughly one quarter to each agent. P1's one queue receives 3.6 units of offered work against one unit of server capacity during `H`, leaving 2.60105 units pending. P2's four queues share the work, with aggregate utilization 3.55295 and only .04705 work pending at `H`. The numerical values depend on the hypothetical `ρ`, fixed `H`, and observed relative arrival pattern; the routing concentration is the organizational mechanism within that constructed scale. A common rescaling of timestamps, horizon and service changes time values but preserves these relative comparisons.
+
+The replay audit asserts one decision per input proxy, unique consecutive task indices, service start no earlier than arrival, completion no earlier than service start, nonoverlapping per-agent service consistent with FCFS, utilization in `[0,1]`, nonnegative backlog, conservation at `H`, and equality between summed agent contributions and total effectiveness. Existing temporal-engine tests cover exact-horizon completion, active residual plus queued work, FCFS and one-server service; new replay tests exercise these invariants on each policy. No model defect was found, so `src/hls/temporal_allocation.py` is unchanged.
+
+#### Agent-level allocation at `ρ=.90`
+
+Vectors follow agent index `0…3`. `n` is assignment count, `f` its fraction of all 214,739 arrivals, `U` utilization, `B` pending task count at `H`, `W` remaining work at `H`, and `Eᵢ` the agent's summed effectiveness contribution. The policy-level mean effectiveness and response mean/P95 are also shown. This table makes idle capacity and queue concentration explicit.
+
+| Organization | Policy | Mean E | Response mean / P95 | n | f | U | B | W | Eᵢ |
+|---|---|---:|---:|---|---|---|---|---|---|
+| Homogeneous | P0 | .600 | .12598 / .30774 | (73486,78001,30073,33179) | (.3422,.3632,.1400,.1545) | (.9559,.9984,.5042,.5500) | (16469,18449,0,375) | (.27609,.30927,0,.00628) | (44091.6,46800.6,18043.8,19907.4) |
+| Homogeneous | P1 | .600 | 1.30984 / 2.45683 | (214739,0,0,0) | (1,0,0,0) | (.9989,0,0,0) | (155153,0,0,0) | (2.60105,0,0,0) | (128843.4,0,0,0) |
+| Homogeneous | P2 | .600 | .00212 / .00645 | (55962,54441,52862,51474) | (.2606,.2535,.2462,.2397) | (.9264,.9009,.8745,.8512) | (702,702,702,702) | (.01176,.01177,.01176,.01176) | (33577.2,32664.6,31717.2,30884.4) |
+| Specialized | P0 | .900 | .12598 / .30774 | (73486,78001,30073,33179) | (.3422,.3632,.1400,.1545) | (.9559,.9984,.5042,.5500) | (16469,18449,0,375) | (.27609,.30927,0,.00628) | (66137.4,70200.9,27065.7,29861.1) |
+| Specialized | P1 | .900 | .12598 / .30774 | (73486,78001,30073,33179) | (.3422,.3632,.1400,.1545) | (.9559,.9984,.5042,.5500) | (16469,18449,0,375) | (.27609,.30927,0,.00628) | (66137.4,70200.9,27065.7,29861.1) |
+| Specialized | P2 | .790 | .00212 / .00747 | (54603,54395,52944,52797) | (.2543,.2533,.2466,.2459) | (.9013,.8978,.8797,.8742) | (844,844,469,651) | (.01414,.01415,.00786,.01091) | (46576.3,47426.7,37575.6,37987.7) |
+| Partially polyvalent | P0 | .750 | .12598 / .30774 | (73486,78001,30073,33179) | (.3422,.3632,.1400,.1545) | (.9559,.9984,.5042,.5500) | (16469,18449,0,375) | (.27609,.30927,0,.00628) | (55114.5,58500.8,22554.8,24884.3) |
+| Partially polyvalent | P1 | .750 | .25607 / .67211 | (106665,78001,30073,0) | (.4967,.3632,.1400,0) | (.9959,.9984,.5042,0) | (47259,18449,0,0) | (.79227,.30927,0,0) | (79998.8,58500.8,22554.8,0) |
+| Partially polyvalent | P2 | .733 | .00212 / .00695 | (54525,54343,53704,52167) | (.2539,.2531,.2501,.2429) | (.9023,.8993,.8886,.8628) | (703,702,701,702) | (.01178,.01176,.01175,.01176) | (40259.0,40573.7,39720.9,36806.9) |
+| Dominant worker | P0 | .637 | .12598 / .30774 | (73486,78001,30073,33179) | (.3422,.3632,.1400,.1545) | (.9559,.9984,.5042,.5500) | (16469,18449,0,375) | (.27609,.30927,0,.00628) | (66137.4,39000.5,15036.5,16589.5) |
+| Dominant worker | P1 | .900 | 1.30984 / 2.45683 | (214739,0,0,0) | (1,0,0,0) | (.9989,0,0,0) | (155153,0,0,0) | (2.60105,0,0,0) | (193265.1,0,0,0) |
+| Dominant worker | P2 | .609 | .00212 / .00736 | (58604,53530,51926,50679) | (.2729,.2493,.2418,.2360) | (.9648,.8876,.8607,.8398) | (1053,586,585,585) | (.01765,.00981,.00980,.00980) | (52743.6,26765.0,25963.0,25339.5) |
+
+P2's score penalizes estimated queue work and therefore shifts subsequent arrivals toward less-loaded agents; the resulting allocation is near-balanced in all four profiles, although the dominant-worker profile still assigns somewhat more to agent 0. P2's balance is not optimality: its effectiveness losses are profile-dependent. Under the class-specialist profile P0 and P1 coincide because the fixed mapping was deliberately aligned to the specialist for each class. This is a designed control, not a general fixed-versus-dynamic result.
+
+#### Offered-load sensitivity
+
+Each cell below is deterministic; vectors list utilization by agent at the corresponding `ρ`. At `ρ=.50` and `.90`, capacity is sufficient in aggregate over `[0,H]`, yet P1 in the homogeneous and dominant profiles concentrates all arrivals on one server and incurs large backlog. At `ρ=1.20`, aggregate offered work is 4.8 against total capacity 4.0; every policy/profile has at least .8 normalized work pending, with small additional residual due to arrival timing and idle fragments. P2 uses otherwise idle capacity under P1, but trades away effectiveness in heterogeneous profiles. P0 has lower response than P1 for homogeneous, partially polyvalent and dominant organizations in this trace; it has the same response as P1 under the deliberately aligned specialist structure. P0 does not beat P2 in the tested full trace.
+
+| Organization | Policy | Mean E (`ρ=.5/.9/1.2`) | Response mean (`.5/.9/1.2`) | Response P95 (`.5/.9/1.2`) | Pending tasks/work (`.5; .9; 1.2`) | Utilization by agent (`.5; .9; 1.2`) |
+|---|---|---|---|---|---|---|
+| Homogeneous | P0 | (.600,.600,.600) | (.00355,.12598,.26633) | (.01866,.30774,.66482) | (1141/.01062;35293/.59164;65457/1.46310) | (.674,.726,.280,.309; .956,.998,.504,.550; .992,.999,.672,.674) |
+| Homogeneous | P1 | (.600,.600,.600) | (.51000,1.30984,1.90982) | (.93687,2.45683,3.59682) | (107500/1.00121;155153/2.60105;170048/3.80103) | (.999,0,0,0; .999,0,0,0; .999,0,0,0) |
+| Homogeneous | P2 | (.600,.600,.600) | (.00004,.00212,.11325) | (.00017,.00645,.18128) | (13/.00010;2808/.04705;36593/.81790) | (.661,.541,.439,.359; .926,.901,.874,.851; .997,.996,.995,.994) |
+| Specialized | P0 | (.900,.900,.900) | (.00355,.12598,.26633) | (.01866,.30774,.66482) | (1141/.01062;35293/.59164;65457/1.46310) | (.674,.726,.280,.309; .956,.998,.504,.550; .992,.999,.672,.674) |
+| Specialized | P1 | (.900,.900,.900) | (.00355,.12598,.26633) | (.01866,.30774,.66482) | (1141/.01062;35293/.59164;65457/1.46310) | (.674,.726,.280,.309; .956,.998,.504,.550; .992,.999,.672,.674) |
+| Specialized | P2 | (.777,.790,.822) | (.00004,.00212,.11411) | (.00017,.00747,.21884) | (13/.00010;2808/.04706;36593/.81791) | (.567,.562,.445,.426; .901,.898,.880,.874; .996,.997,.995,.994) |
+| Partially polyvalent | P0 | (.750,.750,.750) | (.00355,.12598,.26633) | (.01866,.30774,.66482) | (1141/.01062;35293/.59164;65457/1.46310) | (.674,.726,.280,.309; .956,.998,.504,.550; .992,.999,.672,.674) |
+| Partially polyvalent | P1 | (.750,.750,.750) | (.01694,.25607,.48245) | (.06742,.67211,1.20639) | (8944/.08329;65708/1.10154;95348/2.13126) | (.911,.726,.280,0; .996,.998,.504,0; .998,.999,.672,0) |
+| Partially polyvalent | P2 | (.716,.733,.749) | (.00004,.00212,.11326) | (.00017,.00695,.19232) | (14/.00011;2808/.04706;36593/.81791) | (.560,.564,.492,.383; .902,.899,.889,.863; .996,.997,.996,.994) |
+| Dominant worker | P0 | (.637,.637,.637) | (.00355,.12598,.26633) | (.01866,.30774,.66482) | (1141/.01062;35293/.59164;65457/1.46310) | (.674,.726,.280,.309; .956,.998,.504,.550; .992,.999,.672,.674) |
+| Dominant worker | P1 | (.900,.900,.900) | (.51000,1.30984,1.90982) | (.93687,2.45683,3.59682) | (107500/1.00121;155153/2.60105;170048/3.80103) | (.999,0,0,0; .999,0,0,0; .999,0,0,0) |
+| Dominant worker | P2 | (.660,.609,.609) | (.00004,.00212,.11471) | (.00017,.00736,.25242) | (13/.00010;2809/.04706;36594/.81792) | (.798,.488,.390,.324; .965,.888,.861,.840; .998,.996,.995,.994) |
+
+At `ρ=1.20`, all agents approach saturation under P2; its remaining backlog is close to the aggregate excess-work lower bound, unlike P1's concentrated queues. At lower `ρ`, P2's near-even server use is organizational load redistribution, not evidence that SOCTRA has spare analyst capacity. `ρ` is an experimental control, not an empirical estimate.
+
+#### Sensitivity to equal-timestamp order and P1 index ties
+
+Reversing class order changes neither the timestamp multiset, number of records nor global task-class counts; the runner's paired policies are given the same ordered trace within each condition. The 9,748 tied groups/25,289 affected records come from the inspected local snapshot. At `ρ=.90`, only P2 in the specialist and partial-polyvalence profiles changes assignment distribution; all other profile-policy combinations are exactly invariant. These minute changes are deterministic order sensitivity, not sampling uncertainty.
+
+| Profile / policy changed | Δ mean E | Δ response mean | Δ response P95 | Δ assignments | Δ utilization |
+|---|---:|---:|---:|---|---|
+| Specialized / P2 | +.00000186 | −.000000000053 | 0 | (+1,−1,0,0) | (+.00001676,−.00001676,0,0) |
+| Partially polyvalent / P2 | +.00000838 | +.000000000114 | +.000000336 | (+2,−2,0,0) | (+.00003353,−.00003353,0,0) |
+
+All omitted cells in the tie comparison have zero changes in effectiveness, response, P95, assignments and utilization. P1's index tie-break is consequential for its allocation: in the homogeneous profile every task has a four-way maximum tie, and 100% go to agent 0 (utilization `.99895`, three agents idle). In the partial-polyvalence profile every task has a two-agent maximum tie; the lowest-index rule leaves agent 3 idle and routes 49.67% of arrivals to agent 0. By contrast, the specialized profile has a unique highest-effectiveness agent per class and P1 matches the predeclared P0; the dominant-worker profile has a strict agent-0 maximum and P1 again sends 100% to agent 0. Thus the H0 concentration is entirely selected by the tie rule, but the same concentration and response persist under strict dominance: tie-breaking is sufficient here, not necessary for concentration. No alternative tie policy was run or introduced.
+
+**Scientific interpretation.** (i) Congestion can be organizational despite aggregate offered work below capacity: at `ρ=.90`, P1 leaves 155,153 tasks and 2.60105 work units pending in H0 while three servers remain idle; at `ρ=.50` the corresponding backlog is 107,500 tasks/1.00121 units although total offered work is only 2.0 versus capacity 4. (ii) Max-effectiveness assignment concentrates work when many agents share the maximum or when one worker strictly dominates; specialization with one unique expert per class instead spreads work according to class mix. (iii) The tested fixed roster can outperform P1 on response when it distributes load better, at no effectiveness loss in H0 and partial polyvalence; under dominance it has lower response but also lower effectiveness. (iv) Partial polyvalence permits P2 to use all agents and, at `ρ=1.20`, retain mean effectiveness `.74883` versus P1 `.75` while sharply reducing response; this is conditional on the constructed matrix, not a general result. (v) The demand sequence and project-label mix are the only SOCTRA-derived inputs. Every policy effect also depends on hypothetical roster size, effectiveness matrices, service scale, and P0 map. No real SOC policy ranking is identified.
+
+- **Reproduction:** `PYTHONPATH=src python studies/soctra_demand_experiment.py --soctra-csv /path/to/authorized/dataset_20250919.csv`. The runner emits aggregate results only; the local CSV is required for an exact replay.
+
+#### New organizational-strategy comparison S0–S3
+
+This comparison extends HLS-02 but is not a rename of the earlier P0/P1/P2 replay. The prior P0 fixed map and P1/P2 rules, runner output and controls are retained unchanged. In this separate comparison, **S0** is minimum-current-work routing, **S1** reuses P1, **S2** reuses P2, and **S3** is specialist routing with a qualified idle backup. Thus S0 is not the historical fixed-map P0.
+
+- **S0:** select `argmin_i W_i(t)`, with `W_i(t)=max(0, queue_tail_i-t)`; ties use the lowest agent index. Effectiveness is ignored.
+- **S1:** select `argmax_i e[i,k]`; this is unchanged P1.
+- **S2:** select `argmax_i e[i,k]/(W_i(t)+s_k)`; this is unchanged P2.
+- **S3:** select the maximum-effectiveness specialist (index tie). If its current workload exceeds `θs_k`, route to the most effective *other idle* agent with `e[i,k]≥0.50`; ties use index. If none qualifies, assign to the specialist. The main value is `θ=1`, meaning the specialist already has more than one current-task service duration pending. The predeclared sensitivity values are `θ=.5` and `2`. The .50 floor includes the existing .50 non-specialist values and excludes .45 low values in the partial-polyvalence matrix. S3 is a simple hypothetical rule, not a GMV practice or an optimal policy.
+
+The four existing hypothetical four-agent effectiveness profiles and class-service assumptions are unchanged. SOCTRA contributes relative timestamps and opaque class sequence patterns, not an arrival-rate calibration. The four full 28-day windows were selected using demand only, before policy evaluation: (1) usual = volume nearest the median, then lowest daily CV; (2) peak = highest daily peak/mean among windows at or above median volume; (3) mix shift = greatest total-variation distance between first- and second-half class shares; (4) post mix shift = the next 28 days. Ties use the declared deterministic rules in `studies/soctra_demand_experiment.py`. Each trace is normalized to `H=1`; class service is scaled as `s=ρNH/M`, so offered load `ρ=Σs/(NH)` is .50/.90/1.20. This preserves within-window ordering and relative gaps, but neither event counts nor normalized time represent human tasks per day, analyst-hours or shifts. A class label is not a competence or a new-client indicator.
+
+| Demand pattern | Dates (end exclusive) | Alert-row proxies | Active classes | Daily mean / CV / peak | Half-window class TV |
+|---|---|---:|---:|---:|---:|
+| Usual | 2024-07-17–2024-08-14 | 6,144 | 21 | 219.4 / .239 / 293 | .095 |
+| Peak | 2023-01-14–2023-02-11 | 6,290 | 18 | 224.6 / .496 / 574 | .235 |
+| Mix shift | 2024-10-28–2024-11-25 | 5,526 | 23 | 197.4 / .518 / 448 | .352 |
+| Post mix shift | 2024-11-25–2024-12-23 | 3,737 | 22 | 133.5 / .378 / 241 | .126 |
+
+For `M` received proxy tasks, `C_H=#{n: completion_n≤H}`, `P_H=M−C_H`, and completion fraction is `C_H/M`. All-assigned effectiveness/response include tasks completed after H; completed-task effectiveness and response use only `completion_n≤H`. This prevents queue-drain times from being conflated with work completed inside the declared horizon. The runner also reports received/completed/pending counts, both effectiveness totals/means, all-task and completed-only response means/P95, waiting, per-agent assignments/contributions/utilization, makespan and pending service work.
+
+At `ρ=.90`, each cell below is `mean effectiveness / mean response / response P95 / fraction completed by H`. Response and time values use normalized hypothetical units. The examples show why a single policy ranking is not adequate.
+
+| Pattern / organization | S0 | S1 | S2 | S3 |
+|---|---|---|---|---|
+| Peak / homogeneous | .600/.026/.114/.845 | .600/1.186/2.439/.278 | .600/.026/.114/.845 | .600/.160/.758/.745 |
+| Peak / specialized | .600/.026/.114/.845 | .900/.167/.668/.691 | .771/.027/.116/.845 | .820/.050/.274/.820 |
+| Mix shift / partially polyvalent | .601/.052/.122/1.000 | .750/.431/1.015/.634 | .734/.052/.120/1.000 | .750/.249/.812/.803 |
+| Post mix shift / dominant | .604/.018/.044/1.000 | .900/1.320/2.512/.277 | .608/.018/.046/1.000 | .698/.213/.798/.781 |
+
+**Load sensitivity.** Ranges are the minimum–maximum across 16 window-by-profile cells for each policy. They are descriptive scenario ranges, not confidence intervals or a pooled estimate.
+
+| ρ | Policy | Mean effectiveness | Mean response | Completed fraction |
+|---:|---|---:|---:|---:|
+| .50 | S0 | .600–.633 | .00063–.00242 | .965–1.000 |
+| .50 | S1 | .600–.900 | .00841–.58765 | .497–1.000 |
+| .50 | S2 | .600–.785 | .00063–.00248 | .965–1.000 |
+| .50 | S3 | .600–.819 | .00114–.04200 | .912–1.000 |
+| .90 | S0 | .600–.609 | .00787–.05240 | .845–1.000 |
+| .90 | S1 | .600–.900 | .09489–1.38780 | .277–.910 |
+| .90 | S2 | .600–.806 | .00787–.05252 | .845–1.000 |
+| .90 | S3 | .600–.851 | .04169–.29266 | .742–.971 |
+| 1.20 | S0 | .598–.604 | .06962–.18967 | .754–.831 |
+| 1.20 | S1 | .600–.900 | .20219–1.98791 | .208–.789 |
+| 1.20 | S2 | .600–.852 | .06962–.19128 | .754–.831 |
+| 1.20 | S3 | .600–.887 | .16126–.61633 | .617–.807 |
+
+Across the 16 primary `ρ=.90` cases, S0 and S2 had lower all-task mean response than S1 in all 16, as did S3. S1 provides the maximum fixed effectiveness task-by-task; S0 had lower mean effectiveness than S1 in 12 cases, S2 in 12, and S3 in 8. S3 had equal or higher mean effectiveness than S0 but slower response in all 16. S2's response was equal to S0 in four cases and slightly slower in the other 12, while its effectiveness was generally higher in heterogeneous profiles. With the demand concentration in homogeneous and dominant profiles, S1's lowest-index choice directs tied or strictly best work to one agent; specialization instead spreads S1 assignments across classes. In the peak/specialized example, S1 achieves .900 mean effectiveness but only .691 completion by H; S0 reaches .845 completion with .600 effectiveness, while S2 and S3 occupy intermediate quality/response positions. In homogeneous/peak, S0 and S2 match because equal effectiveness makes load the operative distinction for S2; S1's index tie causes the large queue.
+
+At higher ρ, absolute response/backlog rise and completion falls. S3 remains slower than S0 because it sends work to a backup only when idle and only after a specialist threshold is crossed; it does not rebalance across all queue lengths. The S3 threshold sensitivity averaged over the 16 primary cells gives effectiveness/response `.71882/.16983` at θ=.5, `.72034/.17023` at θ=1, and `.72156/.17069` at θ=2. This shows a small local sensitivity over the selected values, not robust performance generally. The main observed limitation for S1 is concentration; for S2, quality loss versus maximum-effectiveness assignment; for S3, threshold/floor dependence and failure to route to busy-but-less-loaded backups; S0 ignores quality. No one rule dominates both modeled quality and time in every cell.
+
+These are deterministic scenario outputs conditioned on alert-row proxies, outcome-blind windows, exact event order, four hypothetical agents, fixed effectiveness matrices, class-level service and normalized ρ. They do not demonstrate improved GMV-CERT operations, measure analyst competence, identify real staffing or validate a client onboarding event. The policies do not adapt to a detected mix change; window contrasts are not a causal test of adaptation. The demand counts serve to expose relative temporal/class patterns, not quantify human workload. No strategy S4 is designed here.
+
+**Reproduction:** `PYTHONPATH=src python studies/soctra_demand_experiment.py --soctra-csv /path/to/authorized/dataset_20250919.csv --organizational-strategies`. This runs 192 matched S0–S3 evaluations (4 windows × 4 organizations × 3 offered loads × 4 rules) plus 32 S3 sensitivity evaluations. The restricted CSV and row-level traces are not in Git; exact replay requires authorized access to the same snapshot. HLS-01 and the historical P0/P1/P2 replay are retained unchanged. This remains exploratory deterministic evidence, not a confirmatory inference or theoretical contribution.
 
 ### Dynamic competence-state change and future value
 
@@ -353,4 +649,4 @@ A documented course-correction decision, not an experiment, is reflected in HLS'
 
 ## Reproduction boundary
 
-The two exact finite studies under `studies/` run without external datasets or large artifacts. Historical campaign summaries above preserve evidence claims and limitations, not raw reproducibility. A researcher needing their original protocols, full reports, logs, or data must consult the cited source-branch commit; their absence from this rebuilt working tree must not be described as regenerated or replayed evidence.
+The exact finite models and synthetic deterministic temporal controls under `studies/` run without external datasets or large artifacts. The SOCTRA alert-proxy replay specifically requires authorized access to the restricted local CSV; no row-level data or source file is included in this branch. Historical campaign summaries above preserve evidence claims and limitations, not raw reproducibility. A researcher needing their original protocols, full reports, logs, or data must consult the cited source-branch commit; their absence from this rebuilt working tree must not be described as regenerated or replayed evidence.

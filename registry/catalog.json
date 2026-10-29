@@ -3750,6 +3750,1317 @@
         "nembhard2015selection"
       ],
       "evidence_maturity": "not_independently_verified"
+    },
+    {
+      "id": "scenario.finite_sequential_task_sequence",
+      "type": "scenario",
+      "name": "Finite deterministic sequence of typed tasks",
+      "definition": "An ordered finite sequence of typed tasks evaluated under fixed deterministic agent-by-task effectiveness.",
+      "scope": "Small exact benchmark instances; no stochastic arrivals or outcome draws.",
+      "assumptions": [
+        "Task types and their order are fixed inputs.",
+        "Every agent is eligible for every task type; capacity is the only assignment feasibility constraint.",
+        "The evaluation horizon is the number of received tasks."
+      ],
+      "relationships": [],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/sequential_task_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "scenario_contract": {
+        "agents": "N indexed agents.",
+        "tasks": "A non-empty ordered sequence of K task-type indices.",
+        "capabilities": "A separate deterministic effectiveness matrix e[i,k] with entries in [0,1]; not a competence observation.",
+        "dynamics": "Task index advances after each decision; effectiveness is fixed.",
+        "constraints": "Each assignment consumes one unit from the selected agent's non-negative integer capacity; rejection consumes none.",
+        "uncertainty": "None in task order, effectiveness contribution, or state transition."
+      },
+      "ontology_class": "scenario",
+      "bibliography_refs": [],
+      "evidence_maturity": "implementation_reference_present"
+    },
+    {
+      "id": "organization.finite_agent_capacities",
+      "type": "organization",
+      "name": "Agents with finite integer task capacities",
+      "definition": "An indexed agent set with fixed initial integer capacities and complete eligibility across the declared task types.",
+      "scope": "Finite deterministic allocation benchmark.",
+      "assumptions": [
+        "One task consumes exactly one capacity unit.",
+        "Capacities do not replenish during the sequence."
+      ],
+      "relationships": [
+        {
+          "kind": "evaluated_in",
+          "target": "scenario.finite_sequential_task_sequence"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/sequential_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "ontology_class": "organization",
+      "bibliography_refs": [],
+      "evidence_maturity": "implementation_reference_present"
+    },
+    {
+      "id": "model.sequential_capacity_constrained_allocation",
+      "type": "model",
+      "name": "Sequential deterministic allocation under finite capacity",
+      "definition": "At each task position, assign the current task to one eligible agent or reject it; assignments consume integer capacity and contribute fixed e[i,k] to a total objective.",
+      "scope": "Finite ordered tasks, fixed effectiveness matrix, no queues, deadlines, learning, cooperation, or uncertainty.",
+      "assumptions": [
+        "Effectiveness is a deterministic contribution in [0,1], not a latent competence value or observed success.",
+        "Rejected tasks contribute zero; mean performance divides by all tasks received.",
+        "The offline policy enumerates feasible choices and is intended only for small instances."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.finite_sequential_task_sequence"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/sequential_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "mathematical_object": "Ordered task-type sequence, fixed N-by-K effectiveness matrix, remaining integer capacities, and a feasible assignment-or-rejection action at each position.",
+      "inputs": "Task types, deterministic effectiveness values, initial capacities, and (for the fixed policy) a predeclared type-to-agent mapping.",
+      "outputs": "Per-task decisions/rejection causes, remaining capacity, total effectiveness, and mean over all received tasks.",
+      "ontology_class": "model",
+      "bibliography_refs": [],
+      "evidence_maturity": "implementation_reference_present"
+    },
+    {
+      "id": "policy.fixed_type_to_agent_assignment",
+      "type": "policy",
+      "name": "Fixed task-type-to-agent assignment",
+      "definition": "Uses a mapping declared before the sequence; does not reassign when its designated agent is exhausted.",
+      "scope": "Sequential finite-capacity benchmark.",
+      "assumptions": [
+        "If the designated agent is exhausted while another agent has capacity, rejection is policy-induced; global saturation is recorded separately."
+      ],
+      "inputs": "Current task type, remaining capacity of the designated agent, and the fixed mapping.",
+      "outputs": "Assign to the mapped agent or reject.",
+      "relationships": [],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/sequential_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "ontology_class": "policy",
+      "bibliography_refs": [],
+      "evidence_maturity": "implementation_reference_present"
+    },
+    {
+      "id": "policy.greedy_online_effectiveness_assignment",
+      "type": "policy",
+      "name": "Greedy online assignment by current effectiveness",
+      "definition": "Assigns the current task to the feasible agent with greatest e[i,k], breaking ties by ascending agent index.",
+      "scope": "Sequential finite-capacity benchmark; online information only.",
+      "assumptions": [
+        "The decision rule observes only the current task type and remaining capacities; it cannot inspect future tasks."
+      ],
+      "inputs": "Current task type, remaining capacities, and fixed effectiveness matrix.",
+      "outputs": "A feasible agent assignment or global-capacity rejection.",
+      "relationships": [],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/sequential_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "ontology_class": "policy",
+      "bibliography_refs": [],
+      "evidence_maturity": "implementation_reference_present"
+    },
+    {
+      "id": "policy.exhaustive_offline_allocation",
+      "type": "policy",
+      "name": "Exact offline allocation by enumeration",
+      "definition": "Uses the full task sequence and enumerates assignment-or-rejection sequences to maximize total deterministic effectiveness under capacities.",
+      "scope": "Small finite benchmark instances; exponential enumeration.",
+      "assumptions": [
+        "This is a hindsight oracle with future information, not an online policy.",
+        "Ties keep the lexicographically first sequence with agent indices ascending and rejection last.",
+        "Objective sums are compared exactly for the supplied numeric entries; binary floating-point entries are treated as their exact represented values."
+      ],
+      "inputs": "Full task sequence, fixed effectiveness matrix, and initial capacities.",
+      "outputs": "An exact maximizing assignment-or-rejection sequence.",
+      "relationships": [],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/sequential_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "ontology_class": "policy",
+      "bibliography_refs": [],
+      "evidence_maturity": "implementation_reference_present"
+    },
+    {
+      "id": "evaluation.total_and_mean_effectiveness_per_received_task",
+      "type": "evaluation",
+      "name": "Total and mean effectiveness per received task",
+      "definition": "Reports the sum of assigned-task effectiveness and that sum divided by all tasks received; rejected tasks contribute zero.",
+      "scope": "Finite deterministic sequential assignment.",
+      "assumptions": [
+        "The denominator includes assigned and rejected tasks.",
+        "Rejection causes and assigned-task counts are reported separately."
+      ],
+      "relationships": [],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/sequential_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "ontology_class": "evaluation",
+      "bibliography_refs": [],
+      "evidence_maturity": "implementation_reference_present"
+    },
+    {
+      "id": "study.sequential_capacity_constrained_assignment",
+      "type": "study",
+      "name": "Sequential deterministic task allocation under finite capacity",
+      "definition": "Consolidate a deterministic benchmark for fixed, greedy online, and exact offline assignment policies under fixed heterogeneous effectiveness and finite agent capacity.",
+      "scope": "First bounded HLS-01 increment; constructed finite controls only, not an empirical application or CE-04 reproduction.",
+      "assumptions": [
+        "Effectiveness entries are deterministic contributions in [0,1].",
+        "No stochastic demand, queues, deadlines, learning, cooperation, or AI intervention."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.finite_sequential_task_sequence"
+        },
+        {
+          "kind": "uses",
+          "target": "organization.fixed_competence_matrix"
+        },
+        {
+          "kind": "uses",
+          "target": "organization.finite_agent_capacities"
+        },
+        {
+          "kind": "uses",
+          "target": "model.sequential_capacity_constrained_allocation"
+        },
+        {
+          "kind": "uses",
+          "target": "model.static_allocation"
+        },
+        {
+          "kind": "evaluated_by",
+          "target": "evaluation.total_and_mean_effectiveness_per_received_task"
+        },
+        {
+          "kind": "evaluated_by",
+          "target": "evaluation.exact_finite_comparison"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.fixed_type_to_agent_assignment"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.greedy_online_effectiveness_assignment"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.exhaustive_offline_allocation"
+        },
+        {
+          "kind": "informed_by",
+          "target": "study.static_allocation"
+        },
+        {
+          "kind": "informed_by",
+          "target": "result.crossed_specialization_gain"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/sequential_allocation.py"
+        },
+        {
+          "kind": "local",
+          "path": "studies/sequential_task_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "active",
+      "execution_status": "EVALUATED",
+      "scientific_outcome": "NOT_EVALUATED",
+      "start_date": "2026-10-29",
+      "completion_date": null,
+      "research_question": "How do a predeclared fixed mapping and a greedy online policy compare with exact offline allocation on finite deterministic typed-task sequences under fixed effectiveness and integer agent capacities?",
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "experiment.sequential_assignment_deterministic_controls",
+      "type": "experiment",
+      "name": "Deterministic controls for sequential assignment policies",
+      "definition": "Runner control suite checks static compatibility, two static nulls, capacity-limited greedy suboptimality, and rejection-cause accounting.",
+      "scope": "Small hand-specified finite cases; deterministic execution, no sampling inference.",
+      "assumptions": [
+        "Control cases validate implementation behavior only and are not empirical evidence."
+      ],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.sequential_capacity_constrained_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.fixed_type_to_agent_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.greedy_online_effectiveness_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.exhaustive_offline_allocation"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/sequential_task_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reproducible",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "result.sequential_benchmark_recovers_static_controls",
+      "type": "result",
+      "name": "Sequential benchmark recovers static allocation controls",
+      "definition": "With non-restrictive capacities, fixed type-to-agent mappings and greedy taskwise selection reproduce StaticAllocationModel policy values for crossed specialization, homogeneous null, and taskwise-dominance null controls.",
+      "scope": "Deterministic control fixtures defined in the benchmark runner.",
+      "assumptions": [
+        "The sequential objective is mean deterministic effectiveness over the empirical task sequence.",
+        "Capacity does not bind in these controls."
+      ],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.sequential_assignment_deterministic_controls"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "studies/sequential_task_allocation.py"
+        },
+        {
+          "kind": "local",
+          "path": "tests/test_sequential_allocation.py"
+        }
+      ],
+      "evidence_type": "technical_validation",
+      "scientific_outcome": "POSITIVE",
+      "evidence_availability": "active_exact_model_available",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "result.greedy_suboptimal_under_finite_capacity",
+      "type": "result",
+      "name": "Greedy online assignment can be suboptimal under finite capacity",
+      "definition": "In one two-task, two-agent fixture, greedy obtains total effectiveness 1.0 while exact offline enumeration obtains 1.7 under capacities (1,1). This is a constructed counterexample, not a general effect estimate.",
+      "scope": "Tasks (type 0, type 1); effectiveness rows (1.0,0.8) and (0.9,0.0); capacities (1,1).",
+      "assumptions": [
+        "Effectiveness is deterministic, tasks are ordered, and offline access to the full sequence is allowed."
+      ],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.sequential_assignment_deterministic_controls"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "studies/sequential_task_allocation.py"
+        },
+        {
+          "kind": "local",
+          "path": "tests/test_sequential_allocation.py"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "POSITIVE",
+      "evidence_availability": "active_exact_model_available",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "scenario.recoverable_capacity_temporal_task_arrivals",
+      "type": "scenario",
+      "name": "Finite temporal arrivals with recoverable service capacity",
+      "definition": "A finite ordered stream of typed tasks arriving over a declared horizon; service jobs may remain queued at the horizon and are then drained to completion.",
+      "scope": "Deterministic one-server-per-agent FCFS allocation controls; arrival times and task types are constructed inputs.",
+      "assumptions": [
+        "Every task arrival is an abstract task instance; an SOCTRA alert record is not assumed to be a human work episode.",
+        "All arrival times lie in [0,H), and all queued tasks are processed after the arrival horizon.",
+        "Demand, effectiveness and service parameters are held identical across compared policies."
+      ],
+      "relationships": [
+        {
+          "kind": "informed_by",
+          "target": "result.sequential_benchmark_recovers_static_controls"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/temporal_task_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "scenario_contract": {
+        "agents": "N agents; each has one service server.",
+        "tasks": "Finite ordered pairs (arrival_time, task_type), with K task types.",
+        "capabilities": "Fixed deterministic effectiveness e[i,k] in [0,1], distinct from competence or observed success.",
+        "dynamics": "One FCFS service queue per agent; service capacity returns when the current task completes.",
+        "constraints": "One task in service per agent; queues are unbounded; no task rejection.",
+        "uncertainty": "None in arrival sequence, service duration or effectiveness in each control."
+      },
+      "ontology_class": "scenario",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "organization.fcfs_single_server_agent_queues",
+      "type": "organization",
+      "name": "Agents with one recoverable FCFS service server",
+      "definition": "Each agent has one non-preemptive server and one unbounded first-come, first-served queue; the next queued task begins at prior completion.",
+      "scope": "Deterministic temporal allocation model.",
+      "assumptions": [
+        "The queue order follows arrival order; simultaneous arrivals retain input order.",
+        "Service capacity is released at completion; no other availability or staffing schedule is modeled."
+      ],
+      "relationships": [
+        {
+          "kind": "evaluated_in",
+          "target": "scenario.recoverable_capacity_temporal_task_arrivals"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/temporal_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "ontology_class": "organization",
+      "bibliography_refs": [],
+      "evidence_maturity": "implementation_reference_present"
+    },
+    {
+      "id": "model.temporal_fcfs_task_allocation",
+      "type": "model",
+      "name": "Deterministic temporal FCFS task allocation",
+      "definition": "At each arrival, an online policy assigns the task to one agent queue. A task starts at the later of its arrival and that agent queue tail, occupies the server for its class-specific deterministic duration, and contributes fixed e[i,k] at completion.",
+      "scope": "Finite arrivals, fixed effectiveness, deterministic service durations shared by agents within task class, unbounded FCFS queues, all tasks drained to completion.",
+      "assumptions": [
+        "Service times are hypothetical positive scenario parameters, not SOCTRA measurements.",
+        "One server per agent; no preemption, rejection, deadlines, learning, cooperation or stochastic success.",
+        "Effectiveness is independent of queue position and service duration."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.recoverable_capacity_temporal_task_arrivals"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/temporal_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "mathematical_object": "Arrival stream (t_n,k_n), e[i,k], class durations s_k, per-agent queue-tail completion times and one online assignment action at each arrival.",
+      "inputs": "Ordered arrivals, fixed effectiveness matrix, positive deterministic service time per task class, arrival horizon, and (for fixed policy) predeclared class-to-agent mapping.",
+      "outputs": "Assignment trace, service starts/completions, effectiveness contributions, waits, responses, per-agent utilization, horizon backlog and makespan.",
+      "ontology_class": "model",
+      "bibliography_refs": [],
+      "evidence_maturity": "implementation_reference_present"
+    },
+    {
+      "id": "policy.fixed_temporal_type_assignment",
+      "type": "policy",
+      "name": "Fixed temporal assignment by task class",
+      "definition": "Routes each arrival to a predeclared agent for its task class; the task joins that agent FCFS queue regardless of current workload.",
+      "scope": "Online; mapping fixed before the sequence is evaluated.",
+      "assumptions": [
+        "No reassignment or future-demand access."
+      ],
+      "relationships": [],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/temporal_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "inputs": "Current task class and frozen type-to-agent mapping.",
+      "outputs": "Assigned agent index.",
+      "ontology_class": "policy",
+      "bibliography_refs": [],
+      "evidence_maturity": "implementation_reference_present"
+    },
+    {
+      "id": "policy.temporal_max_effectiveness_assignment",
+      "type": "policy",
+      "name": "Temporal assignment by maximum fixed effectiveness",
+      "definition": "Routes the current task to an agent maximizing e[i,k], with ties broken by ascending agent index; it does not use queue workload.",
+      "scope": "Online; all tasks eventually complete under unbounded queues.",
+      "assumptions": [
+        "Effectiveness values are fixed and all agents are eligible for all task classes."
+      ],
+      "relationships": [],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/temporal_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "inputs": "Current task class and fixed effectiveness matrix.",
+      "outputs": "Assigned agent index.",
+      "ontology_class": "policy",
+      "bibliography_refs": [],
+      "evidence_maturity": "implementation_reference_present"
+    },
+    {
+      "id": "policy.temporal_effectiveness_load_ratio",
+      "type": "policy",
+      "name": "Temporal assignment by effectiveness-to-workload ratio",
+      "definition": "Routes the current task to an agent maximizing e[i,k]/(W_i+s_k), where W_i is its observable remaining active service plus queued service; ties go to the lowest agent index.",
+      "scope": "Online deterministic heuristic; not claimed optimal.",
+      "assumptions": [
+        "Service durations and queue-tail workload are known at decision time.",
+        "No future arrivals, service completions beyond current state, or task outcomes are consulted."
+      ],
+      "relationships": [],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/temporal_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "inputs": "Current task class, fixed effectiveness matrix, current queue-tail times and current time.",
+      "outputs": "Assigned agent index.",
+      "ontology_class": "policy",
+      "bibliography_refs": [],
+      "evidence_maturity": "implementation_reference_present"
+    },
+    {
+      "id": "evaluation.temporal_allocation_performance_and_load",
+      "type": "evaluation",
+      "name": "Temporal task effectiveness, delay, backlog and utilization",
+      "definition": "Reports task-level deterministic effectiveness and temporal workload metrics for all M received tasks under an arrival horizon H, followed by queue drain.",
+      "scope": "Deterministic temporal allocation controls and horizon-completion views.",
+      "assumptions": [
+        "Time uses the scenario service-time unit.",
+        "P95 uses empirical nearest rank, sorted value at rank ceil(0.95 M).",
+        "Utilization is measured only over [0,H); tasks may complete after H."
+      ],
+      "relationships": [],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/temporal_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reusable",
+      "metric_definitions": {
+        "total_effectiveness": "E_total = sum_n e[agent_n,k_n], over all completed tasks.",
+        "mean_effectiveness": "E_bar = E_total/M; denominator is every received task.",
+        "individual_effectiveness": "Per-agent sum of assigned e values and mean per assigned task; these are model contributions, not measured competence.",
+        "mean_wait": "sum_n(start_n-arrival_n)/M.",
+        "p95_wait": "Nearest-rank 95th percentile of start_n-arrival_n.",
+        "mean_response": "sum_n(completion_n-arrival_n)/M; includes service.",
+        "p95_response": "Nearest-rank 95th percentile of completion_n-arrival_n.",
+        "pending_work_at_H": "At H, sum over unfinished assigned tasks of completion_time - max(service_start, H); this is the active task residual plus full service time of queued tasks, in service-time units. May be fractional.",
+        "utilization_by_agent": "For agent i, service time overlapping [0,H) divided by H; a proportion in [0,1].",
+        "makespan": "max_n completion_n - min_n arrival_n; elapsed time from first arrival to final completion.",
+        "pending_task_count_at_H": "Integer count of assigned tasks with completion_time > H; tasks completing exactly at H are complete. Includes the task in service and all queued tasks.",
+        "completed_task_count_at_H": "Integer count with completion_time <= H; received tasks are partitioned into completed and pending at H.",
+        "fraction_completed_by_H": "Tasks completed by H divided by all received tasks M.",
+        "completed_effectiveness_total": "Sum of fixed e[i,k] over tasks with completion_time <= H; a conditional modeled contribution, not an observed outcome.",
+        "completed_effectiveness_mean": "Completed effectiveness total divided by completed-task count; undefined when none complete by H.",
+        "completed_response_mean_and_p95": "Mean and nearest-rank P95 of completion_time-arrival_time among tasks completed by H only; separate from all-task response."
+      },
+      "ontology_class": "evaluation",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "study.temporal_task_allocation_policy_comparison",
+      "type": "study",
+      "name": "Temporal workload effects in heterogeneous task allocation",
+      "definition": "Deterministic study comparing fixed, maximum-effectiveness and effectiveness/load-ratio assignment under temporally varying arrivals, recoverable per-agent service capacity, and declared effectiveness/demand/load profiles.",
+      "scope": "Six original controls, paired 96-cell sensitivity grid, five-structure focused controls, simultaneous-order probe, and exact small P2 response counterexample on constructed inputs. A separate restricted local-data replay applies the same model to SOCTRA alert-record timestamps as arrival proxies, with hypothetical organizations/effectiveness/service and no claim of human workload validity. A separately identified S0-S3 organization comparison adds minimum-pending-work, reuses the unchanged P1/P2 rules, and adds thresholded specialist-backup routing over four qualitative demand-pattern windows.",
+      "assumptions": [
+        "One deterministic service duration per task class, shared by all agents in the baseline.",
+        "Every task is eventually completed; no deadlines or rejection.",
+        "Competence is not measured; e[i,k] is a constructed deterministic contribution.",
+        "Sensitivity profiles and traces are constructed; offered-load ratios are not observed utilization.",
+        "H0-H2 preserve per-class mean effectiveness at 0.6; H3 is a separate dominant-agent control and does not preserve those marginals.",
+        "Equal-time arrivals retain the supplied sequence order, which determines FCFS order when tasks join the same queue.",
+        "The restricted snapshot is not stored in Git; one alert row is treated only as a modeled arrival proxy, not a confirmed human task.",
+        "Project labels define opaque task classes for the experiment; project identity is not competence.",
+        "Timestamp meaning and timezone are not validated; exact stored order is used only under an explicit recorded-time assumption and simultaneous-order sensitivity.",
+        "Organization size, fixed effectiveness profiles, service durations, and offered-load levels are hypothetical and not calibrated to GMV-CERT staffing or analyst time."
+      ],
+      "relationships": [
+        {
+          "kind": "uses",
+          "target": "scenario.recoverable_capacity_temporal_task_arrivals"
+        },
+        {
+          "kind": "uses",
+          "target": "organization.fcfs_single_server_agent_queues"
+        },
+        {
+          "kind": "uses",
+          "target": "model.temporal_fcfs_task_allocation"
+        },
+        {
+          "kind": "evaluated_by",
+          "target": "evaluation.temporal_allocation_performance_and_load"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.fixed_temporal_type_assignment"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.temporal_max_effectiveness_assignment"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.temporal_effectiveness_load_ratio"
+        },
+        {
+          "kind": "informed_by",
+          "target": "result.sequential_benchmark_recovers_static_controls"
+        },
+        {
+          "kind": "informed_by",
+          "target": "theoretical_result.p1_taskwise_effectiveness_upper_bound"
+        },
+        {
+          "kind": "uses",
+          "target": "scenario.soc_alert_operations"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.temporal_minimum_pending_work"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.temporal_specialist_with_idle_backup"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/temporal_allocation.py"
+        },
+        {
+          "kind": "local",
+          "path": "studies/temporal_task_allocation.py"
+        },
+        {
+          "kind": "local",
+          "path": "studies/soctra_demand_experiment.py"
+        }
+      ],
+      "evidence": [],
+      "status": "active",
+      "execution_status": "EVALUATED",
+      "scientific_outcome": "AMBIGUOUS",
+      "start_date": "2026-10-29",
+      "completion_date": null,
+      "research_question": "Under which deterministic arrival/load and fixed-effectiveness structures does routing by e[i,k]/(W_i+s_k) change response time and collective effectiveness relative to a fixed mapping and maximum-effectiveness routing?",
+      "hypothesis": null,
+      "ontology_class": "study",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "experiment.temporal_deterministic_policy_controls",
+      "type": "experiment",
+      "name": "Six deterministic temporal allocation controls",
+      "definition": "Runs separated arrivals, balanced bursts, concentrated-class bursts, crossed specialization with block demand, homogeneous effectiveness, and agent dominance under matched policy inputs.",
+      "scope": "Small constructed fixtures with common demand, effectiveness, service times and resources across policies.",
+      "assumptions": [
+        "All numeric durations and effectiveness profiles are dimensionless synthetic control values, not operational estimates.",
+        "No statistical inference is performed."
+      ],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.temporal_task_allocation_policy_comparison"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.fixed_temporal_type_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_max_effectiveness_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_effectiveness_load_ratio"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/temporal_task_allocation.py"
+        }
+      ],
+      "evidence": [],
+      "status": "reproducible",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "experiment.temporal_policy_sensitivity_grid",
+      "type": "experiment",
+      "name": "Paired deterministic sensitivity grid for temporal allocation",
+      "definition": "Evaluates fixed P0 mappings, maximum-effectiveness P1 and effectiveness-to-current-workload P2 on the same 48-task traces across four deterministic effectiveness profiles, four demand profiles, two workforce sizes and three arrival horizons.",
+      "scope": "96 H×D×N×horizon cells; no stochastic replication or statistical inference.",
+      "assumptions": [
+        "Unit service duration for both task classes; all tasks eventually complete.",
+        "H0-H2 have per-class marginal mean 0.6; for N=4 the H1/H2 rows are interleaved to avoid confounding index-ordered fixed routing with profile order. H3 is a dominance control with different marginal means.",
+        "Offered load is total offered service divided by N times horizon; peak window ratio is separately reported and neither is observed utilization.",
+        "All effectiveness values, traces and durations are synthetic controls, not SOCTRA measurements."
+      ],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.temporal_task_allocation_policy_comparison"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.fixed_temporal_type_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_max_effectiveness_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_effectiveness_load_ratio"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/temporal_task_allocation.py"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "status": "reproducible",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "result.temporal_policy_tradeoffs_in_constructed_scenarios",
+      "type": "result",
+      "name": "Workload-aware routing has scenario-dependent time-effectiveness tradeoffs",
+      "definition": "Across six constructed controls, P0 and P1 have the same assignments by scenario construction. P2 matches P1 in separated and balanced-burst cases; in concentrated, crossed-block and dominance cases P2 lowers mean response by 6.52–43.04% while mean effectiveness falls by 6.67–17.65%; for homogeneous effectiveness, P2 lowers response by 50% without changing mean effectiveness. Fixture-specific exact outputs only.",
+      "scope": "Exact deterministic runner output; no SOCTRA inference, sampling uncertainty or population claim.",
+      "assumptions": [
+        "Every task completes and P1 independently maximizes fixed effectiveness per task.",
+        "Comparison percentages use P1 as denominator and are reported only for positive P1 metrics."
+      ],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.temporal_deterministic_policy_controls"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "studies/temporal_task_allocation.py"
+        },
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "evidence_type": "technical_validation",
+      "scientific_outcome": "AMBIGUOUS",
+      "evidence_availability": "active_deterministic_fixtures_regenerate_exactly",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "result.temporal_policy_sensitivity_tradeoffs",
+      "type": "result",
+      "name": "Workload-aware allocation trades taskwise effectiveness for response in a subset of constructed regimes",
+      "definition": "In 96 deterministic cells, P2 response was faster than P1 in 54, equal in 42, and slower in none. Twenty-five faster cells had no effectiveness loss; 29 had lower effectiveness. P2 was not faster in 42 cells, with no effectiveness loss in those cells. P1 exceeded or matched each predeclared fixed baseline in all cells. Under the predeclared fixed duty-roster P0 contrast, five H3 cells had lower mean response under P0 than P2; these are fixed-mapping-specific, not a general ordering.",
+      "scope": "Exact descriptive outputs from the declared synthetic sensitivity grid; no statistical inference, SOC calibration or general policy ranking.",
+      "assumptions": [
+        "All tasks complete; P1 selects a per-task effectiveness maximizer and therefore maximizes the deterministic effectiveness sum.",
+        "Relative comparisons are within the same cell and use identical tasks, matrix, service times, horizon and number of servers."
+      ],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.temporal_policy_sensitivity_grid"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "studies/temporal_task_allocation.py"
+        },
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "AMBIGUOUS",
+      "evidence_availability": "deterministic_grid_regenerates_from_runner; no raw execution logs retained",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "theoretical_result.p1_taskwise_effectiveness_upper_bound",
+      "type": "theoretical_result",
+      "name": "Taskwise maximum effectiveness is an upper bound on total effectiveness",
+      "definition": "For fixed e[i,k], all agents eligible, unlimited queues and all tasks eventually completed, selecting an argmax_i e[i,k_n] independently for every task maximizes the sum of deterministic effectiveness contributions.",
+      "scope": "Effectiveness objective only; does not optimize waiting, response, makespan, utilization or throughput.",
+      "assumptions": [
+        "Task contributions are unaffected by agent workload, queue position and completion time.",
+        "All tasks eventually complete and all agents are eligible for every task."
+      ],
+      "relationships": [
+        {
+          "kind": "belongs_to",
+          "target": "study.temporal_task_allocation_policy_comparison"
+        }
+      ],
+      "implementation": [],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "docs/THEORY.md"
+        },
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "status": "retained",
+      "ontology_class": "theoretical_result",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "experiment.temporal_focused_organization_controls",
+      "type": "experiment",
+      "name": "Focused temporal allocation controls across five competence structures",
+      "definition": "Compares fixed, maximum-effectiveness and effectiveness-to-workload assignment for equivalent, crossed-specialist, moderately specialized, dominant-agent and partially polyvalent two-agent matrices under simultaneous balanced and class-concentrated bursts.",
+      "scope": "Ten deterministic constructed cells; N=2, 24 tasks, H=24, unit service by class; descriptive only.",
+      "assumptions": [
+        "Effectiveness entries are fixed deterministic objective contributions, not success probabilities or empirical competence.",
+        "The fixed mapping is declared per structure before routing; no empirical SOC parameters are used.",
+        "All tasks are processed and queues drain; there are no deadlines, learning, cooperation or AI effects."
+      ],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.temporal_task_allocation_policy_comparison"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.fixed_temporal_type_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_max_effectiveness_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_effectiveness_load_ratio"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/temporal_task_allocation.py"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "status": "reproducible",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "experiment.temporal_load_ratio_response_counterexample",
+      "type": "experiment",
+      "name": "Three-task counterexample to response optimality of load-ratio routing",
+      "definition": "Evaluates P1 and P2 on a three-task, two-agent, two-class deterministic sequence, first with equal service times and then with unequal class service times.",
+      "scope": "Exact small counterexample fixture; no statistical inference.",
+      "assumptions": [
+        "Fixed effectiveness and positive deterministic class service times.",
+        "Same ordered arrivals, agents and inputs under both policies."
+      ],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.temporal_task_allocation_policy_comparison"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_max_effectiveness_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_effectiveness_load_ratio"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/temporal_task_allocation.py"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "status": "reproducible",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "result.temporal_focused_organization_tradeoffs",
+      "type": "result",
+      "name": "Redistribution trades deterministic effectiveness for shorter responses in selected burst regimes",
+      "definition": "Across five constructed two-agent structures, P2 matched P1 on balanced bursts in equivalent, crossed, moderate-specialization and partially polyvalent cases; under class-concentrated bursts it shortened response by redistributing work, with structure-dependent effectiveness loss. In the dominance structure it also redistributed during balanced bursts.",
+      "scope": "Ten exact deterministic cells; descriptive scenario outcomes, not SOC evidence or a general policy ranking.",
+      "assumptions": [
+        "Matrices, arrivals and unit service durations are synthetic and fixed.",
+        "No statistical inference is applied to the deterministic tasks."
+      ],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.temporal_focused_organization_controls"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "studies/temporal_task_allocation.py"
+        },
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "AMBIGUOUS",
+      "evidence_availability": "regenerable from deterministic focused runner; no execution logs retained",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "result.temporal_load_ratio_not_response_optimal",
+      "type": "result",
+      "name": "Effectiveness-to-workload routing is not generally response-optimal",
+      "definition": "A three-task exact counterexample gives P2 mean response 4/3 versus P1 7/6 with unit service times; with service times (1,2), P2 mean response is 5/3 versus P1 3/2. Both cases retain total effectiveness 0.8 and the same policy assignments.",
+      "scope": "Counterexample to a universal response-minimization guarantee for P2; does not establish general response optimality of P1.",
+      "assumptions": [
+        "Two agents, two classes, fixed matrix ((0.2,0.2),(0.2,0.4)), arrivals ((0,0),(0.5,0),(0.5,1)).",
+        "The finite search for smaller examples covered only declared discrete effectiveness, arrival-time and service grids."
+      ],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.temporal_load_ratio_response_counterexample"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        },
+        {
+          "kind": "local",
+          "path": "docs/RESEARCH.md"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "NEGATIVE",
+      "evidence_availability": "exact fixture reproducible by regression test; no raw logs needed",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "experiment.soctra_timestamped_alert_demand_replay",
+      "type": "experiment",
+      "name": "Matched allocation replay on restricted timestamped alert-record demand",
+      "definition": "Replays anonymized project-class arrivals derived locally from the latest SOCTRA snapshot through the unchanged HLS-02 engine, comparing P0/P1/P2 under four hypothetical organizations and normalized service-load assumptions.",
+      "scope": "Exploratory deterministic replay of full recorded coverage, calendar year 2023, and a complete 12-month September 2024–August 2025 window; includes load, class-service-duration, class-to-organization alignment, and same-timestamp ordering sensitivities. A later scientific audit verified normalized-time, work-conservation, capacity and tie-break behavior. No analyst-hours or operational policy performance is estimated.",
+      "assumptions": [
+        "Each unique alert record is a demand-arrival proxy; it is not asserted to be a human work episode.",
+        "The stored timestamp is used as relative event time; its timezone and operational meaning remain unverified.",
+        "Timestamps are mapped affinely to a unit horizon, preserving recorded order and relative gaps but not physical-time units.",
+        "Project labels are opaque task classes, not competence dimensions or named clients.",
+        "N=4, deterministic effectiveness contributions, service durations, and offered-load levels are hypothetical.",
+        "Offered load is total hypothetical service work divided by N times the unit horizon; it is neither realized utilization nor a per-agent queue load, and rho below one can coexist with transient or organizational backlog.",
+        "P0/P1/P2 use identical records, service parameters, organization matrix, and horizon within each paired condition; no raw data or row-level results are stored."
+      ],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.temporal_task_allocation_policy_comparison"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.fixed_temporal_type_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_max_effectiveness_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_effectiveness_load_ratio"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/soctra_demand_experiment.py"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_soctra_demand_experiment.py"
+        },
+        {
+          "kind": "local",
+          "path": "docs/RESEARCH.md"
+        }
+      ],
+      "status": "executed_restricted_data",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "incomplete"
+    },
+    {
+      "id": "result.temporal_policy_tradeoffs_on_soctra_alert_proxy_demand",
+      "type": "result",
+      "name": "Allocation policies trade response and effectiveness under SOCTRA alert-proxy replay",
+      "definition": "The matched local replay yields condition-dependent effects of fixed routing, taskwise maximum effectiveness, and effectiveness-to-workload routing under observed alert-record timing/project-class patterns. The output is conditional on proxy arrivals and hypothetical organization/service assumptions; it is not evidence about GMV-CERT analyst performance.",
+      "scope": "Deterministic exploratory simulations using restricted SOCTRA-derived demand records; no statistical inference across independent samples and no operational validation.",
+      "assumptions": [
+        "Conclusions are conditional on the exact local snapshot, time interpretation, anonymous project-class ordering, chosen effectiveness matrices, hypothetical offered load, service profiles, and equal-time ordering rule.",
+        "The P1 taskwise effectiveness upper bound is a mathematical model property; observed policy trade-offs are scenario outputs.",
+        "Source rows and identifiers are unavailable in the repository, so exact output reproduction requires authorized access to the same snapshot."
+      ],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.soctra_timestamped_alert_demand_replay"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "studies/soctra_demand_experiment.py"
+        },
+        {
+          "kind": "local",
+          "path": "tests/test_soctra_demand_experiment.py"
+        }
+      ],
+      "evidence_type": "exploratory",
+      "scientific_outcome": "AMBIGUOUS",
+      "evidence_availability": "Aggregate summary and adapter are tracked; the restricted CSV and row-level trace are not. Exact replay requires the authorized original snapshot.",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "incomplete"
+    },
+    {
+      "id": "policy.temporal_minimum_pending_work",
+      "type": "policy",
+      "name": "Online routing by minimum pending work",
+      "definition": "Assigns the current task to the agent minimizing W_i(t)=max(0,queue_tail_i-t), with lowest index breaking ties; ignores effectiveness.",
+      "scope": "Deterministic online rule in the organization-policy comparison.",
+      "assumptions": [
+        "All agents can receive all task classes.",
+        "Only current observable queue-tail workload is used.",
+        "Queues are unbounded and no task is rejected."
+      ],
+      "relationships": [],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/temporal_allocation.py"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "status": "reusable",
+      "inputs": "Current arrival time and all agent queue-tail completion times.",
+      "outputs": "Selected agent index.",
+      "ontology_class": "policy",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "policy.temporal_specialist_with_idle_backup",
+      "type": "policy",
+      "name": "Thresholded specialist routing with idle backup",
+      "definition": "Selects the maximum-effectiveness specialist (index tie-break). If its current W_i(t) exceeds theta*s_k, routes to the most effective other idle agent with e[i,k] at least a declared floor; otherwise uses the specialist. If no backup qualifies, uses the specialist.",
+      "scope": "Deterministic online heuristic; primary theta=1 and backup effectiveness floor=0.50; threshold sensitivity theta in {0.5,1,2}.",
+      "assumptions": [
+        "Effectiveness is a hypothetical fixed contribution.",
+        "Service duration s_k is shared across agents and known.",
+        "Backup must be idle at arrival; queues are unbounded and no task is rejected."
+      ],
+      "relationships": [],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/temporal_allocation.py"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "status": "reusable",
+      "inputs": "Current task class, fixed effectiveness matrix, observable queue workload, class service duration, threshold and effectiveness floor.",
+      "outputs": "Selected agent index.",
+      "ontology_class": "policy",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "experiment.soc_organizational_strategy_pattern_comparison",
+      "type": "experiment",
+      "name": "Matched organization-policy comparison on demand-pattern windows",
+      "definition": "Compares minimum-work routing (S0), maximum-effectiveness routing (S1), effectiveness-load routing (S2), and thresholded specialist backup (S3) on four outcome-blind 28-day patterns extracted from a restricted SOCTRA alert-record snapshot.",
+      "scope": "Four hypothetical organization profiles, three normalized offered-load levels (0.50, 0.90, 1.20), shared fixed per-class service times and effectiveness within each paired cell. The alert stream supplies qualitative timing/class-pattern structure, not a human task rate.",
+      "assumptions": [
+        "Each alert record is only a modeled arrival proxy.",
+        "Opaque project labels are task classes, not measured competencies or confirmed clients.",
+        "Team size, effectiveness, service durations and offered load are hypothetical.",
+        "Windows are selected using demand-only rules before policy evaluation.",
+        "All policies receive identical ordered arrivals, task classes, service times and horizon."
+      ],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.temporal_task_allocation_policy_comparison"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_minimum_pending_work"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_max_effectiveness_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_effectiveness_load_ratio"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_specialist_with_idle_backup"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/soctra_demand_experiment.py"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_soctra_demand_experiment.py"
+        },
+        {
+          "kind": "local",
+          "path": "docs/RESEARCH.md"
+        }
+      ],
+      "status": "executed_restricted_data",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "incomplete"
+    },
+    {
+      "id": "result.organizational_strategy_tradeoffs_on_demand_patterns",
+      "type": "result",
+      "name": "Organization-policy trade-offs vary with competence structure and demand pattern",
+      "definition": "In 16 deterministic organization-by-window cells at rho=0.90, S0, S2 and S3 have lower all-task mean response than S1 in all cells. S1 gives the taskwise maximum effectiveness. S3 has equal or higher mean effectiveness than S0 but slower response in all 16 cells. These are outputs under constructed rosters and normalized alert-proxy patterns, not operational SOC effects.",
+      "scope": "Four 28-day demand-pattern windows x four four-agent hypothetical organizations, rho=0.90 primary and rho=0.50/1.20 sensitivity. No independent sampling unit or statistical inference.",
+      "assumptions": [
+        "The restricted snapshot, timestamp interpretation, opaque class ordering, organization matrices, service scaling and tie-breaks condition the result.",
+        "Task completion by H is distinct from all-task response.",
+        "No claim is made about GMV-CERT performance, real clients, analyst competence, or a deployed policy."
+      ],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.soc_organizational_strategy_pattern_comparison"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "studies/soctra_demand_experiment.py"
+        },
+        {
+          "kind": "local",
+          "path": "tests/test_soctra_demand_experiment.py"
+        },
+        {
+          "kind": "local",
+          "path": "docs/RESEARCH.md"
+        }
+      ],
+      "evidence_type": "exploratory",
+      "scientific_outcome": "AMBIGUOUS",
+      "evidence_availability": "The restricted CSV is not tracked. The runner, deterministic rules and aggregate findings are tracked; exact replay requires authorized access to the same snapshot.",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "incomplete"
     }
   ],
   "aliases": {
@@ -4059,6 +5370,24 @@
         "scenario.soc_alert_operations"
       ],
       "resolution": "Descriptive application alias for the proposed SOC alert operations scenario; not an active architecture name."
+    },
+    "HLS-01": {
+      "targets": [
+        "study.sequential_capacity_constrained_assignment"
+      ],
+      "kind": "historical_alias"
+    },
+    "HLS-02": {
+      "targets": [
+        "study.temporal_task_allocation_policy_comparison"
+      ],
+      "kind": "historical_alias"
+    },
+    "SOCTRA alert-demand replay": {
+      "targets": [
+        "experiment.soctra_timestamped_alert_demand_replay"
+      ],
+      "kind": "descriptive_study_alias"
     }
   },
   "bibliography": {
