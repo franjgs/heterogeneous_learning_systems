@@ -9,6 +9,20 @@ from hls.temporal_allocation import (
     run_fixed_temporal_policy,
     run_max_effectiveness_temporal_policy,
 )
+from studies.temporal_task_allocation import (
+    SENSITIVITY_AGENT_COUNTS,
+    SENSITIVITY_DEMANDS,
+    SENSITIVITY_EFFECTIVENESS,
+    SENSITIVITY_HORIZONS,
+    SENSITIVITY_SERVICE_TIMES,
+    SENSITIVITY_TASK_COUNT,
+    _fixed_mapping_variants,
+    _peak_window_load,
+    _sensitivity_arrivals,
+    _sensitivity_matrix,
+    run_sensitivity,
+    scenarios,
+)
 
 
 def test_temporal_runner_recovers_static_crossed_specialization_control():
@@ -39,9 +53,32 @@ def test_fcfs_single_server_capacity_recovers_on_completion_and_metrics_are_well
     assert result.p95_waiting_time == 0.5
     assert result.mean_response_time == 1.25
     assert result.p95_response_time == 1.5
+    assert result.pending_task_count_by_agent == (1,)
+    assert result.pending_task_count == 1
     assert result.pending_work_at_horizon_by_agent == (0.5,)
     assert result.utilization_by_agent == (1.0,)
     assert result.makespan == 2.0
+
+
+def test_pending_count_is_integer_and_work_includes_active_residual_and_queued_jobs():
+    result = run_max_effectiveness_temporal_policy(
+        tuple((0.0, 0) for _ in range(4)), ((1.0,),), (1.0,), 1.5
+    )
+    assert result.pending_task_count_by_agent == (3,)
+    assert isinstance(result.pending_task_count, int)
+    assert result.pending_task_count == 3
+    # One active task has 0.5 time left; two tasks are waiting, each 1.0.
+    assert result.pending_work_at_horizon_by_agent == (2.5,)
+    assert result.pending_work_at_horizon == 2.5
+
+
+def test_pending_metrics_are_measured_at_horizon_and_exclude_jobs_completed_at_horizon():
+    result = run_max_effectiveness_temporal_policy(
+        ((0.0, 0),), ((1.0,),), (1.0,), 1.0
+    )
+    assert result.decisions[0].completion_time == 1.0
+    assert result.pending_task_count == 0
+    assert result.pending_work_at_horizon == 0.0
 
 
 def test_fcfs_preserves_arrival_order_within_each_agent_queue():
@@ -154,3 +191,74 @@ def test_load_policy_uses_current_work_only_and_service_recovery():
     assert result.decisions[1].agent_index == 1
     assert result.decisions[2].workload_at_decision == 0.0
     assert result.decisions[2].agent_index == 0
+
+
+def test_sensitivity_profiles_have_declared_marginals_and_dominance_control():
+    for profile in tuple(SENSITIVITY_EFFECTIVENESS)[:3]:
+        for n_agents in SENSITIVITY_AGENT_COUNTS:
+            matrix = _sensitivity_matrix(profile, n_agents)
+            assert all(isclose(sum(row[k] for row in matrix) / n_agents, 0.6) for k in range(2))
+    dominant = _sensitivity_matrix("H3_agent_dominance", 4)
+    assert all(dominant[0][k] > dominant[i][k] for i in range(1, 4) for k in range(2))
+    assert tuple(max(row[k] for row in dominant) for k in range(2)) == (0.9, 0.8)
+
+
+def test_sensitivity_demand_traces_preserve_task_volume_and_encode_declared_shapes():
+    horizon = 48.0
+    traces = {profile: _sensitivity_arrivals(profile, horizon) for profile in SENSITIVITY_DEMANDS}
+    assert all(len(trace) == SENSITIVITY_TASK_COUNT for trace in traces.values())
+    assert all(sum(service[k] for _, k in trace) == 48.0 for trace in traces.values() for service in (SENSITIVITY_SERVICE_TIMES,))
+    for profile in ("D0_distributed", "D1_balanced_bursts", "D3_mixture_shift"):
+        assert sum(k == 0 for _, k in traces[profile]) == 24
+        assert sum(k == 1 for _, k in traces[profile]) == 24
+    assert all(k == 0 for _, k in traces["D2_class_concentrated_bursts"])
+    assert _peak_window_load(traces["D1_balanced_bursts"], horizon, 2) > _peak_window_load(traces["D0_distributed"], horizon, 2)
+    assert _sensitivity_arrivals("D3_mixture_shift", horizon)[23][1] == 0
+    assert _sensitivity_arrivals("D3_mixture_shift", horizon)[24][1] == 1
+
+
+def test_fixed_sensitivity_mappings_are_predeclared_and_nominal_mix_is_explicit():
+    matrix = _sensitivity_matrix("H2_marked_specialization", 4)
+    mappings = _fixed_mapping_variants("H2_marked_specialization", matrix)
+    assert mappings["P0_class_responsibility"] == (0, 1)
+    assert mappings["P0_fixed_duty_roster"] == (0, 1)
+    assert mappings["P0_nominal_mix_owner_75_25"] == (0, 0)
+
+
+def test_original_six_p0_p1_matches_remain_deliberate_controls():
+    for scenario in scenarios():
+        fixed = run_fixed_temporal_policy(
+            scenario.arrivals, scenario.effectiveness, scenario.service_times,
+            scenario.horizon, scenario.type_to_agent,
+        )
+        p1 = run_max_effectiveness_temporal_policy(
+            scenario.arrivals, scenario.effectiveness,
+            scenario.service_times, scenario.horizon,
+        )
+        assert tuple(d.agent_index for d in fixed.decisions) == tuple(
+            d.agent_index for d in p1.decisions
+        )
+
+
+def test_sensitivity_grid_pairs_all_policies_and_repeats_exactly():
+    first = run_sensitivity()
+    second = run_sensitivity()
+    assert first == second
+    assert first["cells"] == 4 * 4 * 2 * len(SENSITIVITY_HORIZONS) == 96
+    contrasts = first["contrasts"]
+    assert sum(row["contrast"] == "P2-P1" for row in contrasts) == 96
+    for baseline in (
+        "P0_class_responsibility",
+        "P0_fixed_duty_roster",
+        "P0_nominal_mix_owner_75_25",
+    ):
+        assert sum(row["contrast"] == f"P1-{baseline}" for row in contrasts) == 96
+        assert sum(row["contrast"] == f"P2-{baseline}" for row in contrasts) == 96
+    for row in contrasts:
+        if row["contrast"] == "P2-P1":
+            assert row["delta_effectiveness_mean"] <= 1e-12
+    rows = first["policy_rows"]
+    assert all(row["pending_tasks"] >= 0 and row["pending_work"] >= 0 for row in rows)
+    assert all(0 <= value <= 1 for row in rows for value in row["utilization"])
+    assert all(sum(row["assigned_count_by_agent"]) == SENSITIVITY_TASK_COUNT for row in rows)
+    assert all(isclose(sum(row["effectiveness_by_agent"]), row["effectiveness_total"]) for row in rows)

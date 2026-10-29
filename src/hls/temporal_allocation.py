@@ -51,6 +51,7 @@ class TemporalAllocationResult:
     assigned_count_by_agent: tuple[int, ...]
     effectiveness_by_agent: tuple[float, ...]
     mean_effectiveness_by_agent: tuple[float | None, ...]
+    pending_task_count_by_agent: tuple[int, ...]
     pending_work_at_horizon_by_agent: tuple[float, ...]
     utilization_by_agent: tuple[float, ...]
     makespan: float
@@ -58,6 +59,10 @@ class TemporalAllocationResult:
     @property
     def pending_work_at_horizon(self) -> float:
         return fsum(self.pending_work_at_horizon_by_agent)
+
+    @property
+    def pending_task_count(self) -> int:
+        return sum(self.pending_task_count_by_agent)
 
 
 def run_fixed_temporal_policy(
@@ -228,9 +233,17 @@ def _summarize(
         fsum(task.effectiveness for task in decisions if task.agent_index == agent)
         for agent in range(n_agents)
     )
-    pending = tuple(
-        max(0.0, max((task.completion_time for task in decisions if task.agent_index == agent), default=0.0) - horizon)
+    unfinished_by_agent = tuple(
+        tuple(
+            task for task in decisions
+            if task.agent_index == agent and task.completion_time > horizon
+        )
         for agent in range(n_agents)
+    )
+    pending_count = tuple(len(tasks) for tasks in unfinished_by_agent)
+    pending_work = tuple(
+        fsum(task.completion_time - max(task.service_start, horizon) for task in tasks)
+        for tasks in unfinished_by_agent
     )
     utilization = tuple(
         fsum(
@@ -255,7 +268,8 @@ def _summarize(
             effectiveness_by_agent[i] / assigned_count[i] if assigned_count[i] else None
             for i in range(n_agents)
         ),
-        pending_work_at_horizon_by_agent=pending,
+        pending_task_count_by_agent=pending_count,
+        pending_work_at_horizon_by_agent=pending_work,
         utilization_by_agent=utilization,
         makespan=max(task.completion_time for task in decisions) - min(task.arrival_time for task in decisions),
     )

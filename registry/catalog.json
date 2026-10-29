@@ -4336,9 +4336,10 @@
         "p95_wait": "Nearest-rank 95th percentile of start_n-arrival_n.",
         "mean_response": "sum_n(completion_n-arrival_n)/M; includes service.",
         "p95_response": "Nearest-rank 95th percentile of completion_n-arrival_n.",
-        "pending_work_at_H": "sum_i max(0, queue_tail_i(H)-H), in service-time units; includes residual active work and all queued work.",
+        "pending_work_at_H": "At H, sum over unfinished assigned tasks of completion_time - max(service_start, H); this is the active task residual plus full service time of queued tasks, in service-time units. May be fractional.",
         "utilization_by_agent": "For agent i, service time overlapping [0,H) divided by H; a proportion in [0,1].",
-        "makespan": "max_n completion_n - min_n arrival_n; elapsed time from first arrival to final completion."
+        "makespan": "max_n completion_n - min_n arrival_n; elapsed time from first arrival to final completion.",
+        "pending_task_count_at_H": "Integer count of assigned tasks with completion_time > H; tasks completing exactly at H are complete. Includes the task in service and all queued tasks."
       },
       "ontology_class": "evaluation",
       "bibliography_refs": [],
@@ -4348,12 +4349,14 @@
       "id": "study.temporal_task_allocation_policy_comparison",
       "type": "study",
       "name": "Temporal workload effects in heterogeneous task allocation",
-      "definition": "Deterministic study comparing fixed, maximum-effectiveness and effectiveness/load-ratio assignment under temporally varying arrivals and recoverable per-agent service capacity.",
-      "scope": "Six constructed controls; not empirical SOCTRA evaluation and not an HLS platform.",
+      "definition": "Deterministic study comparing fixed, maximum-effectiveness and effectiveness/load-ratio assignment under temporally varying arrivals, recoverable per-agent service capacity, and declared effectiveness/demand/load profiles.",
+      "scope": "Six original deterministic controls plus a paired 96-cell H×D×N×horizon sensitivity grid; constructed controls only, not empirical SOCTRA evaluation.",
       "assumptions": [
         "One deterministic service duration per task class, shared by all agents in the baseline.",
         "Every task is eventually completed; no deadlines or rejection.",
-        "Competence is not measured; e[i,k] is a constructed deterministic contribution."
+        "Competence is not measured; e[i,k] is a constructed deterministic contribution.",
+        "Sensitivity profiles and traces are constructed; offered-load ratios are not observed utilization.",
+        "H0-H2 preserve per-class mean effectiveness at 0.6; H3 is a separate dominant-agent control and does not preserve those marginals."
       ],
       "relationships": [
         {
@@ -4456,6 +4459,53 @@
       "evidence_maturity": "current_reproducible"
     },
     {
+      "id": "experiment.temporal_policy_sensitivity_grid",
+      "type": "experiment",
+      "name": "Paired deterministic sensitivity grid for temporal allocation",
+      "definition": "Evaluates fixed P0 mappings, maximum-effectiveness P1 and effectiveness-to-current-workload P2 on the same 48-task traces across four deterministic effectiveness profiles, four demand profiles, two workforce sizes and three arrival horizons.",
+      "scope": "96 H×D×N×horizon cells; no stochastic replication or statistical inference.",
+      "assumptions": [
+        "Unit service duration for both task classes; all tasks eventually complete.",
+        "H0-H2 have per-class marginal mean 0.6; for N=4 the H1/H2 rows are interleaved to avoid confounding index-ordered fixed routing with profile order. H3 is a dominance control with different marginal means.",
+        "Offered load is total offered service divided by N times horizon; peak window ratio is separately reported and neither is observed utilization.",
+        "All effectiveness values, traces and durations are synthetic controls, not SOCTRA measurements."
+      ],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.temporal_task_allocation_policy_comparison"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.fixed_temporal_type_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_max_effectiveness_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_effectiveness_load_ratio"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/temporal_task_allocation.py"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "status": "reproducible",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
       "id": "result.temporal_policy_tradeoffs_in_constructed_scenarios",
       "type": "result",
       "name": "Workload-aware routing has scenario-dependent time-effectiveness tradeoffs",
@@ -4490,6 +4540,45 @@
       "evidence_type": "technical_validation",
       "scientific_outcome": "AMBIGUOUS",
       "evidence_availability": "active_deterministic_fixtures_regenerate_exactly",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "result.temporal_policy_sensitivity_tradeoffs",
+      "type": "result",
+      "name": "Workload-aware allocation trades taskwise effectiveness for response in a subset of constructed regimes",
+      "definition": "In 96 deterministic cells, P2 response was faster than P1 in 54, equal in 42, and slower in none. Twenty-five faster cells had no effectiveness loss; 29 had lower effectiveness. P2 was not faster in 42 cells, with no effectiveness loss in those cells. P1 exceeded or matched each predeclared fixed baseline in all cells.",
+      "scope": "Exact descriptive outputs from the declared synthetic sensitivity grid; no statistical inference, SOC calibration or general policy ranking.",
+      "assumptions": [
+        "All tasks complete; P1 selects a per-task effectiveness maximizer and therefore maximizes the deterministic effectiveness sum.",
+        "Relative comparisons are within the same cell and use identical tasks, matrix, service times, horizon and number of servers."
+      ],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.temporal_policy_sensitivity_grid"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "studies/temporal_task_allocation.py"
+        },
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "AMBIGUOUS",
+      "evidence_availability": "deterministic_grid_regenerates_from_runner; no raw execution logs retained",
       "ontology_class": "result",
       "bibliography_refs": [],
       "evidence_maturity": "current_reproducible"

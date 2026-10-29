@@ -44,9 +44,10 @@ python studies/static_allocation.py
 python studies/competence_development.py
 python studies/sequential_task_allocation.py
 python studies/temporal_task_allocation.py
+python studies/temporal_task_allocation.py --sensitivity
 ~~~
 
-The study commands run small deterministic constructions, not historical campaigns. The sequential runner compares fixed, greedy online and exact offline allocation under non-replenishing capacity. The temporal runner compares fixed, effectiveness-only and effectiveness/load routing with one recoverable FCFS server per agent; its six fixtures are hypothetical and are not SOCTRA outcomes. Neither runner reproduces CE-04. The catalog validator checks identifiers, typed relations, bibliography keys, statuses and local references; it does not validate scientific truth or prove semantic compatibility.
+The study commands run small deterministic constructions, not historical campaigns. The sequential runner compares fixed, greedy online and exact offline allocation under non-replenishing capacity. The temporal runner compares fixed, effectiveness-only and effectiveness/load routing with one recoverable FCFS server per agent; its six fixtures and optional paired sensitivity grid are hypothetical and are not SOCTRA outcomes. Neither runner reproduces CE-04. The catalog validator checks identifiers, typed relations, bibliography keys, statuses and local references; it does not validate scientific truth or prove semantic compatibility.
 
 ## Starting research
 
