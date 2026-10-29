@@ -126,6 +126,53 @@ P1's per-task argmax ensures it cannot have lower deterministic effectiveness th
 
 The runner reports all paired contrasts per cell, including P1−P0 and P2−P0 for each frozen P0 mapping, and P2−P1 once per cell. It also prints exact metric rows, pending task count separately from pending service-time work, utilization by agent and makespan. Reproduce the grid with `PYTHONPATH=src python studies/temporal_task_allocation.py --sensitivity`; the default command continues to run only the six original controls. No sampling inference is applied to the constructed grid. The result does not establish a general policy ranking, SOC-level service values, or an effect of AI.
 
+#### Focused organizational controls and policy counterexample
+
+The 96-cell grid's five cases where the fixed duty-roster P0 has lower mean response than P2 are all H3 dominance cases, with mapping `(0,1)`. P0's class split keeps class-1 work off the dominant class-0 worker, while P2's score continues to favor the dominant worker for both classes; the weak worker only receives selected tasks after the dominant queue has grown. P2 therefore leaves some load on one worker and can have longer responses than the deliberately split fixed roster. P1 maximizes effectiveness by sending every task to the dominant worker, causing the largest queues.
+
+| H3 cell | Policy | Effect mean / total | Response mean / P95 | Tasks per agent | Pending tasks / work | Utilization by agent |
+|---|---|---:|---:|---|---:|---|
+| D0, N=2, H=24 | P0 `(0,1)` | .5500 / 26.4 | 1.0000 / 1.0 | (24,24) | 2 / 1.00 | (.9896,.9688) |
+|  | P1 | .8500 / 40.8 | 12.7500 / 23.5 | (48,0) | 25 / 24.25 | (.9896,0) |
+|  | P2 | .6208 / 29.8 | 1.7500 / 2.5 | (26,22) | 4 / 2.50 | (.9896,.9063) |
+| D0, N=4, H=24 | P0 `(0,1)` | .5500 / 26.4 | 1.0000 / 1.0 | (24,24,0,0) | 2 / 1.00 | (.9896,.9688,0,0) |
+|  | P1 | .8500 / 40.8 | 12.7500 / 23.5 | (48,0,0,0) | 25 / 24.25 | (.9896,0,0,0) |
+|  | P2 | .6208 / 29.8 | 1.7500 / 2.5 | (26,22,0,0) | 4 / 2.50 | (.9896,.9063,0,0) |
+| D1, N=2, H=24 | P0 `(0,1)` | .5500 / 26.4 | 5.5833 / 10.1667 | (24,24) | 8 / 6.1667 | (.8733,.8698) |
+|  | P1 | .8500 / 40.8 | 17.5417 / 32.25 | (48,0) | 28 / 27.0417 | (.8733,0) |
+|  | P2 | .6833 / 32.8 | 7.8368 / 16.3333 | (32,16) | 13 / 11.0833 | (.8733,.6649) |
+| D1, N=2, H=48 | P0 `(0,1)` | .5500 / 26.4 | 4.6667 / 8.3333 | (24,24) | 0 / 0 | (.5000,.5000) |
+|  | P1 | .8500 / 40.8 | 10.5833 / 19.3333 | (48,0) | 7 / 6.0833 | (.8733,0) |
+|  | P2 | .6833 / 32.8 | 5.3611 / 11.5 | (32,16) | 0 / 0 | (.6667,.3333) |
+| D1, N=2, H=96 | P0 `(0,1)` | .5500 / 26.4 | 2.8333 / 4.6667 | (24,24) | 0 / 0 | (.2500,.2500) |
+|  | P1 | .8500 / 40.8 | 8.6667 / 15.6667 | (48,0) | 0 / 0 | (.5000,0) |
+|  | P2 | .6625 / 31.8 | 3.4028 / 7.0 | (30,18) | 0 / 0 | (.3125,.1875) |
+
+Within the five cells P0's response is lower than P2's by 0.57–2.25 time units in the listed rows. For N=4, the three weak agents have identical profiles; lowest-index tie-breaking selects agent 1 and leaves agents 2–3 idle in these outcomes. Thus headcount alone does not guarantee effective use of nominal capacity under this policy and tie rule. These are the exact cases found by contrast against the fixed duty-roster variant; other P0 mappings need not have the same ordering.
+
+A separate focal set uses five two-agent structures and two 24-task simultaneous-arrival traces, all with H=24 and unit service times. The fixed map is selected before routing: R1 splits `(0,1)` to avoid reducing the equivalent-worker control to P1's tie-to-zero rule; R2/R3/R5 assign each class to its best agent; R4 maps both classes to the dominant agent. The table gives mean effectiveness and response mean/P95 as P0/P1/P2; task split and utilization are shown for P2. Pending task count and work are zero in all these cells at H=24.
+
+| Structure | Demand | Effect mean P0/P1/P2 | Response mean P0/P1/P2 | Response P95 P0/P1/P2 | P2 tasks by agent | P2 utilization |
+|---|---|---:|---:|---:|---:|---:|
+| R1 equivalent `(.7,.7)/(.7,.7)` | balanced | .700/.700/.700 | 6.50/12.50/6.50 | 12/23/12 | (12,12) | (.50,.50) |
+| R1 equivalent | class-0 burst | .700/.700/.700 | 12.50/12.50/6.50 | 23/23/12 | (12,12) | (.50,.50) |
+| R2 crossed `(.9,.3)/(.3,.9)` | balanced | .900/.900/.900 | 6.50/6.50/6.50 | 12/12/12 | (12,12) | (.50,.50) |
+| R2 crossed | class-0 burst | .900/.900/.750 | 12.50/12.50/8.00 | 23/23/17 | (18,6) | (.75,.25) |
+| R3 moderate `(.8,.55)/(.55,.8)` | balanced | .800/.800/.800 | 6.50/6.50/6.50 | 12/12/12 | (12,12) | (.50,.50) |
+| R3 moderate | class-0 burst | .800/.800/.696 | 12.50/12.50/6.67 | 23/23/13 | (14,10) | (.58,.42) |
+| R4 dominant `(.9,.8)/(.4,.3)` | balanced | .850/.850/.704 | 12.50/12.50/7.54 | 23/23/16 | (17,7) | (.71,.29) |
+| R4 dominant | class-0 burst | .900/.900/.754 | 12.50/12.50/7.54 | 23/23/16 | (17,7) | (.71,.29) |
+| R5 partial polyvalence `(.8,.72)/(.45,.85)` | balanced | .825/.825/.825 | 6.50/6.50/6.50 | 12/12/12 | (12,12) | (.50,.50) |
+| R5 partial polyvalence | class-0 burst | .800/.800/.683 | 12.50/12.50/7.17 | 23/23/15 | (16,8) | (.67,.33) |
+
+The focal controls suggest a conditional mechanism: redistribution is useful for response when one worker's queue would otherwise accumulate and another can accept work, but effectiveness falls when the receiving agent contributes less. Under balanced demand and crossed or moderate specialization, the expertise-based assignment already balances the work, leaving P2 unchanged. Homogeneous workers allow load balancing with no modeled effectiveness loss. A dominant generalist can still induce a response/effectiveness trade-off because P2's score trades off the two quantities task by task. These are exact scenario outcomes, not an optimization result or recommendation for real analysts.
+
+**Counterexample to response-optimality of P2:** the smallest counterexample found in the bounded searches used two agents, two classes, three tasks, matrix `((.2,.2),(.2,.4))`, arrivals `((0,0),(.5,0),(.5,1))`, and service `(1,1)` or `(1,2)`. P1 assigns `(0,0,1)`; with unit service its responses are `(1,1.5,1)`, mean `1.1667`, P95 `1.5`; P2 assigns `(0,1,1)` with responses `(1,1,2)`, mean `1.3333`, P95 `2.0`. Both have total effectiveness `.8`. P2 moves the second equal-effectiveness class-0 task to idle agent 1; the next class-1 task then waits behind it. With service `(1,2)`, assignments remain the same; mean responses are `1.5` for P1 versus `1.6667` for P2 (P95 `2` versus `3`). The finite searches checked N=2, K=2, effectiveness entries from `{.2,.4,.6,.8,1}`, nondecreasing arrivals from `{0,.5,1}`, and one to three tasks, with equal service `(1,1)` and separately unequal service `(1,2)` or `(2,1)`; they found no smaller counterexample in those discrete domains. They do not establish a global minimum over continuous parameter spaces.
+
+**Simultaneous-arrival order:** in R2 with 12 tasks, equal class totals and all arrivals at zero, alternating class order gives P2 mean response `3.5`, P95 `6`; blocked order (six class 0 followed by six class 1) gives `3.5833`, P95 `7`, with lower mean effectiveness (`.85` versus `.90`). P1's response is unchanged at `3.5` and P95 `6` because class-to-specialist assignments split the queues. FCFS preserves the supplied order; it does not canonicalize ties. Therefore the event sequence is part of the scenario specification whenever equal-time tasks can share an agent.
+
+The existing metric set was sufficient: per-task effectiveness, waiting/response distributions, per-agent task/effectiveness contributions, horizon pending count/work, utilization and makespan explain these controls. No new composite utility or extra metric was introduced. Reproduce the focused table with `PYTHONPATH=src python studies/temporal_task_allocation.py --focused-organizations`; reproduce the P2>P1 counterexample using the regression test `test_p2_can_have_higher_mean_and_p95_response_than_p1`.
+
 ### Dynamic competence-state change and future value
 
 - **Stable ID:** `study.dynamic_competence_development`; **historical aliases:** G2, two-period control cases.

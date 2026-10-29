@@ -4350,13 +4350,14 @@
       "type": "study",
       "name": "Temporal workload effects in heterogeneous task allocation",
       "definition": "Deterministic study comparing fixed, maximum-effectiveness and effectiveness/load-ratio assignment under temporally varying arrivals, recoverable per-agent service capacity, and declared effectiveness/demand/load profiles.",
-      "scope": "Six original deterministic controls plus a paired 96-cell H×D×N×horizon sensitivity grid; constructed controls only, not empirical SOCTRA evaluation.",
+      "scope": "Six original controls, paired 96-cell sensitivity grid, five-structure focused controls, simultaneous-order probe, and exact small P2 response counterexample; constructed deterministic studies only, not empirical SOCTRA evaluation.",
       "assumptions": [
         "One deterministic service duration per task class, shared by all agents in the baseline.",
         "Every task is eventually completed; no deadlines or rejection.",
         "Competence is not measured; e[i,k] is a constructed deterministic contribution.",
         "Sensitivity profiles and traces are constructed; offered-load ratios are not observed utilization.",
-        "H0-H2 preserve per-class mean effectiveness at 0.6; H3 is a separate dominant-agent control and does not preserve those marginals."
+        "H0-H2 preserve per-class mean effectiveness at 0.6; H3 is a separate dominant-agent control and does not preserve those marginals.",
+        "Equal-time arrivals retain the supplied sequence order, which determines FCFS order when tasks join the same queue."
       ],
       "relationships": [
         {
@@ -4548,7 +4549,7 @@
       "id": "result.temporal_policy_sensitivity_tradeoffs",
       "type": "result",
       "name": "Workload-aware allocation trades taskwise effectiveness for response in a subset of constructed regimes",
-      "definition": "In 96 deterministic cells, P2 response was faster than P1 in 54, equal in 42, and slower in none. Twenty-five faster cells had no effectiveness loss; 29 had lower effectiveness. P2 was not faster in 42 cells, with no effectiveness loss in those cells. P1 exceeded or matched each predeclared fixed baseline in all cells.",
+      "definition": "In 96 deterministic cells, P2 response was faster than P1 in 54, equal in 42, and slower in none. Twenty-five faster cells had no effectiveness loss; 29 had lower effectiveness. P2 was not faster in 42 cells, with no effectiveness loss in those cells. P1 exceeded or matched each predeclared fixed baseline in all cells. Under the predeclared fixed duty-roster P0 contrast, five H3 cells had lower mean response under P0 than P2; these are fixed-mapping-specific, not a general ordering.",
       "scope": "Exact descriptive outputs from the declared synthetic sensitivity grid; no statistical inference, SOC calibration or general policy ranking.",
       "assumptions": [
         "All tasks complete; P1 selects a per-task effectiveness maximizer and therefore maximizes the deterministic effectiveness sum.",
@@ -4612,6 +4613,171 @@
       ],
       "status": "retained",
       "ontology_class": "theoretical_result",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "experiment.temporal_focused_organization_controls",
+      "type": "experiment",
+      "name": "Focused temporal allocation controls across five competence structures",
+      "definition": "Compares fixed, maximum-effectiveness and effectiveness-to-workload assignment for equivalent, crossed-specialist, moderately specialized, dominant-agent and partially polyvalent two-agent matrices under simultaneous balanced and class-concentrated bursts.",
+      "scope": "Ten deterministic constructed cells; N=2, 24 tasks, H=24, unit service by class; descriptive only.",
+      "assumptions": [
+        "Effectiveness entries are fixed deterministic objective contributions, not success probabilities or empirical competence.",
+        "The fixed mapping is declared per structure before routing; no empirical SOC parameters are used.",
+        "All tasks are processed and queues drain; there are no deadlines, learning, cooperation or AI effects."
+      ],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.temporal_task_allocation_policy_comparison"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.fixed_temporal_type_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_max_effectiveness_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_effectiveness_load_ratio"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/temporal_task_allocation.py"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "status": "reproducible",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "experiment.temporal_load_ratio_response_counterexample",
+      "type": "experiment",
+      "name": "Three-task counterexample to response optimality of load-ratio routing",
+      "definition": "Evaluates P1 and P2 on a three-task, two-agent, two-class deterministic sequence, first with equal service times and then with unequal class service times.",
+      "scope": "Exact small counterexample fixture; no statistical inference.",
+      "assumptions": [
+        "Fixed effectiveness and positive deterministic class service times.",
+        "Same ordered arrivals, agents and inputs under both policies."
+      ],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.temporal_task_allocation_policy_comparison"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_max_effectiveness_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_effectiveness_load_ratio"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/temporal_task_allocation.py"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "status": "reproducible",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "result.temporal_focused_organization_tradeoffs",
+      "type": "result",
+      "name": "Redistribution trades deterministic effectiveness for shorter responses in selected burst regimes",
+      "definition": "Across five constructed two-agent structures, P2 matched P1 on balanced bursts in equivalent, crossed, moderate-specialization and partially polyvalent cases; under class-concentrated bursts it shortened response by redistributing work, with structure-dependent effectiveness loss. In the dominance structure it also redistributed during balanced bursts.",
+      "scope": "Ten exact deterministic cells; descriptive scenario outcomes, not SOC evidence or a general policy ranking.",
+      "assumptions": [
+        "Matrices, arrivals and unit service durations are synthetic and fixed.",
+        "No statistical inference is applied to the deterministic tasks."
+      ],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.temporal_focused_organization_controls"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "studies/temporal_task_allocation.py"
+        },
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "AMBIGUOUS",
+      "evidence_availability": "regenerable from deterministic focused runner; no execution logs retained",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "result.temporal_load_ratio_not_response_optimal",
+      "type": "result",
+      "name": "Effectiveness-to-workload routing is not generally response-optimal",
+      "definition": "A three-task exact counterexample gives P2 mean response 4/3 versus P1 7/6 with unit service times; with service times (1,2), P2 mean response is 5/3 versus P1 3/2. Both cases retain total effectiveness 0.8 and the same policy assignments.",
+      "scope": "Counterexample to a universal response-minimization guarantee for P2; does not establish general response optimality of P1.",
+      "assumptions": [
+        "Two agents, two classes, fixed matrix ((0.2,0.2),(0.2,0.4)), arrivals ((0,0),(0.5,0),(0.5,1)).",
+        "The finite search for smaller examples covered only declared discrete effectiveness, arrival-time and service grids."
+      ],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.temporal_load_ratio_response_counterexample"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        },
+        {
+          "kind": "local",
+          "path": "docs/RESEARCH.md"
+        }
+      ],
+      "evidence_type": "exact_computation",
+      "scientific_outcome": "NEGATIVE",
+      "evidence_availability": "exact fixture reproducible by regression test; no raw logs needed",
+      "ontology_class": "result",
       "bibliography_refs": [],
       "evidence_maturity": "current_reproducible"
     }

@@ -10,6 +10,7 @@ from hls.temporal_allocation import (
     run_max_effectiveness_temporal_policy,
 )
 from studies.temporal_task_allocation import (
+    FOCUSED_ORGANIZATIONS,
     SENSITIVITY_AGENT_COUNTS,
     SENSITIVITY_DEMANDS,
     SENSITIVITY_EFFECTIVENESS,
@@ -21,6 +22,7 @@ from studies.temporal_task_allocation import (
     _sensitivity_arrivals,
     _sensitivity_matrix,
     run_sensitivity,
+    run_focused_organizations,
     scenarios,
 )
 
@@ -193,6 +195,52 @@ def test_load_policy_uses_current_work_only_and_service_recovery():
     assert result.decisions[2].agent_index == 0
 
 
+@pytest.mark.parametrize(
+    "service,expected_p1,expected_p2,mean_p1,mean_p2,p95_p1,p95_p2",
+    [
+        ((1.0, 1.0), (1.0, 1.5, 1.0), (1.0, 1.0, 2.0), 7 / 6, 4 / 3, 1.5, 2.0),
+        ((1.0, 2.0), (1.0, 1.5, 2.0), (1.0, 1.0, 3.0), 1.5, 5 / 3, 2.0, 3.0),
+    ],
+)
+def test_p2_can_have_higher_mean_and_p95_response_than_p1(service, expected_p1, expected_p2, mean_p1, mean_p2, p95_p1, p95_p2):
+    arrivals = ((0.0, 0), (0.5, 0), (0.5, 1))
+    matrix = ((0.2, 0.2), (0.2, 0.4))
+    p1 = run_max_effectiveness_temporal_policy(arrivals, matrix, service, 2.0)
+    p2 = run_effectiveness_load_temporal_policy(arrivals, matrix, service, 2.0)
+    assert tuple(d.agent_index for d in p1.decisions) == (0, 0, 1)
+    assert tuple(d.agent_index for d in p2.decisions) == (0, 1, 1)
+    assert tuple(d.response_time for d in p1.decisions) == expected_p1
+    assert tuple(d.response_time for d in p2.decisions) == expected_p2
+    assert p2.mean_response_time > p1.mean_response_time
+    assert isclose(p1.mean_response_time, mean_p1)
+    assert isclose(p2.mean_response_time, mean_p2)
+    assert p1.p95_response_time == p95_p1
+    assert p2.p95_response_time == p95_p2
+    assert p1.total_effectiveness == p2.total_effectiveness == 0.8
+
+
+def test_simultaneous_arrival_input_order_can_change_p2_but_not_p1_outcomes():
+    matrix, service = ((0.9, 0.3), (0.3, 0.9)), (1.0, 1.0)
+    alternating = tuple((0.0, task_type) for task_type in (0, 1) * 6)
+    blocked = tuple((0.0, task_type) for task_type in (0,) * 6 + (1,) * 6)
+    for runner in (run_max_effectiveness_temporal_policy, run_effectiveness_load_temporal_policy):
+        first = runner(alternating, matrix, service, 24.0)
+        second = runner(blocked, matrix, service, 24.0)
+        assert len(first.decisions) == len(second.decisions) == 12
+    p1_a = run_max_effectiveness_temporal_policy(alternating, matrix, service, 24.0)
+    p1_b = run_max_effectiveness_temporal_policy(blocked, matrix, service, 24.0)
+    p2_a = run_effectiveness_load_temporal_policy(alternating, matrix, service, 24.0)
+    p2_b = run_effectiveness_load_temporal_policy(blocked, matrix, service, 24.0)
+    assert p1_a.mean_response_time == p1_b.mean_response_time
+    assert p2_a.mean_response_time != p2_b.mean_response_time
+
+
+def test_focused_organization_results_are_reproducible_and_cover_all_profiles():
+    rows = run_focused_organizations()
+    assert len(rows) == len(FOCUSED_ORGANIZATIONS) * 2 * 3
+    assert rows == run_focused_organizations()
+
+
 def test_sensitivity_profiles_have_declared_marginals_and_dominance_control():
     for profile in tuple(SENSITIVITY_EFFECTIVENESS)[:3]:
         for n_agents in SENSITIVITY_AGENT_COUNTS:
@@ -254,6 +302,18 @@ def test_sensitivity_grid_pairs_all_policies_and_repeats_exactly():
     ):
         assert sum(row["contrast"] == f"P1-{baseline}" for row in contrasts) == 96
         assert sum(row["contrast"] == f"P2-{baseline}" for row in contrasts) == 96
+    p0_faster = [
+        row for row in contrasts
+        if row["contrast"] == "P2-P0_fixed_duty_roster"
+        and row["delta_response_mean"] > 1e-12
+    ]
+    assert {row["cell"] for row in p0_faster} == {
+        "H3_agent_dominance|D0_distributed|N2|H24",
+        "H3_agent_dominance|D0_distributed|N4|H24",
+        "H3_agent_dominance|D1_balanced_bursts|N2|H24",
+        "H3_agent_dominance|D1_balanced_bursts|N2|H48",
+        "H3_agent_dominance|D1_balanced_bursts|N2|H96",
+    }
     for row in contrasts:
         if row["contrast"] == "P2-P1":
             assert row["delta_effectiveness_mean"] <= 1e-12

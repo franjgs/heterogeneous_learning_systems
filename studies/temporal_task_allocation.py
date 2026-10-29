@@ -28,6 +28,17 @@ SENSITIVITY_HORIZONS = (24.0, 48.0, 96.0)
 SENSITIVITY_TASK_COUNT = 48
 SENSITIVITY_SERVICE_TIMES = (1.0, 1.0)
 NOMINAL_CLASS_MIX = (0.75, 0.25)
+FOCUSED_ORGANIZATIONS = {
+    "R1_equivalent": ((0.7, 0.7), (0.7, 0.7)),
+    "R2_crossed_specialization": ((0.9, 0.3), (0.3, 0.9)),
+    "R3_moderate_specialization": ((0.8, 0.55), (0.55, 0.8)),
+    "R4_dominant_worker": ((0.9, 0.8), (0.4, 0.3)),
+    "R5_partial_polyvalence": ((0.8, 0.72), (0.45, 0.85)),
+}
+FOCUSED_DEMANDS = {
+    "balanced_simultaneous": tuple((0.0, k) for k in (0, 1) * 12),
+    "class0_concentrated": tuple((0.0, 0) for _ in range(24)),
+}
 
 
 @dataclass(frozen=True)
@@ -148,6 +159,61 @@ def _peak_window_load(arrivals: tuple[tuple[float, int], ...], horizon: float, n
 
 def _relative_change(value: float, baseline: float) -> float | None:
     return 100.0 * (value - baseline) / baseline if baseline != 0 else None
+
+
+def run_focused_organizations() -> tuple[dict[str, object], ...]:
+    """Compare five two-agent organization profiles on two matched bursts."""
+    rows: list[dict[str, object]] = []
+    for organization, matrix in FOCUSED_ORGANIZATIONS.items():
+        if organization == "R1_equivalent":
+            fixed_mapping = (0, 1)  # predeclared split to avoid the P1 tie-to-0 roster
+        else:
+            fixed_mapping = tuple(
+                max(range(len(matrix)), key=lambda agent: matrix[agent][task_type])
+                for task_type in range(2)
+            )
+        for demand, arrivals in FOCUSED_DEMANDS.items():
+            results = (
+                run_fixed_temporal_policy(arrivals, matrix, (1.0, 1.0), 24.0, fixed_mapping),
+                run_max_effectiveness_temporal_policy(arrivals, matrix, (1.0, 1.0), 24.0),
+                run_effectiveness_load_temporal_policy(arrivals, matrix, (1.0, 1.0), 24.0),
+            )
+            for result in results:
+                rows.append({
+                    "organization": organization,
+                    "demand": demand,
+                    "fixed_mapping": fixed_mapping,
+                    "policy": result.policy,
+                    "effectiveness_total": result.total_effectiveness,
+                    "effectiveness_mean": result.mean_effectiveness,
+                    "response_mean": result.mean_response_time,
+                    "response_p95": result.p95_response_time,
+                    "assigned_count_by_agent": result.assigned_count_by_agent,
+                    "pending_tasks": result.pending_task_count,
+                    "pending_work": result.pending_work_at_horizon,
+                    "utilization_by_agent": result.utilization_by_agent,
+                })
+    return tuple(rows)
+
+
+def _focused_report(rows: tuple[dict[str, object], ...]) -> str:
+    headers = (
+        "Organization", "Demand", "Policy", "Fixed map", "Effect mean", "Response mean",
+        "Response P95", "Tasks/agent", "Pending tasks", "Pending work", "Utilization",
+    )
+    lines = [
+        "| " + " | ".join(headers) + " |",
+        "|" + "|".join("---" for _ in headers) + "|",
+    ]
+    for row in rows:
+        lines.append(
+            f"| {row['organization']} | {row['demand']} | {row['policy']} | {row['fixed_mapping']} "
+            f"| {row['effectiveness_mean']:.4f} | {row['response_mean']:.4f} | {row['response_p95']:.4f} "
+            f"| {row['assigned_count_by_agent']} | {row['pending_tasks']} | {row['pending_work']:.4f} "
+            f"| {row['utilization_by_agent']} |"
+        )
+    lines.append("\nSynthetic fixed-control study only; no SOCTRA operational parameters are inferred.")
+    return "\n".join(lines)
 
 
 def run_sensitivity() -> dict[str, object]:
@@ -359,6 +425,27 @@ def _sensitivity_report(result: dict[str, object]) -> str:
         high = sum(row["delta_effectiveness_mean"] > 1e-12 for row in p2_vs)
         lines.append(f"| {label} | {p1_better}/{len(relevant)} | {p2_faster}/{len(p2_vs)} | {low}/{equal}/{high} |")
 
+    row_lookup = {(row["cell"], row["policy"]): row for row in rows}
+    p0_slower = [
+        row for row in contrasts
+        if row["contrast"] == "P2-P0_fixed_duty_roster"
+        and row["delta_response_mean"] > 1e-12
+    ]
+    lines += [
+        "",
+        "Cells where fixed duty-roster P0 has lower mean response than P2:",
+        "| Cell | P0 mapping | Policy | Effect mean/total | Response mean/P95 | Tasks/agent | Pending tasks/work | Utilization |",
+        "|---|---|---|---:|---:|---|---|---|",
+    ]
+    for contrast in p0_slower:
+        for policy in ("P0_fixed_duty_roster", "P1_max_effectiveness", "P2_effectiveness_load"):
+            row = row_lookup[(contrast["cell"], policy)]
+            lines.append(
+                f"| {row['cell']} | (0, 1) | {policy} | {row['effectiveness_mean']:.4f}/{row['effectiveness_total']:.4f} "
+                f"| {row['response_mean']:.4f}/{row['response_p95']:.4f} | {row['assigned_count_by_agent']} "
+                f"| {row['pending_tasks']}/{row['pending_work']:.4f} | {row['utilization']} |"
+            )
+
     worst = sorted(p2p1, key=lambda row: row["relative_response_percent"], reverse=True)[:3]
     lines += ["", "Largest P2 response-time worsenings relative to P1:"]
     if worst and worst[0]["relative_response_percent"] > 1e-12:
@@ -480,8 +567,16 @@ if __name__ == "__main__":
         "--sensitivity", action="store_true",
         help="run the deterministic H×D×N×horizon sensitivity grid",
     )
+    parser.add_argument(
+        "--focused-organizations", action="store_true",
+        help="compare five fixed-effectiveness organizations on two matched bursts",
+    )
     args = parser.parse_args()
-    if args.sensitivity:
+    if args.sensitivity and args.focused_organizations:
+        parser.error("choose only one optional study mode")
+    if args.focused_organizations:
+        print(_focused_report(run_focused_organizations()))
+    elif args.sensitivity:
         print(_sensitivity_report(run_sensitivity()))
     else:
         results = run()

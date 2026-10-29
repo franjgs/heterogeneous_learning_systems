@@ -114,6 +114,8 @@ In the active temporal FCFS model, let a finite sequence contain tasks \(k_1,\ld
 
 The statement concerns effectiveness only. It does not imply minimum waiting, response time, makespan, or maximum throughput. A load-aware policy may obtain shorter queues or responses by assigning some tasks to lower-effectiveness agents. The result would cease to apply if tasks could remain unfinished at evaluation, agents had task-specific ineligibility, effectiveness changed with time/load, or completion altered the task contribution. The implementation and deterministic controls are recorded under `study.temporal_task_allocation_policy_comparison` in the catalog and in `docs/RESEARCH.md`.
 
+The load-ratio rule `e[i,k] / (W_i + s_k)` is not generally response-optimal. An exact three-task counterexample uses two agents, two classes, `e = ((0.2,0.2),(0.2,0.4))`, service times `(1,1)`, and arrivals `((0,0),(0.5,0),(0.5,1))`. P1 assigns agents `(0,0,1)`, giving responses `(1,1.5,1)`, mean `7/6`, P95 `1.5`. P2 assigns `(0,1,1)`: at the second task it sends the type-0 task to idle agent 1 because `0.2/1 > 0.2/1.5`; that makes agent 1's later type-1 task wait, producing responses `(1,1,2)`, mean `4/3`, P95 `2`. Total effectiveness remains `0.8`. With service times `(1,2)`, the same assignments yield P1 responses `(1,1.5,2)`, mean `1.5`, and P2 responses `(1,1,3)`, mean `5/3`. This finite counterexample refutes a general response-minimization guarantee for P2; it does not establish that P1 is generally response-optimal. A regression test records both service-duration cases.
+
 ## 5. Action-dependent state change and future development value
 
 The minimal endogenous dynamic boundary is an action-dependent state transition:
