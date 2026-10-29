@@ -224,6 +224,7 @@ def test_completed_horizon_metrics_exclude_tasks_that_finish_after_horizon():
     assert row["effectiveness_mean"] == pytest.approx(0.6)
     assert row["completed_effectiveness_total"] == pytest.approx(0.8)
     assert row["completed_effectiveness_mean"] == pytest.approx(0.8)
+    assert row["j_h"] == pytest.approx(0.4)
     assert row["completed_response_mean"] == pytest.approx(0.6)
     assert row["completed_response_p95"] == pytest.approx(0.6)
     assert row["pending_work"] == pytest.approx(0.2)
@@ -275,8 +276,7 @@ def test_s0_s4_comparison_pairs_inputs_reports_aggregate_adaptation_and_repeats(
     result = run_adaptive_organizational_comparison(path)
     assert len(result["primary_rows"]) == 4 * 4 * 3 * 5
     assert len(result["diagnostics"]) == 4 * 4 * 3
-    assert len(result["sensitivity_rows"]) == 4 * 4 * 2
-    assert len(result["no_hysteresis_rows"]) == 4 * 4
+    assert len(result["service_sensitivity_rows"]) == 4 * 4 * 5
     for window in ("usual_28d", "peak_28d", "mix_shift_28d", "post_mix_shift_28d"):
         for profile in ("homogeneous", "specialized", "partially_polyvalent", "dominant_worker"):
             cell = [r for r in result["primary_rows"] if r["trace"] == window and r["organization"] == profile and r["offered_load"] == 0.9]
@@ -285,9 +285,12 @@ def test_s0_s4_comparison_pairs_inputs_reports_aggregate_adaptation_and_repeats(
             assert len({r["service_profile"] for r in cell}) == 1
             assert all(r["tasks"] == r["completed_tasks"] + r["pending_tasks_count"] for r in cell)
             assert all(0 <= r["effectiveness_mean"] <= 1 for r in cell)
+            assert all(0 <= r["j_h"] <= r["completed_fraction"] <= 1 for r in cell)
     assert result == run_adaptive_organizational_comparison(path)
     report = format_adaptive_organizational_report(result)
-    assert "HLS-03" in report and "no hysteresis" in report.lower()
+    assert "240 matched evaluations" in report and "80 paired evaluations" in report
+    assert "J_H" in report and "threshold sensitivity" not in report.lower()
+    assert "usual_28d" in report and "Maximum J_H policy" in report
     assert "p-0" not in report and "id-" not in report
 
 

@@ -49,11 +49,6 @@ S3_PRIMARY_THRESHOLD = 1.0
 S3_THRESHOLD_SENSITIVITY = (0.5, 2.0)
 S3_BACKUP_EFFECTIVENESS_FLOOR = 0.50
 S4_PRIMARY_THRESHOLDS = AdaptiveThresholds()
-S4_THRESHOLD_SENSITIVITY = (
-    ("lower_thresholds", AdaptiveThresholds(0.20, 0.80, 0.60, 0.12, 0.28, 0.20)),
-    ("higher_thresholds", AdaptiveThresholds(0.30, 1.20, 0.90, 0.18, 0.42, 0.30)),
-)
-S4_NO_HYSTERESIS = AdaptiveThresholds(0.25, 1.0, 1.0, 0.25, 0.35, 0.35)
 
 
 @dataclass(frozen=True)
@@ -634,11 +629,13 @@ def run_organizational_strategy_comparison(path: str | Path) -> dict[str, object
 
 
 def run_adaptive_organizational_comparison(path: str | Path) -> dict[str, object]:
-    """Matched S0-S4 replay with predeclared S4 thresholds and sensitivity.
+    """Run the 240 matched S0-S4 cells and a bounded service-time sensitivity.
 
     The SOCTRA records supply qualitative relative arrival timing and opaque
     class patterns only. The controller's ``s_ref`` is the arithmetic mean
-    of the scenario's fixed class service-time vector.
+    of the scenario's fixed class service-time vector. The sensitivity keeps
+    the same class service-time vector for every agent and normalizes total
+    offered work to the same rho.
     """
     source = load_soctra_demand(path)
     names = ("usual_28d", "peak_28d", "mix_shift_28d", "post_mix_shift_28d")
@@ -646,8 +643,7 @@ def run_adaptive_organizational_comparison(path: str | Path) -> dict[str, object
     if missing:
         raise ValueError("missing predeclared demand windows: " + ", ".join(missing))
     primary_rows: list[dict[str, object]] = []
-    sensitivity_rows: list[dict[str, object]] = []
-    no_hysteresis_rows: list[dict[str, object]] = []
+    service_sensitivity_rows: list[dict[str, object]] = []
     diagnostics: list[dict[str, object]] = []
     for window in names:
         trace = source.traces[window]
@@ -682,28 +678,30 @@ def run_adaptive_organizational_comparison(path: str | Path) -> dict[str, object
                     "diagnostics": adaptive.diagnostics,
                 })
                 if load == 0.90:
-                    for label, thresholds in S4_THRESHOLD_SENSITIVITY:
-                        result = run_adaptive_temporal_policy(
-                            arrivals, matrix, service, trace.horizon, thresholds
-                        )
-                        row = _row(window, profile, load, "uniform", "class_ascending", "S4", result.allocation)
-                        row["threshold_set"] = label
-                        row["transition_count"] = result.diagnostics.transition_count
-                        row["strategy_decision_counts"] = result.diagnostics.strategy_decision_counts
-                        sensitivity_rows.append(row)
-                    no_hyst = run_adaptive_temporal_policy(
-                        arrivals, matrix, service, trace.horizon, S4_NO_HYSTERESIS
+                    service = _service_times(arrivals, load, "class_heterogeneous")
+                    for policy, result in {
+                        "S0": run_lowest_workload_temporal_policy(arrivals, matrix, service, trace.horizon),
+                        "S1": run_max_effectiveness_temporal_policy(arrivals, matrix, service, trace.horizon),
+                        "S2": run_effectiveness_load_temporal_policy(arrivals, matrix, service, trace.horizon),
+                        "S3": run_specialist_backup_temporal_policy(
+                            arrivals, matrix, service, trace.horizon,
+                            S3_PRIMARY_THRESHOLD, S3_BACKUP_EFFECTIVENESS_FLOOR,
+                        ),
+                    }.items():
+                        service_sensitivity_rows.append(_row(
+                            window, profile, load, "class_heterogeneous", "class_ascending", policy, result
+                        ))
+                    adaptive_sensitivity = run_adaptive_temporal_policy(
+                        arrivals, matrix, service, trace.horizon, S4_PRIMARY_THRESHOLDS
                     )
-                    no_hyst_row = _row(window, profile, load, "uniform", "class_ascending", "S4", no_hyst.allocation)
-                    no_hyst_row["threshold_set"] = "no_hysteresis_ablation"
-                    no_hyst_row["transition_count"] = no_hyst.diagnostics.transition_count
-                    no_hyst_row["strategy_decision_counts"] = no_hyst.diagnostics.strategy_decision_counts
-                    no_hysteresis_rows.append(no_hyst_row)
+                    service_sensitivity_rows.append(_row(
+                        window, profile, load, "class_heterogeneous", "class_ascending", "S4",
+                        adaptive_sensitivity.allocation,
+                    ))
     return {
         "source": source,
         "primary_rows": tuple(primary_rows),
-        "sensitivity_rows": tuple(sensitivity_rows),
-        "no_hysteresis_rows": tuple(no_hysteresis_rows),
+        "service_sensitivity_rows": tuple(service_sensitivity_rows),
         "diagnostics": tuple(diagnostics),
     }
 
@@ -719,6 +717,15 @@ def _row(
 ) -> dict[str, object]:
     completed = [task for task in result.decisions if task.completion_time <= result.arrival_horizon]
     completed_effectiveness = fsum(task.effectiveness for task in completed)
+    j_h = completed_effectiveness / len(result.decisions)
+    completed_fraction = len(completed) / len(result.decisions)
+    if not (
+        -1e-12 <= j_h <= completed_fraction + 1e-12
+        and j_h <= result.mean_effectiveness + 1e-12
+    ):
+        raise AssertionError("J_H must be bounded by completion fraction and assigned effectiveness")
+    if not isclose(j_h, result.j_h, rel_tol=1e-12, abs_tol=1e-12):
+        raise AssertionError("J_H from decisions disagrees with the model summary")
     completed_responses = [task.response_time for task in completed]
     completed_waits = [task.waiting_time for task in completed]
     return {
@@ -731,10 +738,11 @@ def _row(
         "tasks": len(result.decisions),
         "completed_tasks": len(completed),
         "pending_tasks_count": result.pending_task_count,
-        "completed_fraction": len(completed) / len(result.decisions),
+        "completed_fraction": completed_fraction,
         "effectiveness_mean": result.mean_effectiveness,
         "effectiveness_total": result.total_effectiveness,
         "completed_effectiveness_total": completed_effectiveness,
+        "j_h": j_h,
         "completed_effectiveness_mean": (
             completed_effectiveness / len(completed) if completed else None
         ),
@@ -1058,89 +1066,104 @@ def format_organizational_report(result: dict[str, object]) -> str:
 
 
 def format_adaptive_organizational_report(result: dict[str, object]) -> str:
-    """Compact S0-S4 matched results plus aggregate controller diagnostics."""
+    """Compact primary results, S4 diagnostics and bounded service sensitivity."""
     rows = result["primary_rows"]
     lookup = {(r["trace"], r["organization"], r["offered_load"], r["policy"]): r for r in rows}
     names = ("usual_28d", "peak_28d", "mix_shift_28d", "post_mix_shift_28d")
     lines = [
-        "## HLS-03 adaptive organizational strategy S0-S4",
+        "## HLS-02 organizational comparison S0-S4",
         "",
         "Demand windows are selected outcome-blind from SOCTRA alert records, used only as qualitative relative time and opaque class-pattern inputs. Team profiles, service times, and load scaling are hypothetical; this is not an estimate of GMV-CERT performance.",
         "",
         "S4 observes predecision work W_i=max(0, queue_tail_i-t), C=sum(W_i)/(N*s_ref), s_ref=arithmetic mean of fixed class service times, and I=(N*max(W_i)/sum(W_i)-1)/(N-1), with I=0 at zero work. It starts SPECIALIZATION (S1), moves to BALANCED (S2) at C≥0.25 or I≥0.35, to LOAD_DISTRIBUTION (S0) at C≥1; load exits below C=0.75 to BALANCED, and BALANCED exits to specialization only below C=0.15 and I=0.25. Parameters were fixed before replay.",
         "",
-        "Each cell reports mean assigned effectiveness / mean response / P95 response / fraction completed by H. Response summarizes all assigned tasks; completion is separately evaluated at H.",
+        "Primary cells average the four windows within each organization/load combination and report J_H / mean assigned effectiveness / completed fraction / all-task mean response / all-task P95 response. J_H is computed directly from per-task assigned effectiveness for tasks completed by H, divided by all tasks received. All-task wait/response and makespan include the post-H queue drain; completed-only response is retained separately by the runner.",
         "",
-        "| Window | Organization | ρ | S0 | S1 | S2 | S3 | S4 |",
-        "|---|---|---:|---|---|---|---|---|",
+        "### Primary comparison: 240 matched evaluations",
+        "Each policy uses the same ordered arrivals, effectiveness matrix, service vector and H within a cell. Values are deterministic cell averages across four demand windows, not independent statistical replicates.",
+        "",
+        "| Organization | ρ | S0 J_H / ē / f_H / R̄ / R95 | S1 | S2 | S3 | S4 |",
+        "|---|---:|---|---|---|---|---|",
     ]
-    for window in names:
-        for profile in ORGANIZATIONS:
-            for load in OFFERED_LOADS:
-                cells = []
-                for policy in ADAPTIVE_POLICY_NAMES:
-                    row = lookup[(window, profile, load, policy)]
-                    cells.append(
-                        f"{row['effectiveness_mean']:.3f} / {row['response_mean']:.3f} / "
-                        f"{row['response_p95']:.3f} / {row['completed_fraction']:.3f}"
-                    )
-                lines.append(f"| {window} | {profile} | {load:.2f} | " + " | ".join(cells) + " |")
-    lines += [
-        "",
-        "At ρ=0.90, S4 controller diagnostics (state fractions are also the S1/S2/S0 decision fractions in corresponding order). Transition C/I summaries are mean [min,max] at state changes; no alert-level trace is retained.",
-        "",
-        "| Window | Organization | S1 fraction | S2 fraction | S0 fraction | Switches | Transition C | Transition I | Quartile state counts (spec/balanced/load) |",
-        "|---|---|---:|---:|---:|---:|---|---|---|",
-    ]
-    for item in result["diagnostics"]:
-        if item["offered_load"] != 0.90:
-            continue
-        diag = item["diagnostics"]
-        strategies = dict(diag.strategy_decision_counts)
-        n = sum(strategies.values())
-        fractions = [strategies.get(name, 0) / n for name in ("S1", "S2", "S0")]
-        state_quartiles = {name: counts for name, counts in diag.state_counts_by_time_quartile}
-        quartiles = ";".join(
-            "/".join(str(state_quartiles[state][q]) for state in ("SPECIALIZATION", "BALANCED", "LOAD_DISTRIBUTION"))
-            for q in range(4)
-        )
-        c = "NA" if diag.transition_congestion_mean is None else f"{diag.transition_congestion_mean:.3f} [{diag.transition_congestion_min:.3f},{diag.transition_congestion_max:.3f}]"
-        i = "NA" if diag.transition_imbalance_mean is None else f"{diag.transition_imbalance_mean:.3f} [{diag.transition_imbalance_min:.3f},{diag.transition_imbalance_max:.3f}]"
-        lines.append(
-            f"| {item['trace']} | {item['organization']} | "
-            f"{fractions[0]:.3f} | {fractions[1]:.3f} | {fractions[2]:.3f} | "
-            f"{diag.transition_count} | {c} | {i} | {quartiles} |"
-        )
-    lines += [
-        "",
-        "### Threshold sensitivity and hysteresis ablation at ρ=0.90",
-        "Each cell is mean effectiveness / mean response / P95 response / completed fraction; thresholds are fixed variants, not tuned on outcomes.",
-        "",
-        "| Window | Organization | Lower | Main | Higher | No hysteresis (switch count) |",
-        "|---|---|---|---|---|---|",
-    ]
-    main_lookup = {(r["trace"], r["organization"]): r for r in rows if r["offered_load"] == 0.90 and r["policy"] == "S4"}
-    sens_lookup = {(r["trace"], r["organization"], r["threshold_set"]): r for r in result["sensitivity_rows"]}
-    no_hyst_lookup = {(r["trace"], r["organization"]): r for r in result["no_hysteresis_rows"]}
-    for window in names:
-        for profile in ORGANIZATIONS:
+    for profile in ORGANIZATIONS:
+        for load in OFFERED_LOADS:
             cells = []
-            for label, row in (
-                ("lower_thresholds", sens_lookup[(window, profile, "lower_thresholds")]),
-                ("main", main_lookup[(window, profile)]),
-                ("higher_thresholds", sens_lookup[(window, profile, "higher_thresholds")]),
-            ):
-                cells.append(f"{row['effectiveness_mean']:.3f} / {row['response_mean']:.3f} / {row['response_p95']:.3f} / {row['completed_fraction']:.3f}")
-            no_hyst = no_hyst_lookup[(window, profile)]
-            cells.append(
-                f"{no_hyst['effectiveness_mean']:.3f} / {no_hyst['response_mean']:.3f} / "
-                f"{no_hyst['response_p95']:.3f} / {no_hyst['completed_fraction']:.3f} "
-                f"({no_hyst['transition_count']})"
-            )
-            lines.append(f"| {window} | {profile} | " + " | ".join(cells) + " |")
+            for policy in ADAPTIVE_POLICY_NAMES:
+                selected = [lookup[(window, profile, load, policy)] for window in names]
+                means = [fmean(row[key] for row in selected) for key in (
+                    "j_h", "effectiveness_mean", "completed_fraction", "response_mean", "response_p95"
+                )]
+                cells.append(" / ".join(f"{value:.4f}" for value in means))
+            lines.append(f"| {profile} | {load:.2f} | " + " | ".join(cells) + " |")
     lines += [
         "",
-        "All values are deterministic outputs under the declared normalized scenarios. S4 is a rule-based adaptive organization, not a learned policy. No statistical inference or operational SOC claim is made.",
+        "At the primary load ρ=.90, this window/profile view preserves each of the 16 demand-pattern cells. Values are J_H for S0/S1/S2/S3/S4; ties are shown explicitly.",
+        "",
+        "| Window | Organization | S0 / S1 / S2 / S3 / S4 J_H | Maximum J_H policy |",
+        "|---|---|---|---|",
+    ]
+    for window in names:
+        for profile in ORGANIZATIONS:
+            cell = [lookup[(window, profile, 0.90, policy)] for policy in ADAPTIVE_POLICY_NAMES]
+            best = max(row["j_h"] for row in cell)
+            winners = ", ".join(
+                policy for policy, row in zip(ADAPTIVE_POLICY_NAMES, cell)
+                if isclose(row["j_h"], best, rel_tol=1e-12, abs_tol=1e-12)
+            )
+            values = " / ".join(f"{row['j_h']:.4f}" for row in cell)
+            lines.append(f"| {window} | {profile} | {values} | {winners} |")
+    comparisons = []
+    for left, right in (("S2", "S0"), ("S2", "S1"), ("S2", "S3"), ("S4", "S2")):
+        differences = [
+            lookup[(window, profile, load, left)]["j_h"]
+            - lookup[(window, profile, load, right)]["j_h"]
+            for window in names for profile in ORGANIZATIONS for load in OFFERED_LOADS
+        ]
+        comparisons.append(f"{left}−{right}: mean ΔJ_H={fmean(differences):+.5f}, range [{min(differences):+.5f},{max(differences):+.5f}]")
+    lines += ["", "Paired J_H contrasts over the 48 within-window organization/load cells: " + "; ".join(comparisons) + "."]
+    lines += [
+        "",
+        "At ρ=0.90, S4 controller diagnostics (state fractions are also the S1/S2/S0 decision fractions in corresponding order). No alert-level trace is retained.",
+        "",
+        "| Organization | Mean S1 fraction | Mean S2 fraction | Mean S0 fraction | Mean switches per window |",
+        "|---|---:|---:|---:|---:|",
+    ]
+    diagnostics = [item for item in result["diagnostics"] if item["offered_load"] == 0.90]
+    for profile in ORGANIZATIONS:
+        items = [item["diagnostics"] for item in diagnostics if item["organization"] == profile]
+        decisions = [dict(diag.strategy_decision_counts) for diag in items]
+        totals = {name: sum(counts.get(name, 0) for counts in decisions) for name in ("S1", "S2", "S0")}
+        total = sum(totals.values())
+        switch_mean = fmean(diag.transition_count for diag in items)
+        lines.append(
+            f"| {profile} | {totals['S1']/total:.3f} | {totals['S2']/total:.3f} | "
+            f"{totals['S0']/total:.3f} | {switch_mean:.1f} |"
+        )
+    service_rows = result["service_sensitivity_rows"]
+    service_lookup = {(r["trace"], r["organization"], r["policy"]): r for r in service_rows}
+    lines += [
+        "",
+        "### Minimal class-dependent service-time sensitivity (80 paired evaluations; ρ=.90)",
+        "Class durations differ by class but are identical across agents. Their total offered service work is normalized to the same ρ. This tests dependence on equal class durations only; it does not model measured SOC processing times.",
+        "",
+        "| Organization | Policy | Uniform J_H / response / P95 | Class-dependent J_H / response / P95 | ΔJ_H | Δresponse |",
+        "|---|---|---|---|---:|---:|",
+    ]
+    for profile in ORGANIZATIONS:
+        for policy in ADAPTIVE_POLICY_NAMES:
+            uniform = [lookup[(window, profile, 0.90, policy)] for window in names]
+            varied = [service_lookup[(window, profile, policy)] for window in names]
+            uniform_means = [fmean(r[key] for r in uniform) for key in ("j_h", "response_mean", "response_p95")]
+            varied_means = [fmean(r[key] for r in varied) for key in ("j_h", "response_mean", "response_p95")]
+            lines.append(
+                f"| {profile} | {policy} | "
+                f"{uniform_means[0]:.4f} / {uniform_means[1]:.5f} / {uniform_means[2]:.5f} | "
+                f"{varied_means[0]:.4f} / {varied_means[1]:.5f} / {varied_means[2]:.5f} | "
+                f"{varied_means[0]-uniform_means[0]:+.4f} | {varied_means[1]-uniform_means[1]:+.5f} |"
+            )
+    lines += [
+        "",
+        "Interpretation boundary: these are deterministic outputs under normalized hypothetical scenarios. J_H is modeled expected quality completed by H per received task, not observed success. The alert records provide relative temporal/class patterns only; no inference about GMV-CERT performance, analyst competence, service time or staffing follows. No significance tests are applied.",
     ]
     return "\n".join(lines)
 

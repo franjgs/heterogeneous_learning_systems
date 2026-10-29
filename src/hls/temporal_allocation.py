@@ -45,6 +45,8 @@ class TemporalAllocationResult:
     arrival_horizon: float
     total_effectiveness: float
     mean_effectiveness: float
+    completed_effectiveness_total_at_horizon: float
+    j_h: float
     mean_waiting_time: float
     p95_waiting_time: float
     mean_response_time: float
@@ -541,6 +543,10 @@ def _summarize(
     n_agents: int,
 ) -> TemporalAllocationResult:
     total = fsum(task.effectiveness for task in decisions)
+    completed_at_horizon = tuple(
+        task for task in decisions if task.completion_time <= horizon
+    )
+    completed_effectiveness = fsum(task.effectiveness for task in completed_at_horizon)
     waits = [task.waiting_time for task in decisions]
     responses = [task.response_time for task in decisions]
     assigned_count = tuple(
@@ -575,6 +581,8 @@ def _summarize(
         arrival_horizon=horizon,
         total_effectiveness=total,
         mean_effectiveness=total / len(decisions),
+        completed_effectiveness_total_at_horizon=completed_effectiveness,
+        j_h=completed_effectiveness / len(decisions),
         mean_waiting_time=fsum(waits) / len(waits),
         p95_waiting_time=_nearest_rank(waits, 0.95),
         mean_response_time=fsum(responses) / len(responses),

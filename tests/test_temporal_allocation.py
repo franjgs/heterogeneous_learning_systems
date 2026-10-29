@@ -175,6 +175,62 @@ def test_all_temporal_policies_treat_completion_exactly_at_horizon_as_completed(
         assert result.decisions[0].completion_time == 1.0
         assert result.pending_task_count == 0
         assert result.pending_work_at_horizon == 0.0
+        assert result.j_h == result.mean_effectiveness
+
+
+def test_j_h_is_direct_completed_effectiveness_per_all_received_tasks():
+    # The first, low-effectiveness task completes exactly at H. The high-
+    # effectiveness task is pending and must not contribute to J_H.
+    result = run_fixed_temporal_policy(
+        ((0.0, 0), (0.0, 1)), ((0.2, 0.9),), (1.0, 1.0), 1.0, (0, 0)
+    )
+    assert result.pending_task_count == 1
+    assert result.completed_effectiveness_total_at_horizon == pytest.approx(0.2)
+    assert result.j_h == pytest.approx(0.1)
+    assert result.mean_effectiveness == pytest.approx(0.55)
+    assert result.j_h <= 0.5 <= 1.0
+    assert result.j_h <= result.mean_effectiveness
+
+
+def test_j_h_is_zero_when_no_tasks_complete_by_horizon():
+    result = run_fixed_temporal_policy(
+        ((0.0, 0), (0.1, 1)), ((0.2, 0.9),), (2.0, 2.0), 1.0, (0, 0)
+    )
+    assert result.pending_task_count == 2
+    assert result.completed_effectiveness_total_at_horizon == 0.0
+    assert result.j_h == 0.0
+    completed_fraction = (2 - result.pending_task_count) / 2
+    assert result.j_h <= completed_fraction == 0.0
+
+
+def test_j_h_equals_assigned_mean_when_all_tasks_complete_by_horizon():
+    result = run_fixed_temporal_policy(
+        ((0.0, 0), (1.0, 1)), ((0.2, 0.9),), (1.0, 1.0), 3.0, (0, 0)
+    )
+    assert result.pending_task_count == 0
+    assert result.j_h == pytest.approx(result.mean_effectiveness)
+
+
+def test_j_h_satisfies_metric_bounds_for_all_policies():
+    arrivals = ((0.0, 0), (0.0, 1), (0.2, 0), (0.7, 1))
+    matrix = ((0.2, 0.9), (0.8, 0.4))
+    results = (
+        run_fixed_temporal_policy(arrivals, matrix, (0.8, 1.2), 1.0, (0, 1)),
+        run_lowest_workload_temporal_policy(arrivals, matrix, (0.8, 1.2), 1.0),
+        run_max_effectiveness_temporal_policy(arrivals, matrix, (0.8, 1.2), 1.0),
+        run_effectiveness_load_temporal_policy(arrivals, matrix, (0.8, 1.2), 1.0),
+        run_specialist_backup_temporal_policy(arrivals, matrix, (0.8, 1.2), 1.0),
+        run_adaptive_temporal_policy(arrivals, matrix, (0.8, 1.2), 1.0).allocation,
+    )
+    for result in results:
+        completed_fraction = (len(arrivals) - result.pending_task_count) / len(arrivals)
+        assert 0.0 <= result.j_h <= completed_fraction <= 1.0
+        assert result.j_h <= result.mean_effectiveness
+        direct = sum(
+            d.effectiveness for d in result.decisions
+            if d.completion_time <= result.arrival_horizon
+        ) / len(arrivals)
+        assert result.j_h == pytest.approx(direct)
 
 
 def test_fcfs_preserves_arrival_order_within_each_agent_queue():

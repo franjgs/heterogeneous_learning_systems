@@ -4329,8 +4329,8 @@
       "evidence": [],
       "status": "reusable",
       "metric_definitions": {
-        "total_effectiveness": "E_total = sum_n e[agent_n,k_n], over all completed tasks.",
-        "mean_effectiveness": "E_bar = E_total/M; denominator is every received task.",
+        "total_effectiveness": "E_total = sum of fixed e[i,k] over every task assignment; queues are drained after H, so this includes tasks completing after H.",
+        "mean_effectiveness": "E_bar = E_total/M, where M is every received task.",
         "individual_effectiveness": "Per-agent sum of assigned e values and mean per assigned task; these are model contributions, not measured competence.",
         "mean_wait": "sum_n(start_n-arrival_n)/M.",
         "p95_wait": "Nearest-rank 95th percentile of start_n-arrival_n.",
@@ -4342,9 +4342,11 @@
         "pending_task_count_at_H": "Integer count of assigned tasks with completion_time > H; tasks completing exactly at H are complete. Includes the task in service and all queued tasks.",
         "completed_task_count_at_H": "Integer count with completion_time <= H; received tasks are partitioned into completed and pending at H.",
         "fraction_completed_by_H": "Tasks completed by H divided by all received tasks M.",
-        "completed_effectiveness_total": "Sum of fixed e[i,k] over tasks with completion_time <= H; a conditional modeled contribution, not an observed outcome.",
+        "completed_effectiveness_total": "Sum of fixed e[i,k] for tasks with completion_time <= H; conditional modeled contribution, not an observed outcome.",
         "completed_effectiveness_mean": "Completed effectiveness total divided by completed-task count; undefined when none complete by H.",
-        "completed_response_mean_and_p95": "Mean and nearest-rank P95 of completion_time-arrival_time among tasks completed by H only; separate from all-task response."
+        "completed_response_mean_and_p95": "Mean and nearest-rank P95 of completion_time-arrival_time among tasks completed by H only; distinct from all-task response, which includes post-H queue drain.",
+        "j_h": "J_H = (1/M) sum_n e[agent_n,k_n] * 1(completion_n <= H), computed directly from task decisions. Expected modeled effectiveness completed by H per received task; not observed success.",
+        "j_h_bounds": "For e[i,k] in [0,1], 0 <= J_H <= fraction_completed_by_H <= 1 and J_H <= mean_effectiveness."
       },
       "ontology_class": "evaluation",
       "bibliography_refs": [],
@@ -4355,7 +4357,7 @@
       "type": "study",
       "name": "Temporal workload effects in heterogeneous task allocation",
       "definition": "Deterministic study comparing fixed, maximum-effectiveness and effectiveness/load-ratio assignment under temporally varying arrivals, recoverable per-agent service capacity, and declared effectiveness/demand/load profiles.",
-      "scope": "Six original controls, paired 96-cell sensitivity grid, five-structure focused controls, simultaneous-order probe, and exact small P2 response counterexample on constructed inputs. A separate restricted local-data replay applies the same model to SOCTRA alert-record timestamps as arrival proxies, with hypothetical organizations/effectiveness/service and no claim of human workload validity. A separately identified S0-S3 organization comparison adds minimum-pending-work, reuses the unchanged P1/P2 rules, and adds thresholded specialist-backup routing over four qualitative demand-pattern windows. A subsequent rule-based adaptive S0-S4 comparison evaluates the unchanged four organizations on the same four 28-day demand-pattern windows and three normalized loads, with predeclared threshold sensitivity and aggregate-only controller diagnostics.",
+      "scope": "Six original controls, paired 96-cell sensitivity grid, five-structure focused controls, simultaneous-order probe, and exact small P2 response counterexample on constructed inputs. A separate restricted local-data replay applies the same model to SOCTRA alert-record timestamps as arrival proxies, with hypothetical organizations/effectiveness/service and no claim of human workload validity. A separately identified S0-S3 organization comparison adds minimum-pending-work, reuses the unchanged P1/P2 rules, and adds thresholded specialist-backup routing over four qualitative demand-pattern windows. A subsequent rule-based adaptive S0-S4 comparison evaluates the unchanged four organizations on the same four 28-day demand-pattern windows and three normalized loads, with aggregate-only controller diagnostics and a bounded class-dependent service-time sensitivity. The current consolidated outcome is J_H, computed directly per task; earlier threshold/hysteresis probes are exploratory and excluded from the principal comparison.",
       "assumptions": [
         "One deterministic service duration per task class, shared by all agents in the baseline.",
         "Every task is eventually completed; no deadlines or rejection.",
@@ -5104,12 +5106,12 @@
       "type": "experiment",
       "name": "Matched adaptive organizational strategy comparison S0–S4",
       "definition": "Compares minimum-work, maximum-effectiveness, effectiveness/load, specialist-backup and adaptive state-controlled routing on the four preselected 28-day qualitative alert-proxy patterns.",
-      "scope": "Four hypothetical organizations × four windows × offered loads .50/.90/1.20; 240 primary matched evaluations, plus 32 threshold-sensitivity and 16 no-hysteresis evaluations at .90. No row-level traces are retained in Git.",
+      "scope": "Four hypothetical organizations × four qualitative alert-proxy windows × offered loads .50/.90/1.20; exactly 240 primary matched evaluations. A bounded sensitivity adds 80 paired evaluations at rho=.90 with class-dependent service durations shared across agents and total offered work normalized to the same load. No row-level traces are retained in Git.",
       "assumptions": [
         "SOCTRA alert rows are qualitative arrival proxies, not confirmed human tasks.",
         "Team profiles, service durations and offered-load scaling are hypothetical.",
-        "S4 thresholds are fixed before replay and sensitivity variants are not selected by outcome.",
-        "All compared policies receive identical ordered arrivals, class matrix, service times and horizon."
+        "All compared policies receive identical ordered arrivals, class matrix, service times and horizon.",
+        "J_H is calculated from per-task assignment effectiveness and completion time, with all received tasks in its denominator; it is not realized success."
       ],
       "relationships": [
         {
@@ -5162,12 +5164,13 @@
       "id": "result.adaptive_organization_tradeoffs_under_alert_proxy_patterns",
       "type": "result",
       "name": "Adaptive routing is mostly load-distribution behavior under the declared thresholds",
-      "definition": "At rho=.90 across 16 organization-window cells S4 selected S0 in 85.9% of arrival decisions, S2 in 12.4%, and S1 in 1.7%. Its mean effectiveness was .6127 and mean response .0261, versus .6021/.0261 for S0, .6800/.0262 for S2, .7203/.1702 for S3, and .7875/.7781 for S1. At rho=.50/.90/1.20, S4 completed fractions averaged .9911/.9611/.8110; its mean response was .0016/.0261/.1292 and assigned effectiveness .6613/.6127/.6023. These deterministic results are conditional on the selected windows and hypothetical teams/service.",
+      "definition": "In the 16 matched organization-window cells at rho=.90, mean J_H (effectiveness completed by H per received task) was .5787 for S0, .4064 for S1, .6532 for S2, .5764 for S3 and .5893 for S4. S4 minus S2 mean paired J_H was -.06389; S4 had lower mean response by .000129 normalized time units, faster in 12 cells, slower in 2 and tied in 2. At rho=.90, S4 selected S0 for about 86% of decisions in each profile. These deterministic results are conditional on the selected alert-proxy windows and hypothetical teams/service; J_H is modeled expected quality, not observed success.",
       "scope": "Four deterministic SOCTRA alert-record proxy windows × four hypothetical organizations; normalized service and rho. The observed demand is qualitative pattern input only, not human workload or SOC policy validation.",
       "assumptions": [
-        "Fixed S4 thresholds and transition order as recorded in docs/RESEARCH.md.",
+        "S4 thresholds and transition order are fixed as documented in docs/RESEARCH.md; prior threshold probes are not part of the current principal comparison.",
         "No randomization, statistical inference or causal claim about real SOC operations.",
-        "Effectiveness values are hypothetical deterministic contributions, not analyst competence or observed success."
+        "Effectiveness values are hypothetical deterministic contributions, not analyst competence or observed success.",
+        "J_H denominator is all received tasks; exact-horizon completions count as complete."
       ],
       "relationships": [
         {
