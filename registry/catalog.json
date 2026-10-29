@@ -4313,7 +4313,7 @@
       "type": "evaluation",
       "name": "Temporal task effectiveness, delay, backlog and utilization",
       "definition": "Reports task-level deterministic effectiveness and temporal workload metrics for all M received tasks under an arrival horizon H, followed by queue drain.",
-      "scope": "HLS-02 finite deterministic controls.",
+      "scope": "Deterministic temporal allocation controls and horizon-completion views.",
       "assumptions": [
         "Time uses the scenario service-time unit.",
         "P95 uses empirical nearest rank, sorted value at rank ceil(0.95 M).",
@@ -4339,7 +4339,12 @@
         "pending_work_at_H": "At H, sum over unfinished assigned tasks of completion_time - max(service_start, H); this is the active task residual plus full service time of queued tasks, in service-time units. May be fractional.",
         "utilization_by_agent": "For agent i, service time overlapping [0,H) divided by H; a proportion in [0,1].",
         "makespan": "max_n completion_n - min_n arrival_n; elapsed time from first arrival to final completion.",
-        "pending_task_count_at_H": "Integer count of assigned tasks with completion_time > H; tasks completing exactly at H are complete. Includes the task in service and all queued tasks."
+        "pending_task_count_at_H": "Integer count of assigned tasks with completion_time > H; tasks completing exactly at H are complete. Includes the task in service and all queued tasks.",
+        "completed_task_count_at_H": "Integer count with completion_time <= H; received tasks are partitioned into completed and pending at H.",
+        "fraction_completed_by_H": "Tasks completed by H divided by all received tasks M.",
+        "completed_effectiveness_total": "Sum of fixed e[i,k] over tasks with completion_time <= H; a conditional modeled contribution, not an observed outcome.",
+        "completed_effectiveness_mean": "Completed effectiveness total divided by completed-task count; undefined when none complete by H.",
+        "completed_response_mean_and_p95": "Mean and nearest-rank P95 of completion_time-arrival_time among tasks completed by H only; separate from all-task response."
       },
       "ontology_class": "evaluation",
       "bibliography_refs": [],
@@ -4350,7 +4355,7 @@
       "type": "study",
       "name": "Temporal workload effects in heterogeneous task allocation",
       "definition": "Deterministic study comparing fixed, maximum-effectiveness and effectiveness/load-ratio assignment under temporally varying arrivals, recoverable per-agent service capacity, and declared effectiveness/demand/load profiles.",
-      "scope": "Six original controls, paired 96-cell sensitivity grid, five-structure focused controls, simultaneous-order probe, and exact small P2 response counterexample on constructed inputs. A separate restricted local-data replay applies the same model to SOCTRA alert-record timestamps as arrival proxies, with hypothetical organizations/effectiveness/service and no claim of human workload validity.",
+      "scope": "Six original controls, paired 96-cell sensitivity grid, five-structure focused controls, simultaneous-order probe, and exact small P2 response counterexample on constructed inputs. A separate restricted local-data replay applies the same model to SOCTRA alert-record timestamps as arrival proxies, with hypothetical organizations/effectiveness/service and no claim of human workload validity. A separately identified S0-S3 organization comparison adds minimum-pending-work, reuses the unchanged P1/P2 rules, and adds thresholded specialist-backup routing over four qualitative demand-pattern windows.",
       "assumptions": [
         "One deterministic service duration per task class, shared by all agents in the baseline.",
         "Every task is eventually completed; no deadlines or rejection.",
@@ -4403,6 +4408,14 @@
         {
           "kind": "uses",
           "target": "scenario.soc_alert_operations"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.temporal_minimum_pending_work"
+        },
+        {
+          "kind": "compares",
+          "target": "policy.temporal_specialist_with_idle_backup"
         }
       ],
       "implementation": [
@@ -4883,6 +4896,168 @@
       "evidence_type": "exploratory",
       "scientific_outcome": "AMBIGUOUS",
       "evidence_availability": "Aggregate summary and adapter are tracked; the restricted CSV and row-level trace are not. Exact replay requires the authorized original snapshot.",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "incomplete"
+    },
+    {
+      "id": "policy.temporal_minimum_pending_work",
+      "type": "policy",
+      "name": "Online routing by minimum pending work",
+      "definition": "Assigns the current task to the agent minimizing W_i(t)=max(0,queue_tail_i-t), with lowest index breaking ties; ignores effectiveness.",
+      "scope": "Deterministic online rule in the organization-policy comparison.",
+      "assumptions": [
+        "All agents can receive all task classes.",
+        "Only current observable queue-tail workload is used.",
+        "Queues are unbounded and no task is rejected."
+      ],
+      "relationships": [],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/temporal_allocation.py"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "status": "reusable",
+      "inputs": "Current arrival time and all agent queue-tail completion times.",
+      "outputs": "Selected agent index.",
+      "ontology_class": "policy",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "policy.temporal_specialist_with_idle_backup",
+      "type": "policy",
+      "name": "Thresholded specialist routing with idle backup",
+      "definition": "Selects the maximum-effectiveness specialist (index tie-break). If its current W_i(t) exceeds theta*s_k, routes to the most effective other idle agent with e[i,k] at least a declared floor; otherwise uses the specialist. If no backup qualifies, uses the specialist.",
+      "scope": "Deterministic online heuristic; primary theta=1 and backup effectiveness floor=0.50; threshold sensitivity theta in {0.5,1,2}.",
+      "assumptions": [
+        "Effectiveness is a hypothetical fixed contribution.",
+        "Service duration s_k is shared across agents and known.",
+        "Backup must be idle at arrival; queues are unbounded and no task is rejected."
+      ],
+      "relationships": [],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "src/hls/temporal_allocation.py"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_temporal_allocation.py"
+        }
+      ],
+      "status": "reusable",
+      "inputs": "Current task class, fixed effectiveness matrix, observable queue workload, class service duration, threshold and effectiveness floor.",
+      "outputs": "Selected agent index.",
+      "ontology_class": "policy",
+      "bibliography_refs": [],
+      "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "experiment.soc_organizational_strategy_pattern_comparison",
+      "type": "experiment",
+      "name": "Matched organization-policy comparison on demand-pattern windows",
+      "definition": "Compares minimum-work routing (S0), maximum-effectiveness routing (S1), effectiveness-load routing (S2), and thresholded specialist backup (S3) on four outcome-blind 28-day patterns extracted from a restricted SOCTRA alert-record snapshot.",
+      "scope": "Four hypothetical organization profiles, three normalized offered-load levels (0.50, 0.90, 1.20), shared fixed per-class service times and effectiveness within each paired cell. The alert stream supplies qualitative timing/class-pattern structure, not a human task rate.",
+      "assumptions": [
+        "Each alert record is only a modeled arrival proxy.",
+        "Opaque project labels are task classes, not measured competencies or confirmed clients.",
+        "Team size, effectiveness, service durations and offered load are hypothetical.",
+        "Windows are selected using demand-only rules before policy evaluation.",
+        "All policies receive identical ordered arrivals, task classes, service times and horizon."
+      ],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.temporal_task_allocation_policy_comparison"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_minimum_pending_work"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_max_effectiveness_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_effectiveness_load_ratio"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_specialist_with_idle_backup"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/soctra_demand_experiment.py"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_soctra_demand_experiment.py"
+        },
+        {
+          "kind": "local",
+          "path": "docs/RESEARCH.md"
+        }
+      ],
+      "status": "executed_restricted_data",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "incomplete"
+    },
+    {
+      "id": "result.organizational_strategy_tradeoffs_on_demand_patterns",
+      "type": "result",
+      "name": "Organization-policy trade-offs vary with competence structure and demand pattern",
+      "definition": "In 16 deterministic organization-by-window cells at rho=0.90, S0, S2 and S3 have lower all-task mean response than S1 in all cells. S1 gives the taskwise maximum effectiveness. S3 has equal or higher mean effectiveness than S0 but slower response in all 16 cells. These are outputs under constructed rosters and normalized alert-proxy patterns, not operational SOC effects.",
+      "scope": "Four 28-day demand-pattern windows x four four-agent hypothetical organizations, rho=0.90 primary and rho=0.50/1.20 sensitivity. No independent sampling unit or statistical inference.",
+      "assumptions": [
+        "The restricted snapshot, timestamp interpretation, opaque class ordering, organization matrices, service scaling and tie-breaks condition the result.",
+        "Task completion by H is distinct from all-task response.",
+        "No claim is made about GMV-CERT performance, real clients, analyst competence, or a deployed policy."
+      ],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.soc_organizational_strategy_pattern_comparison"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "studies/soctra_demand_experiment.py"
+        },
+        {
+          "kind": "local",
+          "path": "tests/test_soctra_demand_experiment.py"
+        },
+        {
+          "kind": "local",
+          "path": "docs/RESEARCH.md"
+        }
+      ],
+      "evidence_type": "exploratory",
+      "scientific_outcome": "AMBIGUOUS",
+      "evidence_availability": "The restricted CSV is not tracked. The runner, deterministic rules and aggregate findings are tracked; exact replay requires authorized access to the same snapshot.",
       "ontology_class": "result",
       "bibliography_refs": [],
       "evidence_maturity": "incomplete"

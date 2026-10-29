@@ -297,6 +297,60 @@ All omitted cells in the tie comparison have zero changes in effectiveness, resp
 
 - **Reproduction:** `PYTHONPATH=src python studies/soctra_demand_experiment.py --soctra-csv /path/to/authorized/dataset_20250919.csv`. The runner emits aggregate results only; the local CSV is required for an exact replay.
 
+#### New organizational-strategy comparison S0–S3
+
+This comparison extends HLS-02 but is not a rename of the earlier P0/P1/P2 replay. The prior P0 fixed map and P1/P2 rules, runner output and controls are retained unchanged. In this separate comparison, **S0** is minimum-current-work routing, **S1** reuses P1, **S2** reuses P2, and **S3** is specialist routing with a qualified idle backup. Thus S0 is not the historical fixed-map P0.
+
+- **S0:** select `argmin_i W_i(t)`, with `W_i(t)=max(0, queue_tail_i-t)`; ties use the lowest agent index. Effectiveness is ignored.
+- **S1:** select `argmax_i e[i,k]`; this is unchanged P1.
+- **S2:** select `argmax_i e[i,k]/(W_i(t)+s_k)`; this is unchanged P2.
+- **S3:** select the maximum-effectiveness specialist (index tie). If its current workload exceeds `θs_k`, route to the most effective *other idle* agent with `e[i,k]≥0.50`; ties use index. If none qualifies, assign to the specialist. The main value is `θ=1`, meaning the specialist already has more than one current-task service duration pending. The predeclared sensitivity values are `θ=.5` and `2`. The .50 floor includes the existing .50 non-specialist values and excludes .45 low values in the partial-polyvalence matrix. S3 is a simple hypothetical rule, not a GMV practice or an optimal policy.
+
+The four existing hypothetical four-agent effectiveness profiles and class-service assumptions are unchanged. SOCTRA contributes relative timestamps and opaque class sequence patterns, not an arrival-rate calibration. The four full 28-day windows were selected using demand only, before policy evaluation: (1) usual = volume nearest the median, then lowest daily CV; (2) peak = highest daily peak/mean among windows at or above median volume; (3) mix shift = greatest total-variation distance between first- and second-half class shares; (4) post mix shift = the next 28 days. Ties use the declared deterministic rules in `studies/soctra_demand_experiment.py`. Each trace is normalized to `H=1`; class service is scaled as `s=ρNH/M`, so offered load `ρ=Σs/(NH)` is .50/.90/1.20. This preserves within-window ordering and relative gaps, but neither event counts nor normalized time represent human tasks per day, analyst-hours or shifts. A class label is not a competence or a new-client indicator.
+
+| Demand pattern | Dates (end exclusive) | Alert-row proxies | Active classes | Daily mean / CV / peak | Half-window class TV |
+|---|---|---:|---:|---:|---:|
+| Usual | 2024-07-17–2024-08-14 | 6,144 | 21 | 219.4 / .239 / 293 | .095 |
+| Peak | 2023-01-14–2023-02-11 | 6,290 | 18 | 224.6 / .496 / 574 | .235 |
+| Mix shift | 2024-10-28–2024-11-25 | 5,526 | 23 | 197.4 / .518 / 448 | .352 |
+| Post mix shift | 2024-11-25–2024-12-23 | 3,737 | 22 | 133.5 / .378 / 241 | .126 |
+
+For `M` received proxy tasks, `C_H=#{n: completion_n≤H}`, `P_H=M−C_H`, and completion fraction is `C_H/M`. All-assigned effectiveness/response include tasks completed after H; completed-task effectiveness and response use only `completion_n≤H`. This prevents queue-drain times from being conflated with work completed inside the declared horizon. The runner also reports received/completed/pending counts, both effectiveness totals/means, all-task and completed-only response means/P95, waiting, per-agent assignments/contributions/utilization, makespan and pending service work.
+
+At `ρ=.90`, each cell below is `mean effectiveness / mean response / response P95 / fraction completed by H`. Response and time values use normalized hypothetical units. The examples show why a single policy ranking is not adequate.
+
+| Pattern / organization | S0 | S1 | S2 | S3 |
+|---|---|---|---|---|
+| Peak / homogeneous | .600/.026/.114/.845 | .600/1.186/2.439/.278 | .600/.026/.114/.845 | .600/.160/.758/.745 |
+| Peak / specialized | .600/.026/.114/.845 | .900/.167/.668/.691 | .771/.027/.116/.845 | .820/.050/.274/.820 |
+| Mix shift / partially polyvalent | .601/.052/.122/1.000 | .750/.431/1.015/.634 | .734/.052/.120/1.000 | .750/.249/.812/.803 |
+| Post mix shift / dominant | .604/.018/.044/1.000 | .900/1.320/2.512/.277 | .608/.018/.046/1.000 | .698/.213/.798/.781 |
+
+**Load sensitivity.** Ranges are the minimum–maximum across 16 window-by-profile cells for each policy. They are descriptive scenario ranges, not confidence intervals or a pooled estimate.
+
+| ρ | Policy | Mean effectiveness | Mean response | Completed fraction |
+|---:|---|---:|---:|---:|
+| .50 | S0 | .600–.633 | .00063–.00242 | .965–1.000 |
+| .50 | S1 | .600–.900 | .00841–.58765 | .497–1.000 |
+| .50 | S2 | .600–.785 | .00063–.00248 | .965–1.000 |
+| .50 | S3 | .600–.819 | .00114–.04200 | .912–1.000 |
+| .90 | S0 | .600–.609 | .00787–.05240 | .845–1.000 |
+| .90 | S1 | .600–.900 | .09489–1.38780 | .277–.910 |
+| .90 | S2 | .600–.806 | .00787–.05252 | .845–1.000 |
+| .90 | S3 | .600–.851 | .04169–.29266 | .742–.971 |
+| 1.20 | S0 | .598–.604 | .06962–.18967 | .754–.831 |
+| 1.20 | S1 | .600–.900 | .20219–1.98791 | .208–.789 |
+| 1.20 | S2 | .600–.852 | .06962–.19128 | .754–.831 |
+| 1.20 | S3 | .600–.887 | .16126–.61633 | .617–.807 |
+
+Across the 16 primary `ρ=.90` cases, S0 and S2 had lower all-task mean response than S1 in all 16, as did S3. S1 provides the maximum fixed effectiveness task-by-task; S0 had lower mean effectiveness than S1 in 12 cases, S2 in 12, and S3 in 8. S3 had equal or higher mean effectiveness than S0 but slower response in all 16. S2's response was equal to S0 in four cases and slightly slower in the other 12, while its effectiveness was generally higher in heterogeneous profiles. With the demand concentration in homogeneous and dominant profiles, S1's lowest-index choice directs tied or strictly best work to one agent; specialization instead spreads S1 assignments across classes. In the peak/specialized example, S1 achieves .900 mean effectiveness but only .691 completion by H; S0 reaches .845 completion with .600 effectiveness, while S2 and S3 occupy intermediate quality/response positions. In homogeneous/peak, S0 and S2 match because equal effectiveness makes load the operative distinction for S2; S1's index tie causes the large queue.
+
+At higher ρ, absolute response/backlog rise and completion falls. S3 remains slower than S0 because it sends work to a backup only when idle and only after a specialist threshold is crossed; it does not rebalance across all queue lengths. The S3 threshold sensitivity averaged over the 16 primary cells gives effectiveness/response `.71882/.16983` at θ=.5, `.72034/.17023` at θ=1, and `.72156/.17069` at θ=2. This shows a small local sensitivity over the selected values, not robust performance generally. The main observed limitation for S1 is concentration; for S2, quality loss versus maximum-effectiveness assignment; for S3, threshold/floor dependence and failure to route to busy-but-less-loaded backups; S0 ignores quality. No one rule dominates both modeled quality and time in every cell.
+
+These are deterministic scenario outputs conditioned on alert-row proxies, outcome-blind windows, exact event order, four hypothetical agents, fixed effectiveness matrices, class-level service and normalized ρ. They do not demonstrate improved GMV-CERT operations, measure analyst competence, identify real staffing or validate a client onboarding event. The policies do not adapt to a detected mix change; window contrasts are not a causal test of adaptation. The demand counts serve to expose relative temporal/class patterns, not quantify human workload. No strategy S4 is designed here.
+
+**Reproduction:** `PYTHONPATH=src python studies/soctra_demand_experiment.py --soctra-csv /path/to/authorized/dataset_20250919.csv --organizational-strategies`. This runs 192 matched S0–S3 evaluations (4 windows × 4 organizations × 3 offered loads × 4 rules) plus 32 S3 sensitivity evaluations. The restricted CSV and row-level traces are not in Git; exact replay requires authorized access to the same snapshot. HLS-01 and the historical P0/P1/P2 replay are retained unchanged. This remains exploratory deterministic evidence, not a confirmatory inference or theoretical contribution.
+
 ### Dynamic competence-state change and future value
 
 - **Stable ID:** `study.dynamic_competence_development`; **historical aliases:** G2, two-period control cases.

@@ -8,6 +8,8 @@ from hls.temporal_allocation import (
     run_effectiveness_load_temporal_policy,
     run_fixed_temporal_policy,
     run_max_effectiveness_temporal_policy,
+    run_lowest_workload_temporal_policy,
+    run_specialist_backup_temporal_policy,
 )
 from studies.temporal_task_allocation import (
     FOCUSED_ORGANIZATIONS,
@@ -163,6 +165,61 @@ def test_tie_breaking_is_lowest_agent_index_for_all_policies():
     assert tuple(x.agent_index for x in fixed.decisions) == (0, 0)
     assert tuple(x.agent_index for x in p1.decisions) == (0, 0)
     assert tuple(x.agent_index for x in p2.decisions) == (0, 0)
+
+
+def test_s0_uses_least_current_pending_work_and_index_ties():
+    result = run_lowest_workload_temporal_policy(
+        ((0.0, 0), (0.0, 0), (0.0, 0)),
+        ((0.9,), (0.8,), (0.7,)),
+        (1.0,),
+        2.0,
+    )
+    assert tuple(d.agent_index for d in result.decisions) == (0, 1, 2)
+    assert tuple(d.workload_at_decision for d in result.decisions) == (0.0, 0.0, 0.0)
+    assert result == run_lowest_workload_temporal_policy(
+        ((0.0, 0), (0.0, 0), (0.0, 0)), ((0.9,), (0.8,), (0.7,)), (1.0,), 2.0
+    )
+
+
+def test_s3_uses_specialist_until_threshold_then_best_idle_qualified_backup():
+    result = run_specialist_backup_temporal_policy(
+        tuple((0.0, 0) for _ in range(3)),
+        ((0.9,), (0.7,), (0.6,), (0.49,)),
+        (1.0,),
+        2.0,
+        workload_threshold_multiplier=1.0,
+        minimum_backup_effectiveness=0.5,
+    )
+    # At W=0 and W=1, use the specialist; when W=2, route to idle agent 1.
+    assert tuple(d.agent_index for d in result.decisions) == (0, 0, 1)
+
+
+def test_s3_falls_back_to_specialist_when_no_idle_backup_meets_floor():
+    result = run_specialist_backup_temporal_policy(
+        ((0.0, 0), (0.0, 0)), ((0.9,), (0.6,), (0.4,)), (1.0,), 2.0,
+        workload_threshold_multiplier=0.0,
+        minimum_backup_effectiveness=0.7,
+    )
+    assert tuple(d.agent_index for d in result.decisions) == (0, 0)
+
+
+@pytest.mark.parametrize("threshold,floor", [(-1, 0.5), (float("inf"), 0.5), (1, -0.1), (1, 1.1)])
+def test_s3_rejects_invalid_policy_parameters(threshold, floor):
+    with pytest.raises(ValueError):
+        run_specialist_backup_temporal_policy(
+            ((0.0, 0),), ((0.9,), (0.5,)), (1.0,), 1.0, threshold, floor
+        )
+
+
+def test_s0_and_s3_are_online_and_reproducible():
+    prefix = ((0.0, 0), (0.1, 1), (0.2, 0))
+    extended = prefix + ((0.3, 1),)
+    for runner in (run_lowest_workload_temporal_policy, run_specialist_backup_temporal_policy):
+        args = (((0.9, 0.4), (0.7, 0.8)), (1.0, 1.0))
+        left = runner(extended, *args, 2.0)
+        right = runner(prefix, *args, 2.0)
+        assert left.decisions[:len(prefix)] == right.decisions
+        assert left == runner(extended, *args, 2.0)
 
 
 def test_tasks_are_conserved_and_every_task_completes_exactly_once():

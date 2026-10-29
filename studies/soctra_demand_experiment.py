@@ -12,7 +12,7 @@ import hashlib
 from collections import Counter
 from dataclasses import dataclass
 from datetime import date, datetime, time, timedelta
-from math import fsum, isclose
+from math import ceil, fsum, isclose
 from pathlib import Path
 from statistics import fmean, pstdev
 
@@ -21,7 +21,9 @@ from hls.temporal_allocation import (
     TemporalAllocationResult,
     run_effectiveness_load_temporal_policy,
     run_fixed_temporal_policy,
+    run_lowest_workload_temporal_policy,
     run_max_effectiveness_temporal_policy,
+    run_specialist_backup_temporal_policy,
 )
 
 
@@ -38,6 +40,11 @@ POLICY_RUNNERS = (
     ("P1", run_max_effectiveness_temporal_policy),
     ("P2", run_effectiveness_load_temporal_policy),
 )
+ORGANIZATIONAL_POLICY_NAMES = ("S0", "S1", "S2", "S3")
+ORGANIZATIONAL_WINDOW_DAYS = 28
+S3_PRIMARY_THRESHOLD = 1.0
+S3_THRESHOLD_SENSITIVITY = (0.5, 2.0)
+S3_BACKUP_EFFECTIVENESS_FLOOR = 0.50
 
 
 @dataclass(frozen=True)
@@ -60,6 +67,7 @@ class SourceDemand:
     max_tie_size: int
     demand_summaries: dict[str, dict[str, float | int]]
     early_late_project_mix_tv: float | None
+    organizational_demand_summaries: dict[str, dict[str, float | int]]
 
 
 def load_soctra_demand(path: str | Path) -> SourceDemand:
@@ -157,6 +165,51 @@ def load_soctra_demand(path: str | Path) -> SourceDemand:
         )
         traces[name] = DemandTrace(name, arrivals, 1.0, start, end)
 
+    # Select four equal-length windows using demand-only criteria, before any
+    # organization or policy is evaluated. These are qualitative pattern
+    # exemplars, not estimates of a real SOC's task rate.
+    selected_windows = _select_organizational_windows(records, class_index)
+    traces.update(selected_windows)
+    organizational_demand_summaries: dict[str, dict[str, float | int]] = {}
+    for name, trace in selected_windows.items():
+        selected = [
+            (timestamp, class_index[label])
+            for timestamp, label in records
+            if trace.start <= timestamp < trace.end
+        ]
+        daily: Counter[date] = Counter(timestamp.date() for timestamp, _ in selected)
+        per_class: Counter[int] = Counter(task_type for _, task_type in selected)
+        half_class_counts = (Counter(), Counter())
+        for timestamp, label in selected:
+            half = 0 if timestamp < trace.start + timedelta(days=14) else 1
+            half_class_counts[half][label] += 1
+        half_sizes = (sum(half_class_counts[0].values()), sum(half_class_counts[1].values()))
+        half_mix_tv = (
+            0.5 * fsum(
+                abs(
+                    half_class_counts[0].get(k, 0) / half_sizes[0]
+                    - half_class_counts[1].get(k, 0) / half_sizes[1]
+                )
+                for k in range(len(class_index))
+            )
+            if half_sizes[0] and half_sizes[1]
+            else 0.0
+        )
+        counts = sorted(per_class.values(), reverse=True)
+        day_count = ORGANIZATIONAL_WINDOW_DAYS
+        daily_values = [daily.get(trace.start.date() + timedelta(days=i), 0) for i in range(day_count)]
+        mean_daily = fmean(daily_values)
+        organizational_demand_summaries[name] = {
+            "rows": len(selected),
+            "active_project_classes": len(per_class),
+            "top1_share": counts[0] / len(selected),
+            "top5_share": sum(counts[:5]) / len(selected),
+            "daily_mean": mean_daily,
+            "daily_cv": pstdev(daily_values) / mean_daily if mean_daily else 0.0,
+            "daily_peak": max(daily_values),
+            "first_second_mix_tv": half_mix_tv,
+        }
+
     early, late = "early_calendar_year", "late_12_month_window"
     mix_tv = None
     if early in class_counts_by_trace and late in class_counts_by_trace:
@@ -177,6 +230,7 @@ def load_soctra_demand(path: str | Path) -> SourceDemand:
         max_tie_size=max(ties.values()),
         demand_summaries=demand_summaries,
         early_late_project_mix_tv=mix_tv,
+        organizational_demand_summaries=organizational_demand_summaries,
     )
 
 
@@ -201,6 +255,115 @@ def _organization(profile: str, n_types: int, alignment: int = 0) -> tuple[tuple
     result = tuple(matrix)
     # All structures have the same per-class mean by construction.
     assert all(isclose(fsum(result[i][k] for i in range(N_AGENTS)) / N_AGENTS, 0.60) for k in range(n_types))
+    return result
+
+
+def _select_organizational_windows(
+    records: list[tuple[datetime, str]], class_index: dict[str, int]
+) -> dict[str, DemandTrace]:
+    """Select fixed 28-day demand-pattern windows without policy outcomes.
+
+    ``usual`` is nearest the median window volume, with lower daily CV as a
+    tie-break. ``peak`` maximizes peak/mean daily volume among windows at or
+    above the median volume. ``mix_shift`` maximizes total-variation distance
+    between the first and second 14 days. ``post_mix_shift`` is the immediately
+    following 28 days. Remaining ties use the earlier calendar start.
+    """
+    first = min(timestamp.date() for timestamp, _ in records)
+    last = max(timestamp.date() for timestamp, _ in records)
+    daily_total: Counter[date] = Counter(timestamp.date() for timestamp, _ in records)
+    daily_class: dict[date, Counter[int]] = {}
+    for timestamp, label in records:
+        daily_class.setdefault(timestamp.date(), Counter())[class_index[label]] += 1
+    width = ORGANIZATIONAL_WINDOW_DAYS
+    # A transition window and its post-period must both be fully covered.
+    candidate_count = (last - first).days - (2 * width) + 2
+    if candidate_count <= 0:
+        return {}
+    candidates: list[dict[str, object]] = []
+    for offset in range(candidate_count):
+        start_date = first + timedelta(days=offset)
+        days = [start_date + timedelta(days=i) for i in range(width)]
+        counts = [daily_total.get(day, 0) for day in days]
+        total = sum(counts)
+        if total == 0:
+            continue
+        first_mix, second_mix = Counter(), Counter()
+        for day in days[:14]:
+            first_mix.update(daily_class.get(day, Counter()))
+        for day in days[14:]:
+            second_mix.update(daily_class.get(day, Counter()))
+        first_n, second_n = sum(first_mix.values()), sum(second_mix.values())
+        if not first_n or not second_n:
+            continue
+        tv = 0.5 * fsum(
+            abs(first_mix.get(k, 0) / first_n - second_mix.get(k, 0) / second_n)
+            for k in range(len(class_index))
+        )
+        average = total / width
+        candidates.append({
+            "start": start_date,
+            "total": total,
+            "cv": pstdev(counts) / average,
+            "peak_ratio": max(counts) / average,
+            "mix_tv": tv,
+        })
+    if not candidates:
+        return {}
+    median_total = sorted(int(row["total"]) for row in candidates)[(len(candidates) - 1) // 2]
+    usual = min(
+        candidates,
+        key=lambda row: (abs(int(row["total"]) - median_total), float(row["cv"]), row["start"]),
+    )
+    eligible_peak = [row for row in candidates if int(row["total"]) >= median_total]
+    peak = min(
+        eligible_peak,
+        key=lambda row: (-float(row["peak_ratio"]), -int(row["total"]), row["start"]),
+    )
+    change = min(
+        candidates,
+        key=lambda row: (-float(row["mix_tv"]), -int(row["total"]), row["start"]),
+    )
+    selected = {
+        "usual_28d": usual,
+        "peak_28d": peak,
+        "mix_shift_28d": change,
+    }
+    result: dict[str, DemandTrace] = {}
+    for name, row in selected.items():
+        start = datetime.combine(row["start"], time.min)
+        end = start + timedelta(days=width)
+        events = [
+            (timestamp, class_index[label])
+            for timestamp, label in records
+            if start <= timestamp < end
+        ]
+        events.sort(key=lambda item: (item[0], item[1]))
+        duration = (end - start).total_seconds()
+        result[name] = DemandTrace(
+            name,
+            tuple(ArrivalTask((timestamp - start).total_seconds() / duration, kind) for timestamp, kind in events),
+            1.0,
+            start,
+            end,
+        )
+    post_start = datetime.combine(change["start"] + timedelta(days=width), time.min)
+    post_end = post_start + timedelta(days=width)
+    post_events = [
+        (timestamp, class_index[label])
+        for timestamp, label in records
+        if post_start <= timestamp < post_end
+    ]
+    post_events.sort(key=lambda item: (item[0], item[1]))
+    if post_events:
+        duration = (post_end - post_start).total_seconds()
+        result["post_mix_shift_28d"] = DemandTrace(
+            "post_mix_shift_28d",
+            tuple(ArrivalTask((timestamp - post_start).total_seconds() / duration, kind) for timestamp, kind in post_events),
+            1.0,
+            post_start,
+            post_end,
+        )
     return result
 
 
@@ -325,6 +488,39 @@ def _evaluate(
     return results
 
 
+def _evaluate_organizational(
+    trace: DemandTrace,
+    profile: str,
+    offered_load: float,
+    threshold_multiplier: float = S3_PRIMARY_THRESHOLD,
+) -> dict[str, TemporalAllocationResult]:
+    """Matched S0-S3 evaluation on one qualitative-pattern demand window."""
+    arrivals = _ordered(trace.arrivals, "class_ascending")
+    n_types = max(task.task_type for task in arrivals) + 1
+    matrix = _organization(profile, n_types)
+    service = _service_times(arrivals, offered_load, "uniform")
+    results = {
+        "S0": run_lowest_workload_temporal_policy(arrivals, matrix, service, trace.horizon),
+        "S1": run_max_effectiveness_temporal_policy(arrivals, matrix, service, trace.horizon),
+        "S2": run_effectiveness_load_temporal_policy(arrivals, matrix, service, trace.horizon),
+        "S3": run_specialist_backup_temporal_policy(
+            arrivals, matrix, service, trace.horizon,
+            threshold_multiplier, S3_BACKUP_EFFECTIVENESS_FLOOR,
+        ),
+    }
+    # S0 is the new minimum-workload organization. It is not the predeclared
+    # fixed-mapping P0 retained by the historical runner.
+    for name, result in results.items():
+        if len(result.decisions) != len(arrivals):
+            raise AssertionError(f"{name}: task conservation failed")
+        completed = sum(d.completion_time <= trace.horizon for d in result.decisions)
+        if completed + result.pending_task_count != len(arrivals):
+            raise AssertionError(f"{name}: completed plus pending does not conserve arrivals")
+        if not isclose(fsum(result.effectiveness_by_agent), result.total_effectiveness):
+            raise AssertionError(f"{name}: individual contributions do not sum to total")
+    return results
+
+
 def run_soctra_demand_experiment(path: str | Path) -> dict[str, object]:
     """Run a bounded matched replay and sensitivity around recorded event order."""
     source = load_soctra_demand(path)
@@ -381,6 +577,53 @@ def run_soctra_demand_experiment(path: str | Path) -> dict[str, object]:
     }
 
 
+def run_organizational_strategy_comparison(path: str | Path) -> dict[str, object]:
+    """Compare S0-S3 on matched, demand-pattern windows selected without outcomes.
+
+    SOCTRA contributes relative timestamps and opaque class sequence patterns.
+    All service loads, team structures and effectiveness matrices remain
+    hypothetical; normalized-window replay is not a measured operational rate.
+    """
+    source = load_soctra_demand(path)
+    names = ("usual_28d", "peak_28d", "mix_shift_28d", "post_mix_shift_28d")
+    missing = [name for name in names if name not in source.traces]
+    if missing:
+        raise ValueError(
+            "the local snapshot does not span enough nonempty calendar days "
+            "for the predeclared 28-day demand windows: " + ", ".join(missing)
+        )
+    sensitivity: list[dict[str, object]] = []
+    for window in names:
+        trace = source.traces[window]
+        for profile in ORGANIZATIONS:
+            for load in OFFERED_LOADS:
+                for policy, result in _evaluate_organizational(trace, profile, load).items():
+                    sensitivity.append(_row(
+                        window, profile, load, "uniform", "class_ascending", policy, result
+                    ))
+    threshold_rows: list[dict[str, object]] = []
+    for window in names:
+        trace = source.traces[window]
+        for profile in ORGANIZATIONS:
+            for threshold in S3_THRESHOLD_SENSITIVITY:
+                result = run_specialist_backup_temporal_policy(
+                    _ordered(trace.arrivals, "class_ascending"),
+                    _organization(profile, max(task.task_type for task in trace.arrivals) + 1),
+                    _service_times(trace.arrivals, 0.90, "uniform"),
+                    trace.horizon,
+                    threshold,
+                    S3_BACKUP_EFFECTIVENESS_FLOOR,
+                )
+                row = _row(window, profile, 0.90, "uniform", "class_ascending", "S3", result)
+                row["threshold_multiplier"] = threshold
+                threshold_rows.append(row)
+    return {
+        "source": source,
+        "load_sensitivity": tuple(sensitivity),
+        "threshold_sensitivity": tuple(threshold_rows),
+    }
+
+
 def _row(
     trace: str,
     organization: str,
@@ -390,6 +633,10 @@ def _row(
     policy: str,
     result: TemporalAllocationResult,
 ) -> dict[str, object]:
+    completed = [task for task in result.decisions if task.completion_time <= result.arrival_horizon]
+    completed_effectiveness = fsum(task.effectiveness for task in completed)
+    completed_responses = [task.response_time for task in completed]
+    completed_waits = [task.waiting_time for task in completed]
     return {
         "trace": trace,
         "organization": organization,
@@ -398,12 +645,23 @@ def _row(
         "tie_order": tie_order,
         "policy": policy,
         "tasks": len(result.decisions),
+        "completed_tasks": len(completed),
+        "pending_tasks_count": result.pending_task_count,
+        "completed_fraction": len(completed) / len(result.decisions),
         "effectiveness_mean": result.mean_effectiveness,
         "effectiveness_total": result.total_effectiveness,
+        "completed_effectiveness_total": completed_effectiveness,
+        "completed_effectiveness_mean": (
+            completed_effectiveness / len(completed) if completed else None
+        ),
         "waiting_mean": result.mean_waiting_time,
         "waiting_p95": result.p95_waiting_time,
         "response_mean": result.mean_response_time,
         "response_p95": result.p95_response_time,
+        "completed_response_mean": _mean_or_none(completed_responses),
+        "completed_response_p95": _nearest_rank(completed_responses),
+        "completed_waiting_mean": _mean_or_none(completed_waits),
+        "completed_waiting_p95": _nearest_rank(completed_waits),
         "pending_tasks": result.pending_task_count,
         "pending_tasks_by_agent": result.pending_task_count_by_agent,
         "pending_work": result.pending_work_at_horizon,
@@ -413,6 +671,14 @@ def _row(
         "effectiveness_by_agent": result.effectiveness_by_agent,
         "makespan": result.makespan,
     }
+
+
+def _mean_or_none(values: list[float]) -> float | None:
+    return fsum(values) / len(values) if values else None
+
+
+def _nearest_rank(values: list[float]) -> float | None:
+    return sorted(values)[ceil(0.95 * len(values)) - 1] if values else None
 
 
 def _fmt(value: float) -> str:
@@ -600,12 +866,128 @@ def format_report(result: dict[str, object]) -> str:
     return "\n".join(lines)
 
 
+def format_organizational_report(result: dict[str, object]) -> str:
+    """Compact, deterministic report for the separately named S0-S3 study."""
+    source: SourceDemand = result["source"]
+    rows = result["load_sensitivity"]
+    lookup = {
+        (row["trace"], row["organization"], row["offered_load"], row["policy"]): row
+        for row in rows
+    }
+    names = ("usual_28d", "peak_28d", "mix_shift_28d", "post_mix_shift_28d")
+    lines = [
+        "## HLS-02 organizational strategy comparison S0-S3",
+        "",
+        "SOCTRA is used as a qualitative source of relative arrival timing and opaque project-class sequence patterns. Every event is an alert-record proxy; selected-window counts are not interpreted as human task rates. Horizon is normalized to 1 and service times are hypothetical, scaled to offered load.",
+        "",
+        "Windows were selected before policy evaluation, from complete 28-day calendar windows: usual = volume nearest the median (then lower daily CV); peak = maximum daily peak/mean among windows at or above median volume; mix shift = maximum total-variation distance between first and second 14-day class shares; post mix shift = the immediately following 28 days. Ties resolve by larger volume where relevant, then earliest date.",
+        "",
+        f"S3 fixed parameters: specialist threshold θ={S3_PRIMARY_THRESHOLD:g} times the current task's class service duration; if specialist workload W_i(t)>θs_k, use the highest-effectiveness other currently idle agent with e_ik≥{S3_BACKUP_EFFECTIVENESS_FLOOR:.2f}; ties use lowest index. If none qualifies, use the specialist. Threshold sensitivity: {', '.join(map(str, S3_THRESHOLD_SENSITIVITY))} in addition to θ=1.",
+        "",
+        "All effectiveness values, team profiles and service durations are hypothetical. Classes are anonymous project labels, not competence categories. The table reports exact scenario outputs, not policy estimates for GMV-CERT.",
+        "",
+        "| 28-day pattern | Dates (start–end exclusive) | Alert proxies | Active classes | Daily mean / CV / peak | First-half / second-half class TV |",
+        "|---|---|---:|---:|---:|---:|",
+    ]
+    for name in names:
+        trace = source.traces[name]
+        summary = source.organizational_demand_summaries[name]
+        lines.append(
+            f"| {name} | {trace.start.date()}–{trace.end.date()} | {summary['rows']} | "
+            f"{summary['active_project_classes']} | {summary['daily_mean']:.1f} / "
+            f"{summary['daily_cv']:.3f} / {summary['daily_peak']} | {summary['first_second_mix_tv']:.3f} |"
+        )
+    lines += [
+        "",
+        "At each cell, policy values below are `mean effectiveness / mean response / P95 response / completed fraction by H`. Response uses all assigned tasks (including tasks completed after H); completed fraction is a separate horizon view. All time units are normalized hypothetical service units.",
+        "",
+        "| Pattern | Organization | ρ offered | S0 | S1 | S2 | S3 |",
+        "|---|---|---:|---|---|---|---|",
+    ]
+    for window in names:
+        for profile in ORGANIZATIONS:
+            for load in OFFERED_LOADS:
+                cells = []
+                for policy in ORGANIZATIONAL_POLICY_NAMES:
+                    row = lookup[(window, profile, load, policy)]
+                    cells.append(
+                        f"{row['effectiveness_mean']:.3f} / {row['response_mean']:.3f} / "
+                        f"{row['response_p95']:.3f} / {row['completed_fraction']:.3f}"
+                    )
+                lines.append(
+                    f"| {window} | {profile} | {load:.2f} | " + " | ".join(cells) + " |"
+                )
+    lines += [
+        "",
+        "### Horizon completion and resource detail at ρ=0.90",
+        "Received = completed by H + pending at H. Completed-task quality and time below use completed tasks only; the preceding table's quality and response use all assigned tasks. Assignment counts and utilization vectors follow agent-index order.",
+        "",
+        "| Pattern | Organization | Policy | Received / completed / pending | Completed effectiveness total / mean | Completed response mean / P95 | Pending work | Assigned by agent | Utilization by agent |",
+        "|---|---|---|---:|---:|---:|---:|---|---|",
+    ]
+    for window in names:
+        for profile in ORGANIZATIONS:
+            for policy in ORGANIZATIONAL_POLICY_NAMES:
+                row = lookup[(window, profile, 0.90, policy)]
+                completed_mean = row["completed_effectiveness_mean"]
+                completed_response = row["completed_response_mean"]
+                completed_p95 = row["completed_response_p95"]
+                assigned = "(" + ", ".join(map(str, row["assigned"])) + ")"
+                utilization = "(" + ", ".join(f"{value:.3f}" for value in row["utilization"]) + ")"
+                lines.append(
+                    f"| {window} | {profile} | {policy} | {row['tasks']} / {row['completed_tasks']} / {row['pending_tasks_count']} "
+                    f"| {row['completed_effectiveness_total']:.2f} / "
+                    f"{'NA' if completed_mean is None else f'{completed_mean:.3f}'} "
+                    f"| {'NA' if completed_response is None else f'{completed_response:.3f}'} / "
+                    f"{'NA' if completed_p95 is None else f'{completed_p95:.3f}'} "
+                    f"| {row['pending_work']:.3f} | {assigned} | {utilization} |"
+                )
+    threshold_lookup: dict[tuple[object, ...], dict[str, object]] = {}
+    for row in result["threshold_sensitivity"]:
+        threshold_lookup[(row["trace"], row["organization"], row["threshold_multiplier"])] = row
+    lines += [
+        "",
+        "### S3 threshold sensitivity at ρ=0.90",
+        "Values are mean effectiveness / mean response / P95 response / completed fraction. This is a fixed sensitivity set, not post-result tuning.",
+        "",
+        "| Pattern | Organization | θ=0.5 | θ=1.0 | θ=2.0 |",
+        "|---|---|---|---|---|",
+    ]
+    for window in names:
+        for profile in ORGANIZATIONS:
+            cells = []
+            for threshold in (0.5, 1.0, 2.0):
+                if threshold == S3_PRIMARY_THRESHOLD:
+                    row = lookup[(window, profile, 0.90, "S3")]
+                else:
+                    row = threshold_lookup[(window, profile, threshold)]
+                cells.append(
+                    f"{row['effectiveness_mean']:.3f} / {row['response_mean']:.3f} / "
+                    f"{row['response_p95']:.3f} / {row['completed_fraction']:.3f}"
+                )
+            lines.append(f"| {window} | {profile} | " + " | ".join(cells) + " |")
+    lines += [
+        "",
+        "Interpretation boundary: S0-S3 are constructed organizational rules. Demand-window choice is outcome-blind and descriptive. Since each window is normalized and service is scaled to ρ, the evaluation preserves within-window ordering and relative timing but does not estimate alert rates, analyst capacity, actual SOC response, or effects of AI. No statistical inference is applied.",
+    ]
+    return "\n".join(lines)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--soctra-csv", required=True, help="path to an authorized local SOCTRA snapshot")
+    parser.add_argument(
+        "--organizational-strategies",
+        action="store_true",
+        help="run the separately identified S0-S3 organization comparison",
+    )
     args = parser.parse_args()
-    result = run_soctra_demand_experiment(args.soctra_csv)
-    print(format_report(result))
+    if args.organizational_strategies:
+        result = run_organizational_strategy_comparison(args.soctra_csv)
+        print(format_organizational_report(result))
+    else:
+        result = run_soctra_demand_experiment(args.soctra_csv)
+        print(format_report(result))
     return 0
 
 

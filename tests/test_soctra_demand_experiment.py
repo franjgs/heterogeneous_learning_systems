@@ -1,5 +1,5 @@
 import csv
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pytest
 
@@ -10,6 +10,9 @@ from studies.soctra_demand_experiment import (
     _ordered,
     _synthetic_demand_controls,
     _service_times,
+    _row,
+    format_organizational_report,
+    run_organizational_strategy_comparison,
     load_soctra_demand,
 )
 
@@ -171,6 +174,88 @@ def test_p1_maximum_tie_structure_matches_declared_organization_profiles():
         for task_type in range(27):
             maximum = max(row[task_type] for row in matrix)
             assert sum(row[task_type] == maximum for row in matrix) == tied_agents
+
+
+def test_predeclared_28_day_windows_are_deterministic_pattern_descriptors(tmp_path):
+    path = tmp_path / "windows.csv"
+    rows = []
+    first = datetime(2024, 1, 1)
+    for day in range(84):
+        kind = "class-a" if day < 42 else "class-b"
+        rows.append({
+            "id_alerta": f"daily-{day}",
+            "@timestamp0": (first + timedelta(days=day, hours=12)).strftime("%Y-%m-%d %H:%M:%S"),
+            "proyecto": kind,
+        })
+        if day == 10:
+            for spike in range(10):
+                rows.append({
+                    "id_alerta": f"spike-{spike}",
+                    "@timestamp0": (first + timedelta(days=day, hours=12, minutes=1, seconds=spike)).strftime("%Y-%m-%d %H:%M:%S"),
+                    "proyecto": kind,
+                })
+    _write_csv(path, rows)
+    source = load_soctra_demand(path)
+    names = ("usual_28d", "peak_28d", "mix_shift_28d", "post_mix_shift_28d")
+    assert all(name in source.traces for name in names)
+    for name in names:
+        trace = source.traces[name]
+        assert (trace.end - trace.start).days == 28
+        assert all(0 <= task.arrival_time < 1 for task in trace.arrivals)
+    assert source.traces["post_mix_shift_28d"].start == source.traces["mix_shift_28d"].end
+    assert source.traces == load_soctra_demand(path).traces
+    assert source.traces["peak_28d"].start.date() <= (first + timedelta(days=10)).date() < source.traces["peak_28d"].end.date()
+
+
+def test_completed_horizon_metrics_exclude_tasks_that_finish_after_horizon():
+    from hls.temporal_allocation import run_max_effectiveness_temporal_policy
+
+    result = run_max_effectiveness_temporal_policy(
+        ((0.0, 0), (0.6, 1)), ((0.8, 0.4),), (0.6, 0.6), 1.0
+    )
+    row = _row("fixture", "homogeneous", 0.9, "uniform", "class_ascending", "S1", result)
+    assert row["tasks"] == 2
+    assert row["completed_tasks"] == 1
+    assert row["pending_tasks_count"] == 1
+    assert row["completed_fraction"] == 0.5
+    assert row["effectiveness_total"] == pytest.approx(1.2)
+    assert row["effectiveness_mean"] == pytest.approx(0.6)
+    assert row["completed_effectiveness_total"] == pytest.approx(0.8)
+    assert row["completed_effectiveness_mean"] == pytest.approx(0.8)
+    assert row["completed_response_mean"] == pytest.approx(0.6)
+    assert row["completed_response_p95"] == pytest.approx(0.6)
+    assert row["pending_work"] == pytest.approx(0.2)
+
+
+def test_s0_s1_s2_s3_comparison_is_paired_and_reproducible(tmp_path):
+    path = tmp_path / "small-window.csv"
+    rows = []
+    first = datetime(2024, 1, 1)
+    for day in range(84):
+        for event in range(2 if day % 7 == 0 else 1):
+            rows.append({
+                "id_alerta": f"id-{day}-{event}",
+                "@timestamp0": (first + timedelta(days=day, hours=event)).strftime("%Y-%m-%d %H:%M:%S"),
+                "proyecto": f"p-{(day // 14 + event) % 3}",
+            })
+    _write_csv(path, rows)
+    result = run_organizational_strategy_comparison(path)
+    assert len(result["load_sensitivity"]) == 4 * 4 * 3 * 4
+    assert len(result["threshold_sensitivity"]) == 4 * 4 * 2
+    rows = result["load_sensitivity"]
+    for window in ("usual_28d", "peak_28d", "mix_shift_28d", "post_mix_shift_28d"):
+        for profile in ("homogeneous", "specialized", "partially_polyvalent", "dominant_worker"):
+            cell = [row for row in rows if row["trace"] == window and row["organization"] == profile and row["offered_load"] == 0.9]
+            assert {row["policy"] for row in cell} == {"S0", "S1", "S2", "S3"}
+            assert len({row["tasks"] for row in cell}) == 1
+            assert len({row["service_profile"] for row in cell}) == 1
+            for row in cell:
+                assert row["tasks"] == row["completed_tasks"] + row["pending_tasks_count"]
+                assert 0 <= row["effectiveness_mean"] <= 1
+    assert result["load_sensitivity"] == run_organizational_strategy_comparison(path)["load_sensitivity"]
+    report = format_organizational_report(result)
+    assert "S0-S3" in report and "θ=0.5" in report and "θ=2.0" in report
+    assert "p-0" not in report and "id-" not in report
 
 
 def test_synthetic_demand_controls_preserve_count_horizon_and_declared_margins(tmp_path):

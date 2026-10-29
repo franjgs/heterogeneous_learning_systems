@@ -96,6 +96,57 @@ def run_effectiveness_load_temporal_policy(
     return _run("effectiveness_load_ratio", arrivals, effectiveness, service_times, arrival_horizon, None)
 
 
+def run_lowest_workload_temporal_policy(
+    arrivals: Sequence[ArrivalTask | tuple[float, int]],
+    effectiveness: Sequence[Sequence[float]],
+    service_times: Sequence[float],
+    arrival_horizon: float,
+) -> TemporalAllocationResult:
+    """Choose the agent minimizing observable pending work W_i(t); ties use index.
+
+    Here W_i(t)=max(0, queue_tail_i-t), including residual service and all
+    queued work. Effectiveness is deliberately ignored.
+    """
+    return _run("lowest_workload", arrivals, effectiveness, service_times, arrival_horizon, None)
+
+
+def run_specialist_backup_temporal_policy(
+    arrivals: Sequence[ArrivalTask | tuple[float, int]],
+    effectiveness: Sequence[Sequence[float]],
+    service_times: Sequence[float],
+    arrival_horizon: float,
+    workload_threshold_multiplier: float = 1.0,
+    minimum_backup_effectiveness: float = 0.5,
+) -> TemporalAllocationResult:
+    """Use the top-effectiveness specialist, with an idle qualified backup.
+
+    The specialist is the maximum-e[i,k] agent (index breaks ties). If its
+    workload exceeds ``threshold_multiplier * s_k``, route instead to the
+    most effective *other idle* agent with e[i,k] at least the declared
+    floor. Ties go to index. If no backup qualifies, use the specialist.
+    This is a deterministic heuristic; it has no rejection or queue limit.
+    """
+    if (
+        isinstance(workload_threshold_multiplier, bool)
+        or not isinstance(workload_threshold_multiplier, (int, float))
+        or not isfinite(workload_threshold_multiplier)
+        or workload_threshold_multiplier < 0
+    ):
+        raise ValueError("workload threshold multiplier must be finite and nonnegative")
+    if (
+        isinstance(minimum_backup_effectiveness, bool)
+        or not isinstance(minimum_backup_effectiveness, (int, float))
+        or not isfinite(minimum_backup_effectiveness)
+        or not 0 <= minimum_backup_effectiveness <= 1
+    ):
+        raise ValueError("minimum backup effectiveness must be finite and in [0, 1]")
+    return _run(
+        "specialist_backup", arrivals, effectiveness, service_times,
+        arrival_horizon, None, workload_threshold_multiplier,
+        minimum_backup_effectiveness,
+    )
+
+
 def _run(
     policy: str,
     arrivals: Sequence[ArrivalTask | tuple[float, int]],
@@ -103,6 +154,8 @@ def _run(
     service_times: Sequence[float],
     arrival_horizon: float,
     type_to_agent: Sequence[int] | None,
+    workload_threshold_multiplier: float = 1.0,
+    minimum_backup_effectiveness: float = 0.5,
 ) -> TemporalAllocationResult:
     tasks, matrix, durations, horizon = _validate(
         arrivals, effectiveness, service_times, arrival_horizon
@@ -125,7 +178,28 @@ def _run(
             agent = mapping[task_type]
         elif policy == "max_effectiveness":
             agent = max(range(n_agents), key=lambda i: matrix[i][task_type])
-        else:
+        elif policy == "lowest_workload":
+            agent = min(
+                range(n_agents),
+                key=lambda i: max(0.0, available_at[i] - time),
+            )
+        elif policy == "specialist_backup":
+            specialist = max(range(n_agents), key=lambda i: matrix[i][task_type])
+            specialist_work = max(0.0, available_at[specialist] - time)
+            if specialist_work <= workload_threshold_multiplier * durations[task_type]:
+                agent = specialist
+            else:
+                available_backups = [
+                    i for i in range(n_agents)
+                    if i != specialist
+                    and max(0.0, available_at[i] - time) == 0.0
+                    and matrix[i][task_type] >= minimum_backup_effectiveness
+                ]
+                agent = (
+                    max(available_backups, key=lambda i: matrix[i][task_type])
+                    if available_backups else specialist
+                )
+        elif policy == "effectiveness_load_ratio":
             # All service times are positive. W_i is remaining active service
             # plus queued work, observable from the queue tail at arrival time.
             agent = max(
@@ -133,6 +207,8 @@ def _run(
                 key=lambda i: matrix[i][task_type]
                 / (max(0.0, available_at[i] - time) + durations[task_type]),
             )
+        else:
+            raise ValueError(f"unknown temporal allocation policy: {policy}")
 
         workload = max(0.0, available_at[agent] - time)
         start = max(time, available_at[agent])
