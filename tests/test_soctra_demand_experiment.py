@@ -85,6 +85,7 @@ def test_offered_load_is_exact_under_uniform_and_class_heterogeneous_service():
 
 
 def test_same_timestamp_order_is_explicit_and_reproducible():
+    from collections import Counter
     from hls.temporal_allocation import ArrivalTask
 
     arrivals = (ArrivalTask(0.0, 1), ArrivalTask(0.0, 0), ArrivalTask(0.0, 2))
@@ -93,6 +94,83 @@ def test_same_timestamp_order_is_explicit_and_reproducible():
     assert tuple(task.task_type for task in ascending) == (0, 1, 2)
     assert tuple(task.task_type for task in descending) == (2, 1, 0)
     assert ascending == _ordered(arrivals, "class_ascending")
+    assert Counter(task.arrival_time for task in ascending) == Counter(task.arrival_time for task in descending)
+    assert Counter(task.task_type for task in ascending) == Counter(task.task_type for task in descending)
+
+
+def test_timestamp_normalization_preserves_order_and_relative_separations(tmp_path):
+    path = tmp_path / "times.csv"
+    _write_csv(path, [
+        {"id_alerta": "a", "@timestamp0": "2023-02-01 00:00:00", "proyecto": "p"},
+        {"id_alerta": "b", "@timestamp0": "2023-02-01 06:00:00", "proyecto": "p"},
+        {"id_alerta": "c", "@timestamp0": "2023-02-01 18:00:00", "proyecto": "p"},
+    ])
+    trace = load_soctra_demand(path).traces["full_observed_coverage"]
+    times = tuple(task.arrival_time for task in trace.arrivals)
+    assert trace.horizon == 1.0
+    assert times == (0.0, 0.25, 0.75)
+    assert times[1] - times[0] == pytest.approx((6 * 3600) / (24 * 3600))
+    assert times[2] - times[1] == pytest.approx((12 * 3600) / (24 * 3600))
+    assert times == tuple(sorted(times))
+
+
+def test_policy_replays_conserve_tasks_and_capacity_and_report_horizon_backlog(tmp_path):
+    from datetime import datetime
+    from studies.soctra_demand_experiment import DemandTrace
+    from hls.temporal_allocation import ArrivalTask
+
+    arrivals = tuple(ArrivalTask(t, k) for t, k in (
+        (0.0, 0), (0.0, 1), (0.2, 0), (0.4, 1), (0.9, 0),
+    ))
+    trace = DemandTrace("fixture", arrivals, 1.0, datetime(2024, 1, 1), datetime(2024, 1, 2))
+    for result in _evaluate(trace, "partially_polyvalent", 0.9, "uniform", "class_ascending").values():
+        assert len(result.decisions) == len(arrivals)
+        assert tuple(d.task_index for d in result.decisions) == tuple(range(len(arrivals)))
+        assert len({d.task_index for d in result.decisions}) == len(arrivals)
+        assert all(d.service_start >= d.arrival_time for d in result.decisions)
+        assert all(d.completion_time >= d.service_start for d in result.decisions)
+        for agent in range(N_AGENTS):
+            assigned = [d for d in result.decisions if d.agent_index == agent]
+            assert all(
+                right.service_start >= left.completion_time
+                for left, right in zip(assigned, assigned[1:])
+            )
+            expected_pending = [d for d in assigned if d.completion_time > trace.horizon]
+            assert result.pending_task_count_by_agent[agent] == len(expected_pending)
+            assert result.pending_work_at_horizon_by_agent[agent] >= 0.0
+            assert 0.0 <= result.utilization_by_agent[agent] <= 1.0
+        completed_at_horizon = sum(d.completion_time <= trace.horizon for d in result.decisions)
+        assert completed_at_horizon + result.pending_task_count == len(arrivals)
+        assert sum(result.assigned_count_by_agent) == len(arrivals)
+        assert sum(result.effectiveness_by_agent) == pytest.approx(result.total_effectiveness)
+        total_work = sum(0.9 * N_AGENTS / len(arrivals) for _ in arrivals)
+        busy_work_until_horizon = sum(result.utilization_by_agent) * trace.horizon
+        assert busy_work_until_horizon + result.pending_work_at_horizon == pytest.approx(total_work)
+
+
+def test_p1_concentration_occurs_with_exact_ties_and_strict_dominance():
+    from hls.temporal_allocation import run_max_effectiveness_temporal_policy
+
+    arrivals = tuple((index / 10, 0) for index in range(10))
+    tied = run_max_effectiveness_temporal_policy(arrivals, ((0.6,),) * 4, (0.01,), 1.0)
+    strict = run_max_effectiveness_temporal_policy(arrivals, ((0.9,), (0.5,), (0.5,), (0.5,)), (0.01,), 1.0)
+    assert tied.assigned_count_by_agent == strict.assigned_count_by_agent == (10, 0, 0, 0)
+    assert tied.mean_response_time == strict.mean_response_time
+    assert tied.assigned_count_by_agent[0] / len(arrivals) == 1.0
+
+
+def test_p1_maximum_tie_structure_matches_declared_organization_profiles():
+    expected_ties = {
+        "homogeneous": 4,
+        "specialized": 1,
+        "partially_polyvalent": 2,
+        "dominant_worker": 1,
+    }
+    for profile, tied_agents in expected_ties.items():
+        matrix = _organization(profile, 27)
+        for task_type in range(27):
+            maximum = max(row[task_type] for row in matrix)
+            assert sum(row[task_type] == maximum for row in matrix) == tied_agents
 
 
 def test_synthetic_demand_controls_preserve_count_horizon_and_declared_margins(tmp_path):

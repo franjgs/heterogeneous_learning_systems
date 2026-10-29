@@ -4798,12 +4798,14 @@
       "type": "experiment",
       "name": "Matched allocation replay on restricted timestamped alert-record demand",
       "definition": "Replays anonymized project-class arrivals derived locally from the latest SOCTRA snapshot through the unchanged HLS-02 engine, comparing P0/P1/P2 under four hypothetical organizations and normalized service-load assumptions.",
-      "scope": "Exploratory deterministic replay of full recorded coverage and two complete calendar-year windows; includes load, class-service-duration, class-to-organization alignment, and same-timestamp ordering sensitivities. No analyst-hours or operational policy performance is estimated.",
+      "scope": "Exploratory deterministic replay of full recorded coverage, calendar year 2023, and a complete 12-month September 2024–August 2025 window; includes load, class-service-duration, class-to-organization alignment, and same-timestamp ordering sensitivities. A later scientific audit verified normalized-time, work-conservation, capacity and tie-break behavior. No analyst-hours or operational policy performance is estimated.",
       "assumptions": [
         "Each unique alert record is a demand-arrival proxy; it is not asserted to be a human work episode.",
         "The stored timestamp is used as relative event time; its timezone and operational meaning remain unverified.",
+        "Timestamps are mapped affinely to a unit horizon, preserving recorded order and relative gaps but not physical-time units.",
         "Project labels are opaque task classes, not competence dimensions or named clients.",
         "N=4, deterministic effectiveness contributions, service durations, and offered-load levels are hypothetical.",
+        "Offered load is total hypothetical service work divided by N times the unit horizon; it is neither realized utilization nor a per-agent queue load, and rho below one can coexist with transient or organizational backlog.",
         "P0/P1/P2 use identical records, service parameters, organization matrix, and horizon within each paired condition; no raw data or row-level results are stored."
       ],
       "relationships": [
@@ -4852,7 +4854,7 @@
       "definition": "The matched local replay yields condition-dependent effects of fixed routing, taskwise maximum effectiveness, and effectiveness-to-workload routing under observed alert-record timing/project-class patterns. The output is conditional on proxy arrivals and hypothetical organization/service assumptions; it is not evidence about GMV-CERT analyst performance.",
       "scope": "Deterministic exploratory simulations using restricted SOCTRA-derived demand records; no statistical inference across independent samples and no operational validation.",
       "assumptions": [
-        "Conclusions are conditional on the exact local snapshot, time interpretation, anonymous project-class ordering, chosen effectivity matrices, hypothetical offered load, service profiles, and equal-time ordering rule.",
+        "Conclusions are conditional on the exact local snapshot, time interpretation, anonymous project-class ordering, chosen effectiveness matrices, hypothetical offered load, service profiles, and equal-time ordering rule.",
         "The P1 taskwise effectiveness upper bound is a mathematical model property; observed policy trade-offs are scenario outputs.",
         "Source rows and identifiers are unavailable in the repository, so exact output reproduction requires authorized access to the same snapshot."
       ],

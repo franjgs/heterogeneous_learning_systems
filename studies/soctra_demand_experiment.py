@@ -119,7 +119,7 @@ def load_soctra_demand(path: str | Path) -> SourceDemand:
             datetime.combine(last_date + timedelta(days=1), time.min),
         ),
         "early_calendar_year": (datetime(2023, 1, 1), datetime(2024, 1, 1)),
-        "late_calendar_year": (datetime(2024, 9, 1), datetime(2025, 9, 1)),
+        "late_12_month_window": (datetime(2024, 9, 1), datetime(2025, 9, 1)),
     }
     traces: dict[str, DemandTrace] = {}
     demand_summaries: dict[str, dict[str, float | int]] = {}
@@ -157,7 +157,7 @@ def load_soctra_demand(path: str | Path) -> SourceDemand:
         )
         traces[name] = DemandTrace(name, arrivals, 1.0, start, end)
 
-    early, late = "early_calendar_year", "late_calendar_year"
+    early, late = "early_calendar_year", "late_12_month_window"
     mix_tv = None
     if early in class_counts_by_trace and late in class_counts_by_trace:
         early_counts, late_counts = class_counts_by_trace[early], class_counts_by_trace[late]
@@ -279,12 +279,45 @@ def _evaluate(
         "P2": run_effectiveness_load_temporal_policy(arrivals, matrix, service, trace.horizon),
     }
     for result in results.values():
-        if len(result.decisions) != len(arrivals):
+        if len(result.decisions) != len(arrivals) or sum(result.assigned_count_by_agent) != len(arrivals):
             raise AssertionError("task conservation failed")
         if tuple(decision.task_index for decision in result.decisions) != tuple(range(len(arrivals))):
             raise AssertionError("task sequence integrity failed")
-        if any(decision.completion_time < decision.arrival_time for decision in result.decisions):
-            raise AssertionError("completion precedes arrival")
+        if any(
+            decision.service_start < decision.arrival_time
+            or decision.completion_time < decision.service_start
+            for decision in result.decisions
+        ):
+            raise AssertionError("service timing violates arrival/start/completion order")
+        for agent in range(N_AGENTS):
+            agent_tasks = [d for d in result.decisions if d.agent_index == agent]
+            if any(
+                right.service_start < left.completion_time
+                for left, right in zip(agent_tasks, agent_tasks[1:])
+            ):
+                raise AssertionError("single-server FCFS capacity was violated")
+            if result.pending_task_count_by_agent[agent] != sum(
+                d.completion_time > trace.horizon for d in agent_tasks
+            ):
+                raise AssertionError("horizon task backlog does not match completion times")
+        completed_by_horizon = sum(d.completion_time <= trace.horizon for d in result.decisions)
+        if completed_by_horizon + result.pending_task_count != len(arrivals):
+            raise AssertionError("completed plus pending tasks does not conserve arrivals")
+        if any(work < 0.0 for work in result.pending_work_at_horizon_by_agent):
+            raise AssertionError("negative pending work")
+        if any(not 0.0 <= value <= 1.0 for value in result.utilization_by_agent):
+            raise AssertionError("agent utilization is outside [0, 1]")
+        offered_work = fsum(service[task.task_type] for task in arrivals)
+        busy_work_by_horizon = trace.horizon * fsum(result.utilization_by_agent)
+        if not isclose(
+            busy_work_by_horizon + result.pending_work_at_horizon,
+            offered_work,
+            rel_tol=1e-9,
+            abs_tol=1e-9,
+        ):
+            raise AssertionError("busy plus pending service work does not conserve offered work")
+        if not isclose(fsum(result.effectiveness_by_agent), result.total_effectiveness):
+            raise AssertionError("agent contributions do not sum to total effectiveness")
     if results["P1"].total_effectiveness + 1e-12 < max(
         results["P0"].total_effectiveness, results["P2"].total_effectiveness
     ):
@@ -303,7 +336,7 @@ def run_soctra_demand_experiment(path: str | Path) -> dict[str, object]:
                 primary.append(_row("full", profile, load, "uniform", "class_ascending", policy, result))
 
     historical_windows: list[dict[str, object]] = []
-    for trace_name in ("early_calendar_year", "late_calendar_year"):
+    for trace_name in ("early_calendar_year", "late_12_month_window"):
         trace = source.traces.get(trace_name)
         if trace is None:
             continue
@@ -372,7 +405,9 @@ def _row(
         "response_mean": result.mean_response_time,
         "response_p95": result.p95_response_time,
         "pending_tasks": result.pending_task_count,
+        "pending_tasks_by_agent": result.pending_task_count_by_agent,
         "pending_work": result.pending_work_at_horizon,
+        "pending_work_by_agent": result.pending_work_at_horizon_by_agent,
         "utilization": result.utilization_by_agent,
         "assigned": result.assigned_count_by_agent,
         "effectiveness_by_agent": result.effectiveness_by_agent,
@@ -430,19 +465,44 @@ def format_report(result: dict[str, object]) -> str:
             )
     lines += [
         "",
-        "Utilization, assignments, and total contributions by agent at ρ=0.90 (vectors follow model agent indices):",
-        "| Organization | P0 utilization / assignments / contribution | P1 utilization / assignments / contribution | P2 utilization / assignments / contribution |",
-        "|---|---|---|---|",
+        "### Offered-load sensitivity by policy",
+        "Each row is one deterministic cell. Utilization vectors use agent order; pending is task count / remaining service work at H.",
+        "| Organization | Policy | ρ | Mean effectiveness | Response mean / P95 | Pending tasks / work | Utilization by agent |",
+        "|---|---|---:|---:|---:|---:|---|",
     ]
     for profile in ORGANIZATIONS:
-        vectors = []
+        for load in OFFERED_LOADS:
+            for policy, _ in POLICY_RUNNERS:
+                row = primary_lookup[(profile, load, policy)]
+                utilization = "(" + ", ".join(_fmt(value) for value in row["utilization"]) + ")"
+                lines.append(
+                    f"| {profile} | {policy} | {load:.2f} | {_fmt(row['effectiveness_mean'])} "
+                    f"| {_fmt(row['response_mean'])} / {_fmt(row['response_p95'])} "
+                    f"| {row['pending_tasks']} / {_fmt(row['pending_work'])} | {utilization} |"
+                )
+    lines += [
+        "",
+        "### Agent allocation and horizon backlog at ρ=0.90",
+        "Agent vectors use model index order. Assignment fractions divide by all received alert proxies; utilization divides busy time inside [0,H] by H. Pending work is residual service plus queued service at H, in normalized time units.",
+        "| Organization | Policy | Mean effect | Response mean / P95 | Assignments by agent | Assignment fractions | Utilization by agent | Pending tasks by agent | Pending work by agent | Contribution by agent |",
+        "|---|---|---:|---:|---|---|---|---|---|---|",
+    ]
+    for profile in ORGANIZATIONS:
         for policy, _ in POLICY_RUNNERS:
             row = primary_lookup[(profile, 0.90, policy)]
-            utilization = "(" + ", ".join(_fmt(value) for value in row["utilization"]) + ")"
+            total_tasks = row["tasks"]
             assigned = "(" + ", ".join(str(value) for value in row["assigned"]) + ")"
+            fractions = "(" + ", ".join(_fmt(value / total_tasks) for value in row["assigned"]) + ")"
+            utilization = "(" + ", ".join(_fmt(value) for value in row["utilization"]) + ")"
+            pending_tasks = "(" + ", ".join(str(value) for value in row["pending_tasks_by_agent"]) + ")"
+            pending_work = "(" + ", ".join(_fmt(value) for value in row["pending_work_by_agent"]) + ")"
             contribution = "(" + ", ".join(_fmt(value) for value in row["effectiveness_by_agent"]) + ")"
-            vectors.append(f"{utilization} / {assigned} / {contribution}")
-        lines.append(f"| {profile} | {vectors[0]} | {vectors[1]} | {vectors[2]} |")
+            lines.append(
+                f"| {profile} | {policy} | {_fmt(row['effectiveness_mean'])} "
+                f"| {_fmt(row['response_mean'])} / {_fmt(row['response_p95'])} "
+                f"| {assigned} | {fractions} | {utilization} | {pending_tasks} "
+                f"| {pending_work} | {contribution} |"
+            )
     lines += [
         "",
         "### Demand-window comparison at offered load 0.90, uniform service",
@@ -479,8 +539,9 @@ def format_report(result: dict[str, object]) -> str:
     lines += [
         "",
         "### Same-timestamp tie-order sensitivity at offered load 0.90",
-        "| Organization | Policy | Δ mean effectiveness (descending−ascending) | Δ response mean | Δ response P95 |",
-        "|---|---|---:|---:|---:|",
+        "Deltas are descending class order minus ascending class order. Both conditions contain the same timestamp multiset and task-class multiset; only order inside equal-time groups differs.",
+        "| Organization | Policy | Δ mean effectiveness | Δ response mean | Δ response P95 | Δ assignments by agent | Δ utilization by agent |",
+        "|---|---|---:|---:|---:|---|---|",
     ]
     for profile in ORGANIZATIONS:
         for policy, _ in POLICY_RUNNERS:
@@ -488,9 +549,11 @@ def format_report(result: dict[str, object]) -> str:
             descending = tie_lookup[(profile, policy, "class_descending")]
             lines.append(
                 f"| {profile} | {policy} "
-                f"| {_fmt(descending['effectiveness_mean'] - ascending['effectiveness_mean'])} "
-                f"| {_fmt(descending['response_mean'] - ascending['response_mean'])} "
-                f"| {_fmt(descending['response_p95'] - ascending['response_p95'])} |"
+                f"| {descending['effectiveness_mean'] - ascending['effectiveness_mean']:.3e} "
+                f"| {descending['response_mean'] - ascending['response_mean']:.3e} "
+                f"| {descending['response_p95'] - ascending['response_p95']:.3e} "
+                f"| {tuple(y - x for x, y in zip(ascending['assigned'], descending['assigned']))} "
+                f"| {tuple(round(y - x, 8) for x, y in zip(ascending['utilization'], descending['utilization']))} |"
             )
     align_rows = result["alignment_sensitivity"]
     lines += [

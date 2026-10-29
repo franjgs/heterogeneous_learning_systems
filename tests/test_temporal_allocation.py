@@ -83,6 +83,18 @@ def test_pending_metrics_are_measured_at_horizon_and_exclude_jobs_completed_at_h
     assert result.pending_work_at_horizon == 0.0
 
 
+def test_all_temporal_policies_treat_completion_exactly_at_horizon_as_completed():
+    policies = (
+        run_fixed_temporal_policy(((0.0, 0),), ((0.8,),), (1.0,), 1.0, (0,)),
+        run_max_effectiveness_temporal_policy(((0.0, 0),), ((0.8,),), (1.0,), 1.0),
+        run_effectiveness_load_temporal_policy(((0.0, 0),), ((0.8,),), (1.0,), 1.0),
+    )
+    for result in policies:
+        assert result.decisions[0].completion_time == 1.0
+        assert result.pending_task_count == 0
+        assert result.pending_work_at_horizon == 0.0
+
+
 def test_fcfs_preserves_arrival_order_within_each_agent_queue():
     result = run_fixed_temporal_policy(
         ((0.0, 0), (0.1, 1), (0.2, 0)), ((0.5, 0.5),), (1.0, 2.0), 1.0, (0, 0)
