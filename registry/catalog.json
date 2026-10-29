@@ -4350,14 +4350,18 @@
       "type": "study",
       "name": "Temporal workload effects in heterogeneous task allocation",
       "definition": "Deterministic study comparing fixed, maximum-effectiveness and effectiveness/load-ratio assignment under temporally varying arrivals, recoverable per-agent service capacity, and declared effectiveness/demand/load profiles.",
-      "scope": "Six original controls, paired 96-cell sensitivity grid, five-structure focused controls, simultaneous-order probe, and exact small P2 response counterexample; constructed deterministic studies only, not empirical SOCTRA evaluation.",
+      "scope": "Six original controls, paired 96-cell sensitivity grid, five-structure focused controls, simultaneous-order probe, and exact small P2 response counterexample on constructed inputs. A separate restricted local-data replay applies the same model to SOCTRA alert-record timestamps as arrival proxies, with hypothetical organizations/effectiveness/service and no claim of human workload validity.",
       "assumptions": [
         "One deterministic service duration per task class, shared by all agents in the baseline.",
         "Every task is eventually completed; no deadlines or rejection.",
         "Competence is not measured; e[i,k] is a constructed deterministic contribution.",
         "Sensitivity profiles and traces are constructed; offered-load ratios are not observed utilization.",
         "H0-H2 preserve per-class mean effectiveness at 0.6; H3 is a separate dominant-agent control and does not preserve those marginals.",
-        "Equal-time arrivals retain the supplied sequence order, which determines FCFS order when tasks join the same queue."
+        "Equal-time arrivals retain the supplied sequence order, which determines FCFS order when tasks join the same queue.",
+        "The restricted snapshot is not stored in Git; one alert row is treated only as a modeled arrival proxy, not a confirmed human task.",
+        "Project labels define opaque task classes for the experiment; project identity is not competence.",
+        "Timestamp meaning and timezone are not validated; exact stored order is used only under an explicit recorded-time assumption and simultaneous-order sensitivity.",
+        "Organization size, fixed effectiveness profiles, service durations, and offered-load levels are hypothetical and not calibrated to GMV-CERT staffing or analyst time."
       ],
       "relationships": [
         {
@@ -4395,6 +4399,10 @@
         {
           "kind": "informed_by",
           "target": "theoretical_result.p1_taskwise_effectiveness_upper_bound"
+        },
+        {
+          "kind": "uses",
+          "target": "scenario.soc_alert_operations"
         }
       ],
       "implementation": [
@@ -4405,6 +4413,10 @@
         {
           "kind": "local",
           "path": "studies/temporal_task_allocation.py"
+        },
+        {
+          "kind": "local",
+          "path": "studies/soctra_demand_experiment.py"
         }
       ],
       "evidence": [],
@@ -4780,6 +4792,98 @@
       "ontology_class": "result",
       "bibliography_refs": [],
       "evidence_maturity": "current_reproducible"
+    },
+    {
+      "id": "experiment.soctra_timestamped_alert_demand_replay",
+      "type": "experiment",
+      "name": "Matched allocation replay on restricted timestamped alert-record demand",
+      "definition": "Replays anonymized project-class arrivals derived locally from the latest SOCTRA snapshot through the unchanged HLS-02 engine, comparing P0/P1/P2 under four hypothetical organizations and normalized service-load assumptions.",
+      "scope": "Exploratory deterministic replay of full recorded coverage and two complete calendar-year windows; includes load, class-service-duration, class-to-organization alignment, and same-timestamp ordering sensitivities. No analyst-hours or operational policy performance is estimated.",
+      "assumptions": [
+        "Each unique alert record is a demand-arrival proxy; it is not asserted to be a human work episode.",
+        "The stored timestamp is used as relative event time; its timezone and operational meaning remain unverified.",
+        "Project labels are opaque task classes, not competence dimensions or named clients.",
+        "N=4, deterministic effectiveness contributions, service durations, and offered-load levels are hypothetical.",
+        "P0/P1/P2 use identical records, service parameters, organization matrix, and horizon within each paired condition; no raw data or row-level results are stored."
+      ],
+      "relationships": [
+        {
+          "kind": "study",
+          "target": "study.temporal_task_allocation_policy_comparison"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.fixed_temporal_type_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_max_effectiveness_assignment"
+        },
+        {
+          "kind": "uses",
+          "target": "policy.temporal_effectiveness_load_ratio"
+        }
+      ],
+      "implementation": [
+        {
+          "kind": "local",
+          "path": "studies/soctra_demand_experiment.py"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "tests/test_soctra_demand_experiment.py"
+        },
+        {
+          "kind": "local",
+          "path": "docs/RESEARCH.md"
+        }
+      ],
+      "status": "executed_restricted_data",
+      "ontology_class": "experiment",
+      "bibliography_refs": [],
+      "evidence_maturity": "incomplete"
+    },
+    {
+      "id": "result.temporal_policy_tradeoffs_on_soctra_alert_proxy_demand",
+      "type": "result",
+      "name": "Allocation policies trade response and effectiveness under SOCTRA alert-proxy replay",
+      "definition": "The matched local replay yields condition-dependent effects of fixed routing, taskwise maximum effectiveness, and effectiveness-to-workload routing under observed alert-record timing/project-class patterns. The output is conditional on proxy arrivals and hypothetical organization/service assumptions; it is not evidence about GMV-CERT analyst performance.",
+      "scope": "Deterministic exploratory simulations using restricted SOCTRA-derived demand records; no statistical inference across independent samples and no operational validation.",
+      "assumptions": [
+        "Conclusions are conditional on the exact local snapshot, time interpretation, anonymous project-class ordering, chosen effectivity matrices, hypothetical offered load, service profiles, and equal-time ordering rule.",
+        "The P1 taskwise effectiveness upper bound is a mathematical model property; observed policy trade-offs are scenario outputs.",
+        "Source rows and identifiers are unavailable in the repository, so exact output reproduction requires authorized access to the same snapshot."
+      ],
+      "relationships": [
+        {
+          "kind": "from",
+          "target": "experiment.soctra_timestamped_alert_demand_replay"
+        }
+      ],
+      "implementation": [],
+      "status": "retained",
+      "documented_in": {
+        "kind": "local",
+        "path": "docs/RESEARCH.md"
+      },
+      "evidence": [
+        {
+          "kind": "local",
+          "path": "studies/soctra_demand_experiment.py"
+        },
+        {
+          "kind": "local",
+          "path": "tests/test_soctra_demand_experiment.py"
+        }
+      ],
+      "evidence_type": "exploratory",
+      "scientific_outcome": "AMBIGUOUS",
+      "evidence_availability": "Aggregate summary and adapter are tracked; the restricted CSV and row-level trace are not. Exact replay requires the authorized original snapshot.",
+      "ontology_class": "result",
+      "bibliography_refs": [],
+      "evidence_maturity": "incomplete"
     }
   ],
   "aliases": {
@@ -5101,6 +5205,12 @@
         "study.temporal_task_allocation_policy_comparison"
       ],
       "kind": "historical_alias"
+    },
+    "SOCTRA alert-demand replay": {
+      "targets": [
+        "experiment.soctra_timestamped_alert_demand_replay"
+      ],
+      "kind": "descriptive_study_alias"
     }
   },
   "bibliography": {
