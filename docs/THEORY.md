@@ -116,6 +116,26 @@ The statement concerns effectiveness only. It does not imply minimum waiting, re
 
 The load-ratio rule `e[i,k] / (W_i + s_k)` is not generally response-optimal. An exact three-task counterexample uses two agents, two classes, `e = ((0.2,0.2),(0.2,0.4))`, service times `(1,1)`, and arrivals `((0,0),(0.5,0),(0.5,1))`. P1 assigns agents `(0,0,1)`, giving responses `(1,1.5,1)`, mean `7/6`, P95 `1.5`. P2 assigns `(0,1,1)`: at the second task it sends the type-0 task to idle agent 1 because `0.2/1 > 0.2/1.5`; that makes agent 1's later type-1 task wait, producing responses `(1,1,2)`, mean `4/3`, P95 `2`. Total effectiveness remains `0.8`. With service times `(1,2)`, the same assignments yield P1 responses `(1,1.5,2)`, mean `1.5`, and P2 responses `(1,1,3)`, mean `5/3`. This finite counterexample refutes a general response-minimization guarantee for P2; it does not establish that P1 is generally response-optimal. A regression test records both service-duration cases.
 
+### Horizon-truncated effectiveness in the four-server SOC testbed
+
+The active SOC application testbed is a particular deterministic instance of temporal allocation, not the definition of the general HLS model. It uses four continuously available single-server equivalents over a normalized arrival horizon `H=1`, one independent FCFS queue per server, immediate irreversible assignment, no preemption, fixed hypothetical effectiveness `e[i,k]`, and positive deterministic service duration `s_k` shared across agents. All arrivals eventually complete as queues drain after `H`. There are no modeled shifts, breaks, handovers, priorities, escalations, or collaboration. SOCTRA alert records contribute selected relative arrival-time and opaque project-class patterns only; they do not identify human work duration, staffing, or analyst competence. See the study contract and empirical limits in `docs/RESEARCH.md`.
+
+For a fixed assignment run with `M` arrivals, define its horizon-indexed completed effectiveness:
+\[
+J(T)=\frac{1}{M}\sum_{n=1}^{M} e[i(n),k(n)]\,\mathbf 1\{c_n\leq T\},
+\]
+where `i(n)` is the assigned agent, `k(n)` the task class and `c_n` its deterministic completion time. The denominator remains all arrivals at every horizon. For a fixed run, `J(T)` is nondecreasing in `T`; at a common drain horizon after all tasks finish, `J(T)=M^{-1}\sum_n e[i(n),k(n)]`, the assigned mean effectiveness. This identity is bookkeeping from the definition, not a policy guarantee. For two policies, their difference at finite `T` reflects both differences in assigned effectiveness and which contributions have completed by `T`; at the common drain horizon only the assignment-effectiveness difference remains. Accordingly, `J_H` is horizon-specific and must not be described as a universal efficiency, realized-success, or speed measure.
+
+For the specialized testbed profile, a class's designated specialist has `e_s=.90` and a backup has `e_b=.50`. The load-ratio rule chooses the backup over the specialist exactly when
+\[
+\frac{e_b}{W_b+s_k}>\frac{e_s}{W_s+s_k}
+\quad\Longleftrightarrow\quad
+W_s>\frac{e_s}{e_b}W_b+\left(\frac{e_s}{e_b}-1\right)s_k,
+\]
+for positive effectiveness and service. Thus the specified `.90/.50` case has threshold `W_s>1.8W_b+0.8s_k`. This is direct algebra from S2's rule, not a novel theorem. It explains how S2 can route away from a more effective specialist when the specialist's observable queue is sufficiently larger. Whether that improves horizon-completed quality depends on resulting completion times and the task sequence; the inequality alone gives no such guarantee.
+
+In the four specialized, `ρ=.90` demand-window replays, S3's `J(H)` advantage over S2 in three windows persisted after queue drain because S3 assigned more tasks to the `.90` specialist rather than `.50` backups. The advantage changed with the accounting horizon, and S3 had greater all-task response in all four windows. These are deterministic results conditional on the stated profiles, service construction, arrival proxies and horizon; the per-window comparisons and assignment/backlog decomposition are in `docs/RESEARCH.md`. They support no general S3 ranking or claim of real SOC performance.
+
 ## 5. Action-dependent state change and future development value
 
 The minimal endogenous dynamic boundary is an action-dependent state transition:

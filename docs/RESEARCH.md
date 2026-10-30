@@ -354,6 +354,85 @@ These are deterministic scenario outputs conditioned on alert-row proxies, outco
 
 #### Consolidated S0–S4 organizational reference
 
+##### Closed scenario specification and interpretation
+
+This section closes the current simple organizational scenario as a reproducible reference; it does not claim to represent GMV-CERT's actual staffing or operating procedures. Four agents are modeled as continuously available single-server equivalents over the normalized arrival horizon `H=1`. They are not an assertion that four people work continuously for 28 calendar days. Each modeled alert-record proxy is assigned immediately at arrival to one independent FCFS queue, without preemption or reassignment. Each agent serves at most one task at a time; service is deterministic, positive, and identical across agents for a given class. Tasks drain after `H`; no task is discarded. The model has no shifts, breaks, handovers, priorities, escalation, collaboration, or service interruption. Fixed effectiveness values are hypothetical class-specific contributions; SOCTRA supplies neither these values nor validated individual competence. Main-run service times are synthetic and equal across task classes as well as agents; the bounded sensitivity varies durations by class, still identically across agents.
+
+Four 28-day windows were selected from SOCTRA alert timestamps and opaque project labels using the predeclared demand-only criteria documented above: usual, peak, within-window class-mix change, and the immediately following period. A record is an arrival proxy, not a verified human task. The study uses four hypothetical effectiveness profiles (homogeneous, specialized, partially polyvalent, dominant worker), four agents, offered load `ρ∈{.50,.90,1.20}`, and five rules S0–S4. The 240 primary cells are paired across policies on the same window, class sequence, service vector and organization. An additional bounded sensitivity comprises 80 cells with class-dependent service durations at `ρ=.90`; it is not an expansion of the primary grid. With `H=1`, offered load is `ρ=Σ_n s[k_n]/(N H)`; under the main uniform-duration condition `s=ρNH/M`. This is an imposed normalized workload-to-capacity ratio, not observed utilization, analyst-hours, or SOC capacity. Neither SOCTRA nor its experience weights provide analyst service times or individual competence.
+
+The rules used in the comparison are:
+
+- **S0, minimum workload:** choose `argmin_i W_i(t)`, where `W_i(t)=max(0, queue_tail_i−t)` is observable remaining work. Ties go to the lowest agent index. This is a hypothetical conventional baseline, not a claim about GMV practice.
+- **S1, maximum effectiveness:** choose `argmax_i e[i,k]`; ties go to the lowest index. It ignores workload.
+- **S2, effectiveness/load ratio:** choose `argmax_i e[i,k]/(W_i(t)+s_k)`, using current workload and the current class service time; ties go to the lowest index.
+- **S3, specialist with conditional backup:** identify the maximum-effectiveness specialist. If `W_specialist(t)≤θs_k`, assign to that specialist. If `W_specialist(t)>θs_k`, choose the highest-effectiveness other agent who is idle at that arrival and has `e[i,k]≥.50`; if no backup qualifies, retain the specialist. The primary setting is `θ=1`; ties use the lowest index. The `.5` backup floor and threshold are fixed scenario parameters, not calibrated SOC rules.
+- **S4, congestion-state switching:** before each arrival, use the documented workload concentration `B`, normalized imbalance `I`, and dimensionless congestion `C`; select unchanged S1 in SPECIALIZATION, S2 in BALANCED, or S0 in LOAD_DISTRIBUTION, with the fixed entry/exit thresholds and hysteresis stated above. It uses current state only, does not learn, and is not a demonstrated improvement.
+
+The evaluation keeps outcome dimensions separate. Assigned mean effectiveness divides all assigned task contributions by all `M` arrivals. Completed-task mean effectiveness divides contributions only by tasks completed by `H` and is undefined if none complete. Completion fraction is `M_H/M`. The collective horizon metric is
+`J_H=(1/M)Σ_n e[i(n),k(n)]·I(t_fin(n)≤H)`, computed from task-level decisions and completions. Thus `J_H` is completed modeled effectiveness per arrival, not success rate or a universal efficiency measure. For `e∈[0,1]`, `0≤J_H≤completion_fraction≤1` and `J_H≤assigned_mean_effectiveness`. Waiting and response are `start−arrival` and `completion−arrival`; the all-task mean and P95 include queue-drain completions after `H`. Pending task count and pending service work are measured at `H`; utilization is service overlap with `[0,H)` divided by `H`. These metrics do not combine quality and elapsed time into an arbitrary utility.
+
+At `ρ=.90`, averaging the 16 paired window/profile values descriptively gives `J_H=.5787` (S0), `.4064` (S1), `.6532` (S2), `.5764` (S3), and `.5893` (S4). S2 has the highest average in this finite grid, not a universal ranking. Across the 16 cells, S2 is the unique `J_H` maximum in 9, ties for the maximum in 4 homogeneous cells, and is below S3 in 3 specialized cells. Retrospective regret `max_policy J_H−J_H(S2)` is at most `.0185`, with descriptive mean `.002675`; this is neither an attainable online bound nor evidence of an untested policy's gain. It indicates that the observed S2 limitation is concentrated in a narrow part of this grid, rather than a broad failure.
+
+##### Observation-horizon analysis: S2 versus S3
+
+The same fixed assignments were re-evaluated at `T=H`, `1.10H`, and a common drain horizon `T_drain=max(last_completion_S2,last_completion_S3,1.10H)`. No arrivals, service times, assignment decisions, or policy parameters change with `T`. The table gives `ΔJ(T)=J_S3(T)−J_S2(T)` for the specialized profile and `ρ=.90`:
+
+| Demand window | `ΔJ(H)` | `ΔJ(1.10H)` | `ΔJ(T_drain)` |
+|---|---:|---:|---:|
+| Usual | −.01691 | +.00864 | +.04805 |
+| Peak | +.00863 | −.02350 | +.04846 |
+| Class-mix change | +.01842 | +.04473 | +.04473 |
+| Following period | +.01565 | +.04070 | +.04431 |
+
+The corresponding per-policy trajectory (`J` / fraction completed) is:
+
+| Window | Policy | At `H` | At `1.10H` | At `T_drain` |
+|---|---|---:|---:|---:|
+| Usual | S2 | .75986 / 1.000 | .76009 / 1.000 | .76009 / 1.000 |
+|  | S3 | .74295 / .928 | .76873 / .956 | .80814 / 1.000 |
+| Peak | S2 | .64925 / .845 | .73240 / .956 | .77148 / 1.000 |
+|  | S3 | .65789 / .820 | .70890 / .877 | .81994 / 1.000 |
+| Class-mix change | S2 | .78713 / 1.000 | .78730 / 1.000 | .78730 / 1.000 |
+|  | S3 | .80556 / .971 | .83203 / 1.000 | .83203 / 1.000 |
+| Following period | S2 | .80634 / 1.000 | .80634 / 1.000 | .80634 / 1.000 |
+|  | S3 | .82200 / .968 | .84704 / .996 | .85066 / 1.000 |
+
+For the all-task response summaries (which use queue-drain completion times), assigned mean effectiveness, and the pending work measured specifically at `H`:
+
+| Window | Policy | Assigned mean effectiveness | Pending work at H | Response mean / P95 |
+|---|---|---:|---:|---:|
+| Usual | S2 | .76009 | .00053 | .00796 / .01769 |
+|  | S3 | .80814 | .26008 | .06227 / .26734 |
+| Peak | S2 | .77148 | .55745 | .02685 / .11566 |
+|  | S3 | .81994 | .64819 | .04982 / .27427 |
+| Class-mix change | S2 | .78730 | .00031 | .05249 / .12963 |
+|  | S3 | .83203 | .10506 | .09619 / .45159 |
+| Following period | S2 | .80634 | 0 | .01802 / .04456 |
+|  | S3 | .85066 | .11434 | .04169 / .17384 |
+
+At the drain horizon, `J(T_drain)` equals each policy's assigned mean effectiveness. S3's final assignment mean exceeds S2's by `.04805`, `.04846`, `.04473`, and `.04431`, respectively. The number of extra tasks assigned to specialists by S3 rather than S2 is 738, 762, 618, and 414; with the fixed `.90` versus `.50` profile, these count differences account exactly for those final mean-effectiveness gaps. This is an arithmetic attribution under the specified matrix, not an empirical competence effect.
+
+At `H`, completion timing offsets some or all of that assignment-quality advantage. For usual and peak, the additional uncompleted effectiveness attributable to S3 relative to S2 per received task is `.06496` and `.03983`; it turns the usual-window comparison negative at `H`, and temporarily reverses the peak comparison at `1.10H`. The specialist/backup decomposition at `H` makes the queue mechanism visible:
+
+| Window | Policy | Specialist assigned / completed by H | Others assigned / completed by H | Mean assigned effectiveness: specialist / others | Contribution to `J(H)`: specialist / others | Pending work at H: specialist / others |
+|---|---|---:|---:|---:|---:|---:|
+| Usual | S2 | 3,995 / 3,994 | 2,149 / 2,148 | .900 / .500 | .58506 / .17480 | .00036 / .00017 |
+|  | S3 | 4,733 / 4,288 | 1,411 / 1,411 | .900 / .500 | .62813 / .11483 | .26008 / 0 |
+| Peak | S2 | 4,269 / 3,567 | 2,021 / 1,747 | .900 / .500 | .51038 / .13887 | .40108 / .15637 |
+|  | S3 | 5,031 / 3,899 | 1,259 / 1,258 | .900 / .500 | .55789 / .10000 | .64765 / .00054 |
+| Class-mix change | S2 | 3,969 / 3,968 | 1,557 / 1,557 | .900 / .500 | .64625 / .14088 | .00031 / 0 |
+|  | S3 | 4,587 / 4,425 | 939 / 938 | .900 / .500 | .72068 / .08487 | .10475 / .00031 |
+| Following period | S2 | 2,862 / 2,862 | 875 / 875 | .900 / .500 | .68927 / .11707 | 0 / 0 |
+|  | S3 | 3,276 / 3,157 | 461 / 461 | .900 / .500 | .76032 / .06168 | .11434 / 0 |
+
+The two effectiveness columns are the group mean assigned effectiveness (specialist / other) and each group's contribution to total `J(H)` (specialist / other). The table makes explicit that, in every row, S3 shifts assignments toward .90 specialists; the corresponding group backlog is concentrated in that specialist group.
+
+S3's policy rule routes to a qualified backup only when the specialist exceeds its workload threshold and that backup is idle. In these traces, S3 consequently assigns more work to specialists and leaves most of its horizon backlog in the specialist group. S2's ratio rule distributes more work to other agents. That is consistent with the measured response contrast: all-task mean/P95 response for S2 versus S3 is `.00796/.01769` versus `.06227/.26734` (usual), `.02685/.11566` versus `.04982/.27427` (peak), `.05249/.12963` versus `.09619/.45159` (mix change), and `.01802/.04456` versus `.04169/.17384` (following period). These response metrics include the post-`H` drain and do not change when the accounting horizon changes.
+
+Therefore the three S3 wins at `H` persist after all tasks finish, but the size and even sign of the intermediate comparison depend on observation time. The sign reverses within both the usual and peak trajectories (twice in the peak trajectory). The wins are not solely a cutoff artifact: S3 assigns higher final modeled effectiveness. Nor are they a speed advantage: S3 has greater response and specialist backlog in these cases. `J_H` answers a horizon-specific completed-quality question; it is not interchangeable with final assigned quality, throughput, or a universal efficiency measure.
+
+**Scientific status and closure.** The deterministic outputs are internally consistent with the code, the fixed assignment rules and the selected alert-proxy traces. The exact algebraic property of S2 and the arithmetic identity at the drain horizon are model-level facts. The queue-allocation account above is an interpretation supported by the aggregate assignments/backlog and the known rules. Which result matters operationally, whether these hypothetical effectiveness values correspond to analyst capability, and whether another online organization can improve on S2 remain untested. The scenario does not validate GMV-CERT operations; exact replay requires authorized access to the restricted CSV. No new policy is established by this closure.
+
 The S4 controller remains a deterministic predecision rule, not learning: effectiveness, service requirements, and team membership remain fixed. Before each arrival it computes `W_i(t)=max(0, queue_tail_i−t)`, `W=Σ_i W_i`, concentration `B=max_i W_i/W` when `W>0` (otherwise `0`), normalized imbalance `I=(N·B−1)/(N−1)` when `W>0` (otherwise `0`), and congestion `C=W/(N·s_ref)`. Here `s_ref` is the arithmetic mean of the fixed class service-time vector, so `C` is dimensionless average backlog relative to reference service; it is not offered load or utilization. Starting state is SPECIALIZATION (S1). From SPECIALIZATION, it enters LOAD_DISTRIBUTION (S0) if `C≥1`, otherwise BALANCED (S2) if `C≥.25` or `I≥.35`; BALANCED enters LOAD_DISTRIBUTION if `C≥1`, and returns to SPECIALIZATION only if `C<.15` and `I<.25`; LOAD_DISTRIBUTION returns to BALANCED only if `C<.75`. These fixed thresholds were not tuned on replay outcomes. Ties use the lowest agent index as defined by the component policies.
 
 No S0–S4 formula or threshold was changed in this re-execution. It replaces the prior summary as the current comparison: exactly 240 matched primary evaluations (4 windows × 4 organization profiles × 3 offered loads × 5 policies). A bounded check of equal class service durations added 80 paired evaluations (the same four windows/profiles and five policies at `ρ=.90`) with different deterministic durations by task class, shared across analysts and rescaled to keep total offered work at the same `ρ`. Earlier exploratory threshold/hysteresis probes are excluded from the current principal comparison and were not used to retune S4.
