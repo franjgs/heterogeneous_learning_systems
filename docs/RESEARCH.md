@@ -368,6 +368,20 @@ The rules used in the comparison are:
 - **S3, specialist with conditional backup:** identify the maximum-effectiveness specialist. If `W_specialist(t)≤θs_k`, assign to that specialist. If `W_specialist(t)>θs_k`, choose the highest-effectiveness other agent who is idle at that arrival and has `e[i,k]≥.50`; if no backup qualifies, retain the specialist. The primary setting is `θ=1`; ties use the lowest index. The `.5` backup floor and threshold are fixed scenario parameters, not calibrated SOC rules.
 - **S4, congestion-state switching:** before each arrival, use the documented workload concentration `B`, normalized imbalance `I`, and dimensionless congestion `C`; select unchanged S1 in SPECIALIZATION, S2 in BALANCED, or S0 in LOAD_DISTRIBUTION, with the fixed entry/exit thresholds and hysteresis stated above. It uses current state only, does not learn, and is not a demonstrated improvement.
 
+The five rules have distinct roles in the comparison; the labels below describe their use as references, not an empirical ranking:
+
+| Rule | Reference role | What it isolates |
+|---|---|---|
+| S0 | Load baseline | Routes by minimum observable pending work; ignores modeled effectiveness. |
+| S1 | Effectiveness baseline | Routes to maximum modeled effectiveness; ignores workload. |
+| S2 | Main effectiveness/load reference | Scores current effectiveness against predicted completion time. |
+| S3 | Specialization reference | Protects the maximum-effectiveness specialist, with a qualified idle backup under its fixed threshold. |
+| S4 | Exploratory switching reference | Switches among S1, S2 and S0 using current congestion and workload imbalance. |
+
+The audit of the five rules against the active implementation was completed on 2026-10-30. No inconsistency requiring a policy change was found; the rules and parameters remain unchanged. This is a consistency review, not additional experimental evidence.
+
+All comparative conclusions below are conditional on the selected deterministic scenarios and event order, hypothetical effectiveness and service values, SOCTRA-derived alert-record arrival patterns, and the specified observation horizon. The replay does not validate the operating organization or performance of GMV-CERT.
+
 The evaluation keeps outcome dimensions separate. Assigned mean effectiveness divides all assigned task contributions by all `M` arrivals. Completed-task mean effectiveness divides contributions only by tasks completed by `H` and is undefined if none complete. Completion fraction is `M_H/M`. The collective horizon metric is
 `J_H=(1/M)Σ_n e[i(n),k(n)]·I(t_fin(n)≤H)`, computed from task-level decisions and completions. Thus `J_H` is completed modeled effectiveness per arrival, not success rate or a universal efficiency measure. For `e∈[0,1]`, `0≤J_H≤completion_fraction≤1` and `J_H≤assigned_mean_effectiveness`. Waiting and response are `start−arrival` and `completion−arrival`; the all-task mean and P95 include queue-drain completions after `H`. Pending task count and pending service work are measured at `H`; utilization is service overlap with `[0,H)` divided by `H`. These metrics do not combine quality and elapsed time into an arbitrary utility.
 
