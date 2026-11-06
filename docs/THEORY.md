@@ -108,6 +108,108 @@ This follows by choosing the better same-agent endpoint versus the independently
 
 The resource-constrained extension uses points \(z_{ab}=(R_{ab},Y_{ab})\) and convex time-sharing hulls for ONE and ROUTE. On their common feasible budget domain, class inclusion implies \(Y^*_{ROUTE}\ge Y^*_{ONE}\). This is an exact optimization property under the declared convexified feasible sets, not a novel general theorem. In a finite control with p=.5, the positive-gain budget region is (.25,.65), maximum gain .0625 at B=.40; another control has geometric area but zero efficient gain. Thus set expansion/area does not by itself imply value.
 
+### Deterministic temporal allocation: taskwise effectiveness upper bound
+
+In the active temporal FCFS model, let a finite sequence contain tasks \(k_1,\ldots,k_M\), let every task eventually complete, let all agents be eligible, and let each assigned task contribute fixed \(e_{i,k}\), unaffected by queue position or completion time. Then the policy choosing \(i_n\in\arg\max_i e_{i,k_n}\) at each arrival maximizes total effectiveness \(\sum_{n=1}^M e_{i_n,k_n}\) among all assignments. For any alternative assignment \(j_n\), each term satisfies \(e_{j_n,k_n}\leq\max_i e_{i,k_n}\); summing gives the result. This is separable pointwise maximization, not an empirical discovery or a novel theorem.
+
+The statement concerns effectiveness only. It does not imply minimum waiting, response time, makespan, or maximum throughput. A load-aware policy may obtain shorter queues or responses by assigning some tasks to lower-effectiveness agents. The result would cease to apply if tasks could remain unfinished at evaluation, agents had task-specific ineligibility, effectiveness changed with time/load, or completion altered the task contribution. The implementation and deterministic controls are recorded under `study.temporal_task_allocation_policy_comparison` in the catalog and in `docs/RESEARCH.md`.
+
+The load-ratio rule `e[i,k] / (W_i + s_k)` is not generally response-optimal. An exact three-task counterexample uses two agents, two classes, `e = ((0.2,0.2),(0.2,0.4))`, service times `(1,1)`, and arrivals `((0,0),(0.5,0),(0.5,1))`. P1 assigns agents `(0,0,1)`, giving responses `(1,1.5,1)`, mean `7/6`, P95 `1.5`. P2 assigns `(0,1,1)`: at the second task it sends the type-0 task to idle agent 1 because `0.2/1 > 0.2/1.5`; that makes agent 1's later type-1 task wait, producing responses `(1,1,2)`, mean `4/3`, P95 `2`. Total effectiveness remains `0.8`. With service times `(1,2)`, the same assignments yield P1 responses `(1,1.5,2)`, mean `1.5`, and P2 responses `(1,1,3)`, mean `5/3`. This finite counterexample refutes a general response-minimization guarantee for P2; it does not establish that P1 is generally response-optimal. A regression test records both service-duration cases.
+
+### Horizon-truncated effectiveness in the four-server SOC testbed
+
+The active SOC application testbed is a particular deterministic instance of temporal allocation, not the definition of the general HLS model. It uses four continuously available single-server equivalents over a normalized arrival horizon `H=1`, one independent FCFS queue per server, immediate irreversible assignment, no preemption, fixed hypothetical effectiveness `e[i,k]`, and positive deterministic service duration `s_k` shared across agents. All arrivals eventually complete as queues drain after `H`. There are no modeled shifts, breaks, handovers, priorities, escalations, or collaboration. SOCTRA alert records contribute selected relative arrival-time and opaque project-class patterns only; they do not identify human work duration, staffing, or analyst competence. See the study contract and empirical limits in `docs/RESEARCH.md`.
+
+For a fixed assignment run with `M` arrivals, define its horizon-indexed completed effectiveness:
+\[
+J(T)=\frac{1}{M}\sum_{n=1}^{M} e[i(n),k(n)]\,\mathbf 1\{c_n\leq T\},
+\]
+where `i(n)` is the assigned agent, `k(n)` the task class and `c_n` its deterministic completion time. The denominator remains all arrivals at every horizon. For a fixed run, `J(T)` is nondecreasing in `T`; at a common drain horizon after all tasks finish, `J(T)=M^{-1}\sum_n e[i(n),k(n)]`, the assigned mean effectiveness. This identity is bookkeeping from the definition, not a policy guarantee. For two policies, their difference at finite `T` reflects both differences in assigned effectiveness and which contributions have completed by `T`; at the common drain horizon only the assignment-effectiveness difference remains. Accordingly, `J_H` is horizon-specific and must not be described as a universal efficiency, realized-success, or speed measure.
+
+For the specialized testbed profile, a class's designated specialist has `e_s=.90` and a backup has `e_b=.50`. The load-ratio rule chooses the backup over the specialist exactly when
+\[
+\frac{e_b}{W_b+s_k}>\frac{e_s}{W_s+s_k}
+\quad\Longleftrightarrow\quad
+W_s>\frac{e_s}{e_b}W_b+\left(\frac{e_s}{e_b}-1\right)s_k,
+\]
+for positive effectiveness and service. Thus the specified `.90/.50` case has threshold `W_s>1.8W_b+0.8s_k`. This is direct algebra from S2's rule, not a novel theorem. It explains how S2 can route away from a more effective specialist when the specialist's observable queue is sufficiently larger. Whether that improves horizon-completed quality depends on resulting completion times and the task sequence; the inequality alone gives no such guarantee.
+
+In the four specialized, `ρ=.90` demand-window replays, S3's `J(H)` advantage over S2 in three windows persisted after queue drain because S3 assigned more tasks to the `.90` specialist rather than `.50` backups. The advantage changed with the accounting horizon, and S3 had greater all-task response in all four windows. These are deterministic results conditional on the stated profiles, service construction, arrival proxies and horizon; the per-window comparisons and assignment/backlog decomposition are in `docs/RESEARCH.md`. They support no general S3 ranking or claim of real SOC performance.
+
+### Reference allocation rules S0–S4
+
+These deterministic rules are online references for the four-server testbed. At an arrival of type `k` at time `t`, let `W_i(t)=max(0, queue_tail_i−t)` be agent `i`'s residual service plus queued service, `s_k>0` the common service duration for that type, and `e[i,k]∈[0,1]` its fixed modeled contribution. Ties use the lowest agent index unless the rule restricts the candidate set. These definitions match the implementation; none implies general policy optimality.
+
+- **S0 — minimum pending workload:** `argmin_i W_i(t)`. It ignores `e`. Since the arriving task has the same `s_k` for every candidate, S0 minimizes that task's immediate predicted completion time among agents. It does not generally minimize subsequent system response or maximize completed effectiveness: it ignores task type and future arrivals.
+- **S1 — maximum assigned effectiveness:** `argmax_i e[i,k]`, independent of workload. With fixed contributions, all tasks eventually completed and no eligibility restrictions, its pointwise choices maximize total assigned effectiveness: each selected term is the maximum possible for that task. This does not imply better finite-horizon completion, response or makespan; ties can concentrate work on the lowest-index agent.
+- **S2 — effectiveness per predicted completion time:** `argmax_i e[i,k]/(W_i(t)+s_k)`. Its denominator is the predicted time from arrival to task completion on that agent under FCFS. For specialist effectiveness `.90` and backup effectiveness `.50`, the specialist's score is strictly higher iff `W_s < 1.8 W_b + .8 s_k`; the backup's score is strictly higher iff the inequality is reversed. At equality, the ordinary lowest-index tie rule decides. This threshold is direct algebra, not a separate optimality result.
+- **S3 — specialist with conditional idle backup:** choose a maximum-effectiveness specialist (lowest index on a tie). At the primary `θ=1` and backup floor `.50`, use the specialist while `W_s(t)≤θs_k`. If `W_s(t)>θs_k`, choose the highest-effectiveness *other idle* agent satisfying `e[i,k]≥.50`; ties go to the lowest index. If none qualifies, use the specialist. The threshold, floor and idle-only restriction define a heuristic, not an optimal rule.
+- **S4 — congestion-and-imbalance state controller:** before each decision calculate `W=Σ_i W_i`, `B=max_i W_i/W` when `W>0` (otherwise `B=0`), `I=(N B−1)/(N−1)` when `W>0` (otherwise `I=0`), and `C=W/(N s_ref)`, where `s_ref` is the arithmetic mean of the class service-time vector. `C` is dimensionless current backlog relative to reference service, not offered load or utilization. It starts in `SPECIALIZATION` and applies S1; `BALANCED` applies S2; `LOAD_DISTRIBUTION` applies S0. From `SPECIALIZATION`, enter `LOAD_DISTRIBUTION` if `C≥1`, otherwise enter `BALANCED` if `C≥.25` or `I≥.35`. From `BALANCED`, enter `LOAD_DISTRIBUTION` if `C≥1`; return to `SPECIALIZATION` only if `C<.15` and `I<.25`. From `LOAD_DISTRIBUTION`, return to `BALANCED` only if `C<.75`; otherwise stay. Separate entry and exit thresholds provide hysteresis. These fixed thresholds are design heuristics, not fitted or optimal values. S4 uses current state only; its name should be understood as involving both congestion and imbalance.
+
+The S1 total-effectiveness property follows by summing taskwise maxima. S0's immediate completion-time property follows because `s_k` is common across candidate agents. The S2 comparison above is algebraic. S3 and S4 have no general optimality guarantee. Experimental rankings remain conditional on the deterministic arrival windows, hypothetical effectiveness matrices and service assumptions, and the evaluation horizon; they are not validation of GMV-CERT operations.
+
+## 4.1 Proposed SOCTRA–HLS coupled operating model
+
+**Status:** conceptual design for future study; not implemented or evaluated. It extends the SOCTRA L1 triage problem by representing how an effective escalation decision changes downstream L2 work and collective operational outcomes. SOCTRA remains the triage core. The existing four-server HLS-02 queue and its S0–S4 policies are historical comparison references, not this model.
+
+### Evidence classes and operational boundary
+
+The PI's qualitative discussion with a GMV professional motivates a plausible decentralized baseline. It is not a validated workflow map or a claim to reproduce GMV-CERT. The information reported is that analysts choose available alerts; generalists tend to consider SLA while specialists tend to favor projects in which they have experience; one analyst may assume several alerts but processes them sequentially; no explicit collective assignment optimizer was identified; and project work and successfully closed alerts contribute to perceived experience. Closed-alert counts are used as an experience indicator, without resolution time, and experience assessment is largely subjective. A permanent workforce on the order of 20–30 people, night coverage from Colombia, and a project L3 coordinating or supervising the team were also described. The proposed abstraction below deliberately omits staffing geography, shifts, L3 and supervision.
+
+The qualitative discussion also described performance assessment through contractual compliance, SLA compliance, treatment quality and review of incorrectly treated alerts. Assigned severity determines contractual SLA but need not equal the incident's true gravity. Notes gave Critical: `4` (unit unconfirmed), High: 6 hours and Medium: 12 hours. The event that starts/stops each SLA and what event establishes compliance remain unconfirmed. These details are contextual observations, not model parameters or rules attributed to GMV.
+
+### Minimal two-level scenario and decisions
+
+Represent each alert `j` by only available, provenance-checked attributes: arrival time `a_j`, project `p_j`, class/features used by an existing SOCTRA model, severity and its SLA deadline `d_j` where defined, historical escalation reference `y_j^E` where present, and prediction inputs available at L1 decision time. Do not assume additional data fields. A deadline is initially represented as an absolute alert deadline `d_j=a_j+Δ_j`; retaining it unchanged through L1 and L2 is a design hypothesis contingent on the contractual SLA definition.
+
+There are fixed functional pools L1 and L2. Each analyst `i` has an immutable enabled-project set `P_i`; initial L2 analysts have greater experience on the projects they serve. These are scenario hypotheses, including project eligibility, not confirmed GMV rules. An analyst processes assumed alerts sequentially, with no interruption, preemption, parallel processing, collaboration, role promotion or within-run reassignment. No L3, shift, handover or geographic coverage is represented. The initial model has no promotions between L1 and L2.
+
+The minimum decentralized baseline has no global coordinator. When an analyst becomes available, they choose among pending alerts from enabled projects by earliest absolute deadline (equivalently, minimum time remaining to SLA); deterministic ties require a declared rule. If multiple analysts could take the same alert, an atomic claim/reservation resolves the race without a global assignment optimizer. This non-preemptive local EDF rule is a reproducible idealization prompted by the qualitative discussion, not a literal description of GMV. It has no congestion exceptions. The analyst's project preference and the deadline rule are represented as simplified behavioral assumptions, not a universalized observed rule.
+
+For a given alert, keep the following events distinct:
+
+1. An L1 analyst selects and begins the alert.
+2. The SOCTRA model produces a recommendation `r_j` to escalate. It only recommends; it does not assign staff, make the effective escalation decision, or reduce analysis duration.
+3. The L1 analyst decides whether the alert is actually escalated, `u_j∈{0,1}`. No validated empirical response model currently maps recommendation to `u_j`; recommendation use, override and adherence remain uncertain.
+4. If not escalated, L1 completes its treatment/closure path. If escalated, the alert enters the L2 queue only after the effective decision and handoff; only actually escalated alerts can be selected in L2.
+5. An eligible L2 analyst selects the alert by the same decentralized enabled-project and remaining-SLA principle, then treats it sequentially.
+6. Record final treatment outcome and the contractually defined closure/SLA event when those are specified.
+
+SOCTRA's separate report/not-report decision remains in the paper's context and must not be conflated with escalation. It is outside the initial L1-to-L2 routing action unless a later, justified model explicitly includes it.
+
+### Coupling mechanism and escalation errors
+
+The organization and AI are not independent modules in this scenario: effective escalation determines which alerts reach L2, and the resulting L2 arrival stream changes workload, congestion, waits, deadline risk, specialist availability and possible project-specific experience. Conversely, L2 capacity and its organization determine the consequences of L1 decisions. Keep two comparisons distinct: **recommendation error** compares `r_j` with the historical reference `y_j^E`, while **effective escalation disagreement** compares the human decision `u_j` with `y_j^E`. A false-positive effective escalation is `u_j=1` while `y_j^E=0`; it may consume scarce L2 capacity and delay other alerts. A false-negative effective escalation is `u_j=0` while `y_j^E=1`; it may leave an alert on an insufficient L1 path. Whether an erroneous recommendation changes `u_j` depends on the unknown human-response mechanism. These downstream effects are hypotheses of the simulation, not measured security or labor costs.
+
+Historical labels are observed references, not perfect operational truth. Disagreement is not automatically a real security error. For each alert, separate recommendation error relative to `y_j^E`, the human's effective escalation, and adjudicated treatment quality if a valid outcome measure is available. Use existing SOCTRA out-of-training evaluation predictions/confusion information where available. Equal balanced accuracy does not imply equal operational effect: false-positive and false-negative patterns can differ. Synthetic perturbations, if later needed, must be identified as synthetic and must not be described as SOCTRA model results. No error probability is specified here.
+
+Organization may mitigate excess L2 load by managing the alerts that did arrive, subject to its feasible information and capacity. It cannot automatically recover an alert that was never escalated. This asymmetry is central to the coupled question and precludes presuming a positive AI-by-organization interaction.
+
+### Experience and hypothetical competence dynamics
+
+For analyst `i` and project/class `k`, distinguish cumulative satisfactorily completed work from effective competence:
+\[
+N_{ik}(t)=\sum_{j\in\mathcal H_{ik}(t)}\mathbf 1\{\text{task }j\text{ completed satisfactorily by }i\},
+\qquad e_{ik}(t)=\text{modeled effective competence of }i\text{ on }k.
+\]
+`N_ik` is an experience count; `e_ik` is a latent modeled disposition relevant to specified treatment quality or duration. Their mapping is unmeasured. The reported use of successfully closed-alert count as a subjective experience indicator does not validate `e_ik` or establish a learning effect.
+
+If learning is included, use one explicit diminishing-returns hypothesis, for example
+\[
+e_{ik}(t)=e_{ik}^{\min}+(e_{ik}^{\max}-e_{ik}^{\min})\left(1-\exp[-\lambda_k N_{ik}(t)]\right),\quad \lambda_k\ge0,
+\]
+with bounded competence and a declared mapping from competence to success/duration. This is a candidate law, not observed or calibrated. `λ_k=0` supplies a no-learning control. Do not add forgetting, cross-project transfer, formal training, promotions or complex reassignment in this first extension.
+
+Three conceptually distinct cases are needed: (A) fixed competence; (B) experience-evolving competence under a stated law; (C) the same law and initial conditions as B, but an organizing policy also values future competence development. B versus A identifies the modeled consequence of allowing competence to evolve; it cannot establish the value of an anticipatory organization. The latter requires the matched B/C comparison.
+
+### Candidate work-organization policies
+
+The Phase 1 comparison is intentionally small: B0, decentralized local EDF restricted to enabled projects; B1, coordinated selection considering current load and remaining SLA; B2, coordinated selection considering declared competence, current load and remaining SLA. These are proposed policy families, not mathematically specified or implemented algorithms. An anticipatory development-aware variant belongs only to Phase 3. HLS-02's allocation ideas and S0–S4 may inform later operationalizations only after matching their fixed-server, immediate-assignment, FCFS and no-deadline semantics to the new model. S2 is not presumed optimal; none of S0–S4 is silently redefined here.
+
+The investigation order is RQ1 → RQ2 → RQ3. The first phase holds competence, effective escalation decisions and classifier behavior fixed and compares three proposed policies: B0, decentralized local EDF restricted to enabled projects; B1, coordinated organization using load and SLA; B2, coordinated organization using competence, load and SLA. B1 and B2 are not specified mathematically or implemented, and no advantage is presumed. Later phases introduce recommendation variability and, finally, possible competence evolution. This sequencing is a research-design decision, not a change to the model's basic event semantics.
+
+This proposed model is not equivalent to HLS-02. HLS-02 has immediate assignment to individual FCFS queues, fixed competence/contribution and deterministic class service, a common arrival horizon and no alert deadlines, escalation, two functional tiers or learning. The proposed model has decentralized task selection, L1/L2 pools, human-effective escalation following an AI recommendation, alert-specific SLA deadlines, project/class competence and optional experience evolution. Reuse code only after an explicit semantic and unit mapping; this document requests no refactor.
+
 ## 5. Action-dependent state change and future development value
 
 The minimal endogenous dynamic boundary is an action-dependent state transition:
