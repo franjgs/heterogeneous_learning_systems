@@ -148,6 +148,68 @@ These deterministic rules are online references for the four-server testbed. At 
 
 The S1 total-effectiveness property follows by summing taskwise maxima. S0's immediate completion-time property follows because `s_k` is common across candidate agents. The S2 comparison above is algebraic. S3 and S4 have no general optimality guarantee. Experimental rankings remain conditional on the deterministic arrival windows, hypothetical effectiveness matrices and service assumptions, and the evaluation horizon; they are not validation of GMV-CERT operations.
 
+## 4.1 Proposed SOCTRA–HLS coupled operating model
+
+**Status:** conceptual design for future study; not implemented or evaluated. It extends the SOCTRA L1 triage problem by representing how an effective escalation decision changes downstream L2 work and collective operational outcomes. SOCTRA remains the triage core. The existing four-server HLS-02 queue and its S0–S4 policies are historical comparison references, not this model.
+
+### Evidence classes and operational boundary
+
+The PI's qualitative discussion with a GMV professional motivates a plausible decentralized baseline. It is not a validated workflow map or a claim to reproduce GMV-CERT. The information reported is that analysts choose available alerts; generalists tend to consider SLA while specialists tend to favor projects in which they have experience; one analyst may assume several alerts but processes them sequentially; no explicit collective assignment optimizer was identified; and project work and successfully closed alerts contribute to perceived experience. Closed-alert counts are used as an experience indicator, without resolution time, and experience assessment is largely subjective. A permanent workforce on the order of 20–30 people, night coverage from Colombia, and a project L3 coordinating or supervising the team were also described. The proposed abstraction below deliberately omits staffing geography, shifts, L3 and supervision.
+
+The qualitative discussion also described performance assessment through contractual compliance, SLA compliance, treatment quality and review of incorrectly treated alerts. Assigned severity determines contractual SLA but need not equal the incident's true gravity. Notes gave Critical: `4` (unit unconfirmed), High: 6 hours and Medium: 12 hours. The event that starts/stops each SLA and what event establishes compliance remain unconfirmed. These details are contextual observations, not model parameters or rules attributed to GMV.
+
+### Minimal two-level scenario and decisions
+
+Represent each alert `j` by only available, provenance-checked attributes: arrival time `a_j`, project `p_j`, class/features used by an existing SOCTRA model, severity and its SLA deadline `d_j` where defined, historical escalation reference `y_j^E` where present, and prediction inputs available at L1 decision time. Do not assume additional data fields. A deadline is initially represented as an absolute alert deadline `d_j=a_j+Δ_j`; retaining it unchanged through L1 and L2 is a design hypothesis contingent on the contractual SLA definition.
+
+There are fixed functional pools L1 and L2. Each analyst `i` has an immutable enabled-project set `P_i`; initial L2 analysts have greater experience on the projects they serve. These are scenario hypotheses, including project eligibility, not confirmed GMV rules. An analyst processes assumed alerts sequentially, with no interruption, preemption, parallel processing, collaboration, role promotion or within-run reassignment. No L3, shift, handover or geographic coverage is represented. The initial model has no promotions between L1 and L2.
+
+The minimum decentralized baseline has no global coordinator. When an analyst becomes available, they choose among pending alerts from enabled projects by earliest absolute deadline (equivalently, minimum time remaining to SLA); deterministic ties require a declared rule. If multiple analysts could take the same alert, an atomic claim/reservation resolves the race without a global assignment optimizer. This non-preemptive local EDF rule is a reproducible idealization prompted by the qualitative discussion, not a literal description of GMV. It has no congestion exceptions. The analyst's project preference and the deadline rule are represented as simplified behavioral assumptions, not a universalized observed rule.
+
+For a given alert, keep the following events distinct:
+
+1. An L1 analyst selects and begins the alert.
+2. The SOCTRA model produces a recommendation `r_j` to escalate. It only recommends; it does not assign staff, make the effective escalation decision, or reduce analysis duration.
+3. The L1 analyst decides whether the alert is actually escalated, `u_j∈{0,1}`. No validated empirical response model currently maps recommendation to `u_j`; recommendation use, override and adherence remain uncertain.
+4. If not escalated, L1 completes its treatment/closure path. If escalated, the alert enters the L2 queue only after the effective decision and handoff; only actually escalated alerts can be selected in L2.
+5. An eligible L2 analyst selects the alert by the same decentralized enabled-project and remaining-SLA principle, then treats it sequentially.
+6. Record final treatment outcome and the contractually defined closure/SLA event when those are specified.
+
+SOCTRA's separate report/not-report decision remains in the paper's context and must not be conflated with escalation. It is outside the initial L1-to-L2 routing action unless a later, justified model explicitly includes it.
+
+### Coupling mechanism and escalation errors
+
+The organization and AI are not independent modules in this scenario: effective escalation determines which alerts reach L2, and the resulting L2 arrival stream changes workload, congestion, waits, deadline risk, specialist availability and possible project-specific experience. Conversely, L2 capacity and its organization determine the consequences of L1 decisions. Keep two comparisons distinct: **recommendation error** compares `r_j` with the historical reference `y_j^E`, while **effective escalation disagreement** compares the human decision `u_j` with `y_j^E`. A false-positive effective escalation is `u_j=1` while `y_j^E=0`; it may consume scarce L2 capacity and delay other alerts. A false-negative effective escalation is `u_j=0` while `y_j^E=1`; it may leave an alert on an insufficient L1 path. Whether an erroneous recommendation changes `u_j` depends on the unknown human-response mechanism. These downstream effects are hypotheses of the simulation, not measured security or labor costs.
+
+Historical labels are observed references, not perfect operational truth. Disagreement is not automatically a real security error. For each alert, separate recommendation error relative to `y_j^E`, the human's effective escalation, and adjudicated treatment quality if a valid outcome measure is available. Use existing SOCTRA out-of-training evaluation predictions/confusion information where available. Equal balanced accuracy does not imply equal operational effect: false-positive and false-negative patterns can differ. Synthetic perturbations, if later needed, must be identified as synthetic and must not be described as SOCTRA model results. No error probability is specified here.
+
+Organization may mitigate excess L2 load by managing the alerts that did arrive, subject to its feasible information and capacity. It cannot automatically recover an alert that was never escalated. This asymmetry is central to the coupled question and precludes presuming a positive AI-by-organization interaction.
+
+### Experience and hypothetical competence dynamics
+
+For analyst `i` and project/class `k`, distinguish cumulative satisfactorily completed work from effective competence:
+\[
+N_{ik}(t)=\sum_{j\in\mathcal H_{ik}(t)}\mathbf 1\{\text{task }j\text{ completed satisfactorily by }i\},
+\qquad e_{ik}(t)=\text{modeled effective competence of }i\text{ on }k.
+\]
+`N_ik` is an experience count; `e_ik` is a latent modeled disposition relevant to specified treatment quality or duration. Their mapping is unmeasured. The reported use of successfully closed-alert count as a subjective experience indicator does not validate `e_ik` or establish a learning effect.
+
+If learning is included, use one explicit diminishing-returns hypothesis, for example
+\[
+e_{ik}(t)=e_{ik}^{\min}+(e_{ik}^{\max}-e_{ik}^{\min})\left(1-\exp[-\lambda_k N_{ik}(t)]\right),\quad \lambda_k\ge0,
+\]
+with bounded competence and a declared mapping from competence to success/duration. This is a candidate law, not observed or calibrated. `λ_k=0` supplies a no-learning control. Do not add forgetting, cross-project transfer, formal training, promotions or complex reassignment in this first extension.
+
+Three conceptually distinct cases are needed: (A) fixed competence; (B) experience-evolving competence under a stated law; (C) the same law and initial conditions as B, but an organizing policy also values future competence development. B versus A identifies the modeled consequence of allowing competence to evolve; it cannot establish the value of an anticipatory organization. The latter requires the matched B/C comparison.
+
+### Candidate work-organization policies
+
+The Phase 1 comparison is intentionally small: B0, decentralized local EDF restricted to enabled projects; B1, coordinated selection considering current load and remaining SLA; B2, coordinated selection considering declared competence, current load and remaining SLA. These are proposed policy families, not mathematically specified or implemented algorithms. An anticipatory development-aware variant belongs only to Phase 3. HLS-02's allocation ideas and S0–S4 may inform later operationalizations only after matching their fixed-server, immediate-assignment, FCFS and no-deadline semantics to the new model. S2 is not presumed optimal; none of S0–S4 is silently redefined here.
+
+The investigation order is RQ1 → RQ2 → RQ3. The first phase holds competence, effective escalation decisions and classifier behavior fixed and compares three proposed policies: B0, decentralized local EDF restricted to enabled projects; B1, coordinated organization using load and SLA; B2, coordinated organization using competence, load and SLA. B1 and B2 are not specified mathematically or implemented, and no advantage is presumed. Later phases introduce recommendation variability and, finally, possible competence evolution. This sequencing is a research-design decision, not a change to the model's basic event semantics.
+
+This proposed model is not equivalent to HLS-02. HLS-02 has immediate assignment to individual FCFS queues, fixed competence/contribution and deterministic class service, a common arrival horizon and no alert deadlines, escalation, two functional tiers or learning. The proposed model has decentralized task selection, L1/L2 pools, human-effective escalation following an AI recommendation, alert-specific SLA deadlines, project/class competence and optional experience evolution. Reuse code only after an explicit semantic and unit mapping; this document requests no refactor.
+
 ## 5. Action-dependent state change and future development value
 
 The minimal endogenous dynamic boundary is an action-dependent state transition:
