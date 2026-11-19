@@ -45,6 +45,26 @@ def test_local_adapter_uses_timestamp_and_project_without_emitting_labels(tmp_pa
     assert [task.arrival_time for task in trace.arrivals] == [0.0, 0.0, 0.5]
     assert all(isinstance(task.task_type, int) for task in trace.arrivals)
     assert "private-project" not in repr(result)
+    assert len(result.source_alerts) == 3
+    assert all("private-" not in row.alert_key for row in result.source_alerts)
+    assert all(row.historical_escalation_label is None for row in result.source_alerts)
+
+
+def test_adapter_keeps_historical_escalation_separate_from_opaque_demand_fields(tmp_path):
+    path = tmp_path / "restricted-with-label.csv"
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=("id_alerta", "@timestamp0", "proyecto", "escalada_L2"))
+        writer.writeheader()
+        writer.writerows([
+            {"id_alerta": "private-a", "@timestamp0": "2023-02-01 00:00:00", "proyecto": "secret-p", "escalada_L2": "true"},
+            {"id_alerta": "private-b", "@timestamp0": "2023-02-01 12:00:00", "proyecto": "secret-p", "escalada_L2": "0"},
+        ])
+    result = load_soctra_demand(path)
+    assert result.historical_escalation_labels_present
+    assert tuple(row.historical_escalation_label for row in result.source_alerts) == (True, False)
+    assert tuple(row.arrival_time for row in result.source_alerts) == (0.0, 0.5)
+    assert "private-a" not in repr(result)
+    assert "secret-p" not in repr(result)
 
 
 def test_restricted_csv_rejects_duplicate_alert_ids_and_timezone_ambiguity(tmp_path):

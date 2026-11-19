@@ -10,3 +10,21 @@ dist/
 
 # External literature copies kept local; do not publish binary source material.
 docs/literature/**/*.pdf
+
+# Local experiment outputs, model checkpoints, and restricted SOC material.
+/results/
+/models/
+/checkpoints/
+/runs/
+**/raw_evaluations/
+**/*.monitor.csv
+**/*.zip
+**/*.pt
+**/*.pth
+**/dataset_20250919.csv
+**/predict_data/
+studies/soc_human_ai_organization/restricted_local_figures/
+studies/soc_human_ai_organization/SOC_PARAMETRIC_D1_*.csv
+studies/soc_human_ai_organization/SOC_PARAMETRIC_D1_*.svg
+studies/soc_human_ai_organization/soctra_arrival_feature_manifest.json
+/studies/soctra_temporal_prediction_pipeline.py

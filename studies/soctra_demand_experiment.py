@@ -61,6 +61,21 @@ class DemandTrace:
 
 
 @dataclass(frozen=True)
+class SourceAlertDemand:
+    """Minimal in-memory SOCTRA row for downstream RQ1 replay.
+
+    The source identifier is replaced by a stable one-way key before returning.
+    Project names and original identifiers are never exposed by this adapter.
+    """
+
+    alert_key: str
+    timestamp: datetime
+    arrival_time: float
+    project_class: int
+    historical_escalation_label: bool | None
+
+
+@dataclass(frozen=True)
 class SourceDemand:
     traces: dict[str, DemandTrace]
     project_class_count: int
@@ -72,14 +87,22 @@ class SourceDemand:
     demand_summaries: dict[str, dict[str, float | int]]
     early_late_project_mix_tv: float | None
     organizational_demand_summaries: dict[str, dict[str, float | int]]
+    source_alerts: tuple[SourceAlertDemand, ...]
+    historical_escalation_labels_present: bool
 
 
 def load_soctra_demand(path: str | Path) -> SourceDemand:
-    """Load timestamp/project fields only; never retain or emit source labels."""
+    """Load timestamp/project plus optional escalation labels; hash source IDs.
+
+    Raw identifiers and project names remain local to parsing and are never
+    returned. The historical label is retained separately from model output.
+    """
     source = Path(path)
     projects: set[str] = set()
     identifiers: set[str] = set()
     records: list[tuple[datetime, str]] = []
+    record_metadata: list[tuple[datetime, str, str, bool | None]] = []
+    historical_labels_present = False
     ties: Counter[datetime] = Counter()
     required = {"@timestamp0", "proyecto", "id_alerta"}
     try:
@@ -90,6 +113,7 @@ def load_soctra_demand(path: str | Path) -> SourceDemand:
         reader = csv.DictReader(handle)
         if reader.fieldnames is None or not required.issubset(reader.fieldnames):
             raise ValueError("SOCTRA CSV lacks required timestamp/project/alert-id fields")
+        historical_labels_present = "escalada_L2" in reader.fieldnames
         for row_number, row in enumerate(reader, start=2):
             if None in row:
                 raise ValueError(f"malformed SOCTRA CSV record at row {row_number}")
@@ -111,6 +135,8 @@ def load_soctra_demand(path: str | Path) -> SourceDemand:
             class_label = project if project else "\x00unclassified-project"
             projects.add(class_label)
             records.append((timestamp, class_label))
+            historical_label = _parse_optional_boolean(row.get("escalada_L2")) if historical_labels_present else None
+            record_metadata.append((timestamp, class_label, alert_id, historical_label))
             ties[timestamp] += 1
     if not records:
         raise ValueError("SOCTRA CSV contains no demand records")
@@ -125,6 +151,18 @@ def load_soctra_demand(path: str | Path) -> SourceDemand:
     class_index = {label: index for index, label in enumerate(ordered_projects)}
     first_date = min(timestamp.date() for timestamp, _ in records)
     last_date = max(timestamp.date() for timestamp, _ in records)
+    full_start = datetime.combine(first_date, time.min)
+    full_duration = (datetime.combine(last_date + timedelta(days=1), time.min) - full_start).total_seconds()
+    source_alerts = tuple(
+        SourceAlertDemand(
+            alert_key=hashlib.sha256(b"hls-rq1-alert-key-v1\0" + alert_id.encode("utf-8")).hexdigest(),
+            timestamp=timestamp,
+            arrival_time=(timestamp - full_start).total_seconds() / full_duration,
+            project_class=class_index[label],
+            historical_escalation_label=historical,
+        )
+        for timestamp, label, alert_id, historical in sorted(record_metadata, key=lambda item: (item[0], class_index[item[1]], item[2]))
+    )
     windows = {
         "full_observed_coverage": (
             datetime.combine(first_date, time.min),
@@ -235,7 +273,20 @@ def load_soctra_demand(path: str | Path) -> SourceDemand:
         demand_summaries=demand_summaries,
         early_late_project_mix_tv=mix_tv,
         organizational_demand_summaries=organizational_demand_summaries,
+        source_alerts=source_alerts,
+        historical_escalation_labels_present=historical_labels_present,
     )
+
+
+def _parse_optional_boolean(value: str | None) -> bool | None:
+    if value is None or not value.strip():
+        return None
+    normalized = value.strip().casefold()
+    if normalized in {"true", "1", "yes", "y", "si", "sí"}:
+        return True
+    if normalized in {"false", "0", "no", "n"}:
+        return False
+    raise ValueError("unrecognized historical escalation label encoding")
 
 
 def _organization(profile: str, n_types: int, alignment: int = 0) -> tuple[tuple[float, ...], ...]:
