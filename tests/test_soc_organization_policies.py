@@ -1,4 +1,4 @@
-from hls.rq1_allocation import Alert, Analyst, SOC_POLICY_NAMES, simulate
+from hls.rq1_allocation import AllocationSession, Alert, Analyst, SOC_POLICY_NAMES, simulate
 
 
 def _analyst(name, classes, competence=None):
@@ -16,6 +16,71 @@ def _run(alerts, team, policy, services, *, seed=17, latency=0.0, edge_cost=0.0)
 
 def test_active_soc_policy_inventory_is_minimal_and_includes_frozen_d1():
     assert SOC_POLICY_NAMES == ("D1", "P1", "P2", "P3", "P4", "P5")
+
+
+def test_t_and_q_are_explicit_aliases_for_p1_and_p2_without_changing_them():
+    alerts = [Alert("urgent", 0, "x", 2), Alert("loose", 0, "x", 8)]
+    team = [_analyst("a", {"x"})]
+    assert _run(alerts, team, "T", {"x": 1}).assignments == _run(alerts, team, "P1", {"x": 1}).assignments
+    assert _run(alerts, team, "Q", {"x": 1}).assignments == _run(alerts, team, "P2", {"x": 1}).assignments
+
+
+def test_c_selects_on_time_pair_when_t_selects_an_irrecoverably_late_alert():
+    alerts = [Alert("late", 0, "x", 0.5), Alert("viable", 0, "x", 5)]
+    team = [_analyst("a", {"x"}, {"x": 0.7})]
+    assert _run(alerts, team, "T", {"x": 1}).assignments[0].alert_id == "late"
+    result = _run(alerts, team, "C", {"x": 1})
+    assert result.assignments[0].alert_id == "viable"
+
+
+def test_c_uses_global_pair_information_and_pays_one_epoch_latency():
+    alerts = [Alert("x", 0, "x", 2)]
+    team = [_analyst("a-slow", {"x"}, {"x": 0.7}), _analyst("b-fast", {"x"}, {"x": 0.7})]
+    services = {"x": 1}
+    individual = {"a-slow": {"x": 2}, "b-fast": {"x": 0.5}}
+    result = simulate(alerts, team, services, policy="C", admission_horizon=2,
+                      drain_period=8, coordination_latency=0.25,
+                      service_by_analyst_class=individual)
+    assert result.assignments[0].analyst_id == "b-fast"
+    assert result.assignments[0].start == 0.25
+    assert result.coordination_latency_total == 0.25
+    assert result.coordination_person_time == 0.25
+
+
+def test_c_is_sequential_feasible_and_deterministic_with_multiple_pairs():
+    alerts = [Alert("x", 0, "x", 8), Alert("y", 0, "y", 8), Alert("z", 0, "x", 8)]
+    team = [_analyst("a", {"x", "y"}), _analyst("b", {"x"})]
+    first = _run(alerts, team, "C", {"x": 1, "y": 1})
+    second = _run(alerts, team, "C", {"x": 1, "y": 1})
+    assert first == second
+    assert len({job.alert_id for job in first.assignments}) == len(first.assignments)
+    by_id = {a.analyst_id: a for a in team}
+    alerts_by_id = {a.alert_id: a for a in alerts}
+    assert all(alerts_by_id[j.alert_id].task_class in by_id[j.analyst_id].eligible_classes
+               for j in first.assignments)
+    assert len([j for j in first.assignments if j.start == 0]) == 2
+    assert first.dispatch_decisions == 2
+
+
+def test_c_empty_and_single_analyst_cases_and_latency_harm():
+    empty = _run([], [_analyst("a", {"x"})], "C", {"x": 1})
+    assert empty.assignments == ()
+    one = simulate([Alert("x", 0, "x", 1.1)], [_analyst("a", {"x"})], {"x": 1},
+                   policy="C", admission_horizon=1, drain_period=2,
+                   coordination_latency=0.2)
+    zero = simulate([Alert("x", 0, "x", 1.1)], [_analyst("a", {"x"})], {"x": 1},
+                    policy="C", admission_horizon=1, drain_period=2)
+    assert one.after_drain.completed_late == 1
+    assert zero.after_drain.completed_within_sla == 1
+    assert one.coordination_latency_total == 0.2
+
+
+def test_c_equal_priority_ties_are_deterministic():
+    alerts = [Alert("b", 0, "x", 5), Alert("a", 0, "x", 5)]
+    team = [_analyst("z", {"x"}), _analyst("a", {"x"})]
+    first = _run(alerts, team, "C", {"x": 1})
+    second = _run(alerts, team, "C", {"x": 1})
+    assert first.assignments == second.assignments
 
 
 def test_p1_selects_smallest_predicted_post_service_slack():
@@ -150,3 +215,45 @@ def test_d1_frozen_dispatch_remains_reproducible_and_nonpreemptive():
     initial = [job for job in first.assignments if job.start == 0]
     assert len(initial) == 2
     assert all(job.completion == job.start + 1 for job in first.assignments)
+
+
+def test_immediate_dispatch_removes_edges_after_single_new_alert():
+    session = AllocationSession(
+        [Alert("one", 0.0, "x", 5.0)],
+        [_analyst("a", {"x"}), _analyst("b", {"x"})],
+        {"x": 1.0}, admission_horizon=2.0,
+    )
+    assert session.next_event_time() == 0.0
+    session.advance_to(0.0)
+    assert session.dispatch("P1") == ("one",)
+    assert not any(
+        alert.task_class in analyst.eligible_classes
+        for alert in session.pending.values()
+        for analyst in session.available_analysts()
+    )
+
+
+def test_simultaneous_arrivals_and_completions_can_create_multi_matching_state():
+    session = AllocationSession(
+        [
+            Alert("initial-x", 0.0, "x", 10.0),
+            Alert("initial-y", 0.0, "y", 10.0),
+            Alert("batch-x", 1.0, "x", 10.0),
+            Alert("batch-y", 1.0, "y", 10.0),
+        ],
+        [_analyst("a", {"x", "y"}), _analyst("b", {"x", "y"})],
+        {"x": 1.0, "y": 1.0}, admission_horizon=2.0,
+    )
+    session.advance_to(0.0)
+    assert len(session.dispatch("P1")) == 2
+    assert not session.pending
+
+    assert session.next_event_time() == 1.0
+    completed = session.advance_to(1.0)
+    assert len(completed) == 2
+    assert {alert.alert_id for alert in session.arrived_at_now} == {"batch-x", "batch-y"}
+    assert len(session.available_analysts()) == 2
+    assert len(session.pending) == 2
+
+    selected = session.dispatch("P4")
+    assert set(selected) == {"batch-x", "batch-y"}

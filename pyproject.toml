@@ -11,6 +11,7 @@ dependencies = []
 
 [project.optional-dependencies]
 test = ["pytest>=7"]
+soc-calibration = ["scipy>=1.10"]
 
 [project.scripts]
 hls = "hls.__main__:main"

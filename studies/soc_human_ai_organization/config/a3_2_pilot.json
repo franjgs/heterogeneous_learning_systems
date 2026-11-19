@@ -1,0 +1,28 @@
+{
+  "purpose": "Small exploratory, paired pilot for provisional D1/T/Q/C portfolio; not confirmatory.",
+  "time_unit": "hours",
+  "seed_base": 261132000,
+  "seed_count": 20,
+  "capacity_l1_reference_per_hour": 28.42,
+  "admission_horizon_h": 24.0,
+  "drain_h": 24.0,
+  "coordination_latency_c_h": 0.05,
+  "coordination_edge_cost_c_units": 1.0,
+  "comparisons": [
+    {"label": "D1", "policy": "D1", "coordination_latency_h": 0.0, "coordination_edge_cost_units": 0.0},
+    {"label": "T", "policy": "T", "coordination_latency_h": 0.0, "coordination_edge_cost_units": 0.0},
+    {"label": "Q", "policy": "Q", "coordination_latency_h": 0.0, "coordination_edge_cost_units": 0.0},
+    {"label": "C", "policy": "C", "coordination_latency_h": 0.05, "coordination_edge_cost_units": 1.0},
+    {"label": "C_zero_latency", "policy": "C", "coordination_latency_h": 0.0, "coordination_edge_cost_units": 0.0}
+  ],
+  "scenarios": [
+    {"name": "low_load", "rho_l1": 0.35, "deadline_multiplier": 1.0, "eligibility_level": 2.5, "homogeneous_competence": false, "homogeneous_speed": false},
+    {"name": "intermediate_load", "rho_l1": 0.65, "deadline_multiplier": 1.0, "eligibility_level": 2.5, "homogeneous_competence": false, "homogeneous_speed": false},
+    {"name": "near_capacity", "rho_l1": 1.0, "deadline_multiplier": 1.0, "eligibility_level": 2.5, "homogeneous_competence": false, "homogeneous_speed": false},
+    {"name": "restricted_specialization", "rho_l1": 0.65, "deadline_multiplier": 1.0, "eligibility_level": 1.5, "homogeneous_competence": false, "homogeneous_speed": false},
+    {"name": "heterogeneity_homogeneous_control", "rho_l1": 0.65, "deadline_multiplier": 1.0, "eligibility_level": 2.5, "homogeneous_competence": true, "homogeneous_speed": true},
+    {"name": "balanced_class_mix_control", "rho_l1": 0.65, "deadline_multiplier": 1.0, "eligibility_level": 2.5, "homogeneous_competence": false, "homogeneous_speed": false, "class_probabilities": [0.3333333333333333, 0.3333333333333333, 0.3333333333333333]},
+    {"name": "tight_deadlines", "rho_l1": 0.65, "deadline_multiplier": 0.25, "eligibility_level": 2.5, "homogeneous_competence": false, "homogeneous_speed": false}
+  ],
+  "output_dir": "results/soc_a3_2_pilot"
+}

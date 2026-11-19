@@ -18,6 +18,62 @@ SOC_POLICY_NAMES = ("D1", "P1", "P2", "P3", "P4", "P5")
 
 
 @dataclass(frozen=True)
+class HLSAConfig:
+    low: float = 1.0
+    high: float = 2.0
+    initial_mode: str = "D1"
+
+    def __post_init__(self):
+        if not (isfinite(self.low) and isfinite(self.high) and 0 <= self.low < self.high):
+            raise ValueError("HLS-A requires finite thresholds 0 <= low < high")
+        if self.initial_mode not in {"D1", "P1"}:
+            raise ValueError("HLS-A initial_mode must be D1 or P1")
+
+
+@dataclass(frozen=True)
+class HLSBConfig:
+    window_h: float
+    low: float
+    high: float
+    capacity_per_h: float
+
+    def __post_init__(self):
+        if not (isfinite(self.window_h) and self.window_h > 0 and
+                isfinite(self.capacity_per_h) and self.capacity_per_h > 0 and
+                isfinite(self.low) and isfinite(self.high) and 0 <= self.low < self.high):
+            raise ValueError("invalid HLS-B window, capacity or hysteresis")
+
+
+@dataclass(frozen=True)
+class HLSADecision:
+    time: float
+    mode: str
+    pressure: float
+    pending: int
+    occupied: int
+    switched: bool
+
+
+def hlsa_pressure(pending, analysts, running, dispatching, service_time):
+    """Maximum class-specific occupied fraction plus queued service equivalents."""
+    if not pending:
+        return 0.0
+    values = []
+    busy = set(running) | set(dispatching)
+    for task_class in {alert.task_class for alert in pending.values()}:
+        eligible = [a for a in analysts if task_class in a.eligible_classes]
+        if not eligible:
+            continue
+        reference = sum(service_time(a, next(x for x in pending.values()
+                                                  if x.task_class == task_class)) for a in eligible) / len(eligible)
+        work = sum(min(service_time(a, x) for a in eligible)
+                   for x in pending.values() if x.task_class == task_class)
+        values.append(sum(a.analyst_id in busy for a in eligible) / len(eligible)
+                      + work / (len(eligible) * reference))
+    return max(values, default=0.0)
+
+
+@dataclass(frozen=True)
 class B3Config:
     """Fixed, transparent thresholds for the rule-based adaptive controller."""
 
@@ -122,6 +178,8 @@ class SimulationResult:
     coordination_person_time: float
     coordination_latency_total: float = 0.0
     coordination_resource: float = 0.0
+    dispatch_decisions: int = 0
+    hlsa_history: tuple[HLSADecision, ...] = ()
 
 
 def simulate(
@@ -137,6 +195,9 @@ def simulate(
     coordination_edge_cost: float = 0.0,
     b3_config: B3Config = B3Config(),
     service_by_analyst_class: Mapping[str, Mapping[ClassId, float]] | None = None,
+    hlsa_config: HLSAConfig = HLSAConfig(),
+    hlsb_config: HLSBConfig | None = None,
+    diagnostic_trace: list[dict] | None = None,
 ) -> SimulationResult:
     """Run one fixed policy on arrivals in [0, admission_horizon).
 
@@ -147,8 +208,11 @@ def simulate(
     time. A completion exactly at a metric cutoff is included in that snapshot.
     """
     legacy_policies = {"B0", "B0-R", "B0-F", "B1", "B2", "B3"}
-    if policy not in {*legacy_policies, *SOC_POLICY_NAMES}:
-        raise ValueError(f"policy must be one of {tuple(sorted(legacy_policies | set(SOC_POLICY_NAMES)))}")
+    experimental_policies = {"T", "Q", "C"}
+    if policy not in {*legacy_policies, *SOC_POLICY_NAMES, *experimental_policies, "HLS-A", "HLS-B"}:
+        raise ValueError(f"policy must be one of {tuple(sorted(legacy_policies | set(SOC_POLICY_NAMES) | experimental_policies))}")
+    if policy == "HLS-B" and hlsb_config is None:
+        raise ValueError("HLS-B requires a capacity and window configuration")
     if not isinstance(random_seed, int) or isinstance(random_seed, bool):
         raise ValueError("random_seed must be an integer")
     _finite_nonnegative(admission_horizon, "admission_horizon", strictly_positive=True)
@@ -156,7 +220,7 @@ def simulate(
     _finite_nonnegative(coordination_latency, "coordination_latency")
     _finite_nonnegative(coordination_edge_cost, "coordination_edge_cost")
     _validate_b3_config(b3_config)
-    applied_coordination_latency = coordination_latency if policy in {"B1", "B2", "B3", "P4", "P5"} else 0.0
+    applied_coordination_latency = coordination_latency if policy in {"B1", "B2", "B3", "P4", "P5", "C"} else 0.0
     alert_rows = tuple(alerts)
     analyst_rows = tuple(analysts)
     services = dict(service_by_class)
@@ -189,9 +253,14 @@ def simulate(
     order_rng = random.Random(random_seed)
     strategy_counts = {name: 0 for name in ("B0", "B1", "B2")}
     strategy_history: list[str] = []
+    hlsa_history: list[HLSADecision] = []
+    hlsa_mode = hlsa_config.initial_mode
+    hlsb_mode = "D1"
+    observed_arrivals: list[float] = []
     coordination_person_time = 0.0
     coordination_latency_total = 0.0
     coordination_resource = 0.0
+    dispatch_decisions = 0
     horizon_metrics: Metrics | None = None
     drain_end = admission_horizon + drain_period
 
@@ -215,6 +284,7 @@ def simulate(
         if arrival_cursor < len(arrived_times) and arrived_times[arrival_cursor] == now:
             for alert in arrivals_by_time[now]:
                 pending[alert.alert_id] = alert
+                observed_arrivals.append(now)
             arrival_cursor += 1
         finished = [aid for aid, job in running.items() if job.completion == now]
         for aid in finished:
@@ -249,13 +319,63 @@ def simulate(
         ]
         if free and pending:
             strategy = policy
+            if policy == "HLS-A":
+                pressure = hlsa_pressure(pending, ordered_analysts, running, dispatching, service_time)
+                previous = hlsa_mode
+                if hlsa_mode == "D1" and pressure >= hlsa_config.high:
+                    hlsa_mode = "P1"
+                elif hlsa_mode == "P1" and pressure <= hlsa_config.low:
+                    hlsa_mode = "D1"
+                strategy = hlsa_mode
+                hlsa_history.append(HLSADecision(now, strategy, pressure, len(pending),
+                                                 len(running) + len(dispatching), strategy != previous))
+            elif policy == "HLS-B":
+                estimate = sum(now-hlsb_config.window_h < arrival <= now
+                               for arrival in observed_arrivals) / hlsb_config.window_h
+                pressure = estimate / hlsb_config.capacity_per_h
+                previous = hlsb_mode
+                if hlsb_mode == "D1" and pressure >= hlsb_config.high:
+                    hlsb_mode = "P1"
+                elif hlsb_mode == "P1" and pressure <= hlsb_config.low:
+                    hlsb_mode = "D1"
+                strategy = hlsb_mode
+                hlsa_history.append(HLSADecision(now, strategy, pressure, len(pending),
+                                                 len(running) + len(dispatching), strategy != previous))
+            diagnostic_row = None
+            if diagnostic_trace is not None and policy == "HLS-A":
+                preview_rng = random.Random()
+                preview_rng.setstate(order_rng.getstate())
+                d1_preview = _dispatch_d1(free, pending, now, service_time, preview_rng)
+                p1_preview = _dispatch_local_priority(free, pending, now, service_time)
+                def pairs(proposal):
+                    return tuple((a.analyst_id, x.alert_id) for a, x in proposal)
+                delta = None
+                if len(free) == 1 and len(d1_preview) == len(p1_preview) == 1:
+                    analyst = free[0]
+                    first_d = d1_preview[0][1]
+                    first_p = p1_preview[0][1]
+                    if first_d.alert_id != first_p.alert_id:
+                        def value(first, second):
+                            duration = service_time(analyst, first)
+                            return (analyst.competence[first.task_class] *
+                                    int(now + duration <= first.deadline) +
+                                    analyst.competence[second.task_class] *
+                                    int(now + duration + service_time(analyst, second) <= second.deadline))
+                        delta = value(first_p, first_d) - value(first_d, first_p)
+                diagnostic_row = dict(time=now, mode=strategy, z=pressure,
+                    free=tuple(a.analyst_id for a in free), occupied=tuple(sorted(running)),
+                    pending=tuple((x.alert_id, x.task_class, x.deadline, x.arrival) for x in pending.values()),
+                    feasible=tuple((a.analyst_id, x.alert_id, service_time(a, x),
+                                    a.competence[x.task_class], x.deadline-now-service_time(a, x))
+                                   for a in free for x in pending.values() if x.task_class in a.eligible_classes),
+                    d1=pairs(d1_preview), p1=pairs(p1_preview), delta_v=delta)
             if policy == "B3":
                 strategy = _choose_b3_strategy(
                     free, pending, services, now, coordination_latency, b3_config, individual_services,
                 )
                 strategy_counts[strategy] += 1
                 strategy_history.append(strategy)
-            strategy_latency = coordination_latency if strategy in {"B1", "B2"} else 0.0
+            strategy_latency = coordination_latency if strategy in {"B1", "B2", "C"} else 0.0
             dispatch_resource = 0.0
             if strategy == "D1":
                 selected = _dispatch_d1(free, pending, now, service_time, order_rng)
@@ -267,14 +387,31 @@ def simulate(
                     individual_services, order_rng, coordination_latency,
                     coordination_edge_cost,
                 )
+            elif strategy in {"T", "Q"}:
+                selected = (_dispatch_local_priority(free, pending, now, service_time)
+                            if strategy == "T" else
+                            _dispatch_local_competence(free, pending, now, service_time))
+            elif strategy == "C":
+                selected = _dispatch_central_sequential(
+                    free, pending, now, service_time, strategy_latency,
+                )
             else:
                 selected = _dispatch_coordinated(
                     free, pending, services, now, strategy, strategy_latency, individual_services
                 )
-            if selected and strategy in {"P4", "P5"} and strategy_latency:
+            if selected and strategy in {"P4", "P5", "C"} and strategy_latency:
                 coordination_latency_total += strategy_latency
             if selected:
+                dispatch_decisions += 1
                 coordination_resource += dispatch_resource
+                if strategy == "C":
+                    coordination_resource += coordination_edge_cost * sum(
+                        alert.task_class in analyst.eligible_classes
+                        for analyst in free for alert in pending.values()
+                    )
+            if diagnostic_row is not None:
+                diagnostic_row["executed"] = pairs(selected)
+                diagnostic_trace.append(diagnostic_row)
             for analyst, alert in selected:
                 # The matching is one-to-one; remove before scheduling to make
                 # duplicate assignment impossible even under defensive checks.
@@ -317,6 +454,8 @@ def simulate(
         coordination_person_time,
         coordination_latency_total,
         coordination_resource,
+        dispatch_decisions,
+        tuple(hlsa_history),
     )
 
 
@@ -386,6 +525,7 @@ class AllocationSession:
         self.coordination_person_time = 0.0
         self.coordination_latency_total = 0.0
         self.coordination_resource = 0.0
+        self.dispatch_decisions = 0
         self.organization_action_counts = {name: 0 for name in ORGANIZATIONAL_ACTIONS}
         self.organization_action_history: list[str] = []
         self._processed_time: float | None = None
@@ -482,7 +622,7 @@ class AllocationSession:
 
     def dispatch(self, policy: Policy) -> tuple[str, ...]:
         """Apply one policy at current time; return selected alert IDs."""
-        if policy not in {"B0", "B1", "B2", "B3", "D1", "D1-L", "D1-S", "P1", "P2", "P3", "P4", "P5"}:
+        if policy not in {"B0", "B1", "B2", "B3", "D1", "D1-L", "D1-S", "P1", "P2", "P3", "P4", "P5", "T", "Q", "C"}:
             raise ValueError("unknown dispatch policy")
         free = self.available_analysts()
         if not free or not self.pending or self._finalized:
@@ -494,7 +634,7 @@ class AllocationSession:
                                            self.individual_services)
             self.strategy_counts[strategy] += 1
             self.strategy_history.append(strategy)
-        latency = self.coordination_latency if strategy in {"B1", "B2"} else 0.0
+        latency = self.coordination_latency if strategy in {"B1", "B2", "C"} else 0.0
         resource = 0.0
         if strategy in {"D1", "D1-L", "D1-S"}:
             local_correction = strategy in {"D1-L", "D1-S"}
@@ -536,6 +676,14 @@ class AllocationSession:
                 self._service_time, self.individual_services, self.order_rng,
                 self.coordination_latency, self.coordination_edge_cost,
             )
+        elif strategy in {"T", "Q"}:
+            selected = (_dispatch_local_priority(free, self.pending, self.now, self._service_time)
+                        if strategy == "T" else
+                        _dispatch_local_competence(free, self.pending, self.now, self._service_time))
+        elif strategy == "C":
+            selected = _dispatch_central_sequential(
+                free, self.pending, self.now, self._service_time, latency,
+            )
         elif strategy == "B0":
             selected = _dispatch_b0(free, self.pending, "B0", self.order_rng)
         else:
@@ -547,9 +695,16 @@ class AllocationSession:
                 alert.task_class in analyst.eligible_classes
                 for analyst in free for alert in self.pending.values()
             )
-        elif selected and strategy in {"P4", "P5"}:
+        elif selected and strategy in {"P4", "P5", "C"}:
             self.coordination_latency_total += latency
+            if strategy == "C":
+                resource = self.coordination_edge_cost * sum(
+                    alert.task_class in analyst.eligible_classes
+                    for analyst in free for alert in self.pending.values()
+                )
             self.coordination_resource += resource
+        if selected:
+            self.dispatch_decisions += 1
         ids = []
         for analyst, alert in selected:
             if alert.alert_id not in self.pending or analyst.analyst_id in self.running or analyst.analyst_id in self.dispatching:
@@ -630,7 +785,7 @@ class AllocationSession:
             raise RuntimeError("session has not reached its drain boundary")
         return SimulationResult(
             policy, self.horizon, self.drain_period,
-            self.coordination_latency if policy in {"B1", "B2", "B3", "P4", "P5"} else 0.0,
+            self.coordination_latency if policy in {"B1", "B2", "B3", "P4", "P5", "C"} else 0.0,
             self.metrics(self.horizon), self.metrics(self.drain_end),
             tuple(sorted(self.assignments, key=lambda x: (x.start, x.analyst_id, x.alert_id))),
             tuple((name, self.strategy_counts[name]) for name in ("B0", "B1", "B2")),
@@ -638,6 +793,7 @@ class AllocationSession:
             self.coordination_person_time,
             self.coordination_latency_total,
             self.coordination_resource,
+            self.dispatch_decisions,
         )
 
 
@@ -807,6 +963,42 @@ def _dispatch_local_competence(free, pending, now, service_time):
         ))
         selected.append((analyst, alert))
         del remaining[alert.alert_id]
+    return selected
+
+
+def _dispatch_central_sequential(free, pending, now, service_time, coordination_latency=0.0):
+    """Greedy central pair selection; one decision epoch, no batch optimizer.
+
+    Pair priority is lexicographic: (1) predicted on-time completion, (2)
+    least nonnegative slack if on time / least lateness if late, (3) higher
+    assigned-analyst competence, (4) shorter service, then stable IDs. After
+    choosing a pair, its analyst and alert are removed before the next choice.
+    """
+    remaining_alerts = dict(pending)
+    remaining_analysts = list(sorted(free, key=lambda row: row.analyst_id))
+    selected = []
+    while remaining_analysts and remaining_alerts:
+        feasible = []
+        for analyst in remaining_analysts:
+            for alert in remaining_alerts.values():
+                if alert.task_class not in analyst.eligible_classes:
+                    continue
+                duration = service_time(analyst, alert)
+                slack = alert.deadline - now - coordination_latency - duration
+                on_time = slack >= 0
+                temporal_distance = slack if on_time else -slack
+                key = (
+                    -int(on_time), temporal_distance,
+                    -analyst.competence[alert.task_class], duration,
+                    alert.deadline, alert.arrival, alert.alert_id, analyst.analyst_id,
+                )
+                feasible.append((key, analyst, alert))
+        if not feasible:
+            break
+        _, analyst, alert = min(feasible, key=lambda row: row[0])
+        selected.append((analyst, alert))
+        del remaining_alerts[alert.alert_id]
+        remaining_analysts.remove(analyst)
     return selected
 
 

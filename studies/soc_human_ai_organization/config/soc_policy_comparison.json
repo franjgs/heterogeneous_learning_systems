@@ -1,0 +1,22 @@
+{
+  "purpose": "Exploratory matched D1/P1-P5 comparison under A0 parameters",
+  "seed_base": 261140000,
+  "seed_count": 20,
+  "time_unit": "hours",
+  "admission_horizon_h": 24,
+  "drain_h": 24,
+  "policies": ["D1", "P1", "P2", "P3", "P4", "P5"],
+  "costed_latency_h": 0.05,
+  "costed_edge_units": 1.0,
+  "cost_provenance": "Hypothetical values previously used for central coordination in A3.2; no monetary valuation",
+  "output_dir": "results/soc_policy_comparison",
+  "scenarios": [
+    {"name":"rho_065","series":"main","arrival_rate_per_h":18.472082005811792,"active_l1_indices":[0,1,2,3,4,5]},
+    {"name":"rho_085","series":"main","arrival_rate_per_h":24.15579954606157,"active_l1_indices":[0,1,2,3,4,5]},
+    {"name":"rho_100","series":"main","arrival_rate_per_h":28.41858770124891,"active_l1_indices":[0,1,2,3,4,5]},
+    {"name":"rho_125","series":"main","arrival_rate_per_h":35.52323462656114,"active_l1_indices":[0,1,2,3,4,5]},
+    {"name":"staff_6","series":"staffing","arrival_rate_per_h":18.472082005811792,"active_l1_indices":[0,1,2,3,4,5]},
+    {"name":"staff_5","series":"staffing","arrival_rate_per_h":18.472082005811792,"active_l1_indices":[0,1,3,4,5]},
+    {"name":"staff_4","series":"staffing","arrival_rate_per_h":18.472082005811792,"active_l1_indices":[0,1,3,4]}
+  ]
+}

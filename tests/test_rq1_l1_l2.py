@@ -104,6 +104,20 @@ def test_two_level_simulation_is_reproducible():
     assert _run(_rows(), policy="B3") == _run(_rows(), policy="B3")
 
 
+def test_l1_l2_forwards_coordination_edge_cost_to_both_pools():
+    row = RoutedAlert(Alert("cost-edge", 0.0, "p", 3.0), False, True)
+    result = simulate_l1_l2(
+        [row], [_analyst("l1-a", {"p"}), _analyst("l1-b", {"p"})],
+        [_analyst("l2-a", {"p"})], {"p": 0.1}, {"p": 0.2},
+        policy="P4", admission_horizon=1.0, drain_period=0.5,
+        coordination_latency=0.0, coordination_edge_cost=0.5,
+        decision_mode="hypothetical_recommendation_acceptance",
+    )
+    assert result.l1_simulation.coordination_resource == 1.0
+    assert result.l2_simulation.coordination_resource == 0.5
+    assert result.after_drain.pending == 0
+
+
 def test_oos_prediction_loader_requires_available_at_alert_time_and_training_cutoff(tmp_path):
     path = tmp_path / "predictions.csv"
     fields = ("id_alerta", "recommendation", "out_of_sample", "available_at", "training_cutoff", "model_id", "evaluation_split")

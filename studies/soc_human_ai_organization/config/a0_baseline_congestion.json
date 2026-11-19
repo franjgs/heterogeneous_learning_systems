@@ -1,0 +1,38 @@
+{
+  "purpose": "D1-only congestion characterization; no policy comparison or tuning.",
+  "time_unit": "hours",
+  "seed_base": 261140000,
+  "seed_count": 30,
+  "admission_horizon_h": 24.0,
+  "drain_h": 24.0,
+  "base_l1_capacity_per_hour": 28.41858770124891,
+  "reference_class_mix": [0.592, 0.236, 0.172],
+  "deadline_multiplier": 1.0,
+  "fixed_escalation_decision": "hypothetical_recommendation_acceptance",
+  "series": {
+    "A_arrival_load": {
+      "arrival_capacity_multipliers": [0.35, 0.65, 0.85, 1.0, 1.1, 1.25, 1.5],
+      "n_l1": 6,
+      "active_l1_indices": [0, 1, 2, 3, 4, 5]
+    },
+    "B_staffing": {
+      "arrival_rate_per_hour": 18.472082005811792,
+      "staffing_levels": [
+        {"n_l1": 6, "active_l1_indices": [0, 1, 2, 3, 4, 5]},
+        {"n_l1": 5, "active_l1_indices": [0, 1, 3, 4, 5]},
+        {"n_l1": 4, "active_l1_indices": [0, 1, 3, 4]},
+        {"n_l1": 3, "active_l1_indices": [0, 3, 5]}
+      ]
+    },
+    "C_high_load_reduced_staffing": {
+      "arrival_rate_per_hour": 22.0,
+      "staffing_levels": [
+        {"n_l1": 6, "active_l1_indices": [0, 1, 2, 3, 4, 5]},
+        {"n_l1": 5, "active_l1_indices": [0, 1, 3, 4, 5]},
+        {"n_l1": 4, "active_l1_indices": [0, 1, 3, 4]}
+      ]
+    }
+  },
+  "queue_time_grid_h": 0.25,
+  "output_dir": "results/soc_a0_baseline_congestion"
+}

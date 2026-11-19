@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from math import isfinite
 from typing import Mapping, Sequence
 
-from .rq1_allocation import Alert, Analyst, B3Config, Metrics, SimulationResult, simulate
+from .rq1_allocation import Alert, Analyst, B3Config, HLSAConfig, HLSBConfig, Metrics, SimulationResult, simulate
 
 
 @dataclass(frozen=True)
@@ -67,11 +67,17 @@ def simulate_l1_l2(
     admission_horizon: float,
     drain_period: float,
     coordination_latency: float,
+    coordination_edge_cost: float = 0.0,
     decision_mode: str = "historical_label_reference",
     b3_config: B3Config = B3Config(0.75, 0.25, 0.15, 0.25),
     random_seed: int = 0,
     l1_service_by_analyst_class: Mapping[str, Mapping[object, float]] | None = None,
     l2_service_by_analyst_class: Mapping[str, Mapping[object, float]] | None = None,
+    hlsa_config: HLSAConfig = HLSAConfig(),
+    hlsb_l1_config: HLSBConfig | None = None,
+    hlsb_l2_config: HLSBConfig | None = None,
+    l1_diagnostic_trace: list[dict] | None = None,
+    l2_diagnostic_trace: list[dict] | None = None,
 ) -> L1L2Result:
     """Run L1 then L2 with fixed routing decisions and same policy at both pools.
 
@@ -90,6 +96,8 @@ def simulate_l1_l2(
         raise ValueError("drain_period must be finite and nonnegative")
     if not isfinite(coordination_latency) or coordination_latency < 0:
         raise ValueError("coordination_latency must be finite and nonnegative")
+    if not isfinite(coordination_edge_cost) or coordination_edge_cost < 0:
+        raise ValueError("coordination_edge_cost must be finite and nonnegative")
     route_decisions = {}
     for row in alerts:
         if decision_mode == "historical_label_reference":
@@ -105,8 +113,12 @@ def simulate_l1_l2(
         source_alerts, l1_analysts, l1_service_by_class,
         policy=policy, admission_horizon=admission_horizon,
         drain_period=drain_period, coordination_latency=coordination_latency,
+        coordination_edge_cost=coordination_edge_cost,
         b3_config=b3_config, random_seed=random_seed,
         service_by_analyst_class=l1_service_by_analyst_class,
+        hlsa_config=hlsa_config,
+        hlsb_config=hlsb_l1_config,
+        diagnostic_trace=l1_diagnostic_trace,
     )
     source_by_id = {row.alert.alert_id: row for row in alerts}
     l1_jobs = {job.alert_id: job for job in l1.assignments}
@@ -122,8 +134,12 @@ def simulate_l1_l2(
         forwarded, l2_analysts, l2_service_by_class,
         policy=policy, admission_horizon=drain_end,
         drain_period=0.0, coordination_latency=coordination_latency,
+        coordination_edge_cost=coordination_edge_cost,
         b3_config=b3_config, random_seed=random_seed,
         service_by_analyst_class=l2_service_by_analyst_class,
+        hlsa_config=hlsa_config,
+        hlsb_config=hlsb_l2_config,
+        diagnostic_trace=l2_diagnostic_trace,
     )
     l2_jobs = {job.alert_id: job for job in l2.assignments}
     admitted = tuple(row.alert for row in alerts if row.alert.arrival < admission_horizon)

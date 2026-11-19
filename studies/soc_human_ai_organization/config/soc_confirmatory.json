@@ -1,0 +1,22 @@
+{
+  "protocol": "SOC_CONFIRMATORY_PROTOCOL.md",
+  "seed_base": 261160000,
+  "seed_count": 100,
+  "time_unit": "hours",
+  "admission_horizon_h": 24.0,
+  "drain_h": 24.0,
+  "base_l1_capacity_per_hour": 28.41858770124891,
+  "primary_rho": 1.25,
+  "secondary_rho": [0.85, 1.0, 1.10, 1.15],
+  "deadline_multipliers": [0.75, 1.25],
+  "competence_spread_multipliers": [0.75, 1.25],
+  "l1_roster_indices": [0, 1, 2, 3, 4, 5],
+  "l2_count": 3,
+  "policies": ["D1", "P1"],
+  "coordination_latency_h": 0.0,
+  "coordination_edge_cost_units": 0.0,
+  "decision_mode": "hypothetical_recommendation_acceptance",
+  "primary_test": "paired one-sided t, H1 mean(P1-D1)>0, alpha 0.05, df 99",
+  "secondary_family": "eight paired two-sided comparisons, Holm alpha 0.05",
+  "output_dir": "results/soc_confirmatory_d1_p1"
+}
