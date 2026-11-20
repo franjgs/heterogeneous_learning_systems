@@ -1,0 +1,75 @@
+"""Build the autonomous operating-map report from generated summary CSVs."""
+import csv,json
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[2];HERE=Path(__file__).resolve().parent
+OUT=ROOT/"results/soc_hls_final_operating_map"
+def rows(name):
+    with (OUT/name).open(newline="") as f:return list(csv.DictReader(f))
+def f(x,n=4):return f"{float(x):.{n}f}"
+S=rows("scenario_summary.csv");Q=rows("sla_staff_summary.csv");V=json.loads((OUT/"validation_checks.json").read_text())
+classes={x:sum(r["map_class"]==x for r in S) for x in set(r["map_class"] for r in S)}
+winners={x:sum(r["mean_winner"]==x for r in S) for x in ("D1","P1","HLS-B")}
+L=[]
+def add(x=""):L.append(x)
+add("# SOCTRA–HLS — Mapa operativo paramétrico final")
+add();add("**Alcance:** estudio exploratorio y sintético. Se ejecutaron episodios completos emparejados con el simulador existente. D1, P1, HLS-B y el motor permanecieron congelados. No se usaron datos privados de SOCTRA ni datos confidenciales de GMV.")
+add();add("## Auditoría de evidencia anterior")
+add("La cifra de SLA para `nom_r125_d16` en el informe de valor adaptativo era documentalmente incorrecta. Las 20 semillas del CSV central al corte H+D=48 h dan D1=0,910502, P1=0,994254 y HLS-B=0,991937. El informe fue corregido a 0,9105 / 0,9943 / 0,9919.")
+add("La configuración y runner de `nom_r125_d8_fastrec` usan ρrec=0,70 durante 12 h. Con μL1=28,4185877 alertas/h, la exposición esperada es 4×0,85+8×1,25+12×0,70=21,8 horas equivalentes de carga; la esperanza es 619,5. El CSV muestra 618,1 admitidas medias. La tabla operativa anterior había copiado 670,7, calculado con ρrec=0,85; fue corregida. Los episodios guardados eran compatibles con configuración, por lo que no se repitieron.")
+add("Durante la verificación de la nueva serie temporal se detectó que el primer postproceso contaba alertas futuras como cola antes de su llegada. Se corrigió la regla temporal: el snapshot previo a despachar en t incluye solo alertas con llegada estrictamente anterior a t. Se repitieron las ejecuciones para regenerar los resúmenes de cola, trabajo y recuperación. Las políticas y el motor no se alteraron; la discrepancia estaba en métricas derivadas, no en la configuración de demanda ni en el R/N por episodio. Las primeras series de postproceso se descartaron.")
+add("Las pruebas del set publicado comprobaron hash de traza y denominadores iguales por política, admitidas=completadas+pendientes, coherencia de corte y SLA. Ver [`validation_checks.json`](../../results/soc_hls_final_operating_map/validation_checks.json). En especial, el CSV confirma las cifras d16 anteriores. No hubo inconsistencia que justificase repetir campañas históricas.")
+add();add("## Regímenes y diseño")
+add("La matriz se define antes de ver rendimientos: ρ habitual/recovery=0,85; inicio del pulso=4 h; ρalta={1,00;1,10;1,20;1,25;1,40;1,60}; duración={2,4,8,12,16 h}. Cada episodio tiene exactamente 20 h de recuperación con nuevas llegadas, y 24 h de drenaje. Admisión H=4+Tpulso+20 h (26–40 h), con plazo terminal máximo de 12 h y corte H+24 h. Así todos los deadlines maduran antes del corte; lo no resuelto permanece pendiente. La mezcla de alertas y el denominador total varían entre perfiles, pero son iguales entre políticas dentro de cada celda.")
+add("B=max(ρalta−1,0)·Tpulso expresa deuda fluida en horas equivalentes a capacidad; Γ=B/[(1−0,85)·20]. La clase normal/borde es ρalta≤1,00 (B=0); congestión operativa es ρalta>1 y Γ<1; congestión severa es Γ≥1. ρ=1,00 es saturación sin margen, no holgura; los periodos de carga habitual 0,85 son el control realmente subcapacidad. La clasificación es exógena al resultado de políticas. Estos índices son aproximaciones fluidas para el pool L1 y no resumen la elegibilidad, ruteo L2 ni deadlines por clase.")
+add("Se ejecutaron 20 semillas nuevas (261260000–261260019) en las 30 celdas. Se preasignaron 40 semillas adicionales nuevas (261270000–261270039) a las seis celdas con 0,67≤Γ≤1,33, definidas por proximidad a la frontera física Γ=1 y sin inspeccionar resultados de políticas: rho120_d12, rho120_d16, rho125_d12, rho125_d16, rho140_d08, rho160_d04. Hay 840 combinaciones semilla-perfil centrales únicas; el CSV de episodios tiene cortes H y H+D.")
+add("R/N terminal = suma de `competence×(1−0,35×difficulty)` en resoluciones puntuales, dividida por todas las admitidas. SLA es fracción puntual entre admitidas; calidad completada es el promedio de competencia ajustada entre completadas, incluidas las tardías. Los IC95 son t pareados por semilla, sin ajuste por 30 celdas ni selección; son exploratorios. No se tratan celdas como réplicas independientes. En el mapa, empate práctico significa todas las diferencias medias ≤0,005 R/N (umbral descriptivo); incertidumbre indica que el líder medio no queda separado de todos los rivales por IC pareado.")
+add();add("## Mapa principal: intensidad × duración")
+add("![Rendimiento medio líder y estado de incertidumbre](figures/soc_hls_final_policy_map.svg)")
+add("![Congestión fluida y Γ](figures/soc_hls_final_pressure_map.svg)")
+add(f"La media más alta fue D1 en {winners['D1']}/30 celdas, P1 en {winners['P1']}/30 y HLS-B en {winners['HLS-B']}/30. Esto no implica dominancia. Con el criterio de mapa, {classes.get('uncertain',0)} celdas son inciertas; los líderes separados exploratoriamente son D1={classes.get('D1',0)}, P1={classes.get('P1',0)}, HLS-B={classes.get('HLS-B',0)}; empate práctico={classes.get('practical_equivalence',0)}. Sin corrección de multiplicidad, no se elevan a validación confirmatoria.")
+add();add("### Resultados por celda")
+add("| Perfil | ρ alta | Pulso h | B | Γ | n | admitidas media/esperadas | pulso media/esperadas | D1 R/N | P1 R/N | HLS-B R/N | líder / estatus | HB−D1 [IC95] | HB−P1 [IC95] | D1−P1 [IC95] |")
+add("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---:|---:|---:|")
+for r in S:
+    add(f"| {r['profile']} | {f(r['rho_high'],2)} | {r['duration_h']} | {r['B']} | {r['Gamma']} | {r['n_seeds']} | {f(r['admitted_mean'],1)}/{f(r['expected_admitted'],1)} | {f(r['observed_pulse_arrivals_mean'],1)}/{f(r['expected_pulse_arrivals'],1)} | {f(r['D1_RN_mean'])} | {f(r['P1_RN_mean'])} | {f(r['HLS-B_RN_mean'])} | {r['mean_winner']} / {r['map_class']} | {f(r['HLS-B_minus_D1'])} [{f(r['HLS-B_minus_D1_ci_low'])}; {f(r['HLS-B_minus_D1_ci_high'])}] | {f(r['HLS-B_minus_P1'])} [{f(r['HLS-B_minus_P1_ci_low'])}; {f(r['HLS-B_minus_P1_ci_high'])}] | {f(r['D1_minus_P1'])} [{f(r['D1_minus_P1_ci_low'])}; {f(r['D1_minus_P1_ci_high'])}] |")
+add();add("### Estado de colas, calidad y recuperación")
+add("Cola y trabajo pendientes al final del pulso y en H son medias entre semillas bajo D1. El trabajo pendiente es una suma estimada de servicio nominal por clase para tareas L1/L2 incompletas (espera y servicio), no duración de trabajo observada. Recuperación significa que cola y trabajo estimado de ambos niveles vuelven a los valores de t=4 h durante tres horas consecutivas; `NR` es no recuperado antes de H+D. El SLA y la calidad modelada se muestran aparte. Backlog/trabajo HLS-B al retorno usa la observación horaria más cercana a la decisión de volver a D1, no un estado capturado exactamente en el instante de la decisión.")
+add("| Perfil | D1 SLA H | D1 calidad completadas H | Cola L1/L2 fin pulso | Trabajo L1/L2 h fin pulso | Cola L1/L2 H | Trabajo L1/L2 h H | recuperación D1/P1/HLS-B (h) | HLS-B P1 fracción pulso | activación D1→P1 (h) | retorno P1→D1 tras fin pulso (h) | backlog/trabajo al retorno |")
+add("|---|---:|---:|---:|---:|---:|---:|---|---:|---:|---:|---:|")
+for r in S:
+    def q(p,where):return f"{f(r[p+'_queue_l1_'+where],1)}/{f(r[p+'_queue_l2_'+where],1)}"
+    def w(p,where):return f"{f(r[p+'_work_l1_h_est_'+where],1)}/{f(r[p+'_work_l2_h_est_'+where],1)}"
+    rec=" / ".join(str(r[p+"_recovery_time_h_mean"]) for p in ("D1","P1","HLS-B"))
+    add(f"| {r['profile']} | {f(r['D1_SLA_at_H'],3)} | {f(r['D1_quality_completed_at_H'],3)} | {q('D1','at_pulse_end')} | {w('D1','at_pulse_end')} | {q('D1','at_H')} | {w('D1','at_H')} | {rec} | {f(r['HLSB_P1_pulse_fraction_mean'],2)} | {r['HLSB_first_D1_to_P1_delay_mean_h']} | {r['HLSB_first_P1_to_D1_after_pulse_delay_mean_h']} | {r['HLSB_backlog_at_return_mean']} / {r['HLSB_work_h_at_return_mean']} h |")
+add();add("| Perfil | D1 SLA / calidad H | P1 SLA / calidad H | HLS-B SLA / calidad H | R/N terminal D1/P1/HLS-B | pendiente terminal D1/P1/HLS-B |")
+add("|---|---:|---:|---:|---:|---:|")
+for r in S:
+    add(f"| {r['profile']} | {f(r['D1_SLA_at_H'],3)} / {f(r['D1_quality_completed_at_H'],3)} | {f(r['P1_SLA_at_H'],3)} / {f(r['P1_quality_completed_at_H'],3)} | {f(r['HLS-B_SLA_at_H'],3)} / {f(r['HLS-B_quality_completed_at_H'],3)} | {f(r['D1_RN_at_HD'])}/{f(r['P1_RN_at_HD'])}/{f(r['HLS-B_RN_at_HD'])} | {r['D1_pending_at_HD']}/{r['P1_pending_at_HD']}/{r['HLS-B_pending_at_HD']} |")
+add("Resultados detallados por cohorte, prioridad, hora y política están en `cohort_summary.csv`, `priority_summary.csv`, `timeseries.csv` y `modes.csv`.")
+add();add("## Sensibilidad a SLA")
+add("Se ejecutaron cinco SLA parametrizados, cada uno en tres celdas fijadas de antemano: presión moderada (ρ1,20/d8), alta (ρ1,40/d8) y severa (ρ1,60/d16). Se conservaron semillas y realizaciones de llegadas/clase/dificultad; cambian los deadlines. Las diferencias frente al baseline se calculan pareadas por semilla. El punto `reference` se mantiene separado y no se mezclan las 15 condiciones con el mapa principal.")
+add("![Panel de sensibilidad SLA](figures/soc_hls_final_sla_sensitivity.svg)")
+add("| Perfil | T0:f_alta:f_baja | Tpulso/Tcrit | D1 | P1 | HLS-B | HB−D1 [IC95] | HB−P1 [IC95] | cambio D1/P1/HB vs referencia |")
+add("|---|---|---:|---:|---:|---:|---:|---:|---:|")
+for r in Q:
+    if r["kind"]!="sla":continue
+    add(f"| {r['profile']} | {r['T0_h']}:{r['f_high']}:{r['f_low']} ({r['case']}) | {f(r['Tpulse_over_Tcrit'],2)} | {f(r['D1_RN'])} | {f(r['P1_RN'])} | {f(r['HLSB_RN'])} | {f(r['HLSB_minus_D1'])} [{f(r['HLSB_D1_CI_low'])};{f(r['HLSB_D1_CI_high'])}] | {f(r['HLSB_minus_P1'])} [{f(r['HLSB_P1_CI_low'])};{f(r['HLSB_P1_CI_high'])}] | {f(r['D1_delta_vs_baseline'])} / {f(r['P1_delta_vs_baseline'])} / {f(r['HLS-B_delta_vs_baseline'])} |")
+add("Los cambios de plazo alteran el mapa. En ρ1,40/d8, HB−D1 es −0,0022 para SLA de referencia, +0,0313 con escala 0,75 y +0,0457 con separación 1:2:8; se vuelve aproximadamente −0,0078 con escala 1,25 y separación 1:8:16. En ρ1,60/d16 HLS-B supera D1 en R/N en los cinco sets, pero P1 queda por encima de HLS-B en escala 1,25 y separación 1:8:16. Los SLA son hipótesis de resolución terminal y no compromisos contractuales GMV-CERT.")
+add();add("## Sensibilidad al dimensionamiento")
+add("Se mantienen fijas las llegadas absolutas y se recalculan cargas relativas por capacidad. Se comparan los cinco equipos ya definidos en rho1,25/d8 y rho1,60/d16. La demanda por pulso es fija a través de plantilla dentro del perfil.")
+add("![Panel de tamaño de equipo y R/N](figures/soc_hls_final_staffing_sensitivity.svg)")
+add("| Perfil | roster | μ L1 / μ L2 tareas/h | λ pulso/h | ρL1/ρL2 | D1 | P1 | HLS-B | HB−D1 [IC95] | cambio D1/HB vs 6×3 |")
+add("|---|---|---:|---:|---:|---:|---:|---:|---:|---:|")
+for r in Q:
+    if r["kind"]!="staff":continue
+    add(f"| {r['profile']} | {r['case']} ({r['n_l1']}×{r['n_l2']}) | {f(r['mu_l1_common_alerts_per_h'],2)}/{f(r['mu_l2_tasks_per_h'],2)} | {f(r['arrival_rate_high_absolute_per_h'],2)} | {f(r['rho_high_l1'],3)}/{f(r['rho_high_l2'],3)} | {f(r['D1_RN'])} | {f(r['P1_RN'])} | {f(r['HLSB_RN'])} | {f(r['HLSB_minus_D1'])} [{f(r['HLSB_D1_CI_low'])};{f(r['HLSB_D1_CI_high'])}] | {f(r['D1_delta_vs_baseline'])}/{f(r['HLS-B_delta_vs_baseline'])} |")
+add("Las colas de L1 son mucho mayores que las de L2 en perfiles congestionados; la carga L1 es el cuello dominante en estas celdas, aunque el ruteo y elegibilidad siguen condicionando el modelo. En d8, pasar 5→6 L1 eleva D1 R/N de 0,6029 a 0,6691; 6→7 L1 cambia 0,6691 a 0,6612 (la plantilla añade heterogeneidad y no es una escalera perfectamente monotónica). En rho1,60/d16, D1 pasa 0,2662→0,6319 y HLS-B 0,3147→0,6375 con 6→7 L1; variar L2 de 2 a 4 con L1=6 cambia los resultados poco. En este escenario aumentar L1 ofrece una mejora mucho mayor que cambiar política. No se calculan costes ni se recomiendan contrataciones.")
+add();add("## Interpretación, evidencia y límites")
+add("D1 retiene calidad modelada y lidera muchas condiciones de menor presión. P1 protege deadlines en congestión prolongada, con descenso de calidad. HLS-B mezcla los modos de forma causal y puede mejorar ambos fijos en algunas regiones severas, pero no domina y puede volver a D1 con cola residual. Colas, calidad y SLA se distinguen: vaciar cola no demuestra puntualidad.")
+add("La configuración confirmatoria previa HLS-B tuvo diferencia HLS-B−D1 +0,02820 [0,02526;0,03115] en su distribución sintética predefinida de cuatro escenarios y 100 semillas. Ese resultado no valida la cuadrícula ni se combina con estas simulaciones. Los hallazgos del mapa son exploratorios, no se aplicó ajuste confirmatorio y no se extrapolan a frecuencia de incidentes real.")
+add("Limitaciones externas: llegadas Poisson por tramos; tareas, escalado IA, competencia, servicio, deadlines, capacidad continua, elegibilidad y plantilla hipotéticos; sin turnos, ausencias, costes o L3 reales; métricas de calidad son esperanzas del modelo. No se infieren SLA contractuales ni estructura operativa GMV-CERT. Γ no representa exactamente colas heterogéneas. La duración cambia carga total y H, aunque la recuperación posterior se fija en 20 h y cada alerta dispone del mismo drenaje para completar sus deadlines.")
+add("**Conclusión:** los datos identifican zonas de liderazgo de D1, P1 y HLS-B, además de muchas zonas inciertas. HLS-B aporta mejora en perfiles concretos, no frente a ambas fijas en toda congestión. Cambios de SLA pueden cambiar el signo de la ventaja. Cuando L1 está sobrecargado de forma severa, aumentar capacidad L1 mejora la prestación en estos ejemplos mucho más que reordenar analistas. La decisión operativa real requiere parámetros de capacidad, SLA, turnos, elegibilidad y costes no disponibles en este modelo.")
+add();add("## Reproducción")
+add("Runner: [`run_soc_hls_final_operating_map.py`](run_soc_hls_final_operating_map.py); resumen/mapas: [`summarize_soc_hls_final_operating_map.py`](summarize_soc_hls_final_operating_map.py); parámetros: [`config/soc_hls_final_operating_map.json`](config/soc_hls_final_operating_map.json). Tablas: `scenario_summary.csv`, `paired_seed_results.csv`, `sla_staff_summary.csv`, `cohort_summary.csv`, `priority_summary.csv`, `validation_checks.json`. Registros brutos sintéticos: `results/soc_hls_final_operating_map/{main_initial,main_extension,sla_staff}/` con episodios, cortes, semillas, hashes, series, modos, cohortes, prioridades y metadata. No se publicaron trazas de SOCTRA.")
+(HERE/"SOC_HLS_FINAL_OPERATING_MAP.md").write_text("\n".join(L)+"\n",encoding="utf-8")
+print("wrote",HERE/"SOC_HLS_FINAL_OPERATING_MAP.md")

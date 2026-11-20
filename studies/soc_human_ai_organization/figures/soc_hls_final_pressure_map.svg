@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="520" viewBox="0 0 1040 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="35" y="34" font-family="sans-serif" font-size="20">Presión física: Γ exceso/recovery surplus</text>
+<text x="225.0" y="65" text-anchor="middle" font-family="sans-serif" font-size="14">2 h</text>
+<text x="375.0" y="65" text-anchor="middle" font-family="sans-serif" font-size="14">4 h</text>
+<text x="525.0" y="65" text-anchor="middle" font-family="sans-serif" font-size="14">8 h</text>
+<text x="675.0" y="65" text-anchor="middle" font-family="sans-serif" font-size="14">12 h</text>
+<text x="825.0" y="65" text-anchor="middle" font-family="sans-serif" font-size="14">16 h</text>
+<text x="132" y="121.0" text-anchor="end" font-family="sans-serif" font-size="14">ρ=1.00</text>
+<text x="132" y="189.0" text-anchor="end" font-family="sans-serif" font-size="14">ρ=1.10</text>
+<text x="132" y="257.0" text-anchor="end" font-family="sans-serif" font-size="14">ρ=1.20</text>
+<text x="132" y="325.0" text-anchor="end" font-family="sans-serif" font-size="14">ρ=1.25</text>
+<text x="132" y="393.0" text-anchor="end" font-family="sans-serif" font-size="14">ρ=1.40</text>
+<text x="132" y="461.0" text-anchor="end" font-family="sans-serif" font-size="14">ρ=1.60</text>
+<rect x="150" y="82" width="146" height="64" fill="#f4f4f4" stroke="#555"/>
+<text x="223.0" y="110" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.00</text>
+<text x="223.0" y="128" text-anchor="middle" font-family="sans-serif" font-size="14">B=0.000</text>
+<rect x="300" y="82" width="146" height="64" fill="#f4f4f4" stroke="#555"/>
+<text x="373.0" y="110" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.00</text>
+<text x="373.0" y="128" text-anchor="middle" font-family="sans-serif" font-size="14">B=0.000</text>
+<rect x="450" y="82" width="146" height="64" fill="#f4f4f4" stroke="#555"/>
+<text x="523.0" y="110" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.00</text>
+<text x="523.0" y="128" text-anchor="middle" font-family="sans-serif" font-size="14">B=0.000</text>
+<rect x="600" y="82" width="146" height="64" fill="#f4f4f4" stroke="#555"/>
+<text x="673.0" y="110" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.00</text>
+<text x="673.0" y="128" text-anchor="middle" font-family="sans-serif" font-size="14">B=0.000</text>
+<rect x="750" y="82" width="146" height="64" fill="#f4f4f4" stroke="#555"/>
+<text x="823.0" y="110" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.00</text>
+<text x="823.0" y="128" text-anchor="middle" font-family="sans-serif" font-size="14">B=0.000</text>
+<rect x="150" y="150" width="146" height="64" fill="#f0ba81" stroke="#555"/>
+<text x="223.0" y="178" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.07</text>
+<text x="223.0" y="196" text-anchor="middle" font-family="sans-serif" font-size="14">B=0.200</text>
+<rect x="300" y="150" width="146" height="64" fill="#f0ba81" stroke="#555"/>
+<text x="373.0" y="178" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.13</text>
+<text x="373.0" y="196" text-anchor="middle" font-family="sans-serif" font-size="14">B=0.400</text>
+<rect x="450" y="150" width="146" height="64" fill="#f0ba81" stroke="#555"/>
+<text x="523.0" y="178" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.27</text>
+<text x="523.0" y="196" text-anchor="middle" font-family="sans-serif" font-size="14">B=0.800</text>
+<rect x="600" y="150" width="146" height="64" fill="#f0ba81" stroke="#555"/>
+<text x="673.0" y="178" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.40</text>
+<text x="673.0" y="196" text-anchor="middle" font-family="sans-serif" font-size="14">B=1.200</text>
+<rect x="750" y="150" width="146" height="64" fill="#f0ba81" stroke="#555"/>
+<text x="823.0" y="178" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.53</text>
+<text x="823.0" y="196" text-anchor="middle" font-family="sans-serif" font-size="14">B=1.600</text>
+<rect x="150" y="218" width="146" height="64" fill="#f0ba81" stroke="#555"/>
+<text x="223.0" y="246" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.13</text>
+<text x="223.0" y="264" text-anchor="middle" font-family="sans-serif" font-size="14">B=0.400</text>
+<rect x="300" y="218" width="146" height="64" fill="#f0ba81" stroke="#555"/>
+<text x="373.0" y="246" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.27</text>
+<text x="373.0" y="264" text-anchor="middle" font-family="sans-serif" font-size="14">B=0.800</text>
+<rect x="450" y="218" width="146" height="64" fill="#f0ba81" stroke="#555"/>
+<text x="523.0" y="246" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.53</text>
+<text x="523.0" y="264" text-anchor="middle" font-family="sans-serif" font-size="14">B=1.600</text>
+<rect x="600" y="218" width="146" height="64" fill="#f0ba81" stroke="#555"/>
+<text x="673.0" y="246" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.80</text>
+<text x="673.0" y="264" text-anchor="middle" font-family="sans-serif" font-size="14">B=2.400</text>
+<rect x="750" y="218" width="146" height="64" fill="#d97c74" stroke="#555"/>
+<text x="823.0" y="246" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=1.07</text>
+<text x="823.0" y="264" text-anchor="middle" font-family="sans-serif" font-size="14">B=3.200</text>
+<rect x="150" y="286" width="146" height="64" fill="#f0ba81" stroke="#555"/>
+<text x="223.0" y="314" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.17</text>
+<text x="223.0" y="332" text-anchor="middle" font-family="sans-serif" font-size="14">B=0.500</text>
+<rect x="300" y="286" width="146" height="64" fill="#f0ba81" stroke="#555"/>
+<text x="373.0" y="314" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.33</text>
+<text x="373.0" y="332" text-anchor="middle" font-family="sans-serif" font-size="14">B=1.000</text>
+<rect x="450" y="286" width="146" height="64" fill="#f0ba81" stroke="#555"/>
+<text x="523.0" y="314" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.67</text>
+<text x="523.0" y="332" text-anchor="middle" font-family="sans-serif" font-size="14">B=2.000</text>
+<rect x="600" y="286" width="146" height="64" fill="#d97c74" stroke="#555"/>
+<text x="673.0" y="314" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=1.00</text>
+<text x="673.0" y="332" text-anchor="middle" font-family="sans-serif" font-size="14">B=3.000</text>
+<rect x="750" y="286" width="146" height="64" fill="#d97c74" stroke="#555"/>
+<text x="823.0" y="314" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=1.33</text>
+<text x="823.0" y="332" text-anchor="middle" font-family="sans-serif" font-size="14">B=4.000</text>
+<rect x="150" y="354" width="146" height="64" fill="#f0ba81" stroke="#555"/>
+<text x="223.0" y="382" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.27</text>
+<text x="223.0" y="400" text-anchor="middle" font-family="sans-serif" font-size="14">B=0.800</text>
+<rect x="300" y="354" width="146" height="64" fill="#f0ba81" stroke="#555"/>
+<text x="373.0" y="382" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.53</text>
+<text x="373.0" y="400" text-anchor="middle" font-family="sans-serif" font-size="14">B=1.600</text>
+<rect x="450" y="354" width="146" height="64" fill="#d97c74" stroke="#555"/>
+<text x="523.0" y="382" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=1.07</text>
+<text x="523.0" y="400" text-anchor="middle" font-family="sans-serif" font-size="14">B=3.200</text>
+<rect x="600" y="354" width="146" height="64" fill="#d97c74" stroke="#555"/>
+<text x="673.0" y="382" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=1.60</text>
+<text x="673.0" y="400" text-anchor="middle" font-family="sans-serif" font-size="14">B=4.800</text>
+<rect x="750" y="354" width="146" height="64" fill="#d97c74" stroke="#555"/>
+<text x="823.0" y="382" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=2.13</text>
+<text x="823.0" y="400" text-anchor="middle" font-family="sans-serif" font-size="14">B=6.400</text>
+<rect x="150" y="422" width="146" height="64" fill="#f0ba81" stroke="#555"/>
+<text x="223.0" y="450" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.40</text>
+<text x="223.0" y="468" text-anchor="middle" font-family="sans-serif" font-size="14">B=1.200</text>
+<rect x="300" y="422" width="146" height="64" fill="#f0ba81" stroke="#555"/>
+<text x="373.0" y="450" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=0.80</text>
+<text x="373.0" y="468" text-anchor="middle" font-family="sans-serif" font-size="14">B=2.400</text>
+<rect x="450" y="422" width="146" height="64" fill="#d97c74" stroke="#555"/>
+<text x="523.0" y="450" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=1.60</text>
+<text x="523.0" y="468" text-anchor="middle" font-family="sans-serif" font-size="14">B=4.800</text>
+<rect x="600" y="422" width="146" height="64" fill="#d97c74" stroke="#555"/>
+<text x="673.0" y="450" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=2.40</text>
+<text x="673.0" y="468" text-anchor="middle" font-family="sans-serif" font-size="14">B=7.200</text>
+<rect x="750" y="422" width="146" height="64" fill="#d97c74" stroke="#555"/>
+<text x="823.0" y="450" text-anchor="middle" font-family="sans-serif" font-size="14">Γ=3.20</text>
+<text x="823.0" y="468" text-anchor="middle" font-family="sans-serif" font-size="14">B=9.600</text>
+<text x="525.0" y="515" text-anchor="middle" font-family="sans-serif" font-size="14">Duración del pulso (h)</text>
+<text x="28" y="286" transform="rotate(-90 28 286)" text-anchor="middle" font-family="sans-serif" font-size="14">ρ alta relativa a capacidad fluida L1</text>
+<text x="40" y="500" font-family="sans-serif" font-size="12" fill="#555">B=max(ρ−1,0)·T; Γ=B/(0,15·20 h). Clasificación basada en demanda/capacidad y recuperación fijadas, antes de observar políticas.</text></svg>

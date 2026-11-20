@@ -31,9 +31,11 @@ B=(rho_high−1)T_high y Γ=B/[(1−rho_low)T_low], con T_low=24−4−T_high. B
 | nom_r125_d8 | 1.25 | 8 h | 12 h @ ρ=0.85 | 2.00 | 1.111 | 670.7 |
 | nom_r125_d12 | 1.25 | 12 h | 8 h @ ρ=0.85 | 3.00 | 2.500 | 716.1 |
 | nom_r125_d16 | 1.25 | 16 h | 4 h @ ρ=0.85 | 4.00 | 6.667 | 761.6 |
-| nom_r125_d8_fastrec | 1.25 | 8 h | 12 h @ ρ=0.70 | 2.00 | 0.556 | 670.7 |
+| nom_r125_d8_fastrec | 1.25 | 8 h | 12 h @ ρ=0.70 | 2.00 | 0.556 | 619.5 |
 
 Se incluyen tres pares aproximadamente B=0,8 y tres pares B=1,6 con amplitud/duración distintas; cinco duraciones con rho_high=1,25; y un control de recuperación postpulso a ρ=0,70. El control cambia capacidad de recuperación, no pulso. El horizonte fijo iguala tiempo potencial total, aunque duración cambia volumen de pulso y tiempo normal restante; esto se conserva explícito en cada perfil. Tasa base física es 0,85×capacidad fluida base; rho por definición respecto a roster base.
+
+**Corrección de auditoría:** una versión anterior listó 670,7 llegadas esperadas también para `nom_r125_d8_fastrec`. Ese valor aplicaba por error la carga de recuperación ρ=0,85. Configuración y runner confirman ρ=0,70 durante las 12 h posteriores al pulso. Con μL1=28,4185877 alertas/h, la esperanza es μL1×(4×0,85 + 8×1,25 + 12×0,70)=619,5; el CSV de episodios da 618,1 admitidas de media en las 20 semillas. Los restantes perfiles conservan sus tasas y expectativas.
 
 ## Dinámica física y mapas de resultados
 
