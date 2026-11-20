@@ -1,0 +1,219 @@
+{
+  "configuration": {
+    "study": "SOCTRA-HLS phase 2: classifier operating points and SOC operational impact",
+    "reference_pilot_commit": "df80a78e413c88f7cf22b807e8ee27f4e556a726",
+    "frozen_organization_reference_commit": "20cffed6b7a325cb44b7e73b7295ad946be46982",
+    "classifier_points_file": "classifier_points.json",
+    "simulation": {
+      "policies": [
+        "D1",
+        "P1",
+        "HLS-B"
+      ],
+      "hlsb": {
+        "window_h": 4.0,
+        "low": 1.05,
+        "high": 1.2
+      },
+      "l1_analysts": 6,
+      "l2_analyst_counts": [
+        2,
+        3,
+        4
+      ],
+      "rho_l1": [
+        0.85,
+        1.25
+      ],
+      "horizon_h": 24.0,
+      "drain_h": 36.0,
+      "deadlines_h_by_severity": {
+        "high": 1.0,
+        "medium": 4.0,
+        "low": 12.0
+      },
+      "seed_base": 272600000,
+      "n_seeds": 40,
+      "acceptance": "automatic recommendation acceptance; controlled assumption, not measured analyst behavior",
+      "within_class_error_assumption": "pD and pFA are exchangeable across synthetic project classes because individual predictions and class-stratified error rates are unavailable",
+      "capacity_design": "L2 roster size 2/3/4; demand lambda_L1 is held constant across L2 roster sizes for each label definition, prevalence, rho_L1 and seed. The frozen roster builder cycles its declared L2 competence/service profiles when n_L2 exceeds three; report this compositional caveat."
+    },
+    "prevalence_scenarios": {
+      "original_test_exact_audited": {
+        "label_definition": "original",
+        "pi": 0.002699840128036543,
+        "definition": "39/14449 exact test-partition prevalence from the audited SOCTRA data inventory; article Table 2 rounded IR=360.23 implies 40/14449, a one-alert discrepancy documented in the report"
+      },
+      "original_full_count_as_provided": {
+        "label_definition": "original",
+        "pi": 0.0033117804762655733,
+        "definition": "210/63410 supplied for the full historical evaluation population; used as a prevalence sensitivity, not the test partition prevalence"
+      },
+      "standardized_article_test_table2_inferred": {
+        "label_definition": "standardized",
+        "pi": 0.001314969894110319,
+        "definition": "19/14449 inferred exactly from article Table 2 test IR=759.47 (14,430 negatives, 19 positives); not replaced by original-label prevalence"
+      }
+    },
+    "simulation_selection": {
+      "original": [
+        "orig_rf_ac",
+        "orig_lr_ac",
+        "orig_bayesian_mlp_ac",
+        "orig_bayesian_mlp_a"
+      ],
+      "standardized": [
+        "std_lr_ac",
+        "std_bayesian_mlp_ac",
+        "std_lightgbm_ac",
+        "std_lightgbm_c",
+        "std_rf_ac"
+      ],
+      "rule": "Include every pD/pFA Pareto-frontier point from the relevant published label group, plus one dominated high-false-alarm/detection-comparable control: Bayesian MLP A for original labels and RF A+C for standardized labels. The frontier is fixed from the article tables before simulation."
+    },
+    "bayes_benefit_sensitivity": {
+      "symmetric": {
+        "c_FA": 1.0,
+        "c_M": 1.0
+      },
+      "asymmetric_miss_cost_threefold": {
+        "c_FA": 1.0,
+        "c_M": 3.0
+      },
+      "note": "Compute normalized Bayes benefit from published pD/pFA as a cost-sensitivity view only. The published tables do not provide distinct model operating points by these cost ratios; do not call derived values separate trained/evaluated classifiers."
+    },
+    "statistical": {
+      "paired_seed_unit": "one seed trace within a fixed label definition, prevalence, rho_L1 and classifier point; the same trace/recommendation uniforms are shared across policies and classifier points; L2 capacity changes are paired on that same trace",
+      "interval": "two-sided 95% paired Student-t interval, df=39, exploratory, unadjusted unless stated",
+      "multiple_comparisons": "No familywise correction for the full point matrix; operational Pareto results are descriptive."
+    }
+  },
+  "source": {
+    "citation": "Lazaro et al., AI-Driven Alert Triage in Security Operations Centers, AIAI 2026, Table 3 (original labels), Table 5 (standardized labels A/A+C), Table 7 (standardized labels C-only), DOI 10.1007/978-3-032-30805-4_11",
+    "url": "https://doi.org/10.1007/978-3-032-30805-4_11",
+    "note": "Published operating points; no individual chronological-test predictions are used. BNB values for symmetric and cM=3*cFA are derived from published pD/pFA; the tables do not report separate cost-stratified operating points."
+  },
+  "selected_classifier_ids": {
+    "original": [
+      "orig_bayesian_mlp_a",
+      "orig_bayesian_mlp_ac",
+      "orig_lr_ac",
+      "orig_rf_ac"
+    ],
+    "standardized": [
+      "std_bayesian_mlp_ac",
+      "std_lightgbm_ac",
+      "std_lightgbm_c",
+      "std_lr_ac",
+      "std_rf_ac"
+    ],
+    "rule": [
+      " ",
+      "+",
+      ",",
+      "-",
+      ".",
+      "/",
+      ":",
+      "A",
+      "B",
+      "C",
+      "D",
+      "F",
+      "I",
+      "L",
+      "M",
+      "P",
+      "R",
+      "T",
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h",
+      "i",
+      "l",
+      "m",
+      "n",
+      "o",
+      "p",
+      "r",
+      "s",
+      "t",
+      "u",
+      "v",
+      "x",
+      "y",
+      "z"
+    ]
+  },
+  "source_commit": "df80a78e413c88f7cf22b807e8ee27f4e556a726",
+  "generated_episode_rows": 9360,
+  "generated_triage_rows": 1040,
+  "seed_ids": [
+    272600000,
+    272600001,
+    272600002,
+    272600003,
+    272600004,
+    272600005,
+    272600006,
+    272600007,
+    272600008,
+    272600009,
+    272600010,
+    272600011,
+    272600012,
+    272600013,
+    272600014,
+    272600015,
+    272600016,
+    272600017,
+    272600018,
+    272600019,
+    272600020,
+    272600021,
+    272600022,
+    272600023,
+    272600024,
+    272600025,
+    272600026,
+    272600027,
+    272600028,
+    272600029,
+    272600030,
+    272600031,
+    272600032,
+    272600033,
+    272600034,
+    272600035,
+    272600036,
+    272600037,
+    272600038,
+    272600039
+  ],
+  "checks": {
+    "published_operating_points": 25,
+    "original_points": 10,
+    "standardized_points": 15,
+    "selected_original_points": 4,
+    "selected_standardized_points": 5,
+    "expected_conditions": 78,
+    "expected_episode_rows": 9360,
+    "actual_episode_rows": 9360,
+    "actual_triage_rows": 1040,
+    "paired_policy_cells": 3120,
+    "same_exogenous_trace_across_classifier_points": true,
+    "same_trace_and_denominator_across_policies": true,
+    "same_confusion_counts_across_policies": true,
+    "no_policy_receives_hidden_need": true,
+    "false_negative_credit_gated_by_integrated_metric": true,
+    "all_deadlines_mature_before_terminal_cutoff": true,
+    "published_BA_recomputed_within_rounding": true,
+    "unique_exogenous_trace_seeds": 240,
+    "n_seeds": 40
+  }
+}

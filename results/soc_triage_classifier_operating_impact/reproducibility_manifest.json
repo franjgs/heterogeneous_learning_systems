@@ -1,0 +1,46 @@
+{
+  "study": "SOCTRA-HLS classifier operational impact phase 2",
+  "pilot_reference_commit": "df80a78e413c88f7cf22b807e8ee27f4e556a726",
+  "repository_head_at_manifest_generation": "df80a78e413c88f7cf22b807e8ee27f4e556a726",
+  "python": "3.11.9",
+  "platform": "macOS-27.2.1-arm64-arm-64bit",
+  "input_code_and_configuration_sha256": {
+    "studies/soc_triage_classifier_operating_impact/config/phase2.json": "ada4e02d15749719f0cb28c8648255adefd3e88d4a18a0546aa3e3b7e05b8e7c",
+    "studies/soc_triage_classifier_operating_impact/config/classifier_points.json": "fdf3a59115f4b428417d706855760aaebaaff5064107fe75bd1f05bf8548712f",
+    "studies/soc_triage_classifier_operating_impact/run_phase2.py": "5c1bfa95819cd05a517ddcff77e66ed60be71039c59a52f20cff21a1ac14cac5",
+    "studies/soc_triage_classifier_operating_impact/summarize_phase2.py": "c42ab78a9c64ebe674503127a48bcbeb37efed87f1be4d02376cdffe05c61c53",
+    "studies/soc_triage_classifier_operating_impact/test_phase2.py": "ae21adfa3cdc39dee8fe39736af5f02e82fa936052e972fa7fd658f37b05e89d",
+    "src/hls/ia_l1_l2_simulation.py": "2bc195b5c8d9477460897a5111b8f179bb31820427c16793ef18457595d6dea8",
+    "src/hls/rq1_l1_l2.py": "4748c0bed6c711cddfc5fd81f433cccfb46a5ffe3545d29107d3dde350380302",
+    "src/hls/rq1_allocation.py": "ea7deb9d6d73ad383fe1f9f258ec42006c11fad9228a1dc2af915f249c4ee337",
+    "studies/soc_human_ai_organization/soc_parametric_baseline.py": "619029dd7667eef69ae896f845ebd4da6c19c61f906f5b077610174204ff7232",
+    "studies/soc_triage_organization_coupling/run_pilot.py": "bf7c9b9a91987de75eab1150b4b4283f0bde1a57c11bff0f2fa3c31ac160f9d3"
+  },
+  "output_sha256": {
+    "all_published_operating_points.csv": "423effb8434366386d290b33e16e07f36319e99892e86183b534e2970ab1a0fc",
+    "analytic_l2_frontiers.csv": "2ffc2a5e95634617d81825f302a27b0e3f2dc0e58a792ededd647b6d8c3f37d1",
+    "analytic_load_by_false_alarm.png": "34976c35cb8eaef5707fbe5a7c053a4d7d31582774960af4c52aad72df806033",
+    "analytic_load_by_point.csv": "0703f72a753abecf488c9267f65302fb6e529507c376ba409dae5915f6edddda",
+    "classifier_organization_interactions.csv": "49d530e2b52fe6711e7b5af08abad0bd40dde1e1b17c10e4bd471bed259d6d7b",
+    "episodes.csv": "1df125d0c909b0c78b3ba0dce693b0d5362df67635c6dfec4b50622b225c0cbc",
+    "metadata.json": "7c3368e7846fccfecffd8e99e5cdf0723577d6d1ba96f4e027f3437ade3e3ab8",
+    "operational_outcome_vs_false_alarm.png": "90f3a33bc542a164c7d448f751c7e203390fc208583418aae2e3dd2cec5d9ece",
+    "operational_pareto_descriptive.csv": "656ab625d2ef38873da2c26027fc12a77415b03aaacdfc448143b3b9074e85b4",
+    "operational_tradeoff_reference_roster.png": "24a24d992ef2056d961b1be2b71be8a48ad40cc1d2d6ab76a3a74091362f8bdf",
+    "paired_classifier_contrasts.csv": "fef93c913bfc982b1df821a3c7121ade605db1117f01da239672b74581549979",
+    "paired_policy_contrasts.csv": "36bf377de21dabfa95f1b11c8c456158997ee3f2f651286094e5b4c016ffd862",
+    "paired_policy_effects.png": "5d3a182de3cb5134624019a944b265135caa68f1e32469017cecb7e04240be90",
+    "statistical_pareto.csv": "496e7fe1952fa787bee4b279dbe5e7906bea76ff8014edb367782d9e3f635b52",
+    "summary_by_condition.csv": "e2cd5e666bbf2c66390244ffd7195903956e2ee07b46d41f4328bdd2f44ab8bf",
+    "triage_by_seed.csv": "ef825a8029314e815ffec1423fe3dbfdc585aa2bd3a5e016b8cadcbbdf307ab3",
+    "triage_confusion_pooled.csv": "e00a25c1061e730c2f47514a5fdbb91343d0fb4e1727911f7ae4e246d7660bd7",
+    "validation_checks.json": "4c77dcc3f129f8b026addb942792e85d860ef42bacc201bc3ed7d1514dd2c2f0",
+    "waps_switches.csv": "c765dc722c1ed924779b4239f4ea8372eee865d9168c5d27867bf62f12614c9c"
+  },
+  "workspace_status_at_manifest_generation": [
+    " M src/hls/rq1_allocation.py",
+    " M src/hls/rq1_l1_l2.py",
+    "?? studies/soc_triage_classifier_operating_impact/"
+  ],
+  "note": "Workspace status is recorded for provenance; unrelated pre-existing engine edits are not staged by this study. Compare source hashes when reproducing."
+}

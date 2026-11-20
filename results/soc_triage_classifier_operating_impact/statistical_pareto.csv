@@ -1,0 +1,26 @@
+id,label_definition,table,algorithm,features,pD,pFA,BA_published,dominated,frontier_rule
+orig_lr_a,original,3,LR,A,0.825,0.3402,0.7424,True,maximize pD and minimize pFA within label definition only
+orig_rf_a,original,3,RF,A,0.75,0.2714,0.7393,True,maximize pD and minimize pFA within label definition only
+orig_xgboost_a,original,3,XGBoost,A,0.6,0.243,0.6785,True,maximize pD and minimize pFA within label definition only
+orig_lightgbm_a,original,3,LightGBM,A,0.75,0.3516,0.6992,True,maximize pD and minimize pFA within label definition only
+orig_bayesian_mlp_a,original,3,Bayesian MLP,A,0.8,0.2301,0.7849,True,maximize pD and minimize pFA within label definition only
+orig_lr_ac,original,3,LR,A+C,0.8,0.205,0.7975,False,maximize pD and minimize pFA within label definition only
+orig_rf_ac,original,3,RF,A+C,0.75,0.1618,0.7941,False,maximize pD and minimize pFA within label definition only
+orig_xgboost_ac,original,3,XGBoost,A+C,0.725,0.2074,0.7588,True,maximize pD and minimize pFA within label definition only
+orig_lightgbm_ac,original,3,LightGBM,A+C,0.75,0.1664,0.7918,True,maximize pD and minimize pFA within label definition only
+orig_bayesian_mlp_ac,original,3,Bayesian MLP,A+C,0.85,0.2056,0.8222,False,maximize pD and minimize pFA within label definition only
+std_lr_a,standardized,5,LR,A,0.6842,0.0082,0.838,True,maximize pD and minimize pFA within label definition only
+std_rf_a,standardized,5,RF,A,0.8421,0.1231,0.8595,True,maximize pD and minimize pFA within label definition only
+std_xgboost_a,standardized,5,XGBoost,A,0.6842,0.0124,0.8359,True,maximize pD and minimize pFA within label definition only
+std_lightgbm_a,standardized,5,LightGBM,A,0.7895,0.0608,0.8643,True,maximize pD and minimize pFA within label definition only
+std_bayesian_mlp_a,standardized,5,Bayesian MLP,A,0.6842,0.0177,0.8332,True,maximize pD and minimize pFA within label definition only
+std_lr_ac,standardized,5,LR,A+C,0.6842,0.0081,0.8381,False,maximize pD and minimize pFA within label definition only
+std_rf_ac,standardized,5,RF,A+C,0.8421,0.1491,0.8465,True,maximize pD and minimize pFA within label definition only
+std_xgboost_ac,standardized,5,XGBoost,A+C,0.6842,0.0136,0.8353,True,maximize pD and minimize pFA within label definition only
+std_lightgbm_ac,standardized,5,LightGBM,A+C,0.8421,0.045,0.8986,False,maximize pD and minimize pFA within label definition only
+std_bayesian_mlp_ac,standardized,5,Bayesian MLP,A+C,0.7042,0.0154,0.8444,False,maximize pD and minimize pFA within label definition only
+std_lr_c,standardized,7,LR,C,0.7895,0.3294,0.73,True,maximize pD and minimize pFA within label definition only
+std_rf_c,standardized,7,RF,C,0.8421,0.3545,0.7438,True,maximize pD and minimize pFA within label definition only
+std_xgboost_c,standardized,7,XGBoost,C,0.8421,0.3421,0.75,True,maximize pD and minimize pFA within label definition only
+std_lightgbm_c,standardized,7,LightGBM,C,0.8947,0.4051,0.7448,False,maximize pD and minimize pFA within label definition only
+std_bayesian_mlp_c,standardized,7,Bayesian MLP,C,0.8421,0.3793,0.7314,True,maximize pD and minimize pFA within label definition only

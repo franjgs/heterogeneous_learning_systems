@@ -1,0 +1,28 @@
+{
+  "published_operating_points": 25,
+  "original_points": 10,
+  "standardized_points": 15,
+  "selected_original_points": 4,
+  "selected_standardized_points": 5,
+  "expected_conditions": 78,
+  "expected_episode_rows": 9360,
+  "actual_episode_rows": 9360,
+  "actual_triage_rows": 1040,
+  "paired_policy_cells": 3120,
+  "same_exogenous_trace_across_classifier_points": true,
+  "same_trace_and_denominator_across_policies": true,
+  "same_confusion_counts_across_policies": true,
+  "no_policy_receives_hidden_need": true,
+  "false_negative_credit_gated_by_integrated_metric": true,
+  "all_deadlines_mature_before_terminal_cutoff": true,
+  "published_BA_recomputed_within_rounding": true,
+  "unique_exogenous_trace_seeds": 240,
+  "n_seeds": 40,
+  "postprocess_conservation_checks": {
+    "admitted_equals_trace_alert_count": true,
+    "TP_FP_FN_TN_sum_equals_admitted": true,
+    "TP_plus_FN_equals_synthetic_need_count": true,
+    "L2_assignments_not_greater_than_L1_assignments": true,
+    "deadlines_mature_before_terminal_cutoff": true
+  }
+}

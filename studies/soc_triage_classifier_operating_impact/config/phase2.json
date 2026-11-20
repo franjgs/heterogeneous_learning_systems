@@ -1,0 +1,53 @@
+{
+  "study": "SOCTRA-HLS phase 2: classifier operating points and SOC operational impact",
+  "reference_pilot_commit": "df80a78e413c88f7cf22b807e8ee27f4e556a726",
+  "frozen_organization_reference_commit": "20cffed6b7a325cb44b7e73b7295ad946be46982",
+  "classifier_points_file": "classifier_points.json",
+  "simulation": {
+    "policies": ["D1", "P1", "HLS-B"],
+    "hlsb": {"window_h": 4.0, "low": 1.05, "high": 1.2},
+    "l1_analysts": 6,
+    "l2_analyst_counts": [2, 3, 4],
+    "rho_l1": [0.85, 1.25],
+    "horizon_h": 24.0,
+    "drain_h": 36.0,
+    "deadlines_h_by_severity": {"high": 1.0, "medium": 4.0, "low": 12.0},
+    "seed_base": 272600000,
+    "n_seeds": 40,
+    "acceptance": "automatic recommendation acceptance; controlled assumption, not measured analyst behavior",
+    "within_class_error_assumption": "pD and pFA are exchangeable across synthetic project classes because individual predictions and class-stratified error rates are unavailable",
+    "capacity_design": "L2 roster size 2/3/4; demand lambda_L1 is held constant across L2 roster sizes for each label definition, prevalence, rho_L1 and seed. The frozen roster builder cycles its declared L2 competence/service profiles when n_L2 exceeds three; report this compositional caveat."
+  },
+  "prevalence_scenarios": {
+    "original_test_exact_audited": {
+      "label_definition": "original",
+      "pi": 0.002699840128036543,
+      "definition": "39/14449 exact test-partition prevalence from the audited SOCTRA data inventory; article Table 2 rounded IR=360.23 implies 40/14449, a one-alert discrepancy documented in the report"
+    },
+    "original_full_count_as_provided": {
+      "label_definition": "original",
+      "pi": 0.0033117804762655733,
+      "definition": "210/63410 supplied for the full historical evaluation population; used as a prevalence sensitivity, not the test partition prevalence"
+    },
+    "standardized_article_test_table2_inferred": {
+      "label_definition": "standardized",
+      "pi": 0.001314969894110319,
+      "definition": "19/14449 inferred exactly from article Table 2 test IR=759.47 (14,430 negatives, 19 positives); not replaced by original-label prevalence"
+    }
+  },
+  "simulation_selection": {
+    "original": ["orig_rf_ac", "orig_lr_ac", "orig_bayesian_mlp_ac", "orig_bayesian_mlp_a"],
+    "standardized": ["std_lr_ac", "std_bayesian_mlp_ac", "std_lightgbm_ac", "std_lightgbm_c", "std_rf_ac"],
+    "rule": "Include every pD/pFA Pareto-frontier point from the relevant published label group, plus one dominated high-false-alarm/detection-comparable control: Bayesian MLP A for original labels and RF A+C for standardized labels. The frontier is fixed from the article tables before simulation."
+  },
+  "bayes_benefit_sensitivity": {
+    "symmetric": {"c_FA": 1.0, "c_M": 1.0},
+    "asymmetric_miss_cost_threefold": {"c_FA": 1.0, "c_M": 3.0},
+    "note": "Compute normalized Bayes benefit from published pD/pFA as a cost-sensitivity view only. The published tables do not provide distinct model operating points by these cost ratios; do not call derived values separate trained/evaluated classifiers."
+  },
+  "statistical": {
+    "paired_seed_unit": "one seed trace within a fixed label definition, prevalence, rho_L1 and classifier point; the same trace/recommendation uniforms are shared across policies and classifier points; L2 capacity changes are paired on that same trace",
+    "interval": "two-sided 95% paired Student-t interval, df=39, exploratory, unadjusted unless stated",
+    "multiple_comparisons": "No familywise correction for the full point matrix; operational Pareto results are descriptive."
+  }
+}

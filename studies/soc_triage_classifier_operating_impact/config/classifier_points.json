@@ -1,0 +1,36 @@
+{
+  "source": {
+    "citation": "Lazaro et al., AI-Driven Alert Triage in Security Operations Centers, AIAI 2026, Table 3 (original labels), Table 5 (standardized labels A/A+C), Table 7 (standardized labels C-only), DOI 10.1007/978-3-032-30805-4_11",
+    "url": "https://doi.org/10.1007/978-3-032-30805-4_11",
+    "note": "Published operating points; no individual chronological-test predictions are used. BNB values for symmetric and cM=3*cFA are derived from published pD/pFA; the tables do not report separate cost-stratified operating points."
+  },
+  "points": [
+    {"id":"orig_lr_a","label_definition":"original","table":"3","algorithm":"LR","features":"A","pD":0.8250,"pFA":0.3402,"BA_published":0.7424},
+    {"id":"orig_rf_a","label_definition":"original","table":"3","algorithm":"RF","features":"A","pD":0.7500,"pFA":0.2714,"BA_published":0.7393},
+    {"id":"orig_xgboost_a","label_definition":"original","table":"3","algorithm":"XGBoost","features":"A","pD":0.6000,"pFA":0.2430,"BA_published":0.6785},
+    {"id":"orig_lightgbm_a","label_definition":"original","table":"3","algorithm":"LightGBM","features":"A","pD":0.7500,"pFA":0.3516,"BA_published":0.6992},
+    {"id":"orig_bayesian_mlp_a","label_definition":"original","table":"3","algorithm":"Bayesian MLP","features":"A","pD":0.8000,"pFA":0.2301,"BA_published":0.7849},
+    {"id":"orig_lr_ac","label_definition":"original","table":"3","algorithm":"LR","features":"A+C","pD":0.8000,"pFA":0.2050,"BA_published":0.7975},
+    {"id":"orig_rf_ac","label_definition":"original","table":"3","algorithm":"RF","features":"A+C","pD":0.7500,"pFA":0.1618,"BA_published":0.7941},
+    {"id":"orig_xgboost_ac","label_definition":"original","table":"3","algorithm":"XGBoost","features":"A+C","pD":0.7250,"pFA":0.2074,"BA_published":0.7588},
+    {"id":"orig_lightgbm_ac","label_definition":"original","table":"3","algorithm":"LightGBM","features":"A+C","pD":0.7500,"pFA":0.1664,"BA_published":0.7918},
+    {"id":"orig_bayesian_mlp_ac","label_definition":"original","table":"3","algorithm":"Bayesian MLP","features":"A+C","pD":0.8500,"pFA":0.2056,"BA_published":0.8222},
+
+    {"id":"std_lr_a","label_definition":"standardized","table":"5","algorithm":"LR","features":"A","pD":0.6842,"pFA":0.0082,"BA_published":0.8380},
+    {"id":"std_rf_a","label_definition":"standardized","table":"5","algorithm":"RF","features":"A","pD":0.8421,"pFA":0.1231,"BA_published":0.8595},
+    {"id":"std_xgboost_a","label_definition":"standardized","table":"5","algorithm":"XGBoost","features":"A","pD":0.6842,"pFA":0.0124,"BA_published":0.8359},
+    {"id":"std_lightgbm_a","label_definition":"standardized","table":"5","algorithm":"LightGBM","features":"A","pD":0.7895,"pFA":0.0608,"BA_published":0.8643},
+    {"id":"std_bayesian_mlp_a","label_definition":"standardized","table":"5","algorithm":"Bayesian MLP","features":"A","pD":0.6842,"pFA":0.0177,"BA_published":0.8332},
+    {"id":"std_lr_ac","label_definition":"standardized","table":"5","algorithm":"LR","features":"A+C","pD":0.6842,"pFA":0.0081,"BA_published":0.8381},
+    {"id":"std_rf_ac","label_definition":"standardized","table":"5","algorithm":"RF","features":"A+C","pD":0.8421,"pFA":0.1491,"BA_published":0.8465},
+    {"id":"std_xgboost_ac","label_definition":"standardized","table":"5","algorithm":"XGBoost","features":"A+C","pD":0.6842,"pFA":0.0136,"BA_published":0.8353},
+    {"id":"std_lightgbm_ac","label_definition":"standardized","table":"5","algorithm":"LightGBM","features":"A+C","pD":0.8421,"pFA":0.0450,"BA_published":0.8986},
+    {"id":"std_bayesian_mlp_ac","label_definition":"standardized","table":"5","algorithm":"Bayesian MLP","features":"A+C","pD":0.7042,"pFA":0.0154,"BA_published":0.8444},
+
+    {"id":"std_lr_c","label_definition":"standardized","table":"7","algorithm":"LR","features":"C","pD":0.7895,"pFA":0.3294,"BA_published":0.7300},
+    {"id":"std_rf_c","label_definition":"standardized","table":"7","algorithm":"RF","features":"C","pD":0.8421,"pFA":0.3545,"BA_published":0.7438},
+    {"id":"std_xgboost_c","label_definition":"standardized","table":"7","algorithm":"XGBoost","features":"C","pD":0.8421,"pFA":0.3421,"BA_published":0.7500},
+    {"id":"std_lightgbm_c","label_definition":"standardized","table":"7","algorithm":"LightGBM","features":"C","pD":0.8947,"pFA":0.4051,"BA_published":0.7448},
+    {"id":"std_bayesian_mlp_c","label_definition":"standardized","table":"7","algorithm":"Bayesian MLP","features":"C","pD":0.8421,"pFA":0.3793,"BA_published":0.7314}
+  ]
+}
