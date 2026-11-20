@@ -1,0 +1,70 @@
+{
+  "purpose": "Exploratory A1 scenario sizing only; not the confirmatory campaign.",
+  "model": {
+    "time_unit": "hour",
+    "admission_horizon_h": 24.0,
+    "candidate_drain_h": 24.0,
+    "operational_deadlines_h": {
+      "low": 12.0,
+      "medium": 4.0,
+      "high": 1.0
+    },
+    "l1_analysts": 6,
+    "l2_analysts": 3,
+    "l1_base_service_h": {
+      "portfolio_top5": 0.20,
+      "portfolio_next5": 0.25,
+      "portfolio_tail": 0.30
+    },
+    "l2_base_service_h": {
+      "portfolio_top5": 0.75,
+      "portfolio_next5": 0.90,
+      "portfolio_tail": 1.00
+    },
+    "class_mix": {
+      "portfolio_top5": 0.592,
+      "portfolio_next5": 0.236,
+      "portfolio_tail": 0.172
+    },
+    "priority_mix_assumed": {
+      "low": 0.50,
+      "medium": 0.35,
+      "high": 0.15
+    },
+    "escalation_need_by_class_assumed": {
+      "portfolio_top5": 0.03,
+      "portfolio_next5": 0.05,
+      "portfolio_tail": 0.08
+    },
+    "ai_operating_point_assumed": {
+      "sensitivity": 0.90,
+      "false_positive_rate": 0.01
+    },
+    "eligibility_level_reference": 2.5,
+    "difficulty_beta_assumed": [2.0, 2.0]
+  },
+  "capacity_load_multipliers": [0.35, 0.65, 0.85, 1.0, 1.25],
+  "deadline_multipliers": [2.0, 1.0, 0.5, 0.25, 0.1],
+  "coordination_latency_h": [0.0, 0.05, 0.15],
+  "coordination_edge_cost_units": [0.0, 1.0],
+  "drain_sweep_h": [8.0, 16.0, 24.0, 36.0],
+  "core_paired_seeds": {
+    "base": 261119000,
+    "count": 20
+  },
+  "mechanism_paired_seeds": {
+    "base": 261129000,
+    "count": 8
+  },
+  "policies": ["D1", "P1", "P2", "P3", "P4", "P5"],
+  "coordination_latency_for_noncoordinating_policies_h": 0.0,
+  "burst_control": {
+    "duration_h": 2.0,
+    "rate_multiplier": 3.0,
+    "expected_total_arrivals_held_constant": true
+  },
+  "l2_stress_escalation_multiplier": 4.0,
+  "drain_check_policies": ["D1", "P4"],
+  "drain_check_seeds": 8,
+  "output_dir": "results/soc_a1_calibration"
+}

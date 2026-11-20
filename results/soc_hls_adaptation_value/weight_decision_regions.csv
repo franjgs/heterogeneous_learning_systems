@@ -1,0 +1,9 @@
+focus_family,weight_interval_start,weight_interval_end,expected_return_winner,V_adapt_sign_change_roots
+brief,0.0,0.527322503115,HLS-B,0.5273225
+brief,0.527322503115,1.0,D1,0.5273225
+moderate,0.0,0.319255146919,HLS-B,0.31925515
+moderate,0.319255146919,1.0,D1,0.31925515
+prolonged,0.0,0.220813843237,D1,0.22081384
+prolonged,0.220813843237,1.0,HLS-B,0.22081384
+fast_recovery,0.0,0.133576011805,HLS-B,0.13357601
+fast_recovery,0.133576011805,1.0,D1,0.13357601

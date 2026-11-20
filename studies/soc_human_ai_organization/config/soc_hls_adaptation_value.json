@@ -1,0 +1,41 @@
+{
+  "source_commit": "bec423a54588de2e5157265f810f3617d1994b4d",
+  "source_episode_file": "results/soc_hls_operating_regions/episodes.csv",
+  "source_sensitivity_file": "results/soc_hls_operating_sensitivity/episodes.csv",
+  "terminal_cutoff_h": 48.0,
+  "policies": ["D1", "P1", "HLS-B"],
+  "seeds_expected": 20,
+  "scenario_groups": {
+    "brief": [
+      "B08_rho120_d4",
+      "B08_rho140_d2",
+      "B16_rho140_d4",
+      "nom_r125_d2",
+      "nom_r125_d4"
+    ],
+    "moderate": [
+      "B08_rho110_d8",
+      "B16_rho120_d8",
+      "nom_r125_d8"
+    ],
+    "prolonged": [
+      "B16_rho110_d16",
+      "nom_r125_d12",
+      "nom_r125_d16"
+    ],
+    "fast_recovery": ["nom_r125_d8_fastrec"]
+  },
+  "weight_families": {
+    "method": "Vary one family mass p in [0,1]; divide 1-p among the other families in proportion to their scenario counts in the central design; divide each family mass equally among its members.",
+    "grid_step": 0.01,
+    "uniform_reference": "Equal weight per one of the 12 scenario rows; group masses therefore brief=5/12, moderate=3/12, prolonged=3/12, fast_recovery=1/12. This is a mathematical reference, not an operational probability."
+  },
+  "bootstrap": {
+    "method": "paired_seed_cluster_percentile",
+    "replicates": 10000,
+    "random_seed": 20261120,
+    "resampling_unit": "seed ID; all 12 scenarios and 3 policies for each sampled seed stay together",
+    "confidence_level": 0.95
+  },
+  "output_dir": "results/soc_hls_adaptation_value"
+}

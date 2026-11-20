@@ -1,0 +1,64 @@
+{
+  "description": "Published aggregate evidence only; full episode traces remain local and regenerable.",
+  "copied_sources": {
+    "results/soc_a0_weaknesses/summary.json": {
+      "published_path": "studies/soc_human_ai_organization/evidence/soc_a0_weaknesses_summary.json",
+      "source_sha256": "3ff8d237960e611eccf8d551a9f8bf8a3ed19bee0cb49db60ffb90c6d15aa93b",
+      "published_sha256": "3ff8d237960e611eccf8d551a9f8bf8a3ed19bee0cb49db60ffb90c6d15aa93b"
+    },
+    "results/soc_confirmatory_d1_p1/test_results.json": {
+      "published_path": "studies/soc_human_ai_organization/evidence/soc_confirmatory_test_results.json",
+      "source_sha256": "70640693685767025f02f406f105e9af407a9f5e9827fdb24fc600176dfb680c",
+      "published_sha256": "70640693685767025f02f406f105e9af407a9f5e9827fdb24fc600176dfb680c"
+    },
+    "results/soc_hlsb_validation/statistics.json": {
+      "published_path": "studies/soc_human_ai_organization/evidence/soc_hlsb_validation_statistics.json",
+      "source_sha256": "c17255f863e66057dbf93ce5de838111b951c3b03569263319ee64162b007d22",
+      "published_sha256": "c17255f863e66057dbf93ce5de838111b951c3b03569263319ee64162b007d22"
+    },
+    "results/soc_confirmatory_d1_p1/rn_by_load.svg": {
+      "published_path": "studies/soc_human_ai_organization/figures/soc_confirmatory_rn_by_load.svg",
+      "source_sha256": "b4a02327e29a259e1ed3d51208984a7d84abd3701efaae81005a1d2759726873",
+      "published_sha256": "2d75e31711a34b08e4587813fb9757bdc181ea00357d685b4155938ffa41610e"
+    },
+    "results/soc_confirmatory_d1_p1/paired_effect_by_load.svg": {
+      "published_path": "studies/soc_human_ai_organization/figures/soc_confirmatory_paired_effect.svg",
+      "source_sha256": "151e6f7ca26943146774cabfebfbbda119d81f127c3b8c719e45caf81401f798",
+      "published_sha256": "765d63824aff7c783a4fd0830c30d3c2e02dbbee12caddcbb017812fe436578a"
+    },
+    "results/soc_confirmatory_d1_p1/sla_quality_tradeoff.svg": {
+      "published_path": "studies/soc_human_ai_organization/figures/soc_confirmatory_sla_quality.svg",
+      "source_sha256": "2c4276be68a45701386f40f0872ba020e9730a3d1e339e52f8b5926a727151e9",
+      "published_sha256": "6431dee9e748b8ea4a2ec9fa6d65e99da23400ed4de3134fab9861d3d459e4f5"
+    },
+    "results/soc_a0_baseline_congestion/a0_arrival_load_curves.svg": {
+      "published_path": "studies/soc_human_ai_organization/figures/soc_a0_arrival_load.svg",
+      "source_sha256": "d2ed33d09a5162dda3011d011647d00858de019fa2122efa4a8e1fcfd6dfefa4",
+      "published_sha256": "b8b479db54a82b6937d3566c882eef76056f0ba940621b253e4e03d7dddbde93"
+    },
+    "results/soc_a0_baseline_congestion/a0_staffing_curves.svg": {
+      "published_path": "studies/soc_human_ai_organization/figures/soc_a0_staffing.svg",
+      "source_sha256": "0fc5149005ce6048ac33b80554ed363676931951be79e6d1b5f4ecf0c0f21bde",
+      "published_sha256": "287aff8d14c604e96a9bab1b39e576e7efaac99815226ceab050f98a242641ac"
+    },
+    "results/soc_a0_baseline_congestion/a0_queue_evolution.svg": {
+      "published_path": "studies/soc_human_ai_organization/figures/soc_a0_queue_evolution.svg",
+      "source_sha256": "7d14fd5f41328aaea2b448d00909b5530d3d06061061d12938556158afde4cbf",
+      "published_sha256": "18f99f5baa238c20d0396fd7781faf2b8899fdba1bfe63c023eeffac383da82c"
+    },
+    "results/soc_a0_baseline_congestion/a0_urgent_blocking.svg": {
+      "published_path": "studies/soc_human_ai_organization/figures/soc_a0_urgent_blocking.svg",
+      "source_sha256": "275c3ccfc112a535b39d77e6f9c3a5bda30673a453bef9b3d28426343ae520b6",
+      "published_sha256": "f395dadbbb9479ddc344a1d258a79534dcb79e267213150085f09aa68b0c514e"
+    }
+  },
+  "extracted_table": {
+    "source": "results/soc_policy_comparison/summary.csv",
+    "published_path": "studies/soc_human_ai_organization/evidence/soc_policy_comparison_rn_terminal.csv",
+    "filter": "series=main, phase=zero, cutoff_h=48.0, metric=R_per_admitted, scenario in rho_065/rho_085/rho_100/rho_125",
+    "source_sha256": "0976e27fb19e55ae874c6030222fd9b3cd0d9dd65b2200daaa0fae9cb6d84eea",
+    "row_count": 24,
+    "published_sha256": "85eef98f689a2e7ccd91a9c78be43cffbc96b4a2ba2d349ca586a492ebc84827"
+  },
+  "note": "Published SVG files and CSV extract use LF and stripped trailing whitespace; source hashes identify original local artifacts."
+}

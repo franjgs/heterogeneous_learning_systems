@@ -1,0 +1,17 @@
+{
+  "phase": "development_pilot",
+  "seed_base": 261220000,
+  "seed_count": 8,
+  "horizon_h": 36.0,
+  "drain_h": 36.0,
+  "normal_rho_assumed": 0.50,
+  "peak_multiplier_observed_daily_max_over_mean": 2.654,
+  "recovery_rho_assumed": 0.85,
+  "pulse_rho": 1.327,
+  "profiles": [
+    {"name":"brief_overload_recovery","segments":[[0,6,0.50],[6,10,1.327],[10,36,0.50]]},
+    {"name":"sustained_overload_recovery","segments":[[0,6,0.50],[6,18,1.327],[18,36,0.50]]},
+    {"name":"recurrent_incomplete_recovery","segments":[[0,6,0.50],[6,8,1.327],[8,14,0.85],[14,16,1.327],[16,22,0.85],[22,24,1.327],[24,36,0.85]]}
+  ],
+  "hlsb": {"window_h":4.0,"low":1.05,"high":1.20}
+}

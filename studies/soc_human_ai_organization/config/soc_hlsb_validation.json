@@ -1,0 +1,18 @@
+{
+  "phase": "independent_validation",
+  "seed_base": 261190000,
+  "seed_count": 100,
+  "horizon_h": 24.0,
+  "drain_h": 24.0,
+  "hlsb": {"window_h": 4.0, "low": 1.05, "high": 1.20},
+  "hlsa": {"low": 2.0, "high": 3.0},
+  "scenarios": [
+    {"name": "steady_100", "base_rho": 1.0},
+    {"name": "steady_125", "base_rho": 1.25},
+    {"name": "moderate_overload", "base_rho": 0.85, "shift_h": 8.0, "after_rho": 1.25},
+    {"name": "overload_recovery", "base_rho": 1.25, "shift_h": 12.0, "after_rho": 0.85}
+  ],
+  "primary": "one-sided paired t-test HLS-B minus D1, alpha 0.05, equal scenario weight per seed, R/N at H+D",
+  "secondary": "12 scenario-by-control two-sided paired t-tests, Holm family alpha 0.05",
+  "output_dir": "results/soc_hlsb_validation"
+}

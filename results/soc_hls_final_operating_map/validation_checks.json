@@ -1,0 +1,11 @@
+{
+  "episode_cut_rows": 8040,
+  "scenario_seed_condition_policy_cut_cells": 2680,
+  "all_policies_paired_on_trace_and_admitted_denominator": true,
+  "admitted_equals_completed_plus_pending": true,
+  "RN_bounded_by_SLA": true,
+  "deadline_free_exogenous_hashes_equal_across_SLA_and_staff_conditions": true,
+  "all_runs_have_H_and_HD_cutoffs": true,
+  "time_series_rows": 237060,
+  "deadline_cutoff_no_truncation": "H+24h drain exceeds max 12h deadline"
+}

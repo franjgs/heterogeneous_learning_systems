@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="650" viewBox="0 0 1180 650">
+<rect width="100%" height="100%" fill="white"/>
+<text x="30" y="30" font-family="sans-serif" font-size="19">Scenario-wise signed shortfall to retrospective fixed-policy reference</text>
+<line x1="250.0" y1="55" x2="250.0" y2="565" stroke="#ddd" stroke-width="1"/>
+<text x="250.0" y="587" text-anchor="middle" font-family="sans-serif" font-size="11">-0.021</text>
+<line x1="361.7" y1="55" x2="361.7" y2="565" stroke="#ddd" stroke-width="1"/>
+<text x="361.7" y="587" text-anchor="middle" font-family="sans-serif" font-size="11">-0.014</text>
+<line x1="473.3" y1="55" x2="473.3" y2="565" stroke="#ddd" stroke-width="1"/>
+<text x="473.3" y="587" text-anchor="middle" font-family="sans-serif" font-size="11">-0.007</text>
+<line x1="585.0" y1="55" x2="585.0" y2="565" stroke="#666" stroke-width="2"/>
+<text x="585.0" y="587" text-anchor="middle" font-family="sans-serif" font-size="11">+0.000</text>
+<line x1="696.7" y1="55" x2="696.7" y2="565" stroke="#ddd" stroke-width="1"/>
+<text x="696.7" y="587" text-anchor="middle" font-family="sans-serif" font-size="11">+0.007</text>
+<line x1="808.3" y1="55" x2="808.3" y2="565" stroke="#ddd" stroke-width="1"/>
+<text x="808.3" y="587" text-anchor="middle" font-family="sans-serif" font-size="11">+0.014</text>
+<line x1="920.0" y1="55" x2="920.0" y2="565" stroke="#ddd" stroke-width="1"/>
+<text x="920.0" y="587" text-anchor="middle" font-family="sans-serif" font-size="11">+0.021</text>
+<text x="238" y="79" text-anchor="end" font-family="sans-serif" font-size="11">B08_rho120_d4</text>
+<rect x="585.0" y="67" width="25.1" height="16" fill="#c85a54"/>
+<text x="932" y="79" font-family="sans-serif" font-size="11">+0.0016</text>
+<text x="238" y="119" text-anchor="end" font-family="sans-serif" font-size="11">B08_rho140_d2</text>
+<rect x="585.0" y="107" width="15.8" height="16" fill="#c85a54"/>
+<text x="932" y="119" font-family="sans-serif" font-size="11">+0.0010</text>
+<text x="238" y="159" text-anchor="end" font-family="sans-serif" font-size="11">B16_rho140_d4</text>
+<rect x="585.0" y="147" width="67.3" height="16" fill="#c85a54"/>
+<text x="932" y="159" font-family="sans-serif" font-size="11">+0.0043</text>
+<text x="238" y="199" text-anchor="end" font-family="sans-serif" font-size="11">nom_r125_d2</text>
+<rect x="585.0" y="187" width="1.1" height="16" fill="#c85a54"/>
+<text x="932" y="199" font-family="sans-serif" font-size="11">+0.0001</text>
+<text x="238" y="239" text-anchor="end" font-family="sans-serif" font-size="11">nom_r125_d4</text>
+<rect x="585.0" y="227" width="48.9" height="16" fill="#c85a54"/>
+<text x="932" y="239" font-family="sans-serif" font-size="11">+0.0031</text>
+<text x="238" y="279" text-anchor="end" font-family="sans-serif" font-size="11">B08_rho110_d8</text>
+<rect x="585.0" y="267" width="33.8" height="16" fill="#c85a54"/>
+<text x="932" y="279" font-family="sans-serif" font-size="11">+0.0021</text>
+<text x="238" y="319" text-anchor="end" font-family="sans-serif" font-size="11">B16_rho120_d8</text>
+<rect x="585.0" y="307" width="93.6" height="16" fill="#c85a54"/>
+<text x="932" y="319" font-family="sans-serif" font-size="11">+0.0059</text>
+<text x="238" y="359" text-anchor="end" font-family="sans-serif" font-size="11">nom_r125_d8</text>
+<rect x="585.0" y="347" width="90.9" height="16" fill="#c85a54"/>
+<text x="932" y="359" font-family="sans-serif" font-size="11">+0.0058</text>
+<text x="238" y="399" text-anchor="end" font-family="sans-serif" font-size="11">B16_rho110_d16</text>
+<rect x="585.0" y="387" width="65.1" height="16" fill="#c85a54"/>
+<text x="932" y="399" font-family="sans-serif" font-size="11">+0.0041</text>
+<text x="238" y="439" text-anchor="end" font-family="sans-serif" font-size="11">nom_r125_d12</text>
+<rect x="473.9" y="427" width="111.1" height="16" fill="#26855b"/>
+<text x="932" y="439" font-family="sans-serif" font-size="11">-0.0071</text>
+<text x="238" y="479" text-anchor="end" font-family="sans-serif" font-size="11">nom_r125_d16</text>
+<rect x="293.7" y="467" width="291.3" height="16" fill="#26855b"/>
+<text x="932" y="479" font-family="sans-serif" font-size="11">-0.0185</text>
+<text x="238" y="519" text-anchor="end" font-family="sans-serif" font-size="11">nom_r125_d8_fastrec</text>
+<rect x="585.0" y="507" width="127.7" height="16" fill="#c85a54"/>
+<text x="932" y="519" font-family="sans-serif" font-size="11">+0.0081</text>
+<text x="585.0" y="615" text-anchor="middle" font-family="sans-serif" font-size="13">Fixed-policy oracle R/N − HLS-B R/N (positive = HLS-B shortfall; negative = HLS-B gain)</text>
+</svg>

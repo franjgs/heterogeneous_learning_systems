@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="590" viewBox="0 0 1000 590"><rect width="1000" height="590" fill="white"/>
+<text x="30" y="28" font-family="sans-serif" font-size="18">R/N terminal frente al desplazamiento de todas las fronteras</text>
+<text x="30" y="63" font-family="sans-serif" font-size="15">Tramos de 2 h</text>
+<line x1="145" y1="173.0" x2="820" y2="173.0" stroke="#e4e4e4"/><text x="95" y="177.0" font-family="sans-serif" font-size="11">0.62</text>
+<line x1="145" y1="156.0" x2="820" y2="156.0" stroke="#e4e4e4"/><text x="95" y="160.0" font-family="sans-serif" font-size="11">0.64</text>
+<line x1="145" y1="139.0" x2="820" y2="139.0" stroke="#e4e4e4"/><text x="95" y="143.0" font-family="sans-serif" font-size="11">0.66</text>
+<polyline fill="none" stroke="#2166ac" stroke-width="2" points="265.0,144.3 370.0,143.1 475.0,142.0"/>
+<circle cx="265.0" cy="144.3" r="4" fill="#2166ac"/>
+<circle cx="370.0" cy="143.1" r="4" fill="#2166ac"/>
+<circle cx="475.0" cy="142.0" r="4" fill="#2166ac"/>
+<polyline fill="none" stroke="#b2182b" stroke-width="2" points="265.0,137.9 370.0,138.2 475.0,138.9"/>
+<circle cx="265.0" cy="137.9" r="4" fill="#b2182b"/>
+<circle cx="370.0" cy="138.2" r="4" fill="#b2182b"/>
+<circle cx="475.0" cy="138.9" r="4" fill="#b2182b"/>
+<line x1="370" y1="73" x2="370" y2="200" stroke="#999" stroke-dasharray="3 3"/>
+<text x="151.0" y="215" font-family="sans-serif" font-size="11">-2</text>
+<text x="256.0" y="215" font-family="sans-serif" font-size="11">-1</text>
+<text x="361.0" y="215" font-family="sans-serif" font-size="11">+0</text>
+<text x="466.0" y="215" font-family="sans-serif" font-size="11">+1</text>
+<text x="571.0" y="215" font-family="sans-serif" font-size="11">+2</text>
+<text x="781.0" y="215" font-family="sans-serif" font-size="11">+4</text>
+<text x="30" y="238" font-family="sans-serif" font-size="15">Tramos de 4 h</text>
+<line x1="145" y1="348.0" x2="820" y2="348.0" stroke="#e4e4e4"/><text x="95" y="352.0" font-family="sans-serif" font-size="11">0.62</text>
+<line x1="145" y1="331.0" x2="820" y2="331.0" stroke="#e4e4e4"/><text x="95" y="335.0" font-family="sans-serif" font-size="11">0.64</text>
+<line x1="145" y1="314.0" x2="820" y2="314.0" stroke="#e4e4e4"/><text x="95" y="318.0" font-family="sans-serif" font-size="11">0.66</text>
+<polyline fill="none" stroke="#2166ac" stroke-width="2" points="160.0,321.1 265.0,320.1 370.0,319.0 475.0,317.3 580.0,315.8"/>
+<circle cx="160.0" cy="321.1" r="4" fill="#2166ac"/>
+<circle cx="265.0" cy="320.1" r="4" fill="#2166ac"/>
+<circle cx="370.0" cy="319.0" r="4" fill="#2166ac"/>
+<circle cx="475.0" cy="317.3" r="4" fill="#2166ac"/>
+<circle cx="580.0" cy="315.8" r="4" fill="#2166ac"/>
+<polyline fill="none" stroke="#b2182b" stroke-width="2" points="160.0,312.4 265.0,312.2 370.0,313.1 475.0,313.3 580.0,314.3"/>
+<circle cx="160.0" cy="312.4" r="4" fill="#b2182b"/>
+<circle cx="265.0" cy="312.2" r="4" fill="#b2182b"/>
+<circle cx="370.0" cy="313.1" r="4" fill="#b2182b"/>
+<circle cx="475.0" cy="313.3" r="4" fill="#b2182b"/>
+<circle cx="580.0" cy="314.3" r="4" fill="#b2182b"/>
+<line x1="370" y1="248" x2="370" y2="375" stroke="#999" stroke-dasharray="3 3"/>
+<text x="151.0" y="390" font-family="sans-serif" font-size="11">-2</text>
+<text x="256.0" y="390" font-family="sans-serif" font-size="11">-1</text>
+<text x="361.0" y="390" font-family="sans-serif" font-size="11">+0</text>
+<text x="466.0" y="390" font-family="sans-serif" font-size="11">+1</text>
+<text x="571.0" y="390" font-family="sans-serif" font-size="11">+2</text>
+<text x="781.0" y="390" font-family="sans-serif" font-size="11">+4</text>
+<text x="30" y="413" font-family="sans-serif" font-size="15">Tramos de 12 h</text>
+<line x1="145" y1="523.0" x2="820" y2="523.0" stroke="#e4e4e4"/><text x="95" y="527.0" font-family="sans-serif" font-size="11">0.62</text>
+<line x1="145" y1="506.0" x2="820" y2="506.0" stroke="#e4e4e4"/><text x="95" y="510.0" font-family="sans-serif" font-size="11">0.64</text>
+<line x1="145" y1="489.0" x2="820" y2="489.0" stroke="#e4e4e4"/><text x="95" y="493.0" font-family="sans-serif" font-size="11">0.66</text>
+<polyline fill="none" stroke="#2166ac" stroke-width="2" points="160.0,500.6 265.0,499.6 370.0,498.1 475.0,497.1 580.0,495.3 790.0,492.3"/>
+<circle cx="160.0" cy="500.6" r="4" fill="#2166ac"/>
+<circle cx="265.0" cy="499.6" r="4" fill="#2166ac"/>
+<circle cx="370.0" cy="498.1" r="4" fill="#2166ac"/>
+<circle cx="475.0" cy="497.1" r="4" fill="#2166ac"/>
+<circle cx="580.0" cy="495.3" r="4" fill="#2166ac"/>
+<circle cx="790.0" cy="492.3" r="4" fill="#2166ac"/>
+<polyline fill="none" stroke="#b2182b" stroke-width="2" points="160.0,524.2 265.0,522.4 370.0,519.7 475.0,516.5 580.0,513.7 790.0,510.1"/>
+<circle cx="160.0" cy="524.2" r="4" fill="#b2182b"/>
+<circle cx="265.0" cy="522.4" r="4" fill="#b2182b"/>
+<circle cx="370.0" cy="519.7" r="4" fill="#b2182b"/>
+<circle cx="475.0" cy="516.5" r="4" fill="#b2182b"/>
+<circle cx="580.0" cy="513.7" r="4" fill="#b2182b"/>
+<circle cx="790.0" cy="510.1" r="4" fill="#b2182b"/>
+<line x1="370" y1="423" x2="370" y2="550" stroke="#999" stroke-dasharray="3 3"/>
+<text x="151.0" y="565" font-family="sans-serif" font-size="11">-2</text>
+<text x="256.0" y="565" font-family="sans-serif" font-size="11">-1</text>
+<text x="361.0" y="565" font-family="sans-serif" font-size="11">+0</text>
+<text x="466.0" y="565" font-family="sans-serif" font-size="11">+1</text>
+<text x="571.0" y="565" font-family="sans-serif" font-size="11">+2</text>
+<text x="781.0" y="565" font-family="sans-serif" font-size="11">+4</text>
+<text x="740" y="72" fill="#2166ac" font-family="sans-serif" font-size="13">Moderada primero</text>
+<text x="740" y="91" fill="#b2182b" font-family="sans-serif" font-size="13">Sobrecarga primero</text>
+<text x="30" y="578" font-family="sans-serif" font-size="11">Medias exploratorias de 20 semillas; puntos omitidos = calendario inválido. Eje vertical común: R/N.</text>
+</svg>

@@ -1,0 +1,19 @@
+{
+  "phase": "development_only",
+  "seeds": [261170000, 261170001, 261170002, 261170003, 261170004, 261170005],
+  "horizon_h": 24.0,
+  "drain_h": 24.0,
+  "base_capacity_alerts_per_h": 28.41858770124891,
+  "scenarios": [
+    {"name": "steady_085", "base_rho": 0.85},
+    {"name": "steady_100", "base_rho": 1.0},
+    {"name": "steady_125", "base_rho": 1.25},
+    {"name": "burst_recovery", "base_rho": 0.85, "burst_window_h": [8.0, 16.0], "burst_rho": 1.25},
+    {"name": "early_overload_recovery", "base_rho": 1.25, "shift_h": 8.0, "after_rho": 0.85}
+  ],
+  "candidates": [
+    {"low": 0.5, "high": 1.0},
+    {"low": 1.0, "high": 2.0},
+    {"low": 2.0, "high": 3.0}
+  ]
+}

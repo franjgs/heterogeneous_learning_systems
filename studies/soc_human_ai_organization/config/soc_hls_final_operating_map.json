@@ -1,0 +1,49 @@
+{
+  "source_commit": "144e4b4c705cad1b540d64d5f5a231d9a2ab4830",
+  "phase": "exploratory_parametric_operating_map",
+  "seed_base_initial": 261260000,
+  "seed_count_initial": 20,
+  "seed_base_extension": 261270000,
+  "seed_count_extension": 40,
+  "extension_profiles": ["rho120_d12", "rho120_d16", "rho125_d12", "rho125_d16", "rho140_d08", "rho160_d04"],
+  "rho_normal": 0.85,
+  "pulse_start_h": 4,
+  "post_pulse_recovery_h": 20,
+  "drain_h": 24,
+  "rho_high_grid": [1.0, 1.1, 1.2, 1.25, 1.4, 1.6],
+  "pulse_duration_grid_h": [2, 4, 8, 12, 16],
+  "deadline_h_reference": {"high": 1, "medium": 4, "low": 12},
+  "sla_profiles": [
+    {"name": "scale_075", "T0": 0.75, "f_high": 4, "f_low": 12, "axis": "scale"},
+    {"name": "reference", "T0": 1.0, "f_high": 4, "f_low": 12, "axis": "reference"},
+    {"name": "scale_125", "T0": 1.25, "f_high": 4, "f_low": 12, "axis": "scale"},
+    {"name": "separation_2_8", "T0": 1.0, "f_high": 2, "f_low": 8, "axis": "separation"},
+    {"name": "separation_8_16", "T0": 1.0, "f_high": 8, "f_low": 16, "axis": "separation"}
+  ],
+  "sla_map_profiles": ["rho120_d08", "rho140_d08", "rho160_d16"],
+  "staffing_profiles": ["rho125_d08", "rho160_d16"],
+  "staffing_teams": [
+    {"name": "L1_5_L2_3", "n_l1": 5, "n_l2": 3},
+    {"name": "L1_6_L2_2", "n_l1": 6, "n_l2": 2},
+    {"name": "L1_6_L2_3", "n_l1": 6, "n_l2": 3},
+    {"name": "L1_6_L2_4", "n_l1": 6, "n_l2": 4},
+    {"name": "L1_7_L2_3", "n_l1": 7, "n_l2": 3}
+  ],
+  "policies": ["D1", "P1", "HLS-B"],
+  "hlsb": {"window_h": 4, "low": 1.05, "high": 1.2},
+  "recovery_definition": "first hourly time at or after pulse end with both stage backlogs and estimated outstanding service hours no greater than their t=4h pre-pulse values for three consecutive observations; no recovery by H+D is censored as not recovered",
+  "operational_region_definition": {
+    "normal_or_capacity_edge": "rho_high <= 1.00; no positive fluid overload debt B",
+    "congestion_operational": "rho_high > 1.00 and Gamma < 1; recovery surplus can absorb fluid overload debt within the fixed 20h recovery window",
+    "congestion_severe": "Gamma >= 1; fluid overload debt equals or exceeds all normal-rate recovery surplus",
+    "B": "max(rho_high-1,0)*pulse_duration_h",
+    "Gamma": "B/((1-rho_normal)*post_pulse_recovery_h)"
+  },
+  "reporting_equivalence_margin_RN": 0.005,
+  "notes": [
+    "20 initial paired seeds for all 30 main cells; an additional 40 seeds are allocated, before reading comparative outcomes, to the six cells with 0.67 <= Gamma <= 1.33 nearest the physical overload/recovery frontier.",
+    "Main-profile admission horizon equals 4h pre-pulse + pulse duration + fixed 20h post-pulse recovery. Drain is fixed at 24h; all terminal deadlines (maximum 12h) mature before H+D.",
+    "Demand is synthetic Poisson by segment. HLS-B, D1 and P1 are not modified. No confirmatory claim is intended.",
+    "SLA and staffing sensitivity uses the five previously published SLA parameterizations and fixed demand for staffing changes, with base-demand traces reused where compatible; these conditional results are not pooled as operating probabilities."
+  ]
+}

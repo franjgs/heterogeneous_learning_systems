@@ -1,0 +1,112 @@
+{
+  "config": {
+    "phase": "exploratory_operating_domain",
+    "seed_base": 261240000,
+    "seed_count": 20,
+    "admission_h": 24.0,
+    "drain_h": 24.0,
+    "pulse_start_h": 4.0,
+    "rho_normal": 0.85,
+    "rho_recovery_fast": 0.7,
+    "hlsb": {
+      "window_h": 4.0,
+      "low": 1.05,
+      "high": 1.2
+    },
+    "deadline_h": {
+      "low": 12.0,
+      "medium": 4.0,
+      "high": 1.0
+    },
+    "profiles": [
+      {
+        "name": "B08_rho110_d8",
+        "rho_high": 1.1,
+        "duration_h": 8,
+        "rho_recovery": 0.85,
+        "design_group": "B\u22480.8"
+      },
+      {
+        "name": "B08_rho120_d4",
+        "rho_high": 1.2,
+        "duration_h": 4,
+        "rho_recovery": 0.85,
+        "design_group": "B\u22480.8"
+      },
+      {
+        "name": "B08_rho140_d2",
+        "rho_high": 1.4,
+        "duration_h": 2,
+        "rho_recovery": 0.85,
+        "design_group": "B\u22480.8"
+      },
+      {
+        "name": "B16_rho110_d16",
+        "rho_high": 1.1,
+        "duration_h": 16,
+        "rho_recovery": 0.85,
+        "design_group": "B\u22481.6"
+      },
+      {
+        "name": "B16_rho120_d8",
+        "rho_high": 1.2,
+        "duration_h": 8,
+        "rho_recovery": 0.85,
+        "design_group": "B\u22481.6"
+      },
+      {
+        "name": "B16_rho140_d4",
+        "rho_high": 1.4,
+        "duration_h": 4,
+        "rho_recovery": 0.85,
+        "design_group": "B\u22481.6"
+      },
+      {
+        "name": "nom_r125_d2",
+        "rho_high": 1.25,
+        "duration_h": 2,
+        "rho_recovery": 0.85,
+        "design_group": "nominal-rho125"
+      },
+      {
+        "name": "nom_r125_d4",
+        "rho_high": 1.25,
+        "duration_h": 4,
+        "rho_recovery": 0.85,
+        "design_group": "nominal-rho125"
+      },
+      {
+        "name": "nom_r125_d8",
+        "rho_high": 1.25,
+        "duration_h": 8,
+        "rho_recovery": 0.85,
+        "design_group": "nominal-rho125"
+      },
+      {
+        "name": "nom_r125_d12",
+        "rho_high": 1.25,
+        "duration_h": 12,
+        "rho_recovery": 0.85,
+        "design_group": "nominal-rho125"
+      },
+      {
+        "name": "nom_r125_d16",
+        "rho_high": 1.25,
+        "duration_h": 16,
+        "rho_recovery": 0.85,
+        "design_group": "nominal-rho125"
+      },
+      {
+        "name": "nom_r125_d8_fastrec",
+        "rho_high": 1.25,
+        "duration_h": 8,
+        "rho_recovery": 0.7,
+        "design_group": "recovery-control"
+      }
+    ]
+  },
+  "mu_l1": 28.41858770124891,
+  "mu_l2": 3.8350089865588264,
+  "episodes": 1440,
+  "seed_design": "same seed ids across scenarios; paired within scenario only; scenario-level inference does not pool profiles"
+}
