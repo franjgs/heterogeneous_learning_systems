@@ -1,0 +1,18 @@
+{
+  "expected_configs": 44,
+  "expected_episode_rows": 1320,
+  "actual_episode_rows": 1320,
+  "actual_triage_rows": 440,
+  "one_trace_hash_per_policy_cell": true,
+  "same_exogenous_trace_across_classifier_points": true,
+  "same_denominator_across_policies": true,
+  "no_duplicate_l1_assignments": true,
+  "no_duplicate_l2_assignments": true,
+  "no_task_l2_without_positive_recommendation": true,
+  "false_negative_correct_on_time_credit_is_zero": true,
+  "deadline_maturation_by_terminal_cutoff": true,
+  "legacy_RN_reconstruction_matches_wrapper": true,
+  "policies_and_engine_source_unchanged": true,
+  "unique_exogenous_realizations": 40,
+  "unique_trace_hashes_by_classifier_config": 440
+}

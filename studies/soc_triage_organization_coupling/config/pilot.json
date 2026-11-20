@@ -1,0 +1,54 @@
+{
+  "study": "SOCTRA-HLS triage-organization coupling pilot",
+  "frozen_reference_commit": "20cffed6b7a325cb44b7e73b7295ad946be46982",
+  "policies": ["D1", "P1", "HLS-B"],
+  "decision_mode": "hypothetical_recommendation_acceptance",
+  "human_acceptance": "automatic, controlled assumption; not a GMV behavior claim",
+  "horizon_h": 24.0,
+  "drain_h": 36.0,
+  "rho_l1": [0.85, 1.25],
+  "n_l1": 6,
+  "n_l2": 3,
+  "mean_eligible_projects_per_l1": 2.5,
+  "seed_base": 271200000,
+  "n_seeds": 10,
+  "class_prevalence_scenarios": {
+    "historical_evaluation_prevalence": {
+      "kind": "homogeneous_across_classes",
+      "pi": 0.0033552464740651154,
+      "definition": "344/102526 from old classifier evaluation; not the chronological independent test and not objective GMV L2 need"
+    },
+    "original_synthetic_prevalence": {
+      "kind": "class_conditional",
+      "class_probabilities": [0.592, 0.236, 0.172],
+      "need_probability_by_class": [0.03, 0.05, 0.08],
+      "overall_pi": 0.04332,
+      "definition": "exact weighted prevalence in frozen synthetic SOC reference mix"
+    }
+  },
+  "classifier_operating_points": [
+    {"name": "historical_old_exact", "pD": 0.7965116279069767, "pFA": 0.2858624806717426, "source": "274/344 and 29210/102182; old 102526-alert evaluation only"},
+    {"name": "grid_pd07965_pfa001", "pD": 0.7965, "pFA": 0.01, "source": "synthetic sensitivity point"},
+    {"name": "grid_pd07965_pfa005", "pD": 0.7965, "pFA": 0.05, "source": "synthetic sensitivity point"},
+    {"name": "grid_pd07965_pfa010", "pD": 0.7965, "pFA": 0.10, "source": "synthetic sensitivity point"},
+    {"name": "grid_pd07965_pfa015", "pD": 0.7965, "pFA": 0.15, "source": "synthetic sensitivity point"},
+    {"name": "grid_pd07965_pfa2859", "pD": 0.7965, "pFA": 0.2859, "source": "synthetic rounded sensitivity point; not claimed as an ROC continuation"},
+    {"name": "grid_pd090_pfa001", "pD": 0.90, "pFA": 0.01, "source": "synthetic sensitivity point"},
+    {"name": "grid_pd090_pfa005", "pD": 0.90, "pFA": 0.05, "source": "synthetic sensitivity point"},
+    {"name": "grid_pd090_pfa010", "pD": 0.90, "pFA": 0.10, "source": "synthetic sensitivity point"},
+    {"name": "grid_pd090_pfa015", "pD": 0.90, "pFA": 0.15, "source": "synthetic sensitivity point"},
+    {"name": "grid_pd090_pfa2859", "pD": 0.90, "pFA": 0.2859, "source": "synthetic sensitivity point; not claimed as an ROC continuation"}
+  ],
+  "hlsb": {"window_h": 4.0, "low": 1.05, "high": 1.2},
+  "deadlines_h_by_severity": {"high": 1.0, "medium": 4.0, "low": 12.0},
+  "resolution_probability": "analyst competence * (1 - 0.35 * difficulty), same frozen model form",
+  "primary_integrated_metric": "expected correct-and-on-time final resolution per admitted alert; for true L2 need, a negative route yields zero credit regardless of L1 completion",
+  "secondary_metrics": ["legacy R/N", "routed SLA", "required-resolution SLA", "routing accuracy", "confusion matrix", "L1/L2 backlog", "utilization", "mode switches"],
+  "notes": [
+    "All classifier operating points are crossed with both prevalence scenarios and both rho_L1 regimes; points are controlled sensitivities, not a single ROC curve.",
+    "For each prevalence, rho_L1, and seed, arrivals, class, severity, difficulty, and hidden need are generated once; a keyed per-alert uniform is reused across classifier points to couple recommendations.",
+    "The empirical operating point comes from an older 102526-alert evaluation and is not the article's selected classifier nor the 14449-alert chronological test.",
+    "L2 effective capacity is recomputed from each induced recommendation-positive class mix using the frozen roster, eligibility, and analyst-specific service maps. WAPS window and thresholds remain fixed.",
+    "10 paired development seeds per configuration; exploratory only."
+  ]
+}
