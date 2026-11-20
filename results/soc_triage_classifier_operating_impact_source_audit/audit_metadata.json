@@ -1,0 +1,11 @@
+{
+  "n_inventory": 72,
+  "pdf_sha256": "1053de0ee82e40d4f9990f3f3117fd635db60daffc49555594ae8674256e4f91",
+  "pdf_bytes": 373204,
+  "pdf_primary_source": "local supplied PDF; Table 5 p.39 and Table 7 p.41; no web sources used to fill values",
+  "latex_crosscheck": "~/Downloads/Alert_Triage_No_Authors.tex; supporting consistency check only",
+  "n_old_points_matching_symmetric_operating_point": 25,
+  "n_old_points": 25,
+  "simulations_run": false,
+  "capacity_method": "existing phase2 analytical method: frozen roster, fractional-flow effective_capacity, composition derived from homogeneous prevalence; no policy/simulator execution"
+}

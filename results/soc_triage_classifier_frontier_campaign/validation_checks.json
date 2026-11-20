@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "inventory_rows": 72,
+  "joint_frontier_points": 13,
+  "new_frontier_points_simulated": 8,
+  "reused_phase2_rows_before_targeted_repeat_filter": 9252,
+  "simulated_new_frontier_policy_episodes": 9360,
+  "targeted_policy_episode_repeats": 108,
+  "targeted_mismatch_seed_rho_cells": [
+    [
+      272600013,
+      1.25
+    ],
+    [
+      272600030,
+      0.85
+    ],
+    [
+      272600030,
+      1.25
+    ]
+  ],
+  "merged_episode_rows": 18720,
+  "matched_condition_cells": 720,
+  "trace_failures": [],
+  "denominator_failures": [],
+  "confusion_failures": 0,
+  "deadline_failures": [],
+  "prevalence_note": "39/14449 directly audited and 40/14449 PDF-IR implied remain separate; original legacy Phase 2 pi is neither exact value",
+  "policy_engine_note": "No motor or policy edits in this campaign; pre-existing worktree edits add unrelated NOMINAL-REF only and were not invoked",
+  "no_reported_classifier": true
+}

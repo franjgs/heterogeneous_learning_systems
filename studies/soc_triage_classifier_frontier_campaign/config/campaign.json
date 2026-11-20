@@ -1,0 +1,101 @@
+{
+  "study": "SOCTRA–HLS joint escalation frontier operational campaign",
+  "pilot_reference_commit": "df80a78e413c88f7cf22b807e8ee27f4e556a726",
+  "phase2_source_commit": "218dc7ba4616b26f7051d7548e6fbcecfd8bc5b8",
+  "classifier_source": "SOCTRA_JournalArticle_2026.pdf, Table 5 p.39 and Table 7 p.41; audited 72-point inventory",
+  "new_frontier_points": [
+    "original_lsensemble_apc_symmetric",
+    "original_bayesian_mlp_apc_asymmetric_cM3cFA",
+    "original_rf_apc_asymmetric_cM3cFA",
+    "original_lightgbm_c_asymmetric_cM3cFA",
+    "original_bayesian_mlp_c_asymmetric_cM3cFA",
+    "standardized_rf_apc_asymmetric_cM3cFA",
+    "standardized_lsensemble_a_asymmetric_cM3cFA",
+    "standardized_lightgbm_apc_asymmetric_cM3cFA"
+  ],
+  "reused_phase2_original_points": [
+    "orig_rf_ac",
+    "orig_lr_ac",
+    "orig_bayesian_mlp_ac",
+    "orig_bayesian_mlp_a"
+  ],
+  "prevalence_scenarios": {
+    "original_audited_39_of_14449": {
+      "label_definition": "original",
+      "pi": 0.002699148730015918,
+      "definition": "directly audited original labels: 39/14449; separate from the PDF rounded-IR implication"
+    },
+    "original_pdf_ir_implied_40_of_14449": {
+      "label_definition": "original",
+      "pi": 0.002768357671811198,
+      "definition": "40/14449 implied by article Table 1 test IR 360.23; inferred from rounded statistic, not substituted for the audited count"
+    },
+    "standardized_pdf_ir_implied_19_of_14449": {
+      "label_definition": "standardized",
+      "pi": 0.001314969894110319,
+      "definition": "19/14449 implied by article Table 1 test IR 759.47"
+    }
+  },
+  "simulation": {
+    "seed_base": 272600000,
+    "n_seeds": 40,
+    "rho_l1": [
+      0.85,
+      1.25
+    ],
+    "l2_analyst_counts": [
+      2,
+      3,
+      4
+    ],
+    "l1_analysts": 6,
+    "policies": [
+      "D1",
+      "P1",
+      "HLS-B"
+    ],
+    "horizon_h": 24.0,
+    "drain_h": 36.0,
+    "hlsb": {
+      "window_h": 4.0,
+      "low": 1.05,
+      "high": 1.2
+    },
+    "deadlines_h_by_severity": {
+      "high": 1.0,
+      "medium": 4.0,
+      "low": 12.0
+    },
+    "acceptance": "automatic; controlled synthetic assumption",
+    "within_class_error_assumption": "pD and pFA exchangeable across synthetic task classes; no individual SOCTRA predictions used",
+    "no_reported_classifier": true
+  },
+  "reuse_audit": {
+    "source_episode_csv": "results/soc_triage_classifier_frontier_campaign/phase2_reuse_source_episodes.csv",
+    "old_original_phase2_scenario": "original_test_exact_audited",
+    "old_standardized_phase2_scenario": "standardized_article_test_table2_inferred",
+    "original_legacy_config_pi": 0.002699840128036543,
+    "audited_39_trace_match_expected": 80,
+    "pdf_implied_40_trace_match_observed": 77,
+    "pdf_implied_40_mismatch_scenario_seed_cells": [
+      {
+        "seed": 272600013,
+        "rho_l1": 1.25
+      },
+      {
+        "seed": 272600030,
+        "rho_l1": 0.85
+      },
+      {
+        "seed": 272600030,
+        "rho_l1": 1.25
+      }
+    ],
+    "standardized_19_trace_match_expected": 80
+  },
+  "statistics": {
+    "unit": "paired seed within fixed label definition, prevalence, classifier point, L1 load and L2 roster",
+    "interval": "two-sided 95% paired Student-t interval, df=39; exploratory and unadjusted",
+    "multiple_comparisons": "No familywise correction; Pareto analyses descriptive"
+  }
+}

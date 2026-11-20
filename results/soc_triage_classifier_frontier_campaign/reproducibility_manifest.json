@@ -1,0 +1,44 @@
+{
+  "pilot_reference_commit": "df80a78e413c88f7cf22b807e8ee27f4e556a726",
+  "phase2_code_and_result_reference": "218dc7ba4616b26f7051d7548e6fbcecfd8bc5b8",
+  "generated_utc": "2026-11-20T21:32:22+00:00",
+  "sha256_inputs": {
+    "campaign_config": {
+      "path": "studies/soc_triage_classifier_frontier_campaign/config/campaign.json",
+      "sha256": "858abeadd6f4b6d4d880b2bb11c8b3b829e4ef742b805886e380c33158456972"
+    },
+    "phase2_reuse_source_episodes": {
+      "path": "results/soc_triage_classifier_frontier_campaign/phase2_reuse_source_episodes.csv",
+      "sha256": "0127cab736283aa61ec379688a79d53195c01695ebbb4c225036dbd90608cfd8"
+    },
+    "classifier_inventory_72": {
+      "path": "results/soc_triage_classifier_operating_impact_source_audit/classifier_inventory_72.csv",
+      "sha256": "753efc7ba1766d399360cd1085e55646e81ee0812c7702034cac10bffa5f4772"
+    },
+    "joint_frontier_13": {
+      "path": "results/soc_triage_classifier_operating_impact_source_audit/joint_pareto_frontier_13.csv",
+      "sha256": "45f90bd57c460beabcf659af58010aec818ac27b4e3a4613a1d07d16e8456924"
+    },
+    "source_audit_metadata": {
+      "path": "results/soc_triage_classifier_operating_impact_source_audit/audit_metadata.json",
+      "sha256": "4698f79413161b49c87ab208cbc47c7cc72f8b2b66b6e0c54feb14da2384cc4c"
+    }
+  },
+  "sha256_outputs": {
+    "classifier_organization_interactions.csv": "ca5bf341b8978a2e3c1a3a7500b81449310bc39bcb51c0ec543b04da850184d7",
+    "descriptive_classifier_choices.csv": "743a738a9151af5056fc569a214f1ffba29117f3214ba06bdb25564d93c2cb75",
+    "episodes.csv": "ba56ba7ac0a9db71672aa29834bf6dc8a375d2fd63b67976d266012b6349997d",
+    "figure_classifier_codebook.csv": "dacc8bc5c4b43b32b397d713cdfc5d51e7e7e04a85a51773b3c90ec561a40d8d",
+    "frontier_operational_tradeoff.png": "99b7ee9c7bc2210e2902f15cdd1c6b0ea9e7a6e818de2333be52e5e48a1a7a45",
+    "operational_pareto.csv": "8c40540bd7def8bb623b89b0628eae62b7f4e4e4b6f4dca3963c3efacecf7ed3",
+    "paired_classifier_contrasts.csv": "d03d15aca58d22aa54328bea589b80f0a7a19c4a972663c855be4c784837035e",
+    "paired_policy_contrasts.csv": "2a900f900a6e56a2bd506dd7534caebadaa3f63aae999e0d45ced2e63603f67d",
+    "phase2_reuse_source_episodes.csv": "0127cab736283aa61ec379688a79d53195c01695ebbb4c225036dbd90608cfd8",
+    "phase2_reuse_trace_audit.csv": "bc77fabdaf36264a58a3bef680f89f792c929628be976223453248a095c14500",
+    "prevalence_sensitivity_paired.csv": "ff6796a85f25e2583a28b323fbb83d52beb44e5f37470ae3f2bddd44712a55b9",
+    "summary_by_condition.csv": "8e7910c2caf79a74515214a4c8baf3625ce9bc094e99a8c76022ef1114e72516",
+    "unique_trace_positive_counts.csv": "357b9c417f929f3b98cb3e9bba2db60c55181fcae2ca7f6903face0d5bb9e855",
+    "validation_checks.json": "93c5aa031f74a8d643f9f3204410825b2fa54b6e939e048f8b76dc00aa9dc488",
+    "waps_switches.csv": "ef24d82f9d3a0f5dc3f613767752fa63716c2964f76f20b4322c1cd98f847195"
+  }
+}
