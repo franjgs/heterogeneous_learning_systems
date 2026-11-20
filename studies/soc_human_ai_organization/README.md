@@ -27,7 +27,7 @@ Esta carpeta documenta una aplicación de **HLS** al trabajo de analistas humano
 11. [Comparación exploratoria D1/P1–P5](SOC_POLICY_COMPARISON_RESULTS.md): campaña emparejada A0, rendimiento esperado, sensibilidad de plantilla y coste; sin evidencia de matching múltiple.
 12. [Consolidación científica](SOC_SCIENTIFIC_CONSOLIDATION.md): interpretación verificada y límites de A0, A3.2 y D1/P1–P5; punto de entrada a las cifras originales.
 13. [Validación confirmatoria D1/P1](SOC_CONFIRMATORY_RESULTS.md) y [protocolo prefijado](SOC_CONFIRMATORY_PROTOCOL.md): 100 semillas independientes en sobrecarga, análisis de carga y sensibilidad; evidencia limitada al simulador sintético.
-14. [Referencia operativa GMV-CERT](GMV_CERT_OPERATIONAL_REFERENCE.md): contenido cualitativo comunicado, interpretación, incógnitas e hipótesis, preservado como documento fuente de contexto.
+14. [Referencia operativa GMV-CERT](GMV_CERT_OPERATIONAL_REFERENCE.md): reconstrucción cualitativa preliminar, hipótesis diferenciadas por procedencia y temas para contrastar en la segunda ronda de contactos; no es un procedimiento verificado.
 15. [Desarrollo HLS-B](SOC_HLSB_DEVELOPMENT_RESULTS.md), [protocolo de validación](SOC_HLSB_VALIDATION_PROTOCOL.md) y [resultados independientes](SOC_HLSB_VALIDATION_RESULTS.md): selector D1/P1 por llegadas observadas, configuración congelada y cuatro escenarios sintéticos.
 
 La documentación general conserva autoridad para HLS: consultar [THEORY](../../docs/THEORY.md), [RESEARCH](../../docs/RESEARCH.md) y [HISTORY](../../docs/HISTORY.md) cuando la pregunta exceda esta aplicación. No se modifican desde esta consolidación.
