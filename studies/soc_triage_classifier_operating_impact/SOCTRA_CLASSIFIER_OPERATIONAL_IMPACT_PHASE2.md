@@ -1,5 +1,7 @@
 # SOCTRA classifier operating points and SOC operational impact — Phase 2
 
+> **Source-correction notice (2026-11-20):** the complete SOCTRA journal PDF supersedes the source inventory and Pareto interpretation in this report. All 25 operating-point rate pairs used here crosswalk exactly to symmetric-cost points in the article’s Table 5; the prior simulations remain unchanged and apply only to those matched synthetic rate pairs. The distinct asymmetric-cost Table 7 points were not simulated in this phase. See [the source correction and 72-point audit](SOCTRA_CLASSIFIER_SOURCE_CORRECTION.md) for the complete inventory, corrected frontiers, analytic load projections, and impact assessment. No prior numerical result file was modified.
+
 ## Executive summary
 
 This independent, exploratory study evaluates whether published escalation-classifier operating points can yield different operational outcomes once recommendations induce L2 work. The classifier scores are empirical aggregate values, but the recommendations used here are synthetic Bernoulli draws; there are no alert-level SOCTRA predictions in this study. The need-for-L2 variable, automatic acceptance, project-independent error rates, service times, and continuous analyst availability are modeling assumptions. Results therefore describe a controlled simulator, not GMV-CERT performance.

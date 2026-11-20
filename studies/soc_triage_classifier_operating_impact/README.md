@@ -5,6 +5,13 @@ organization-coupling pilot, D1, P1, WAPS/HLS-B, or the historical simulator.
 Published aggregate operating points are converted into keyed Bernoulli
 recommendations. No individual SOCTRA predictions or alert records are used.
 
+The complete article-PDF source correction and 72-point escalation inventory
+are documented in [SOCTRA_CLASSIFIER_SOURCE_CORRECTION.md](SOCTRA_CLASSIFIER_SOURCE_CORRECTION.md).
+It supersedes this phase's incomplete classifier-source inventory and
+Pareto interpretation while preserving all earlier simulation outputs.
+The joint symmetric/asymmetric frontier and campaign selection are in
+[SOCTRA_CLASSIFIER_JOINT_PARETO_CAMPAIGN_SELECTION.md](SOCTRA_CLASSIFIER_JOINT_PARETO_CAMPAIGN_SELECTION.md).
+
 ## Reproduction
 
 From the repository root:

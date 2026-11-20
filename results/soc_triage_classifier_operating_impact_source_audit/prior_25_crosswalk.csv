@@ -1,0 +1,26 @@
+prior_id,prior_source_table,label_definition,features,algorithm,pD,pFA,matches_pdf_symmetric_operating_point,match_id
+orig_lr_a,3,original,A,LR,0.825,0.3402,True,original_lr_a_symmetric
+orig_rf_a,3,original,A,RF,0.75,0.2714,True,original_rf_a_symmetric
+orig_xgboost_a,3,original,A,XGBoost,0.6,0.243,True,original_xgboost_a_symmetric
+orig_lightgbm_a,3,original,A,LightGBM,0.75,0.3516,True,original_lightgbm_a_symmetric
+orig_bayesian_mlp_a,3,original,A,Bayesian MLP,0.8,0.2301,True,original_bayesian_mlp_a_symmetric
+orig_lr_ac,3,original,A+C,LR,0.8,0.205,True,original_lr_apc_symmetric
+orig_rf_ac,3,original,A+C,RF,0.75,0.1618,True,original_rf_apc_symmetric
+orig_xgboost_ac,3,original,A+C,XGBoost,0.725,0.2074,True,original_xgboost_apc_symmetric
+orig_lightgbm_ac,3,original,A+C,LightGBM,0.75,0.1664,True,original_lightgbm_apc_symmetric
+orig_bayesian_mlp_ac,3,original,A+C,Bayesian MLP,0.85,0.2056,True,original_bayesian_mlp_apc_symmetric
+std_lr_a,5,standardized,A,LR,0.6842,0.0082,True,standardized_lr_a_symmetric
+std_rf_a,5,standardized,A,RF,0.8421,0.1231,True,standardized_rf_a_symmetric
+std_xgboost_a,5,standardized,A,XGBoost,0.6842,0.0124,True,standardized_xgboost_a_symmetric
+std_lightgbm_a,5,standardized,A,LightGBM,0.7895,0.0608,True,standardized_lightgbm_a_symmetric
+std_bayesian_mlp_a,5,standardized,A,Bayesian MLP,0.6842,0.0177,True,standardized_bayesian_mlp_a_symmetric
+std_lr_ac,5,standardized,A+C,LR,0.6842,0.0081,True,standardized_lr_apc_symmetric
+std_rf_ac,5,standardized,A+C,RF,0.8421,0.1491,True,standardized_rf_apc_symmetric
+std_xgboost_ac,5,standardized,A+C,XGBoost,0.6842,0.0136,True,standardized_xgboost_apc_symmetric
+std_lightgbm_ac,5,standardized,A+C,LightGBM,0.8421,0.045,True,standardized_lightgbm_apc_symmetric
+std_bayesian_mlp_ac,5,standardized,A+C,Bayesian MLP,0.7042,0.0154,True,standardized_bayesian_mlp_apc_symmetric
+std_lr_c,7,standardized,C,LR,0.7895,0.3294,True,standardized_lr_c_symmetric
+std_rf_c,7,standardized,C,RF,0.8421,0.3545,True,standardized_rf_c_symmetric
+std_xgboost_c,7,standardized,C,XGBoost,0.8421,0.3421,True,standardized_xgboost_c_symmetric
+std_lightgbm_c,7,standardized,C,LightGBM,0.8947,0.4051,True,standardized_lightgbm_c_symmetric
+std_bayesian_mlp_c,7,standardized,C,Bayesian MLP,0.8421,0.3793,True,standardized_bayesian_mlp_c_symmetric
