@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="620" viewBox="0 0 1050 620"><rect width="1050" height="620" fill="white"/><text x="25" y="25" font-family="sans-serif" font-size="18">Mapa de perfiles: Δ R/N terminal HLS-B − mejor política fija</text>
+<text x="20" y="69" font-family="sans-serif" font-size="12">B08_rho110_d8 | ρ=1.10, d=8h, B=0.8, Γ=0.44</text>
+<line x1="244.2" y1="65" x2="257.8" y2="65" stroke="#fdae61" stroke-width="3"/><circle cx="251.0" cy="65" r="6" fill="#fdae61"/><text x="780" y="69" font-family="sans-serif" font-size="11">D1; -0.002 [-0.004,-0.001]</text>
+<text x="20" y="108" font-family="sans-serif" font-size="12">B08_rho120_d4 | ρ=1.20, d=4h, B=0.8, Γ=0.33</text>
+<line x1="248.9" y1="104" x2="257.8" y2="104" stroke="#fdae61" stroke-width="3"/><circle cx="253.3" cy="104" r="6" fill="#fdae61"/><text x="780" y="108" font-family="sans-serif" font-size="11">D1; -0.002 [-0.003,-0.001]</text>
+<text x="20" y="147" font-family="sans-serif" font-size="12">B08_rho140_d2 | ρ=1.40, d=2h, B=0.8, Γ=0.30</text>
+<line x1="252.3" y1="143" x2="259.3" y2="143" stroke="#fdae61" stroke-width="3"/><circle cx="255.8" cy="143" r="6" fill="#fdae61"/><text x="780" y="147" font-family="sans-serif" font-size="11">D1; -0.001 [-0.002,-0.000]</text>
+<text x="20" y="186" font-family="sans-serif" font-size="12">B16_rho110_d16 | ρ=1.10, d=16h, B=1.6, Γ=2.67</text>
+<line x1="230.8" y1="182" x2="254.4" y2="182" stroke="#fdae61" stroke-width="3"/><circle cx="242.6" cy="182" r="6" fill="#fdae61"/><text x="780" y="186" font-family="sans-serif" font-size="11">D1; -0.004 [-0.007,-0.001]</text>
+<text x="20" y="225" font-family="sans-serif" font-size="12">B16_rho120_d8 | ρ=1.20, d=8h, B=1.6, Γ=0.89</text>
+<line x1="228.9" y1="221" x2="241.1" y2="221" stroke="#d73027" stroke-width="3"/><circle cx="235.0" cy="221" r="6" fill="#d73027"/><text x="780" y="225" font-family="sans-serif" font-size="11">D1; -0.006 [-0.007,-0.004]</text>
+<text x="20" y="264" font-family="sans-serif" font-size="12">B16_rho140_d4 | ρ=1.40, d=4h, B=1.6, Γ=0.67</text>
+<line x1="236.7" y1="260" x2="247.4" y2="260" stroke="#fdae61" stroke-width="3"/><circle cx="242.1" cy="260" r="6" fill="#fdae61"/><text x="780" y="264" font-family="sans-serif" font-size="11">D1; -0.004 [-0.006,-0.003]</text>
+<text x="20" y="303" font-family="sans-serif" font-size="12">nom_r125_d2 | ρ=1.25, d=2h, B=0.5, Γ=0.19</text>
+<line x1="259.2" y1="299" x2="260.3" y2="299" stroke="#91bfdb" stroke-width="3"/><circle cx="259.7" cy="299" r="6" fill="#91bfdb"/><text x="780" y="303" font-family="sans-serif" font-size="11">D1; -0.000 [-0.000,+0.000]</text>
+<text x="20" y="342" font-family="sans-serif" font-size="12">nom_r125_d4 | ρ=1.25, d=4h, B=1.0, Γ=0.42</text>
+<line x1="242.1" y1="338" x2="251.8" y2="338" stroke="#fdae61" stroke-width="3"/><circle cx="246.9" cy="338" r="6" fill="#fdae61"/><text x="780" y="342" font-family="sans-serif" font-size="11">D1; -0.003 [-0.004,-0.002]</text>
+<text x="20" y="381" font-family="sans-serif" font-size="12">nom_r125_d8 | ρ=1.25, d=8h, B=2.0, Γ=1.11</text>
+<line x1="224.1" y1="377" x2="247.4" y2="377" stroke="#d73027" stroke-width="3"/><circle cx="235.8" cy="377" r="6" fill="#d73027"/><text x="780" y="381" font-family="sans-serif" font-size="11">D1; -0.006 [-0.009,-0.003]</text>
+<text x="20" y="420" font-family="sans-serif" font-size="12">nom_r125_d12 | ρ=1.25, d=12h, B=3.0, Γ=2.50</text>
+<line x1="233.8" y1="416" x2="345.5" y2="416" stroke="#fdae61" stroke-width="3"/><circle cx="289.6" cy="416" r="6" fill="#fdae61"/><text x="780" y="420" font-family="sans-serif" font-size="11">D1; +0.007 [-0.006,+0.020]</text>
+<text x="20" y="459" font-family="sans-serif" font-size="12">nom_r125_d16 | ρ=1.25, d=16h, B=4.0, Γ=6.67</text>
+<line x1="324.4" y1="455" x2="351.0" y2="455" stroke="#1a9850" stroke-width="3"/><circle cx="337.7" cy="455" r="6" fill="#1a9850"/><text x="780" y="459" font-family="sans-serif" font-size="11">P1; +0.019 [+0.015,+0.022]</text>
+<text x="20" y="498" font-family="sans-serif" font-size="12">nom_r125_d8_fastrec | ρ=1.25, d=8h, B=2.0, Γ=1.11</text>
+<line x1="220.0" y1="494" x2="231.8" y2="494" stroke="#d73027" stroke-width="3"/><circle cx="225.9" cy="494" r="6" fill="#d73027"/><text x="780" y="498" font-family="sans-serif" font-size="11">D1; -0.008 [-0.010,-0.007]</text>
+<line x1="260" y1="52" x2="260" y2="535" stroke="#777" stroke-dasharray="4 3"/>
+<text x="25" y="570" fill="#1a9850" font-family="sans-serif" font-size="12">ventaja descriptiva</text>
+<text x="180" y="570" fill="#d73027" font-family="sans-serif" font-size="12">inferioridad</text>
+<text x="300" y="570" fill="#91bfdb" font-family="sans-serif" font-size="12">casi empate</text>
+<text x="430" y="570" fill="#fdae61" font-family="sans-serif" font-size="12">incierto</text>
+<text x="25" y="600" font-family="sans-serif" font-size="11">IC95 % t pareado exploratorio, n=20; mejor fija seleccionada por media; sin ajuste multiplicidad.</text>
+</svg>

@@ -1,0 +1,12 @@
+{
+  "phase": "exploratory_development",
+  "seed_base": 261230000,
+  "seed_count": 20,
+  "admission_h": 24.0,
+  "drain_h": 24.0,
+  "pulse_start_h": 4.0,
+  "rho_normal": 0.85,
+  "rho_overload": 1.25,
+  "durations_h": [2, 4, 6, 8, 12, 16],
+  "hlsb": {"window_h": 4.0, "low": 1.05, "high": 1.20}
+}

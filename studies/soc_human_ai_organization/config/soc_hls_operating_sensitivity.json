@@ -1,0 +1,26 @@
+{
+  "phase": "selected_secondary_sensitivities",
+  "seed_base": 261250000,
+  "seed_count": 20,
+  "pulse_start_h": 4.0,
+  "horizon_h": 24.0,
+  "drain_h": 24.0,
+  "rho_normal_base_team": 0.85,
+  "rho_pulse_base_team": 1.25,
+  "selected_durations_h": [8,16],
+  "sla_sets": [
+    {"name":"scale_075","T0":0.75,"f_high":4,"f_low":12,"axis":"scale"},
+    {"name":"reference","T0":1.0,"f_high":4,"f_low":12,"axis":"reference"},
+    {"name":"scale_125","T0":1.25,"f_high":4,"f_low":12,"axis":"scale"},
+    {"name":"separation_2_8","T0":1.0,"f_high":2,"f_low":8,"axis":"separation"},
+    {"name":"separation_8_16","T0":1.0,"f_high":8,"f_low":16,"axis":"separation"}
+  ],
+  "teams": [
+    {"name":"L1_5_L2_3","n_l1":5,"n_l2":3},
+    {"name":"L1_6_L2_2","n_l1":6,"n_l2":2},
+    {"name":"L1_6_L2_3","n_l1":6,"n_l2":3},
+    {"name":"L1_6_L2_4","n_l1":6,"n_l2":4},
+    {"name":"L1_7_L2_3","n_l1":7,"n_l2":3}
+  ],
+  "hlsb":{"window_h":4.0,"low":1.05,"high":1.20}
+}

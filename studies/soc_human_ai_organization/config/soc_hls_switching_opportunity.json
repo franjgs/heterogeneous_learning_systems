@@ -1,0 +1,13 @@
+{
+  "phase": "exploratory_timing",
+  "seed_base": 261210000,
+  "seed_count": 20,
+  "horizon_h": 24.0,
+  "drain_h": 24.0,
+  "regime_lengths_h": [2.0, 4.0, 12.0],
+  "orders": ["moderate_first", "overload_first"],
+  "rho_moderate": 1.0,
+  "rho_overload": 1.25,
+  "offsets_h": [-2.0, -1.0, 0.0, 1.0, 2.0, 4.0],
+  "hlsb": {"window_h": 4.0, "low": 1.05, "high": 1.20}
+}

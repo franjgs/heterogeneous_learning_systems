@@ -1,0 +1,34 @@
+{
+  "mu_l1": 28.41858770124891,
+  "expected_arrivals_by_duration": {
+    "2": 602.4740592664768,
+    "4": 625.208929427476,
+    "6": 647.943799588475,
+    "8": 670.6786697494742,
+    "12": 716.1484100714725,
+    "16": 761.6181503934707
+  },
+  "config": {
+    "phase": "exploratory_development",
+    "seed_base": 261230000,
+    "seed_count": 20,
+    "admission_h": 24.0,
+    "drain_h": 24.0,
+    "pulse_start_h": 4.0,
+    "rho_normal": 0.85,
+    "rho_overload": 1.25,
+    "durations_h": [
+      2,
+      4,
+      6,
+      8,
+      12,
+      16
+    ],
+    "hlsb": {
+      "window_h": 4.0,
+      "low": 1.05,
+      "high": 1.2
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "config": {
+    "phase": "development_pilot",
+    "seed_base": 261220000,
+    "seed_count": 8,
+    "horizon_h": 36.0,
+    "drain_h": 36.0,
+    "normal_rho_assumed": 0.5,
+    "peak_multiplier_observed_daily_max_over_mean": 2.654,
+    "recovery_rho_assumed": 0.85,
+    "pulse_rho": 1.327,
+    "profiles": [
+      {
+        "name": "brief_overload_recovery",
+        "segments": [
+          [
+            0,
+            6,
+            0.5
+          ],
+          [
+            6,
+            10,
+            1.327
+          ],
+          [
+            10,
+            36,
+            0.5
+          ]
+        ]
+      },
+      {
+        "name": "sustained_overload_recovery",
+        "segments": [
+          [
+            0,
+            6,
+            0.5
+          ],
+          [
+            6,
+            18,
+            1.327
+          ],
+          [
+            18,
+            36,
+            0.5
+          ]
+        ]
+      },
+      {
+        "name": "recurrent_incomplete_recovery",
+        "segments": [
+          [
+            0,
+            6,
+            0.5
+          ],
+          [
+            6,
+            8,
+            1.327
+          ],
+          [
+            8,
+            14,
+            0.85
+          ],
+          [
+            14,
+            16,
+            1.327
+          ],
+          [
+            16,
+            22,
+            0.85
+          ],
+          [
+            22,
+            24,
+            1.327
+          ],
+          [
+            24,
+            36,
+            0.85
+          ]
+        ]
+      }
+    ],
+    "hlsb": {
+      "window_h": 4.0,
+      "low": 1.05,
+      "high": 1.2
+    }
+  },
+  "mu_l1": 28.41858770124891,
+  "mu_l2": 3.8350089865588264,
+  "trace_pairs": 24,
+  "policy_episodes": 144
+}
