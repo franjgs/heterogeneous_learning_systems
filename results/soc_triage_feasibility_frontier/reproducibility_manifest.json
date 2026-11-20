@@ -1,0 +1,26 @@
+{
+  "created_utc": "2026-11-20T23:26:22+00:00",
+  "analysis_only_no_simulations": true,
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 20261121,
+  "input_sha256": {
+    "studies/soc_triage_feasibility_frontier/config/analysis.json": "92f806510f133a3af0680f4daf3ccca748d5c390ece7b2c8c6646b60357d54ce",
+    "results/soc_triage_classifier_frontier_campaign/episodes.csv": "ba56ba7ac0a9db71672aa29834bf6dc8a375d2fd63b67976d266012b6349997d",
+    "results/soc_triage_classifier_frontier_campaign/reproducibility_manifest.json": "541dc8cf064617ac85eaebee316f6f07af0400d60297b6b03e6241739f8bb327",
+    "results/soc_triage_classifier_operating_impact_source_audit/classifier_inventory_72.csv": "0308f9c948c942e80b77d602610baccc59d7e5233d329de5afe3bb3ddb1480cb",
+    "studies/soc_triage_classifier_frontier_campaign/config/campaign.json": "858abeadd6f4b6d4d880b2bb11c8b3b829e4ef742b805886e380c33158456972"
+  },
+  "output_sha256": {
+    "analytic_capacity_load.csv": "b36478d4ab627a774a66eabee69fb25f1c95b35e69629d5c622e21ee2749d582",
+    "feasibility_grid.csv": "68f248914d5b203653a8464b50a974c8c32ed9d42d53d2d231a3038c29860dd2",
+    "heterogeneous_pfa_capacity_boundaries.csv": "5217ab4031a6bb61a29e798a86954eb528ef09416d0e56407e299ffd1d7bd595",
+    "prevalence_sensitivity_splus.csv": "ed5cd4837384c8009cbfac1e105846a7a59683e777ec44f5a68be0c5e2410833",
+    "priority_case_feasibility.png": "3232158abc79339ccf5887c858ead4f566655bf4fa69d61f258ba8693c515bce",
+    "priority_case_splus_by_policy.png": "453e111f4f5a0d8d95eb58370ab31f901ca740a8dc609c7b6e7ec01df67466f4",
+    "priority_case_status.csv": "052e17abf9a7564f6c0fa8651f9b7ead5075a4c5f9f31d24a1243f4a131b038c",
+    "splus_estimates.csv": "a6af3f187d792f0dd8603b82c2c62ae2501a20f9eacc05bd40baffc8a7e4bd90",
+    "splus_paired_contrasts.csv": "af2353aa5a1b8d445fafffdbdc31e782a949658b1b44897a46a5cf3a3fbfc3b4",
+    "threshold_080_summary.csv": "287e0e94dd42192f663784d4161d695df23601d6b87ee801d13d4ea8d5d715da",
+    "validation_checks.json": "dede207c5dc8811113d07c0a6730a77ea2a06534e9e8ca0daf3ec86ea93fcdd5"
+  }
+}

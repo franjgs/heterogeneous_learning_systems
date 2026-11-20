@@ -1,0 +1,337 @@
+{
+  "status": "PASS",
+  "failures": [],
+  "episodes_read": 18720,
+  "seed_count": 40,
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 20261121,
+  "seed_cluster_ids": [
+    272600000,
+    272600001,
+    272600002,
+    272600003,
+    272600004,
+    272600005,
+    272600006,
+    272600007,
+    272600008,
+    272600009,
+    272600010,
+    272600011,
+    272600012,
+    272600013,
+    272600014,
+    272600015,
+    272600016,
+    272600017,
+    272600018,
+    272600019,
+    272600020,
+    272600021,
+    272600022,
+    272600023,
+    272600024,
+    272600025,
+    272600026,
+    272600027,
+    272600028,
+    272600029,
+    272600030,
+    272600031,
+    272600032,
+    272600033,
+    272600034,
+    272600035,
+    272600036,
+    272600037,
+    272600038,
+    272600039
+  ],
+  "numerator_reconstruction": "necessary_L2_timely_per_need \u00d7 true_need_count, checked integer to 1e-9; numerator <= TP_count",
+  "need_denominator": "true_need_count; TP_count+FN_count checked for every episode",
+  "policy_denominator_pairing": "exact per seed across D1/P1/HLS-B and all classifier/roster alternatives",
+  "finite_sample_Splus_le_empirical_pD_rows_checked": 18720,
+  "Splus_point_estimates_above_published_pD_count": 32,
+  "Splus_above_published_pD_cells": [
+    [
+      "standardized",
+      "standardized_bayesian_mlp_apc_symmetric",
+      "D1",
+      0.85,
+      2
+    ],
+    [
+      "standardized",
+      "standardized_bayesian_mlp_apc_symmetric",
+      "P1",
+      0.85,
+      2
+    ],
+    [
+      "standardized",
+      "standardized_bayesian_mlp_apc_symmetric",
+      "HLS-B",
+      0.85,
+      2
+    ],
+    [
+      "standardized",
+      "standardized_bayesian_mlp_apc_symmetric",
+      "D1",
+      0.85,
+      3
+    ],
+    [
+      "standardized",
+      "standardized_bayesian_mlp_apc_symmetric",
+      "P1",
+      0.85,
+      3
+    ],
+    [
+      "standardized",
+      "standardized_bayesian_mlp_apc_symmetric",
+      "HLS-B",
+      0.85,
+      3
+    ],
+    [
+      "standardized",
+      "standardized_bayesian_mlp_apc_symmetric",
+      "D1",
+      0.85,
+      4
+    ],
+    [
+      "standardized",
+      "standardized_bayesian_mlp_apc_symmetric",
+      "P1",
+      0.85,
+      4
+    ],
+    [
+      "standardized",
+      "standardized_bayesian_mlp_apc_symmetric",
+      "HLS-B",
+      0.85,
+      4
+    ],
+    [
+      "standardized",
+      "standardized_bayesian_mlp_apc_symmetric",
+      "P1",
+      1.25,
+      2
+    ],
+    [
+      "standardized",
+      "standardized_bayesian_mlp_apc_symmetric",
+      "P1",
+      1.25,
+      3
+    ],
+    [
+      "standardized",
+      "standardized_bayesian_mlp_apc_symmetric",
+      "P1",
+      1.25,
+      4
+    ],
+    [
+      "standardized",
+      "standardized_lightgbm_apc_symmetric",
+      "P1",
+      0.85,
+      2
+    ],
+    [
+      "standardized",
+      "standardized_lightgbm_apc_symmetric",
+      "D1",
+      0.85,
+      3
+    ],
+    [
+      "standardized",
+      "standardized_lightgbm_apc_symmetric",
+      "P1",
+      0.85,
+      3
+    ],
+    [
+      "standardized",
+      "standardized_lightgbm_apc_symmetric",
+      "HLS-B",
+      0.85,
+      3
+    ],
+    [
+      "standardized",
+      "standardized_lightgbm_apc_symmetric",
+      "P1",
+      0.85,
+      4
+    ],
+    [
+      "standardized",
+      "standardized_lr_apc_symmetric",
+      "D1",
+      0.85,
+      2
+    ],
+    [
+      "standardized",
+      "standardized_lr_apc_symmetric",
+      "P1",
+      0.85,
+      2
+    ],
+    [
+      "standardized",
+      "standardized_lr_apc_symmetric",
+      "HLS-B",
+      0.85,
+      2
+    ],
+    [
+      "standardized",
+      "standardized_lr_apc_symmetric",
+      "D1",
+      0.85,
+      3
+    ],
+    [
+      "standardized",
+      "standardized_lr_apc_symmetric",
+      "P1",
+      0.85,
+      3
+    ],
+    [
+      "standardized",
+      "standardized_lr_apc_symmetric",
+      "HLS-B",
+      0.85,
+      3
+    ],
+    [
+      "standardized",
+      "standardized_lr_apc_symmetric",
+      "D1",
+      0.85,
+      4
+    ],
+    [
+      "standardized",
+      "standardized_lr_apc_symmetric",
+      "P1",
+      0.85,
+      4
+    ],
+    [
+      "standardized",
+      "standardized_lr_apc_symmetric",
+      "HLS-B",
+      0.85,
+      4
+    ],
+    [
+      "standardized",
+      "standardized_lr_apc_symmetric",
+      "P1",
+      1.25,
+      2
+    ],
+    [
+      "standardized",
+      "standardized_lr_apc_symmetric",
+      "P1",
+      1.25,
+      3
+    ],
+    [
+      "standardized",
+      "standardized_lr_apc_symmetric",
+      "P1",
+      1.25,
+      4
+    ],
+    [
+      "standardized",
+      "standardized_rf_apc_asymmetric_cM3cFA",
+      "P1",
+      0.85,
+      4
+    ],
+    [
+      "standardized",
+      "standardized_rf_apc_symmetric",
+      "D1",
+      0.85,
+      4
+    ],
+    [
+      "standardized",
+      "standardized_rf_apc_symmetric",
+      "HLS-B",
+      0.85,
+      4
+    ]
+  ],
+  "Splus_above_published_pD_ci_contains_target_count": 32,
+  "Splus_above_published_pD_ci_lower_above_target_count": 0,
+  "unique_need_prevalence_load_seed_cells": 240,
+  "capacity_LP_source_metric_max_abs_difference": 0.0006128235753140032,
+  "capacity_LP_condition_comparisons": 156,
+  "capacity_LP_source_metric_differences_by_prevalence": {
+    "original_audited_39_of_14449": {
+      "n": 54,
+      "max_abs": 6.183890776778611e-06,
+      "mean_signed": 1.5258538934951698e-06
+    },
+    "original_pdf_ir_implied_40_of_14449": {
+      "n": 54,
+      "max_abs": 0.0006128235753140032,
+      "mean_signed": -0.00015121212068841745
+    },
+    "standardized_pdf_ir_implied_19_of_14449": {
+      "n": 48,
+      "max_abs": 8.881784197001252e-16,
+      "mean_signed": -2.2695965477363227e-17
+    }
+  },
+  "capacity_feasibility_threshold_classification_crossings": {
+    "original_audited_39_of_14449|rho_max=0.5": 0,
+    "original_audited_39_of_14449|rho_max=0.8": 0,
+    "original_audited_39_of_14449|rho_max=1.0": 0,
+    "original_audited_39_of_14449|rho_max=1.2": 0,
+    "original_pdf_ir_implied_40_of_14449|rho_max=0.5": 0,
+    "original_pdf_ir_implied_40_of_14449|rho_max=0.8": 0,
+    "original_pdf_ir_implied_40_of_14449|rho_max=1.0": 0,
+    "original_pdf_ir_implied_40_of_14449|rho_max=1.2": 0,
+    "standardized_pdf_ir_implied_19_of_14449|rho_max=0.5": 0,
+    "standardized_pdf_ir_implied_19_of_14449|rho_max=0.8": 0,
+    "standardized_pdf_ir_implied_19_of_14449|rho_max=1.0": 0,
+    "standardized_pdf_ir_implied_19_of_14449|rho_max=1.2": 0
+  },
+  "zero_need_seed_cells": 66,
+  "zero_denominator_bootstrap_replicates": "excluded from ratio quantiles and counted per condition; all point denominators positive",
+  "monotonicity_violations": 0,
+  "demand_scenarios_preserved": [
+    0.85,
+    1.25
+  ],
+  "l2_rosters": [
+    2,
+    3,
+    4
+  ],
+  "policy_set": [
+    "D1",
+    "P1",
+    "HLS-B"
+  ],
+  "simulation_executed": false,
+  "source_campaign_commit": "218dc7ba4616b26f7051d7548e6fbcecfd8bc5b8",
+  "campaign_trace_hash_checks": "inherited from source campaign validation_checks.json"
+}

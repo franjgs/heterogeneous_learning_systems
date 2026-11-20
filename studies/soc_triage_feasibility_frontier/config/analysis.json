@@ -1,0 +1,26 @@
+{
+  "reference_campaign_commit": "3a199faf9cce6ef95e74258e4e282c456de0f0a6",
+  "episode_input": "results/soc_triage_classifier_frontier_campaign/episodes.csv",
+  "classifier_inventory_input": "results/soc_triage_classifier_operating_impact_source_audit/classifier_inventory_72.csv",
+  "bootstrap": {
+    "method": "paired seed-cluster percentile bootstrap",
+    "replicates": 10000,
+    "seed": 20261121,
+    "zero_denominator_replicates": "exclude from ratio quantiles and report count"
+  },
+  "threshold_grid": {
+    "d_min": [0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 1.0],
+    "rho_max": [0.5, 0.8, 1.0, 1.2],
+    "s_min": [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95]
+  },
+  "priority_case": {
+    "classifier_id": "standardized_lightgbm_apc_symmetric",
+    "prevalence_scenario": "standardized_pdf_ir_implied_19_of_14449",
+    "rho_L1": 1.25,
+    "n_L2": 3,
+    "d_min": 0.8,
+    "rho_max": 0.8,
+    "s_min": 0.7
+  },
+  "simulation_executed": false
+}
