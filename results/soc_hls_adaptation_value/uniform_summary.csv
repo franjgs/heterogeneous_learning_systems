@@ -1,0 +1,2 @@
+D1_expected_RN,P1_expected_RN,HLSB_expected_RN,best_fixed_ex_ante,best_fixed_expected_RN,V_adapt,V_adapt_relative_percent,bootstrap_95_low,bootstrap_95_high,bootstrap_probability_V_positive,bootstrap_best_fixed_D1_frequency,bootstrap_best_fixed_P1_frequency,oracle_retrospective_RN,oracle_minus_HLSB_regret,HLSB_loses_to_ex_ante_fixed_fraction_of_seed_portfolios
+0.66085502,0.63429609,0.66132526,D1,0.66085502,0.00047024,0.07116,-0.00132696,0.00241682,0.67490,1.00000,0.00000,0.66220807,0.00088281,0.50000
