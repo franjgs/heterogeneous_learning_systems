@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "episode_rows": 43200,
+  "expected_rows": 43200,
+  "duplicate_factor_rows": 0,
+  "factor_grid": {
+    "classifiers": [
+      "standardized_lightgbm_apc_symmetric",
+      "standardized_lsensemble_apc_symmetric",
+      "standardized_bayesian_mlp_apc_symmetric"
+    ],
+    "alpha": [
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "n_L2": [
+      2,
+      3,
+      4
+    ],
+    "policies": [
+      "D1",
+      "P1",
+      "HLS-B"
+    ]
+  },
+  "independent_simulation_units": 400,
+  "rows_per_seed_block": 108,
+  "positive_need_alerts": 474,
+  "positive_need_seed_blocks": 267,
+  "zero_need_seed_blocks": 133,
+  "need_count_distribution": {
+    "0": 133,
+    "1": 136,
+    "2": 81,
+    "3": 30,
+    "4": 15,
+    "5": 4,
+    "6": 1
+  },
+  "admitted_alert_count_min_max": [
+    759,
+    939
+  ],
+  "exogenous_trace_hashes_shared_across_classifiers": true,
+  "confusion_and_recommendation_counts_constant_within_classifier_seed": true,
+  "S_plus_denominator_equals_all_needs": true,
+  "S_plus_numerator_not_greater_than_TP": true,
+  "bootstrap": {
+    "replicates": 10000,
+    "seed": 711202611,
+    "block": "seed ID; same index matrix for all classifiers/policies/alpha/rosters",
+    "zero_denominator_replicates": 0
+  },
+  "interaction_rows": 108,
+  "interaction_formula": "(S_A_P-S_B_P)-(S_A_Q-S_B_Q)",
+  "maxT_familywise_intervals": "paired non-studentized max-|z| bootstrap over all 108 contrasts",
+  "maxT_critical_value": 3.450844685408839,
+  "maxT_intervals_excluding_zero": 9,
+  "multiplicity_adjustment": "none; exploratory intervals are pointwise",
+  "published_pD_pFA_uncertainty": "not estimated: audited model-specific source counts/denominators unavailable; rates held fixed"
+}

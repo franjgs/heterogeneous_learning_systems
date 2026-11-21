@@ -1,0 +1,2 @@
+seed_count,mean_L1_P1_fraction,mean_L1_switches_per_seed,total_L1_switches,mean_L1_backlog_H,mean_L1_backlog_terminal,mean_L1_utilization_H,mean_L1_utilization_terminal
+400,0.5887925121606318,2.87,1148,218.53,0.0,0.9944492010166042,0.5310489756944441

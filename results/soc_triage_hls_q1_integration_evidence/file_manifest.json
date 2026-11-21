@@ -1,0 +1,197 @@
+{
+  "format": "sha256-file-inventory-v1",
+  "base_commit": "cc0880d8f56cb3aa05ff29f55f493441ec01206a",
+  "branch": "research/soctra-hls-q1-integration-evidence",
+  "files": [
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/alpha_paired_contrasts.csv",
+      "bytes": 12399,
+      "sha256": "1f65b52d9061b685f7c566675f224f9b0657085eab0dd94d00a9564d3301f20e"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/analytic_workload_by_alpha.csv",
+      "bytes": 17240,
+      "sha256": "f05ad3b645ba8c9269b7e79819fc64f168b3bbd92d96bb603e012e831664815a"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/audit_checks.json",
+      "bytes": 1720,
+      "sha256": "038182287cf37626788d87085ce13d034a7bfd433ed51e0b7987f1a3a0d2ec82"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/audit_interaction_contrasts.csv",
+      "bytes": 38334,
+      "sha256": "739b107cc67d04b87025b0d741f233d0812aa5d42eba4060e8cc39adcc1f8a0a"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/audit_need_distribution.csv",
+      "bytes": 71,
+      "sha256": "ee722a426776d5a181c601a7c21d7276e49ca4799fffb6ffaa1f6c5369c74da3"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/classifier_organization_interactions.csv",
+      "bytes": 6370,
+      "sha256": "b6850b2b3853a54e07c3b08babbe0956022c951606435bc14ee06a9fd1faaeca"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/episodes.csv",
+      "bytes": 31414756,
+      "sha256": "b526f207d6db94697531e2aee8c0371ff579bce924c36d42c010016c8cb44ac5"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/execution_manifest.json",
+      "bytes": 4391,
+      "sha256": "e1015092eddc5dbc550b2ad77ae30cb9fcc3ccca3ece2c0f1811a1f88119e5b2"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/figures/policy_contrasts_alpha.png",
+      "bytes": 194215,
+      "sha256": "89d181b627d4d26cb83b62064ac30d4e85cc18ab9d942b80fdd238952ca731ee"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/figures/rho_l2_alpha.png",
+      "bytes": 137439,
+      "sha256": "37fa753d756ca4264d1e33f92fe1468c379e4ba2742fe2abffbb2797f57c1fc4"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/figures/splus_alpha_capacity.png",
+      "bytes": 232850,
+      "sha256": "a2078f5c5d6730882ddc20fd7fa3fd710b9a92584eeece307e7b5060b7ea9d09"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/l1_waps_mode_summary.csv",
+      "bytes": 251,
+      "sha256": "536ea4f7f5ae3cfc5788152128773dfd6384a9ed151807dc4373a55a4fd8043b"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/l1_waps_modes_by_seed.csv",
+      "bytes": 59232,
+      "sha256": "12142e0c908c458a182a0621e8b114df989c56ca39ccd3ba309abb9ba11277bb"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/l1_waps_switches.csv",
+      "bytes": 63893,
+      "sha256": "c9d8e40d4e767424b0e5abe4e5b62a3d8763127611b2ef1d63f254ff63c527cc"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/paired_classifier_contrasts.csv",
+      "bytes": 20180,
+      "sha256": "7c8e8a488faf5acd99b0259014c49a255a16b31431615787bf639af625acad93"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/paired_policy_contrasts.csv",
+      "bytes": 12863,
+      "sha256": "2a1ae54a8fd2b742e8b93af2b97899ae0a5d7e9aaa6c025f259d9b0648a7098f"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/summary_by_condition.csv",
+      "bytes": 101536,
+      "sha256": "ec69253248954e34115a886bc0bb035ae8d55b266f0adca8188d8e03f809171b"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/trace_audit.csv",
+      "bytes": 220872,
+      "sha256": "d98bbe623cc9cefb17c7fab85654d909ea94c26c240e82dadea5b97f812f48bf"
+    },
+    {
+      "path": "results/soc_triage_hls_q1_integration_evidence/validation_checks.json",
+      "bytes": 1072,
+      "sha256": "5502d642fab169bc9743b4a24d695d281b618b3405aee80c48f281464b9efa9f"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/AUDIT_FINAL.md",
+      "bytes": 15675,
+      "sha256": "9fc3f09afd0afbdb86ca216880e9d2ed3c7267b053a1066d86dc8d70067b0376"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/AUDIT_REPORT.md",
+      "bytes": 6513,
+      "sha256": "621f3ef0c76f6fccd469aa2b66aae85418a92165a2e58384c0fb47f54bd62b29"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/EXPERIMENTAL_DESIGN.md",
+      "bytes": 4497,
+      "sha256": "762e27a1b02000c89cf92d4812205f1ce1c9eeb94be0baafcd4ccf37c24e9731"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/EXPERIMENTAL_RESULTS.md",
+      "bytes": 9771,
+      "sha256": "91f3c5e7eb6e425890fcdf4888d88994f9bc56030b4a2d1afe513852f6548221"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/FP_WORKLOAD_SENSITIVITY.md",
+      "bytes": 3408,
+      "sha256": "152e0d9ef62722c2d51a7db7c5bb200bdbaab99dd525dc59b28a09519676d222"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/PAPER_RESULTS_SUMMARY.md",
+      "bytes": 3631,
+      "sha256": "99c7116778686f707572b7bd3bdd5b999519b5ff9ea3d8dceeb6655ab5fa0b77"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/README.md",
+      "bytes": 2620,
+      "sha256": "629ee4521fe30310ab006f4c2295f31a2203bb8265b4e4ead82a40625cc58053"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/REPRODUCIBILITY.md",
+      "bytes": 4631,
+      "sha256": "09083cb53dc11bae020be398a8ee3ff04dc467ed78a194db3657c016fec137f8"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/SIMULATOR_SPECIFICATION.md",
+      "bytes": 5438,
+      "sha256": "084bc6d5d15b607455bdc715147c558b35d2e7b6962ca34ce89e52f9073cad41"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/UNCERTAINTY_ANALYSIS.md",
+      "bytes": 3755,
+      "sha256": "b5bc7b3650e0b138499c0cf10cf292b6ff3afbc9aaa05e4b6d49fa12e8af948d"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/analyze_analytical.py",
+      "bytes": 3311,
+      "sha256": "fc6c58ac15f22b6101a254248705c61ec053aaacf10935c99353ad4537f4fd8c"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/audit_saved_campaign.py",
+      "bytes": 11393,
+      "sha256": "161767e7f1c65c4af3f925e79665fbfa99a3160abdfa3c34da3ad0d5c4a56108"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/config/primary_campaign.json",
+      "bytes": 2624,
+      "sha256": "bdbc41d72243e868edec54e2e62dcbf48a29ee1a7fb99bd31a427cddbfe64521"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/fp_workload_engine.py",
+      "bytes": 6618,
+      "sha256": "ffbaf5454a4286b13c46a7205a0a4f7c5b0bfb45aad42d0e164b1425f9801381"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/make_figures.py",
+      "bytes": 3984,
+      "sha256": "5802927d2692d2e5b20e3d24a984affac8905618d7a0df3685cbd55c9222c294"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/reanalyze_saved_episodes.py",
+      "bytes": 8311,
+      "sha256": "1add190d67eb781d4d1ca50271bfa3d0adb11337e4f032da6e43e0cdebae2c6c"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/run_primary_campaign.py",
+      "bytes": 22575,
+      "sha256": "16c7882418a60ab3c32f3130a4f4b01330153f9a12181c12de10a90bde6f156d"
+    },
+    {
+      "path": "studies/soc_triage_hls_q1_integration_evidence/write_file_manifest.py",
+      "bytes": 1560,
+      "sha256": "76d7d7fdb99c7ddb3d42d269a32d7dde37d637f58985c40e695689aeb919cc9c"
+    },
+    {
+      "path": "tests/test_soc_triage_hls_q1_fp_workload.py",
+      "bytes": 6380,
+      "sha256": "5f74c9b95b5aada64ec4fdb44719e89dc48f5ef2be7b68e3263ebaf4edf7fa2f"
+    }
+  ]
+}

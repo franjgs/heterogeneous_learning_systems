@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "episode_rows": 43200,
+  "classifier_points": 3,
+  "alpha_levels": 4,
+  "rosters": [
+    2,
+    3,
+    4
+  ],
+  "policies": [
+    "D1",
+    "P1",
+    "HLS-B"
+  ],
+  "paired_seed_count": 400,
+  "new_seed_ids": [
+    711000000,
+    711000399
+  ],
+  "zero_need_seed_cells_per_trace": 399,
+  "denominator_confusion_trace_checks": "PASS",
+  "all_deadlines_mature_before_cutoff": true,
+  "same_trace_and_confusion_across_policies": "PASS",
+  "common_random_numbers_across_classifiers": "stable per-alert triage uniform; trace audit stored",
+  "alpha1_original_engine_equivalence": "see tests and validation run",
+  "HLS_policies_frozen": true,
+  "SOCTRA_models_frozen": true,
+  "elapsed_seconds": 355.2600362300873,
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 711202611,
+  "unique_seed_need_count": 474,
+  "unique_zero_need_seeds": 133,
+  "trace_rows_with_zero_need_across_classifier_points": 399,
+  "same_need_count_across_classifier_points": true,
+  "L1_WAPS_mode_replay_matches_saved_backlogs": "PASS",
+  "L1_WAPS_mode_replay_failures": []
+}

@@ -1,0 +1,133 @@
+{
+  "config": {
+    "study": "SOCTRA-HLS Q1 integration evidence: false-positive workload sensitivity",
+    "reference_commit": "cc0880d8f56cb3aa05ff29f55f493441ec01206a",
+    "branch": "research/soctra-hls-q1-integration-evidence",
+    "soctra_source": "SOCTRA Journal Article 2026, Table 5, PDF p. 39; standardized escalation labels, symmetric costs, published rates are fixed inputs",
+    "label_definition": "standardized",
+    "prevalence": {
+      "positive_count": 19,
+      "total": 14449,
+      "pi": 0.001314969894110319,
+      "source": "article-implied standardized test prevalence; positive count independently audited; not an objective need prevalence"
+    },
+    "classifiers": [
+      {
+        "id": "standardized_lightgbm_apc_symmetric",
+        "algorithm": "LightGBM",
+        "features": "A+C",
+        "pD": 0.8421,
+        "pFA": 0.045,
+        "BA": 0.8986,
+        "role": "higher detection, moderate false-positive workload"
+      },
+      {
+        "id": "standardized_lsensemble_apc_symmetric",
+        "algorithm": "LSEnsemble",
+        "features": "A+C",
+        "pD": 0.8421,
+        "pFA": 0.0743,
+        "BA": 0.8839,
+        "role": "published dominated control: equal detection, higher pFA"
+      },
+      {
+        "id": "standardized_bayesian_mlp_apc_symmetric",
+        "algorithm": "Bayesian MLP",
+        "features": "A+C",
+        "pD": 0.7042,
+        "pFA": 0.0154,
+        "BA": 0.8444,
+        "role": "lower pFA, lower detection trade-off"
+      }
+    ],
+    "simulation": {
+      "n_new_paired_seeds": 400,
+      "seed_base": 711000000,
+      "rho_L1": 1.25,
+      "n_L1": 6,
+      "n_L2": [
+        2,
+        3,
+        4
+      ],
+      "policies": [
+        "D1",
+        "P1",
+        "HLS-B"
+      ],
+      "horizon_h": 24.0,
+      "drain_h": 36.0,
+      "deadline_h_by_severity": {
+        "high": 1.0,
+        "medium": 4.0,
+        "low": 12.0
+      },
+      "waps": {
+        "window_h": 4.0,
+        "low": 1.05,
+        "high": 1.2
+      },
+      "fp_service_fraction_alpha": [
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "acceptance": "automatic, controlled synthetic assumption",
+      "need": "synthetic and hidden from dispatchers",
+      "recommendations": "synthetic Bernoulli draws from published pD/pFA; stable per-alert common random numbers across classifiers",
+      "new_simulator": "independent L2 event driver; D1/P1 dispatch functions and HLS-B thresholds imported unchanged; alpha=1 must match original L2 assignments exactly"
+    },
+    "statistics": {
+      "primary_estimand": "pooled S_plus = total true-need alerts routed positive and completed by H+D and deadline / all synthetic true needs",
+      "bootstrap": {
+        "unit": "paired seed cluster",
+        "replicates": 10000,
+        "seed": 711202611
+      },
+      "other_means": "paired seed-cluster percentile bootstrap",
+      "multiplicity": "exploratory contrasts; no familywise correction",
+      "precision_target": "approximately +/-0.05 at 95% for a proportion near 0.70, requiring about 323 independent positive needs before clustering adjustment"
+    }
+  },
+  "checks": {
+    "status": "PASS",
+    "episode_rows": 43200,
+    "classifier_points": 3,
+    "alpha_levels": 4,
+    "rosters": [
+      2,
+      3,
+      4
+    ],
+    "policies": [
+      "D1",
+      "P1",
+      "HLS-B"
+    ],
+    "paired_seed_count": 400,
+    "new_seed_ids": [
+      711000000,
+      711000399
+    ],
+    "zero_need_seed_cells_per_trace": 399,
+    "denominator_confusion_trace_checks": "PASS",
+    "all_deadlines_mature_before_cutoff": true,
+    "same_trace_and_confusion_across_policies": "PASS",
+    "common_random_numbers_across_classifiers": "stable per-alert triage uniform; trace audit stored",
+    "alpha1_original_engine_equivalence": "see tests and validation run",
+    "HLS_policies_frozen": true,
+    "SOCTRA_models_frozen": true,
+    "elapsed_seconds": 355.2600362300873,
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 711202611,
+    "unique_seed_need_count": 474,
+    "unique_zero_need_seeds": 133,
+    "trace_rows_with_zero_need_across_classifier_points": 399,
+    "same_need_count_across_classifier_points": true,
+    "L1_WAPS_mode_replay_matches_saved_backlogs": "PASS",
+    "L1_WAPS_mode_replay_failures": []
+  },
+  "input_source": "published aggregate rates only",
+  "no_historical_result_files_modified": true
+}
