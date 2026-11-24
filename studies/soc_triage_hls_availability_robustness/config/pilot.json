@@ -1,0 +1,18 @@
+{
+  "time_origin": "Monday 00:00; elapsed natural hours",
+  "calendar_A": "all analysts continuous 24x7",
+  "calendar_B_L1": "continuous 24x7",
+  "calendar_B_L2": "Monday-Friday 09:00-17:00",
+  "deadlines_h": {"high": 12, "medium": 24, "low": 72},
+  "rho_L1_primary": 0.85,
+  "rho_L1_sensitivity": 1.25,
+  "alpha": [0.25, 1.0],
+  "classifiers": ["LightGBM A+C", "LSEnsemble A+C", "Bayesian MLP A+C"],
+  "policies": ["D1", "P1", "WAPS"],
+  "pilot_seed_count": 8,
+  "admission_horizon_h": 168,
+  "accounting_cutoff_h": 168,
+  "terminal_drain_h": 0,
+  "paired_conditions": ["L2_24x7", "L2_8x5"],
+  "note": "Synthetic deadlines; not GMV-CERT SLAs. Pilot settings are technical, not inferential."
+}

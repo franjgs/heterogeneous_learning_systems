@@ -1,0 +1,9 @@
+# Experimental design
+
+Paired arms differ only in L2 calendar: continuous 24x7 versus weekday 09:00–17:00. Keep alert stream, classifiers, label/recommendation draws, synthetic need, service realization, analyst identities and competencies, deadlines, alpha, and dispatch policy common by seed. L1 remains continuous. A calendar change also changes weekly L2 capacity; therefore the estimand is the complete calendar proposal effect, not a pure redistribution-of-hours effect.
+
+Begin at rho_L1=0.85 to avoid making upstream saturation the sole explanation; follow with rho_L1=1.25 as sensitivity. Keep the standardized LightGBM A+C, LSEnsemble A+C, Bayesian MLP A+C classifiers; symmetric costs; D1, P1 and WAPS; and alpha 0.25 and 1.00. Do not tune policies on observed outcomes or add fast/late escalations.
+
+Use multi-day admission windows that include at least one weekend. Primary deadline metrics use only events observed by the fixed accounting cutoff; no terminal drain may turn unfinished work into timely work. Report queue, suspended, running, completed on time, and completed late separately. Split explanatory analyses into availability exposure, congestion, and selection/priority effects; these mechanisms can overlap.
+
+Statistical unit is the seed block. For S_plus and paired calendar differences, resample complete seed blocks, preserving every condition within a seed. Choose final seed count after the technical pilot by the observed clustered precision of S_plus and paired differences. Do not use condition-episode rows as independent observations or select conditions for significance. The eight-seed configuration is a technical pilot only and cannot support confirmatory inference.
