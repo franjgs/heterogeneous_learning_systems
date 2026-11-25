@@ -1,0 +1,51 @@
+{
+  "format": "gzip CSV, deterministic mtime=0",
+  "code_commit": "d088a7994104994f03ce919b070883fbc8e28859",
+  "files": [
+    {
+      "path": "results/soc_triage_hls_availability_robustness/campaign/episodes.csv.gz",
+      "sha256": "6b5047ceff78b001de62404e53fa40fbf4de3dd2991c7d2f0ff9c64e6daa8128",
+      "bytes": 29000919
+    },
+    {
+      "path": "results/soc_triage_hls_availability_robustness/campaign/execution_manifest.json",
+      "sha256": "5537849c0f71f03cac133c792b27a3ab3f33b2f3c9d6446d870b89f98812c012",
+      "bytes": 2705
+    },
+    {
+      "path": "results/soc_triage_hls_availability_robustness/campaign/figures/splus_alpha_contrasts.png",
+      "sha256": "b5bddffd064101b556f0ef8a30c0f4b885cae5aa15f717a3fa00ae9a7a1a96a2",
+      "bytes": 82640
+    },
+    {
+      "path": "results/soc_triage_hls_availability_robustness/campaign/figures/splus_calendar_contrasts.png",
+      "sha256": "90ae9c6743a0926c8d00f2368d295745f25c5b101026ba0fef2ae3de0111047f",
+      "bytes": 86199
+    },
+    {
+      "path": "results/soc_triage_hls_availability_robustness/campaign/paired_calendar_contrasts.csv.gz",
+      "sha256": "a176c7f9ecc3fcf19e231ab533c8ffee0088f6d8e20795d97d96835e085f3e2c",
+      "bytes": 3383
+    },
+    {
+      "path": "results/soc_triage_hls_availability_robustness/campaign/paired_factor_contrasts.csv.gz",
+      "sha256": "55dbf976884233cf7d93367dce7a62e3fec51e826115cebcea00d5f537549b9d",
+      "bytes": 27448
+    },
+    {
+      "path": "results/soc_triage_hls_availability_robustness/campaign/summary_by_condition.csv.gz",
+      "sha256": "8c0a3eed7b9731767d206a24af71903b82641a982d63bc499d3d835392d5abc8",
+      "bytes": 53695
+    },
+    {
+      "path": "results/soc_triage_hls_availability_robustness/campaign/trace_audit.csv.gz",
+      "sha256": "fd09ba26f4ac6f2b6a4ae572c3623f54eeb1729a1f07f319aa3182d51524b5e7",
+      "bytes": 268840
+    },
+    {
+      "path": "results/soc_triage_hls_availability_robustness/campaign/validation_checks.json",
+      "sha256": "00e6ce7dbf5e44d178dac05f429f263ee9a1d439c5215f9a03c5b62a867c1937",
+      "bytes": 686
+    }
+  ]
+}

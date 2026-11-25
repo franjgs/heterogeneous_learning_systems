@@ -1,0 +1,14 @@
+{
+  "episodes": 43200,
+  "task_rows": 1681848,
+  "divergent_episodes": 0,
+  "divergences": [],
+  "expected_episodes": 43200,
+  "expected_trace_records": 1200,
+  "tolerance_absolute": 1e-10,
+  "source_branch": "research/soctra-hls-q1-integration-evidence",
+  "source_commit": "9772abae1bfcd2c810760e68ecd8fba107d320f0",
+  "status": "PASS",
+  "seed_count_run": 400,
+  "full_reference_campaign": true
+}

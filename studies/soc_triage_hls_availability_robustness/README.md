@@ -1,9 +1,33 @@
 # SOCTRA–HLS availability robustness
 
-Isolated synthetic extension studying L2 availability calendars and natural-time deadlines. It does not reproduce the GMV-CERT SOC, claim GMV service levels, change SOCTRA, alter D1/P1/WAPS, or rewrite historical campaigns.
+An isolated synthetic study of how weekly L2 analyst availability changes deadline-based outcomes in SOCTRA-assisted triage. It does not reproduce the GMV-CERT SOC or claim operational service levels. It does not modify SOCTRA, D1/P1/WAPS, historical experiments or the LaTeX manuscript.
 
-The source RQ1 allocation dispatchers and the previous study's synthetic trace generation are reusable. `availability_engine.py` provides the separate preempt-and-resume clock needed for duty schedules. Calendars support any configured weekdays and overnight windows; 24x7, 8x5, and 6x7 are expressible. A job interrupted at shift end retains its analyst and completed service; it resumes at the next available interval. No handoff or new dispatch decision occurs for that job. New work is not started while unavailable. Uniform scaling is opt-in through `simulate_scaled`; the historical engine's units/defaults remain unchanged.
+## What is included
 
-The pilot specification is in `config/pilot.json`. Absolute simulation time starts Monday 00:00; deadlines are synthetic natural-hour offsets from original alert arrival: High 12 h, Medium 24 h, Low 72 h. The admission horizon is 168 h and accounting cutoff 240 h, allowing the latest 72 h deadline to mature. The 24x7 versus weekday 09:00–17:00 comparison includes the intended reduction in weekly capacity. There is no terminal drain in deadline accounting.
+- `availability_engine.py`: configurable weekly analyst calendars and persistent suspend/resume service.
+- `run_full_regression.py`: full comparison against the frozen Q1 integration reference.
+- `run_availability_campaign.py`: paired integrated SOCTRA→L1→L2 campaign.
+- `merge_campaign_shards.py`: seed-block pairing checks, summaries and bootstrap contrasts.
+- `make_campaign_figures.py`: publication-style summary figures.
+- `SOC_EXPERT_INPUT_DELTA.md`: boundary between qualitative scenario guidance and evidence.
+- `BACKWARD_COMPATIBILITY_REPORT.md`: reference commit and exact regression findings.
 
-See `BACKWARD_COMPATIBILITY_REPORT.md` for the frozen branch/commit, exact continuous fixture parity, and the aggregate campaign regression fixture. See `SOC_EXPERT_INPUT_DELTA.md` for the careful boundary between qualitative scenario guidance and SOCTRA evidence. Run technical checks with `pytest studies/soc_triage_hls_availability_robustness/tests`. Campaign outputs belong under `results/soc_triage_hls_availability_robustness/`; no historical result path is read for writing.
+L2 weekdays 09:00–17:00 and High/Medium/Low synthetic deadlines of 12/24/72 natural hours are configurable hypotheses. For the campaign, admission lasts 168 hours and accounting closes at 240 hours; no terminal drain is used to turn late work into on-time work. The 24x7 vs 8x5 contrast includes both lower weekly capacity and temporal placement.
+
+## Reproduce
+
+From the repository root, run tests:
+
+```bash
+pytest -q studies/soc_triage_hls_availability_robustness/tests
+```
+
+The historical regression requires the original Q1 integration study and reference files. Its full invocation and exact fields are documented in `REPRODUCIBILITY.md`.
+
+The completed scientific run used 400 paired seed blocks (86,400 condition-seed episodes) in four disjoint 100-seed shards. To reproduce on a sufficiently provisioned host, run `run_availability_campaign.py` with seed offsets `0`, `100`, `200`, and `300`, then pass the four output folders to `merge_campaign_shards.py`. Exact commands, seed base, code revision, bootstrap settings, result inventory and hashes are in `REPRODUCIBILITY.md` and the result manifests.
+
+## Results
+
+`EXPERIMENTAL_RESULTS.md` reports the main results and limits. Merged episode-level results, condition summaries, paired contrasts, trace audits and figures are stored under `results/soc_triage_hls_availability_robustness/campaign/`. Historical regression tables are stored separately under `results/soc_triage_hls_availability_robustness/regression/`. Generated results are not written into or over the Q1 reference directory.
+
+The L2 task stays assigned to the same analyst over calendar suspensions. Calendar unavailability pauses effective work; it does not trigger policy re-selection or automatic handoff. `S_plus` is synthetic recommended-need task completion by deadline, not incident resolution. See `MODEL_EXTENSION.md`, `EXPERIMENTAL_DESIGN.md`, `VALIDATION_REPORT.md` and `SCIENTIFIC_IMPLICATIONS.md` for model and interpretation details.

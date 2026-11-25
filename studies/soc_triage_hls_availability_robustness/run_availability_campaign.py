@@ -332,11 +332,11 @@ def _summarize(rows, reps=10000, boot_seed=711202611):
                           "CI95_low":_q(delta)[0],"CI95_high":_q(delta)[1],"paired_seed_blocks":len(seeds)})
     factor_contrasts=[]
     def emit(kind, classifier, rho, alpha, n_l2, calendar, contrast, left_key, right_key,
-             difference_arrays, point_delta):
+             difference_arrays, point_delta, policy=None):
         arr=np.asarray(difference_arrays,dtype=float); arr=arr[np.isfinite(arr)]
         factor_contrasts.append({"contrast_type":kind,"classifier_id":classifier,"rho_L1":rho,
             "alpha":alpha,"n_L2":n_l2,"calendar":calendar,"contrast":contrast,
-            "estimate":float(point_delta),"CI95_low":_q(arr)[0],"CI95_high":_q(arr)[1],
+            "policy":policy or "all","estimate":float(point_delta),"CI95_low":_q(arr)[0],"CI95_high":_q(arr)[1],
             "paired_seed_blocks":len(seeds)})
     classifiers=sorted({k[0] for k in groups})
     for classifier,rho,alpha,n_l2 in sorted({k[:4] for k in groups}):
@@ -376,7 +376,7 @@ def _summarize(rows, reps=10000, boot_seed=711202611):
     for classifier,rho,n_l2,policy,calendar in sorted({(k[0],k[1],k[3],k[4],k[5]) for k in groups}):
       ka=(classifier,rho,.25,n_l2,policy,calendar); kb=(classifier,rho,1.0,n_l2,policy,calendar)
       emit("alpha_sensitivity",classifier,rho,.25,n_l2,calendar,"alpha_0.25-minus-alpha_1.0",
-           ka,kb,by_group[ka][4]-by_group[kb][4],point_s[ka]-point_s[kb])
+           ka,kb,by_group[ka][4]-by_group[kb][4],point_s[ka]-point_s[kb],policy=policy)
     for classifier,alpha,n_l2,policy in sorted({(k[0],k[2],k[3],k[4]) for k in groups}):
       ka0=(classifier,.85,alpha,n_l2,policy,"L2_24x7"); kb0=(classifier,.85,alpha,n_l2,policy,"L2_8x5_Mon_Fri_09_17")
       ka1=(classifier,1.25,alpha,n_l2,policy,"L2_24x7"); kb1=(classifier,1.25,alpha,n_l2,policy,"L2_8x5_Mon_Fri_09_17")

@@ -1,9 +1,21 @@
 # Validation report
 
-`pytest -q studies/soc_triage_hls_availability_robustness/tests`: 17 passed. Coverage includes exact D1/P1/WAPS fixture comparisons, reference aggregate fixture, continuous and configurable weekly schedules, overnight Sunday/week boundary, shift-end suspension, repeated resumption, same analyst, remaining work, no out-of-calendar service, independent deadlines, uniform time scaling, hidden-label isolation and exact fast-D1/RNG parity against the frozen dispatcher across 40 seeds.
+## Historical regression
 
-Full historical regression: 43,200 episodes and 1,681,848 task records compared; zero divergent episode or task assignments at absolute tolerance `1e-10`. The reference commit, fields and limitation of the continuous-mode exact backend are described in `BACKWARD_COMPATIBILITY_REPORT.md`.
+The reference is branch `research/soctra-hls-q1-integration-evidence`, commit `9772abae1bfcd2c810760e68ecd8fba107d320f0`. The complete 400-block × 108-condition replay compared 43,200 episodes and 1,681,848 L2 assignment records, including arrivals/recommendation trace hashes, needs, assignments, analyst IDs, starts, service, completions, final states, backlog, utilization, S_plus and policy contrasts. It found zero divergences under exact ID/hash comparison and absolute numeric tolerance `1e-10`. See `BACKWARD_COMPATIBILITY_REPORT.md` and compressed row-level evidence in the regression results.
 
-The integrated technical pilot passed: 1,728 condition-seed episodes across eight paired seed blocks; 48 trace audit rows; 168 h admission and 240 h evaluation; zero terminal drain; every admitted deadline matured; both calendar arms retained identical demand, recommendation, need, confusion counts and L1 assignment hashes. Eight seeds are technical validation only, not inferential evidence.
+## Automated and technical tests
 
-Development found and corrected: one-analyst-at-a-time dispatch instead of joint dispatch; missed overnight week boundary; repeated episode lookup with quadratic work; and D1 candidate lookup scaling. A direct continuous event-loop stress comparison also found tiny completion rounding capable of changing a later tie. Exact 24x7 mode therefore delegates to the frozen backend. Non-continuous calendars use the new event loop, tested on explicit suspension/resumption fixtures.
+`pytest -q studies/soc_triage_hls_availability_robustness/tests`: 17 passed. Tests include calendar patterns (24x7, configurable 8x5, 6x7, Sunday and week rollover), suspension and repeated resumption, exact work/owner persistence, deadlines independent of severity and historical deadline reproduction, uniform time scaling, hidden-label isolation, D1/P1/WAPS frozen fixtures, fast-D1 decision/trace/RNG parity, historical aggregate regression fixture and continuous-mode exact comparison.
+
+The final integrated pilot completed with 1,728 condition-seed episodes (8 technical seed blocks), 48 trace audits, identical calendar-paired upstream traces and L1 assignments, all admitted deadlines mature by the fixed cutoff, and zero terminal drain. The pilot is a technical check, not scientific inference.
+
+## Full campaign technical gates
+
+The 400-block campaign produced 86,400 episodes and 2,400 trace audit rows. The merger verified disjoint seed ranges, two matched calendar arms per condition-seed, identical exogenous/recommendation/need traces within calendar pairs, invariant L1 assignments across classifier/alpha/L2-roster/calendar, matched confusion counts across the two calendar arms, and deadlines mature by the 240-hour accounting cutoff. Ten thousand block-bootstrap replicates use seed `711202611`; episode rows are not treated as independent.
+
+During merger bring-up an overstrict check incorrectly required classifier outcomes to be identical across classifiers. That check was removed: classifier differences are intended, and exogenous trace/need hashes are independently verified by the trace audit. The merger then passed all intended pairing gates. Figure generation exposed that alpha contrast rows lacked the policy identifier; this was added and the merged contrasts and figures regenerated from the already completed shards. Neither correction changes simulated episodes or historical files.
+
+## Known interpretation limits
+
+The full run did not save task-by-task detail rows (`task_rows=0`); it retains each condition-seed episode and final task-state counts/metrics. The 24x7 arm uses the frozen continuous backend to preserve historical event-order behavior; the new calendar event engine is exercised in noncontinuous scenarios and explicit lifecycle tests. The system remains synthetic and assumes recommendation acceptance; no operational conclusions about GMV-CERT follow.

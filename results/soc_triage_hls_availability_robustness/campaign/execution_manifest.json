@@ -1,0 +1,105 @@
+{
+  "config": {
+    "study": "Synthetic SOCTRA-HLS L2 calendar robustness",
+    "seed_base": 711000000,
+    "seed_blocks": 400,
+    "rho_L1": [
+      0.85,
+      1.25
+    ],
+    "n_L1": 6,
+    "n_L2": [
+      2,
+      3,
+      4
+    ],
+    "classifiers": [
+      {
+        "id": "standardized_lightgbm_apc_symmetric",
+        "algorithm": "LightGBM",
+        "features": "A+C",
+        "pD": 0.8421,
+        "pFA": 0.045,
+        "BA": 0.8986
+      },
+      {
+        "id": "standardized_lsensemble_apc_symmetric",
+        "algorithm": "LSEnsemble",
+        "features": "A+C",
+        "pD": 0.8421,
+        "pFA": 0.0743,
+        "BA": 0.8839
+      },
+      {
+        "id": "standardized_bayesian_mlp_apc_symmetric",
+        "algorithm": "Bayesian MLP",
+        "features": "A+C",
+        "pD": 0.7042,
+        "pFA": 0.0154,
+        "BA": 0.8444
+      }
+    ],
+    "policies": [
+      "D1",
+      "P1",
+      "WAPS"
+    ],
+    "alpha": [
+      0.25,
+      1.0
+    ],
+    "calendar_conditions": [
+      "L2_24x7",
+      "L2_8x5_Mon_Fri_09_17"
+    ],
+    "L1_calendar": "24x7",
+    "deadlines_h_by_severity": {
+      "high": 12.0,
+      "medium": 24.0,
+      "low": 72.0
+    },
+    "admission_horizon_h": 168.0,
+    "evaluation_cutoff_h": 240.0,
+    "terminal_drain_h": 0.0,
+    "waps": {
+      "window_h": 4.0,
+      "low": 1.05,
+      "high": 1.2
+    },
+    "paired_randomness": "same per-alert stable SOCTRA triage uniform and exogenous trace in both calendars",
+    "bootstrap": {
+      "unit": "paired seed block",
+      "replicates": 10000,
+      "seed": 711202611
+    },
+    "note": "Synthetic scenario only. Calendar contrast changes weekly capacity and temporal placement; deadlines are not GMV-CERT SLAs."
+  },
+  "checks": {
+    "status": "PASS",
+    "episode_rows": 86400,
+    "seed_blocks": 400,
+    "seed_range": [
+      711000000,
+      711000399
+    ],
+    "trace_audit_rows": 2400,
+    "all_calendar_pair_checks": "PASS",
+    "all_deadlines_mature": true,
+    "bootstrap_unit": "seed block",
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 711202611,
+    "admission_h": 168.0,
+    "cutoff_h": 240.0,
+    "terminal_drain_h": 0,
+    "shards": [
+      "results/soc_triage_hls_availability_robustness/campaign/shard0",
+      "results/soc_triage_hls_availability_robustness/campaign/shard1",
+      "results/soc_triage_hls_availability_robustness/campaign/shard2",
+      "results/soc_triage_hls_availability_robustness/campaign/shard3"
+    ]
+  },
+  "synthetic_only": true,
+  "regression_source_commit": "9772abae1bfcd2c810760e68ecd8fba107d320f0",
+  "campaign_code_commit": "d088a7994104994f03ce919b070883fbc8e28859",
+  "analysis_code": "merge_campaign_shards.py; seed-block bootstrap"
+}

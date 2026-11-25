@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "episode_rows": 86400,
+  "seed_blocks": 400,
+  "seed_range": [
+    711000000,
+    711000399
+  ],
+  "trace_audit_rows": 2400,
+  "all_calendar_pair_checks": "PASS",
+  "all_deadlines_mature": true,
+  "bootstrap_unit": "seed block",
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 711202611,
+  "admission_h": 168.0,
+  "cutoff_h": 240.0,
+  "terminal_drain_h": 0,
+  "shards": [
+    "results/soc_triage_hls_availability_robustness/campaign/shard0",
+    "results/soc_triage_hls_availability_robustness/campaign/shard1",
+    "results/soc_triage_hls_availability_robustness/campaign/shard2",
+    "results/soc_triage_hls_availability_robustness/campaign/shard3"
+  ]
+}

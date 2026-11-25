@@ -1,0 +1,26 @@
+{
+  "format": "gzip CSV, deterministic mtime=0",
+  "code_commit": "d088a7994104994f03ce919b070883fbc8e28859",
+  "files": [
+    {
+      "path": "results/soc_triage_hls_availability_robustness/regression/episode_comparison.csv.gz",
+      "sha256": "f853e946a2025f1daee88c816f648870df15b2448d367bfd8f0fc2dbacec5940",
+      "bytes": 3309370
+    },
+    {
+      "path": "results/soc_triage_hls_availability_robustness/regression/regression_checks.json",
+      "sha256": "5a0dab5303e8356eeba6a54f8cc0c97b3de2ecb34d27694c92424dea6279c535",
+      "bytes": 400
+    },
+    {
+      "path": "results/soc_triage_hls_availability_robustness/regression/task_assignment_comparison.csv.gz",
+      "sha256": "bbb68bd516422efd8a17ba521f5a2f3e16bd85a3fdbb42516fcc98abb64a3a85",
+      "bytes": 23403392
+    },
+    {
+      "path": "results/soc_triage_hls_availability_robustness/regression/trace_comparison.csv.gz",
+      "sha256": "cc81f648b1178476245440e9c4b226ba549cd07e3bde656b2ac5f9793a00b7a7",
+      "bytes": 185731
+    }
+  ]
+}

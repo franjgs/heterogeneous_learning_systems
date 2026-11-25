@@ -67,6 +67,19 @@ def main():
         if len({(x["admitted"],x["TP"],x["FP"],x["FN"],x["TN"],x["S_plus_denominator"]) for x in vals})!=1:
             raise ValueError(f"confusion pairing failed for {k}")
         if any(x["max_deadline_admitted_h"]>CUTOFF for x in vals): raise ValueError(f"deadline beyond cutoff {k}")
+    trace_groups={}
+    for r in trace:
+        trace_groups.setdefault((float(r["rho_L1"]),int(r["seed"])),[]).append(r)
+    for k,vals in trace_groups.items():
+        if len({r["exogenous_sha256"] for r in vals})!=1 or len({r["need_sha256"] for r in vals})!=1:
+            raise ValueError(f"classifier exogenous/need pairing failed for {k}")
+    upstream={}
+    for r in rows:
+        c=r["condition"]
+        upstream.setdefault((c["rho_L1"],c["seed"],c["policy"]),[]).append(r)
+    for k,vals in upstream.items():
+        if len({r["l1_assignment_hash"] for r in vals})!=1:
+            raise ValueError(f"L1 assignment changed across classifier/alpha/roster/calendar: {k}")
     summaries,calendar_contrasts,factor_contrasts=_summarize(
         rows,int(CONFIG["bootstrap"]["replicates"]),int(CONFIG["bootstrap"]["seed"]))
     out.mkdir(parents=True,exist_ok=True)
@@ -85,6 +98,12 @@ def main():
         "bootstrap_seed":CONFIG["bootstrap"]["seed"],"admission_h":CONFIG["admission_horizon_h"],
         "cutoff_h":CUTOFF,"terminal_drain_h":0,"shards":[str(x) for x in args.shards]}
     (out/"validation_checks.json").write_text(json.dumps(checks,indent=2)+"\n")
+    (out/"execution_manifest.json").write_text(json.dumps({
+        "config":CONFIG,"checks":checks,"synthetic_only":True,
+        "regression_source_commit":"9772abae1bfcd2c810760e68ecd8fba107d320f0",
+        "campaign_code_commit":"d088a7994104994f03ce919b070883fbc8e28859",
+        "analysis_code":"merge_campaign_shards.py; seed-block bootstrap"
+    },indent=2)+"\n")
     print(f"merged {len(rows)} condition-seed episodes across {len(seeds)} paired seed blocks")
 
 if __name__=="__main__": main()

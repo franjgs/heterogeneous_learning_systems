@@ -17,10 +17,19 @@ def main():
             with source.open("rb") as inp, target.open("wb") as raw:
                 with gzip.GzipFile(filename="",mode="wb",fileobj=raw,mtime=0,compresslevel=9) as out:
                     shutil.copyfileobj(inp,out)
-            digest=hashlib.sha256(target.read_bytes()).hexdigest()
-            entries.append({"path":str(target),"sha256":digest,"bytes":target.stat().st_size,
-                            "uncompressed_bytes":source.stat().st_size})
             if args.delete_originals: source.unlink()
+    for d in args.directories:
+        for path in sorted(d.rglob("*")):
+            if not path.is_file() or path.name=="artifact_manifest.json" or path.suffix==".csv":
+                continue
+            if any(part.startswith("shard") for part in path.relative_to(d).parts):
+                continue
+            if path.suffix not in {".gz",".json",".png",".svg"}:
+                continue
+            h=hashlib.sha256()
+            with path.open("rb") as stream:
+                for block in iter(lambda:stream.read(1024*1024),b""): h.update(block)
+            entries.append({"path":str(path),"sha256":h.hexdigest(),"bytes":path.stat().st_size})
     manifest={"format":"gzip CSV, deterministic mtime=0","code_commit":args.code_commit,"files":entries}
     for d in args.directories:
         (d/"artifact_manifest.json").write_text(json.dumps(manifest,indent=2)+"\n",encoding="utf-8")
