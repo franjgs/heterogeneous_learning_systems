@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "scenario_id": "synthetic-soc-mixed-shifts",
+  "description": "Generic synthetic rotating L1 coverage and individual L2 weekly calendars; not an operational SOC description.",
+  "generation": {
+    "generator":{"reference":"run_primary_campaign._primary_trace"},
+    "classifier":{"reference":"q1_primary_campaign.classifiers","default":"standardized_lsensemble_apc_symmetric","options":["standardized_lightgbm_apc_symmetric","standardized_lsensemble_apc_symmetric","standardized_bayesian_mlp_apc_symmetric"]},
+    "prevalence":{"reference":"q1_primary_campaign.prevalence.pi"},
+    "parameters":{"rho_L1":0.85,"alpha":1.0},
+    "need_reference":"synthetic_hidden_need"
+  },
+  "organization": {
+    "teams":{"L1":["day-1","day-2","night-1"],"L2":["expert-a","expert-b","expert-c"]},
+    "analysts":[
+      {"id":"day-1","level":"L1","eligible_classes":["portfolio_top5","portfolio_next5","portfolio_tail"],"competence":{"portfolio_top5":0.8,"portfolio_next5":0.8,"portfolio_tail":0.7},"service_h":{"portfolio_top5":0.2,"portfolio_next5":0.3,"portfolio_tail":0.4},"calendar":{"kind":"weekly","windows":[{"day":"Mon","start_h":0,"end_h":8},{"day":"Tue","start_h":0,"end_h":8},{"day":"Wed","start_h":0,"end_h":8},{"day":"Thu","start_h":0,"end_h":8},{"day":"Fri","start_h":0,"end_h":8},{"day":"Sat","start_h":0,"end_h":8},{"day":"Sun","start_h":0,"end_h":8}]}},
+      {"id":"day-2","level":"L1","eligible_classes":["portfolio_top5","portfolio_next5","portfolio_tail"],"competence":{"portfolio_top5":0.8,"portfolio_next5":0.8,"portfolio_tail":0.7},"service_h":{"portfolio_top5":0.2,"portfolio_next5":0.3,"portfolio_tail":0.4},"calendar":{"kind":"weekly","windows":[{"day":"Mon","start_h":8,"end_h":16},{"day":"Tue","start_h":8,"end_h":16},{"day":"Wed","start_h":8,"end_h":16},{"day":"Thu","start_h":8,"end_h":16},{"day":"Fri","start_h":8,"end_h":16},{"day":"Sat","start_h":8,"end_h":16},{"day":"Sun","start_h":8,"end_h":16}]}},
+      {"id":"night-1","level":"L1","eligible_classes":["portfolio_top5","portfolio_next5","portfolio_tail"],"competence":{"portfolio_top5":0.8,"portfolio_next5":0.8,"portfolio_tail":0.7},"service_h":{"portfolio_top5":0.2,"portfolio_next5":0.3,"portfolio_tail":0.4},"calendar":{"kind":"weekly","windows":[{"day":"Mon","start_h":16,"end_h":0},{"day":"Tue","start_h":16,"end_h":0},{"day":"Wed","start_h":16,"end_h":0},{"day":"Thu","start_h":16,"end_h":0},{"day":"Fri","start_h":16,"end_h":0},{"day":"Sat","start_h":16,"end_h":0},{"day":"Sun","start_h":16,"end_h":0}]}},
+      {"id":"expert-a","level":"L2","eligible_classes":["portfolio_top5","portfolio_next5"],"competence":{"portfolio_top5":0.94,"portfolio_next5":0.85},"service_h":{"portfolio_top5":0.75,"portfolio_next5":1.0},"calendar":{"kind":"weekly","windows":[{"day":"Mon","start_h":9,"end_h":17},{"day":"Tue","start_h":9,"end_h":17},{"day":"Wed","start_h":9,"end_h":17},{"day":"Thu","start_h":9,"end_h":17},{"day":"Fri","start_h":9,"end_h":17}]}},
+      {"id":"expert-b","level":"L2","eligible_classes":["portfolio_top5","portfolio_next5","portfolio_tail"],"competence":{"portfolio_top5":0.82,"portfolio_next5":0.90,"portfolio_tail":0.78},"service_h":{"portfolio_top5":0.9,"portfolio_next5":0.85,"portfolio_tail":1.2},"calendar":{"kind":"weekly","windows":[{"day":"Tue","start_h":12,"end_h":20},{"day":"Wed","start_h":12,"end_h":20},{"day":"Thu","start_h":12,"end_h":20},{"day":"Fri","start_h":12,"end_h":20},{"day":"Sat","start_h":12,"end_h":20}]}},
+      {"id":"expert-c","level":"L2","eligible_classes":["portfolio_top5","portfolio_tail"],"competence":{"portfolio_top5":0.87,"portfolio_tail":0.91},"service_h":{"portfolio_top5":0.8,"portfolio_tail":1.1},"calendar":{"kind":"weekly","windows":[{"day":"Sun","start_h":21,"end_h":5},{"day":"Mon","start_h":21,"end_h":5},{"day":"Tue","start_h":21,"end_h":5},{"day":"Wed","start_h":21,"end_h":5},{"day":"Thu","start_h":21,"end_h":5}]}}
+    ]
+  },
+  "policies":{"L1":{"default":"D1","available":["D1","P1","WAPS"],"waps":{"window_h":4,"low":1.05,"high":1.2,"capacity_per_h":12}},"L2":{"default":"WAPS","available":["D1","P1","WAPS"],"waps":{"window_h":4,"low":1.05,"high":1.2,"capacity_per_h":3}}},
+  "deadlines":{"mode":"severity_map","offsets_by_severity_h":{"high":12,"medium":24,"low":72}},
+  "time":{"admission_horizon":168,"evaluation_horizon":240,"scale":1},
+  "experiment":{"seed_start":920000,"seed_count":20,"policy_grid":["D1","P1","WAPS"],"alpha":[0.25,1.0]}
+}

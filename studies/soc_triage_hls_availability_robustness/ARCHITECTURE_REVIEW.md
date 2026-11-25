@@ -1,5 +1,28 @@
 # SOCTRA–HLS architecture review
 
+## External JSON loader update
+
+An optional loader is now implemented in `scenario_loader.py`. It constructs
+the existing frozen `execution_api.py` resources, teams, per-level policy
+settings, deadlines, and time settings from schema version 1 JSON. It resolves
+the checked-in Q1 classifier operating points and prevalence through explicit
+reference IDs, without importing the historical campaign runner, consuming
+randomness, or changing globals. `LoadedScenario.request_for()` builds the
+existing `SimulationRequest` when the caller supplies existing generated
+`Alert` records. Thus alert generation remains a separate established step;
+the JSON loader does not invoke the private generator itself.
+
+Three examples are in `config/`: a historical resource/reference snapshot and
+two synthetic organizations (continuous and individual mixed shifts). The
+historical example is representative of the n_L2=3 roster and records original
+campaign provenance; it does not replace campaign settings, cover every
+historical condition, or regenerate historical results. Synthetic examples
+are not descriptions of GMV-CERT. Calendars currently support repeating
+weekly windows, including overnight shifts; holidays and absences are outside
+scope. Priority interruption, reassignment, early/late escalation, new policy
+algorithms, and campaign migration remain future work. See
+`CONFIGURATION_GUIDE.md` for schema and use.
+
 **Original review baseline:** `research/soctra-hls-availability-robustness` at `2baef4057e8618416130e27924a37f4336e2db69`
 **Stage 1–2 implementation baseline:** `a60b1e65772ad1032b882695c57ee765f8713d47`
 **Scope:** the original review proposed an architecture; the update below records the two implemented stages. No new campaign was run. SOCTRA, policies, historical results, and LaTeX remain unchanged.
