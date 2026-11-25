@@ -1,7 +1,18 @@
 # SOCTRA–HLS architecture review
 
-**Review baseline:** `research/soctra-hls-availability-robustness` at `2baef4057e8618416130e27924a37f4336e2db69`  
-**Scope:** architecture proposal only. No campaign was run for this review. No simulator, SOCTRA, policy, historical result, or LaTeX file is changed by this document.
+**Original review baseline:** `research/soctra-hls-availability-robustness` at `2baef4057e8618416130e27924a37f4336e2db69`
+**Stage 1–2 implementation baseline:** `a60b1e65772ad1032b882695c57ee765f8713d47`
+**Scope:** the original review proposed an architecture; the update below records the two implemented stages. No new campaign was run. SOCTRA, policies, historical results, and LaTeX remain unchanged.
+
+## Implementation update: stages 1 and 2
+
+The minimum configuration and adapter layers now live in `execution_api.py`, with examples in `EXECUTION_API.md`. Frozen types cover analyst resources (reusing `Analyst`), immutable competence/eligibility/service maps, individual calendars, L1/L2 team membership, D1/P1/WAPS plus WAPS parameters, admission/evaluation horizons, deadline-offset metadata, seed, time scale, and an environment-only realization payload. Validation runs deterministically before a backend call and consumes no random values. It checks identifiers and team membership, competence/service keys, positive service durations, calendar validity, horizons, deadlines and policy compatibility. Teams accept independent positive analyst counts and different per-person resources.
+
+`ExecutionBackend` is a small protocol implemented by `ContinuousBackend` and `CalendarBackend`. They call the existing `rq1_allocation.simulate` / frozen hidden-work L2 function and `availability_engine.simulate`, respectively. The native engine result is always retained. Both expose common assignment/task/decision fields; `None` marks task-level data unavailable from a source engine. Continuous execution does not synthesize a lifecycle ledger or work segments; calendar execution forwards the native episodes and service segments. Existing signatures, loops, policies, metrics, generators and JSON campaign configs remain unchanged. The environment realization is not included in dispatcher arguments.
+
+These changes implement only the architecture plan's type/configuration and adapter steps. They do **not** remove campaign module globals, temporary horizon mutation or D1 monkey-patching; those remain concrete stage-3 refactoring targets. No metric evaluator was introduced. The adapters are optional and have no callers in historical campaigns. Focused fixtures compare each adapter's retained native result to a direct call of its engine for D1, P1 and WAPS, and exercise immutable inputs, validation, scale, calendar suspension and hidden-label isolation. No scientific campaign was run.
+
+Still open: explicit campaign dependency injection to remove globals/private helper imports; removal of monkey-patching without changing D1; extraction of campaign composition; metric evaluator separation; task-level continuous lifecycle records if the source engine later exposes them. Interruption, reassignment, escalation timing, new policies, reporting and operational calibration remain out of scope.
 
 ## 1. Architecture as it exists
 

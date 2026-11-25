@@ -1,0 +1,62 @@
+# Execution API: minimum usage
+
+`execution_api.py` adds immutable configuration values and adapters around the existing engines. It is optional; historical scripts can continue calling their current functions directly.
+
+## Configure resources and a request
+
+```python
+from hls.rq1_allocation import Alert, Analyst
+from studies.soc_triage_hls_availability_robustness.availability_engine import (
+    TimeScale, WEEKDAY_9_TO_17,
+)
+from studies.soc_triage_hls_availability_robustness.execution_api import (
+    AnalystResource, CalendarBackend, DeadlineConfig, OrganizationConfig,
+    PolicyConfig, SimulationRequest, SimulationSettings, TeamConfig,
+)
+
+analyst = Analyst("L2-01", frozenset({"class_a"}), {"class_a": 0.8})
+resource = AnalystResource(
+    analyst,
+    service_by_class={"class_a": 1.25},
+    forecast_service_by_class={"class_a": 1.25},
+    calendar=WEEKDAY_9_TO_17,
+)
+organization = OrganizationConfig(
+    analysts=(resource,), teams=(TeamConfig("L2", ("L2-01",)),)
+)
+request = SimulationRequest(
+    alerts=(Alert("alert-1", 16.0, "class_a", 28.0),),
+    organization=organization,
+    level="L2",
+    policy=PolicyConfig("D1"),
+    settings=SimulationSettings(
+        admission_horizon=168.0,
+        evaluation_horizon=240.0,
+        seed=123,
+        time_scale=TimeScale(1.0),
+        deadlines=DeadlineConfig({"High": 12.0, "Medium": 24.0, "Low": 72.0}),
+    ),
+)
+result = CalendarBackend().run(request)
+```
+
+`Alert.deadline` remains an absolute natural-time instant; the offsets in `DeadlineConfig` document the scenario but never rewrite alert records. `admission_horizon` determines which alerts enter the episode. `evaluation_horizon` is the later execution/accounting cutoff. `TimeScale` multiplies arrival/deadline instants, service, calendars, horizons and WAPS window/capacity consistently; result times remain in the scaled units.
+
+`OrganizationConfig` supports any positive team sizes and one calendar, competence map, eligibility set, actual service map and optional forecast service map per analyst. Every configured analyst belongs to exactly one L1 or L2 team. `CalendarBackend` requires a calendar for every member of the selected team; `ContinuousBackend` ignores calendars and delegates to the historical continuous engine.
+
+## Choose a backend
+
+```python
+from studies.soc_triage_hls_availability_robustness.execution_api import ContinuousBackend
+
+continuous_result = ContinuousBackend().run(request)
+calendar_result = CalendarBackend().run(request)
+```
+
+Both return `ExecutionResult` with the native engine result, native assignment records, per-alert `TaskExecution` records, optional work segments and optional WAPS mode decisions. A field is `None` when that engine does not expose it at task level; the adapter does not fabricate states, work segments, or remaining-work values. The calendar engine exposes its lifecycle states/work segments. The continuous allocation engine does not expose a task-level work ledger, so its task-state fields other than native assignment identity/times are unavailable. Inspect `native_result` for the exact source contract.
+
+## Hidden environment data
+
+`EnvironmentRealization` is a separate optional request input. It contains service scales and, where required by the historical hidden-work runner, synthetic hidden-need labels. These values are passed only to the environment execution function. D1/P1/WAPS dispatch receives the engine's public alerts, analysts and ex-ante service estimates; neither hidden need nor TP/FP labels are dispatcher arguments. `ContinuousBackend`'s hidden-work route requires both environment maps because that native function validates both; `CalendarBackend` can consume service scales without receiving hidden need.
+
+All dataclasses copy and freeze their mapping inputs. Their validation is deterministic and runs before engine invocation. Existing configuration files, engine signatures, policies, recommendations and metrics are unchanged.
