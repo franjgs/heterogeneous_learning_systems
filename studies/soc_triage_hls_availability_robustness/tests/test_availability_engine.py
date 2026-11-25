@@ -1,6 +1,7 @@
 import sys
 import json
 import inspect
+import random
 import pytest
 from pathlib import Path
 
@@ -12,6 +13,8 @@ from studies.soc_triage_hls_availability_robustness.availability_engine import (
     simulate, simulate_scaled,
 )
 from studies.soc_triage_hls_q1_integration_evidence.fp_workload_engine import simulate_l2_hidden_work
+from hls.rq1_allocation import _dispatch_d1
+from studies.soc_triage_hls_availability_robustness.fast_dispatch import dispatch_d1_fast
 
 
 def roster():
@@ -50,6 +53,31 @@ def test_no_service_outside_available_windows():
                       {"L2-A": WEEKDAY_9_TO_17}, horizon=30)
     assert result.assignments[0].start == 9
     assert result.assignments[0].completion == 11
+
+
+def test_weekend_cutoff_retains_suspended_task_state():
+    a = roster()
+    out = simulate([Alert("fri", 112, "x", 140)], a, {"L2-A": {"x": 5}},
+                   {"L2-A": WEEKDAY_9_TO_17}, horizon=144)
+    task = out.episodes[0]
+    assert task.status == "suspended"
+    assert task.analyst_id == "L2-A"
+    assert task.remaining_service_h == 4
+    assert task.suspension_h == 31
+    assert dict(out.work_done_by_alert)["fri"] == 1
+
+
+def test_executed_segments_never_cross_unavailable_time():
+    cal = WEEKDAY_9_TO_17
+    a = roster()
+    out = simulate([Alert("overnight", 16, "x", 100)], a, {"L2-A": {"x": 3}},
+                   {"L2-A": cal}, horizon=40)
+    assert out.assignments[0].completion == 35
+    for _aid, _analyst, start, end in out.work_segments:
+        cursor = start
+        while cursor < end:
+            assert cal.available(cursor + min(.25, (end-cursor)/2))
+            cursor += .25
 
 
 def test_deadline_uses_natural_time_from_original_arrival():
@@ -133,6 +161,23 @@ def test_continuous_engine_matches_historical_assignments_and_completion(policy)
 def test_dispatcher_cannot_receive_hidden_need_or_fp_labels():
     params = set(inspect.signature(simulate).parameters)
     assert not ({"need_by_id", "true_escalation_need", "is_fp", "is_tp"} & params)
+
+
+def test_fast_d1_matches_frozen_dispatch_and_rng_exactly():
+    analysts = [Analyst("A", frozenset({"x", "y"}), {"x": .7, "y": .8}),
+                Analyst("B", frozenset({"x"}), {"x": .9}),
+                Analyst("C", frozenset({"y"}), {"y": .6})]
+    alerts = {f"a{i}": Alert(f"a{i}", i/10, "x" if i % 2 else "y", 3 + i/3)
+              for i in range(40)}
+    service = lambda analyst, alert: .5 + .05 * ((ord(analyst.analyst_id)-65) + (1 if alert.task_class == "x" else 2))
+    for seed in range(40):
+        r1, r2 = random.Random(seed), random.Random(seed)
+        t1, t2 = [], []
+        old = _dispatch_d1(analysts, alerts, 1.25, service, r1, trace=t1)
+        new = dispatch_d1_fast(analysts, alerts, 1.25, service, r2, trace=t2)
+        assert [(a.analyst_id,x.alert_id) for a,x in old] == [(a.analyst_id,x.alert_id) for a,x in new]
+        assert t1 == t2
+        assert r1.random() == r2.random()
 
 
 def test_historical_campaign_reference_metric_is_recorded():

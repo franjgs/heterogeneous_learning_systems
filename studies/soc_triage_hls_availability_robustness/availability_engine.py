@@ -9,7 +9,7 @@ from dataclasses import dataclass
 import random
 from typing import Mapping, Sequence
 
-from hls.rq1_allocation import Alert, Analyst, Assignment, HLSBConfig, _dispatch_d1, _dispatch_local_priority
+from hls.rq1_allocation import Alert, Analyst, Assignment, HLSBConfig, HLSADecision, _dispatch_d1, _dispatch_local_priority
 
 
 @dataclass(frozen=True)
@@ -95,6 +95,7 @@ class Episode:
     completion: float | None
     deadline: float
     suspension_h: float
+    start: float | None = None
 
 
 @dataclass(frozen=True)
@@ -104,12 +105,17 @@ class Outcome:
     statuses: tuple[tuple[str, str], ...]
     work_done_by_alert: tuple[tuple[str, float], ...] = ()
     work_segments: tuple[tuple[str, str, float, float], ...] = ()
+    dispatch_epochs: int = 0
+    p1_dispatch_epochs: int = 0
+    switches: tuple[HLSADecision, ...] = ()
 
 
 def simulate(arrivals: Sequence[Alert], analysts: Sequence[Analyst],
              service: Mapping[str, Mapping[object, float]], calendars: Mapping[str, Calendar],
              *, horizon: float, policy: str = "D1", seed: int = 0,
-             waps_config: HLSBConfig | None = None) -> Outcome:
+             waps_config: HLSBConfig | None = None,
+             actual_service: Mapping[str, Mapping[object, float]] | None = None,
+             realized_scale_by_alert: Mapping[str, float] | None = None) -> Outcome:
     """Run until cutoff. In-progress jobs pause at shift end and resume on same analyst.
 
     ``Alert.deadline`` is interpreted as absolute natural time from arrival, as in
@@ -126,11 +132,16 @@ def simulate(arrivals: Sequence[Alert], analysts: Sequence[Analyst],
     if len({a.alert_id for a in rows}) != len(rows):
         raise ValueError("duplicate alert id")
     by_id = {a.alert_id: a for a in rows}
+    actual_map = actual_service or service
+    scales = dict(realized_scale_by_alert or {a.alert_id: 1.0 for a in rows})
+    if set(scales) != set(by_id) or any(not 0 < v <= 1 for v in scales.values()):
+        raise ValueError("realized service scales must cover admitted tasks and lie in (0,1]")
     pending = {a.alert_id for a in rows}
     remaining = {a.alert_id: None for a in rows}
     owner: dict[str, str] = {}
     start_time: dict[str, float] = {}
     completion: dict[str, float] = {}
+    planned_completion: dict[str, float] = {}
     suspension = {a.alert_id: 0.0 for a in rows}
     work_done = {a.alert_id: 0.0 for a in rows}
     segments: list[tuple[str, str, float, float]] = []
@@ -139,11 +150,17 @@ def simulate(arrivals: Sequence[Alert], analysts: Sequence[Analyst],
     rng = random.Random(seed)
     observed_arrivals: list[float] = []
     mode = "D1"
+    switches: list[HLSADecision] = []
+    dispatch_epochs = p1_epochs = 0
     t = 0.0
 
     analyst_by_id = {a.analyst_id: a for a in analysts}
     while t < horizon:
         observed_arrivals.extend(a.arrival for a in rows if a.arrival == t)
+        for aid, who in owner.items():
+            if calendars[who].available(t) and aid not in open_segment:
+                open_segment[aid] = t
+                planned_completion[aid] = t + remaining[aid]
         # Dispatch only to free, available analysts. Owned suspended work is
         # reserved and resumes without entering a new policy decision.
         owned_analysts = set(owner.values())
@@ -157,45 +174,57 @@ def simulate(arrivals: Sequence[Alert], analysts: Sequence[Analyst],
                 assert cfg is not None
                 rate = sum(t - cfg.window_h < arrival <= t for arrival in observed_arrivals) / cfg.window_h
                 pressure = rate / cfg.capacity_per_h
+                previous_mode = mode
                 if mode == "D1" and pressure >= cfg.high:
                     mode = "P1"
                 elif mode == "P1" and pressure <= cfg.low:
                     mode = "D1"
+                if mode != previous_mode:
+                    switches.append(HLSADecision(t, mode, pressure, len(queue), len(owned_analysts), True))
                 selected_policy = mode
             service_forecast = lambda analyst, alert: float(service[analyst.analyst_id][alert.task_class])
             chosen = (_dispatch_d1(free, queue, t, service_forecast, rng)
                       if selected_policy == "D1" else _dispatch_local_priority(free, queue, t, service_forecast))
+            dispatch_epochs += 1
+            p1_epochs += int(selected_policy == "P1")
             for analyst, alert in chosen:
                 pending.remove(alert.alert_id)
                 owner[alert.alert_id] = analyst.analyst_id
-                remaining[alert.alert_id] = service_forecast(analyst, alert)
+                remaining[alert.alert_id] = (float(actual_map[analyst.analyst_id][alert.task_class])
+                                              * scales[alert.alert_id])
                 start_time[alert.alert_id] = t
+                if calendars[analyst.analyst_id].available(t):
+                    open_segment[alert.alert_id] = t
+                    planned_completion[alert.alert_id] = t + remaining[alert.alert_id]
 
         events = [horizon]
         events.extend(a.arrival for a in rows if a.alert_id in pending and a.arrival > t + 1e-10)
         events.extend(cal.next_change(t) for cal in calendars.values())
         for aid, who in owner.items():
             if calendars[who].available(t):
-                events.append(min(calendars[who].next_change(t), t + remaining[aid]))
+                events.append(min(calendars[who].next_change(t), planned_completion[aid]))
         nt = min(x for x in events if x > t + 1e-10)
         dt = nt - t
         for aid, who in list(owner.items()):
             if calendars[who].available(t):
-                work_done[aid] += dt
-                remaining[aid] -= dt
-                if aid not in open_segment:
-                    open_segment[aid] = t
-                if remaining[aid] <= 1e-9:
+                if nt >= planned_completion[aid] - 1e-12:
+                    work_done[aid] += remaining[aid]
+                    remaining[aid] = 0.0
                     completion[aid] = nt
                     task = by_id[aid]
                     segments.append((aid, who, open_segment.pop(aid), nt))
                     jobs.append(Assignment(aid, who, start_time[aid], nt,
                                            analyst_by_id[who].competence[task.task_class]))
                     del owner[aid]
+                    planned_completion.pop(aid, None)
+                else:
+                    work_done[aid] += dt
+                    remaining[aid] -= dt
             else:
                 suspension[aid] += dt
                 if aid in open_segment:
                     segments.append((aid, who, open_segment.pop(aid), t))
+                planned_completion.pop(aid, None)
         t = nt
 
     episodes = []
@@ -207,13 +236,15 @@ def simulate(arrivals: Sequence[Alert], analysts: Sequence[Analyst],
             status = "suspended" if not calendars[owner[aid]].available(horizon - 1e-9) else "running"
         else:
             status = "queued"
-        episodes.append(Episode(aid, status, owner.get(aid), float(remaining[aid] or 0), completion.get(aid), a.deadline, suspension[aid]))
+        episodes.append(Episode(aid, status, owner.get(aid), float(remaining[aid] or 0),
+                                completion.get(aid), a.deadline, suspension[aid], start_time.get(aid)))
     for aid, who in owner.items():
         if aid in open_segment:
             segments.append((aid, who, open_segment[aid], horizon))
     return Outcome(tuple(sorted(jobs, key=lambda j: (j.start, j.analyst_id, j.alert_id))),
                    tuple(episodes), tuple((e.alert_id, e.status) for e in episodes),
-                   tuple(sorted(work_done.items())), tuple(sorted(segments)))
+                   tuple(sorted(work_done.items())), tuple(sorted(segments)),
+                   dispatch_epochs, p1_epochs, tuple(switches))
 
 
 def simulate_scaled(arrivals: Sequence[Alert], analysts: Sequence[Analyst],

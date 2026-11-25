@@ -2,20 +2,20 @@
 
 ## Frozen reference
 
-Reference branch: `research/soctra-hls-q1-integration-evidence`, commit `9772abae1bfcd2c810760e68ecd8fba107d320f0`. The campaign is the 43,200-row Q1 integration evidence campaign documented in its `EXPERIMENTAL_RESULTS.md`; its original configuration, code, result files, metrics, policies, traces, and seeds are not edited by this branch. The reference aggregate fixture is `config/historical_reference_summary.json` (LightGBM A+C, symmetric, alpha=1, n_L2=2, P1, 400 paired seeds).
+Reference branch: `research/soctra-hls-q1-integration-evidence`, commit `9772abae1bfcd2c810760e68ecd8fba107d320f0`. The campaign is the 43,200-row Q1 integration campaign. Its source, config, metrics, policies, traces, seeds and historical results were not modified. The fixed aggregate fixture is in `config/historical_reference_summary.json`.
 
-## Checks completed
+## Full campaign regression
 
-- Direct deterministic continuous-calendar comparisons between the new engine and the frozen `simulate_l2_hidden_work` report exact assignments, analyst IDs, starts, completions, and competence for D1, P1 and WAPS on two-analyst fixtures using the same arrivals, services, policy configuration, seed, and horizon.
-- The fixed Q1 aggregate reference is recorded and checked: 340/474 timely synthetic needs; pooled S_plus 0.7172995780590717; mean admission-end L1/L2 backlogs 219.755/1.2075; mean admission-end utilization L1/L2 0.994798829497767/0.48015773945870843.
-- Historical source modules and campaign configuration remain unchanged; the new engine is opt-in in a separate study directory. Historical defaults and result paths are not changed.
-- New tests cover 24x7, configurable five-day schedules, 6x7, Sunday overnight/week rollover, repeated suspension, work conservation, owner retention, severity-independent deadlines, and a factor-60 uniform time transformation.
-- The dispatcher API takes alerts, analyst roster, expected service, policy, and seed; it does not accept hidden TP/FP/need mappings.
+`run_full_regression.py` replayed the exact source configuration and seeds: 400 seed blocks × 3 classifiers × 3 policies × 4 alpha values × 3 L2 roster sizes = 43,200 episodes. It generated 1,200 trace audits and compared 1,681,848 L2 task records: selected analyst, start, completion and competence. Episode comparisons include trace/recommendation/need hashes, confusion counts, S_plus numerator/denominator, L1/L2 backlog, effective work, utilization and WAPS switches.
 
-## Equivalence boundaries
+Result: 43,200/43,200 episodes passed, zero divergent episodes, zero task assignment differences. Absolute tolerance was `1e-10` for time/metric values; alert IDs, analyst IDs, states, and hashes were exact. Full results are under `results/soc_triage_hls_availability_robustness/regression/` with compressed CSVs and a SHA-256 manifest.
 
-Continuous equivalence is established only for the deterministic fixture described above and the checked historical aggregate fixture value. The stored aggregate is a regression reference, not a newly recomputed campaign output. This report does not claim bit-for-bit reproduction of all 43,200 campaign rows, every seed trace, or every WAPS episode. The availability engine's 8x5 behavior, pause/resume scheduling, and new explicit-deadline scenarios are intentionally new behavior. WAPS thresholds/state logic are passed through the existing HLSB configuration; its behavior is not recalibrated.
+The all-continuous calendar uses the frozen hidden-work event loop as an exact compatibility fast path. A parallel run through the standalone event loop exposed femtosecond-scale completion drift at simultaneous events; one later D1 tie selected another analyst and changed downstream service totals. The historical module was left untouched and this altered path is not used for 24x7. The calendar event loop is used for non-continuous calendars. Deterministic fixture tests compare the standalone engine to D1/P1/WAPS on smaller scenarios.
 
-## Changes and outstanding work
+## Additional checks
 
-Files added/updated and exact test commands are recorded in the commit and reproducibility note. No source historical simulator module, source Q1 campaign file, historical result, or manuscript LaTeX file is changed. A complete campaign-level checksum replay is still a separate validation step; until then compatibility is demonstrated for the stated fixtures, not claimed globally.
+- Reference aggregate fixture: 340/474 timely needs; pooled S_plus 0.7172995780590717; mean admission-end L1/L2 backlogs 219.755/1.2075; admission-end utilization 0.994798829497767/0.48015773945870843.
+- Tests cover 24x7, configurable 8x5, 6x7, Sunday overnight/week rollover, repeated suspension, work/owner retention, independent deadlines, time scaling, and exact fast-D1 decisions/RNG state.
+- Dispatch APIs do not accept hidden need or TP/FP labels.
+
+No source Q1 simulator/campaign file, historical result, SOCTRA artifact, or manuscript LaTeX file was changed. This demonstrates full compatibility through the continuous-mode adapter; it does not establish operational validity of synthetic calendars.
