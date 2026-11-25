@@ -32,9 +32,11 @@ the explicitly referenced existing trace generator, then calls
 - `deadlines`: `severity_map` with nonnegative
   `offsets_by_severity_h`, `provided_absolute` to preserve generated Alert
   deadlines, or `explicit_by_alert` with an `absolute_by_alert` mapping.
-  Severity mapping is applied only when `request_for` receives a separate
-  `severity_by_alert` map; no new alert fields are introduced. Deadlines in
-  `Alert` remain absolute natural-time instants.
+  In `severity_map` mode, `request_for` requires a separate `severity_by_alert`
+  map covering exactly the supplied alert IDs, with only configured severity
+  labels. `provided_absolute` preserves deadlines already present in generated
+  Alerts. No new alert fields are introduced. Deadlines in `Alert` remain
+  absolute natural-time instants.
 - `time`: positive `admission_horizon`, later `evaluation_horizon`, and a
   positive uniform `scale`.
 - `experiment`: integer `seed_start`, positive `seed_count`, plus optional
@@ -69,7 +71,9 @@ from studies.soc_triage_hls_availability_robustness.execution_api import Calenda
 
 scenario = load_scenario("studies/soc_triage_hls_availability_robustness/config/SYNTHETIC_SOC_MIXED_SHIFTS.json")
 # alerts = existing_generator(...); preserve the original paired seed/draw logic
-request = scenario.request_for("L2", alerts, seed=920000, policy="WAPS")
+severity = {alert.alert_id: "medium" for alert in alerts}
+request = scenario.request_for("L2", alerts, seed=920000, policy="WAPS",
+                               severity_by_alert=severity)
 result = CalendarBackend().run(request)
 ```
 

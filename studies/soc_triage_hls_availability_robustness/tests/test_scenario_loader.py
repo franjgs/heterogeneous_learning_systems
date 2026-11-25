@@ -63,6 +63,64 @@ def test_requests_work_with_both_existing_backends_and_severity_deadlines_are_si
     assert calendar.native_result is not None
 
 
+def test_severity_map_requires_sidecar_and_computes_absolute_deadlines():
+    scenario = load_scenario(CONFIG / "SYNTHETIC_SOC_24x7.json")
+    alerts = (Alert("a", 2.0, "portfolio_top5", 100.0),
+              Alert("b", 4.0, "portfolio_top5", 100.0))
+    with pytest.raises(ScenarioConfigError, match="severity_by_alert is required"):
+        scenario.request_for("L2", alerts)
+    request = scenario.request_for("L2", alerts,
+                                   severity_by_alert={"a": "high", "b": "low"})
+    assert [a.deadline for a in request.alerts] == [14.0, 76.0]
+
+
+def test_severity_map_requires_exact_alert_ids_and_known_severities():
+    scenario = load_scenario(CONFIG / "SYNTHETIC_SOC_24x7.json")
+    alerts = (Alert("a", 2.0, "portfolio_top5", 100.0),
+              Alert("b", 4.0, "portfolio_top5", 100.0))
+    with pytest.raises(ScenarioConfigError, match="cover exactly"):
+        scenario.request_for("L2", alerts, severity_by_alert={"a": "high"})
+    with pytest.raises(ScenarioConfigError, match="unknown severities"):
+        scenario.request_for("L2", alerts,
+                             severity_by_alert={"a": "urgent", "b": "low"})
+
+
+def _load_with_deadline_mode(tmp_path, mode, **deadline_fields):
+    raw = json.loads((CONFIG / "SYNTHETIC_SOC_24x7.json").read_text())
+    raw["deadlines"] = {"mode": mode, **deadline_fields}
+    path = tmp_path / f"{mode}.json"
+    path.write_text(json.dumps(raw))
+    return load_scenario(path)
+
+
+def test_provided_absolute_preserves_generated_deadlines(tmp_path):
+    scenario = _load_with_deadline_mode(tmp_path, "provided_absolute")
+    alerts = (Alert("a", 2.0, "portfolio_top5", 30.0),)
+    request = scenario.request_for("L2", alerts)
+    assert request.alerts == alerts
+
+
+def test_explicit_by_alert_keeps_existing_absolute_deadline_behavior(tmp_path):
+    scenario = _load_with_deadline_mode(
+        tmp_path, "explicit_by_alert", absolute_by_alert={"a": 19.0}
+    )
+    alerts = (Alert("a", 2.0, "portfolio_top5", 30.0),
+              Alert("b", 4.0, "portfolio_top5", 35.0))
+    request = scenario.request_for("L2", alerts)
+    assert [a.deadline for a in request.alerts] == [19.0, 35.0]
+
+
+def test_loading_historical_reference_does_not_mutate_historical_configuration():
+    historical_json = (ROOT.parent / "soc_triage_hls_q1_integration_evidence" /
+                       "config" / "primary_campaign.json")
+    before = historical_json.read_bytes()
+    first = load_scenario(CONFIG / "HISTORICAL_REFERENCE.json")
+    second = load_scenario(CONFIG / "HISTORICAL_REFERENCE.json")
+    assert historical_json.read_bytes() == before
+    assert first.organization == second.organization
+    assert first.settings == second.settings
+
+
 def test_scenarios_are_independent_and_loader_does_not_consume_randomness_or_change_campaign_globals():
     state = random.getstate()
     loaded_a = load_scenario(CONFIG / "SYNTHETIC_SOC_24x7.json")

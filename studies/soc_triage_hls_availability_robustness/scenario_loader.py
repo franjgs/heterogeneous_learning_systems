@@ -83,7 +83,11 @@ class LoadedScenario:
         waps = self.policies[level].get("waps") if policy_name == "WAPS" else None
         rows = tuple(alerts)
         deadline_spec = self.generation["deadline_mode"]
-        if deadline_spec["mode"] == "severity_map" and severity_by_alert is not None:
+        if deadline_spec["mode"] == "severity_map":
+            if severity_by_alert is None:
+                raise ScenarioConfigError(
+                    "severity_by_alert is required when deadlines.mode is 'severity_map'"
+                )
             offsets = deadline_spec["offsets_by_severity_h"]
             if set(severity_by_alert) != {a.alert_id for a in rows}:
                 raise ScenarioConfigError("severity_by_alert must cover exactly the supplied alerts")

@@ -19,7 +19,9 @@ campaign provenance; it does not replace campaign settings, cover every
 historical condition, or regenerate historical results. Synthetic examples
 are not descriptions of GMV-CERT. Calendars currently support repeating
 weekly windows, including overnight shifts; holidays and absences are outside
-scope. Priority interruption, reassignment, early/late escalation, new policy
+scope. The loader now requires a complete alert-ID-to-severity sidecar for
+`severity_map`; use `provided_absolute` to keep generated Alert deadlines.
+Priority interruption, reassignment, early/late escalation, new policy
 algorithms, and campaign migration remain future work. See
 `CONFIGURATION_GUIDE.md` for schema and use.
 
