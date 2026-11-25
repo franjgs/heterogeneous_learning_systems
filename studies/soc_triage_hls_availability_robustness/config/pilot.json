@@ -3,16 +3,29 @@
   "calendar_A": "all analysts continuous 24x7",
   "calendar_B_L1": "continuous 24x7",
   "calendar_B_L2": "Monday-Friday 09:00-17:00",
+  "calendar_examples": {
+    "24x7": "all seven days 00:00-24:00",
+    "8x5_example": "configurable five weekdays, each 09:00-17:00",
+    "6x7": "all seven days 10:00-16:00"
+  },
   "deadlines_h": {"high": 12, "medium": 24, "low": 72},
   "rho_L1_primary": 0.85,
   "rho_L1_sensitivity": 1.25,
+  "n_L1": 6,
+  "n_L2": [2, 3, 4],
   "alpha": [0.25, 1.0],
-  "classifiers": ["LightGBM A+C", "LSEnsemble A+C", "Bayesian MLP A+C"],
+  "classifiers": [
+    {"name": "LightGBM", "features": "A+C", "pD": 0.8421, "pFA": 0.0450},
+    {"name": "LSEnsemble", "features": "A+C", "pD": 0.8421, "pFA": 0.0743},
+    {"name": "Bayesian MLP", "features": "A+C", "pD": 0.7042, "pFA": 0.0154}
+  ],
   "policies": ["D1", "P1", "WAPS"],
+  "waps": {"window_h": 4.0, "low": 1.05, "high": 1.2},
   "pilot_seed_count": 8,
   "admission_horizon_h": 168,
-  "accounting_cutoff_h": 168,
+  "accounting_cutoff_h": 240,
   "terminal_drain_h": 0,
   "paired_conditions": ["L2_24x7", "L2_8x5"],
+  "paired_inputs": ["same analyst IDs", "same demand", "same recommendation draws", "same synthetic need", "same service realizations", "same competencies", "same deadlines", "same policy settings"],
   "note": "Synthetic deadlines; not GMV-CERT SLAs. Pilot settings are technical, not inferential."
 }

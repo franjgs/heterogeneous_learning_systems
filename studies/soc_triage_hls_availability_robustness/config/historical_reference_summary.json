@@ -1,0 +1,24 @@
+{
+  "source_branch": "research/soctra-hls-q1-integration-evidence",
+  "source_commit": "9772abae1bfcd2c810760e68ecd8fba107d320f0",
+  "source_artifact": "results/soc_triage_hls_q1_integration_evidence/summary_by_condition.csv",
+  "condition": {
+    "classifier_id": "standardized_lightgbm_apc_symmetric",
+    "alpha": 1.0,
+    "n_L2": 2,
+    "policy": "P1",
+    "paired_seeds": 400
+  },
+  "aggregate_reference": {
+    "timely_needs": 340,
+    "total_needs": 474,
+    "S_plus_pooled": 0.7172995780590717,
+    "L1_backlog_H_mean": 219.755,
+    "L2_backlog_H_mean": 1.2075,
+    "L1_backlog_terminal_mean": 0.0,
+    "L2_backlog_terminal_mean": 0.0,
+    "utilization_L1_mean_H_mean": 0.994798829497767,
+    "utilization_L2_mean_H_mean": 0.48015773945870843,
+    "L2_work_offered_class_mean_h_mean": 31.931475
+  }
+}

@@ -14,25 +14,76 @@ from hls.rq1_allocation import Alert, Analyst, Assignment, HLSBConfig, _dispatch
 
 @dataclass(frozen=True)
 class Calendar:
-    windows: tuple[tuple[int, float, float], ...]  # weekday 0=Mon, [start,end) hour
+    windows: tuple[tuple[int, float, float], ...]  # weekday 0=Mon; end <= start means overnight
+    hours_per_day: float = 24.0
+
+    def __post_init__(self):
+        for day, start, end in self.windows:
+            if day not in range(7) or not (0 <= start < self.hours_per_day) or not (0 <= end <= self.hours_per_day):
+                raise ValueError("calendar window outside weekday or day-hour bounds")
+            if start == end:
+                raise ValueError("zero-length shifts are not valid")
 
     def available(self, t: float) -> bool:
-        day = int(t // 24) % 7
-        hour = t % 24
-        return any(d == day and start <= hour < end for d, start, end in self.windows)
+        week = 7 * self.hours_per_day
+        week_hour = t % week
+        for day, start, end in self.windows:
+            begin = day * self.hours_per_day + start
+            finish = day * self.hours_per_day + end
+            if end <= start:
+                finish += self.hours_per_day
+            if finish <= week:
+                if begin <= week_hour < finish:
+                    return True
+            elif week_hour >= begin or week_hour < finish - week:
+                return True
+        return False
 
     def next_change(self, t: float) -> float:
         # All boundaries repeat weekly; advance to the next boundary (or a daily
         # boundary for all-day schedules).
-        base = int(t // 168) * 168
-        points = sorted({d * 24 + x for d, a, b in self.windows for x in (a, b)}
-                        | {d * 24 for d in range(7)} | {168})
-        candidates = [base + p for p in points if base + p > t + 1e-10]
-        return min(candidates) if candidates else base + 168
+        week = 7 * self.hours_per_day
+        base = int(t // week) * week
+        points_set = {0, week}
+        for d, a, b in self.windows:
+            points_set.add((d * self.hours_per_day + a) % week)
+            points_set.add((d * self.hours_per_day + b + (self.hours_per_day if b <= a else 0)) % week)
+        points = sorted(points_set)
+        candidates = sorted(base + cycle * week + p for cycle in (0, 1) for p in points
+                           if base + cycle * week + p > t + 1e-10)
+        for boundary in candidates:
+            eps = min(1e-7, max(1e-10, (boundary - t) / 4))
+            if self.available(boundary - eps) != self.available(boundary + eps):
+                return boundary
+        return base + week
+
+    def scaled(self, factor: float) -> "Calendar":
+        return Calendar(tuple((d, a * factor, b * factor) for d, a, b in self.windows),
+                        self.hours_per_day * factor)
 
 
 CONTINUOUS = Calendar(tuple((d, 0.0, 24.0) for d in range(7)))
 WEEKDAY_9_TO_17 = Calendar(tuple((d, 9.0, 17.0) for d in range(5)))
+
+
+@dataclass(frozen=True)
+class TimeScale:
+    """Uniform multiplier for all time quantities passed to the simulator."""
+    factor: float = 1.0
+
+    def __post_init__(self):
+        if self.factor <= 0:
+            raise ValueError("time scale factor must be positive")
+
+
+def deadline_from_arrival(arrival: float, severity: object, *,
+                          explicit_hours: float | None = None,
+                          by_severity: Mapping[object, float] | None = None) -> float:
+    """Return absolute natural-time deadline; explicit offset is severity-independent."""
+    offset = explicit_hours if explicit_hours is not None else (by_severity or {})[severity]
+    if offset < 0:
+        raise ValueError("deadline offset must be nonnegative")
+    return arrival + offset
 
 
 @dataclass(frozen=True)
@@ -51,6 +102,8 @@ class Outcome:
     assignments: tuple[Assignment, ...]
     episodes: tuple[Episode, ...]
     statuses: tuple[tuple[str, str], ...]
+    work_done_by_alert: tuple[tuple[str, float], ...] = ()
+    work_segments: tuple[tuple[str, str, float, float], ...] = ()
 
 
 def simulate(arrivals: Sequence[Alert], analysts: Sequence[Analyst],
@@ -79,29 +132,25 @@ def simulate(arrivals: Sequence[Alert], analysts: Sequence[Analyst],
     start_time: dict[str, float] = {}
     completion: dict[str, float] = {}
     suspension = {a.alert_id: 0.0 for a in rows}
+    work_done = {a.alert_id: 0.0 for a in rows}
+    segments: list[tuple[str, str, float, float]] = []
+    open_segment: dict[str, float] = {}
     jobs: list[Assignment] = []
     rng = random.Random(seed)
     observed_arrivals: list[float] = []
     mode = "D1"
     t = 0.0
 
+    analyst_by_id = {a.analyst_id: a for a in analysts}
     while t < horizon:
         observed_arrivals.extend(a.arrival for a in rows if a.arrival == t)
-        # Resume owned work before dispatching new work; it remains with its analyst.
-        for aid, analyst_id in list(owner.items()):
-            if aid not in completion and calendars[analyst_id].available(t):
-                start_time.setdefault(aid, t)
-        busy = {owner[aid] for aid in owner if aid not in completion and start_time.get(aid) == t}
-        for analyst in analysts:
-            if analyst.analyst_id in busy or not calendars[analyst.analyst_id].available(t):
-                continue
-            owned = next((aid for aid, who in owner.items() if who == analyst.analyst_id and aid not in completion), None)
-            if owned is not None:
-                continue
-            eligible_pending = {aid: by_id[aid] for aid in pending if by_id[aid].arrival <= t
-                                if by_id[aid].task_class in analyst.eligible_classes}
-            if not eligible_pending:
-                continue
+        # Dispatch only to free, available analysts. Owned suspended work is
+        # reserved and resumes without entering a new policy decision.
+        owned_analysts = set(owner.values())
+        free = [a for a in analysts if a.analyst_id not in owned_analysts
+                and calendars[a.analyst_id].available(t)]
+        queue = {aid: by_id[aid] for aid in pending if by_id[aid].arrival <= t}
+        if free and queue:
             selected_policy = policy
             if policy in {"WAPS", "HLS-B"}:
                 cfg = waps_config
@@ -113,46 +162,40 @@ def simulate(arrivals: Sequence[Alert], analysts: Sequence[Analyst],
                 elif mode == "P1" and pressure <= cfg.low:
                     mode = "D1"
                 selected_policy = mode
-            if selected_policy == "D1":
-                chosen = _dispatch_d1([analyst], eligible_pending, t,
-                    lambda a, x: float(service[a.analyst_id][x.task_class]), rng)
-            else:
-                chosen = _dispatch_local_priority([analyst], eligible_pending, t,
-                    lambda a, x: float(service[a.analyst_id][x.task_class]))
-            if chosen:
-                _, alert = chosen[0]
+            service_forecast = lambda analyst, alert: float(service[analyst.analyst_id][alert.task_class])
+            chosen = (_dispatch_d1(free, queue, t, service_forecast, rng)
+                      if selected_policy == "D1" else _dispatch_local_priority(free, queue, t, service_forecast))
+            for analyst, alert in chosen:
                 pending.remove(alert.alert_id)
                 owner[alert.alert_id] = analyst.analyst_id
-                remaining[alert.alert_id] = float(service[analyst.analyst_id][alert.task_class])
-                start_time.setdefault(alert.alert_id, t)
+                remaining[alert.alert_id] = service_forecast(analyst, alert)
+                start_time[alert.alert_id] = t
 
         events = [horizon]
         events.extend(a.arrival for a in rows if a.alert_id in pending and a.arrival > t + 1e-10)
         events.extend(cal.next_change(t) for cal in calendars.values())
         for aid, who in owner.items():
-            if aid in completion:
-                continue
-            cal = calendars[who]
-            boundary = cal.next_change(t)
-            if cal.available(t):
-                events.append(min(boundary, t + remaining[aid]))
-            else:
-                events.append(boundary)
+            if calendars[who].available(t):
+                events.append(min(calendars[who].next_change(t), t + remaining[aid]))
         nt = min(x for x in events if x > t + 1e-10)
         dt = nt - t
         for aid, who in list(owner.items()):
-            if aid in completion:
-                continue
             if calendars[who].available(t):
+                work_done[aid] += dt
                 remaining[aid] -= dt
+                if aid not in open_segment:
+                    open_segment[aid] = t
                 if remaining[aid] <= 1e-9:
                     completion[aid] = nt
                     task = by_id[aid]
+                    segments.append((aid, who, open_segment.pop(aid), nt))
                     jobs.append(Assignment(aid, who, start_time[aid], nt,
-                                           analysts[[a.analyst_id for a in analysts].index(who)].competence[task.task_class]))
+                                           analyst_by_id[who].competence[task.task_class]))
                     del owner[aid]
             else:
                 suspension[aid] += dt
+                if aid in open_segment:
+                    segments.append((aid, who, open_segment.pop(aid), t))
         t = nt
 
     episodes = []
@@ -165,5 +208,28 @@ def simulate(arrivals: Sequence[Alert], analysts: Sequence[Analyst],
         else:
             status = "queued"
         episodes.append(Episode(aid, status, owner.get(aid), float(remaining[aid] or 0), completion.get(aid), a.deadline, suspension[aid]))
+    for aid, who in owner.items():
+        if aid in open_segment:
+            segments.append((aid, who, open_segment[aid], horizon))
     return Outcome(tuple(sorted(jobs, key=lambda j: (j.start, j.analyst_id, j.alert_id))),
-                   tuple(episodes), tuple((e.alert_id, e.status) for e in episodes))
+                   tuple(episodes), tuple((e.alert_id, e.status) for e in episodes),
+                   tuple(sorted(work_done.items())), tuple(sorted(segments)))
+
+
+def simulate_scaled(arrivals: Sequence[Alert], analysts: Sequence[Analyst],
+                    service: Mapping[str, Mapping[object, float]], calendars: Mapping[str, Calendar],
+                    *, horizon: float, scale: TimeScale = TimeScale(), policy: str = "D1",
+                    seed: int = 0, waps_config: HLSBConfig | None = None) -> Outcome:
+    """Run an otherwise identical scenario with every time quantity multiplied.
+
+    Returned times, deadlines, work, and durations use the scaled units.
+    """
+    f = scale.factor
+    alerts_scaled = tuple(Alert(a.alert_id, a.arrival * f, a.task_class, a.deadline * f) for a in arrivals)
+    service_scaled = {aid: {k: v * f for k, v in values.items()} for aid, values in service.items()}
+    calendar_scaled = {aid: cal.scaled(f) for aid, cal in calendars.items()}
+    cfg = None if waps_config is None else HLSBConfig(
+        window_h=waps_config.window_h * f, low=waps_config.low, high=waps_config.high,
+        capacity_per_h=waps_config.capacity_per_h / f)
+    return simulate(alerts_scaled, analysts, service_scaled, calendar_scaled, horizon=horizon * f,
+                    policy=policy, seed=seed, waps_config=cfg)
