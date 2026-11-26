@@ -6,6 +6,7 @@ and location-free. Dispatchers see only pending alerts and ex ante service.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from math import isfinite
 import random
 from typing import Mapping, Sequence
 
@@ -134,8 +135,8 @@ def simulate(arrivals: Sequence[Alert], analysts: Sequence[Analyst],
     by_id = {a.alert_id: a for a in rows}
     actual_map = actual_service or service
     scales = dict(realized_scale_by_alert or {a.alert_id: 1.0 for a in rows})
-    if set(scales) != set(by_id) or any(not 0 < v <= 1 for v in scales.values()):
-        raise ValueError("realized service scales must cover admitted tasks and lie in (0,1]")
+    if set(scales) != set(by_id) or any(not isfinite(float(v)) or v <= 0 for v in scales.values()):
+        raise ValueError("realized service scales must cover admitted tasks and be finite and positive")
     pending = {a.alert_id for a in rows}
     remaining = {a.alert_id: None for a in rows}
     owner: dict[str, str] = {}

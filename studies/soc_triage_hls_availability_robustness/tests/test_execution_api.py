@@ -12,13 +12,16 @@ from studies.soc_triage_hls_availability_robustness.execution_api import (
 
 
 def build_request(*, policy="D1", calendar=CONTINUOUS, admission=24, evaluation=40,
-                  scale=1.0, service=3.0, environment=None, analysts=None, level="L2"):
+                  scale=1.0, service=3.0, forecast_service=None, environment=None,
+                  analysts=None, level="L2", alerts=None):
     analysts = analysts or [Analyst("L2-A", frozenset({"x"}), {"x": .8})]
-    resources = tuple(AnalystResource(a, {"x": service}, calendar) for a in analysts)
+    forecast_service = service if forecast_service is None else forecast_service
+    resources = tuple(AnalystResource(a, {"x": service}, calendar,
+                                      {"x": forecast_service}) for a in analysts)
     org = OrganizationConfig(resources, (TeamConfig(level, tuple(a.analyst_id for a in analysts)),))
     waps = HLSBConfig(4, 1.05, 1.2, .4) if policy == "WAPS" else None
     return SimulationRequest(
-        (Alert("a", 16, "x", 32), Alert("b", 18, "x", 42)), org, level,
+        tuple(alerts or (Alert("a", 16, "x", 32), Alert("b", 18, "x", 42))), org, level,
         PolicyConfig(policy, waps),
         SimulationSettings(admission, evaluation, 17, TimeScale(scale),
                            DeadlineConfig({"high": 12, "medium": 24, "low": 72})),
@@ -193,6 +196,126 @@ def test_hidden_need_is_not_forwarded_to_calendar_dispatch(monkeypatch):
 
     monkeypatch.setattr(availability_engine, "_dispatch_d1", spy)
     CalendarBackend().run(request)
+    assert seen
+
+
+def test_beta_zero_preserves_historical_alpha_service_on_both_backends():
+    env = EnvironmentRealization(
+        {"a": .25, "b": 1.0}, {"a": False, "b": True},
+        {"a": .9, "b": .1}, difficulty_service_beta=0.0,
+    )
+    request = build_request(calendar=CONTINUOUS, service=4.0, environment=env)
+    assert dict(env.realized_scales_for(("a", "b"))) == {"a": .25, "b": 1.0}
+    continuous = ContinuousBackend().run(request)
+    calendar = CalendarBackend().run(request)
+    for result in (continuous, calendar):
+        durations = {job.alert_id: job.completion - job.start for job in result.assignments}
+        assert durations == {"a": 1.0, "b": 4.0}
+
+
+def test_beta_changes_effective_service_but_not_forecast_or_dispatch():
+    analysts = [Analyst("fast", frozenset({"x"}), {"x": .8}),
+                Analyst("slow", frozenset({"x"}), {"x": .8})]
+    alerts = (Alert("hard", 0, "x", 20), Alert("easy", 0, "x", 20))
+
+    def run(beta, difficulty):
+        env = EnvironmentRealization(
+            hidden_need_by_alert={"hard": True, "easy": True},
+            difficulty_by_alert=difficulty,
+            difficulty_service_beta=beta,
+        )
+        request = build_request(calendar=CONTINUOUS, admission=1, evaluation=20,
+                                service=2.0, forecast_service=2.0, environment=env,
+                                analysts=analysts, alerts=alerts)
+        return ContinuousBackend().run(request)
+
+    zero = run(0.0, {"hard": .9, "easy": .1})
+    positive = run(1.0, {"hard": .9, "easy": .1})
+    zero_map = {a.alert_id: (a.analyst_id, a.start) for a in zero.assignments}
+    positive_map = {a.alert_id: (a.analyst_id, a.start) for a in positive.assignments}
+    assert positive_map == zero_map
+    durations = {a.alert_id: a.completion - a.start for a in positive.assignments}
+    assert durations == {"hard": pytest.approx(2.8), "easy": pytest.approx(1.2)}
+
+
+def test_alpha_and_difficulty_multiply_once_for_l2_and_match_continuous_engines():
+    env = EnvironmentRealization(
+        {"fp": .25, "tp": 1.0}, {"fp": False, "tp": True},
+        {"fp": .75, "tp": .75}, difficulty_service_beta=1.0,
+    )
+    request = build_request(calendar=CONTINUOUS, admission=1, evaluation=20,
+                            service=4.0, forecast_service=4.0, environment=env,
+                            alerts=(Alert("fp", 0, "x", 12), Alert("tp", 0, "x", 12)))
+    assert dict(env.realized_scales_for(("fp", "tp"))) == {"fp": .3125, "tp": 1.25}
+    continuous = ContinuousBackend().run(request)
+    calendar = CalendarBackend().run(request)
+    expected = {"fp": 1.25, "tp": 5.0}
+    for result in (continuous, calendar):
+        durations = {job.alert_id: job.completion - job.start for job in result.assignments}
+        assert durations == expected
+    assert [(x.alert_id, x.analyst_id, x.start, x.completion) for x in continuous.assignments] == [
+        (x.alert_id, x.analyst_id, x.start, x.completion) for x in calendar.assignments
+    ]
+
+    l1_env = EnvironmentRealization(difficulty_by_alert={"fp": .75},
+                                    difficulty_service_beta=1.0)
+    l1_request = build_request(calendar=CONTINUOUS, admission=1, evaluation=20,
+                               service=4.0, environment=l1_env,
+                               analysts=[Analyst("L1-A", frozenset({"x"}), {"x": .8})],
+                               level="L1", alerts=(Alert("fp", 0, "x", 12),))
+    l1_result = ContinuousBackend().run(l1_request)
+    assert l1_result.assignments[0].completion == 5.0  # difficulty only; no L2 alpha
+
+
+def test_calendar_suspension_preserves_composed_work_and_original_deadline():
+    env = EnvironmentRealization(
+        {"late-fp": .25}, {"late-fp": False}, {"late-fp": 1.0},
+        difficulty_service_beta=1.0,
+    )
+    alert = Alert("late-fp", 112, "x", 120)
+    request = build_request(calendar=WEEKDAY_9_TO_17, admission=120, evaluation=180,
+                            service=4.0, environment=env, alerts=(alert,))
+    result = CalendarBackend().run(request)
+    task = result.tasks_by_alert["late-fp"]
+    assert task.completion == pytest.approx(177.5)
+    assert task.effective_work == pytest.approx(1.5)
+    assert task.suspension == pytest.approx(64.0)
+    assert task.status == "completed_late"
+    assert result.native_result.episodes[0].deadline == 120
+    assert result.work_segments == (
+        type(result.work_segments[0])("late-fp", "L2-A", 112, 113),
+        type(result.work_segments[0])("late-fp", "L2-A", 177, 177.5),
+    )
+
+
+def test_difficulty_maps_remain_environment_only_for_both_dispatchers(monkeypatch):
+    from studies.soc_triage_hls_q1_integration_evidence import fp_workload_engine
+    from studies.soc_triage_hls_availability_robustness import availability_engine
+
+    env = EnvironmentRealization({"a": .25, "b": 1.0}, {"a": False, "b": True},
+                                 {"a": .9, "b": .1}, difficulty_service_beta=1.0)
+    request = build_request(calendar=CONTINUOUS, environment=env)
+    excluded = (env.hidden_need_by_alert, env.difficulty_by_alert,
+                env.service_scale_by_alert, env.realized_scales_for(("a", "b")))
+    seen = []
+
+    for module, backend in ((fp_workload_engine, ContinuousBackend()),
+                            (availability_engine, CalendarBackend())):
+        original = module._dispatch_d1
+
+        def spy(*args, _original=original, **kwargs):
+            free, pending, _, forecast, _ = args
+            assert all(forecast(analyst, alert) == 3.0
+                       for analyst in free for alert in pending.values())
+            assert not any(value is not None and any(arg is value for arg in args)
+                           for value in excluded)
+            assert not any(isinstance(arg, dict) and any(arg == value for value in excluded)
+                           for arg in args)
+            seen.append(True)
+            return _original(*args, **kwargs)
+
+        monkeypatch.setattr(module, "_dispatch_d1", spy)
+        backend.run(request)
     assert seen
 
 

@@ -195,6 +195,8 @@ def simulate(
     coordination_edge_cost: float = 0.0,
     b3_config: B3Config = B3Config(),
     service_by_analyst_class: Mapping[str, Mapping[ClassId, float]] | None = None,
+    forecast_service_by_analyst_class: Mapping[str, Mapping[ClassId, float]] | None = None,
+    realized_scale_by_alert: Mapping[str, float] | None = None,
     hlsa_config: HLSAConfig = HLSAConfig(),
     hlsb_config: HLSBConfig | None = None,
     diagnostic_trace: list[dict] | None = None,
@@ -225,10 +227,33 @@ def simulate(
     analyst_rows = tuple(analysts)
     services = dict(service_by_class)
     individual_services = {key: dict(value) for key, value in (service_by_analyst_class or {}).items()}
+    forecast_input = {key: dict(value) for key, value in
+                      (forecast_service_by_analyst_class or {}).items()}
+    realized_scales = dict(realized_scale_by_alert or {})
+    if (set(realized_scales) - {a.alert_id for a in alert_rows} or
+            any(not isfinite(float(v)) or float(v) <= 0 for v in realized_scales.values())):
+        raise ValueError("realized service scales must be finite, positive, and refer to known alerts")
     _validate(alert_rows, analyst_rows, services, individual_services)
+    _validate(alert_rows, analyst_rows, services, forecast_input)
+    forecast_services = {
+        analyst.analyst_id: {
+            task_class: forecast_input.get(analyst.analyst_id, {}).get(
+                task_class,
+                individual_services.get(analyst.analyst_id, {}).get(task_class,
+                                                                     services[task_class]),
+            )
+            for task_class in analyst.eligible_classes
+        }
+        for analyst in analyst_rows
+    }
 
     def service_time(analyst: Analyst, alert: Alert) -> float:
-        return individual_services.get(analyst.analyst_id, {}).get(alert.task_class, services[alert.task_class])
+        return forecast_services[analyst.analyst_id].get(alert.task_class, services[alert.task_class])
+
+    def effective_service_time(analyst: Analyst, alert: Alert) -> float:
+        base = individual_services.get(analyst.analyst_id, {}).get(alert.task_class,
+                                                                  services[alert.task_class])
+        return base * float(realized_scales.get(alert.alert_id, 1.0))
 
     ordered_analysts = tuple(sorted(analyst_rows, key=lambda a: a.analyst_id))
     admitted = tuple(sorted(
@@ -296,7 +321,7 @@ def simulate(
             analyst, alert, start = dispatching.pop(aid)
             assignment = Assignment(
                 alert.alert_id, analyst.analyst_id, start,
-                start + service_time(analyst, alert), analyst.competence[alert.task_class],
+                start + effective_service_time(analyst, alert), analyst.competence[alert.task_class],
             )
             running[analyst.analyst_id] = assignment
             assignments.append(assignment)
@@ -371,7 +396,7 @@ def simulate(
                     d1=pairs(d1_preview), p1=pairs(p1_preview), delta_v=delta)
             if policy == "B3":
                 strategy = _choose_b3_strategy(
-                    free, pending, services, now, coordination_latency, b3_config, individual_services,
+                    free, pending, services, now, coordination_latency, b3_config, forecast_services,
                 )
                 strategy_counts[strategy] += 1
                 strategy_history.append(strategy)
@@ -384,7 +409,7 @@ def simulate(
             elif strategy in {"P1", "P2", "P3", "P4", "P5"}:
                 selected, strategy_latency, dispatch_resource = _dispatch_soc_policy(
                     strategy, free, pending, services, now, service_time,
-                    individual_services, order_rng, coordination_latency,
+                    forecast_services, order_rng, coordination_latency,
                     coordination_edge_cost,
                 )
             elif strategy in {"T", "Q"}:
@@ -397,7 +422,7 @@ def simulate(
                 )
             else:
                 selected = _dispatch_coordinated(
-                    free, pending, services, now, strategy, strategy_latency, individual_services
+                    free, pending, services, now, strategy, strategy_latency, forecast_services
                 )
             if selected and strategy in {"P4", "P5", "C"} and strategy_latency:
                 coordination_latency_total += strategy_latency
@@ -428,7 +453,7 @@ def simulate(
                 else:
                     assignment = Assignment(
                         alert.alert_id, analyst.analyst_id, now,
-                        now + service_time(analyst, alert), analyst.competence[alert.task_class],
+                        now + effective_service_time(analyst, alert), analyst.competence[alert.task_class],
                     )
                     running[analyst.analyst_id] = assignment
                     assignments.append(assignment)

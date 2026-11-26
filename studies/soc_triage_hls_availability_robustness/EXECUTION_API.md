@@ -57,7 +57,9 @@ Both return `ExecutionResult` with the native engine result, native assignment r
 
 ## Hidden environment data
 
-`EnvironmentRealization` is a separate optional request input. It contains service scales and, where required by the historical hidden-work runner, synthetic hidden-need labels. These values are passed only to the environment execution function. D1/P1/WAPS dispatch receives the engine's public alerts, analysts and ex-ante service estimates; neither hidden need nor TP/FP labels are dispatcher arguments. `ContinuousBackend`'s hidden-work route requires both environment maps because that native function validates both; `CalendarBackend` can consume service scales without receiving hidden need.
+`EnvironmentRealization` is an optional sidecar for environment-only values. `service_scale_by_alert` retains the existing alpha multiplier for L2 work; `difficulty_by_alert` plus `difficulty_service_beta` optionally derives the difficulty multiplier. The adapter composes them once as `m_a * [1 + beta * (q_a - 0.5)]` and passes the resulting per-alert scale to the selected engine. Beta defaults to zero. For L1 the campaign supplies difficulty only, so alpha never changes L1 service.
+
+`AnalystResource.forecast_service_by_class` is the dispatch-time service estimate. The continuous allocation engine and calendar engine receive this forecast for policy decisions, while actual nominal service and the composed realization are used only when calculating completion/work. The hidden-work continuous route receives its hidden need labels and composite service realization as separate environment inputs; the calendar engine never receives hidden-need labels. Neither dispatcher receives difficulty, true L2 need, or TP/FP status. The simulation request validates that provided sidecars cover exactly the admitted alert IDs.
 
 All dataclasses copy and freeze their mapping inputs. Their validation is deterministic and runs before engine invocation. Existing configuration files, engine signatures, policies, recommendations and metrics are unchanged.
 

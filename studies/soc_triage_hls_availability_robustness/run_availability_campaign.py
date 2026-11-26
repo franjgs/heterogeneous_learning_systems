@@ -26,6 +26,7 @@ from studies.soc_triage_hls_availability_robustness.availability_engine import (
     CONTINUOUS, WEEKDAY_9_TO_17, simulate as simulate_calendar,
 )
 from studies.soc_triage_hls_availability_robustness import availability_engine as availability_module
+from studies.soc_triage_hls_availability_robustness.execution_api import EnvironmentRealization
 from studies.soc_triage_hls_availability_robustness.fast_dispatch import dispatch_d1_fast
 from studies.soc_human_ai_organization.calibrate_a1_scenarios import effective_capacity
 from studies.soc_human_ai_organization.soc_parametric_baseline import (
@@ -39,6 +40,7 @@ OUT = ROOT / "results" / "soc_triage_hls_availability_robustness" / "campaign"
 H = float(CONFIG["admission_horizon_h"])
 CUTOFF = float(CONFIG["evaluation_cutoff_h"])
 PI = float(old.PI)
+BETA_DIFFICULTY_SERVICE = float(CONFIG.get("difficulty_service_beta", 0.0))
 
 
 def _write(path: Path, rows, fields=None):
@@ -80,6 +82,13 @@ def _make_trace(seed: int, point: dict, rho: float):
 
 def _run_l1(trace, roster, service, policy, seed, mu_l1):
     rows = [row.routed.alert for row in trace]
+    scales = None
+    if BETA_DIFFICULTY_SERVICE > 0:
+        realization = EnvironmentRealization(
+            difficulty_by_alert={row.routed.alert.alert_id: row.difficulty for row in trace},
+            difficulty_service_beta=BETA_DIFFICULTY_SERVICE,
+        )
+        scales = realization.realized_scales_for(tuple(a.alert_id for a in rows))
     waps = None
     engine_policy = policy
     if policy == "WAPS":
@@ -89,6 +98,8 @@ def _run_l1(trace, roster, service, policy, seed, mu_l1):
         rows, roster, BASE_SERVICE_L1_H, policy=engine_policy,
         admission_horizon=H, drain_period=CUTOFF-H,
         random_seed=seed, service_by_analyst_class=service,
+        forecast_service_by_analyst_class=service,
+        realized_scale_by_alert=scales,
         hlsb_config=waps,
     )
 
@@ -111,7 +122,15 @@ def _run_condition(trace, point, rho, alpha, n_l2, policy, seed, l1, l1_services
         if a.arrival < H and route[a.alert_id] and job is not None and job.completion < CUTOFF:
             l2_arrivals.append(Alert(a.alert_id, job.completion, a.task_class, a.deadline))
     l2_need = {a.alert_id: need[a.alert_id] for a in l2_arrivals}
-    scales = {a.alert_id: 1.0 if l2_need[a.alert_id] else alpha for a in l2_arrivals}
+    alpha_scales = {a.alert_id: 1.0 if l2_need[a.alert_id] else alpha for a in l2_arrivals}
+    environment = EnvironmentRealization(
+        service_scale_by_alert=alpha_scales,
+        hidden_need_by_alert=l2_need,
+        difficulty_by_alert=({a.alert_id: trace_by_id[a.alert_id].difficulty for a in l2_arrivals}
+                             if BETA_DIFFICULTY_SERVICE > 0 else None),
+        difficulty_service_beta=BETA_DIFFICULTY_SERVICE,
+    )
+    scales = environment.realized_scales_for(tuple(a.alert_id for a in l2_arrivals))
     factors = old._expected_class_factors(point, alpha)
     forecast = {analyst.analyst_id: {k: l2_services[analyst.analyst_id][k] * factors[k]
                                     for k in analyst.eligible_classes} for analyst in l2}

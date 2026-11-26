@@ -199,10 +199,18 @@ class SimulationSettings:
 
 @dataclass(frozen=True)
 class EnvironmentRealization:
-    """Environment-only service realization; never passed to a dispatcher."""
+    """Environment-only service realization; never passed to a dispatcher.
+
+    ``service_scale_by_alert`` is the existing outcome-dependent multiplier
+    (for example, alpha for false-positive L2 work). The optional difficulty
+    sidecar contributes a second, independent multiplier. Engines receive
+    their product once, while policies see only forecast service.
+    """
 
     service_scale_by_alert: Mapping[str, float] | None = None
     hidden_need_by_alert: Mapping[str, bool] | None = None
+    difficulty_by_alert: Mapping[str, float] | None = None
+    difficulty_service_beta: float = 0.0
 
     def __post_init__(self):
         if self.service_scale_by_alert is not None:
@@ -216,6 +224,31 @@ class EnvironmentRealization:
             if any(not aid or not isinstance(value, bool) for aid, value in needs.items()):
                 raise ValueError("hidden need must contain booleans keyed by alert ID")
             object.__setattr__(self, "hidden_need_by_alert", needs)
+        beta = float(self.difficulty_service_beta)
+        if not isfinite(beta) or not 0 <= beta < 2:
+            raise ValueError("difficulty_service_beta must satisfy 0 <= beta < 2")
+        if beta > 0 and self.difficulty_by_alert is None:
+            raise ValueError("difficulty_by_alert is required when difficulty_service_beta is nonzero")
+        if self.difficulty_by_alert is not None:
+            difficulty = _frozen_map(self.difficulty_by_alert)
+            if any(not aid or not isfinite(float(value)) or not 0 <= value <= 1
+                   for aid, value in difficulty.items()):
+                raise ValueError("difficulty values must be finite, in [0,1], and keyed by alert ID")
+            object.__setattr__(self, "difficulty_by_alert", difficulty)
+        object.__setattr__(self, "difficulty_service_beta", beta)
+
+    def realized_scales_for(self, alert_ids: Sequence[str]) -> Mapping[str, float]:
+        """Compose alpha-like work scaling and difficulty exactly once."""
+        ids = tuple(alert_ids)
+        base = self.service_scale_by_alert or {}
+        difficulty = self.difficulty_by_alert or {}
+        if set(base) - set(ids) or set(difficulty) - set(ids):
+            raise ValueError("environment realizations contain unknown alert IDs")
+        return _frozen_map({
+            aid: float(base.get(aid, 1.0)) *
+                 (1.0 + self.difficulty_service_beta * (float(difficulty.get(aid, 0.5)) - 0.5))
+            for aid in ids
+        })
 
 
 @dataclass(frozen=True)
@@ -253,12 +286,13 @@ class SimulationRequest:
                 raise ValueError(f"no {self.level} analyst is eligible for {alert.task_class!r}")
         admitted_ids = {a.alert_id for a in alerts if a.arrival < self.settings.admission_horizon}
         if self.environment is not None:
-            for name in ("service_scale_by_alert", "hidden_need_by_alert"):
+            for name in ("service_scale_by_alert", "hidden_need_by_alert", "difficulty_by_alert"):
                 values = getattr(self.environment, name)
                 if values is not None and set(values) != admitted_ids:
                     raise ValueError(f"{name} must cover exactly the admitted alerts")
             has_realization = (self.environment.service_scale_by_alert is not None or
-                               self.environment.hidden_need_by_alert is not None)
+                               self.environment.hidden_need_by_alert is not None or
+                               self.environment.difficulty_service_beta > 0)
             if has_realization and (self.environment.service_scale_by_alert is None or
                                     self.environment.hidden_need_by_alert is None):
                 # The historical hidden-work engine requires both maps for validation.
@@ -368,14 +402,11 @@ class ContinuousBackend:
         admitted = tuple(a for a in alerts if a.arrival < request.settings.admission_horizon * factor)
         policy = "HLS-B" if request.policy.name == "WAPS" else request.policy.name
         environment = request.environment
-        if environment is not None and (environment.service_scale_by_alert is not None or
-                                        environment.hidden_need_by_alert is not None):
-            if environment.service_scale_by_alert is None or environment.hidden_need_by_alert is None:
-                raise ValueError("continuous hidden-work execution requires both environment maps")
+        if environment is not None and environment.hidden_need_by_alert is not None:
             from studies.soc_triage_hls_q1_integration_evidence.fp_workload_engine import (
                 simulate_l2_hidden_work,
             )
-            scales = environment.service_scale_by_alert
+            scales = environment.realized_scales_for(tuple(a.alert_id for a in admitted))
             needs = environment.hidden_need_by_alert
             native = simulate_l2_hidden_work(
                 admitted, needs, analysts, actual, forecast, scales,
@@ -385,8 +416,10 @@ class ContinuousBackend:
             assignments = native.assignments
             decisions = tuple(native.switches) if request.policy.name == "WAPS" else None
         else:
-            if actual != forecast:
-                raise ValueError("different actual/forecast service requires environment realization")
+            scales = (None if environment is None or
+                      (environment.service_scale_by_alert is None and
+                       environment.difficulty_service_beta == 0)
+                      else environment.realized_scales_for(tuple(a.alert_id for a in admitted)))
             native = simulate_continuous(
                 alerts, analysts, _service_by_class(request.resources),
                 policy=policy,
@@ -395,6 +428,8 @@ class ContinuousBackend:
                              request.settings.admission_horizon) * factor,
                 random_seed=request.settings.seed,
                 service_by_analyst_class=actual,
+                forecast_service_by_analyst_class=forecast,
+                realized_scale_by_alert=scales,
                 hlsb_config=waps,
             )
             assignments = native.assignments
@@ -416,7 +451,9 @@ class CalendarBackend:
         alerts, analysts, actual, forecast, calendars, waps, factor = _scaled_inputs(request)
         admitted = tuple(a for a in alerts if a.arrival < request.settings.admission_horizon * factor)
         env = request.environment
-        scales = None if env is None else env.service_scale_by_alert
+        scales = (None if env is None or
+                  (env.service_scale_by_alert is None and env.difficulty_service_beta == 0)
+                  else env.realized_scales_for(tuple(a.alert_id for a in admitted)))
         # hidden_need_by_alert is deliberately not forwarded; the dispatcher
         # sees alerts, roster, and ex-ante service only.
         native = simulate_calendar(

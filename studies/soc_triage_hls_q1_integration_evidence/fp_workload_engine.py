@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import random
 from dataclasses import dataclass
+from math import isfinite
 from typing import Mapping, Sequence
 
 from hls.rq1_allocation import (
@@ -57,8 +58,9 @@ def simulate_l2_hidden_work(
     ids = {a.alert_id for a in rows}
     if ids != set(need_by_id) or ids != set(realized_scale_by_id):
         raise ValueError("hidden outcome/scale mapping must cover routed arrivals exactly")
-    if any(not 0 < realized_scale_by_id[aid] <= 1 for aid in ids):
-        raise ValueError("realized scales must be in (0,1]")
+    if any(not isfinite(float(realized_scale_by_id[aid])) or realized_scale_by_id[aid] <= 0
+           for aid in ids):
+        raise ValueError("realized scales must be finite and positive")
     analysts = tuple(sorted(analysts, key=lambda a: a.analyst_id))
     analyst_by_id = {a.analyst_id: a for a in analysts}
     arrivals_by_time: dict[float, list[Alert]] = {}
