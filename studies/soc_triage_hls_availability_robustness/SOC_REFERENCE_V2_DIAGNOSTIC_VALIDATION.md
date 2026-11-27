@@ -16,7 +16,7 @@ La asignación configurada en ambos niveles es D1. Los rótulos TP/FP/TN/FN, dif
 Comando reproducible desde la raíz del repositorio:
 
 ```bash
-python studies/soc_triage_hls_availability_robustness/run_scenario.py --seed 998001
+python studies/soc_triage_hls_availability_robustness/run_scenario.py --config studies/soc_triage_hls_availability_robustness/config/SOC_REFERENCE_ORGANIZATION_V2.json --seed 998001
 ```
 
 Se usó el JSON V2 sin overrides, `triage_single_investigation`, `CalendarBackend` y política D1 tal como está configurada. El resultado fue:

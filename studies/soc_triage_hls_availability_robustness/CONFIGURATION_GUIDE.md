@@ -1,6 +1,6 @@
 # External scenario configuration (JSON)
 
-> **Frontera de versión:** los JSON históricos siguen construyendo solicitudes por nivel y sus ejecutores conservan el flujo anterior. El JSON V2 además declara el modo de triaje y puede ejecutarse por `run_scenario.py`. Para valores y diagnósticos vigentes, véase [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
+> **Frontera de versión:** los JSON históricos siguen construyendo solicitudes por nivel y sus ejecutores conservan el flujo anterior. Los JSON V2/V2_24X7 declaran el modo de triaje y pueden ejecutarse por `run_scenario.py`; V2_24X7 es el default actual. Para valores y diagnósticos vigentes, véase [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
 
 `scenario_loader.load_scenario(path)` reads a version 1 JSON scenario and
 returns a frozen `LoadedScenario` built on the existing `execution_api.py`
@@ -8,7 +8,10 @@ types. For legacy JSON the caller still supplies alerts to `request_for` and
 selects a backend. For V2, `generate_trace(seed)` adapts the existing
 `hls.ia_l1_l2_simulation.generate_alerts`; `triage_scenario_for(seed)` builds
 the input consumed by `triage_execution.py`. The one-episode runner is
-`python studies/soc_triage_hls_availability_robustness/run_scenario.py`.
+`python studies/soc_triage_hls_availability_robustness/run_scenario.py`. Its
+default is the experimental V2_24X7 config, which sets every individual
+calendar to continuous availability. The original V2 config retains L1 rotating
+24x7 coverage and L2 weekday 8x5 for later availability analyses.
 
 ## Top-level sections
 
@@ -58,6 +61,15 @@ at or before the start denotes an overnight window. Multiple windows can
 represent 6x7, 8x5 on any selected days, split shifts, or rotating coverage.
 Calendars belong to analysts, not teams. The available engine has no holidays,
 leave, or absence model.
+
+The existing non-campaign diagnostic accepts `--config <scenario.json>` to
+recalculate assignable capacity and temporal feasibility without generating a
+trace. The paired V2/V2_24X7 control is documented in
+[SOC_REFERENCE_V2_24X7_VALIDATION.md](SOC_REFERENCE_V2_24X7_VALIDATION.md).
+
+La cadena `organization.resource_reference` en V2_24X7 identifica la procedencia
+del roster, pero hereda texto descriptivo del perfil V2. La disponibilidad
+efectiva siempre se determina por el campo `calendar` de cada profesional.
 
 ## Historical references and examples
 

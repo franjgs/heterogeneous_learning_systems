@@ -17,7 +17,7 @@ from studies.soc_triage_hls_availability_robustness.triage_execution import (  #
 )
 
 
-DEFAULT_CONFIG = Path(__file__).with_name("config") / "SOC_REFERENCE_ORGANIZATION_V2.json"
+DEFAULT_CONFIG = Path(__file__).with_name("config") / "SOC_REFERENCE_ORGANIZATION_V2_24X7.json"
 
 
 def run_one(config_path: str | Path = DEFAULT_CONFIG, *, seed: int | None = None,

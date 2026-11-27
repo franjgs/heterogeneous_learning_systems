@@ -6,6 +6,7 @@ week; it does not draw arrivals, invoke an engine, or compare policies.
 from __future__ import annotations
 
 import json
+import argparse
 from pathlib import Path
 import sys
 
@@ -22,7 +23,7 @@ from studies.soc_triage_hls_availability_robustness.scenario_loader import load_
 
 
 ROOT = Path(__file__).resolve().parent
-CONFIG = ROOT / "config" / "SOC_REFERENCE_ORGANIZATION_V2.json"
+CONFIG = ROOT / "config" / "SOC_REFERENCE_ORGANIZATION_V2_24X7.json"
 
 
 def weighted_quantile(rows, field: str, probability: float) -> float:
@@ -81,7 +82,10 @@ def expected_l2_outside_schedule(scenario, demand, width_h: float = 0.25) -> dic
 
 
 def main() -> None:
-    scenario = load_scenario(CONFIG)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--config", type=Path, default=CONFIG,
+                        help="scenario JSON (defaults to the V2_24X7 experimental base)")
+    scenario = load_scenario(parser.parse_args().config)
     demand = scenario.demand_profile
     classes = tuple(demand["prevalence_by_class"])
     profile = CapacityDemandProfile(

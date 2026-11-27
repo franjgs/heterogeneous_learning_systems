@@ -1,8 +1,8 @@
 # SOCTRA-HLS: modelo organizativo canónico
 
-**Escenario ejecutable vigente V2:** [configuración](config/SOC_REFERENCE_ORGANIZATION_V2.json), selecciona `triage_single_investigation` y se ejecuta con [`run_scenario.py`](run_scenario.py). Roster, servicios, prevalencia y demanda son hipótesis sintéticas, no datos operativos. V1 se conserva como perfil diagnóstico anterior.
+**Escenario experimental base actual:** [V2_24X7](config/SOC_REFERENCE_ORGANIZATION_V2_24X7.json), selecciona `triage_single_investigation` y se ejecuta con [`run_scenario.py`](run_scenario.py). Todos los profesionales están disponibles de forma individual y continua como idealización experimental, no como jornada laboral real. V2 8x5 se conserva intacto como variante de análisis posterior; V1 y las campañas históricas siguen siendo antecedentes.
 
-> **Modelo organizativo vigente (decisión científica):** una herramienta automática recomienda L1 o L2 al llegar cada alerta; su recomendación se acepta automáticamente y se ejecuta una única investigación en el nivel elegido. TP/FP/TN/FN se definen frente a la etiqueta histórica de escalado adoptada como referencia operativa, no frente a una verdad objetiva de especialización. La configuración V2 y `run_scenario.py` ya conectan este flujo a JSON, el generador existente y el backend de calendarios; los ejecutores/campañas históricos conservan su flujo anterior. Véase la sección 16 para estado y límites.
+> **Modelo organizativo vigente (decisión científica):** una herramienta automática recomienda L1 o L2 al llegar cada alerta; su recomendación se acepta automáticamente y se ejecuta una única investigación en el nivel elegido. TP/FP/TN/FN se definen frente a la etiqueta histórica de escalado adoptada como referencia operativa, no frente a una verdad objetiva de especialización. La configuración V2_24X7 y `run_scenario.py` conectan este flujo a JSON, el generador existente y el backend; se recupera disponibilidad continua individual para aislar efectos de asignación y carga sin cierres de calendario. El modelo mantiene calendarios restringidos en V2 8x5 y los ejecutores/campañas históricos conservan su flujo anterior. Véase la sección 16 para estado y límites.
 
 ## 1. Objetivo y alcance
 
@@ -200,11 +200,11 @@ No hay evidencia salarial/coste empresarial. Coste normalizado configurable por 
 | Coste relativo 1.8 | distinguir coste horario sin inventar salarios | coste de ocupado solamente |
 | Demanda como metadato diagnóstico | evitar fingir que JSON ya la genera | generador paralelo o cambio de campañas |
 
-## 13. Escenario organizativo ejecutable V2
+## 13. Escenario organizativo ejecutable V2 8x5 (variante de disponibilidad)
 
-V2 es una configuración central fija para ejecuciones técnicas y futuras
-investigaciones. No sustituye ni reescribe V1, las configuraciones históricas,
-los resultados publicados ni los runners de campañas. Se carga y ejecuta con:
+V2 8x5 fue la configuración central para el diagnóstico anterior y permanece
+como variante reproducible de disponibilidad. No sustituye ni reescribe V1, las
+configuraciones históricas, los resultados publicados ni los runners de campañas. Se carga y ejecuta con:
 
 ```sh
 python studies/soc_triage_hls_availability_robustness/run_scenario.py --config studies/soc_triage_hls_availability_robustness/config/SOC_REFERENCE_ORGANIZATION_V2.json --seed 998001
@@ -330,10 +330,13 @@ ajustan deadlines para evitar los incumplimientos fuera del horario L2.
 
 ### Coste y ejecución técnica reproducible
 
-Se mantienen costes horarios normalizados L1=1.0 y L2=1.8 unidades por hora
-programada, como razón hipotética no salarial. Con la plantilla y turnos V2,
-el coste semanal es **168 unidades L1**, **216 L2**, **384 en total**. Es coste
-contratado/programado, no coste de horas ocupadas ni dato de nómina.
+Se mantienen costes horarios normalizados L1=1.0 y L2=1.8 unidades por hora,
+como razón hipotética no salarial. En V2 8x5, la metadata anterior daba 168
+unidades L1, 216 L2 y 384 total por horas contratadas del roster. Estos importes
+no se trasladan a disponibilidad 24x7: la variante conserva las tarifas
+relativas, pero no modela plantilla, salarios ni coste real de tener a cada
+profesional disponible 168 h/semana. No interpretar el coste semanal heredado
+como coste de V2_24X7.
 
 Una ejecución técnica con seed `998001`, configuración D1 individual y
 `CalendarBackend` generó **476** alertas: TP=35, FP=28, TN=405, FN=8; 413 se
@@ -346,29 +349,85 @@ D1/P1/WAPS. No atribuye mejoras a ninguna política.
 
 La reproducción técnica de seed `998001` está documentada en [SOC_REFERENCE_V2_DIAGNOSTIC_VALIDATION.md](SOC_REFERENCE_V2_DIAGNOSTIC_VALIDATION.md), con detalle por alerta en su CSV anexo. Reprodujo 476 alertas y 335 puntuales, 141 tardías y ninguna pendiente. En la ruta recomendada y con las realizaciones efectivas, 35 retrasos fueron inviables por calendario L2 aun sin colas y 106 rutas L1 eran viables bajo la mejor cota sin contención pero tardías en la ejecución. El episodio evidencia saturación temporal L1 en el pulso y holgura semanal L2; no identifica efectos causales de política. Es diagnóstico de una única semilla, no campaña ni validación empírica.
 
+## 13 bis. Base experimental V2_24X7 (disponibilidad individual continua)
+
+La variante [`SOC_REFERENCE_ORGANIZATION_V2_24X7.json`](config/SOC_REFERENCE_ORGANIZATION_V2_24X7.json)
+parte de V2 y cambia **solo el campo `calendar` de cada analista** a
+`{"kind":"continuous"}`. Profesionales, clase, elegibilidad, competencia,
+eficiencia, servicios, mezclas, severidades, parámetros alpha/beta/gamma,
+clasificador, deadlines, tasas, regímenes y semilla permanecen idénticos. El
+identificador y la referencia descriptiva del roster se heredan como procedencia;
+la disponibilidad operativa la determinan los ocho campos `calendar`. Al citar
+una corrida identificar siempre el archivo JSON y su hash/commit.
+
+Esta es la configuración base de las siguientes investigaciones de políticas:
+triaje automático, una investigación directa por alerta y todos los L1/L2
+individualmente disponibles todo el tiempo. Es una idealización deliberada
+para eliminar cierres de calendario como mecanismo de espera/suspensión y
+recuperar la simplificación de disponibilidad continua de los estudios
+originales. No representa turnos reales, guardias ni relevos; no implica que
+personas trabajen 24x7. No se cambian SLA ni demanda.
+
+Ejecución y diagnóstico reutilizables:
+
+```sh
+python studies/soc_triage_hls_availability_robustness/run_scenario.py --config studies/soc_triage_hls_availability_robustness/config/SOC_REFERENCE_ORGANIZATION_V2_24X7.json --seed 998001
+python studies/soc_triage_hls_availability_robustness/analyze_reference_organization.py --config studies/soc_triage_hls_availability_robustness/config/SOC_REFERENCE_ORGANIZATION_V2_24X7.json
+```
+
+El análisis comparativo técnico de la semilla 998001 y los diagnósticos por
+régimen están en
+[`SOC_REFERENCE_V2_24X7_VALIDATION.md`](SOC_REFERENCE_V2_24X7_VALIDATION.md).
+La capacidad de las dos plantillas crece porque los calendarios pasan a
+168 h/profesional/semana: L1 de 168 a 840 horas-persona/semana (×5), L2 de 120
+a 504 (×4.2). Por tanto, la comparación V2/V2_24X7 elimina restricciones de
+calendario **y aumenta capacidad disponible**; no es un efecto aislado de
+quitar suspensiones. No se reescala la demanda para recuperar rho anterior.
+
+La integración conserva el LP de capacidad, la cota de viabilidad y los
+motores de calendario; con calendario continuo, la inviabilidad por cierre
+desaparece, pero siguen existiendo carga, heterogeneidad y la posibilidad de
+congestión bajo otra tasa. La semilla de control no muestra presión alta:
+rho máximo esperado en el pulso = 0.308 para L1 y 0.057 para L2. En esa única
+traza todas las 476 alertas cumplen; esto no valida el SLA ni demuestra que las
+políticas producirán diferencias bajo esta carga. La V2 8x5 y su diagnóstico
+se conservan como variante para una fase posterior sobre disponibilidad.
+
+Las tarifas horarias relativas L1=1.0 y L2=1.8 permanecen como metadata
+hipotética. `contracted_hours_per_week` conserva los valores heredados V2 y no
+es válido para calcular coste de una organización 24x7. Tampoco se transforma
+la idealización en coste laboral real.
+
 ## 14. Compatibilidad y alcance de conclusiones
 
 La configuración V1, las configuraciones históricas, los ejecutores de campaña,
 los motores, algoritmos, clasificadores, resultados y manuscritos permanecen
-intactos. V2 conecta generación, flujo y backend para una ejecución
-reproducible individual. Los JSON históricos sin `flow_mode` cargan
-`historical_l1_then_l2`; los ejecutores existentes no se redirigen a V2.
+intactos. V2 y V2_24X7 conectan generación, flujo y backend para una ejecución
+reproducible individual; V2_24X7 es la base experimental sin cierres de
+calendario. Los JSON históricos sin `flow_mode` cargan
+`historical_l1_then_l2`; los ejecutores históricos no se redirigen al escenario
+nuevo. El runner y analizador usan V2_24X7 como default; V2 requiere indicar su
+JSON explícitamente.
 
 **Propiedades matemáticas:** normalización E[f]=1 bajo Beta(2,2); mínimos de
 servicio y LP condicionado a entradas. **Hipótesis:** roster, competencias,
 eficiencia, Beta, prevalencia, tasas, mezcla, alpha, coste y ausencia DST.
 **Calculado:** capacidad fluida y factibilidad calendarizada discretizada para
-V1 y V2. Se ejecutó una sola integración técnica V2; no hubo campaña.
+V1, V2 8x5 y V2_24X7. Se ejecutó un control técnico emparejado de una semilla;
+no hubo campaña.
 
-V2 refleja que una alerta L2 fuera de turno puede incumplir un SLA corto aunque
-su servicio activo quepa en el plazo. No se puede concluir estabilidad general,
-SLA real, costes reales, superioridad de política ni mejoras de rendimiento.
+V2 8x5 refleja que una alerta L2 fuera de turno puede incumplir un SLA corto
+aunque su servicio activo quepa en el plazo. V2_24X7 elimina esa restricción en
+la base experimental, pero multiplica las horas disponibles y reduce rho; no es
+una comparación de calendario manteniendo capacidad constante. No se puede concluir estabilidad general, SLA real, costes reales, superioridad
+de política ni mejoras de rendimiento.
 Se necesitarían datos operativos representativos y experimentos futuros
 preespecificados.
 
 ## 15. Archivos y referencias
 
-- JSON vigente: config/SOC_REFERENCE_ORGANIZATION_V2.json.
+- Base experimental: config/SOC_REFERENCE_ORGANIZATION_V2_24X7.json.
+- Variante disponibilidad L1 24x7/L2 8x5: config/SOC_REFERENCE_ORGANIZATION_V2.json.
 - JSON diagnóstico anterior: config/SOC_REFERENCE_ORGANIZATION_V1.json.
 - Ejecución técnica: run_scenario.py --seed 998001.
 - Diagnóstico: analyze_reference_organization.py.
@@ -397,12 +456,13 @@ Pendiente: (1) roster real con descansos, ausencias, festivos y relevos; (2) ser
 | FN L1 | Esfuerzo gamma≥1, gamma=1 neutro, no fijar aún gamma>1 | `gamma` está implementado en API nueva con default 1; no se aplica al flujo histórico |
 | SLA | Deadline absoluto y tiempo natural; finalización puntual, tardía o pendiente al corte | API clasifica los tres estados; nuevo runner los agrega; métricas históricas conservan sus definiciones |
 | Calidad | Proxy separado; no exactitud validada | Competencia/proxies existen, pero no hay outcome adjudicado de resolución correcta |
-| Turnos | L1 cobertura por roster individual 24x7; L2 lunes-viernes 09–17 | Calendarios existen; runner de disponibilidad ha usado L1 continuo en las campañas descritas. Relevo L1 no está modelado |
+| Calendarios | Base V2_24X7: disponibilidad continua individual para L1/L2, sin suspensiones por turno | `SOC_REFERENCE_ORGANIZATION_V2_24X7.json` cambia solo los calendarios; V2 8x5 se conserva como variante y los motores soportan ambos |
 
-V1 y sus resultados diagnósticos permanecen como perfil anterior; no deben
-interpretarse como características de V2. V2 es el escenario ejecutable
-recomendado para nuevas pruebas técnicas. Sus parámetros siguen siendo
-sintéticos y deberán revisarse antes de preespecificar campañas.
+V1 y sus resultados diagnósticos permanecen como perfil anterior. V2 8x5 y su
+validación seed 998001 se conservan intactos como variante de disponibilidad.
+V2_24X7 es la base ejecutable recomendada para las siguientes comparaciones de
+políticas sin restricción de calendarios. Todos sus parámetros siguen siendo
+sintéticos y la disponibilidad individual continua es una idealización.
 
 ### Qué está implementado, qué falta y qué se excluye
 
@@ -434,12 +494,12 @@ recomendación, escalado tardío, reintento, reapertura, retorno L2→L1 y múlt
 etapas. El triaje humano queda como extensión distinta con tiempo propio previo
 a la investigación.
 
-**Validación focalizada:** `pytest -q studies/soc_triage_hls_availability_robustness/tests`
-aprobó 90 pruebas. Cubren ambos modos, rutas TP/FP/TN/FN, alpha/beta/gamma,
+**Validación focalizada previa a V2_24X7:** `pytest -q studies/soc_triage_hls_availability_robustness/tests`
+aprobó 90 pruebas en el commit anterior. Para V2_24X7 se ejecutaron 64 pruebas
+focalizadas de loader, integración, orquestación y API; todas pasaron. Cubren ambos modos, rutas TP/FP/TN/FN, alpha/beta/gamma,
 aislamiento de etiquetas, estados SLA, calendarios, suspensión, deadline,
 generación JSON reproducible, capacidad y viabilidad de ruta única, selección
-histórica y ausencia de streams aleatorios añadidos por el orquestador. Una
-ejecución V2 fija verificó integración end-to-end. No se ejecutaron campañas ni
+histórica y ausencia de streams aleatorios añadidos por el orquestador. Las ejecuciones técnicas V2/V2_24X7 verificaron integración end-to-end. No se ejecutaron campañas ni
 la regresión masiva y no se compararon todos los resultados históricos bit a bit.
 
 ### Decisiones consolidadas
@@ -453,8 +513,9 @@ la regresión masiva y no se compararon todos los resultados históricos bit a b
 - FP L2 puede tener servicio reducido con alpha, pero no se supone trivialidad.
 - FN L1 tiene esfuerzo adicional representable por gamma como hipótesis; no se
   fija gamma y el neutro es 1.
-- L1 cubre organizativamente 24x7 mediante calendarios de personas; L2 opera
-  8x5 en días laborables 09–17. El horario no pausa el SLA.
+- La base experimental V2_24X7 ofrece disponibilidad individual continua para
+  L1/L2 como idealización, no como jornada real; V2 L1 24x7/L2 8x5 queda para
+  análisis posterior. El SLA siempre corre en tiempo natural.
 - Coste, competencia y velocidad son dimensiones separadas. Perfiles pueden
   favorecer L2 en clases concretas sin imponer superioridad universal.
 - Finalización, puntualidad contractual y calidad esperada son resultados
@@ -462,7 +523,7 @@ la regresión masiva y no se compararon todos los resultados históricos bit a b
 
 ### Decisiones todavía abiertas
 
-1. Evidencia para beta distinto de cero o gamma mayor que uno; V2 conserva
+1. Evidencia para beta distinto de cero o gamma mayor que uno; V2_24X7 conserva
    beta=0 y gamma=1 como referencia neutra.
 2. Relevo de trabajo L1 entre profesionales al cerrar turno; la continuidad
    actual de propiedad no debe confundirse con cobertura del equipo.

@@ -1,0 +1,452 @@
+{
+  "schema_version": 1,
+  "scenario_id": "soc-reference-organizational-v2-single-investigation",
+  "description": "Version 2 operational reference for automatic triage and one investigation per alert. Arrival, prevalence and service values are explicitly synthetic hypotheses; V1 and historical campaign configurations remain unchanged.",
+  "generation": {
+    "generator": {
+      "reference": "ia_l1_l2_simulation.generate_alerts"
+    },
+    "classifier": {
+      "reference": "q1_primary_campaign.classifiers",
+      "default": "standardized_lightgbm_apc_symmetric",
+      "options": [
+        "standardized_lightgbm_apc_symmetric"
+      ]
+    },
+    "prevalence": {
+      "reference": "demand_profile.prevalence_by_class"
+    },
+    "parameters": {
+      "alpha": 0.5,
+      "difficulty_service_beta": 0.0,
+      "gamma": 1.0,
+      "difficulty_distribution_beta": [
+        2.0,
+        2.0
+      ]
+    },
+    "need_reference": "synthetic_hidden_reference_escalation; evaluator-only; not objective specialization truth"
+  },
+  "organization": {
+    "resource_reference": "synthetic roster schedule in SOC_ORGANIZATIONAL_MODEL.md; 5 rotating L1 seats and 3 weekday L2 specialists",
+    "teams": {
+      "L1": [
+        "L1-01",
+        "L1-02",
+        "L1-03",
+        "L1-04",
+        "L1-05"
+      ],
+      "L2": [
+        "L2-01",
+        "L2-02",
+        "L2-03"
+      ]
+    },
+    "service_model": {
+      "base_service_h": {
+        "L1": {
+          "portfolio_top5": 0.25,
+          "portfolio_next5": 0.3,
+          "portfolio_tail": 0.4
+        },
+        "L2": {
+          "portfolio_top5": 0.18,
+          "portfolio_next5": 0.25,
+          "portfolio_tail": 0.55
+        }
+      },
+      "difficulty_service_beta": 0.0,
+      "duration_factor_definition": "service_h = base_service_h[level][class] * duration_factor_by_class[analyst][class]",
+      "classification": "synthetic investigation-duration hypotheses for the single-investigation flow; hours; not empirical measurements",
+      "forecast_basis": "L1 nominal forecast (gamma=1,beta=0); L2 service forecast is nominal service multiplied by E[m | recommendation positive] from configured class prevalence, sensitivity, false-positive rate and alpha; no per-alert hidden label is used",
+      "forecast_l2_positive_route_factor": 0.8376232860235747
+    },
+    "analysts": [
+      {
+        "id": "L1-01",
+        "level": "L1",
+        "eligible_classes": [
+          "portfolio_top5",
+          "portfolio_next5",
+          "portfolio_tail"
+        ],
+        "competence": {
+          "portfolio_top5": 0.78,
+          "portfolio_next5": 0.74,
+          "portfolio_tail": 0.68
+        },
+        "duration_factor_by_class": {
+          "portfolio_top5": 0.9,
+          "portfolio_next5": 0.9,
+          "portfolio_tail": 0.9
+        },
+        "service_h": {
+          "portfolio_top5": 0.225,
+          "portfolio_next5": 0.27,
+          "portfolio_tail": 0.36000000000000004
+        },
+        "forecast_service_h": {
+          "portfolio_top5": 0.225,
+          "portfolio_next5": 0.27,
+          "portfolio_tail": 0.36000000000000004
+        },
+        "calendar": {
+          "kind": "continuous"
+        }
+      },
+      {
+        "id": "L1-02",
+        "level": "L1",
+        "eligible_classes": [
+          "portfolio_top5",
+          "portfolio_next5",
+          "portfolio_tail"
+        ],
+        "competence": {
+          "portfolio_top5": 0.72,
+          "portfolio_next5": 0.86,
+          "portfolio_tail": 0.73
+        },
+        "duration_factor_by_class": {
+          "portfolio_top5": 1.0,
+          "portfolio_next5": 1.0,
+          "portfolio_tail": 1.0
+        },
+        "service_h": {
+          "portfolio_top5": 0.25,
+          "portfolio_next5": 0.3,
+          "portfolio_tail": 0.4
+        },
+        "forecast_service_h": {
+          "portfolio_top5": 0.25,
+          "portfolio_next5": 0.3,
+          "portfolio_tail": 0.4
+        },
+        "calendar": {
+          "kind": "continuous"
+        }
+      },
+      {
+        "id": "L1-03",
+        "level": "L1",
+        "eligible_classes": [
+          "portfolio_top5",
+          "portfolio_next5",
+          "portfolio_tail"
+        ],
+        "competence": {
+          "portfolio_top5": 0.7,
+          "portfolio_next5": 0.76,
+          "portfolio_tail": 0.88
+        },
+        "duration_factor_by_class": {
+          "portfolio_top5": 1.1,
+          "portfolio_next5": 1.1,
+          "portfolio_tail": 1.1
+        },
+        "service_h": {
+          "portfolio_top5": 0.275,
+          "portfolio_next5": 0.33,
+          "portfolio_tail": 0.44000000000000006
+        },
+        "forecast_service_h": {
+          "portfolio_top5": 0.275,
+          "portfolio_next5": 0.33,
+          "portfolio_tail": 0.44000000000000006
+        },
+        "calendar": {
+          "kind": "continuous"
+        }
+      },
+      {
+        "id": "L1-04",
+        "level": "L1",
+        "eligible_classes": [
+          "portfolio_top5",
+          "portfolio_next5",
+          "portfolio_tail"
+        ],
+        "competence": {
+          "portfolio_top5": 0.85,
+          "portfolio_next5": 0.7,
+          "portfolio_tail": 0.75
+        },
+        "duration_factor_by_class": {
+          "portfolio_top5": 0.95,
+          "portfolio_next5": 0.95,
+          "portfolio_tail": 0.95
+        },
+        "service_h": {
+          "portfolio_top5": 0.2375,
+          "portfolio_next5": 0.285,
+          "portfolio_tail": 0.38
+        },
+        "forecast_service_h": {
+          "portfolio_top5": 0.2375,
+          "portfolio_next5": 0.285,
+          "portfolio_tail": 0.38
+        },
+        "calendar": {
+          "kind": "continuous"
+        }
+      },
+      {
+        "id": "L1-05",
+        "level": "L1",
+        "eligible_classes": [
+          "portfolio_top5",
+          "portfolio_next5",
+          "portfolio_tail"
+        ],
+        "competence": {
+          "portfolio_top5": 0.76,
+          "portfolio_next5": 0.73,
+          "portfolio_tail": 0.86
+        },
+        "duration_factor_by_class": {
+          "portfolio_top5": 1.05,
+          "portfolio_next5": 1.05,
+          "portfolio_tail": 1.05
+        },
+        "service_h": {
+          "portfolio_top5": 0.2625,
+          "portfolio_next5": 0.315,
+          "portfolio_tail": 0.42000000000000004
+        },
+        "forecast_service_h": {
+          "portfolio_top5": 0.2625,
+          "portfolio_next5": 0.315,
+          "portfolio_tail": 0.42000000000000004
+        },
+        "calendar": {
+          "kind": "continuous"
+        }
+      },
+      {
+        "id": "L2-01",
+        "level": "L2",
+        "eligible_classes": [
+          "portfolio_top5",
+          "portfolio_next5"
+        ],
+        "competence": {
+          "portfolio_top5": 0.94,
+          "portfolio_next5": 0.77
+        },
+        "duration_factor_by_class": {
+          "portfolio_top5": 0.95,
+          "portfolio_next5": 0.95
+        },
+        "service_h": {
+          "portfolio_top5": 0.17099999999999999,
+          "portfolio_next5": 0.2375
+        },
+        "forecast_service_h": {
+          "portfolio_top5": 0.14323358191003127,
+          "portfolio_next5": 0.198935530430599
+        },
+        "calendar": {
+          "kind": "continuous"
+        }
+      },
+      {
+        "id": "L2-02",
+        "level": "L2",
+        "eligible_classes": [
+          "portfolio_next5",
+          "portfolio_tail"
+        ],
+        "competence": {
+          "portfolio_next5": 0.93,
+          "portfolio_tail": 0.78
+        },
+        "duration_factor_by_class": {
+          "portfolio_next5": 1.05,
+          "portfolio_tail": 1.05
+        },
+        "service_h": {
+          "portfolio_next5": 0.2625,
+          "portfolio_tail": 0.5775000000000001
+        },
+        "forecast_service_h": {
+          "portfolio_next5": 0.21987611258118836,
+          "portfolio_tail": 0.48372744767861453
+        },
+        "calendar": {
+          "kind": "continuous"
+        }
+      },
+      {
+        "id": "L2-03",
+        "level": "L2",
+        "eligible_classes": [
+          "portfolio_top5",
+          "portfolio_tail"
+        ],
+        "competence": {
+          "portfolio_top5": 0.79,
+          "portfolio_tail": 0.92
+        },
+        "duration_factor_by_class": {
+          "portfolio_top5": 1.0,
+          "portfolio_tail": 1.0
+        },
+        "service_h": {
+          "portfolio_top5": 0.18,
+          "portfolio_tail": 0.55
+        },
+        "forecast_service_h": {
+          "portfolio_top5": 0.15077219148424345,
+          "portfolio_tail": 0.46069280731296613
+        },
+        "calendar": {
+          "kind": "continuous"
+        }
+      }
+    ]
+  },
+  "policies": {
+    "L1": {
+      "default": "D1",
+      "available": [
+        "D1",
+        "P1",
+        "WAPS"
+      ],
+      "waps": {
+        "window_h": 4,
+        "low": 1.05,
+        "high": 1.2,
+        "capacity_per_h": 12
+      }
+    },
+    "L2": {
+      "default": "D1",
+      "available": [
+        "D1",
+        "P1",
+        "WAPS"
+      ],
+      "waps": {
+        "window_h": 4,
+        "low": 1.05,
+        "high": 1.2,
+        "capacity_per_h": 3
+      }
+    }
+  },
+  "deadlines": {
+    "mode": "severity_map",
+    "offsets_by_severity_h": {
+      "high": 1,
+      "medium": 4,
+      "low": 12
+    }
+  },
+  "time": {
+    "admission_horizon": 168,
+    "evaluation_horizon": 336,
+    "scale": 1
+  },
+  "experiment": {
+    "seed_start": 998001,
+    "seed_count": 1,
+    "purpose": "versioned executable scenario; one-seed technical runs only; not a policy campaign"
+  },
+  "demand_profile": {
+    "units": "alerts_per_natural_hour_by_class",
+    "basis": "explicit synthetic generator inputs and ex-ante capacity assumptions; not empirical incident-rate estimates",
+    "uniform_arrival_time_assumption": "within each named regime; class proportions fixed within regime",
+    "class_mix": {
+      "portfolio_top5": 0.5,
+      "portfolio_next5": 0.3,
+      "portfolio_tail": 0.2
+    },
+    "severity_mix": {
+      "high": 0.2,
+      "medium": 0.3,
+      "low": 0.5
+    },
+    "prevalence_by_class": {
+      "portfolio_top5": 0.1,
+      "portfolio_next5": 0.1,
+      "portfolio_tail": 0.1
+    },
+    "sensitivity_by_class": {
+      "portfolio_top5": 0.8421,
+      "portfolio_next5": 0.8421,
+      "portfolio_tail": 0.8421
+    },
+    "false_positive_rate_by_class": {
+      "portfolio_top5": 0.045,
+      "portfolio_next5": 0.045,
+      "portfolio_tail": 0.045
+    },
+    "alpha": 0.5,
+    "beta": 0.0,
+    "regimes": [
+      {
+        "name": "ordinary",
+        "start_h": 0,
+        "end_h": 120,
+        "arrival_rate_by_class": {
+          "portfolio_top5": 1.25,
+          "portfolio_next5": 0.75,
+          "portfolio_tail": 0.5
+        }
+      },
+      {
+        "name": "overload_pulse",
+        "start_h": 120,
+        "end_h": 144,
+        "arrival_rate_by_class": {
+          "portfolio_top5": 3.0,
+          "portfolio_next5": 1.8,
+          "portfolio_tail": 1.2
+        }
+      },
+      {
+        "name": "recovery",
+        "start_h": 144,
+        "end_h": 168,
+        "arrival_rate_by_class": {
+          "portfolio_top5": 0.75,
+          "portfolio_next5": 0.45,
+          "portfolio_tail": 0.3
+        }
+      }
+    ],
+    "schedule_reference": "Hours from Monday 00:00, natural time; week starts Monday 00:00. Synthetic rates per class per natural hour.",
+    "generator_mapping": "The three regimes map to the existing nonhomogeneous Poisson generator: ordinary base rate, bounded burst multiplier, then persistent recovery rate. Class mixture is fixed across regimes.",
+    "gamma": 1.0
+  },
+  "cost_model": {
+    "unit": "relative cost units per scheduled professional-hour",
+    "normalization": {
+      "L1": 1.0,
+      "L2": 1.8
+    },
+    "basis": "synthetic normalized hourly cost ratio hypothesis; L1=1, L2=1.8; not observed salary data",
+    "contracted_hours_per_week": {
+      "L1": 168,
+      "L2": 120
+    },
+    "scheduled_cost_units_per_week": {
+      "L1": 168,
+      "L2": 216
+    },
+    "occupied_time_cost_is_separate": true,
+    "hourly_cost_units_by_analyst": {
+      "L1-01": 1.0,
+      "L1-02": 1.0,
+      "L1-03": 1.0,
+      "L1-04": 1.0,
+      "L1-05": 1.0,
+      "L2-01": 1.8,
+      "L2-02": 1.8,
+      "L2-03": 1.8
+    }
+  },
+  "flow_mode": "triage_single_investigation"
+}
