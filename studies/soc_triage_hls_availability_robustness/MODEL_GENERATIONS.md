@@ -28,6 +28,8 @@ In the current load-regime/policy-pilot configuration, `alpha=0.50`, `beta=0`, a
 
 The existing pilot has been post-processed by arrival cohort (ordinary, overload pulse and recovery) in [`SOC_NEW_MODEL_POLICY_COHORT_ANALYSIS.md`](SOC_NEW_MODEL_POLICY_COHORT_ANALYSIS.md). It shows an exploratory WAPS-over-P1 R/N advantage in recovery, but no clear WAPS-over-D1 R/N advantage there and no WAPS-over-P1 R/N advantage during overload. This does not change the pilot's exploratory status.
 
+A subsequent predeclared intensity/duration pilot evaluated four overload profiles with 12 paired seeds per profile (144 episodes). Its report is [`SOC_NEW_MODEL_OVERLOAD_INTENSITY_PILOT.md`](SOC_NEW_MODEL_OVERLOAD_INTENSITY_PILOT.md); the execution records and hashes are in [`SOC_NEW_MODEL_OVERLOAD_INTENSITY_RESULTS.json`](SOC_NEW_MODEL_OVERLOAD_INTENSITY_RESULTS.json). This remains exploratory NEW MODEL evidence and does not change OLD MODEL results or the manuscript.
+
 ## Experimental status and comparability
 
 The OLD MODEL has the repository's established historical and confirmatory evidence and the manuscript. The NEW MODEL has executable single-investigation configurations, technical diagnostics, and one paired ten-seed exploratory D1/P1/HLS-B pilot. It does not yet have confirmatory multi-seed evidence for its organizational workflow, difficulty effect, or FN effort effect.

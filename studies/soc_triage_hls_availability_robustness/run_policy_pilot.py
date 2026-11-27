@@ -116,6 +116,10 @@ def _run_one(scenario, seed: int, policy: str) -> dict:
         "queue_trajectory": [],
         "hlsb_switches": [],
         "hlsb_switch_count_by_level": {},
+        # Post-run observability only: exact dispatch-mode counts are returned by
+        # the existing engine and do not participate in any policy decision.
+        "dispatch_epochs_by_level": {},
+        "p1_dispatch_epochs_by_level": {},
         "parameters": {
             level: {"policy": triage.policies[level].name,
                     "waps": asdict(triage.policies[level].waps)
@@ -195,6 +199,9 @@ def _run_one(scenario, seed: int, policy: str) -> dict:
         decisions = stage.policy_decisions or ()
         result["hlsb_switch_count_by_level"][level] = len(decisions)
         result["hlsb_switches"].extend({"level": level, **asdict(item)} for item in decisions)
+        native = stage.native_result
+        result["dispatch_epochs_by_level"][level] = int(getattr(native, "dispatch_epochs", 0))
+        result["p1_dispatch_epochs_by_level"][level] = int(getattr(native, "p1_dispatch_epochs", 0))
     return result
 
 

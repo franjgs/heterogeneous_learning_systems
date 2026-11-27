@@ -410,6 +410,8 @@ Se ejecutó un piloto exploratorio emparejado de D1, P1 y HLS-B/WAPS sobre la co
 
 El postproceso de las mismas diez semillas por cohorte de llegada, con diferencias emparejadas e incertidumbre descriptiva, está en [SOC_NEW_MODEL_POLICY_COHORT_ANALYSIS.md](SOC_NEW_MODEL_POLICY_COHORT_ANALYSIS.md). No implica ejecuciones nuevas ni atribución causal de los patrones locales.
 
+El piloto exploratorio prefijado de intensidad y duración de sobrecarga (cuatro perfiles, doce semillas emparejadas por perfil, 144 episodios) está documentado en [SOC_NEW_MODEL_OVERLOAD_INTENSITY_PILOT.md](SOC_NEW_MODEL_OVERLOAD_INTENSITY_PILOT.md), con [resultados por ejecución](SOC_NEW_MODEL_OVERLOAD_INTENSITY_RESULTS.json), [runner](run_overload_intensity_pilot.py) y [perfiles A–D](config/SOC_NEW_MODEL_OVERLOAD_PROFILE_A.json). Sus resultados son del NEW MODEL y no constituyen validación confirmatoria.
+
 ## 14. Compatibilidad y alcance de conclusiones
 
 La configuración V1, las configuraciones históricas, los ejecutores de campaña,
