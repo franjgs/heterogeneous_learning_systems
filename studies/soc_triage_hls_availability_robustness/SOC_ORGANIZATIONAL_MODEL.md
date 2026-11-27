@@ -408,6 +408,8 @@ La variante [`SOC_REFERENCE_V2_24X7_LOAD_REGIMES.json`](config/SOC_REFERENCE_V2_
 
 Se ejecutó un piloto exploratorio emparejado de D1, P1 y HLS-B/WAPS sobre la configuración temporal anterior, con 10 semillas nuevas y 30 episodios. Las trazas y realizaciones ambientales coinciden por semilla; el R/N medio fue 0.7844/0.7753/0.7821, respectivamente, mientras la fracción puntual fue 97.56%/100%/99.69%. Las diferencias son exploratorias: no establecen superioridad ni cambian políticas o parámetros. El procedimiento, diferencias emparejadas, resultados por cohorte/subgrupo, transiciones de HLS-B, límites y JSON reproducible están en [SOC_REFERENCE_V2_24X7_POLICY_PILOT.md](SOC_REFERENCE_V2_24X7_POLICY_PILOT.md); los 30 registros y hashes están en [SOC_REFERENCE_V2_24X7_POLICY_PILOT_RESULTS.json](SOC_REFERENCE_V2_24X7_POLICY_PILOT_RESULTS.json). El runner es [run_policy_pilot.py](run_policy_pilot.py).
 
+El postproceso de las mismas diez semillas por cohorte de llegada, con diferencias emparejadas e incertidumbre descriptiva, está en [SOC_NEW_MODEL_POLICY_COHORT_ANALYSIS.md](SOC_NEW_MODEL_POLICY_COHORT_ANALYSIS.md). No implica ejecuciones nuevas ni atribución causal de los patrones locales.
+
 ## 14. Compatibilidad y alcance de conclusiones
 
 La configuración V1, las configuraciones históricas, los ejecutores de campaña,

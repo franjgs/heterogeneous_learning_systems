@@ -26,6 +26,8 @@ The current experimental base is individually continuous 24x7 availability as a 
 
 In the current load-regime/policy-pilot configuration, `alpha=0.50`, `beta=0`, and `gamma=1`. Alpha actively scales false-positive L2 service. Beta is neutral, so difficulty does not change realized duration; gamma is neutral, so FN has no extra L1 duration. The beta and gamma mechanisms exist in code but are not activated in these results and have not been experimentally validated. The pilot reports D1 R/N 0.7844 and SLA 97.56%; P1 0.7753 and 100%; HLS-B 0.7821 and 99.69%. These are exploratory NEW MODEL outcomes, not confirmatory evidence.
 
+The existing pilot has been post-processed by arrival cohort (ordinary, overload pulse and recovery) in [`SOC_NEW_MODEL_POLICY_COHORT_ANALYSIS.md`](SOC_NEW_MODEL_POLICY_COHORT_ANALYSIS.md). It shows an exploratory WAPS-over-P1 R/N advantage in recovery, but no clear WAPS-over-D1 R/N advantage there and no WAPS-over-P1 R/N advantage during overload. This does not change the pilot's exploratory status.
+
 ## Experimental status and comparability
 
 The OLD MODEL has the repository's established historical and confirmatory evidence and the manuscript. The NEW MODEL has executable single-investigation configurations, technical diagnostics, and one paired ten-seed exploratory D1/P1/HLS-B pilot. It does not yet have confirmatory multi-seed evidence for its organizational workflow, difficulty effect, or FN effort effect.
