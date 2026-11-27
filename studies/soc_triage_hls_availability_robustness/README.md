@@ -16,6 +16,8 @@ This is a technical execution, not a policy comparison or campaign. `analyze_ref
 
 The exploratory ten-seed D1/P1/HLS-B policy pilot on that exact load profile is documented in [SOC_REFERENCE_V2_24X7_POLICY_PILOT.md](SOC_REFERENCE_V2_24X7_POLICY_PILOT.md), with per-run hashes and metrics in [the results JSON](SOC_REFERENCE_V2_24X7_POLICY_PILOT_RESULTS.json). Reproduce it with `python studies/soc_triage_hls_availability_robustness/run_policy_pilot.py --output studies/soc_triage_hls_availability_robustness/SOC_REFERENCE_V2_24X7_POLICY_PILOT_RESULTS.json`. It is exploratory and does not establish a policy winner.
 
+The selected overload profile D was subsequently tested with a pre-registered independent seed block. Read the [confirmatory protocol](SOC_NEW_MODEL_PROFILE_D_CONFIRMATORY_PROTOCOL.md) and [validation report](SOC_NEW_MODEL_PROFILE_D_CONFIRMATORY_VALIDATION.md); per-episode records and the post-processing script/results are linked there. This NEW MODEL result is conditional on synthetic profile D and is separate from all OLD MODEL evidence.
+
 ## What is included
 
 - `availability_engine.py`: configurable weekly analyst calendars and persistent suspend/resume service.

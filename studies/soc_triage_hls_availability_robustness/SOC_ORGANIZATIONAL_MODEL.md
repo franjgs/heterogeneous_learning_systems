@@ -412,6 +412,10 @@ El postproceso de las mismas diez semillas por cohorte de llegada, con diferenci
 
 El piloto exploratorio prefijado de intensidad y duración de sobrecarga (cuatro perfiles, doce semillas emparejadas por perfil, 144 episodios) está documentado en [SOC_NEW_MODEL_OVERLOAD_INTENSITY_PILOT.md](SOC_NEW_MODEL_OVERLOAD_INTENSITY_PILOT.md), con [resultados por ejecución](SOC_NEW_MODEL_OVERLOAD_INTENSITY_RESULTS.json), [runner](run_overload_intensity_pilot.py) y [perfiles A–D](config/SOC_NEW_MODEL_OVERLOAD_PROFILE_A.json). Sus resultados son del NEW MODEL y no constituyen validación confirmatoria.
 
+## 13 quinquies. Validación confirmatoria del perfil D
+
+La hipótesis exploratoria de ventaja de HLS-B frente a ambas políticas fijas en el perfil D se sometió a una validación independiente, preespecificada, con 60 semillas nuevas (180 episodios). El protocolo, resultados primarios/por cohorte, JSON íntegros, análisis reproducible y límites están en [SOC_NEW_MODEL_PROFILE_D_CONFIRMATORY_VALIDATION.md](SOC_NEW_MODEL_PROFILE_D_CONFIRMATORY_VALIDATION.md). La hipótesis conjunta fue respaldada para el perfil D sintético; no implica superioridad por régimen ni generalización a otros escenarios.
+
 ## 14. Compatibilidad y alcance de conclusiones
 
 La configuración V1, las configuraciones históricas, los ejecutores de campaña,
@@ -428,9 +432,11 @@ servicio y LP condicionado a entradas. **Hipótesis:** roster, competencias,
 eficiencia, Beta, prevalencia, tasas, mezcla, alpha, coste y ausencia DST.
 **Calculado:** capacidad fluida y factibilidad calendarizada discretizada para
 V1, V2 8x5 y V2_24X7. Las verificaciones iniciales de V2_24X7 fueron controles
-técnicos de una semilla; después se ejecutó el piloto exploratorio de diez
-semillas documentado en la sección 13 quater. Es la única comparación de
-políticas NEW MODEL registrada aquí y no es confirmatoria.
+técnicos de una semilla; después se ejecutaron un piloto exploratorio y una
+validación confirmatoria independiente, ambos documentados en las secciones
+13 quater y 13 quinquies. La validación confirmatoria respalda la hipótesis
+conjunta en el perfil D, condicionada al escenario sintético; no extiende la
+conclusión a otros perfiles ni cambia el estado de la evidencia OLD MODEL.
 
 V2 8x5 refleja que una alerta L2 fuera de turno puede incumplir un SLA corto
 aunque su servicio activo quepa en el plazo. V2_24X7 elimina esa restricción en
