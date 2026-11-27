@@ -10,7 +10,7 @@ The canonical organizational decisions, SLA rule, executable V2_24X7 base, synth
 python studies/soc_triage_hls_availability_robustness/run_scenario.py --config studies/soc_triage_hls_availability_robustness/config/SOC_REFERENCE_ORGANIZATION_V2_24X7.json --seed 998001
 ```
 
-This is a technical execution, not a policy comparison or campaign. `analyze_reference_organization.py --config <scenario.json>` calculates ex-ante capacity and temporal feasibility. The paired seed-998001 control is reported in [V2_24X7 validation](SOC_REFERENCE_V2_24X7_VALIDATION.md).
+This is a technical execution, not a policy comparison or campaign. `analyze_reference_organization.py --config <scenario.json>` calculates ex-ante capacity and temporal feasibility. The paired seed-998001 control is reported in [V2_24X7 validation](SOC_REFERENCE_V2_24X7_VALIDATION.md). A separate [ordinary/pulse/recovery demand profile](SOC_REFERENCE_V2_24X7_LOAD_REGIMES_VALIDATION.md) keeps V2_24X7 organization fixed and is runnable with `SOC_REFERENCE_V2_24X7_LOAD_REGIMES.json`.
 
 ## What is included
 

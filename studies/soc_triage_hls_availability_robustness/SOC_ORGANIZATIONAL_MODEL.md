@@ -398,6 +398,10 @@ hipotética. `contracted_hours_per_week` conserva los valores heredados V2 y no
 es válido para calcular coste de una organización 24x7. Tampoco se transforma
 la idealización en coste laboral real.
 
+## 13 ter. Perfil de carga para congestión y recuperación
+
+La variante [`SOC_REFERENCE_V2_24X7_LOAD_REGIMES.json`](config/SOC_REFERENCE_V2_24X7_LOAD_REGIMES.json) conserva íntegra la organización V2_24X7 y cambia las tasas temporales a ρ_L1 objetivo 0.85/1.25/0.65 en ventanas de 96/24/48 h. Las tasas totales derivadas del LP son 16.542/24.327/12.650 alertas por hora; se ajustan por la fracción esperada L1=0.87529, no se equiparan a μ_L1=17.0346. La semilla 998001 produjo 2,812 alertas, 69 tardías y ninguna pendiente; la cola L1 alcanzó 122 alertas al final del pulso y se drenó durante la recuperación. Detalle, tasas por nivel, uso y criterio explícito de recuperación: [SOC_REFERENCE_V2_24X7_LOAD_REGIMES_VALIDATION.md](SOC_REFERENCE_V2_24X7_LOAD_REGIMES_VALIDATION.md). Es una sola ejecución diagnóstica, no validación estadística ni comparación de políticas.
+
 ## 14. Compatibilidad y alcance de conclusiones
 
 La configuración V1, las configuraciones históricas, los ejecutores de campaña,
@@ -426,10 +430,12 @@ preespecificados.
 
 ## 15. Archivos y referencias
 
-- Base experimental: config/SOC_REFERENCE_ORGANIZATION_V2_24X7.json.
+- Base experimental de carga baja: config/SOC_REFERENCE_ORGANIZATION_V2_24X7.json.
+- Perfil temporal congestionado: config/SOC_REFERENCE_V2_24X7_LOAD_REGIMES.json.
 - Variante disponibilidad L1 24x7/L2 8x5: config/SOC_REFERENCE_ORGANIZATION_V2.json.
 - JSON diagnóstico anterior: config/SOC_REFERENCE_ORGANIZATION_V1.json.
-- Ejecución técnica: run_scenario.py --seed 998001.
+- Ejecución técnica: run_scenario.py --seed 998001 (base); elegir JSON explícito para otros perfiles.
+- Diagnóstico de carga/recuperación: analyze_load_regimes.py; reporte SOC_REFERENCE_V2_24X7_LOAD_REGIMES_VALIDATION.md.
 - Diagnóstico: analyze_reference_organization.py.
 - Interfaces: scenario_loader.py, execution_api.py, triage_execution.py, availability_engine.py; usage in EXECUTION_API.md.
 - Viabilidad/capacidad: scenario_diagnostics.py y SCENARIO_FEASIBILITY_DIAGNOSTICS.md; LP en studies/soc_human_ai_organization/calibrate_a1_scenarios.py::effective_capacity.
