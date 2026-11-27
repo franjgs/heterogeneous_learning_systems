@@ -30,17 +30,19 @@ The existing pilot has been post-processed by arrival cohort (ordinary, overload
 
 A subsequent predeclared intensity/duration pilot evaluated four overload profiles with 12 paired seeds per profile (144 episodes). Its report is [`SOC_NEW_MODEL_OVERLOAD_INTENSITY_PILOT.md`](SOC_NEW_MODEL_OVERLOAD_INTENSITY_PILOT.md); the execution records and hashes are in [`SOC_NEW_MODEL_OVERLOAD_INTENSITY_RESULTS.json`](SOC_NEW_MODEL_OVERLOAD_INTENSITY_RESULTS.json). This remains exploratory NEW MODEL evidence and does not change OLD MODEL results or the manuscript.
 
+The exploratory selection of overload profile D was followed by an independent, pre-registered 60-seed paired validation of D1, P1 and HLS-B/WAPS. The protocol, report and episode-level statistical analysis are [`SOC_NEW_MODEL_PROFILE_D_CONFIRMATORY_PROTOCOL.md`](SOC_NEW_MODEL_PROFILE_D_CONFIRMATORY_PROTOCOL.md), [`SOC_NEW_MODEL_PROFILE_D_CONFIRMATORY_VALIDATION.md`](SOC_NEW_MODEL_PROFILE_D_CONFIRMATORY_VALIDATION.md) and [`SOC_NEW_MODEL_PROFILE_D_CONFIRMATORY_ANALYSIS.json`](SOC_NEW_MODEL_PROFILE_D_CONFIRMATORY_ANALYSIS.json). Mean R/N was 0.63200 (D1), 0.63583 (P1) and 0.64049 (HLS-B). The pre-specified intersection-union test supported HLS-B over both controls in this synthetic profile D. This is conditional evidence, not universal policy superiority, operational validation, nor empirical validation of competence or service assumptions. The confirmatory experiments retain `alpha=0.50`, `beta=0` and `gamma=1`: alpha is active, while beta and gamma are neutral and their effects have not been experimentally validated.
+
 ## Experimental status and comparability
 
-The OLD MODEL has the repository's established historical and confirmatory evidence and the manuscript. The NEW MODEL has executable single-investigation configurations, technical diagnostics, and one paired ten-seed exploratory D1/P1/HLS-B pilot. It does not yet have confirmatory multi-seed evidence for its organizational workflow, difficulty effect, or FN effort effect.
+The OLD MODEL has the repository's established historical and confirmatory evidence and the complete current LaTeX manuscript. The NEW MODEL has executable single-investigation configurations, technical diagnostics, exploratory pilots, and independent confirmatory multi-seed evidence for the joint R/N comparison of D1, P1 and HLS-B in profile D. This confirmation is limited to the selected synthetic profile and does not validate the organizational assumptions against operational data, the competence-based quality proxy, or non-neutral difficulty (`beta`) and FN-effort (`gamma`) effects.
 
 Do not infer a causal policy difference across generations. The workflow, roster, service assumptions, workload, horizons, and in some studies metric estimands differ. In particular, historical `S_plus` and the NEW MODEL pilot's `R/N` must not be treated as interchangeable endpoints. The old evidence remains scientifically meaningful within its own model; it is not transferred to or used as validation of the new one.
 
 ## Open scientific questions and handoff boundary
 
-- Which NEW MODEL confirmatory workloads, estimands, and seed-block count should be pre-registered after review of the exploratory pilot?
+- How far does the profile-D result generalize to other NEW MODEL demand profiles, workload compositions and organizational assumptions, and which additional confirmatory estimands would resolve that question?
 - What external evidence, if any, can support non-neutral beta/gamma or validate the competence-based quality proxy?
 - How sensitive are NEW MODEL findings to classifier prevalence/error assumptions, alpha, team sizing, and demand composition?
 - Which operational details remain deliberately abstract, especially handoff, recommendation review, and the interpretation of historical escalation labels?
 
-Transfer of NEW MODEL evidence to the LaTeX manuscript is deferred until its experiments are designed, executed, and reviewed. No current manuscript statement or figure is to be replaced with pilot results. This index and all documents linked here preserve the distinction; it does not itself add scientific results.
+Transfer of NEW MODEL evidence to the LaTeX manuscript remains deferred until the NEW MODEL experimental program and its evidence have been reviewed. No current manuscript statement or figure is to be replaced with NEW MODEL results. This index and all documents linked here preserve the distinction; it does not itself add scientific results.

@@ -1,6 +1,6 @@
 # SOCTRA-HLS: organización de equipos SOC
 
-> **OLD MODEL / MODELO VIEJO:** los protocolos, campañas, resultados, mapas operativos y estudios adaptativos archivados en esta carpeta pertenecen al flujo histórico L1 primero y posible segunda investigación L2. Conservan su validez dentro de ese modelo; no validan el NEW MODEL ni deben transferirse a su manuscrito/resultados. La línea activa de investigación y su evidencia exploratoria están en la rama `research/soctra-hls-new-model`, con estado en [MODEL_GENERATIONS.md](../soc_triage_hls_availability_robustness/MODEL_GENERATIONS.md).
+> **OLD MODEL / MODELO VIEJO:** los protocolos, campañas, resultados, mapas operativos y estudios adaptativos archivados en esta carpeta pertenecen al flujo histórico L1 primero y posible segunda investigación L2. Conservan su validez dentro de ese modelo; no validan el NEW MODEL ni deben transferirse a su manuscrito/resultados. La línea activa de investigación está en `research/soctra-hls-new-model` y dispone de pilotos exploratorios y una validación confirmatoria acotada al perfil sintético D; consulta [MODEL_GENERATIONS.md](../soc_triage_hls_availability_robustness/MODEL_GENERATIONS.md) para resultados y límites. Esta validación no demuestra superioridad universal ni valida un SOC real.
 
 ## Punto de entrada
 
