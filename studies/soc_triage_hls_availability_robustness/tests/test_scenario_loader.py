@@ -41,6 +41,79 @@ def test_mixed_calendars_keep_individual_and_overnight_windows():
     assert (6, 21.0, 5.0) in by_id["expert-c"].calendar.windows
 
 
+def test_reference_organization_has_continuous_l1_roster_fixed_l2_8x5_and_cost_metadata():
+    scenario = load_scenario(CONFIG / "SOC_REFERENCE_ORGANIZATION_V1.json")
+    l1, l2 = scenario.organization.resources_for("L1"), scenario.organization.resources_for("L2")
+    assert len(l1) == 5 and len(l2) == 3
+    # The calendar API's week starts Monday 00:00. Check full coverage without
+    # requiring any single individual to be continuously available.
+    for slot in range(7 * 24):
+        t = slot + .5
+        assert sum(resource.calendar.available(t) for resource in l1) == 1
+    assert [sum(end - start for _, start, end in r.calendar.windows) for r in l1] == [40, 32, 32, 32, 32]
+    for resource in l2:
+        assert len(resource.calendar.windows) == 5
+        assert all((day, start, end) == (day, 9.0, 17.0)
+                   for day, start, end in resource.calendar.windows)
+        assert sum(end - start for _, start, end in resource.calendar.windows) == 40
+    assert dict(scenario.settings.deadlines.offsets_by_severity_h) == {"high": 1, "medium": 4, "low": 12}
+    assert scenario.cost_model["normalization"]["L2"] > scenario.cost_model["normalization"]["L1"]
+    person_cost = scenario.cost_model["hourly_cost_units_by_analyst"]
+    assert all(person_cost[r.analyst.analyst_id] == 1.0 for r in l1)
+    assert all(person_cost[r.analyst.analyst_id] == 1.8 for r in l2)
+    assert sum(sum(end - start for _, start, end in r.calendar.windows) for r in l1) == 168
+    assert sum(sum(end - start for _, start, end in r.calendar.windows) for r in l2) == 120
+    scheduled_cost = {level: sum(person_cost[r.analyst.analyst_id] *
+                                 sum(end - start for _, start, end in r.calendar.windows)
+                                 for r in scenario.organization.resources_for(level))
+                      for level in ("L1", "L2")}
+    assert scheduled_cost == {"L1": 168, "L2": 216}
+    assert scenario.demand_profile["regimes"][1]["name"] == "overload_pulse"
+    # Demand/cost remain metadata and do not alter historical compatibility data.
+    assert scenario.generation["parameters"]["difficulty_service_beta"] == 0
+
+
+def test_reference_organization_keeps_natural_deadline_when_route_is_l2():
+    scenario = load_scenario(CONFIG / "SOC_REFERENCE_ORGANIZATION_V1.json")
+    alert = Alert("saturday-night", 143.75, "portfolio_top5", 999.0)
+    request = scenario.request_for("L2", (alert,), severity_by_alert={"saturday-night": "high"})
+    assert request.alerts[0].arrival == 143.75
+    assert request.alerts[0].deadline == 144.75
+    assert request.alerts[0].deadline - request.alerts[0].arrival == 1.0
+
+
+def test_reference_weekend_l2_route_is_calendar_infeasible_without_pausing_sla():
+    from studies.soc_triage_hls_availability_robustness.scenario_diagnostics import assess_deadline_feasibility
+
+    scenario = load_scenario(CONFIG / "SOC_REFERENCE_ORGANIZATION_V1.json")
+    alerts = (Alert("weekend-escalation", 143.75, "portfolio_top5", 999.0),)
+    request = scenario.request_for("L1", alerts,
+        severity_by_alert={"weekend-escalation": "high"})
+    report = assess_deadline_feasibility(request,
+        l2_required_by_alert={"weekend-escalation": True}, route_basis="scenario_route",
+        severity_by_alert={"weekend-escalation": "high"})
+    task = report.tasks[0]
+    assert task.optimistic_intrinsically_infeasible is False
+    assert task.calendar_infeasible is True
+    assert task.calendar_earliest_completion > request.alerts[0].deadline
+    assert request.alerts[0].deadline - request.alerts[0].arrival == 1.0
+
+
+def test_reference_weekday_morning_l2_route_can_be_calendar_feasible():
+    from studies.soc_triage_hls_availability_robustness.scenario_diagnostics import assess_deadline_feasibility
+
+    scenario = load_scenario(CONFIG / "SOC_REFERENCE_ORGANIZATION_V1.json")
+    alert = Alert("weekday-escalation", 9.125, "portfolio_top5", 999.0)
+    request = scenario.request_for("L1", (alert,), severity_by_alert={"weekday-escalation": "high"})
+    report = assess_deadline_feasibility(request,
+        l2_required_by_alert={"weekday-escalation": True}, route_basis="scenario_route",
+        severity_by_alert={"weekday-escalation": "high"})
+    task = report.tasks[0]
+    assert task.optimistic_intrinsically_infeasible is False
+    assert task.calendar_infeasible is False
+    assert task.calendar_earliest_completion <= request.alerts[0].deadline
+
+
 def test_historical_reference_resolves_published_point_and_historical_deadline_values():
     scenario = load_scenario(CONFIG / "HISTORICAL_REFERENCE.json")
     assert scenario.classifier_point().id == "standardized_lightgbm_apc_symmetric"

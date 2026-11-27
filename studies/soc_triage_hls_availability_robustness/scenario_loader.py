@@ -57,6 +57,8 @@ class LoadedScenario:
     seed_start: int
     experiment: Mapping
     organization_reference: str | None = None
+    demand_profile: Mapping | None = None
+    cost_model: Mapping | None = None
 
     def classifier_point(self, classifier_id: str | None = None) -> ClassifierOperatingPoint:
         selected = classifier_id or self.generation["classifier_default"]
@@ -198,6 +200,13 @@ def load_scenario(path: str | Path) -> LoadedScenario:
         raise ScenarioConfigError("scenario_id must be a nonempty string")
     description = str(config.get("description", ""))
 
+    demand_profile = config.get("demand_profile")
+    if demand_profile is not None:
+        demand_profile = _freeze(_object(demand_profile, "demand_profile"))
+    cost_model = config.get("cost_model")
+    if cost_model is not None:
+        cost_model = _freeze(_object(cost_model, "cost_model"))
+
     gen = _object(config.get("generation"), "generation")
     generator = _object(gen.get("generator"), "generation.generator").get("reference")
     if generator != "run_primary_campaign._primary_trace":
@@ -301,4 +310,4 @@ def load_scenario(path: str | Path) -> LoadedScenario:
         "absolute_by_alert": absolute_by_alert})
     return LoadedScenario(scenario_id, description, _freeze(resolved), organization,
         MappingProxyType(policies), settings, seed_count, seed_start, _freeze(experiment),
-        organization_cfg.get("resource_reference"))
+        organization_cfg.get("resource_reference"), demand_profile, cost_model)
