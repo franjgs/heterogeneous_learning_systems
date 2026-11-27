@@ -1,5 +1,7 @@
 # Validación diagnóstica de V2 — episodio 998001
 
+> **NEW MODEL / MODELO NUEVO:** esta ejecución usa `triage_single_investigation`; se conserva como diagnóstico de una semilla, no como resultado OLD MODEL ni como campaña comparativa.
+
 **Estado:** informe de una ejecución técnica reproducible; no es campaña ni comparación de políticas.  
 **Configuración:** [`SOC_REFERENCE_ORGANIZATION_V2.json`](config/SOC_REFERENCE_ORGANIZATION_V2.json).  
 **Datos por alerta:** [`SOC_REFERENCE_V2_SEED_998001_ALERTS.csv`](SOC_REFERENCE_V2_SEED_998001_ALERTS.csv).  

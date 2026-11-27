@@ -1,6 +1,6 @@
 # Experimental design
 
-> **Diseño de campaña histórica:** el protocolo describe el flujo anterior con L1 para todas las alertas y posible L2 posterior. Se conserva como registro del experimento ejecutado y no define la organización actualmente acordada. Véase [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
+> **OLD MODEL / MODELO VIEJO — diseño histórico:** el protocolo describe el flujo anterior con L1 para todas las alertas y posible L2 posterior. Se conserva como registro del experimento ejecutado y no define la organización actualmente acordada. Véase [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
 
 Paired arms differ only in L2 calendar: continuous 24x7 versus weekday 09:00–17:00. Keep alert stream, classifiers, label/recommendation draws, synthetic need, service realization, analyst identities and competencies, deadlines, alpha, and dispatch policy common by seed. L1 remains continuous. A calendar change also changes weekly L2 capacity; therefore the estimand is the complete calendar proposal effect, not a pure redistribution-of-hours effect.
 

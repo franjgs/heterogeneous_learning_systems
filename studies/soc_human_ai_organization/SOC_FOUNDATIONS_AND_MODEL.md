@@ -1,5 +1,7 @@
 # Fundamentos y modelo SOC
 
+> **OLD MODEL / MODELO VIEJO:** this document records the historical L1-first organizational model and its evidence. Its results remain valid only for that model and do not validate the NEW MODEL. See [MODEL_GENERATIONS.md](../soc_triage_hls_availability_robustness/MODEL_GENERATIONS.md). The current LaTeX manuscript belongs entirely to the OLD MODEL; NEW MODEL transfer is deferred.
+
 ## 1. Pregunta científica y relación con HLS
 
 HLS estudia la organización y el aprendizaje de entidades heterogéneas en entornos dinámicos. SOCTRA-HLS es una aplicación a equipos SOC donde el triaje asistido por IA y la organización del trabajo humano son componentes relacionados del problema editorial. La pregunta organizativa de este estudio es: **¿en qué condiciones pueden estrategias sencillas de priorización temporal, especialización y coordinación mejorar el rendimiento colectivo de un SOC respecto a D1?** Se busca identificar mecanismos, beneficios y compromisos; no se presupone que coordinación, heterogeneidad o adaptación sean beneficiosas ni se pretende demostrar superioridad universal.

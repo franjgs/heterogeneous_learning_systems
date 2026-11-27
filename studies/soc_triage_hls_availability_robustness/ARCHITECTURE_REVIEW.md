@@ -1,6 +1,6 @@
 # SOCTRA–HLS architecture review
 
-> **Instantánea histórica de arquitectura:** las fases y diagramas de esta revisión documentan la arquitectura de la campaña anterior, incluyendo servicio L1 previo a L2. Desde esta revisión, V2 integra JSON, generación existente y `triage_execution.py` mediante `run_scenario.py`; el resto del documento conserva su fecha y alcance originales. Para el estado actual, consulte el [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
+> **Alcance de generaciones:** las fases y diagramas de la revisión inicial describen la arquitectura **OLD MODEL / MODELO VIEJO** de la campaña L1→L2. Las actualizaciones posteriores de loader/backend y `triage_execution.py` registran integración reutilizada por **NEW MODEL / MODELO NUEVO**; no cambian los resultados históricos. Para los estados científicos separados, consulte [MODEL_GENERATIONS.md](MODEL_GENERATIONS.md) y el [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
 
 ## External JSON loader update
 

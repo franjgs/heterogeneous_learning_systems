@@ -1,5 +1,7 @@
 # Protocolo fijado: D1 frente a P1
 
+> **OLD MODEL / MODELO VIEJO:** this document records the historical L1-first organizational model and its evidence. Its results remain valid only for that model and do not validate the NEW MODEL. See [MODEL_GENERATIONS.md](../soc_triage_hls_availability_robustness/MODEL_GENERATIONS.md). The current LaTeX manuscript belongs entirely to the OLD MODEL; NEW MODEL transfer is deferred.
+
 **Registro previo a la ejecución:** 19-11-2026. Este documento y `config/soc_confirmatory.json` se fijan antes de observar los resultados de las nuevas semillas. El contraste y los niveles de sensibilidad no se cambiarán a partir de esos resultados. La campaña compara únicamente las implementaciones existentes de D1 y P1.
 
 ## Contraste primario

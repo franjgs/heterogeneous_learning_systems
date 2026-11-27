@@ -1,5 +1,7 @@
 # Piloto exploratorio de D1, P1 y HLS-B — V2_24X7
 
+> **NEW MODEL / MODELO NUEVO:** los resultados de este piloto emparejado pertenecen exclusivamente al flujo de triaje automático e investigación única. No son comparables causalmente con OLD MODEL.
+
 **Tipo:** comparación piloto, exploratoria y emparejada; no análisis confirmatorio.  
 **Commit de configuración:** `6ab0934aaf5b9f821b55ca002e05e68e00a68334`.  
 **Configuración:** [`SOC_REFERENCE_V2_24X7_LOAD_REGIMES.json`](config/SOC_REFERENCE_V2_24X7_LOAD_REGIMES.json).  

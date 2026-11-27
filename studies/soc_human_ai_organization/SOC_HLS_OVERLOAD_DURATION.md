@@ -1,5 +1,7 @@
 # Duración crítica de sobrecarga y recuperación dinámica
 
+> **OLD MODEL / MODELO VIEJO:** this document records the historical L1-first organizational model and its evidence. Its results remain valid only for that model and do not validate the NEW MODEL. See [MODEL_GENERATIONS.md](../soc_triage_hls_availability_robustness/MODEL_GENERATIONS.md). The current LaTeX manuscript belongs entirely to the OLD MODEL; NEW MODEL transfer is deferred.
+
 **Estado:** piloto exploratorio de 20 semillas nuevas por duración. HLS-B congelada (ventana 4 h, umbral bajo 1,05, alto 1,20). No es validación independiente ni se reajusta el supervisor.
 
 ## Hipótesis física y diseño

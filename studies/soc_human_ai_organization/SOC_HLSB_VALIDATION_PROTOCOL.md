@@ -1,5 +1,7 @@
 # Protocolo previo: validación independiente de HLS-B
 
+> **OLD MODEL / MODELO VIEJO:** this document records the historical L1-first organizational model and its evidence. Its results remain valid only for that model and do not validate the NEW MODEL. See [MODEL_GENERATIONS.md](../soc_triage_hls_availability_robustness/MODEL_GENERATIONS.md). The current LaTeX manuscript belongs entirely to the OLD MODEL; NEW MODEL transfer is deferred.
+
 **Fijado antes de ejecutar la validación:** 19-11-2026. La configuración serializada es [soc_hlsb_validation.json](config/soc_hlsb_validation.json). No se modificarán regla, escenarios ni semillas tras observar resultados.
 
 HLS-B conserva ventana 4 h, retorno a D1 en \(\widehat\rho\le1,05\) y activación P1 en \(\widehat\rho\ge1,20\). Las capacidades L1/L2 se calculan del mismo roster, servicios, elegibilidad y mezcla de clases mediante el LP fluido usado en desarrollo. Se comparan D1, P1, HLS-A 2/3 y HLS-B. H=24 h; D=24 h; escalado y calidad modelada, plazos, analistas y generador son los de desarrollo. Las políticas reciben idéntica traza exógena por escenario y semilla.

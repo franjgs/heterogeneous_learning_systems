@@ -1,6 +1,8 @@
 # SOCTRA–HLS availability robustness
 
-> **Estado de versiones:** las campañas e informes existentes conservan el flujo histórico L1→L2 y sus resultados no se reinterpretan. La configuración V2 selecciona el flujo de investigación única desde JSON y se ejecuta mediante `run_scenario.py`. La fuente de verdad es el [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
+> **Generaciones:** esta rama desarrolla el **NEW MODEL / MODELO NUEVO** (triaje automático y una investigación directa por alerta). Las campañas históricas y el manuscrito LaTeX actual pertenecen íntegramente al **OLD MODEL / MODELO VIEJO** (investigación inicial L1 y posible segunda investigación L2). Consulta el índice [MODEL_GENERATIONS.md](MODEL_GENERATIONS.md) antes de interpretar o citar resultados de cualquiera de las dos generaciones. No son evidencia intercambiable.
+
+> **Estado de versiones:** las campañas e informes antiguos conservan el flujo histórico L1→L2 y sus resultados no se reinterpretan. La configuración V2 selecciona el flujo de investigación única desde JSON y se ejecuta mediante `run_scenario.py`. La fuente de verdad para la organización del NEW MODEL es el [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
 
 An isolated synthetic study of professional heterogeneity, workload and deadline outcomes under configurable availability in SOCTRA-assisted triage. It does not reproduce the GMV-CERT SOC or claim operational service levels. It does not modify SOCTRA, D1/P1/WAPS, historical experiments or the LaTeX manuscript.
 

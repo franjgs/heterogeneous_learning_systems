@@ -1,5 +1,7 @@
 # Resultados SOC y lecciones aprendidas
 
+> **OLD MODEL / MODELO VIEJO:** this document records the historical L1-first organizational model and its evidence. Its results remain valid only for that model and do not validate the NEW MODEL. See [MODEL_GENERATIONS.md](../soc_triage_hls_availability_robustness/MODEL_GENERATIONS.md). The current LaTeX manuscript belongs entirely to the OLD MODEL; NEW MODEL transfer is deferred.
+
 Este documento consolida resultados **condicionales a cada escenario**. No son estimaciones del desempeño real de GMV-CERT. Las políticas/semillas/modelos no son intercambiables entre campañas; los intervalos solo aplican al diseño que se indica. Los ficheros no citados por enlace permanecen como artefactos reproducibles locales, no como documentos canónicos.
 
 Las etiquetas B0–B4, C0/C1/C2 × P0/P1 y D1-L/D1-S que aparecen aquí pertenecen a formulaciones históricas. El repertorio vigente D1/P1–P5 se define en [Fundamentos y modelo](SOC_FOUNDATIONS_AND_MODEL.md); las etiquetas P1–P5 no son renombrados de las políticas históricas con nombres coincidentes.

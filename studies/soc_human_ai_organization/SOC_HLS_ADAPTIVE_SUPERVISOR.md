@@ -1,5 +1,7 @@
 # HLS-A: supervisor D1/P1 y piloto de desarrollo
 
+> **OLD MODEL / MODELO VIEJO:** this document records the historical L1-first organizational model and its evidence. Its results remain valid only for that model and do not validate the NEW MODEL. See [MODEL_GENERATIONS.md](../soc_triage_hls_availability_robustness/MODEL_GENERATIONS.md). The current LaTeX manuscript belongs entirely to the OLD MODEL; NEW MODEL transfer is deferred.
+
 **Estado:** implementación operativa y piloto de **desarrollo**; no se realizó una validación independiente preespecificada de HLS-A como candidato primario. Posteriormente se incluyó como comparador fijo en la [validación de HLS-B](SOC_HLSB_VALIDATION_RESULTS.md). D1 y P1 no fueron modificadas. HLS-A elige cuál de sus despachadores originales se aplica en cada época. Los resultados previos de [D1/P1](SOC_CONFIRMATORY_RESULTS.md) motivan el diseño, pero sus semillas y resultados no se usaron para seleccionar umbrales.
 
 ## Regla causal

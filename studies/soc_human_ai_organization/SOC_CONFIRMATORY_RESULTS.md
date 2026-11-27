@@ -1,5 +1,7 @@
 # Validación independiente D1 frente a P1
 
+> **OLD MODEL / MODELO VIEJO:** this document records the historical L1-first organizational model and its evidence. Its results remain valid only for that model and do not validate the NEW MODEL. See [MODEL_GENERATIONS.md](../soc_triage_hls_availability_robustness/MODEL_GENERATIONS.md). The current LaTeX manuscript belongs entirely to the OLD MODEL; NEW MODEL transfer is deferred.
+
 **Estado:** contraste primario ejecutado conforme al [protocolo prefijado](SOC_CONFIRMATORY_PROTOCOL.md) el 19-11-2026. Resultado confirmatorio **dentro del simulador sintético**, no validación operativa de GMV-CERT. No se cambiaron D1, P1, motor ni recompensa.
 
 ## Diseño y procedencia

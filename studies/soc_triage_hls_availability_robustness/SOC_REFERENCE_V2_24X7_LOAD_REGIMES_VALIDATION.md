@@ -1,5 +1,7 @@
 # Validación de carga ordinaria, pulso y recuperación — V2_24X7
 
+> **NEW MODEL / MODELO NUEVO:** perfil de demanda del flujo de investigación única; es una ejecución diagnóstica, no validación del OLD MODEL.
+
 **Tipo:** diagnóstico técnico reproducible de una ejecución; no campaña ni comparación de políticas.  
 **Commit de partida:** `ffeb64606f62560870f6142f7bbd8ec3a739fde0`.  
 **Configuración:** [`SOC_REFERENCE_V2_24X7_LOAD_REGIMES.json`](config/SOC_REFERENCE_V2_24X7_LOAD_REGIMES.json).  

@@ -1,5 +1,7 @@
 # Control diagnóstico V2 frente a V2_24X7
 
+> **NEW MODEL / MODELO NUEVO:** ambas configuraciones usan triaje y una investigación única. Este informe técnico no pertenece al OLD MODEL ni cambia sus campañas.
+
 **Alcance:** comparación técnica de dos ejecuciones emparejadas; no campaña de políticas ni validación empírica.  
 **Commit de partida:** `13c0bb7a7a2dddfbc6a6d1fde838a1fa4c4f704a`.  
 **Archivos:** [`SOC_REFERENCE_ORGANIZATION_V2.json`](config/SOC_REFERENCE_ORGANIZATION_V2.json) y [`SOC_REFERENCE_ORGANIZATION_V2_24X7.json`](config/SOC_REFERENCE_ORGANIZATION_V2_24X7.json).  

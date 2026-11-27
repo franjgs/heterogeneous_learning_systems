@@ -1,5 +1,7 @@
 # SOCTRA-HLS: modelo organizativo canónico
 
+> **NEW MODEL / MODELO NUEVO:** este documento especifica la línea activa de triaje automático seguido por exactamente una investigación. Las campañas históricas y el manuscrito LaTeX pertenecen al **OLD MODEL / MODELO VIEJO**. Véase [MODEL_GENERATIONS.md](MODEL_GENERATIONS.md) para estado, evidencia, restricciones de comparabilidad y preguntas pendientes.
+
 **Escenario experimental base actual:** [V2_24X7](config/SOC_REFERENCE_ORGANIZATION_V2_24X7.json), selecciona `triage_single_investigation` y se ejecuta con [`run_scenario.py`](run_scenario.py). Todos los profesionales están disponibles de forma individual y continua como idealización experimental, no como jornada laboral real. V2 8x5 se conserva intacto como variante de análisis posterior; V1 y las campañas históricas siguen siendo antecedentes.
 
 > **Modelo organizativo vigente (decisión científica):** una herramienta automática recomienda L1 o L2 al llegar cada alerta; su recomendación se acepta automáticamente y se ejecuta una única investigación en el nivel elegido. TP/FP/TN/FN se definen frente a la etiqueta histórica de escalado adoptada como referencia operativa, no frente a una verdad objetiva de especialización. La configuración V2_24X7 y `run_scenario.py` conectan este flujo a JSON, el generador existente y el backend; se recupera disponibilidad continua individual para aislar efectos de asignación y carga sin cierres de calendario. El modelo mantiene calendarios restringidos en V2 8x5 y los ejecutores/campañas históricos conservan su flujo anterior. Véase la sección 16 para estado y límites.
@@ -421,8 +423,10 @@ JSON explícitamente.
 servicio y LP condicionado a entradas. **Hipótesis:** roster, competencias,
 eficiencia, Beta, prevalencia, tasas, mezcla, alpha, coste y ausencia DST.
 **Calculado:** capacidad fluida y factibilidad calendarizada discretizada para
-V1, V2 8x5 y V2_24X7. Se ejecutó un control técnico emparejado de una semilla;
-no hubo campaña.
+V1, V2 8x5 y V2_24X7. Las verificaciones iniciales de V2_24X7 fueron controles
+técnicos de una semilla; después se ejecutó el piloto exploratorio de diez
+semillas documentado en la sección 13 quater. Es la única comparación de
+políticas NEW MODEL registrada aquí y no es confirmatoria.
 
 V2 8x5 refleja que una alerta L2 fuera de turno puede incumplir un SLA corto
 aunque su servicio activo quepa en el plazo. V2_24X7 elimina esa restricción en
@@ -447,6 +451,7 @@ preespecificados.
 - Tests: tests/test_scenario_loader.py, tests/test_scenario_diagnostics.py, tests/test_execution_api.py, tests/test_triage_execution.py, tests/test_scenario_integration.py.
 - Evidencia previa: studies/soc_human_ai_organization/ y studies/soc_triage_hls_q1_integration_evidence/.
 - Métricas históricas: [auditoría final Q1](../soc_triage_hls_q1_integration_evidence/AUDIT_FINAL.md) y [comparación organizativa](../soc_human_ai_organization/SOC_POLICY_COMPARISON_RESULTS.md) preservan definiciones/denominadores de R/N propios de esos estudios.
+- Generaciones científicas: [OLD MODEL / NEW MODEL](MODEL_GENERATIONS.md) identifica el manuscrito, evidencia histórica, configuraciones nuevas y límites de comparabilidad.
 - Índices: README raíz y README de estudio enlazan este documento. LaTeX no se modifica.
 
 Pendiente: (1) roster real con descansos, ausencias, festivos y relevos; (2) servicio medido por nivel/clase y asociación duración-calidad; (3) llegadas, mezcla y pulsos observados; (4) prevalence/need y errores clasificador por clase/dificultad; (5) costes autorizados para reemplazar 1.8; (6) horizonte de medición que no convierta tardanza en cumplimiento; (7) decidir si el calendario semanal abstracto requiere zona horaria, DST y fechas reales.

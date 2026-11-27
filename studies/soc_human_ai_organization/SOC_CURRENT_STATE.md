@@ -1,5 +1,7 @@
 # Estado científico actual de SOCTRA-HLS
 
+> **OLD MODEL / MODELO VIEJO:** this document records the historical L1-first organizational model and its evidence. Its results remain valid only for that model and do not validate the NEW MODEL. See [MODEL_GENERATIONS.md](../soc_triage_hls_availability_robustness/MODEL_GENERATIONS.md). The current LaTeX manuscript belongs entirely to the OLD MODEL; NEW MODEL transfer is deferred.
+
 ## Resumen
 
 SOCTRA-HLS es una aplicación del programa general HLS al triaje asistido por IA y la organización del trabajo humano en un SOC. El artículo para *Electronics* relacionará conceptualmente los resultados previos de triaje automático de SOCTRA con el estudio de organización de analistas, pero ambos se mantienen como marcos experimentales independientes: no se afirma que las predicciones SOCTRA se hayan integrado experimentalmente en las decisiones organizativas. D1 es la referencia descentralizada del estudio organizativo. Existe un simulador funcional, pero sus parámetros operativos son mayoritariamente hipotéticos y no lo convierten en una reproducción cuantitativamente validada de GMV-CERT.

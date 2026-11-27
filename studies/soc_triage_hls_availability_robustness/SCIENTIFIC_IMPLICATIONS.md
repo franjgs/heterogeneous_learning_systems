@@ -1,6 +1,6 @@
 # Scientific implications and final assessment
 
-> **Resultados históricos:** este análisis interpreta la campaña de disponibilidad con el flujo anterior (servicio L1 para todas las alertas y L2 posterior para positivas). Sus resultados no describen la organización conceptual vigente ni deben extrapolarse a la nueva ruta sin ejecutar una nueva validación. Metodología y resultados se preservan; véase [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
+> **OLD MODEL / MODELO VIEJO — interpretación histórica:** este análisis interpreta la campaña de disponibilidad con el flujo anterior (servicio L1 para todas las alertas y L2 posterior para positivas). Sus resultados no describen la organización conceptual vigente ni deben extrapolarse a la nueva ruta sin ejecutar una nueva validación. Metodología y resultados se preservan; véase [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
 
 ## What the simulation supports
 

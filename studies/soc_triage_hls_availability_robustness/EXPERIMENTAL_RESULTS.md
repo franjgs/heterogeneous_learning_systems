@@ -1,6 +1,6 @@
 # Experimental results
 
-> **Campaña histórica, flujo anterior:** los resultados siguientes corresponden a todas las alertas procesadas primero por L1 y a L2 posterior para recomendaciones positivas. No son resultados del modelo organizativo vigente de una investigación única tras el triaje. Se preservan sin reinterpretación; véase [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
+> **OLD MODEL / MODELO VIEJO — campaña histórica:** los resultados siguientes corresponden a todas las alertas procesadas primero por L1 y a L2 posterior para recomendaciones positivas. No son resultados del modelo organizativo vigente de una investigación única tras el triaje. Se preservan sin reinterpretación; véase [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
 
 ## Campaign and analysis
 

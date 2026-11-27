@@ -1,5 +1,7 @@
 # Guía de evidencia para el artículo SOCTRA-HLS
 
+> **OLD MODEL / MODELO VIEJO:** this document records the historical L1-first organizational model and its evidence. Its results remain valid only for that model and do not validate the NEW MODEL. See [MODEL_GENERATIONS.md](../soc_triage_hls_availability_robustness/MODEL_GENERATIONS.md). The current LaTeX manuscript belongs entirely to the OLD MODEL; NEW MODEL transfer is deferred.
+
 **Uso:** transferencia científica al PI, CE y redactor LaTeX. Las cifras son del simulador SOC sintético; no son mediciones del rendimiento de GMV-CERT. Esta guía no sustituye los [fundamentos](SOC_FOUNDATIONS_AND_MODEL.md), la [consolidación anterior a HLS-A](SOC_SCIENTIFIC_CONSOLIDATION.md) ni los protocolos y resultados originales.
 
 ## Preguntas y niveles de evidencia

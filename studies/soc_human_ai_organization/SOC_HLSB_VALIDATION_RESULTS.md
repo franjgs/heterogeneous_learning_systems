@@ -1,5 +1,7 @@
 # Validación independiente de HLS-B
 
+> **OLD MODEL / MODELO VIEJO:** this document records the historical L1-first organizational model and its evidence. Its results remain valid only for that model and do not validate the NEW MODEL. See [MODEL_GENERATIONS.md](../soc_triage_hls_availability_robustness/MODEL_GENERATIONS.md). The current LaTeX manuscript belongs entirely to the OLD MODEL; NEW MODEL transfer is deferred.
+
 **Estado:** configuración 4 h / retorno 1,05 / activación 1,20 congelada en el [protocolo previo](SOC_HLSB_VALIDATION_PROTOCOL.md). Se usaron 100 semillas nuevas (`261190000–261190099`) por escenario; no se modificó la regla durante la ejecución. Evidencia del simulador sintético, no medición de GMV-CERT.
 
 ## Resultado primario predefinido

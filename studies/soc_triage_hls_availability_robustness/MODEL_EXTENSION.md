@@ -1,6 +1,6 @@
 # Model extension
 
-> **Versión histórica de arquitectura:** describe el flujo y alcance implementados en la etapa de disponibilidad/calendarios. La investigación L1 seguida de L2 para recomendaciones positivas no es el modelo organizativo actualmente acordado. La API nueva de orquestación está en `triage_execution.py`; las decisiones vigentes y sus límites de integración están en [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md). Se conserva esta descripción como registro técnico, sin cambiar la metodología histórica.
+> **Alcance de generaciones:** el flujo y alcance de las campañas de disponibilidad descritas originalmente corresponden al **OLD MODEL / MODELO VIEJO**. Los apartados de integración posteriores documentan interfaces ahora reutilizadas por **NEW MODEL / MODELO NUEVO**, pero no reescriben la metodología histórica. Véase [MODEL_GENERATIONS.md](MODEL_GENERATIONS.md) y el [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
 
 ## Reuse audit
 

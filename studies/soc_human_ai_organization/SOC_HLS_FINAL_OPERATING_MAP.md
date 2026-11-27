@@ -1,5 +1,7 @@
 # SOCTRA–HLS — Mapa operativo paramétrico final
 
+> **OLD MODEL / MODELO VIEJO:** this document records the historical L1-first organizational model and its evidence. Its results remain valid only for that model and do not validate the NEW MODEL. See [MODEL_GENERATIONS.md](../soc_triage_hls_availability_robustness/MODEL_GENERATIONS.md). The current LaTeX manuscript belongs entirely to the OLD MODEL; NEW MODEL transfer is deferred.
+
 **Alcance:** estudio exploratorio y sintético. Se ejecutaron episodios completos emparejados con el simulador existente. D1, P1, HLS-B y el motor permanecieron congelados. No se usaron datos privados de SOCTRA ni datos confidenciales de GMV.
 
 ## Auditoría de evidencia anterior

@@ -1,5 +1,7 @@
 # Comparación experimental D1/P1–P5
 
+> **OLD MODEL / MODELO VIEJO:** this document records the historical L1-first organizational model and its evidence. Its results remain valid only for that model and do not validate the NEW MODEL. See [MODEL_GENERATIONS.md](../soc_triage_hls_availability_robustness/MODEL_GENERATIONS.md). The current LaTeX manuscript belongs entirely to the OLD MODEL; NEW MODEL transfer is deferred.
+
 **Estado:** campaña exploratoria sintética de mecanismos, revisada en la [consolidación científica](SOC_SCIENTIFIC_CONSOLIDATION.md); no estimación del SOC de GMV ni prueba confirmatoria de superioridad general.
 
 ## Configuración y políticas efectivas

@@ -1,5 +1,7 @@
 # SOCTRA-HLS: organización de equipos SOC
 
+> **OLD MODEL / MODELO VIEJO:** los protocolos, campañas, resultados, mapas operativos y estudios adaptativos archivados en esta carpeta pertenecen al flujo histórico L1 primero y posible segunda investigación L2. Conservan su validez dentro de ese modelo; no validan el NEW MODEL ni deben transferirse a su manuscrito/resultados. La línea activa de investigación y su evidencia exploratoria están en la rama `research/soctra-hls-new-model`, con estado en [MODEL_GENERATIONS.md](../soc_triage_hls_availability_robustness/MODEL_GENERATIONS.md).
+
 ## Punto de entrada
 
 Esta carpeta documenta una aplicación de **HLS** al trabajo de analistas humanos y sistemas de IA en un Security Operations Center. HLS es el programa general; SOCTRA aporta contexto empírico sobre triaje y alertas, y GMV-CERT es una referencia operativa cualitativa. La aplicación no define ni sustituye HLS.
