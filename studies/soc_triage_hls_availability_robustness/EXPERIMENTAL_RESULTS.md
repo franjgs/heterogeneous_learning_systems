@@ -1,5 +1,7 @@
 # Experimental results
 
+> **Campaña histórica, flujo anterior:** los resultados siguientes corresponden a todas las alertas procesadas primero por L1 y a L2 posterior para recomendaciones positivas. No son resultados del modelo organizativo vigente de una investigación única tras el triaje. Se preservan sin reinterpretación; véase [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
+
 ## Campaign and analysis
 
 The completed campaign contains 400 paired seed blocks (`711000000`–`711000399`), 216 conditions per block and 86,400 condition-seed episodes. The factorial design combines three frozen SOCTRA classifier operating points, D1/P1/WAPS, `rho_L1` 0.85/1.25, alpha 0.25/1.00, L2 team sizes 2/3/4, and L2 24x7/weekday 09:00–17:00 calendars. L1 remains 24x7. Each episode admits alerts for 168 natural hours and is evaluated through hour 240, with no terminal drain; thus the maximum 72-hour deadline of every admitted alert matures.

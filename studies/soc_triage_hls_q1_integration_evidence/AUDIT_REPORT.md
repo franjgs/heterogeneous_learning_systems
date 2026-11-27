@@ -1,5 +1,7 @@
 # Audit report: SOCTRA triage × HLS organization
 
+> **AVISO DE VERSIÓN HISTÓRICA:** este documento conserva el diseño, metodología o resultados de una versión anterior, en la que las alertas podían recibir servicio L1 antes de pasar a L2. No describe el modelo organizativo vigente ni debe reinterpretarse como evidencia de la ruta de investigación única tras triaje. Se conserva íntegro para reproducibilidad. Decisiones actuales y estado de implementación: [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 ## Scope and status
 
 This audit uses the frozen evidence available at the integration-synthesis reference and the published classifier inventory. It does not alter SOCTRA records, preprocessing, labels, model training, published operating points, D1, P1, WAPS/HLS-B, or the historical engine. The previous 18,720 policy-episode campaign is retained unchanged. New work is isolated in this sub-study.

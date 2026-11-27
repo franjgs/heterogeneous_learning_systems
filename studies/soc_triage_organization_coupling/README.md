@@ -1,5 +1,7 @@
 # SOCTRA–HLS triage–organization coupling pilot
 
+> **AVISO DE VERSIÓN HISTÓRICA:** este documento conserva el diseño, metodología o resultados de una versión anterior, en la que las alertas podían recibir servicio L1 antes de pasar a L2. No describe el modelo organizativo vigente ni debe reinterpretarse como evidencia de la ruta de investigación única tras triaje. Se conserva íntegro para reproducibilidad. Decisiones actuales y estado de implementación: [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 This independent exploratory line evaluates how synthetic escalation
 recommendations alter L1/L2 offered work, queueing and the relative performance
 of the frozen D1, P1 and HLS-B/WAPS dispatch rules. It does not read SOCTRA

@@ -1,5 +1,7 @@
 # Scientific implications and final assessment
 
+> **Resultados históricos:** este análisis interpreta la campaña de disponibilidad con el flujo anterior (servicio L1 para todas las alertas y L2 posterior para positivas). Sus resultados no describen la organización conceptual vigente ni deben extrapolarse a la nueva ruta sin ejecutar una nueva validación. Metodología y resultados se preservan; véase [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
+
 ## What the simulation supports
 
 In this explicitly synthetic model, restricting L2 from 24x7 to weekday 09:00–17:00 lowers deadline-based `S_plus` across the examined paired cells. At `rho_L1=0.85`, alpha 0.25, `n_L2=3`, D1, the decreases range from 0.110 to 0.134, with seed-block 95% intervals excluding zero. The change reflects the combined loss and timing of weekly capacity, not intermittency isolated from capacity.

@@ -1,5 +1,7 @@
 # Integrated theory: classifier triage and heterogeneous SOC organization
 
+> **Formulación de campaña anterior:** las ecuaciones de carga y `S_+` abajo se refieren a estudios con ruta L1 seguida de L2 tras completar L1 para recomendaciones positivas. Se preservan como teoría/estimando de esa evidencia y no como descripción del flujo organizativo vigente. Véase [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 ## System and estimand
 
 The system combines two modules:

@@ -1,5 +1,7 @@
 # Proposed article outline: SOCTRA–HLS integrated evaluation
 
+> **Borrador basado en evidencia histórica:** el esquema resume campañas de recomendación sintética y flujos previos, algunos con investigación L1 anterior a L2. No debe redactarse como metodología del modelo organizativo vigente sin actualizarlo tras implementar y validar esa ruta. Véase [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 This outline is limited to an article built from the evidence already available. It does not declare the manuscript complete or accepted, and it does not add experiments.
 
 ## Proposed central question

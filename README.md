@@ -14,7 +14,7 @@ The active core is deliberately small: three exact finite mathematical models, a
 
 The proposed first application testbed is a simplified Security Operations Center with two distinct processes: initial alert triage (L1: escalate/report decisions) and deeper alert analysis (L2). It is a proposal, not a validated account of a particular client SOC. No client-level workflow, competence data, or operational dataset is currently verified. The first research dimension is competence heterogeneity and its characterization, utilization, development, adaptation, benefits and costs; increased heterogeneity is not presumed beneficial. See the [proposed study](docs/RESEARCH.md#competence-heterogeneity-in-soc-alert-operations-proposed-testbed) and [catalog entry](registry/catalog.json).
 
-The current synthetic SOCTRA-HLS organizational decisions and versioned reference profile are documented in [SOC_ORGANIZATIONAL_MODEL.md](studies/soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md). Its roster, demand rates and relative costs are modeling hypotheses, not operational measurements.
+The current synthetic SOCTRA-HLS organizational decisions, their implementation status, and the versioned diagnostic profile are documented in [modelo organizativo canónico](studies/soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md). The adopted triage-then-single-investigation flow is not yet implemented; historical campaign results use earlier flows and remain labeled as such. Profile roster, demand rates and relative costs are modeling hypotheses, not operational measurements or defaults.
 
 ## Repository map
 

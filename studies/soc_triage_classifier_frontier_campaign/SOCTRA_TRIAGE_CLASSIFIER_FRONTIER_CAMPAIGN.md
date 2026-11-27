@@ -1,5 +1,7 @@
 # SOCTRA–HLS joint classifier-frontier campaign
 
+> **AVISO DE VERSIÓN HISTÓRICA:** este documento conserva el diseño, metodología o resultados de una versión anterior, en la que las alertas podían recibir servicio L1 antes de pasar a L2. No describe el modelo organizativo vigente ni debe reinterpretarse como evidencia de la ruta de investigación única tras triaje. Se conserva íntegro para reproducibilidad. Decisiones actuales y estado de implementación: [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 ## Objetivo y fuente de configuraciones
 
 Esta extensión evalúa, en el simulador organizativo existente, los 13 puntos de la frontera conjunta de detección/falsa alarma y cuatro controles de la fase 2. Los puntos publicados son tasas agregadas del artículo, no predicciones individuales sobre alertas SOCTRA. Las recomendaciones son sintéticas y automáticas. No se simula reportado. D1, P1 y WAPS/HLS-B permanecen sin cambios.

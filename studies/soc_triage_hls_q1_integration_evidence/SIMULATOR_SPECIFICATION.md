@@ -1,5 +1,7 @@
 # Simulator specification and parameter provenance
 
+> **Versión de campaña histórica:** la especificación siguiente describe los experimentos Q1 ejecutados: todas las alertas reciben servicio L1 y las recomendaciones positivas aceptadas pasan después a L2. No es el flujo organizativo vigente (triaje automático seguido de una sola investigación en el nivel recomendado). Se conserva íntegra para reproducibilidad; consultar [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md) para las decisiones actuales.
+
 ## System boundary
 
 The synthetic experiment accepts alert arrivals at L1, generates a hidden binary need for L2, draws a synthetic escalation recommendation from a fixed published operating point, runs every alert through L1, and sends accepted positive recommendations to an independent L2 queue after L1 completion. No report classifier is included. The decision rule is automatic acceptance, solely to isolate the workload effect; it is not an observed GMV-CERT behavior.

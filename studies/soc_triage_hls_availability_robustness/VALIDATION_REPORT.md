@@ -1,5 +1,7 @@
 # Validation report
 
+> **AVISO DE VERSIÓN HISTÓRICA:** este informe o protocolo documenta la campaña de disponibilidad ejecutada con servicio L1 previo para todas las alertas y posible L2 posterior. Se preserva para reproducibilidad; no describe ni valida el flujo organizativo vigente. Véase [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 ## Historical regression
 
 The reference is branch `research/soctra-hls-q1-integration-evidence`, commit `9772abae1bfcd2c810760e68ecd8fba107d320f0`. The complete 400-block × 108-condition replay compared 43,200 episodes and 1,681,848 L2 assignment records, including arrivals/recommendation trace hashes, needs, assignments, analyst IDs, starts, service, completions, final states, backlog, utilization, S_plus and policy contrasts. It found zero divergences under exact ID/hash comparison and absolute numeric tolerance `1e-10`. See `BACKWARD_COMPATIBILITY_REPORT.md` and compressed row-level evidence in the regression results.

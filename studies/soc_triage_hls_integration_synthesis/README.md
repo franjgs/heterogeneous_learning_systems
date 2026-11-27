@@ -1,5 +1,7 @@
 # SOCTRA–HLS integrated evidence synthesis
 
+> **Síntesis de versiones anteriores:** los estudios de integración que resume modelan recomendaciones sintéticas con aceptación automática, pero algunos ejecutan servicio L1 antes de una eventual etapa L2. Sus resultados no validan el flujo organizativo vigente de una sola investigación en el nivel recomendado. Se conservan como evidencia condicionada a sus métodos; las decisiones actuales están en [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 This independent synthesis brings together existing SOCTRA classifier evidence and the HLS organization simulator. It creates no new policy, controller, or simulation result. Its central distinction is between the evaluated **triage-to-organization** path and a formalized, but not implemented, **organization-to-triage** feasibility relation.
 
 ## Documents

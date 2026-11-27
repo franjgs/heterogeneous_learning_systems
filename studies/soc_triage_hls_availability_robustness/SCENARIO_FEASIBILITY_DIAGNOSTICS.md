@@ -1,5 +1,7 @@
 # Diagnósticos de deadlines y capacidad
 
+> **Alcance de versión:** las interfaces son diagnósticos externos reutilizables, pero algunos ejemplos/rutas implementadas reflejan el flujo anterior L1→L2. Para interpretar rutas, TP/FP/TN/FN, SLA y el modelo vigente, consultar [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md). La factibilidad y capacidad V1 no se deben trasladar al flujo nuevo sin recalcular entradas.
+
 ## Alcance
 
 `scenario_diagnostics.py` añade evaluaciones ex ante y de trazas para describir

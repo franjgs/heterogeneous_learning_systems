@@ -1,5 +1,7 @@
 # SOCTRA classifier operating impact: Phase 2
 
+> **AVISO DE VERSIÓN HISTÓRICA:** este documento conserva el diseño, metodología o resultados de una versión anterior, en la que las alertas podían recibir servicio L1 antes de pasar a L2. No describe el modelo organizativo vigente ni debe reinterpretarse como evidencia de la ruta de investigación única tras triaje. Se conserva íntegro para reproducibilidad. Decisiones actuales y estado de implementación: [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 This is an independent synthetic evaluation; it does not modify the
 organization-coupling pilot, D1, P1, WAPS/HLS-B, or the historical simulator.
 Published aggregate operating points are converted into keyed Bernoulli

@@ -1,5 +1,7 @@
 # False-positive workload sensitivity
 
+> **AVISO DE VERSIÓN HISTÓRICA:** este documento conserva el diseño, metodología o resultados de una versión anterior, en la que las alertas podían recibir servicio L1 antes de pasar a L2. No describe el modelo organizativo vigente ni debe reinterpretarse como evidencia de la ruta de investigación única tras triaje. Se conserva íntegro para reproducibilidad. Decisiones actuales y estado de implementación: [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 ## Target mechanism
 
 Existing coupling studies assume a recommended positive creates an L2 investigation with service comparable to a true positive. This is a useful conservative workload scenario, but an operational false alarm may be dismissed after less work. The sensitivity parameter is

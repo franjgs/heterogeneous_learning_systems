@@ -1,5 +1,7 @@
 # SOCTRA classifier operating points and SOC operational impact — Phase 2
 
+> **AVISO DE VERSIÓN HISTÓRICA:** este documento conserva el diseño, metodología o resultados de una versión anterior, en la que las alertas podían recibir servicio L1 antes de pasar a L2. No describe el modelo organizativo vigente ni debe reinterpretarse como evidencia de la ruta de investigación única tras triaje. Se conserva íntegro para reproducibilidad. Decisiones actuales y estado de implementación: [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 ## Executive summary
 
 This independent, exploratory study evaluates whether published escalation-classifier operating points can yield different operational outcomes once recommendations induce L2 work. The classifier scores are empirical aggregate values, but the recommendations used here are synthetic Bernoulli draws; there are no alert-level SOCTRA predictions in this study. The need-for-L2 variable, automatic acceptance, project-independent error rates, service times, and continuous analyst availability are modeling assumptions. Results therefore describe a controlled simulator, not GMV-CERT performance.

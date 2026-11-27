@@ -1,5 +1,7 @@
 # Final audit — SOCTRA–HLS Q1 integration evidence
 
+> **AVISO DE VERSIÓN HISTÓRICA:** este documento conserva el diseño, metodología o resultados de una versión anterior, en la que las alertas podían recibir servicio L1 antes de pasar a L2. No describe el modelo organizativo vigente ni debe reinterpretarse como evidencia de la ruta de investigación única tras triaje. Se conserva íntegro para reproducibilidad. Decisiones actuales y estado de implementación: [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 ## 1. Scope, source state and disposition
 
 This audit reads the saved 43,200-row episode file and saved trace audit. It does not run the simulator or alter SOCTRA, D1, P1, WAPS, historical campaigns, or the generated episodes. The analysis branch is `research/soctra-hls-q1-integration-evidence`, based on `cc0880d8f56cb3aa05ff29f55f493441ec01206a`.

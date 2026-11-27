@@ -1,5 +1,7 @@
 # SOCTRA–HLS JCR-Q1 integration evidence
 
+> **AVISO DE VERSIÓN HISTÓRICA:** este documento conserva el diseño, metodología o resultados de una versión anterior, en la que las alertas podían recibir servicio L1 antes de pasar a L2. No describe el modelo organizativo vigente ni debe reinterpretarse como evidencia de la ruta de investigación única tras triaje. Se conserva íntegro para reproducibilidad. Decisiones actuales y estado de implementación: [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 This independent sub-study audits the existing classifier-to-organization evidence and adds a prespecified sensitivity analysis for the service consumed by false-positive escalation recommendations. SOCTRA data, preprocessing, models, published rates, HLS policies and the historical simulation engine are not changed. No individual SOCTRA prediction is reconstructed.
 
 The experimental base is commit `cc0880d8f56cb3aa05ff29f55f493441ec01206a`; the work is isolated on `research/soctra-hls-q1-integration-evidence`. The source tree is a clean Git worktree. Results are synthetic and conditional on stated assumptions, not estimates of GMV-CERT operations.

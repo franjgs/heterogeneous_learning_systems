@@ -1,8 +1,10 @@
 # SOCTRA–HLS availability robustness
 
+> **Estado conceptual:** las campañas y sus informes de este directorio usan el flujo histórico de servicio L1 seguido de L2 para recomendaciones positivas. El modelo organizativo vigente acuerda triaje automático seguido de una sola investigación en el nivel recomendado, pero aún requiere implementación; resultados antiguos no se presentan como resultados de ese flujo. La fuente de verdad es [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
+
 An isolated synthetic study of how weekly L2 analyst availability changes deadline-based outcomes in SOCTRA-assisted triage. It does not reproduce the GMV-CERT SOC or claim operational service levels. It does not modify SOCTRA, D1/P1/WAPS, historical experiments or the LaTeX manuscript.
 
-The canonical organizational decisions, SLA rule, versioned proposed roster, synthetic demand assumptions, costs and policy-independent diagnostics are consolidated in [SOC_ORGANIZATIONAL_MODEL.md](SOC_ORGANIZATIONAL_MODEL.md). The proposed V1 JSON and diagnostic-only calculation are `config/SOC_REFERENCE_ORGANIZATION_V1.json` and `analyze_reference_organization.py`; they do not launch a campaign or replace the historic arrival generator.
+The canonical organizational decisions, SLA rule, versioned proposed roster, synthetic demand assumptions, costs and policy-independent diagnostics are consolidated in [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md). The proposed V1 JSON and diagnostic-only calculation are `config/SOC_REFERENCE_ORGANIZATION_V1.json` and `analyze_reference_organization.py`; they do not launch a campaign or replace the historic arrival generator.
 
 ## What is included
 

@@ -1,5 +1,7 @@
 # Dificultad, servicio efectivo y calendarios en SOCTRA-HLS
 
+> **Alcance de versión:** este documento especifica la extensión beta/alpha implementada para los runners históricos que describe. No significa que esté implementada la ruta organizativa vigente de una investigación directa en el nivel recomendado ni el factor gamma FN. Para decisiones actuales, resultados métricos y estado de implementación, consultar [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md). La metodología y resultados anteriores no se reinterpretan.
+
 ## Motivación y alcance
 
 El tiempo de procesamiento depende de la clase de tarea, del nivel L1/L2, del

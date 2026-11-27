@@ -1,5 +1,7 @@
 # SOCTRA–HLS joint frontier campaign
 
+> **AVISO DE VERSIÓN HISTÓRICA:** este documento conserva el diseño, metodología o resultados de una versión anterior, en la que las alertas podían recibir servicio L1 antes de pasar a L2. No describe el modelo organizativo vigente ni debe reinterpretarse como evidencia de la ruta de investigación única tras triaje. Se conserva íntegro para reproducibilidad. Decisiones actuales y estado de implementación: [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 This separate exploratory extension evaluates the eight previously unsimulated points on the joint pD/pFA frontier and reuses compatible Phase 2 episodes. It preserves the Phase 2 pilot at `df80a78e413c88f7cf22b807e8ee27f4e556a726`; the phase 2 source snapshot used by the runner is recorded in `config/campaign.json`.
 
 Read the [campaign report](SOCTRA_TRIAGE_CLASSIFIER_FRONTIER_CAMPAIGN.md) for the prevalence audit, exact trace-based reuse decisions, paired results, operational Pareto analysis, uncertainty, and limitations.

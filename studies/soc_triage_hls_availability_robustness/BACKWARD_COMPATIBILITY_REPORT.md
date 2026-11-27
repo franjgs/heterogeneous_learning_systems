@@ -1,5 +1,7 @@
 # Backward compatibility report
 
+> **AVISO DE VERSIÓN HISTÓRICA:** este informe o protocolo documenta la campaña de disponibilidad ejecutada con servicio L1 previo para todas las alertas y posible L2 posterior. Se preserva para reproducibilidad; no describe ni valida el flujo organizativo vigente. Véase [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 ## Frozen reference
 
 Reference branch: `research/soctra-hls-q1-integration-evidence`, commit `9772abae1bfcd2c810760e68ecd8fba107d320f0`. The campaign is the 43,200-row Q1 integration campaign. Its source, config, metrics, policies, traces, seeds and historical results were not modified. The fixed aggregate fixture is in `config/historical_reference_summary.json`.

@@ -1,5 +1,7 @@
 # Reproducibility
 
+> **AVISO DE VERSIÓN HISTÓRICA:** este informe o protocolo documenta la campaña de disponibilidad ejecutada con servicio L1 previo para todas las alertas y posible L2 posterior. Se preserva para reproducibilidad; no describe ni valida el flujo organizativo vigente. Véase [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 ## Software and provenance
 
 Reference source branch: `research/soctra-hls-q1-integration-evidence`, commit `9772abae1bfcd2c810760e68ecd8fba107d320f0`. The new code was developed on `research/soctra-hls-availability-robustness`; campaign workers recorded code revision `d088a7994104994f03ce919b070883fbc8e28859`. Later changes only correct merger validation, identify policy in derived alpha contrasts, and add result reporting/figures; no simulator episodes were rerun or altered. Campaign config is `config/availability_campaign.json`; its full copy is stored in each shard's execution manifest.

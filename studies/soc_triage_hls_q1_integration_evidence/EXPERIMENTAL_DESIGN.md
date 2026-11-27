@@ -1,5 +1,7 @@
 # Experimental design (prespecified)
 
+> **AVISO DE VERSIÓN HISTÓRICA:** este documento conserva el diseño, metodología o resultados de una versión anterior, en la que las alertas podían recibir servicio L1 antes de pasar a L2. No describe el modelo organizativo vigente ni debe reinterpretarse como evidencia de la ruta de investigación única tras triaje. Se conserva íntegro para reproducibilidad. Decisiones actuales y estado de implementación: [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 ## Question and unit
 
 The unit is a synthetic SOC episode under a joint operating condition \(u=(\theta,P,C)\). The primary question is whether a published standardized escalation point's trade-off between detections and induced L2 work changes \(S_+\) or its contrast between D1, P1 and WAPS as false-positive work and L2 resources vary.

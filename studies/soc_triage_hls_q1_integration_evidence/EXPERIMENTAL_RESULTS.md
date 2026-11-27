@@ -1,5 +1,7 @@
 # Experimental results: SOCTRA triage × human organization
 
+> **AVISO DE VERSIÓN HISTÓRICA:** este documento conserva el diseño, metodología o resultados de una versión anterior, en la que las alertas podían recibir servicio L1 antes de pasar a L2. No describe el modelo organizativo vigente ni debe reinterpretarse como evidencia de la ruta de investigación única tras triaje. Se conserva íntegro para reproducibilidad. Decisiones actuales y estado de implementación: [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 ## Scope and status
 
 This is a new, exploratory simulation campaign on the independent branch `research/soctra-hls-q1-integration-evidence`, based on reference commit `cc0880d8f56cb3aa05ff29f55f493441ec01206a`. It uses three published standardized-label A+C operating points at fixed reported (p_D,p_{FA}), not individual SOCTRA predictions. The 400 seed IDs are new. D1, P1 and WAPS are frozen. There is no claim of operational validation at GMV-CERT.

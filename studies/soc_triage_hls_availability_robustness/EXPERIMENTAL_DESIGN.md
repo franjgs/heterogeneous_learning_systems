@@ -1,5 +1,7 @@
 # Experimental design
 
+> **Diseño de campaña histórica:** el protocolo describe el flujo anterior con L1 para todas las alertas y posible L2 posterior. Se conserva como registro del experimento ejecutado y no define la organización actualmente acordada. Véase [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
+
 Paired arms differ only in L2 calendar: continuous 24x7 versus weekday 09:00–17:00. Keep alert stream, classifiers, label/recommendation draws, synthetic need, service realization, analyst identities and competencies, deadlines, alpha, and dispatch policy common by seed. L1 remains continuous. A calendar change also changes weekly L2 capacity; therefore the estimand is the complete calendar proposal effect, not a pure redistribution-of-hours effect.
 
 Begin at rho_L1=0.85 to avoid making upstream saturation the sole explanation; follow with rho_L1=1.25 as sensitivity. Keep the standardized LightGBM A+C, LSEnsemble A+C, Bayesian MLP A+C classifiers; symmetric costs; D1, P1 and WAPS; and alpha 0.25 and 1.00. Do not tune policies on observed outcomes or add fast/late escalations.

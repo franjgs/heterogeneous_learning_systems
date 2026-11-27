@@ -1,5 +1,7 @@
 # Article-ready results summary
 
+> **AVISO DE VERSIÓN HISTÓRICA:** este documento conserva el diseño, metodología o resultados de una versión anterior, en la que las alertas podían recibir servicio L1 antes de pasar a L2. No describe el modelo organizativo vigente ni debe reinterpretarse como evidencia de la ruta de investigación única tras triaje. Se conserva íntegro para reproducibilidad. Decisiones actuales y estado de implementación: [modelo organizativo canónico](../soc_triage_hls_availability_robustness/SOC_ORGANIZATIONAL_MODEL.md).
+
 ## Bounded claim
 
 In a paired simulation using three published standardized-label SOCTRA operating points as fixed probability inputs, classifier-induced L2 workload and organizational policy jointly affected the proportion of synthetic L2 needs completed within deadline. Under elevated L1 demand, 2–4 L2 analysts, automatic recommendation acceptance, and illustrative false-positive service fractions α=.25–1.00, pooled (S_+) varied materially across D1, P1 and WAPS. Across the 36 prespecified cells, P1 and WAPS had higher point estimates than D1, while WAPS did not exceed P1 in any cell; these are exploratory pointwise results without multiplicity correction and conditional on the model.
