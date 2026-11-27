@@ -402,6 +402,10 @@ la idealización en coste laboral real.
 
 La variante [`SOC_REFERENCE_V2_24X7_LOAD_REGIMES.json`](config/SOC_REFERENCE_V2_24X7_LOAD_REGIMES.json) conserva íntegra la organización V2_24X7 y cambia las tasas temporales a ρ_L1 objetivo 0.85/1.25/0.65 en ventanas de 96/24/48 h. Las tasas totales derivadas del LP son 16.542/24.327/12.650 alertas por hora; se ajustan por la fracción esperada L1=0.87529, no se equiparan a μ_L1=17.0346. La semilla 998001 produjo 2,812 alertas, 69 tardías y ninguna pendiente; la cola L1 alcanzó 122 alertas al final del pulso y se drenó durante la recuperación. Detalle, tasas por nivel, uso y criterio explícito de recuperación: [SOC_REFERENCE_V2_24X7_LOAD_REGIMES_VALIDATION.md](SOC_REFERENCE_V2_24X7_LOAD_REGIMES_VALIDATION.md). Es una sola ejecución diagnóstica, no validación estadística ni comparación de políticas.
 
+## 13 quater. Piloto comparativo de políticas
+
+Se ejecutó un piloto exploratorio emparejado de D1, P1 y HLS-B/WAPS sobre la configuración temporal anterior, con 10 semillas nuevas y 30 episodios. Las trazas y realizaciones ambientales coinciden por semilla; el R/N medio fue 0.7844/0.7753/0.7821, respectivamente, mientras la fracción puntual fue 97.56%/100%/99.69%. Las diferencias son exploratorias: no establecen superioridad ni cambian políticas o parámetros. El procedimiento, diferencias emparejadas, resultados por cohorte/subgrupo, transiciones de HLS-B, límites y JSON reproducible están en [SOC_REFERENCE_V2_24X7_POLICY_PILOT.md](SOC_REFERENCE_V2_24X7_POLICY_PILOT.md); los 30 registros y hashes están en [SOC_REFERENCE_V2_24X7_POLICY_PILOT_RESULTS.json](SOC_REFERENCE_V2_24X7_POLICY_PILOT_RESULTS.json). El runner es [run_policy_pilot.py](run_policy_pilot.py).
+
 ## 14. Compatibilidad y alcance de conclusiones
 
 La configuración V1, las configuraciones históricas, los ejecutores de campaña,

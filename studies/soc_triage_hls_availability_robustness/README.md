@@ -12,6 +12,8 @@ python studies/soc_triage_hls_availability_robustness/run_scenario.py --config s
 
 This is a technical execution, not a policy comparison or campaign. `analyze_reference_organization.py --config <scenario.json>` calculates ex-ante capacity and temporal feasibility. The paired seed-998001 control is reported in [V2_24X7 validation](SOC_REFERENCE_V2_24X7_VALIDATION.md). A separate [ordinary/pulse/recovery demand profile](SOC_REFERENCE_V2_24X7_LOAD_REGIMES_VALIDATION.md) keeps V2_24X7 organization fixed and is runnable with `SOC_REFERENCE_V2_24X7_LOAD_REGIMES.json`.
 
+The exploratory ten-seed D1/P1/HLS-B policy pilot on that exact load profile is documented in [SOC_REFERENCE_V2_24X7_POLICY_PILOT.md](SOC_REFERENCE_V2_24X7_POLICY_PILOT.md), with per-run hashes and metrics in [the results JSON](SOC_REFERENCE_V2_24X7_POLICY_PILOT_RESULTS.json). Reproduce it with `python studies/soc_triage_hls_availability_robustness/run_policy_pilot.py --output studies/soc_triage_hls_availability_robustness/SOC_REFERENCE_V2_24X7_POLICY_PILOT_RESULTS.json`. It is exploratory and does not establish a policy winner.
+
 ## What is included
 
 - `availability_engine.py`: configurable weekly analyst calendars and persistent suspend/resume service.
@@ -20,6 +22,7 @@ This is a technical execution, not a policy comparison or campaign. `analyze_ref
 - `scenario_diagnostics.py` and `SCENARIO_FEASIBILITY_DIAGNOSTICS.md`: policy-independent deadline, class-constrained capacity and sampled queue-recovery diagnostics.
 - `run_full_regression.py`: full comparison against the frozen Q1 integration reference.
 - `run_availability_campaign.py`: paired integrated SOCTRA→L1→L2 campaign.
+- `run_policy_pilot.py`: fixed-seed paired exploratory comparison on the new triage single-investigation load profile.
 - `merge_campaign_shards.py`: seed-block pairing checks, summaries and bootstrap contrasts.
 - `make_campaign_figures.py`: publication-style summary figures.
 - `SOC_EXPERT_INPUT_DELTA.md`: boundary between qualitative scenario guidance and evidence.

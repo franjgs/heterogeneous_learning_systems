@@ -187,12 +187,15 @@ def test_hidden_need_is_not_forwarded_to_calendar_dispatch(monkeypatch):
     seen = []
     original = availability_engine._dispatch_d1
 
-    def spy(*args, **kwargs):
-        seen.append((args, kwargs))
-        assert len(args) == 5
-        assert not any(isinstance(arg, dict) and arg == request.environment.hidden_need_by_alert
-                       for arg in args)
-        return original(*args, **kwargs)
+    def spy(free, pending, now, service_time, rng, *args, **kwargs):
+        seen.append(now)
+        assert all(type(alert) is Alert for alert in pending.values())
+        assert not any(isinstance(value, dict) and value == request.environment.hidden_need_by_alert
+                       for value in (free, pending, kwargs))
+        for analyst in free:
+            for alert in pending.values():
+                assert service_time(analyst, alert) == request.resources[0].forecast_service_by_class["x"]
+        return original(free, pending, now, service_time, rng, *args, **kwargs)
 
     monkeypatch.setattr(availability_engine, "_dispatch_d1", spy)
     CalendarBackend().run(request)
