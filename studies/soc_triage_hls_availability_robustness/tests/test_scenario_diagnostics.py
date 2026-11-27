@@ -86,6 +86,44 @@ def test_beta_and_alpha_change_effective_stage_work_without_moving_deadline():
     assert req.alerts[0].deadline == 2.0
 
 
+def test_single_investigation_deadline_lower_bound_does_not_add_l1_to_direct_l2_route():
+    l1 = [resource("l1", "L1", ["x"], {"x": 5.0})]
+    l2 = [resource("l2", "L2", ["x"], {"x": 1.0})]
+    alert = Alert("tp", 0, "x", 1.5)
+    req = request((alert,), l1, l2)
+    old = assess_deadline_feasibility(
+        req, l2_required_by_alert={"tp": True}, route_basis="simulated_route",
+    ).tasks[0]
+    new = assess_deadline_feasibility(
+        req, l2_required_by_alert={"tp": True}, route_basis="simulated_route",
+        flow_mode="triage_single_investigation",
+    ).tasks[0]
+    assert old.route == "L1+L2" and old.optimistic_min_service_h == 6.0
+    assert new.route == "L2" and new.optimistic_min_service_h == 1.0
+    assert new.optimistic_l1_analyst_id is None
+    assert new.calendar_earliest_completion == pytest.approx(1.0)
+
+
+def test_new_flow_capacity_uses_negative_route_gamma_and_separate_l2_route_alpha():
+    l1 = [resource("l1", "L1", ["x"], {"x": 1.0})]
+    l2 = [resource("l2", "L2", ["x"], {"x": 1.0})]
+    org = request((), l1, l2).organization
+    profile_new = CapacityDemandProfile(
+        (DemandRegime("steady", 0, 10, {"x": 1.0}),),
+        {"x": .2}, {"x": .5}, {"x": .1}, alpha=.25, beta=0,
+        gamma=2, flow_mode="triage_single_investigation",
+    )
+    result = assess_capacity(org, profile_new)
+    l1_row = next(x for x in result.regimes if x.level == "L1")
+    l2_row = next(x for x in result.regimes if x.level == "L2")
+    # P(L1)=.82; expected L1 work/hour=.72 TN + .20 FN effort.
+    assert l1_row.offered_rate_per_h == pytest.approx(.82)
+    assert l1_row.offered_l1_work_h_per_h == pytest.approx(.92)
+    # L2 gets TP=.10 plus alpha-scaled FP=.02 work/hour.
+    assert l2_row.offered_rate_per_h == pytest.approx(.18)
+    assert l2_row.offered_l2_work_h_per_h == pytest.approx(.12)
+
+
 def test_calendar_bound_honors_weekday_turns_while_optimistic_bound_does_not():
     l1 = [resource("l1", "L1", ["x"], {"x": 1.0}, WEEKDAY_9_TO_17)]
     l2 = [resource("l2", "L2", ["x"], {"x": 1.0}, WEEKDAY_9_TO_17)]

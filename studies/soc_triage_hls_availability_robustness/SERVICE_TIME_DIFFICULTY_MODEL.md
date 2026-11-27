@@ -1,6 +1,6 @@
 # Dificultad, servicio efectivo y calendarios en SOCTRA-HLS
 
-> **Alcance de versión:** este documento especifica beta/alpha en los runners históricos que describe. El orquestador actual también compone gamma para FN en el modo `triage_single_investigation`, pero ese modo aún no está conectado al loader JSON ni a los runners de campañas. Para decisiones y estado completos, consultar [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md). La metodología y resultados anteriores no se reinterpretan.
+> **Alcance de versión:** las duraciones y resultados de campañas aquí descritos corresponden a sus flujos históricos. El modelo de servicio `beta/alpha/gamma` también se ejecuta en V2 mediante el loader JSON y `run_scenario.py`; los runners y resultados históricos no se reinterpretan. Los valores de V2 y sus hipótesis se consolidan en [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
 
 ## Motivación y alcance
 

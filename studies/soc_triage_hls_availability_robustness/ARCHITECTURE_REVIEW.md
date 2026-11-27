@@ -1,6 +1,6 @@
 # SOCTRA–HLS architecture review
 
-> **Nota de consistencia conceptual:** las fases implementadas y diagramas de flujo de esta revisión documentan la arquitectura de la campaña anterior, incluyendo servicio L1 previo a L2. El modelo organizativo vigente y la diferencia respecto al código están en [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md). Esta nota no altera el estado técnico histórico descrito abajo.
+> **Instantánea histórica de arquitectura:** las fases y diagramas de esta revisión documentan la arquitectura de la campaña anterior, incluyendo servicio L1 previo a L2. Desde esta revisión, V2 integra JSON, generación existente y `triage_execution.py` mediante `run_scenario.py`; el resto del documento conserva su fecha y alcance originales. Para el estado actual, consulte el [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
 
 ## External JSON loader update
 

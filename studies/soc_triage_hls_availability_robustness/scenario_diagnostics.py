@@ -17,6 +17,9 @@ from studies.soc_triage_hls_availability_robustness.availability_engine import C
 from studies.soc_triage_hls_availability_robustness.execution_api import (
     EnvironmentRealization, OrganizationConfig, SimulationRequest,
 )
+from studies.soc_triage_hls_availability_robustness.triage_execution import (
+    FLOW_MODES, HISTORICAL_L1_THEN_L2, TRIAGE_SINGLE_INVESTIGATION,
+)
 
 
 def _quantile(values: Sequence[float], p: float) -> float | None:
@@ -57,7 +60,7 @@ class AlertDeadlineDiagnostic:
     optimistic_min_service_h: float
     optimistic_slack_h: float
     optimistic_intrinsically_infeasible: bool
-    optimistic_l1_analyst_id: str
+    optimistic_l1_analyst_id: str | None
     optimistic_l2_analyst_id: str | None
     calendar_earliest_completion: float | None
     calendar_slack_h: float | None
@@ -99,6 +102,7 @@ def assess_deadline_feasibility(
     severity_by_alert: Mapping[str, str] | None = None,
     environment: EnvironmentRealization | None = None,
     include_calendars: bool = True,
+    flow_mode: str = HISTORICAL_L1_THEN_L2,
 ) -> DeadlineFeasibilityReport:
     """Compute zero-queue lower bounds and earliest calendar-respecting completion.
 
@@ -108,6 +112,8 @@ def assess_deadline_feasibility(
     """
     if route_basis not in {"true_need", "simulated_route", "scenario_route"}:
         raise ValueError("route_basis must explicitly name true_need or a simulated/scenario route")
+    if flow_mode not in FLOW_MODES:
+        raise ValueError(f"flow_mode must be one of {sorted(FLOW_MODES)}")
     alerts = tuple(a for a in request.alerts if a.arrival < request.settings.admission_horizon)
     ids = {a.alert_id for a in alerts}
     if set(l2_required_by_alert) != ids or any(not isinstance(v, bool) for v in l2_required_by_alert.values()):
@@ -130,19 +136,26 @@ def assess_deadline_feasibility(
         need_l2 = l2_required_by_alert[alert.alert_id]
         eligible_l1 = [r for r in l1 if alert.task_class in r.analyst.eligible_classes]
         eligible_l2 = [r for r in l2 if alert.task_class in r.analyst.eligible_classes] if need_l2 else []
-        if not eligible_l1 or (need_l2 and not eligible_l2):
+        direct_l2 = flow_mode == TRIAGE_SINGLE_INVESTIGATION and need_l2
+        if (not direct_l2 and not eligible_l1) or (need_l2 and not eligible_l2):
             raise ValueError(f"no eligible professional for alert {alert.alert_id!r} on required route")
         def l1_service(resource):
-            return resource.service_by_class[alert.task_class] * difficulty_factor * scale
-        min_l1 = min(eligible_l1, key=lambda r: (l1_service(r), r.analyst.analyst_id))
-        optimistic_work = l1_service(min_l1)
+            multiplier = (float((env.service_scale_by_alert or {}).get(alert.alert_id, 1.0))
+                          if env and flow_mode == TRIAGE_SINGLE_INVESTIGATION else 1.0)
+            return resource.service_by_class[alert.task_class] * difficulty_factor * multiplier * scale
+        min_l1 = (min(eligible_l1, key=lambda r: (l1_service(r), r.analyst.analyst_id))
+                  if eligible_l1 and not direct_l2 else None)
+        optimistic_work = l1_service(min_l1) if min_l1 is not None else 0.0
         min_l2 = None
         if need_l2:
             alpha = float((env.service_scale_by_alert or {}).get(alert.alert_id, 1.0)) if env else 1.0
             def l2_service(resource):
                 return resource.service_by_class[alert.task_class] * difficulty_factor * alpha * scale
             min_l2 = min(eligible_l2, key=lambda r: (l2_service(r), r.analyst.analyst_id))
-            optimistic_work += l2_service(min_l2)
+            if direct_l2:
+                optimistic_work = l2_service(min_l2)
+            else:
+                optimistic_work += l2_service(min_l2)
         slack = (alert.deadline - alert.arrival) * scale
         optimistic_slack = slack - optimistic_work
         l1_finish = l2_finish = None
@@ -155,14 +168,15 @@ def assess_deadline_feasibility(
                     finish = _calendar_completion(calendar, start * scale, service_fn(resource))
                     candidates.append((finish, resource.analyst.analyst_id))
                 return min(candidates)
-            l1_finish, l1_calendar_id = earliest(eligible_l1, alert.arrival, l1_service)
+            if not direct_l2:
+                l1_finish, l1_calendar_id = earliest(eligible_l1, alert.arrival, l1_service)
             if need_l2:
                 assert min_l2 is not None
                 # L2 receives the alert only after L1 service, with its own
                 # earliest eligible calendar. The original alert deadline stays fixed.
                 alpha = float((env.service_scale_by_alert or {}).get(alert.alert_id, 1.0)) if env else 1.0
                 l2_finish, l2_calendar_id = earliest(
-                    eligible_l2, l1_finish / scale,
+                    eligible_l2, (alert.arrival if direct_l2 else l1_finish / scale),
                     lambda r: r.service_by_class[alert.task_class] * difficulty_factor * alpha * scale,
                 )
             calendar_finish = l2_finish if need_l2 else l1_finish
@@ -170,11 +184,12 @@ def assess_deadline_feasibility(
             calendar_bad = calendar_slack < -1e-12
         else:
             calendar_finish = calendar_slack = calendar_bad = None
-        route = "L1+L2" if need_l2 else "L1"
+        route = (("L2" if need_l2 else "L1") if flow_mode == TRIAGE_SINGLE_INVESTIGATION
+                 else ("L1+L2" if need_l2 else "L1"))
         rows.append(AlertDeadlineDiagnostic(
             alert.alert_id, str(alert.task_class), str((severity_by_alert or {}).get(alert.alert_id, "unspecified")),
             route, slack, optimistic_work, optimistic_slack, optimistic_slack < -1e-12,
-            min_l1.analyst.analyst_id, min_l2.analyst.analyst_id if min_l2 else None,
+            min_l1.analyst.analyst_id if min_l1 else None, min_l2.analyst.analyst_id if min_l2 else None,
             calendar_finish, calendar_slack, calendar_bad, l1_calendar_id, l2_calendar_id,
         ))
     groups = []
@@ -217,11 +232,13 @@ class DemandRegime:
     realized_l2_rate_by_class: Mapping[str, float] | None = None
     realized_l2_service_factor_by_class: Mapping[str, float] | None = None
     realized_l1_service_factor_by_class: Mapping[str, float] | None = None
+    realized_l1_rate_by_class: Mapping[str, float] | None = None
 
     def __post_init__(self):
         if not self.name or not isfinite(self.start_h) or not isfinite(self.end_h) or self.start_h < 0 or self.end_h <= self.start_h:
             raise ValueError("demand regime needs a name and finite 0 <= start_h < end_h")
         for name, values in (("arrival rates", self.arrival_rate_by_class),
+                             ("realized L1 rates", self.realized_l1_rate_by_class or {}),
                              ("realized L2 rates", self.realized_l2_rate_by_class or {}),
                              ("realized L2 factors", self.realized_l2_service_factor_by_class or {}),
                              ("realized L1 factors", self.realized_l1_service_factor_by_class or {})):
@@ -233,7 +250,7 @@ class DemandRegime:
             raise ValueError("realized L2 classes must appear in the incoming class-rate map")
         if self.realized_l1_service_factor_by_class is not None and set(self.realized_l1_service_factor_by_class) - set(self.arrival_rate_by_class):
             raise ValueError("realized L1 factor classes must appear in the incoming class-rate map")
-        for name in ("arrival_rate_by_class", "realized_l2_rate_by_class",
+        for name in ("arrival_rate_by_class", "realized_l1_rate_by_class", "realized_l2_rate_by_class",
                      "realized_l2_service_factor_by_class", "realized_l1_service_factor_by_class"):
             value = getattr(self, name)
             if value is not None:
@@ -251,6 +268,8 @@ class CapacityDemandProfile:
     # Optional E[q|class,need] and E[q|class,no-need]. With no map the
     # synthetic independent Beta(2,2) model has both means at 0.5.
     difficulty_mean_by_class_and_need: Mapping[str, tuple[float, float]] | None = None
+    gamma: float = 1.0
+    flow_mode: str = HISTORICAL_L1_THEN_L2
 
     def __post_init__(self):
         object.__setattr__(self, "regimes", tuple(self.regimes))
@@ -283,6 +302,10 @@ class CapacityDemandProfile:
             raise ValueError("alpha must be in (0,1]")
         if not isfinite(self.beta) or not 0 <= self.beta < 2:
             raise ValueError("beta must satisfy 0 <= beta < 2")
+        if not isfinite(self.gamma) or self.gamma < 1:
+            raise ValueError("gamma must be finite and at least 1")
+        if self.flow_mode not in FLOW_MODES:
+            raise ValueError(f"flow_mode must be one of {sorted(FLOW_MODES)}")
         for name in ("prevalence_by_class", "sensitivity_by_class", "false_positive_rate_by_class"):
             value = getattr(self, name)
             if value is not None:
@@ -362,6 +385,8 @@ def realized_demand_regime(name: str, start_h: float, end_h: float, alerts: Sequ
                            l2_route_by_alert: Mapping[str, bool],
                            true_need_by_alert: Mapping[str, bool],
                            difficulty_by_alert: Mapping[str, float], alpha: float, beta: float,
+                           gamma: float = 1.0,
+                           flow_mode: str = HISTORICAL_L1_THEN_L2,
                            route_basis: str = "simulated_route") -> DemandRegime:
     """Build empirical rates and mean effective service multipliers from a trace.
 
@@ -372,8 +397,10 @@ def realized_demand_regime(name: str, start_h: float, end_h: float, alerts: Sequ
         raise ValueError("route_basis must name simulated_route, scenario_route or true_need")
     if not isfinite(start_h) or not isfinite(end_h) or end_h <= start_h:
         raise ValueError("trace window must have finite end_h > start_h")
-    if not isfinite(alpha) or not 0 < alpha <= 1 or not isfinite(beta) or not 0 <= beta < 2:
-        raise ValueError("alpha must be in (0,1] and beta in [0,2)")
+    if not isfinite(alpha) or not 0 < alpha <= 1 or not isfinite(beta) or not 0 <= beta < 2 or not isfinite(gamma) or gamma < 1:
+        raise ValueError("alpha must be in (0,1], beta in [0,2), and gamma >= 1")
+    if flow_mode not in FLOW_MODES:
+        raise ValueError(f"flow_mode must be one of {sorted(FLOW_MODES)}")
     rows = tuple(a for a in alerts if start_h <= a.arrival < end_h)
     ids = {a.alert_id for a in rows}
     for label, values in (("route", l2_route_by_alert), ("need", true_need_by_alert),
@@ -385,22 +412,30 @@ def realized_demand_regime(name: str, start_h: float, end_h: float, alerts: Sequ
     if any(not isfinite(float(difficulty_by_alert[x])) or not 0 <= float(difficulty_by_alert[x]) <= 1 for x in ids):
         raise ValueError("difficulty values must be in [0,1]")
     routes = true_need_by_alert if route_basis == "true_need" else l2_route_by_alert
-    incoming, routed, l1_factors, l2_factors = {}, {}, {}, {}
+    incoming, routed, l1_routed, l1_factors, l2_factors = {}, {}, {}, {}, {}
     for alert in rows:
         task_class = str(alert.task_class)
         incoming[task_class] = incoming.get(task_class, 0) + 1
         f_q = 1 + beta * (float(difficulty_by_alert[alert.alert_id]) - .5)
-        l1_factors.setdefault(task_class, []).append(f_q)
+        path_l2 = bool(routes[alert.alert_id])
+        if flow_mode == HISTORICAL_L1_THEN_L2 or not path_l2:
+            l1_routed[task_class] = l1_routed.get(task_class, 0) + 1
+            l1_m = (gamma if flow_mode == TRIAGE_SINGLE_INVESTIGATION and
+                    true_need_by_alert[alert.alert_id] and not path_l2 else 1.0)
+            l1_factors.setdefault(task_class, []).append(l1_m * f_q)
         if routes[alert.alert_id]:
             routed[task_class] = routed.get(task_class, 0) + 1
             m = 1.0 if true_need_by_alert[alert.alert_id] else alpha
             l2_factors.setdefault(task_class, []).append(m * f_q)
     duration = end_h - start_h
-    return DemandRegime(name, start_h, end_h,
-                        {k: count / duration for k, count in incoming.items()},
-                        {k: count / duration for k, count in routed.items()},
-                        {k: mean(values) for k, values in l2_factors.items()},
-                        {k: mean(values) for k, values in l1_factors.items()})
+    return DemandRegime(
+        name=name, start_h=start_h, end_h=end_h,
+        arrival_rate_by_class={k: count / duration for k, count in incoming.items()},
+        realized_l2_rate_by_class={k: count / duration for k, count in routed.items()},
+        realized_l2_service_factor_by_class={k: mean(values) for k, values in l2_factors.items()},
+        realized_l1_service_factor_by_class={k: mean(values) for k, values in l1_factors.items()},
+        realized_l1_rate_by_class={k: count / duration for k, count in l1_routed.items()},
+    )
 
 
 def assess_capacity(organization: OrganizationConfig, profile: CapacityDemandProfile) -> CapacityReport:
@@ -423,10 +458,14 @@ def assess_capacity(organization: OrganizationConfig, profile: CapacityDemandPro
     # independence model E[f]=1. Optional conditional means represent dependence.
     service_factor = {}
     route_probability = {}
+    l1_route_probability = {}
+    l1_service_factor = {}
     for k in classes:
         if profile.prevalence_by_class is None:
             route_probability[k] = 0.0
             service_factor[k] = 1.0
+            l1_route_probability[k] = 1.0
+            l1_service_factor[k] = 1.0
             continue
         pi = float(profile.prevalence_by_class[k])
         pd = float(profile.sensitivity_by_class[k])
@@ -441,26 +480,38 @@ def assess_capacity(organization: OrganizationConfig, profile: CapacityDemandPro
         ef_no_need = 1.0 + profile.beta * (mean_q_no_need - 0.5)
         numerator = pi * pd * ef_need + (1.0 - pi) * pfa * profile.alpha * ef_no_need
         service_factor[k] = numerator / p_route if p_route > 0 else 1.0
+        p_l1 = (1.0 - pi) * (1.0 - pfa) + pi * (1.0 - pd)
+        l1_route_probability[k] = 1.0 if profile.flow_mode == HISTORICAL_L1_THEN_L2 else p_l1
+        if profile.difficulty_mean_by_class_and_need is None:
+            mean_q_need = mean_q_no_need = 0.5
+        else:
+            mean_q_need, mean_q_no_need = map(float, profile.difficulty_mean_by_class_and_need[k])
+        ef_need = 1.0 + profile.beta * (mean_q_need - 0.5)
+        ef_no_need = 1.0 + profile.beta * (mean_q_no_need - 0.5)
+        if profile.flow_mode == HISTORICAL_L1_THEN_L2:
+            numerator_l1 = pi * ef_need + (1.0 - pi) * ef_no_need
+            denominator_l1 = 1.0
+        else:
+            # L1 receives TN and FN only; gamma scales FN investigation effort.
+            numerator_l1 = pi * (1.0 - pd) * profile.gamma * ef_need + (1.0 - pi) * (1.0 - pfa) * ef_no_need
+            denominator_l1 = p_l1
+        l1_service_factor[k] = numerator_l1 / denominator_l1 if denominator_l1 > 0 else 1.0
     results = []
     assumptions = ["Fluid LP; fractional assignment; one analyst-hour of work per available analyst-hour.",
                    "Expected L2 routing uses class-specific prevalence, sensitivity and false-positive rate.",
                    "Default difficulty factors have mean 1 (Beta(2,2), independent of need and recommendation).",
                    "A capacity ratio is pressure, not a stability or deadline guarantee."]
+    assumptions.append(f"L1 routing/service uses flow_mode={profile.flow_mode}; gamma={profile.gamma:g} for FN effort.")
     if profile.difficulty_mean_by_class_and_need is not None:
         assumptions[2] = "Difficulty dependence uses caller-supplied E[q|class,need/no-need]; recommendation is conditionally independent of difficulty within need strata."
     for regime in profile.regimes:
         incoming = {k: float(regime.arrival_rate_by_class.get(k, 0.0)) for k in classes}
-        rate1 = sum(incoming.values())
-        share1 = {k: incoming[k] / rate1 for k in classes} if rate1 else {k: 1.0 / len(classes) for k in classes}
-        l1_factor = {}
-        for k in classes:
-            if profile.difficulty_mean_by_class_and_need is None:
-                mean_q = 0.5
-            else:
-                pi = float(profile.prevalence_by_class[k]) if profile.prevalence_by_class else 0.5
-                q_need, q_no_need = profile.difficulty_mean_by_class_and_need[k]
-                mean_q = pi * float(q_need) + (1 - pi) * float(q_no_need)
-            l1_factor[k] = 1.0 + profile.beta * (mean_q - 0.5)
+        incoming_l1 = ({k: incoming[k] * l1_route_probability[k] for k in classes}
+                       if regime.realized_l1_rate_by_class is None else
+                       {k: float(regime.realized_l1_rate_by_class.get(k, 0.0)) for k in classes})
+        rate1 = sum(incoming_l1.values())
+        share1 = {k: incoming_l1[k] / rate1 for k in classes} if rate1 else {k: 1.0 / len(classes) for k in classes}
+        l1_factor = dict(l1_service_factor)
         if regime.realized_l1_service_factor_by_class is not None:
             l1_factor.update(regime.realized_l1_service_factor_by_class)
         class_service1 = {aid: {k: value * l1_factor[k] for k, value in m.items() if k in classes}
@@ -494,7 +545,7 @@ def assess_capacity(organization: OrganizationConfig, profile: CapacityDemandPro
                                  if rate1 else (None, ()))
         capacity2, _ = (capacity_or_unstaffed(l2, l2_service, share2)
                         if rate2 else (None, ()))
-        unstaffed1 = tuple(k for k in classes if incoming[k] > 0 and not any(k in r.analyst.eligible_classes for r in l1))
+        unstaffed1 = tuple(k for k in classes if incoming_l1[k] > 0 and not any(k in r.analyst.eligible_classes for r in l1))
         unstaffed2 = tuple(k for k in classes if incoming_l2[k] > 0 and not any(k in r.analyst.eligible_classes for r in l2))
         cap1 = float(capacity1["max_common_arrivals_per_h"]) if capacity1 else None
         cap2 = float(capacity2["max_common_arrivals_per_h"]) if capacity2 else None
@@ -508,14 +559,17 @@ def assess_capacity(organization: OrganizationConfig, profile: CapacityDemandPro
             return "structural_overload" if rho > 1.0 + 1e-9 else "capacity_sufficient_mean"
         # Offered hours use the same average-eligible service convention as the
         # existing Q1 workload audit; LP capacity remains the assignment test.
-        offered1 = sum(incoming[k] * mean([base_l1[r.analyst.analyst_id][k] for r in l1
+        offered1 = sum(incoming_l1[k] * mean([base_l1[r.analyst.analyst_id][k] for r in l1
                                           if k in r.analyst.eligible_classes]) * l1_factor[k]
                        for k in classes if any(k in r.analyst.eligible_classes for r in l1))
         offered2 = sum(incoming_l2[k] * mean([base_l2[r.analyst.analyst_id][k] for r in l2
                                              if k in r.analyst.eligible_classes]) * active_l2_factor[k]
                        for k in classes if incoming_l2[k] and any(k in r.analyst.eligible_classes for r in l2))
+        l1_basis = ("realized_trace" if regime.realized_l1_rate_by_class is not None else
+                    "expected_negative_route" if profile.flow_mode == TRIAGE_SINGLE_INVESTIGATION else
+                    "incoming_rate_by_class")
         results.extend((
-            RegimeCapacity(regime.name, regime.start_h, regime.end_h, "L1", cap1, rate1, rho1, status(rho1, unstaffed1), "incoming_rate_by_class",
+            RegimeCapacity(regime.name, regime.start_h, regime.end_h, "L1", cap1, rate1, rho1, status(rho1, unstaffed1), l1_basis,
                            unstaffed1, tuple(capacity1["fluid_utilization_at_capacity"]) if capacity1 else (),
                            tuple(aid for aid, utilization in capacity1["fluid_utilization_at_capacity"] if utilization >= 1 - 1e-8) if capacity1 else (),
                            offered1, 0.0),

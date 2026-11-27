@@ -1,27 +1,32 @@
 # External scenario configuration (JSON)
 
-> **Configuración no equivale a flujo organizativo:** el loader crea solicitudes de un nivel y no orquesta triaje ni ruta end-to-end. El nuevo orquestador está disponible en `triage_execution.py`, pero no está parametrizado por estos JSON ni conectado a un runner de escenarios. Para estado y decisiones vigentes, véase [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
+> **Frontera de versión:** los JSON históricos siguen construyendo solicitudes por nivel y sus ejecutores conservan el flujo anterior. El JSON V2 además declara el modo de triaje y puede ejecutarse por `run_scenario.py`. Para valores y diagnósticos vigentes, véase [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
 
 `scenario_loader.load_scenario(path)` reads a version 1 JSON scenario and
 returns a frozen `LoadedScenario` built on the existing `execution_api.py`
-types. It does not generate alerts, draw random numbers, import campaign
-runners, or change module configuration. The caller obtains `Alert` records from
-the explicitly referenced existing trace generator, then calls
-`scenario.request_for(level, alerts, ...)` and passes the result to
-`ContinuousBackend` or `CalendarBackend`.
+types. For legacy JSON the caller still supplies alerts to `request_for` and
+selects a backend. For V2, `generate_trace(seed)` adapts the existing
+`hls.ia_l1_l2_simulation.generate_alerts`; `triage_scenario_for(seed)` builds
+the input consumed by `triage_execution.py`. The one-episode runner is
+`python studies/soc_triage_hls_availability_robustness/run_scenario.py`.
 
 ## Top-level sections
 
 - `scenario_id`, `description`, `schema_version`: identity and schema (`1`).
-- `generation`: `generator.reference` currently accepts
-  `run_primary_campaign._primary_trace`; `classifier.reference` must be
+- `flow_mode`: optional `triage_single_investigation` or
+  `historical_l1_then_l2`; absent values default to the historical flow.
+- `generation`: `generator.reference` accepts
+  `run_primary_campaign._primary_trace` for legacy provenance or
+  `ia_l1_l2_simulation.generate_alerts` for the V2 seeded trace adapter;
+  `classifier.reference` must be
   `q1_primary_campaign.classifiers`, with a default and allowed historical
   classifier IDs; `prevalence.reference` must be
-  `q1_primary_campaign.prevalence.pi`. The loader reads operating point rates
-  and prevalence from the checked-in Q1 `primary_campaign.json`. `parameters`
-  holds scenario inputs such as `rho_L1` and `alpha`; these remain metadata for
-  the existing generator/experiment orchestration. `need_reference` describes
-  the synthetic hidden need and is never passed to dispatchers.
+  `q1_primary_campaign.prevalence.pi` or `demand_profile.prevalence_by_class`.
+  Q1 references resolve from the checked-in primary campaign JSON; V2 uses
+  synthetic class-conditional prevalence in its demand profile. Parameters
+  include alpha, beta, gamma and the existing difficulty-distribution shape.
+  `need_reference` describes the hidden reference and is never passed to
+  dispatchers.
 - `organization`: `analysts` declares each `id`, `level` (`L1` or `L2`),
   `eligible_classes`, competence values in `[0,1]`, positive `service_h` values,
   optional positive `forecast_service_h`, and an individual calendar. `teams`
@@ -56,8 +61,10 @@ leave, or absence model.
 
 ## Historical references and examples
 
-The loader resolves the three published classifier operating points and
-prevalence from `../soc_triage_hls_q1_integration_evidence/config/primary_campaign.json`.
+The loader resolves the three published classifier operating points from
+`../soc_triage_hls_q1_integration_evidence/config/primary_campaign.json`.
+Prevalence is Q1-referenced in legacy configurations and is an explicitly
+synthetic class-conditional input in V2.
 `config/HISTORICAL_REFERENCE.json` is an explicit resource snapshot for a
 representative six-L1/three-L2 historical roster and references the original
 generator/configuration provenance. It is a validation aid, not a replacement
@@ -79,18 +86,20 @@ request = scenario.request_for("L2", alerts, seed=920000, policy="WAPS",
 result = CalendarBackend().run(request)
 ```
 
-The caller must keep classifier recommendation generation, hidden need, and
-realized service in their existing roles. The loader does not execute a
-generator reference or infer missing alert deadlines. WAPS is validated but
-the existing backend remains responsible for policy execution.
+The legacy per-level `request_for` path does not execute a generator. For V2,
+the dedicated `generate_trace` adapter invokes only the recognized existing
+generator reference and `triage_scenario_for` keeps need, recommendation and
+difficulty sidecars separate from the dispatcher. WAPS remains implemented by
+the existing backend.
 
 ## Validation and limits
 
 Load-time checks cover schema version and references, analyst IDs/team
 membership, level consistency, eligibility/competence/service coherence,
 calendar windows, policy names and WAPS parameters, time horizons, deadlines,
-and seeds. Values are frozen after loading. The loader accepts only the listed
-historical generator/classifier/prevalence references; it does not load Python
-plugins or arbitrary modules. Alert generation and severity sidecars remain
-caller responsibilities. New policies, priority interruptions, reassignment,
-and early/late escalation are not implemented.
+and seeds. Values are frozen after loading. The loader accepts only listed
+generator/classifier/prevalence references; it does not load Python plugins or
+arbitrary modules. The existing generator adapter supports schedules it can
+represent (one rate shift or one bounded pulse plus recovery, fixed class mix).
+New policies, priority interruptions, reassignment, and early/late escalation
+are not implemented.

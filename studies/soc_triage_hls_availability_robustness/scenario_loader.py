@@ -1,14 +1,14 @@
-"""Optional JSON scenario loader for SOCTRA-HLS execution_api objects.
+"""JSON scenario loader and adapter to the existing seeded HLS generator.
 
-The loader resolves metadata and immutable resources only. Alert generation stays
-with the referenced historical generator; callers pass its Alert records to
-``LoadedScenario.request_for``. No campaign module is imported or mutated.
+Legacy scenarios still provide Alert records to ``request_for``. V2 can call
+``generate_trace`` and ``triage_scenario_for`` for one configured execution.
+No campaign module is imported or mutated.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
 import json
-from math import isfinite
+from math import isfinite, isclose
 from pathlib import Path
 from types import MappingProxyType
 from typing import Mapping
@@ -20,6 +20,9 @@ from studies.soc_triage_hls_availability_robustness.availability_engine import (
 from studies.soc_triage_hls_availability_robustness.execution_api import (
     AnalystResource, DeadlineConfig, EnvironmentRealization, OrganizationConfig,
     PolicyConfig, SimulationRequest, SimulationSettings, TeamConfig,
+)
+from studies.soc_triage_hls_availability_robustness.triage_execution import (
+    FLOW_MODES, HISTORICAL_L1_THEN_L2, TriageScenario,
 )
 
 
@@ -59,6 +62,7 @@ class LoadedScenario:
     organization_reference: str | None = None
     demand_profile: Mapping | None = None
     cost_model: Mapping | None = None
+    flow_mode: str = HISTORICAL_L1_THEN_L2
 
     def classifier_point(self, classifier_id: str | None = None) -> ClassifierOperatingPoint:
         selected = classifier_id or self.generation["classifier_default"]
@@ -66,6 +70,109 @@ class LoadedScenario:
             return self.generation["classifiers"][selected]
         except KeyError as exc:
             raise ScenarioConfigError(f"unknown configured classifier {selected!r}") from exc
+
+    def generate_trace(self, seed: int):
+        """Generate a seeded trace through the existing HLS alert generator."""
+        if self.generation["generator_reference"] != "ia_l1_l2_simulation.generate_alerts":
+            raise ScenarioConfigError("this scenario references a historical generator; no generic trace adapter is available")
+        from hls.ia_l1_l2_simulation import ScenarioConfig, generate_alerts
+
+        demand = self.demand_profile
+        if demand is None:
+            raise ScenarioConfigError("the configured generator requires demand_profile")
+        regimes = tuple(demand["regimes"])
+        horizon = self.settings.admission_horizon
+        if not regimes or regimes[0]["start_h"] != 0 or regimes[-1]["end_h"] != horizon:
+            raise ScenarioConfigError("demand regimes must cover [0, admission_horizon]")
+        if any(a["end_h"] != b["start_h"] for a, b in zip(regimes, regimes[1:])):
+            raise ScenarioConfigError("demand regimes must be contiguous for this generator")
+        classes = tuple(demand["class_mix"])
+        class_mix = tuple(float(demand["class_mix"][k]) for k in classes)
+        if not classes or any(not isfinite(x) or x < 0 for x in class_mix) or not isclose(sum(class_mix), 1.0, abs_tol=1e-9):
+            raise ScenarioConfigError("demand_profile.class_mix must be nonnegative and sum to one")
+        for name in ("prevalence_by_class", "sensitivity_by_class", "false_positive_rate_by_class"):
+            values = demand.get(name, {})
+            if set(values) != set(classes) or any(not isfinite(float(v)) or not 0 <= float(v) <= 1 for v in values.values()):
+                raise ScenarioConfigError(f"demand_profile.{name} must cover classes with probabilities in [0,1]")
+        severity_mix = demand.get("severity_mix", {})
+        if set(severity_mix) != {"low", "medium", "high"} or any(
+                not isfinite(float(v)) or float(v) < 0 for v in severity_mix.values()) or not isclose(
+                sum(float(v) for v in severity_mix.values()), 1.0, abs_tol=1e-9):
+            raise ScenarioConfigError("demand_profile.severity_mix must define low/medium/high and sum to one")
+        point = self.classifier_point()
+        if any(not isclose(float(demand["sensitivity_by_class"][k]), point.p_detection, abs_tol=1e-12) or
+               not isclose(float(demand["false_positive_rate_by_class"][k]), point.p_false_alarm, abs_tol=1e-12)
+               for k in classes):
+            raise ScenarioConfigError("demand classifier rates must match the selected classifier operating point")
+        rate_maps = [dict(r["arrival_rate_by_class"]) for r in regimes]
+        totals = [sum(row.values()) for row in rate_maps]
+        if any(set(row) != set(classes) or any(not isfinite(float(x)) or float(x) < 0 for x in row.values())
+               for row in rate_maps) or any(not isfinite(total) or total <= 0 for total in totals):
+            raise ScenarioConfigError("configured generator requires positive arrival rates in each regime")
+        for row, total in zip(rate_maps, totals):
+            if set(row) != set(classes) or any(abs(row[k] / total - demand["class_mix"][k]) > 1e-9 for k in classes):
+                raise ScenarioConfigError("existing generator requires a fixed class mix across demand regimes")
+
+        burst = shift_after = rate_after = None
+        if len(regimes) == 2:
+            shift_after, rate_after = regimes[1]["start_h"], totals[1]
+        elif len(regimes) == 3:
+            if totals[1] < totals[0]:
+                raise ScenarioConfigError("the middle regime must be a pulse at least as intense as baseline")
+            burst = (regimes[1]["start_h"], regimes[1]["end_h"], totals[1] / totals[0])
+            shift_after, rate_after = regimes[2]["start_h"], totals[2]
+        elif len(regimes) != 1:
+            raise ScenarioConfigError("existing generator supports one regime, one rate shift, or one pulse plus recovery")
+
+        params = self.generation["parameters"]
+        need = tuple(float(demand["prevalence_by_class"][k]) for k in classes)
+        severity_order = ("low", "medium", "high")
+        deadlines = self.settings.deadlines.offsets_by_severity_h
+        return generate_alerts(ScenarioConfig(
+            horizon=horizon, arrival_rate=totals[0], classes=classes,
+            class_probabilities=class_mix,
+            severity_probabilities=tuple(float(demand["severity_mix"][k]) for k in severity_order),
+            escalation_probability_by_class=need,
+            deadline_by_severity=tuple((k, float(deadlines[k])) for k in severity_order),
+            burst_window=burst, arrival_rate_shift_after=shift_after,
+            arrival_rate_after=rate_after,
+            ai_sensitivity=point.p_detection, ai_false_positive_rate=point.p_false_alarm,
+            difficulty_beta=tuple(params.get("difficulty_distribution_beta", (2.0, 2.0))),
+        ), int(seed))
+
+    def triage_scenario_for(self, seed: int, *, policy: str | None = None):
+        """Build the triage orchestration input and return it with its source trace."""
+        if self.flow_mode not in FLOW_MODES:
+            raise ScenarioConfigError(f"unsupported flow_mode {self.flow_mode!r}")
+        rows = self.generate_trace(seed)
+        params = self.generation["parameters"]
+        for key in ("alpha", "beta", "gamma"):
+            config_key = "difficulty_service_beta" if key == "beta" else key
+            if key in (self.demand_profile or {}) and not isclose(
+                    float(params.get(config_key, 1.0 if key in {"alpha", "gamma"} else 0.0)),
+                    float(self.demand_profile[key]), abs_tol=1e-12):
+                raise ScenarioConfigError(f"generation.parameters and demand_profile disagree on {key}")
+        policies = {}
+        for level in ("L1", "L2"):
+            spec = self.policies[level]
+            name = policy or spec["default"]
+            if name not in spec["available"]:
+                raise ScenarioConfigError(f"policy {name!r} is not available for {level}")
+            policies[level] = PolicyConfig(name, spec["waps"] if name == "WAPS" else None)
+        inputs = TriageScenario(
+            alerts=tuple(row.routed.alert for row in rows), organization=self.organization,
+            policies=policies,
+            settings=SimulationSettings(self.settings.admission_horizon,
+                self.settings.evaluation_horizon, int(seed), self.settings.time_scale,
+                self.settings.deadlines),
+            reference_escalation_by_alert={row.routed.alert.alert_id: bool(row.true_escalation_need) for row in rows},
+            recommendation_l2_by_alert={row.routed.alert.alert_id: bool(row.routed.soctra_recommendation) for row in rows},
+            difficulty_by_alert={row.routed.alert.alert_id: float(row.difficulty) for row in rows},
+            alpha=float(params.get("alpha", 1.0)),
+            difficulty_service_beta=float(params.get("difficulty_service_beta", 0.0)),
+            gamma=float(params.get("gamma", 1.0)),
+        )
+        return inputs, rows
 
     def request_for(self, level: str, alerts, *, seed: int | None = None,
                     policy: str | None = None, environment: EnvironmentRealization | None = None,
@@ -199,6 +306,9 @@ def load_scenario(path: str | Path) -> LoadedScenario:
     if not isinstance(scenario_id, str) or not scenario_id.strip():
         raise ScenarioConfigError("scenario_id must be a nonempty string")
     description = str(config.get("description", ""))
+    flow_mode = config.get("flow_mode", HISTORICAL_L1_THEN_L2)
+    if flow_mode not in FLOW_MODES:
+        raise ScenarioConfigError(f"flow_mode must be one of {sorted(FLOW_MODES)}")
 
     demand_profile = config.get("demand_profile")
     if demand_profile is not None:
@@ -209,18 +319,27 @@ def load_scenario(path: str | Path) -> LoadedScenario:
 
     gen = _object(config.get("generation"), "generation")
     generator = _object(gen.get("generator"), "generation.generator").get("reference")
-    if generator != "run_primary_campaign._primary_trace":
+    if generator not in {"run_primary_campaign._primary_trace",
+                         "ia_l1_l2_simulation.generate_alerts"}:
         raise ScenarioConfigError(f"unsupported generator reference {generator!r}")
     resolved = dict(_resolve_classifier_refs(gen))
     prevalence = _object(gen.get("prevalence"), "generation.prevalence")
-    if prevalence.get("reference") != "q1_primary_campaign.prevalence.pi":
-        raise ScenarioConfigError("generation.prevalence must reference the historical Q1 prevalence")
+    if prevalence.get("reference") not in {"q1_primary_campaign.prevalence.pi",
+                                             "demand_profile.prevalence_by_class"}:
+        raise ScenarioConfigError("unsupported generation.prevalence reference")
     historic = json.loads(_historical_campaign().read_text(encoding="utf-8"))
     resolved.update({"generator_reference": generator, "classifier_reference": "q1_primary_campaign.classifiers",
                      "prevalence_reference": prevalence["reference"],
                      "prevalence_pi": float(historic["prevalence"]["pi"]),
                      "need_reference": str(gen.get("need_reference", "synthetic_hidden_need")),
                      "deadline_mode": _object(config.get("deadlines"), "deadlines")})
+    if prevalence["reference"] == "demand_profile.prevalence_by_class":
+        if demand_profile is None:
+            raise ScenarioConfigError("synthetic prevalence reference requires demand_profile")
+        mix, by_class = demand_profile.get("class_mix", {}), demand_profile.get("prevalence_by_class", {})
+        if set(mix) != set(by_class):
+            raise ScenarioConfigError("class_mix and prevalence_by_class must have identical classes")
+        resolved["prevalence_pi"] = sum(float(mix[k]) * float(by_class[k]) for k in mix)
     params = _object(gen.get("parameters", {}), "generation.parameters")
     resolved["parameters"] = _freeze(params)
 
@@ -310,4 +429,4 @@ def load_scenario(path: str | Path) -> LoadedScenario:
         "absolute_by_alert": absolute_by_alert})
     return LoadedScenario(scenario_id, description, _freeze(resolved), organization,
         MappingProxyType(policies), settings, seed_count, seed_start, _freeze(experiment),
-        organization_cfg.get("resource_reference"), demand_profile, cost_model)
+        organization_cfg.get("resource_reference"), demand_profile, cost_model, flow_mode)

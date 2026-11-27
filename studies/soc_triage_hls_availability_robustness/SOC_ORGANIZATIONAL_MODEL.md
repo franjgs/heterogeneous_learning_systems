@@ -1,8 +1,8 @@
 # SOCTRA-HLS: modelo organizativo canónico
 
-**Perfil organizativo V1:** [configuración](config/SOC_REFERENCE_ORGANIZATION_V1.json). Sus tasas, costes y roster son hipótesis sintéticas, no datos observados. La configuración es diagnóstica y no está integrada en un runner end-to-end.
+**Escenario ejecutable vigente V2:** [configuración](config/SOC_REFERENCE_ORGANIZATION_V2.json), selecciona `triage_single_investigation` y se ejecuta con [`run_scenario.py`](run_scenario.py). Roster, servicios, prevalencia y demanda son hipótesis sintéticas, no datos operativos. V1 se conserva como perfil diagnóstico anterior.
 
-> **Modelo organizativo vigente (decisión científica):** una herramienta automática recomienda L1 o L2 al llegar cada alerta; su recomendación se acepta automáticamente y se ejecuta una única investigación en el nivel elegido. TP/FP/TN/FN se definen frente a la etiqueta histórica de escalado adoptada como referencia operativa, no frente a una verdad objetiva de especialización. La API explícita de este flujo ya está implementada en `triage_execution.py`; aún no se conecta al loader JSON ni sustituye los ejecutores/campañas históricos. Estos resultados describen versiones anteriores y se conservan sin reinterpretación; véanse sus avisos y la sección 15.
+> **Modelo organizativo vigente (decisión científica):** una herramienta automática recomienda L1 o L2 al llegar cada alerta; su recomendación se acepta automáticamente y se ejecuta una única investigación en el nivel elegido. TP/FP/TN/FN se definen frente a la etiqueta histórica de escalado adoptada como referencia operativa, no frente a una verdad objetiva de especialización. La configuración V2 y `run_scenario.py` ya conectan este flujo a JSON, el generador existente y el backend de calendarios; los ejecutores/campañas históricos conservan su flujo anterior. Véase la sección 16 para estado y límites.
 
 ## 1. Objetivo y alcance
 
@@ -200,29 +200,185 @@ No hay evidencia salarial/coste empresarial. Coste normalizado configurable por 
 | Coste relativo 1.8 | distinguir coste horario sin inventar salarios | coste de ocupado solamente |
 | Demanda como metadato diagnóstico | evitar fingir que JSON ya la genera | generador paralelo o cambio de campañas |
 
-## 13. Compatibilidad y alcance de conclusiones
+## 13. Escenario organizativo ejecutable V2
 
-Nueva configuración: config/SOC_REFERENCE_ORGANIZATION_V1.json. No cambia HISTORICAL_REFERENCE.json, SYNTHETIC_SOC_24x7.json, SYNTHETIC_SOC_MIXED_SHIFTS.json, motores, algoritmos, clasificadores, resultados o manuscritos. Servicios históricos y deadlines históricos quedan intactos; beta predeterminado sigue cero. El cargador expone metadatos demand_profile y cost_model, pero no los introduce en SimulationRequest.
+V2 es una configuración central fija para ejecuciones técnicas y futuras
+investigaciones. No sustituye ni reescribe V1, las configuraciones históricas,
+los resultados publicados ni los runners de campañas. Se carga y ejecuta con:
 
-**Propiedades matemáticas:** normalización E[f]=1 bajo Beta(2,2); mínimos de servicio y LP condicionado a entradas. **Hipótesis:** roster, competencias, eficiencia, Beta, prevalence, tasas, mezcla, alpha, coste y ausencia DST. **Calculado:** capacidad fluida y factibilidad calendarizada discretizada. No se ejecutaron campañas.
+```sh
+python studies/soc_triage_hls_availability_robustness/run_scenario.py --config studies/soc_triage_hls_availability_robustness/config/SOC_REFERENCE_ORGANIZATION_V2.json --seed 998001
+```
 
-Por ejemplo, una alerta alta que llega sábado 23:45 tiene deadline domingo 00:45; su trabajo activo mínimo cabe en el plazo, pero la finalización más temprana L1→L2 con estos turnos es lunes 09:17 (calendar slack −32.535 h). No se puede concluir estabilidad general, SLA real, costes reales, superioridad de política ni mejoras de rendimiento. Se necesitarían datos operativos representativos y experimentos futuros preespecificados. La configuración de demanda no autoriza ni inicia campaña.
+El JSON declara `flow_mode: triage_single_investigation`. `scenario_loader`
+construye la entrada de `triage_execution.py`; el runner llama al
+`CalendarBackend` existente. Se puede seleccionar explícitamente el modo
+histórico mediante `--flow-mode historical_l1_then_l2`. Los ejecutores antiguos
+no leen este selector y mantienen su comportamiento y configuración históricos.
+El modo de una investigación también acepta una política explícita con
+`--policy`, pero una ejecución individual no es una comparación de políticas.
 
-## 14. Archivos y referencias del perfil V1
+### Generación reproducible y supuestos
 
-- JSON: config/SOC_REFERENCE_ORGANIZATION_V1.json.
+V2 reutiliza `src/hls/ia_l1_l2_simulation.py::generate_alerts`; no incorpora un
+segundo generador. El adaptador traduce los tres regímenes contiguos con mezcla
+fija a las primitivas existentes: tasa Poisson base, pulso acotado y tasa de
+recuperación posterior. El generador produce clase, severidad, dificultad
+Beta(2,2), referencia oculta de escalado y recomendación Bernoulli. Se fija el
+seed en la configuración y cada ejecución también acepta `--seed`. El adaptador
+rechaza perfiles con mezcla cambiante o regímenes que las primitivas existentes
+no pueden representar, en lugar de aproximarlos silenciosamente.
+
+Todos los valores siguientes de llegada, mezcla y prevalencia son hipótesis
+sintéticas. La mezcla por clase `(top5,next5,tail)` es `(0.50,0.30,0.20)`; la
+mezcla por severidad `(alta,media,baja)` es `(0.20,0.30,0.50)`. Las tasas son
+alertas por hora natural:
+
+| Régimen | Intervalo h desde lunes 00:00 | Top5 | Next5 | Tail | Total |
+|---|---:|---:|---:|---:|---:|
+| Habitual | [0,120) | 1.25 | 0.75 | 0.50 | 2.50 |
+| Pulso | [120,144) | 3.00 | 1.80 | 1.20 | 6.00 |
+| Recuperación | [144,168) | 0.75 | 0.45 | 0.30 | 1.50 |
+
+La referencia sintética oculta de escalado tiene prevalencia 0.10 por clase;
+no se sustituye por la prevalencia SOCTRA del conjunto Q1 ni representa una
+verdad objetiva de especialización. Las recomendaciones se generan con
+`pD=0.8421`, `pFA=0.045` del punto LightGBM APC simétrico documentado en Q1.
+Aplicar esas tasas como sorteos Bernoulli a esta prevalencia sintética no
+equivale a ejecutar el clasificador sobre cada alerta ni valida su calibración
+en un SOC. La dificultad Beta(2,2) es independiente de clase y referencia.
+Parámetros de V2: `beta=0`, `alpha=0.50`, `gamma=1.0`; la recomendación se
+acepta siempre (100%, regla fija y no un parámetro). La necesidad etiquetada
+sirve como referencia operativa sintética, no como verdad empírica.
+
+### Servicios y equipo
+
+Los servicios representan únicamente investigación de la única etapa asignada;
+no incluyen triaje automático. Servicio nominal base en horas de trabajo:
+
+| Clase | Base L1 | Base L2 | Interpretación sintética |
+|---|---:|---:|---|
+| Top5 | 0.25 h | 0.18 h | L2 puede ser más rápido en esta especialidad |
+| Next5 | 0.30 h | 0.25 h | L2 puede ser más rápido en esta especialidad |
+| Tail | 0.40 h | 0.55 h | L2 no es universalmente más rápido |
+
+El servicio individual es `base(level,class) × u(analista,class)`; V2 conserva
+los factores heterogéneos u de V1. El forecast L1 coincide con ese nominal
+(beta=0, gamma=1). Para una recomendación positiva, el forecast L2 aplica el
+factor ex ante
+`E[m | recomendado L2] = [pi*pD + (1-pi)*pFA*alpha] / [pi*pD + (1-pi)*pFA]`
+con `pi=0.10`, `pD=0.8421`, `pFA=0.045`, `alpha=0.50`, que da **0.837623**.
+Así incorpora el promedio esperado de TP/FP sin revelar la etiqueta ni el
+tiempo realizado de una alerta. Los servicios V2 son hipótesis centrales para
+que el trabajo activo mínimo
+quepa en deadlines sintéticos y las colas/calendarios puedan causar tardanza;
+no son mediciones. L2-01 es elegible para Top5/Next5, L2-02 para Next5/Tail y
+L2-03 para Top5/Tail. Cada uno tiene competencia elevada en sus focos y no hay
+dominancia individual universal.
+
+L1 conserva cinco calendarios rotatorios que cubren las 168 horas semanales con
+exactamente un profesional disponible en cada intervalo; cada persona tiene
+32–40 horas programadas. L2 conserva tres especialistas con 40 horas cada uno,
+lunes a viernes 09:00–17:00. Son 120 horas-persona L2 contratadas por semana,
+pero solo 40 horas naturales cubiertas; no hay guardias. Gamma se mantiene
+neutro porque no hay evidencia para justificar un valor mayor que uno.
+Deadlines: alta 1 h, media 4 h, baja 12 h naturales. Admisión: 168 h; corte de
+evaluación: 336 h. Alpha afecta solo FP recomendados a L2; gamma solo FN
+enrutados a L1; beta ajusta servicio efectivo por dificultad. Ningún factor
+detiene ni reinicia el SLA.
+
+### Capacidad y factibilidad V2
+
+`analyze_reference_organization.py` reutiliza el LP de capacidad asignable con
+elegibilidad, servicios individuales y fracciones de calendario, enroutando
+ex ante negativos a L1 y positivos a L2. L1 recibe TN/FN; L2 recibe TP/FP. Con
+beta cero, el factor esperado de dificultad es uno. El LP es una cota fluida
+por régimen, no simula colas ni disponibilidad en instantes concretos:
+
+| Régimen | Nivel | Capacidad asignable alertas/h naturales | Tasa ofrecida alertas/h | Carga relativa | Trabajo ofrecido h-persona/h | Diagnóstico |
+|---|---|---:|---:|---:|---:|---|
+| Habitual | L1 | 3.424 | 2.188 | 0.639 | 0.646 | Capacidad media suficiente |
+| Habitual | L2 | 3.106 | 0.312 | 0.100 | 0.072 | Capacidad media suficiente |
+| Pulso | L1 | 3.424 | 5.252 | 1.534 | 1.549 | Sobrecarga estructural del régimen |
+| Pulso | L2 | 3.106 | 0.748 | 0.241 | 0.173 | Capacidad media suficiente |
+| Recuperación | L1 | 3.424 | 1.313 | 0.383 | 0.387 | Capacidad media suficiente; margen para drenar |
+| Recuperación | L2 | 3.106 | 0.187 | 0.060 | 0.043 | Capacidad media suficiente |
+
+El pulso genera presión superior a la capacidad media de L1; la recuperación
+ofrece margen medio para reducir cola. Las cargas no se igualan entre niveles.
+La carga L2 media oculta que el equipo no opera por la noche ni fin de semana:
+solo hay cobertura 40 horas naturales. Una integración determinista de 15
+minutos estima **47.39 recomendaciones L2 y 10.94 horas de trabajo especializado
+ofrecidas fuera de cobertura por semana** (24.94 alertas/5.76 h en habitual,
+17.96/4.14 h en el pulso, 4.49/1.04 h en recuperación). Son llegadas/trabajo
+acumulables antes de reabrir, no una cola simulada ni una espera individual.
+
+La viabilidad temporal enumera puntos medios cada 15 minutos de la semana y
+pondera clase, severidad y los cuatro resultados de clasificación. Evalúa rutas
+directas: TP L2, FP alpha-L2, TN L1 y FN gamma-L1, sin colas y con dificultad
+media 0.5:
+
+- Inviabilidad por servicio activo mínimo: **0.00%** en esta enumeración.
+- Inviabilidad calendarizada ponderada sobre todas las alertas: **6.92%**.
+- Entre las rutas a L2, **55.47%** es inviable por calendario; principalmente
+  por llegadas fuera de 8×5 con SLA corto.
+
+Son resultados diagnósticos del perfil sintético, no garantías de SLA. La
+factibilidad sin cola es necesaria, no suficiente; la enumeración calendarizada
+representa una mejor asignación individual, no despacho ni congestión. No se
+ajustan deadlines para evitar los incumplimientos fuera del horario L2.
+
+### Coste y ejecución técnica reproducible
+
+Se mantienen costes horarios normalizados L1=1.0 y L2=1.8 unidades por hora
+programada, como razón hipotética no salarial. Con la plantilla y turnos V2,
+el coste semanal es **168 unidades L1**, **216 L2**, **384 en total**. Es coste
+contratado/programado, no coste de horas ocupadas ni dato de nómina.
+
+Una ejecución técnica con seed `998001`, configuración D1 individual y
+`CalendarBackend` generó **476** alertas: TP=35, FP=28, TN=405, FN=8; 413 se
+enrutaron a L1 y 63 a L2. Las 476 recibieron una investigación; 335 finalizaron
+dentro de SLA, 141 tarde y 0 quedaron pendientes al corte 336 h. Es una prueba
+técnica reproducible, no una campaña, estimación científica ni comparación
+D1/P1/WAPS. No atribuye mejoras a ninguna política.
+
+## 14. Compatibilidad y alcance de conclusiones
+
+La configuración V1, las configuraciones históricas, los ejecutores de campaña,
+los motores, algoritmos, clasificadores, resultados y manuscritos permanecen
+intactos. V2 conecta generación, flujo y backend para una ejecución
+reproducible individual. Los JSON históricos sin `flow_mode` cargan
+`historical_l1_then_l2`; los ejecutores existentes no se redirigen a V2.
+
+**Propiedades matemáticas:** normalización E[f]=1 bajo Beta(2,2); mínimos de
+servicio y LP condicionado a entradas. **Hipótesis:** roster, competencias,
+eficiencia, Beta, prevalencia, tasas, mezcla, alpha, coste y ausencia DST.
+**Calculado:** capacidad fluida y factibilidad calendarizada discretizada para
+V1 y V2. Se ejecutó una sola integración técnica V2; no hubo campaña.
+
+V2 refleja que una alerta L2 fuera de turno puede incumplir un SLA corto aunque
+su servicio activo quepa en el plazo. No se puede concluir estabilidad general,
+SLA real, costes reales, superioridad de política ni mejoras de rendimiento.
+Se necesitarían datos operativos representativos y experimentos futuros
+preespecificados.
+
+## 15. Archivos y referencias
+
+- JSON vigente: config/SOC_REFERENCE_ORGANIZATION_V2.json.
+- JSON diagnóstico anterior: config/SOC_REFERENCE_ORGANIZATION_V1.json.
+- Ejecución técnica: run_scenario.py --seed 998001.
 - Diagnóstico: analyze_reference_organization.py.
 - Interfaces: scenario_loader.py, execution_api.py, triage_execution.py, availability_engine.py; usage in EXECUTION_API.md.
 - Viabilidad/capacidad: scenario_diagnostics.py y SCENARIO_FEASIBILITY_DIAGNOSTICS.md; LP en studies/soc_human_ai_organization/calibrate_a1_scenarios.py::effective_capacity.
 - Servicio: SERVICE_TIME_DIFFICULTY_MODEL.md.
-- Tests: tests/test_scenario_loader.py, tests/test_scenario_diagnostics.py, tests/test_execution_api.py, tests/test_triage_execution.py.
+- Tests: tests/test_scenario_loader.py, tests/test_scenario_diagnostics.py, tests/test_execution_api.py, tests/test_triage_execution.py, tests/test_scenario_integration.py.
 - Evidencia previa: studies/soc_human_ai_organization/ y studies/soc_triage_hls_q1_integration_evidence/.
 - Métricas históricas: [auditoría final Q1](../soc_triage_hls_q1_integration_evidence/AUDIT_FINAL.md) y [comparación organizativa](../soc_human_ai_organization/SOC_POLICY_COMPARISON_RESULTS.md) preservan definiciones/denominadores de R/N propios de esos estudios.
 - Índices: README raíz y README de estudio enlazan este documento. LaTeX no se modifica.
 
 Pendiente: (1) roster real con descansos, ausencias, festivos y relevos; (2) servicio medido por nivel/clase y asociación duración-calidad; (3) llegadas, mezcla y pulsos observados; (4) prevalence/need y errores clasificador por clase/dificultad; (5) costes autorizados para reemplazar 1.8; (6) horizonte de medición que no convierta tardanza en cumplimiento; (7) decidir si el calendario semanal abstracto requiere zona horaria, DST y fechas reales.
 
-## 15. Estado de implementación, decisiones y cuestiones abiertas
+## 16. Estado de implementación, decisiones y cuestiones abiertas
 
 ### Modelo vigente acordado frente al código
 
@@ -230,22 +386,19 @@ Pendiente: (1) roster real con descansos, ausencias, festivos y relevos; (2) ser
 |---|---|---|
 | Fuente de referencia para TP/FP/TN/FN | Etiqueta histórica de escalado SOCTRA adoptada como referencia operativa, no verdad objetiva de especialización | Existen etiquetas sintéticas ocultas para necesidad/ruta en campañas anteriores; su semántica no debe elevarse a verdad empírica |
 | Triaje principal | Automático, latencia despreciable, recomendación aceptada en 100% | `triage_execution.py` recibe las recomendaciones ya generadas y acepta la ruta; no simula latencia de clasificador |
-| Ruta | TP/FP van directamente a investigación L2; TN/FN a investigación L1 | Implementado en `triage_single_investigation`; no conectado todavía al loader/runner de campañas. El ejecutor histórico conserva L1 antes de L2 |
-| Número de investigaciones | Una investigación por alerta en el nivel recomendado | API nueva inicia una etapa por alerta; API histórica conserva dos etapas para positivas |
+| Generación de V2 | Demanda temporal y mezcla declaradas en JSON, semilla fija | `scenario_loader.generate_trace` reutiliza `ia_l1_l2_simulation.generate_alerts`; traduce la mezcla/régimen V2 a rate base, pulso y recuperación |
+| Ruta | TP/FP van directamente a investigación L2; TN/FN a investigación L1 | JSON y `run_scenario.py` integrados con `triage_execution`; los runners históricos conservan L1 antes de L2 |
+| Número de investigaciones | Una investigación por alerta en el nivel recomendado | V2 ejecutable asigna una etapa; el modo histórico preserva las etapas antiguas |
 | FP L2 | Investigación no necesariamente trivial; factor alpha modula el esfuerzo | alpha ambiental se aplica en ambos modos; políticas solo ven forecast, nunca etiqueta o escala efectiva |
 | FN L1 | Esfuerzo gamma≥1, gamma=1 neutro, no fijar aún gamma>1 | `gamma` está implementado en API nueva con default 1; no se aplica al flujo histórico |
-| SLA | Deadline absoluto y tiempo natural; finalización puntual, tardía o pendiente al corte | API nueva clasifica los tres estados sin borrar trabajo; métricas agregadas históricas y límites de corte siguen siendo propios de cada runner |
+| SLA | Deadline absoluto y tiempo natural; finalización puntual, tardía o pendiente al corte | API clasifica los tres estados; nuevo runner los agrega; métricas históricas conservan sus definiciones |
 | Calidad | Proxy separado; no exactitud validada | Competencia/proxies existen, pero no hay outcome adjudicado de resolución correcta |
 | Turnos | L1 cobertura por roster individual 24x7; L2 lunes-viernes 09–17 | Calendarios existen; runner de disponibilidad ha usado L1 continuo en las campañas descritas. Relevo L1 no está modelado |
 
-La configuración `SOC_REFERENCE_ORGANIZATION_V1.json`, sus servicios,
-alpha=0.50, plantilla, demanda y porcentajes diagnósticos fueron construidos
-para análisis anterior y no están integrados a un runner completo con la ruta
-TP/FP/TN/FN aquí adoptada. No son defaults vigentes ni dimensionamiento
-validado del modelo actualizado. Antes de usar el modo nuevo en campañas habrá
-que integrar este perfil con la ruta y recalcular holguras y carga; no reutilizar
-sin revisión sus resultados de capacidad/calendario como si fueran del nuevo
-flujo.
+V1 y sus resultados diagnósticos permanecen como perfil anterior; no deben
+interpretarse como características de V2. V2 es el escenario ejecutable
+recomendado para nuevas pruebas técnicas. Sus parámetros siguen siendo
+sintéticos y deberán revisarse antes de preespecificar campañas.
 
 ### Qué está implementado, qué falta y qué se excluye
 
@@ -256,18 +409,21 @@ ocultas; colas/calendarios/suspensión; deadline natural; métricas de estado,
 trabajo y SLA en runners existentes. `triage_execution.py` los orquesta ya en
 modo nuevo o histórico usando los dos backends existentes.
 
-**Implementado como API explícita, pendiente de integración de escenarios:**
+**Integrado para ejecución técnica por escenario:**
 `triage_execution.run_triage_flow(..., flow_mode="triage_single_investigation")`
 envía las alertas recomendadas directamente a la cola de su único nivel de
 investigación y compone alpha, beta y gamma como escalas ambientales. La misma
 API mantiene `flow_mode="historical_l1_then_l2"` para reproducir la ruta
-anterior. El loader JSON y los runners/campañas no seleccionan todavía el nuevo
-modo; el flujo histórico sigue siendo el suyo por defecto. Los dispatchers
+anterior. El loader JSON y `run_scenario.py` conectan el modo nuevo al generador
+existente y al backend de calendario. Los ejecutores de campañas anteriores
+conservan su flujo histórico. Los dispatchers
 reciben forecasts y metadatos públicos, no etiqueta de referencia, confusión,
 necesidad oculta, q realizada ni multiplicadores efectivos. Ninguna política
-ni motor fue reescrito. Falta añadir selección declarativa en JSON y conectarla
-a un ejecutor de escenario; los forecasts ajustados por mezcla esperada de
-alpha/gamma deben declararse ex ante y nunca usar labels individuales.
+ni motor fue reescrito. Falta integrar el selector en futuros runners de
+campaña. El forecast L2 V2 ya se ajusta con la mezcla TP/FP ex ante. Si un
+estudio cambia alpha, gamma, beta o las dependencias entre dificultad y
+referencia, debe recalcular y declarar el forecast agregado antes de ejecutar;
+nunca debe usar labels individuales.
 
 **Descartado del estudio principal:** decisión humana de contradecir la
 recomendación, escalado tardío, reintento, reapertura, retorno L2→L1 y múltiples
@@ -275,12 +431,12 @@ etapas. El triaje humano queda como extensión distinta con tiempo propio previo
 a la investigación.
 
 **Validación focalizada:** `pytest -q studies/soc_triage_hls_availability_robustness/tests`
-aprobó 85 pruebas unitarias en este estado. Cubren ambos modos, rutas TP/FP/TN/FN,
-alpha/beta/gamma, aislamiento de etiquetas, estados SLA, calendarios, suspensión,
-deadline original, selección histórica y que el orquestador no crea generadores
-aleatorios adicionales.
-No se ejecutaron campañas ni la regresión masiva; las pruebas funcionales no
-constituyen una comparación contra todos los resultados históricos.
+aprobó 90 pruebas. Cubren ambos modos, rutas TP/FP/TN/FN, alpha/beta/gamma,
+aislamiento de etiquetas, estados SLA, calendarios, suspensión, deadline,
+generación JSON reproducible, capacidad y viabilidad de ruta única, selección
+histórica y ausencia de streams aleatorios añadidos por el orquestador. Una
+ejecución V2 fija verificó integración end-to-end. No se ejecutaron campañas ni
+la regresión masiva y no se compararon todos los resultados históricos bit a bit.
 
 ### Decisiones consolidadas
 
@@ -302,8 +458,8 @@ constituyen una comparación contra todos los resultados históricos.
 
 ### Decisiones todavía abiertas
 
-1. Valor/escenarios de gamma y evidencia que lo sustente; mantener gamma=1
-   como control neutro.
+1. Evidencia para beta distinto de cero o gamma mayor que uno; V2 conserva
+   beta=0 y gamma=1 como referencia neutra.
 2. Relevo de trabajo L1 entre profesionales al cerrar turno; la continuidad
    actual de propiedad no debe confundirse con cobertura del equipo.
 3. Calibración del coste relativo, los perfiles de servicio/competencia y la

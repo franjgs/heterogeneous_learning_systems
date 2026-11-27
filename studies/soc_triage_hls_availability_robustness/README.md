@@ -1,15 +1,22 @@
 # SOCTRA–HLS availability robustness
 
-> **Estado conceptual:** las campañas y sus informes de este directorio usan el flujo histórico de servicio L1 seguido de L2 para recomendaciones positivas. La API nueva de triaje e investigación única existe en `triage_execution.py`, pero aún no está conectada a JSON ni ejecutores de campañas; resultados antiguos no se presentan como resultados de ese flujo. La fuente de verdad es [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
+> **Estado de versiones:** las campañas e informes existentes conservan el flujo histórico L1→L2 y sus resultados no se reinterpretan. La configuración V2 selecciona el flujo de investigación única desde JSON y se ejecuta mediante `run_scenario.py`. La fuente de verdad es el [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
 
 An isolated synthetic study of how weekly L2 analyst availability changes deadline-based outcomes in SOCTRA-assisted triage. It does not reproduce the GMV-CERT SOC or claim operational service levels. It does not modify SOCTRA, D1/P1/WAPS, historical experiments or the LaTeX manuscript.
 
-The canonical organizational decisions, SLA rule, versioned proposed roster, synthetic demand assumptions, costs and policy-independent diagnostics are consolidated in [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md). The proposed V1 JSON and diagnostic-only calculation are `config/SOC_REFERENCE_ORGANIZATION_V1.json` and `analyze_reference_organization.py`; they do not launch a campaign or replace the historic arrival generator.
+The canonical organizational decisions, SLA rule, executable V2 roster, synthetic demand assumptions, costs and policy-independent diagnostics are consolidated in [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md). V1 remains a historical diagnostic profile. V2 uses the existing alert generator and can be run once with a fixed seed:
+
+```sh
+python studies/soc_triage_hls_availability_robustness/run_scenario.py --seed 998001
+```
+
+This is a technical execution, not a policy comparison or campaign. `analyze_reference_organization.py` calculates ex-ante capacity and temporal feasibility only.
 
 ## What is included
 
 - `availability_engine.py`: configurable weekly analyst calendars and persistent suspend/resume service.
 - `execution_api.py` and `EXECUTION_API.md`: immutable scenario/resource records and continuous/calendar backend adapters.
+- `triage_execution.py`, `scenario_loader.py`, `run_scenario.py`: explicit flow selection, JSON-to-trace integration and one seeded scenario execution.
 - `scenario_diagnostics.py` and `SCENARIO_FEASIBILITY_DIAGNOSTICS.md`: policy-independent deadline, class-constrained capacity and sampled queue-recovery diagnostics.
 - `run_full_regression.py`: full comparison against the frozen Q1 integration reference.
 - `run_availability_campaign.py`: paired integrated SOCTRA→L1→L2 campaign.

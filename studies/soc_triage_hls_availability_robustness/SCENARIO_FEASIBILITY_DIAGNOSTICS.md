@@ -1,6 +1,6 @@
 # Diagnósticos de deadlines y capacidad
 
-> **Alcance de versión:** las interfaces son diagnósticos externos reutilizables, pero algunos ejemplos/rutas implementadas reflejan el flujo anterior L1→L2. Para interpretar rutas, TP/FP/TN/FN, SLA y el modelo vigente, consultar [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md). La factibilidad y capacidad V1 no se deben trasladar al flujo nuevo sin recalcular entradas.
+> **Alcance de versión:** los ejemplos iniciales reflejan el flujo anterior L1→L2. `assess_deadline_feasibility` y `assess_capacity` admiten ahora el modo directo de investigación única, gamma para FN y flujos L1/L2 separados. Para parámetros V2, resultados y supuestos consultar [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md); los diagnósticos V1 no se trasladan al flujo nuevo.
 
 ## Alcance
 

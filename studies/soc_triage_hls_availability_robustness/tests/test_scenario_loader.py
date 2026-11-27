@@ -73,6 +73,34 @@ def test_reference_organization_has_continuous_l1_roster_fixed_l2_8x5_and_cost_m
     assert scenario.generation["parameters"]["difficulty_service_beta"] == 0
 
 
+def test_v2_json_generates_seeded_trace_and_builds_configured_single_investigation_flow():
+    scenario = load_scenario(CONFIG / "SOC_REFERENCE_ORGANIZATION_V2.json")
+    assert scenario.flow_mode == "triage_single_investigation"
+    assert scenario.generation["prevalence_pi"] == pytest.approx(.1)
+    first = scenario.generate_trace(998001)
+    again = scenario.generate_trace(998001)
+    assert first == again
+    assert len(first) == 476
+    triage, source_rows = scenario.triage_scenario_for(998001)
+    assert source_rows == first
+    assert triage.alpha == .5 and triage.difficulty_service_beta == 0 and triage.gamma == 1
+    l2_factor = (.1 * .8421 + (1 - .1) * .045 * .5) / (.1 * .8421 + (1 - .1) * .045)
+    for resource in scenario.organization.resources_for("L2"):
+        for task_class, actual in resource.service_by_class.items():
+            assert resource.forecast_service_by_class[task_class] == pytest.approx(actual * l2_factor)
+    assert triage.recommendation_l2_by_alert == {
+        row.routed.alert.alert_id: row.routed.soctra_recommendation for row in first
+    }
+    assert triage.reference_escalation_by_alert == {
+        row.routed.alert.alert_id: row.true_escalation_need for row in first
+    }
+
+
+def test_historical_scenario_json_defaults_to_legacy_flow_selector():
+    scenario = load_scenario(CONFIG / "HISTORICAL_REFERENCE.json")
+    assert scenario.flow_mode == "historical_l1_then_l2"
+
+
 def test_reference_organization_keeps_natural_deadline_when_route_is_l2():
     scenario = load_scenario(CONFIG / "SOC_REFERENCE_ORGANIZATION_V1.json")
     alert = Alert("saturday-night", 143.75, "portfolio_top5", 999.0)
