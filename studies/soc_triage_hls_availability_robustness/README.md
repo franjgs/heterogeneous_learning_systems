@@ -6,6 +6,7 @@ An isolated synthetic study of how weekly L2 analyst availability changes deadli
 
 - `availability_engine.py`: configurable weekly analyst calendars and persistent suspend/resume service.
 - `execution_api.py` and `EXECUTION_API.md`: immutable scenario/resource records and continuous/calendar backend adapters.
+- `scenario_diagnostics.py` and `SCENARIO_FEASIBILITY_DIAGNOSTICS.md`: policy-independent deadline, class-constrained capacity and sampled queue-recovery diagnostics.
 - `run_full_regression.py`: full comparison against the frozen Q1 integration reference.
 - `run_availability_campaign.py`: paired integrated SOCTRA→L1→L2 campaign.
 - `merge_campaign_shards.py`: seed-block pairing checks, summaries and bootstrap contrasts.

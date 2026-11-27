@@ -15,6 +15,7 @@ from pathlib import Path
 import statistics
 import sys
 import time
+from collections.abc import Mapping
 
 from scipy.optimize import linprog
 from scipy.stats import t as student_t
@@ -113,9 +114,22 @@ def build_team(*, eligibility_level: float = BASE_ELIGIBILITY,
     return l1, l2, l1_service, l2_service
 
 
-def effective_capacity(analysts, service_by_analyst_class, class_shares) -> dict:
-    """Fluid LP: maximize common arrival rate subject to unit capacity per analyst."""
-    classes = tuple(PROJECTS)
+def effective_capacity(analysts, service_by_analyst_class, class_shares, *,
+                       classes=None, capacity_by_analyst=None) -> dict:
+    """Fluid LP: maximize arrival rate under class mix, eligibility and staff time.
+
+    The historical three-argument interface retains its original SOC classes and
+    one service-hour per analyst-hour. Generic diagnostics may supply another
+    class vocabulary and available fractions (for example, a weekly calendar).
+    """
+    classes = tuple(PROJECTS if classes is None else classes)
+    if isinstance(class_shares, Mapping):
+        shares = tuple(float(class_shares[task_class]) for task_class in classes)
+    else:
+        shares = tuple(float(value) for value in class_shares)
+        if len(shares) != len(classes):
+            raise ValueError("class_shares length must match classes")
+    capacities_by_analyst = capacity_by_analyst or {}
     eligible_edges = [
         (i, k) for i, analyst in enumerate(analysts)
         for k, task_class in enumerate(classes)
@@ -124,7 +138,7 @@ def effective_capacity(analysts, service_by_analyst_class, class_shares) -> dict
     n_edges = len(eligible_edges)
     objective = [0.0] * n_edges + [-1.0]
     equalities, targets = [], []
-    for k, share in enumerate(class_shares):
+    for k, share in enumerate(shares):
         equalities.append([float(kk == k) for _, kk in eligible_edges] + [-share])
         targets.append(0.0)
     capacities, limits = [], []
@@ -133,7 +147,10 @@ def effective_capacity(analysts, service_by_analyst_class, class_shares) -> dict
             service_by_analyst_class[analyst.analyst_id][classes[k]] if ii == i else 0.0
             for ii, k in eligible_edges
         ] + [0.0])
-        limits.append(1.0)
+        capacity = float(capacities_by_analyst.get(analyst.analyst_id, 1.0))
+        if not math.isfinite(capacity) or capacity < 0:
+            raise ValueError("capacity_by_analyst values must be finite and nonnegative")
+        limits.append(capacity)
     solution = linprog(
         objective, A_ub=capacities, b_ub=limits,
         A_eq=equalities, b_eq=targets,
@@ -148,8 +165,9 @@ def effective_capacity(analysts, service_by_analyst_class, class_shares) -> dict
             solution.x[e] * service_by_analyst_class[analyst.analyst_id][classes[k]]
             for e, (ii, k) in enumerate(eligible_edges) if ii == i
         )
-        utilizations.append((analyst.analyst_id, workload))
-    return {"max_common_arrivals_per_h": rate, "class_shares": list(class_shares),
+        cap = float(capacities_by_analyst.get(analyst.analyst_id, 1.0))
+        utilizations.append((analyst.analyst_id, workload / cap if cap else 0.0))
+    return {"max_common_arrivals_per_h": rate, "class_shares": list(shares),
             "fluid_utilization_at_capacity": utilizations,
             "method": "fractional flow LP; each analyst has one service-hour per hour"}
 
