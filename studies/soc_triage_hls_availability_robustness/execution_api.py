@@ -187,8 +187,8 @@ class SimulationSettings:
                 raise ValueError(f"{name} must be finite and nonnegative")
         if self.admission_horizon <= 0:
             raise ValueError("admission_horizon must be positive")
-        if self.evaluation_horizon <= self.admission_horizon:
-            raise ValueError("evaluation_horizon must be later than admission_horizon")
+        if self.evaluation_horizon < self.admission_horizon:
+            raise ValueError("evaluation_horizon must not precede admission_horizon")
         if not isinstance(self.seed, int) or isinstance(self.seed, bool):
             raise ValueError("seed must be an integer")
         if not isinstance(self.time_scale, TimeScale) or not isfinite(self.time_scale.factor) or self.time_scale.factor <= 0:
@@ -201,10 +201,10 @@ class SimulationSettings:
 class EnvironmentRealization:
     """Environment-only service realization; never passed to a dispatcher.
 
-    ``service_scale_by_alert`` is the existing outcome-dependent multiplier
-    (for example, alpha for false-positive L2 work). The optional difficulty
-    sidecar contributes a second, independent multiplier. Engines receive
-    their product once, while policies see only forecast service.
+    ``service_scale_by_alert`` is an environment-only positive multiplier
+    (for example alpha for FP or gamma for FN work). The optional difficulty
+    sidecar contributes its existing multiplier. Engines receive their
+    product once; policies see only forecast service.
     """
 
     service_scale_by_alert: Mapping[str, float] | None = None
@@ -216,8 +216,9 @@ class EnvironmentRealization:
         if self.service_scale_by_alert is not None:
             scales = _frozen_map(self.service_scale_by_alert)
             for aid, value in scales.items():
-                if not aid or not isfinite(float(value)) or not 0 < value <= 1:
-                    raise ValueError("service scales must be finite, in (0,1], and keyed by alert ID")
+                scale = float(value)
+                if not aid or not isfinite(scale) or scale <= 0:
+                    raise ValueError("service scales must be finite, positive, and keyed by alert ID")
             object.__setattr__(self, "service_scale_by_alert", scales)
         if self.hidden_need_by_alert is not None:
             needs = _frozen_map(self.hidden_need_by_alert)
@@ -278,8 +279,8 @@ class SimulationRequest:
         if len({a.alert_id for a in alerts}) != len(alerts):
             raise ValueError("alert IDs must be unique")
         if any(not a.alert_id or not isfinite(a.arrival) or a.arrival < 0 or
-               not isfinite(a.deadline) or a.deadline < a.arrival for a in alerts):
-            raise ValueError("alerts require IDs and finite arrival-relative natural-time deadlines")
+               not isfinite(a.deadline) or a.deadline < 0 for a in alerts):
+            raise ValueError("alerts require IDs and finite nonnegative natural-time instants")
         for alert in alerts:
             eligible = [r for r in resources if alert.task_class in r.analyst.eligible_classes]
             if alert.arrival < self.settings.admission_horizon and not eligible:

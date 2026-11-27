@@ -1,6 +1,6 @@
 # External scenario configuration (JSON)
 
-> **Configuración no equivale a flujo organizativo:** el loader crea solicitudes de un nivel y no orquesta triaje ni ruta end-to-end. Los ejemplos JSON no implementan por sí solos TP/FP/TN/FN, alpha/gamma por resultado ni la investigación única tras recomendación. Para estado y decisiones vigentes, véase [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
+> **Configuración no equivale a flujo organizativo:** el loader crea solicitudes de un nivel y no orquesta triaje ni ruta end-to-end. El nuevo orquestador está disponible en `triage_execution.py`, pero no está parametrizado por estos JSON ni conectado a un runner de escenarios. Para estado y decisiones vigentes, véase [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
 
 `scenario_loader.load_scenario(path)` reads a version 1 JSON scenario and
 returns a frozen `LoadedScenario` built on the existing `execution_api.py`

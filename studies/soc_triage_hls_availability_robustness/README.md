@@ -1,6 +1,6 @@
 # SOCTRA–HLS availability robustness
 
-> **Estado conceptual:** las campañas y sus informes de este directorio usan el flujo histórico de servicio L1 seguido de L2 para recomendaciones positivas. El modelo organizativo vigente acuerda triaje automático seguido de una sola investigación en el nivel recomendado, pero aún requiere implementación; resultados antiguos no se presentan como resultados de ese flujo. La fuente de verdad es [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
+> **Estado conceptual:** las campañas y sus informes de este directorio usan el flujo histórico de servicio L1 seguido de L2 para recomendaciones positivas. La API nueva de triaje e investigación única existe en `triage_execution.py`, pero aún no está conectada a JSON ni ejecutores de campañas; resultados antiguos no se presentan como resultados de ese flujo. La fuente de verdad es [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md).
 
 An isolated synthetic study of how weekly L2 analyst availability changes deadline-based outcomes in SOCTRA-assisted triage. It does not reproduce the GMV-CERT SOC or claim operational service levels. It does not modify SOCTRA, D1/P1/WAPS, historical experiments or the LaTeX manuscript.
 

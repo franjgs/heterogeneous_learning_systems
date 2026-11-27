@@ -40,7 +40,7 @@ request = SimulationRequest(
 result = CalendarBackend().run(request)
 ```
 
-`Alert.deadline` remains an absolute natural-time instant; the offsets in `DeadlineConfig` document the scenario but never rewrite alert records. `admission_horizon` determines which alerts enter the episode. `evaluation_horizon` is the later execution/accounting cutoff. `TimeScale` multiplies arrival/deadline instants, service, calendars, horizons and WAPS window/capacity consistently; result times remain in the scaled units.
+`Alert.deadline` remains an absolute natural-time instant; the offsets in `DeadlineConfig` document the scenario but never rewrite alert records. `admission_horizon` determines which alerts enter the episode. `evaluation_horizon` is the execution/accounting cutoff and may equal the admission horizon for a zero-drain stage. `TimeScale` multiplies arrival/deadline instants, service, calendars, horizons and WAPS window/capacity consistently; result times remain in the scaled units. A historical downstream stage may receive an alert after its original deadline; that absolute deadline is preserved so late completion remains measurable.
 
 `OrganizationConfig` supports any positive team sizes and one calendar, competence map, eligibility set, actual service map and optional forecast service map per analyst. Every configured analyst belongs to exactly one L1 or L2 team. `CalendarBackend` requires a calendar for every member of the selected team; `ContinuousBackend` ignores calendars and delegates to the historical continuous engine.
 
@@ -57,11 +57,41 @@ Both return `ExecutionResult` with the native engine result, native assignment r
 
 ## Hidden environment data
 
-`EnvironmentRealization` is an optional sidecar for environment-only values. `service_scale_by_alert` retains the existing alpha multiplier for L2 work; `difficulty_by_alert` plus `difficulty_service_beta` optionally derives the difficulty multiplier. The adapter composes them once as `m_a * [1 + beta * (q_a - 0.5)]` and passes the resulting per-alert scale to the selected engine. Beta defaults to zero. For L1 the campaign supplies difficulty only, so alpha never changes L1 service.
+`EnvironmentRealization` is an optional sidecar for environment-only values. `service_scale_by_alert` carries a positive multiplier, including alpha for FP L2 or gamma for FN L1; `difficulty_by_alert` plus `difficulty_service_beta` optionally derives the difficulty multiplier. The adapter composes them once as `m_a * [1 + beta * (q_a - 0.5)]` and passes the resulting per-alert scale to the selected engine. Beta defaults to zero. In the new triage flow, alpha affects only FP routed to L2 and gamma only FN routed to L1. Alpha remains `0 < alpha <= 1`; gamma is `>=1` and defaults to 1.
 
 `AnalystResource.forecast_service_by_class` is the dispatch-time service estimate. The continuous allocation engine and calendar engine receive this forecast for policy decisions, while actual nominal service and the composed realization are used only when calculating completion/work. The hidden-work continuous route receives its hidden need labels and composite service realization as separate environment inputs; the calendar engine never receives hidden-need labels. Neither dispatcher receives difficulty, true L2 need, or TP/FP status. The simulation request validates that provided sidecars cover exactly the admitted alert IDs.
 
 All dataclasses copy and freeze their mapping inputs. Their validation is deterministic and runs before engine invocation. Existing configuration files, engine signatures, policies, recommendations and metrics are unchanged.
+
+## Explicit triage and investigation orchestration
+
+`triage_execution.run_triage_flow` reuses the existing backends and requires
+an explicit `flow_mode`. Pass one backend for both levels or a mapping with
+separate `L1`/`L2` backends (for example, continuous L1 and calendar L2):
+
+- `triage_single_investigation`: routes each admitted alert immediately by its
+  supplied recommendation; L2 recommendations never enter L1 first. Every
+  alert starts at most one investigation stage.
+- `historical_l1_then_l2`: sends all admitted alerts to L1, then sends positive
+  recommendations to L2 only after L1 completion, preserving the original
+  deadline. This is a compatibility path and is not the new organizational
+  model.
+
+`TriageScenario` takes the already generated alerts, hidden reference labels,
+recommendations, and difficulty trace, plus organization, per-level policies,
+alpha, beta, and gamma. It does not generate recommendations or draw additional
+random values. Defaults are beta=0 and gamma=1; alpha is explicit and required.
+Hidden labels and the realized scale are held by the environment realization.
+Dispatchers receive `Alert` metadata, analyst/forecast maps and the selected
+level pool only. The new API returns per-alert `completed_within_sla`,
+`completed_late`, or `pending` at the accounting cutoff, while retaining stage
+results. Completion after the deadline is not censored. These status fractions
+are separate from any historical quality proxy/R/N endpoint.
+
+This orchestration API is not yet wired into `scenario_loader` JSON or the
+historical campaign runners. Their defaults and saved results therefore remain
+unchanged. See [SOC_ORGANIZATIONAL_MODEL.md](SOC_ORGANIZATIONAL_MODEL.md) for
+the scientific definitions and implementation boundary.
 
 ## Load a complete external scenario
 

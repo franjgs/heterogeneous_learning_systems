@@ -75,8 +75,8 @@ def test_organization_rejects_duplicate_ids_and_incoherent_membership():
 
 def test_request_rejects_horizon_deadline_policy_scale_and_unstaffed_class():
     request = build_request()
-    with pytest.raises(ValueError, match="later than"):
-        SimulationSettings(10, 10, 1, TimeScale(), DeadlineConfig({}))
+    with pytest.raises(ValueError, match="precede"):
+        SimulationSettings(11, 10, 1, TimeScale(), DeadlineConfig({}))
     with pytest.raises(ValueError, match="finite and positive"):
         SimulationSettings(10, 20, 1, TimeScale(float("inf")), DeadlineConfig({}))
     with pytest.raises(ValueError, match="recognized|D1|P1|WAPS"):

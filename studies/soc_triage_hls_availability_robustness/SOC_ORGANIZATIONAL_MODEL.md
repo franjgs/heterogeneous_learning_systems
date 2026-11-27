@@ -2,7 +2,7 @@
 
 **Perfil organizativo V1:** [configuración](config/SOC_REFERENCE_ORGANIZATION_V1.json). Sus tasas, costes y roster son hipótesis sintéticas, no datos observados. La configuración es diagnóstica y no está integrada en un runner end-to-end.
 
-> **Modelo organizativo vigente (decisión científica):** una herramienta automática recomienda L1 o L2 al llegar cada alerta; su recomendación se acepta automáticamente y se ejecuta una única investigación en el nivel elegido. TP/FP/TN/FN se definen frente a la etiqueta histórica de escalado adoptada como referencia operativa, no frente a una verdad objetiva de especialización. Este modelo conceptual todavía no está implementado por los runners. Las campañas y resultados ya publicados describen versiones anteriores y se conservan sin reinterpretación; véanse sus avisos y la sección 15.
+> **Modelo organizativo vigente (decisión científica):** una herramienta automática recomienda L1 o L2 al llegar cada alerta; su recomendación se acepta automáticamente y se ejecuta una única investigación en el nivel elegido. TP/FP/TN/FN se definen frente a la etiqueta histórica de escalado adoptada como referencia operativa, no frente a una verdad objetiva de especialización. La API explícita de este flujo ya está implementada en `triage_execution.py`; aún no se conecta al loader JSON ni sustituye los ejecutores/campañas históricos. Estos resultados describen versiones anteriores y se conservan sin reinterpretación; véanse sus avisos y la sección 15.
 
 ## 1. Objetivo y alcance
 
@@ -39,14 +39,14 @@ m_a=1\text{ si hay necesidad real},\;m_a=\alpha\text{ para un FP escalado}.
 \]
 alpha solo modifica el esfuerzo de investigación de los FP asignados a L2, nunca L1. No significa que todo FP sea trivial; alpha=1 representa investigación completa y valores inferiores son hipótesis de esfuerzo reducido. El nuevo flujo conceptual asigna una sola investigación; se conserva el identificador y el deadline original de la alerta. alpha=0.50 del perfil V1 es una hipótesis previa diagnóstica, no una estimación ni un default confirmado para el modelo adoptado. Los experimentos históricos con alpha 0.25/0.50/0.75/1.00 y beta cero no se editan.
 
-El modelo adoptado añade conceptualmente un factor gamma para FN investigados por L1:
+El modelo adoptado usa un factor gamma para FN investigados por L1:
 
 \[
 s_{L1,ia}=\widehat{s}_{ia}f(q_a)\gamma_a,\qquad
 \gamma_a=\begin{cases}\gamma,&\text{FN},\\1,&\text{en otro caso},\end{cases}\quad \gamma\geq1.
 \]
 
-gamma es una hipótesis sintética de mayor esfuerzo de investigación cuando la referencia indicaba escalado pero el clasificador deja la alerta en L1. No es penalización estadística, ni consecuencia automática de equivocarse, ni parámetro implementado. No se fija valor; gamma=1 es referencia neutra. La misma etiqueta de referencia y la recomendación se utilizan solo por el entorno/evaluador para instanciar el esfuerzo, no para dar información oculta a la asignación.
+gamma es una hipótesis sintética de mayor esfuerzo de investigación cuando la referencia indicaba escalado pero el clasificador deja la alerta en L1. No es penalización estadística ni consecuencia universal de equivocarse. Está implementada como multiplicador ambiental optativo en el nuevo flujo; el valor predeterminado es gamma=1, que es neutral. No se fija un valor experimental mayor que uno. La misma etiqueta de referencia y la recomendación se utilizan solo por el entorno/evaluador para instanciar el esfuerzo, no para dar información oculta a la asignación.
 
 Conceptualmente, `s_realizada = s_prevista × f(q) × m_alpha × m_gamma`, con cada multiplicador condicional no aplicable igual a uno. El dispatcher conoce servicios previstos por clase y cualquier forecast ex ante declarado; no ve q realizada ni etiquetas/multiplicadores individuales. La construcción de forecasts a partir de tasas agregadas es una decisión experimental por fijar, no permite filtrar Y ni la confusión individual.
 
@@ -212,10 +212,10 @@ Por ejemplo, una alerta alta que llega sábado 23:45 tiene deadline domingo 00:4
 
 - JSON: config/SOC_REFERENCE_ORGANIZATION_V1.json.
 - Diagnóstico: analyze_reference_organization.py.
-- Interfaces: scenario_loader.py, execution_api.py, availability_engine.py.
+- Interfaces: scenario_loader.py, execution_api.py, triage_execution.py, availability_engine.py; usage in EXECUTION_API.md.
 - Viabilidad/capacidad: scenario_diagnostics.py y SCENARIO_FEASIBILITY_DIAGNOSTICS.md; LP en studies/soc_human_ai_organization/calibrate_a1_scenarios.py::effective_capacity.
 - Servicio: SERVICE_TIME_DIFFICULTY_MODEL.md.
-- Tests: tests/test_scenario_loader.py, tests/test_scenario_diagnostics.py, tests/test_execution_api.py.
+- Tests: tests/test_scenario_loader.py, tests/test_scenario_diagnostics.py, tests/test_execution_api.py, tests/test_triage_execution.py.
 - Evidencia previa: studies/soc_human_ai_organization/ y studies/soc_triage_hls_q1_integration_evidence/.
 - Métricas históricas: [auditoría final Q1](../soc_triage_hls_q1_integration_evidence/AUDIT_FINAL.md) y [comparación organizativa](../soc_human_ai_organization/SOC_POLICY_COMPARISON_RESULTS.md) preservan definiciones/denominadores de R/N propios de esos estudios.
 - Índices: README raíz y README de estudio enlazan este documento. LaTeX no se modifica.
@@ -229,12 +229,12 @@ Pendiente: (1) roster real con descansos, ausencias, festivos y relevos; (2) ser
 | Elemento | Decisión/modelo científico vigente | Estado en el código auditado |
 |---|---|---|
 | Fuente de referencia para TP/FP/TN/FN | Etiqueta histórica de escalado SOCTRA adoptada como referencia operativa, no verdad objetiva de especialización | Existen etiquetas sintéticas ocultas para necesidad/ruta en campañas anteriores; su semántica no debe elevarse a verdad empírica |
-| Triaje principal | Automático, latencia despreciable, recomendación aceptada en 100% | Las recomendaciones se generan exógenamente antes del motor y aceptación positiva es automática, pero no enrutando antes del servicio humano |
-| Ruta | TP/FP van directamente a investigación L2; TN/FN a investigación L1 | El runner de disponibilidad actual da servicio L1 completo a todas las alertas y solo después crea L2 para recomendación positiva que terminó L1 antes del corte |
-| Número de investigaciones | Una investigación por alerta en el nivel recomendado | El runner actual implementa L1 y luego L2 para positivas; es flujo histórico distinto |
-| FP L2 | Investigación no necesariamente trivial; factor alpha modula el esfuerzo | alpha ambiental ya se usa en experimentos de falsa alarma L2; su semántica es una fracción de servicio, no un resultado de investigación |
-| FN L1 | Esfuerzo gamma≥1, gamma=1 neutro, valor pendiente | No hay regla condicionada a FN; el servicio L1 no distingue FN de TN dentro de clase/persona/dificultad |
-| SLA | Deadline absoluto y tiempo natural; finalización puntual, tardía o pendiente al corte | Motores antiguos y de disponibilidad conservan deadline y distinguen estados; runners históricos pueden tener definiciones y cortes propios |
+| Triaje principal | Automático, latencia despreciable, recomendación aceptada en 100% | `triage_execution.py` recibe las recomendaciones ya generadas y acepta la ruta; no simula latencia de clasificador |
+| Ruta | TP/FP van directamente a investigación L2; TN/FN a investigación L1 | Implementado en `triage_single_investigation`; no conectado todavía al loader/runner de campañas. El ejecutor histórico conserva L1 antes de L2 |
+| Número de investigaciones | Una investigación por alerta en el nivel recomendado | API nueva inicia una etapa por alerta; API histórica conserva dos etapas para positivas |
+| FP L2 | Investigación no necesariamente trivial; factor alpha modula el esfuerzo | alpha ambiental se aplica en ambos modos; políticas solo ven forecast, nunca etiqueta o escala efectiva |
+| FN L1 | Esfuerzo gamma≥1, gamma=1 neutro, no fijar aún gamma>1 | `gamma` está implementado en API nueva con default 1; no se aplica al flujo histórico |
+| SLA | Deadline absoluto y tiempo natural; finalización puntual, tardía o pendiente al corte | API nueva clasifica los tres estados sin borrar trabajo; métricas agregadas históricas y límites de corte siguen siendo propios de cada runner |
 | Calidad | Proxy separado; no exactitud validada | Competencia/proxies existen, pero no hay outcome adjudicado de resolución correcta |
 | Turnos | L1 cobertura por roster individual 24x7; L2 lunes-viernes 09–17 | Calendarios existen; runner de disponibilidad ha usado L1 continuo en las campañas descritas. Relevo L1 no está modelado |
 
@@ -242,32 +242,45 @@ La configuración `SOC_REFERENCE_ORGANIZATION_V1.json`, sus servicios,
 alpha=0.50, plantilla, demanda y porcentajes diagnósticos fueron construidos
 para análisis anterior y no están integrados a un runner completo con la ruta
 TP/FP/TN/FN aquí adoptada. No son defaults vigentes ni dimensionamiento
-validado del modelo actualizado. Una vez implementada la ruta de una sola
-investigación habrá que recalcular holguras y carga: no reutilizar sin revisión
-sus resultados de capacidad/calendario como si fueran del nuevo flujo.
+validado del modelo actualizado. Antes de usar el modo nuevo en campañas habrá
+que integrar este perfil con la ruta y recalcular holguras y carga; no reutilizar
+sin revisión sus resultados de capacidad/calendario como si fueran del nuevo
+flujo.
 
 ### Qué está implementado, qué falta y qué se excluye
 
-**Reutilizable ya implementado:** perfiles de servicio y competencia por
+**Implementado/reutilizable:** perfiles de servicio y competencia por
 profesional/clase; elegibilidad; dificultad y beta de servicio; alpha como
 realización ambiental L2; generación separada de recomendaciones y etiquetas
 ocultas; colas/calendarios/suspensión; deadline natural; métricas de estado,
-trabajo y SLA en runners existentes. Estos componentes no implementan por sí
-solos la secuencia adoptada.
+trabajo y SLA en runners existentes. `triage_execution.py` los orquesta ya en
+modo nuevo o histórico usando los dos backends existentes.
 
-**Requiere cambios de código antes de ejecutar el modelo principal:** un
-orquestador debe rutear tras el triaje automático, enviando recomendación
-positiva directamente a la cola L2 y negativa a L1, sin trabajo de investigación
-previo en L1. El servicio realizado debe permitir alpha en FP L2 y gamma en FN
-L1, manteniendo escalas realizadas ocultas para las políticas. Los dispatchers
-seguirán usando solo previsiones ex ante; no recibirán etiqueta de referencia,
-confusión, necesidad oculta, q realizado ni gamma realizado. No se detallan aquí
-los cambios de motor ni se alteran las políticas.
+**Implementado como API explícita, pendiente de integración de escenarios:**
+`triage_execution.run_triage_flow(..., flow_mode="triage_single_investigation")`
+envía las alertas recomendadas directamente a la cola de su único nivel de
+investigación y compone alpha, beta y gamma como escalas ambientales. La misma
+API mantiene `flow_mode="historical_l1_then_l2"` para reproducir la ruta
+anterior. El loader JSON y los runners/campañas no seleccionan todavía el nuevo
+modo; el flujo histórico sigue siendo el suyo por defecto. Los dispatchers
+reciben forecasts y metadatos públicos, no etiqueta de referencia, confusión,
+necesidad oculta, q realizada ni multiplicadores efectivos. Ninguna política
+ni motor fue reescrito. Falta añadir selección declarativa en JSON y conectarla
+a un ejecutor de escenario; los forecasts ajustados por mezcla esperada de
+alpha/gamma deben declararse ex ante y nunca usar labels individuales.
 
 **Descartado del estudio principal:** decisión humana de contradecir la
 recomendación, escalado tardío, reintento, reapertura, retorno L2→L1 y múltiples
 etapas. El triaje humano queda como extensión distinta con tiempo propio previo
 a la investigación.
+
+**Validación focalizada:** `pytest -q studies/soc_triage_hls_availability_robustness/tests`
+aprobó 85 pruebas unitarias en este estado. Cubren ambos modos, rutas TP/FP/TN/FN,
+alpha/beta/gamma, aislamiento de etiquetas, estados SLA, calendarios, suspensión,
+deadline original, selección histórica y que el orquestador no crea generadores
+aleatorios adicionales.
+No se ejecutaron campañas ni la regresión masiva; las pruebas funcionales no
+constituyen una comparación contra todos los resultados históricos.
 
 ### Decisiones consolidadas
 

@@ -1,6 +1,6 @@
 # Model extension
 
-> **Versión histórica de arquitectura:** describe el flujo y alcance implementados en la etapa de disponibilidad/calendarios. La investigación L1 seguida de L2 para recomendaciones positivas no es el modelo organizativo actualmente acordado. La ruta vigente y sus límites de implementación están en [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md). Se conserva esta descripción como registro técnico, sin cambiar la metodología histórica.
+> **Versión histórica de arquitectura:** describe el flujo y alcance implementados en la etapa de disponibilidad/calendarios. La investigación L1 seguida de L2 para recomendaciones positivas no es el modelo organizativo actualmente acordado. La API nueva de orquestación está en `triage_execution.py`; las decisiones vigentes y sus límites de integración están en [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md). Se conserva esta descripción como registro técnico, sin cambiar la metodología histórica.
 
 ## Reuse audit
 

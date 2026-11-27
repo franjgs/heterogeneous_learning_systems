@@ -1,6 +1,6 @@
 # Dificultad, servicio efectivo y calendarios en SOCTRA-HLS
 
-> **Alcance de versión:** este documento especifica la extensión beta/alpha implementada para los runners históricos que describe. No significa que esté implementada la ruta organizativa vigente de una investigación directa en el nivel recomendado ni el factor gamma FN. Para decisiones actuales, resultados métricos y estado de implementación, consultar [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md). La metodología y resultados anteriores no se reinterpretan.
+> **Alcance de versión:** este documento especifica beta/alpha en los runners históricos que describe. El orquestador actual también compone gamma para FN en el modo `triage_single_investigation`, pero ese modo aún no está conectado al loader JSON ni a los runners de campañas. Para decisiones y estado completos, consultar [modelo organizativo canónico](SOC_ORGANIZATIONAL_MODEL.md). La metodología y resultados anteriores no se reinterpretan.
 
 ## Motivación y alcance
 
