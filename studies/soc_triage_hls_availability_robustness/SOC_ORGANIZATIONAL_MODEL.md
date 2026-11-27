@@ -1,10 +1,10 @@
 # SOCTRA-HLS: modelo organizativo canónico
 
-**Fuente de verdad V1:** [configuración organizativa](config/SOC_REFERENCE_ORGANIZATION_V1.json). Los valores nuevos son hipótesis sintéticas, no datos observados de un SOC.
+**Perfil organizativo V1:** [configuración](config/SOC_REFERENCE_ORGANIZATION_V1.json). Sus tasas, costes y roster son hipótesis sintéticas, no datos observados. La configuración es diagnóstica y no está integrada en un runner end-to-end.
 
 ## 1. Objetivo y alcance
 
-Representar tareas y profesionales heterogéneos para estudiar cómo clase, severidad, dificultad, servicio, elegibilidad, competencia, calendarios y organización se relacionan con colas y resultados. Todas las alertas pasan inicialmente por L1; algunas pasan a L2 para trabajo especializado. Los diagnósticos de viabilidad y capacidad son evaluaciones externas, no nuevas políticas. El escenario no representa ni valida una organización cliente concreta.
+Representar tareas y profesionales heterogéneos para estudiar cómo clase, severidad, dificultad, servicio, elegibilidad, competencia, calendarios y organización se relacionan con colas y resultados. El flujo integrado actualmente implementado envía todas las alertas a servicio L1 antes de aplicar la recomendación positiva para encaminarlas a L2. La distinción organizativa más reciente —triaje separado de investigación y positivas enviadas directamente a L2 tras triaje automático— aún no está implementada; véase la auditoría al final de este documento. Los diagnósticos de viabilidad y capacidad son evaluaciones externas, no nuevas políticas. El escenario no representa ni valida una organización cliente concreta.
 
 ## 2. Taxonomía y datos disponibles
 
@@ -166,3 +166,197 @@ Por ejemplo, una alerta alta que llega sábado 23:45 tiene deadline domingo 00:4
 - Índices: README raíz y README de estudio enlazan este documento. LaTeX no se modifica.
 
 Pendiente: (1) roster real con descansos, ausencias, festivos y relevos; (2) servicio medido por nivel/clase y asociación duración-calidad; (3) llegadas, mezcla y pulsos observados; (4) prevalence/need y errores clasificador por clase/dificultad; (5) costes autorizados para reemplazar 1.8; (6) horizonte de medición que no convierta tardanza en cumplimiento; (7) decidir si el calendario semanal abstracto requiere zona horaria, DST y fechas reales.
+
+## 14. Auditoría del flujo de triaje e investigación
+
+Esta sección registra la distinción organizativa acordada entre **triaje** e
+**investigación** y la contrasta con el código de `9daefeaf`. No cambia la
+interpretación de las campañas existentes: describe qué falta para que un
+futuro runner represente el flujo nuevo. Los TP/TN/FP/FN son estados
+ambientales/evaluativos; las etiquetas ocultas nunca se entregan al dispatcher.
+
+### Flujo organizativo acordado
+
+La alerta llega y recibe una recomendación de triaje. En el escenario de
+referencia el triaje es automático, de latencia despreciable respecto al
+trabajo humano y sin capacidad L1 significativa. La recomendación determina
+la ruta inicial:
+
+| Resultado | Necesidad real | Ruta inicial | Trabajo humano esperado |
+|---|---|---|---|
+| TP | Sí requiere especialización | L2 | Investigación especializada L2 completa; no investigación L1 completa |
+| TN | No requiere especialización | L1 | Investigación ordinaria L1 |
+| FP | No requiere especialización | L2 | Investigación L2 innecesaria; no se presume que sea trivial |
+| FN | Sí requiere especialización | L1 | Investigación L1; se postula más esfuerzo medio y menor calidad esperada que con L2 |
+
+Para triaje humano, el tiempo del analista L1 sería una etapa anterior a la
+decisión de ruta. Ese modo no se adopta como referencia V1 porque requiere un
+tiempo de triaje diferenciado. En ambos modos el reloj SLA empieza en la
+llegada, conserva el deadline original y continúa durante colas, turnos,
+suspensión y cualquier escalado o relevo.
+
+La necesidad de L2 significa que la alerta necesita especialización para el
+trabajo adecuado; no significa que L1 sea incapaz de resolverla. La afirmación
+FN sobre más esfuerzo y menor calidad es una hipótesis sintética del escenario,
+no evidencia empírica.
+
+### Qué ejecuta hoy el código
+
+`run_availability_campaign._make_trace()` crea previamente recomendaciones
+Bernoulli con las tasas `pD` y `pFA`; el bucle del motor no asigna tiempo ni
+recursos al clasificador. `run_availability_campaign._run_l1()` pasa todas las
+alertas a la cola y servicio L1. Después, `_run_condition()` crea una llegada
+L2 solo cuando la recomendación es positiva y existe finalización L1 dentro
+del cutoff; la llegada L2 usa esa finalización y conserva el ID, la clase y el
+deadline original. Las recomendaciones positivas se aceptan al 100% en ese
+runner. Las negativas permanecen en la ruta L1. No se registra una decisión
+humana L1, ni hay corrección de una negativa durante la investigación.
+
+Por tanto, el runner actual es **servicio humano L1 para todas las alertas,
+seguido de aceptación automática de las recomendaciones positivas**. No es
+triaje automático seguido de investigación en L1 o L2. Una recomendación
+positiva no llega directamente a L2 y sí soporta un servicio L1 completo. Una
+recomendación negativa no puede producir una escalada tardía.
+
+El orquestador más antiguo `simulate_l1_l2()` también fija la ruta antes de
+ejecutar L1; ofrece el modo de etiqueta histórica o el modo de aceptar una
+recomendación hipotética. `observed_effective_analyst_decision` queda vacío.
+Esas opciones son referencias de ruteo, no decisiones de un profesional.
+
+La configuración V1 de este documento es metadato para diagnósticos y el
+`scenario_loader` construye solicitudes de un solo nivel. No configura por sí
+sola este flujo integrado ni reemplaza la configuración de las campañas. En
+particular, los servicios L1/L2 y alpha=0.50 de V1 pertenecen al perfil
+diagnóstico anterior: no son parámetros ya conectados al nuevo flujo
+TP/TN/FP/FN.
+
+### Auditoría de servicios, dificultad, competencia y resolución
+
+| Elemento | Lo que permite el modelo existente | Límite para el flujo acordado |
+|---|---|---|
+| `s_base(level,class)` y `u_(analyst,class)` | La configuración puede hacer que L2 tarde menos que L1 para una clase dada, o que la relación varíe por clase y persona. | Los valores V1 actuales hacen mayor el servicio L2 que L1 en las tres clases. No codifican por sí solos que esas actividades sean distintas ni la expectativa de especialista más eficiente. |
+| `task_class` / elegibilidad | Separa top5/next5/tail y restringe qué profesionales pueden atender cada clase. | Son clases/proyectos, no el tipo ordinario/especializado del trabajo. Una clase puede contener alertas TN y FN. |
+| Competencia `c_(i,k)` | Hay un valor por profesional y clase; pueden existir perfiles diferentes entre niveles y profesionales. | Para la misma persona y clase, la competencia no cambia entre TN y FN. No modela una penalización de corrección específica a la ruta fallida. |
+| Dificultad `q_a` y `f(q_a)` | Con `beta>0` ajusta el tiempo efectivo por alerta y también alimenta proxies de calidad existentes. | El generador la trata como dificultad general, no como necesidad de especialización; el mismo factor se aplica a L1 y L2. Condicionarla a need para simular FN sería una hipótesis nueva y alteraría también el esfuerzo L2 y los proxies de calidad. |
+| `alpha` | Escala solo el tiempo L2 de los FP; `alpha=1` implica trabajo completo. | `alpha<1` supone menor esfuerzo FP. Alpha no distingue investigación ordinaria y especializada ni justifica llamar trivial una falsa alarma. V1 alpha=0.50 es solo la hipótesis del perfil anterior. |
+| Necesidad oculta y recomendación | Se generan y contabilizan TP/TN/FP/FN; el entorno puede conservar etiquetas ocultas. | La necesidad no condiciona el servicio L1 actual. Un FN consume el mismo servicio L1 que un TN si coinciden persona, clase y dificultad. |
+| Calidad | Finalización, puntualidad y proxies basados en competencia/dificultad se calculan por separado. | No se sortea ni observa una resolución correcta/incorrecta; competencia no está calibrada como probabilidad de resolución. |
+
+#### A. Rapidez de L2
+
+Sí, matemáticamente se puede expresar con los parámetros existentes si la
+clase y el contenido del trabajo comparado están definidos de forma
+compatible: se eligen servicios base y factores individuales que den menor
+servicio L2 para las clases en que se espera especialización. No hay una regla
+que imponga esa relación. Los números de V1 son lo contrario en valor nominal
+por clase (base L2 0.30/0.36/0.42 h, base L1 0.08/0.10/0.12 h); dado que el
+runner anterior presta servicio completo L1 antes de L2, no es válido usar esa
+diferencia para concluir que L2 sea menos eficiente. No se cambian esos
+valores: su interpretación necesita redefinir primero las actividades.
+
+#### B. Alertas ordinarias y especializadas en una misma clase
+
+No de forma directa. La clase actual identifica proyecto/estrato; la
+necesidad de especialización es otro booleano oculto. Para dos alertas de la
+misma clase atendidas por la misma persona y con el mismo q, el servicio
+previsto y efectivo L1 es idéntico, aunque una sea TN y otra FN. Separar los
+tipos como clases distintas sería posible solo si la definición de clase se
+refinara y los parámetros de clasificador, mezcla, elegibilidad, competencia y
+servicio también se redefinieran. No debe hacerse por conveniencia sin decidir
+qué significa una clase para SOCTRA.
+
+#### C. Mayor esfuerzo L1 para FN
+
+No con la formulación actual manteniendo iguales clase, analista y dificultad:
+
+\[
+s_{L1}=s_{base}(L1,k)u_{i,k}f(q_a).
+\]
+
+La necesidad/recomendación no aparece en esa expresión. `u_(i,k)` varía por
+profesional y clase, no por resultado del clasificador. El factor de dificultad
+podría producir más servicio si q fuese mayor para ciertos FN, pero el
+generador actual no especifica esa dependencia y q no es sinónimo de necesidad
+de especialización. Sería una hipótesis diferente, con efectos simultáneos
+sobre L2 y los proxies de calidad. El sidecar genérico de escala realizada no
+proporciona actualmente una regla configurable de sobreesfuerzo FN L1.
+
+Si se desea conservar la hipótesis «FN requieren más tiempo medio que TN de la
+misma clase», la extensión mínima y transparente sería un factor de esfuerzo
+L1 específico para FN, aplicado solo dentro del entorno a la duración
+realizada y nunca revelado al dispatcher. Se necesitarían justificar y
+parametrizar ese factor; no se adopta ni se implementa aquí. Sin él, el modelo
+debe declarar el mismo servicio medio TN/FN en L1.
+
+#### D. Menor corrección esperada para FN
+
+La competencia actual puede reflejar diferencias generales de desempeño por
+profesional y clase, pero no cambia por necesidad/ruta dentro de una clase.
+Las métricas existentes no definen una probabilidad calibrada de resolución:
+`S_plus` es atención puntual de una necesidad correctamente recomendada; el
+proxy `competence × (1 − 0.35 × difficulty)` es una puntuación modelada, no una
+probabilidad observada ni validada. La finalización indica que terminó el
+servicio; el SLA indica que acabó antes del deadline; ninguno demuestra que la
+investigación fuera correcta.
+
+Con clases que representen de forma explícita tipos de tarea especializada,
+los perfiles `c_(i,k)` podrían servir como proxy comparativo de la capacidad
+de L1/L2 en esos tipos. No separan, sin embargo, un FN y un TN de la misma
+clase. Para afirmar una probabilidad menor de resolución correcta en FN hace
+falta definir una función de corrección condicionada por profesional,
+actividad/clase y tipo de ruta, además de hipótesis o calibración. No se
+introduce una nueva ley de calidad en esta fase.
+
+### Consecuencia para la secuencia del motor
+
+La fórmula anterior de tiempo end-to-end presupone servicio L1 completo y,
+después, servicio L2 en positivos. El flujo automático acordado requiere otra
+secuencia: recomendación al llegar; investigación L2 para positivas; servicio
+L1 para negativas, distinguiendo TN y FN en el esfuerzo. El servicio L1 actual
+no se puede reinterpretar simultáneamente como triaje breve de positivas e
+investigación completa de negativas. Esa diferencia es una incompatibilidad
+del flujo, no un ajuste de calendario o deadline.
+
+El ajuste mínimo futuro requiere cambiar el orden de enrutamiento del
+orquestador para que las positivas automáticas no consuman una investigación
+L1 completa. Si se conserva la hipótesis de mayor esfuerzo FN, requiere además
+la regla ambiental de esfuerzo FN L1 descrita arriba. Ni esta regla ni la
+reordenación están implementadas. Si se elige triaje humano, habrá que modelar
+un tiempo L1 de triaje separado; no es necesario para el escenario automático
+de latencia despreciable.
+
+### Estados de decisión
+
+| Estado | Decisión documentada | Estado |
+|---|---|---|
+| Triaje V1 | Automático, latencia despreciable y sin consumo humano significativo. | Hipótesis organizativa adoptada; no ejecutada así por el runner actual. |
+| TP / FP | Ruta inicial a L2; FP usa trabajo especializado no trivial por defecto. | Regla conceptual; el runner actual pasa antes por servicio L1. Alpha=0.50 en JSON es un escenario previo, no valor empírico ni default consolidado para el nuevo flujo. |
+| TN / FN | Permanecen inicialmente en L1; FN puede requerir más esfuerzo y tener menor calidad esperada. | Hipótesis sintética; diferencias de servicio/corrección no están implementadas. |
+| Coste y perfiles | Coste no determina velocidad ni competencia; perfiles varían por profesional y clase. | Decisión conservada en el modelo, sin datos empíricos. |
+| SLA/calendarios | Reloj natural continuo; L1 cobertura 24x7 por turnos; L2 L-V 09–17. | Reglas consolidadas, pero el runner integrado aún usa todas las alertas en L1 y L1 continuo. |
+| Escalado tardío y relevo L1 | No se presupone override posterior ni reasignación entre analistas L1. | Pendiente organizativo. |
+
+### Resultado de auditoría
+
+**Implementado:** servicios por nivel/clase y profesional, elegibilidad,
+competencia, dificultad y factor f(q), alpha L2 para FP, necesidad y
+recomendación ocultas a dispatchers, calendarios, deadline natural y medición
+de finalización puntual.
+
+**Representable por parametrización, pero no configurado como regla general:**
+L2 más rápido que L1 en clases seleccionadas; diferencias de competencia y
+velocidad por profesional/clase. Los valores deben referirse a actividades
+comparables.
+
+**Propuesto pero no implementado:** triaje automático seguido directamente de
+investigación en L1 o L2; menor servicio/ninguna investigación L1 completa en
+TP/FP; esfuerzo medio FN mayor que TN en la misma clase; diferencia de
+corrección esperada entre investigación L1 y especializada L2.
+
+**Pendiente de evidencia:** tiempos por actividad, efecto de especialización
+en servicio y corrección, reducción de servicio FP, distribución de q
+condicionada por need, competencia calibrada y conducta ante escalado tardío o
+relevo. Los supuestos propuestos no son mediciones SOC.
+
+Esta auditoría no cambia parámetros, escenarios, motores, políticas,
+clasificadores ni resultados históricos. No se ejecutaron experimentos.
