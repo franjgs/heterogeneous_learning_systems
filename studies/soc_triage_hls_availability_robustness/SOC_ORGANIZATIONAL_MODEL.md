@@ -342,6 +342,10 @@ dentro de SLA, 141 tarde y 0 quedaron pendientes al corte 336 h. Es una prueba
 técnica reproducible, no una campaña, estimación científica ni comparación
 D1/P1/WAPS. No atribuye mejoras a ninguna política.
 
+### Validación diagnóstica del episodio V2
+
+La reproducción técnica de seed `998001` está documentada en [SOC_REFERENCE_V2_DIAGNOSTIC_VALIDATION.md](SOC_REFERENCE_V2_DIAGNOSTIC_VALIDATION.md), con detalle por alerta en su CSV anexo. Reprodujo 476 alertas y 335 puntuales, 141 tardías y ninguna pendiente. En la ruta recomendada y con las realizaciones efectivas, 35 retrasos fueron inviables por calendario L2 aun sin colas y 106 rutas L1 eran viables bajo la mejor cota sin contención pero tardías en la ejecución. El episodio evidencia saturación temporal L1 en el pulso y holgura semanal L2; no identifica efectos causales de política. Es diagnóstico de una única semilla, no campaña ni validación empírica.
+
 ## 14. Compatibilidad y alcance de conclusiones
 
 La configuración V1, las configuraciones históricas, los ejecutores de campaña,
