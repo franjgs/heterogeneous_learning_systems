@@ -33,6 +33,24 @@ def test_generator_reproducibility_and_configured_confusion_matrix():
     assert all(row.routed.soctra_recommendation == row.true_escalation_need for row in mixed)
 
 
+def test_reference_escalation_can_be_derived_from_difficulty_threshold_without_extra_draws():
+    base = ScenarioConfig(horizon=1.0, arrival_rate=500,
+                          escalation_probability_by_class=(0.2, 0.5, 0.8))
+    threshold = 0.75
+    routed = ScenarioConfig(horizon=1.0, arrival_rate=500,
+                            escalation_probability_by_class=(0.2, 0.5, 0.8),
+                            reference_escalation_difficulty_threshold=threshold)
+    base_trace = generate_alerts(base, 771)
+    routed_trace = generate_alerts(routed, 771)
+    assert len(base_trace) == len(routed_trace)
+    assert [(a.routed.alert, a.difficulty) for a in base_trace] == [
+        (a.routed.alert, a.difficulty) for a in routed_trace
+    ]
+    assert all(row.true_escalation_need == (row.difficulty >= threshold)
+               for row in routed_trace)
+    assert [row.severity for row in base_trace] == [row.severity for row in routed_trace]
+
+
 def test_hidden_reference_not_in_observation_and_actions_b0_b1_b2_run():
     l1, l2, service = _pools()
     config = ScenarioConfig(horizon=0.2, arrival_rate=80)

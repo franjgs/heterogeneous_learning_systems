@@ -96,6 +96,7 @@ def main() -> None:
         sensitivity_by_class=demand["sensitivity_by_class"],
         false_positive_rate_by_class=demand["false_positive_rate_by_class"],
         alpha=demand["alpha"], beta=demand["beta"],
+        difficulty_mean_by_class_and_need=demand.get("difficulty_mean_by_class_and_need"),
         gamma=demand.get("gamma", 1.0), flow_mode=scenario.flow_mode,
     )
     capacity = assess_capacity(scenario.organization, profile)

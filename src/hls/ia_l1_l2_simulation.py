@@ -47,6 +47,7 @@ class ScenarioConfig:
     ai_sensitivity_by_severity: tuple[float, float, float] | None = None
     ai_false_positive_by_severity: tuple[float, float, float] | None = None
     difficulty_beta: tuple[float, float] = (2.0, 2.0)
+    reference_escalation_difficulty_threshold: float | None = None
 
 
 @dataclass(frozen=True)
@@ -102,7 +103,10 @@ def generate_alerts(config: ScenarioConfig, seed: int) -> tuple[SimulatedAlert, 
         p_need = (config.escalation_probability_by_class_severity[ix][severity_ix]
                   if config.escalation_probability_by_class_severity is not None
                   else config.escalation_probability_by_class[ix])
-        need = rng.random() < p_need
+        need_draw = rng.random()
+        need = (difficulty >= config.reference_escalation_difficulty_threshold
+                if config.reference_escalation_difficulty_threshold is not None
+                else need_draw < p_need)
         shifted = config.shift_after is not None and t >= config.shift_after
         base_sensitivity = config.ai_sensitivity_by_severity[severity_ix] if config.ai_sensitivity_by_severity else config.ai_sensitivity
         base_fpr = config.ai_false_positive_by_severity[severity_ix] if config.ai_false_positive_by_severity else config.ai_false_positive_rate
@@ -611,6 +615,9 @@ def _validate_config(config: ScenarioConfig) -> None:
         raise ValueError("arrival_rate_after must be positive")
     if len(config.difficulty_beta) != 2 or any(x <= 0 for x in config.difficulty_beta):
         raise ValueError("difficulty beta shape parameters must be positive")
+    if (config.reference_escalation_difficulty_threshold is not None and
+            not 0 <= config.reference_escalation_difficulty_threshold <= 1):
+        raise ValueError("reference escalation difficulty threshold must be within [0,1]")
 
 
 def _available_roster(roster: Sequence[Analyst], fraction: float, seed: int) -> tuple[Analyst, ...]:

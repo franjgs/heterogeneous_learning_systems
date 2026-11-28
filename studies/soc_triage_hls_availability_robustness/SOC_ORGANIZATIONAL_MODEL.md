@@ -2,9 +2,9 @@
 
 > **NEW MODEL / MODELO NUEVO:** este documento especifica la línea activa de triaje automático seguido por exactamente una investigación. Las campañas históricas y el manuscrito LaTeX pertenecen al **OLD MODEL / MODELO VIEJO**. Véase [MODEL_GENERATIONS.md](MODEL_GENERATIONS.md) para estado, evidencia, restricciones de comparabilidad y preguntas pendientes.
 
-**Escenario experimental base actual:** [V2_24X7](config/SOC_REFERENCE_ORGANIZATION_V2_24X7.json), selecciona `triage_single_investigation` y se ejecuta con [`run_scenario.py`](run_scenario.py). Todos los profesionales están disponibles de forma individual y continua como idealización experimental, no como jornada laboral real. V2 8x5 se conserva intacto como variante de análisis posterior; V1 y las campañas históricas siguen siendo antecedentes.
+**Referencia CONOPS vigente para diagnósticos organizativos:** [SOC_NEW_MODEL_CONOPS_REFERENCE.json](config/SOC_NEW_MODEL_CONOPS_REFERENCE.json), con `triage_single_investigation`, D1 en L1, P1 en L2 y disponibilidad individual continua como idealización experimental, no como jornada laboral real. V2/V2_24X7 y sus pilotos, incluida la validación confirmatoria, permanecen intactos como evidencia obtenida bajo sus parámetros anteriores; no se reinterpretan con este CONOPS.
 
-> **Modelo organizativo vigente (decisión científica):** una herramienta automática recomienda L1 o L2 al llegar cada alerta; su recomendación se acepta automáticamente y se ejecuta una única investigación en el nivel elegido. TP/FP/TN/FN se definen frente a la etiqueta histórica de escalado adoptada como referencia operativa, no frente a una verdad objetiva de especialización. La configuración V2_24X7 y `run_scenario.py` conectan este flujo a JSON, el generador existente y el backend; se recupera disponibilidad continua individual para aislar efectos de asignación y carga sin cierres de calendario. El modelo mantiene calendarios restringidos en V2 8x5 y los ejecutores/campañas históricos conservan su flujo anterior. Véase la sección 16 para estado y límites.
+> **Modelo organizativo vigente (decisión científica):** una herramienta automática recomienda L1 o L2 al llegar cada alerta; su recomendación se acepta automáticamente y se ejecuta una única investigación en el nivel elegido. En la referencia CONOPS la complejidad q determina una referencia sintética de especialización mediante q0, calibrado a la prevalencia de la etiqueta estandarizada SOCTRA (`19/14.449`), que no es verdad objetiva de necesidad. La dificultad determina el esfuerzo W(q); la velocidad profesional V determina la duración T=W/V; competencia determina únicamente la calidad esperada modelada. La organización de referencia es 5 L1 heterogéneos y 3 L2 elegibles para todas las clases, con D1 en L1 y P1 en L2. La ejecución previa V2_24X7 y sus resultados permanecen congelados en sus propios supuestos.
 
 ## 1. Objetivo y alcance
 
@@ -20,37 +20,42 @@ Llegadas, capacidad nominal, capacidad asignable, carga relativa, colas, trabajo
 
 D1, P1, WAPS/HLS-B, clasificadores y recomendaciones SOCTRA no cambian. Las políticas solo reciben el forecast y otra información disponible antes de ejecución. Los sidecars de dificultad, necesidad y TP/FP se usan solo por el motor/evaluador.
 
-## 3. Servicio previsto y efectivo
+## 3. Esfuerzo, velocidad y servicio
 
-Para alerta a, profesional i, nivel l_i y clase k_a:
-
-\[
-\widehat{s}_{ia}=s_{base}(l_i,k_a)u_{i,k_a},\quad
-s_{ia}=\widehat{s}_{ia}f(q_a),\quad
-f(q_a)=1+\beta(q_a-0.5),\;0\leq\beta<2.
-\]
-
-Unidades: horas de trabajo. beta < 2 asegura factor positivo en q∈[0,1]. El forecast_service_by_class se muestra al dispatcher; q realizado y servicio efectivo pertenecen al entorno/motor. V1 usa beta=0, de modo que no añade variabilidad temporal por dificultad.
-
-El generador existente usa q ~ Beta(2,2): hipótesis sintética, acotada, simétrica y centrada en 0.5; no se estimó con observaciones SOC. E[q]=0.5, así que E[f(q)]=1. Bajo esas hipótesis se conserva el servicio medio nominal; no implica igualdad por alerta o traza. Detalle en [SERVICE_TIME_DIFFICULTY_MODEL.md](SERVICE_TIME_DIFFICULTY_MODEL.md).
-
-En L2 se combina el factor de dificultad con el multiplicador preexistente para falsas positivas:
-\[
-s_{L2,ia}=s_{base}(L2,k_a)u_{i,k_a}f(q_a)m_a,\quad
-m_a=1\text{ si hay necesidad real},\;m_a=\alpha\text{ para un FP escalado}.
-\]
-alpha solo modifica el esfuerzo de investigación de los FP asignados a L2, nunca L1. No significa que todo FP sea trivial; alpha=1 representa investigación completa y valores inferiores son hipótesis de esfuerzo reducido. El nuevo flujo conceptual asigna una sola investigación; se conserva el identificador y el deadline original de la alerta. alpha=0.50 del perfil V1 es una hipótesis previa diagnóstica, no una estimación ni un default confirmado para el modelo adoptado. Los experimentos históricos con alpha 0.25/0.50/0.75/1.00 y beta cero no se editan.
-
-El modelo adoptado usa un factor gamma para FN investigados por L1:
+En el CONOPS vigente se separan explícitamente el esfuerzo de la tarea y la
+velocidad del profesional:
 
 \[
-s_{L1,ia}=\widehat{s}_{ia}f(q_a)\gamma_a,\qquad
-\gamma_a=\begin{cases}\gamma,&\text{FN},\\1,&\text{en otro caso},\end{cases}\quad \gamma\geq1.
+W(q)=1+\beta(q-0.5)\quad[\text{unidades de trabajo}],\qquad
+V_{i,k}=\frac{1}{b_{l_i,k}u_{i,k}}\quad[\text{unidades de trabajo/h}],
+\]
+\[
+T_{i,a}=\frac{W(q_a)}{V_{i,k_a}}
+ =b_{l_i,k_a}u_{i,k_a}[1+\beta(q_a-0.5)]\quad[\text{horas activas}].
 \]
 
-gamma es una hipótesis sintética de mayor esfuerzo de investigación cuando la referencia indicaba escalado pero el clasificador deja la alerta en L1. No es penalización estadística ni consecuencia universal de equivocarse. Está implementada como multiplicador ambiental optativo en el nuevo flujo; el valor predeterminado es gamma=1, que es neutral. No se fija un valor experimental mayor que uno. La misma etiqueta de referencia y la recomendación se utilizan solo por el entorno/evaluador para instanciar el esfuerzo, no para dar información oculta a la asignación.
+`b` es el tiempo nominal por unidad de trabajo para nivel y proyecto; `u` es
+un factor sintético inverso de velocidad individual por proyecto. Menor `u`
+significa mayor velocidad. `W(q)` es estrictamente creciente si `beta>0` y
+positivo para todo `q∈[0,1]` si `0≤beta<2`. La competencia no interviene en
+`V`: es un atributo distinto que alimenta la calidad esperada modelada.
+`forecast_service_by_class` es una expectativa ex ante condicionada a la ruta
+pública y a los parámetros agregados; no revela la dificultad, referencia o
+confusión individuales. El motor aplica a cada alerta el factor efectivo
+`W(q_a)` exactamente una vez.
 
-Conceptualmente, `s_realizada = s_prevista × f(q) × m_alpha × m_gamma`, con cada multiplicador condicional no aplicable igual a uno. El dispatcher conoce servicios previstos por clase y cualquier forecast ex ante declarado; no ve q realizada ni etiquetas/multiplicadores individuales. La construcción de forecasts a partir de tasas agregadas es una decisión experimental por fijar, no permite filtrar Y ni la confusión individual.
+La dificultad es sintética `q~Beta(2,2)`; `E[q]=0.5` y por tanto
+`E[W(q)]=1` antes del condicionamiento por ruta. No se ha calibrado con tiempos
+humanos. En la referencia CONOPS `beta=1`; en V2 y en las campañas confirmatoria
+y exploratorias previas `beta=0`, por lo que estas últimas no validan el efecto
+temporal de dificultad. El documento [SERVICE_TIME_DIFFICULTY_MODEL.md](SERVICE_TIME_DIFFICULTY_MODEL.md)
+describe la extensión general ya disponible.
+
+Para evitar contar dos veces la complejidad, en CONOPS `alpha=1` y `gamma=1`:
+FP L2 conserva el esfuerzo ordinario `W(q)` de su alerta y FN L1 ya tiene más
+esfuerzo porque su `q` está en la cola compleja. No se multiplica de nuevo por
+un factor de FP/FN. Los perfiles V2 previos usaron `alpha=0.50`, `beta=0` y
+`gamma=1`; se conservan sin reinterpretación y sus resultados no se cambian.
 
 ## 4. Triaje, ruta y resultados TP/FP/TN/FN
 
@@ -61,11 +66,11 @@ Sea `Y=1` la etiqueta de referencia de escalado y `R=1` la recomendación L2. La
 | Caso | Y | R | Ruta adoptada | Trabajo asignado |
 |---|---:|---:|---|---|
 | TP | 1 | 1 | Triaje → L2 | Una investigación especializada; uso necesario según referencia |
-| FP | 0 | 1 | Triaje → L2 | Una investigación L2; uso innecesario según referencia; esfuerzo modulado por alpha |
+| FP | 0 | 1 | Triaje → L2 | Una investigación L2 para una tarea ordinaria; consume capacidad especializada. En CONOPS `alpha=1`; no se asume trivialidad |
 | TN | 0 | 0 | Triaje → L1 | Una investigación L1 ordinaria |
-| FN | 1 | 0 | Triaje → L1 | Una investigación L1 aunque la referencia favorezca L2; esfuerzo gamma como hipótesis |
+| FN | 1 | 0 | Triaje → L1 | Una investigación L1 compleja, con mayor esfuerzo `W(q)` por `q≥q0`; no hay segunda investigación ni factor gamma adicional |
 
-Las etiquetas son para evaluación y realización ambiental. D1/P1/HLS-B no observan Y, TP/FP/FN/TN, q realizado ni los factores alpha/gamma realizados. Su decisión/distribución entre analistas ocurre dentro del nivel de la ruta y con sus entradas ex ante. La extensión de esfuerzo no cambia la recomendación ni la asignación de nivel.
+Las etiquetas son para evaluación y realización ambiental. D1/P1/HLS-B no observan Y, TP/FP/FN/TN, q realizado ni servicio efectivo. En el CONOPS la ruta de referencia coincide con `Y=1[q≥q0]`; los errores se generan al aplicar sensibilidad y FPR del clasificador a Y. Las políticas observan solo alertas en su cola de nivel, deadlines, elegibilidad y forecast público. La velocidad/competencia del analista tampoco determina la ruta.
 
 No se modelan fallos de investigación, reintentos, reaperturas, escalado tardío, revisión humana de recomendación, retorno L2→L1 ni varias etapas de investigación. Una alerta finaliza cuando termina el servicio asignado, aunque el modelo no verifique que la conclusión sea correcta; es una simplificación deliberada, no una afirmación sobre todos los SOC. El triaje humano es una posible extensión que consumiría tiempo L1 anterior a la decisión de ruta; no forma parte del escenario principal.
 
@@ -351,7 +356,7 @@ D1/P1/WAPS. No atribuye mejoras a ninguna política.
 
 La reproducción técnica de seed `998001` está documentada en [SOC_REFERENCE_V2_DIAGNOSTIC_VALIDATION.md](SOC_REFERENCE_V2_DIAGNOSTIC_VALIDATION.md), con detalle por alerta en su CSV anexo. Reprodujo 476 alertas y 335 puntuales, 141 tardías y ninguna pendiente. En la ruta recomendada y con las realizaciones efectivas, 35 retrasos fueron inviables por calendario L2 aun sin colas y 106 rutas L1 eran viables bajo la mejor cota sin contención pero tardías en la ejecución. El episodio evidencia saturación temporal L1 en el pulso y holgura semanal L2; no identifica efectos causales de política. Es diagnóstico de una única semilla, no campaña ni validación empírica.
 
-## 13 bis. Base experimental V2_24X7 (disponibilidad individual continua)
+## 13 bis. Configuración histórica V2_24X7 (disponibilidad individual continua)
 
 La variante [`SOC_REFERENCE_ORGANIZATION_V2_24X7.json`](config/SOC_REFERENCE_ORGANIZATION_V2_24X7.json)
 parte de V2 y cambia **solo el campo `calendar` de cada analista** a
@@ -362,7 +367,8 @@ identificador y la referencia descriptiva del roster se heredan como procedencia
 la disponibilidad operativa la determinan los ocho campos `calendar`. Al citar
 una corrida identificar siempre el archivo JSON y su hash/commit.
 
-Esta es la configuración base de las siguientes investigaciones de políticas:
+Esta fue la configuración base de los pilotos registrados a continuación; ya
+no es la configuración organizativa de referencia actual:
 triaje automático, una investigación directa por alerta y todos los L1/L2
 individualmente disponibles todo el tiempo. Es una idealización deliberada
 para eliminar cierres de calendario como mecanismo de espera/suspensión y
@@ -416,16 +422,16 @@ El piloto exploratorio prefijado de intensidad y duración de sobrecarga (cuatro
 
 La hipótesis exploratoria de ventaja de HLS-B frente a ambas políticas fijas en el perfil D se sometió a una validación independiente y preespecificada con 60 semillas nuevas (180 episodios). R/N medio fue 0.63200 (D1), 0.63583 (P1) y 0.64049 (HLS-B); los contrastes HLS-B−D1=+0.008483, IC95% [+0.006775,+0.010190], y HLS-B−P1=+0.004656, IC95% [+0.004237,+0.005075], superaron conjuntamente la prueba de intersección-unión preespecificada con α=0.05. La conclusión se limita al perfil D sintético: no demuestra superioridad en cada régimen ni generalización universal, y no valida empíricamente el SOC, la calidad proxy ni los servicios. Se conservaron `alpha=0.50`, `beta=0` y `gamma=1`; beta y gamma son neutros en estos experimentos y sus efectos no han sido validados. El [protocolo](SOC_NEW_MODEL_PROFILE_D_CONFIRMATORY_PROTOCOL.md), [informe completo](SOC_NEW_MODEL_PROFILE_D_CONFIRMATORY_VALIDATION.md), [análisis estadístico](SOC_NEW_MODEL_PROFILE_D_CONFIRMATORY_ANALYSIS.json) y [registros](SOC_NEW_MODEL_PROFILE_D_CONFIRMATORY_RESULTS.json) conservan el diseño y la evidencia.
 
-## 14. Compatibilidad y alcance de conclusiones
+## 14. Compatibilidad y alcance de conclusiones históricas
 
 La configuración V1, las configuraciones históricas, los ejecutores de campaña,
 los motores, algoritmos, clasificadores, resultados y manuscritos permanecen
 intactos. V2 y V2_24X7 conectan generación, flujo y backend para una ejecución
-reproducible individual; V2_24X7 es la base experimental sin cierres de
-calendario. Los JSON históricos sin `flow_mode` cargan
+reproducible individual; V2_24X7 fue la base experimental sin cierres de
+calendario de los pilotos consignados arriba. Los JSON históricos sin `flow_mode` cargan
 `historical_l1_then_l2`; los ejecutores históricos no se redirigen al escenario
-nuevo. El runner y analizador usan V2_24X7 como default; V2 requiere indicar su
-JSON explícitamente.
+nuevo. Los runners de V2 conservan su configuración y valores predeterminados;
+el diagnóstico CONOPS nuevo usa explícitamente su JSON versionado.
 
 **Propiedades matemáticas:** normalización E[f]=1 bajo Beta(2,2); mínimos de
 servicio y LP condicionado a entradas. **Hipótesis:** roster, competencias,
@@ -448,7 +454,9 @@ preespecificados.
 
 ## 15. Archivos y referencias
 
-- Base experimental de carga baja: config/SOC_REFERENCE_ORGANIZATION_V2_24X7.json.
+- Referencia organizativa CONOPS vigente: config/SOC_NEW_MODEL_CONOPS_REFERENCE.json.
+- Diagnóstico CONOPS reproducible: diagnose_new_model_conops.py y results/soc_new_model_conops/seed_2026112801.json.
+- Base experimental histórica de carga baja: config/SOC_REFERENCE_ORGANIZATION_V2_24X7.json.
 - Perfil temporal congestionado: config/SOC_REFERENCE_V2_24X7_LOAD_REGIMES.json.
 - Variante disponibilidad L1 24x7/L2 8x5: config/SOC_REFERENCE_ORGANIZATION_V2.json.
 - JSON diagnóstico anterior: config/SOC_REFERENCE_ORGANIZATION_V1.json.
@@ -468,51 +476,53 @@ Pendiente: (1) roster real con descansos, ausencias, festivos y relevos; (2) ser
 
 ## 16. Estado de implementación, decisiones y cuestiones abiertas
 
-### Modelo vigente acordado frente al código
+### Modelo vigente frente a la implementación
 
 | Elemento | Decisión/modelo científico vigente | Estado en el código auditado |
 |---|---|---|
-| Fuente de referencia para TP/FP/TN/FN | Etiqueta histórica de escalado SOCTRA adoptada como referencia operativa, no verdad objetiva de especialización | Existen etiquetas sintéticas ocultas para necesidad/ruta en campañas anteriores; su semántica no debe elevarse a verdad empírica |
+| Fuente de referencia para TP/FP/TN/FN | Dificultad q, con referencia Y=1[q≥q0]; q0 reproduce prevalencia estandarizada 19/14449 | `generate_alerts` genera q y referencia; loader verifica Beta(2,2), q0 y prevalencia; Y sigue siendo etiqueta de proceso, no verdad objetiva |
 | Triaje principal | Automático, latencia despreciable, recomendación aceptada en 100% | `triage_execution.py` recibe las recomendaciones ya generadas y acepta la ruta; no simula latencia de clasificador |
-| Generación de V2 | Demanda temporal y mezcla declaradas en JSON, semilla fija | `scenario_loader.generate_trace` reutiliza `ia_l1_l2_simulation.generate_alerts`; traduce la mezcla/régimen V2 a rate base, pulso y recuperación |
+| Generación CONOPS | Llegadas de Poisson homogéneas con intensidad media de registros como escala; clase/severidad independientes y sintéticas | JSON versionado, `scenario_loader.generate_trace` y `generate_alerts`; no representa el patrón horario empírico ni la asociación real entre atributos |
 | Ruta | TP/FP van directamente a investigación L2; TN/FN a investigación L1 | JSON y `run_scenario.py` integrados con `triage_execution`; los runners históricos conservan L1 antes de L2 |
 | Número de investigaciones | Una investigación por alerta en el nivel recomendado | V2 ejecutable asigna una etapa; el modo histórico preserva las etapas antiguas |
-| FP L2 | Investigación no necesariamente trivial; factor alpha modula el esfuerzo | alpha ambiental se aplica en ambos modos; políticas solo ven forecast, nunca etiqueta o escala efectiva |
-| FN L1 | Esfuerzo gamma≥1, gamma=1 neutro, no fijar aún gamma>1 | `gamma` está implementado en API nueva con default 1; no se aplica al flujo histórico |
+| FP L2 | Investigación de alerta ordinaria, con trabajo W(q); no trivialidad impuesta | CONOPS fija alpha=1; mantiene una sola escala de esfuerzo por complejidad |
+| FN L1 | q≥q0 implica trabajo mayor por W(q), sin investigación secundaria | CONOPS fija gamma=1 y beta=1; no hay factor gamma adicional ni segunda investigación |
 | SLA | Deadline absoluto y tiempo natural; finalización puntual, tardía o pendiente al corte | API clasifica los tres estados; nuevo runner los agrega; métricas históricas conservan sus definiciones |
 | Calidad | Proxy separado; no exactitud validada | Competencia/proxies existen, pero no hay outcome adjudicado de resolución correcta |
-| Calendarios | Base V2_24X7: disponibilidad continua individual para L1/L2, sin suspensiones por turno | `SOC_REFERENCE_ORGANIZATION_V2_24X7.json` cambia solo los calendarios; V2 8x5 se conserva como variante y los motores soportan ambos |
+| Calendarios | Disponibilidad individual continua de L1/L2 para aislar políticas en este diagnóstico | JSON CONOPS usa calendario `continuous`; V2 con L2 8x5 y V2_24X7 permanecen reproducibles |
 
-V1 y sus resultados diagnósticos permanecen como perfil anterior. V2 8x5 y su
-validación seed 998001 se conservan intactos como variante de disponibilidad.
-V2_24X7 es la base ejecutable recomendada para las siguientes comparaciones de
-políticas sin restricción de calendarios. Todos sus parámetros siguen siendo
-sintéticos y la disponibilidad individual continua es una idealización.
+V1 y sus resultados diagnósticos permanecen como perfil anterior. V2 8x5,
+V2_24X7 y su validación seed 998001 se conservan intactos como evidencia de la
+configuración anterior. El CONOPS nuevo es la referencia diagnóstica actual;
+los pilotos V2 no se reinterpretan con él. Todos los valores organizativos
+nuevos son hipótesis sintéticas y la disponibilidad individual continua es una
+idealización.
 
 ### Qué está implementado, qué falta y qué se excluye
 
 **Implementado/reutilizable:** perfiles de servicio y competencia por
-profesional/clase; elegibilidad; dificultad y beta de servicio; alpha como
-realización ambiental L2; generación separada de recomendaciones y etiquetas
-ocultas; colas/calendarios/suspensión; deadline natural; métricas de estado,
-trabajo y SLA en runners existentes. `triage_execution.py` los orquesta ya en
-modo nuevo o histórico usando los dos backends existentes.
+profesional/clase; elegibilidad; dificultad q; beta como factor de esfuerzo;
+alpha/gamma todavía disponibles para perfiles anteriores; generación de
+recomendaciones y etiquetas ocultas; colas/calendarios/suspensión; deadline
+natural; métricas de estado, trabajo y SLA. `triage_execution.py` ejecuta
+flujo nuevo o histórico con los backends existentes.
 
 **Integrado para ejecución técnica por escenario:**
 `triage_execution.run_triage_flow(..., flow_mode="triage_single_investigation")`
-envía las alertas recomendadas directamente a la cola de su único nivel de
-investigación y compone alpha, beta y gamma como escalas ambientales. La misma
-API mantiene `flow_mode="historical_l1_then_l2"` para reproducir la ruta
-anterior. El loader JSON y `run_scenario.py` conectan el modo nuevo al generador
-existente y al backend de calendario. Los ejecutores de campañas anteriores
-conservan su flujo histórico. Los dispatchers
+envía cada alerta a la cola de un único nivel. El loader JSON conserva el
+generador y ejecutor existentes, permite perfiles de eficiencia derivados de
+`b·u`, y acepta `reference_escalation_difficulty_threshold`: cuando existe,
+`Y=1[q≥q0]`; cuando se omite, se mantiene el generador de etiqueta previo para
+compatibilidad. La prueba del CONOPS selecciona explícitamente D1 en L1 y P1
+en L2. Los ejecutores históricos conservan el modo
+`historical_l1_then_l2`. Los dispatchers
 reciben forecasts y metadatos públicos, no etiqueta de referencia, confusión,
 necesidad oculta, q realizada ni multiplicadores efectivos. Ninguna política
-ni motor fue reescrito. Falta integrar el selector en futuros runners de
-campaña. El forecast L2 V2 ya se ajusta con la mezcla TP/FP ex ante. Si un
-estudio cambia alpha, gamma, beta o las dependencias entre dificultad y
-referencia, debe recalcular y declarar el forecast agregado antes de ejecutar;
-nunca debe usar labels individuales.
+ni motor fue reescrito. El forecast solo contiene valores esperados de
+duración por clase/ruta. En CONOPS beta=1 interviene una vez en duración,
+alpha=gamma=1 son neutrales. El nuevo umbral reutiliza la extracción aleatoria
+que ya existía para Y; al omitirlo, el camino histórico de generación sigue
+igual.
 
 **Descartado del estudio principal:** decisión humana de contradecir la
 recomendación, escalado tardío, reintento, reapertura, retorno L2→L1 y múltiples
@@ -535,12 +545,13 @@ la regresión masiva y no se compararon todos los resultados históricos bit a b
   nivel que investiga.
 - TP/FP/TN/FN se miden respecto a la etiqueta histórica de escalado usada como
   referencia operativa; no llamarla ground truth objetivo.
-- FP L2 puede tener servicio reducido con alpha, pero no se supone trivialidad.
-- FN L1 tiene esfuerzo adicional representable por gamma como hipótesis; no se
-  fija gamma y el neutro es 1.
-- La base experimental V2_24X7 ofrece disponibilidad individual continua para
-  L1/L2 como idealización, no como jornada real; V2 L1 24x7/L2 8x5 queda para
-  análisis posterior. El SLA siempre corre en tiempo natural.
+- FP L2 consume capacidad con investigación de complejidad ordinaria; el
+  CONOPS fija alpha=1 para evitar un segundo ajuste del esfuerzo.
+- FN L1 entra en la cola de complejidad q y exige más trabajo por beta=1; el
+  CONOPS fija gamma=1 para evitar contabilizar de nuevo el mismo efecto.
+- La referencia CONOPS usa disponibilidad individual continua 24x7 como
+  idealización, no como jornada real. V2 8x5 y V2_24X7 siguen disponibles como
+  versiones históricas. El SLA siempre corre en tiempo natural.
 - Coste, competencia y velocidad son dimensiones separadas. Perfiles pueden
   favorecer L2 en clases concretas sin imponer superioridad universal.
 - Finalización, puntualidad contractual y calidad esperada son resultados
@@ -548,8 +559,8 @@ la regresión masiva y no se compararon todos los resultados históricos bit a b
 
 ### Decisiones todavía abiertas
 
-1. Evidencia para beta distinto de cero o gamma mayor que uno; V2_24X7 conserva
-   beta=0 y gamma=1 como referencia neutra.
+1. Evidencia empírica para el vínculo entre q y esfuerzo, la velocidad por
+   proyecto y la adecuación de beta=1; los valores actuales son hipótesis.
 2. Relevo de trabajo L1 entre profesionales al cerrar turno; la continuidad
    actual de propiedad no debe confundirse con cobertura del equipo.
 3. Calibración del coste relativo, los perfiles de servicio/competencia y la
@@ -569,3 +580,241 @@ interfaces existentes, pero no presentar el flujo anterior como la
 organización vigente. El documento canónico es la fuente única para las
 decisiones organizativas actuales; los textos secundarios solo amplían su
 implementación o registran metodología/resultados históricos.
+
+## 17. CONOPS vigente y diagnóstico organizativo inicial
+
+### Especificación operativa
+
+La referencia ejecutable actual es
+[`config/SOC_NEW_MODEL_CONOPS_REFERENCE.json`](config/SOC_NEW_MODEL_CONOPS_REFERENCE.json).
+El flujo es triaje automático de latencia despreciable, recomendación aceptada
+sin revisión y **una investigación única**: TP/FP se envían directamente a L2;
+TN/FN, directamente a L1. No hay transferencia ni investigación L1 previa a
+una ruta L2. Se usa el `CalendarBackend` existente y calendarios individuales
+continuos en ambos niveles, una idealización de disponibilidad, no una jornada
+laboral.
+
+Las dimensiones de alerta se separan conceptualmente. Proyecto determina la
+cartera; severidad determina el SLA (alta 1 h, media 4 h, baja 12 h); `q` es
+complejidad intrínseca en [0,1] y determina esfuerzo. El escenario base supone
+independencia entre clase, severidad y dificultad, porque no hay datos
+individuales versionados que permitan estimar su asociación. Esto es una
+hipótesis, no un hallazgo empírico.
+
+La referencia sintética de especialización se define como `Y=1[q≥q0]`, con
+`q~Beta(2,2)`. En vez de introducir la prevalencia previa arbitraria de 10%,
+`q0=0.9789151127185249` se obtiene resolviendo
+`P(q≥q0)=(1−q0)^2(1+2q0)=19/14449=0.0013149699`. El numerador 19 es la
+prevalencia auditada/artículo-implied de etiquetas positivas del conjunto de
+prueba **estandarizado** después de la definición contrafactual usada por esa
+fuente; se escoge esta versión porque el punto de clasificador fijado también
+es el estandarizado. La evidencia está en
+[`SIMULATOR_SPECIFICATION.md`](../soc_triage_hls_q1_integration_evidence/SIMULATOR_SPECIFICATION.md),
+[`AUDIT_REPORT.md`](../soc_triage_hls_q1_integration_evidence/AUDIT_REPORT.md)
+y [`primary_campaign.json`](../soc_triage_hls_q1_integration_evidence/config/primary_campaign.json).
+La etiqueta histórica es proxy de proceso, no verdad objetiva de necesidad L2;
+`q` no se presenta como complejidad medida. La prevalencia de complejidad en
+este escenario coincide matemáticamente con la prevalencia proxy por
+construcción, no por validación empírica.
+
+El clasificador usa `pD=0.8421` y `pFA=0.045`, fijos del punto standardized
+LightGBM. Por ello la proporción que se recomienda a L2 es
+`πpD+(1−π)pFA=0.04604816` (4.6048%), mientras la referencia Y=1 es 0.1315%.
+La diferencia se debe a las falsas alarmas, no a que q0 se haya calibrado a
+4.6%. La simulación genera errores Bernoulli sintéticos condicionales a Y; los
+valores publicados no aportan numeradores/denominadores por modelo para
+cuantificar incertidumbre y se tratan como entradas fijas. No se atribuye
+validez operativa a esa transferencia.
+
+### Esfuerzo, velocidad y calidad
+
+Para proyecto `k` y analista `i`,
+`W(q)=1+β(q−0.5)` unidades de trabajo,
+`V(i,k)=1/[b(level,k)·u(i,k)]` unidades/hora, y
+`T(i,a)=W(q_a)/V(i,k_a)=b(level,k)u(i,k)[1+β(q_a−0.5)]` horas activas.
+El factor `u` representa velocidad y no se deduce de competencia. La
+competencia individual afecta al proxy de calidad, no al tiempo. En CONOPS
+`β=1`, por lo que el factor de esfuerzo va de 0.5 a 1.5 y crece linealmente
+con `q`; todas las duraciones son positivas. `alpha=gamma=1`: FP L2 conserva
+su esfuerzo W(q), y FN L1 requiere más esfuerzo porque `q≥q0`; no se vuelve a
+multiplicar por complejidad. Así se evita contarla dos veces. Estos valores son
+hipótesis sintéticas, no calibraciones de servicio humano. El resultado de
+calidad `competencia·(1−0.35q)` es un proxy definido por el simulador, no una
+probabilidad observada de resolución correcta.
+
+### Organización y supuestos congelados
+
+La configuración usa tres proyectos existentes (`portfolio_top5`,
+`portfolio_next5`, `portfolio_tail`), sin añadir tipos técnicos. La mezcla
+0.50/0.30/0.20, la mezcla de severidad alta/media/baja 0.20/0.30/0.50, su
+independencia y el punto de clasificador aplicado por clase son hipótesis
+sintéticas.
+
+| Elemento | L1 | L2 |
+|---|---:|---:|
+| Profesionales | 5 | 3 |
+| Asignación | D1 | P1 |
+| Calendario individual | Continuo 24x7, idealización | Continuo 24x7, idealización |
+| Elegibilidad | Heterogénea; hay nulos/ineligibilidad individual; toda clase está cubierta | Todos elegibles para todos los proyectos |
+| Competencia | 0.64–0.83; heterogénea por persona/proyecto | 0.90–0.93; mayor y relativamente homogénea |
+| Tiempo nominal `b` (h/unidad de trabajo) | top5 0.25; next5 0.30; tail 0.40 | top5 0.18; next5 0.22; tail 0.30 |
+
+Los factores individuales `u`, elegibilidad y competencia exactos están en el
+JSON. Todos los valores son hipótesis. El roster proporciona cobertura de
+todas las clases en L1 y L2; no se ha ajustado para maximizar el desempeño de
+una política. L2 es más veloz que L1 para la misma clase según estos perfiles,
+pero puede acumular más tiempo total porque la ruta contiene alertas de mayor
+complejidad.
+
+### Demanda y método del diagnóstico
+
+La referencia aplica una llegada Poisson estacionaria total de `9.0125
+alertas/h` (=216.3 registros/día dividido por 24) durante 168 h, y drenaje
+hasta 336 h. El promedio diario de 216.3 procede del resumen agregado
+SOCTRA ([`docs/RESEARCH.md`](../../docs/RESEARCH.md),
+[`SOC_FOUNDATIONS_AND_MODEL.md`](../soc_human_ai_organization/SOC_FOUNDATIONS_AND_MODEL.md));
+es solo escala de volumen. El extracto incluye 214,739 IDs en 993 fechas y
+presenta variabilidad diaria/interllegadas incompatible con un Poisson
+homogéneo simple. La tasa constante horaria es por tanto una simplificación
+del diagnóstico, no una reproducción del proceso real. Mezclas y falta de
+asociación horaria son sintéticas.
+
+El análisis reutiliza `scenario_loader.generate_trace`,
+`ia_l1_l2_simulation.generate_alerts`, `triage_execution.run_triage_flow`,
+`CalendarBackend` y el LP de elegibilidad/servicio en
+`scenario_diagnostics.assess_capacity`. No altera políticas ni la realización
+de la simulación. La carga ex ante del LP usa las distribuciones condicionales
+Beta(2,2) truncadas por q0, tasas fijas del clasificador y servicio efectivo
+esperado. La traza post hoc conserva campos ocultos solo para evaluación.
+`diagnose_new_model_conops.py` y su salida versionada permiten repetir la
+misma semilla:
+
+```sh
+python studies/soc_triage_hls_availability_robustness/diagnose_new_model_conops.py \
+  --seed 2026112801 \
+  --output studies/soc_triage_hls_availability_robustness/results/soc_new_model_conops/seed_2026112801.json
+```
+
+La ejecución es una sola prueba técnica, no un estudio de prestaciones ni una
+comparación de políticas.
+
+SHA-256 del JSON de escenario: `1ac1603e69832f9ce607750a7e4d455a67333b66e2ba4345a9d0ae8ed68794e9`.
+SHA-256 de la traza exógena generada: `59e4a2db548c3b613d9d3a16484c969845003361af1d1a319ff6882c9cf2a736`.
+
+### Diagnóstico técnico, semilla 2026112801
+
+La configuración y traza están hasheadas en el JSON de resultados. El control
+generó 1,435 alertas en 168 h (8.5417/h observado frente a 9.0125/h esperado):
+TP=1, FP=58, TN=1,376, FN=0. Se asignaron 1,376 investigaciones L1 y 59 L2;
+cada alerta tuvo exactamente una. La cola de complejidad `q≥q0` tuvo 1 alerta
+(0.0697% de la muestra), frente a 0.1315% esperado; la diferencia es variación
+de una muestra y no motivo para recalibrar q0.
+
+**Distribución observada por cartera y severidad** (conteo de alertas):
+
+| Grupo | L1 | L2 | Total |
+|---|---:|---:|---:|
+| top5 | 715 | 30 | 745 |
+| next5 | 415 | 19 | 434 |
+| tail | 246 | 10 | 256 |
+| Alta | 257 | 8 | 265 |
+| Media | 420 | 23 | 443 |
+| Baja | 699 | 28 | 727 |
+
+**Resultados por nivel** (h de servicio activo; esperas en horas):
+
+| Nivel/política | Alertas (tasa observada/h) | Trabajo ofrecido ex ante (h-persona/h) | Capacidad LP asignable (alertas/h) | rho LP | Utilización observada | Servicio total (h) | Servicio medio (h) | Espera media (h) | SLA puntual/tarde/pendiente |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| L1 / D1 | 1,376 (8.1905) | 2.5849 | 17.0881 | 0.5031 | 48.96% | 411.578 | 0.2991 | 0.00781 | 1,376 / 0 / 0 |
+| L2 / P1 | 59 (0.3512) | 0.09063 | 13.9859 | 0.02967 | 2.55% | 12.841 | 0.2176 | 0 | 59 / 0 / 0 |
+
+El LP respeta clases, elegibilidad, heterogeneidad, calendario (168 h por
+analista/semana) y servicio esperado. Las horas disponibles durante admisión
+son 840 L1-persona-h y 504 L2-persona-h; la oferta esperada consume
+aproximadamente 51.7% y 3.02%, respectivamente. `rho` del LP es tasa de ruta
+dividida por capacidad asignable y no equivale exactamente a utilización por
+hora-persona (por discretización/capacidad fluida y perfiles de trabajo); se
+reportan ambas.
+
+| Utilización individual durante las 168 h de admisión | Valor |
+|---|---:|
+| L1-01 | 45.64% |
+| L1-02 | 44.59% |
+| L1-03 | 45.02% |
+| L1-04 | 54.09% |
+| L1-05 | 55.46% |
+| L2-01 | 6.74% |
+| L2-02 | 0.90% |
+| L2-03 | 0.00% |
+
+La causa cuantitativa de la infrautilización L2 es la baja prevalencia de la
+etiqueta de referencia combinada con `pFA=4.5%`: se esperan 0.415 alertas/h a
+L2, solo 4.60% de llegadas. La capacidad L2 estimada es cerca de 33.7 veces la
+tasa de ruta esperada; la utilización observada del episodio fue 2.55%. L2 no
+se congestiona. L1 recibe la mayor parte del tráfico, pero con una carga de
+trabajo esperada menor que la capacidad de sus cinco profesionales. Todos los
+analistas resultan vinculantes en el óptimo fluido por la asignación común de
+la mezcla, aunque no significa que trabajen al límite.
+
+**Confusión y ruta observadas:**
+
+| Caso | n | Ruta | Espera media (h) | Servicio medio (h) | Calidad modelada media |
+|---|---:|---|---:|---:|---:|
+| TP | 1 | L2 | 0 | 0.2724 | 0.5967 |
+| FP | 58 | L2 | 0 | 0.2167 | 0.7461 |
+| TN | 1,376 | L1 | 0.00781 | 0.2991 | 0.6183 |
+| FN | 0 | L1 | — | — | — |
+
+No observar FN en esta realización no prueba que no ocurran. Bajo el modelo,
+si se realiza FN, su `q≥q0` aumenta el esfuerzo en L1; `gamma=1` no añade
+ningún esfuerzo aparte.
+
+**Colas, tiempos y SLA:** el servicio total fue 424.419 h-persona; la respuesta
+media global 0.3033 h y espera media 0.00749 h (aprox. 27 segundos). La cola
+L1 muestreada cada 15 min alcanzó 3 alertas y un máximo estimado de trabajo
+residual 1.456 h; L2 tuvo cola de espera cero y máximo residual durante
+servicios de 0.377 h. En los límites de régimen muestreados (96, 120 y 168 h),
+el residual fue <0.53 h en L1 y <0.21 h en L2; al corte 336 h no quedaba
+trabajo. La estimación de residual incluye servicio efectivo registrado para
+alertas iniciadas y forecast mínimo elegible para quienes esperaban; no es una
+métrica exacta del orden completo de trabajo pendiente. El tamaño de cola es
+exacto en instantes muestreados, pero puede perder picos entre muestras.
+
+Cumplieron SLA 1,435/1,435; 0 tardías y 0 pendientes. Cumplieron 265/265
+alertas altas, 443/443 medias y 727/727 bajas. Todas las clases y niveles
+tuvieron 100% puntual en esta muestra. La dificultad compleja tuvo q cercano
+a 0.984 y el resto media q≈0.504; la duración media fue 0.248 h en top5,
+0.308 h en next5 y 0.414 h en tail. Por ello, la ejecución no proporciona
+evidencia de incumplimientos ni de congestión sostenida bajo esta intensidad.
+
+### Lectura y límites
+
+Este primer episodio muestra un escenario operativo no trivial en composición
+y heterogeneidad, pero **no genera presión suficiente para estudiar
+congestión**: D1 tiene utilización observada cercana a la mitad y P1 en L2
+está muy infrautilizada. Los breves episodios de cola L1 son variación local y
+no causan SLA tardíos. La baja asignación L2 deriva principalmente del
+umbral/prevalencia baja (19/14,449) y del clasificador con FPR 0.045, no de la
+plantilla. No debe aumentarse q0, alterar el roster o modificar servicios a
+partir de una semilla para producir congestión; cualquier cambio requiere una
+pregunta científica y protocolo separados.
+
+El valor de 216.3/día es un agregado de registros, no de esfuerzo útil; la
+distribución Poisson homogénea ignora variabilidad empírica, interllegadas,
+horario y correlaciones. La proporción de L2 y el patrón de cola dependen
+fuertemente de la referencia sintética y de los errores supuestos del
+clasificador. Los perfiles `b`, `u`, competencia, `beta=1`, mezclas y calidad
+son hipótesis no calibradas. La etiqueta de escalado no demuestra necesidad
+objetiva y la calidad no es tasa medida de resolución correcta. Una semilla no
+estima incertidumbre de operación ni compara políticas. El SLA de este control
+solo comprueba consistencia lógica de deadlines en la muestra.
+
+**Decisiones consolidadas por este diagnóstico:** el JSON CONOPS, no V2, es la
+referencia organizativa actual; se elige la prevalencia standardized disponible
+para calibrar q0 y no el 10% previo; complejidad afecta esfuerzo solo una vez;
+D1 se fija en L1 y P1 en L2 para el diagnóstico. **Pendiente:** validar
+asociaciones conjuntas y servicio/calidad con datos autorizados, justificar el
+uso de un proceso Poisson frente a llegadas empíricas, y definir una pregunta
+posterior que explique la infrautilización L2 antes de cambiar plantilla o
+caudal. Los resultados de los pilotos y confirmación V2 anteriores siguen
+intactos y solo describen sus configuraciones originales.

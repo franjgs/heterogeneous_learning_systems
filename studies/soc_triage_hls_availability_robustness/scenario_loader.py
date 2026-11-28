@@ -126,6 +126,16 @@ class LoadedScenario:
 
         params = self.generation["parameters"]
         need = tuple(float(demand["prevalence_by_class"][k]) for k in classes)
+        difficulty_shapes = tuple(float(x) for x in params.get("difficulty_distribution_beta", (2.0, 2.0)))
+        q0 = params.get("reference_escalation_difficulty_threshold")
+        if q0 is not None:
+            q0 = float(q0)
+            if difficulty_shapes != (2.0, 2.0):
+                raise ScenarioConfigError("difficulty-threshold routing currently requires the configured Beta(2,2) difficulty distribution")
+            implied_prevalence = (1.0 - q0) ** 2 * (1.0 + 2.0 * q0)
+            if any(not isclose(value, implied_prevalence, rel_tol=1e-10, abs_tol=1e-12)
+                   for value in need):
+                raise ScenarioConfigError("prevalence_by_class must equal the Beta(2,2) upper-tail probability implied by q0")
         severity_order = ("low", "medium", "high")
         deadlines = self.settings.deadlines.offsets_by_severity_h
         return generate_alerts(ScenarioConfig(
@@ -137,10 +147,11 @@ class LoadedScenario:
             burst_window=burst, arrival_rate_shift_after=shift_after,
             arrival_rate_after=rate_after,
             ai_sensitivity=point.p_detection, ai_false_positive_rate=point.p_false_alarm,
-            difficulty_beta=tuple(params.get("difficulty_distribution_beta", (2.0, 2.0))),
+            difficulty_beta=difficulty_shapes,
+            reference_escalation_difficulty_threshold=q0,
         ), int(seed))
 
-    def triage_scenario_for(self, seed: int, *, policy: str | None = None):
+    def triage_scenario_for(self, seed: int, *, policy: str | Mapping[str, str] | None = None):
         """Build the triage orchestration input and return it with its source trace."""
         if self.flow_mode not in FLOW_MODES:
             raise ScenarioConfigError(f"unsupported flow_mode {self.flow_mode!r}")
@@ -153,9 +164,11 @@ class LoadedScenario:
                     float(self.demand_profile[key]), abs_tol=1e-12):
                 raise ScenarioConfigError(f"generation.parameters and demand_profile disagree on {key}")
         policies = {}
+        if isinstance(policy, Mapping) and set(policy) - {"L1", "L2"}:
+            raise ScenarioConfigError("policy mapping may contain only L1 and/or L2")
         for level in ("L1", "L2"):
             spec = self.policies[level]
-            name = policy or spec["default"]
+            name = policy.get(level, spec["default"]) if isinstance(policy, Mapping) else (policy or spec["default"])
             if name not in spec["available"]:
                 raise ScenarioConfigError(f"policy {name!r} is not available for {level}")
             policies[level] = PolicyConfig(name, spec["waps"] if name == "WAPS" else None)
@@ -346,6 +359,9 @@ def load_scenario(path: str | Path) -> LoadedScenario:
     organization_cfg = _object(config.get("organization"), "organization")
     analyst_specs = organization_cfg.get("analysts")
     teams_cfg = _object(organization_cfg.get("teams"), "organization.teams")
+    service_model = _object(organization_cfg.get("service_model", {}), "organization.service_model")
+    base_service = service_model.get("base_service_h")
+    demand_classes = (set(demand_profile.get("class_mix", {})) if demand_profile is not None else set())
     if not isinstance(analyst_specs, list) or not analyst_specs:
         raise ScenarioConfigError("organization.analysts must be a nonempty list")
     resources, levels = [], {}
@@ -355,12 +371,42 @@ def load_scenario(path: str | Path) -> LoadedScenario:
         if not isinstance(aid, str) or not aid.strip() or level not in {"L1", "L2"}:
             raise ScenarioConfigError(f"analyst {i} needs a nonempty id and level L1/L2")
         eligible = spec.get("eligible_classes")
-        competence = _object(spec.get("competence"), f"analyst {aid}.competence")
-        service = _object(spec.get("service_h"), f"analyst {aid}.service_h")
+        configured_competence = _object(spec.get("competence"), f"analyst {aid}.competence")
         if not isinstance(eligible, list) or not eligible or len(eligible) != len(set(eligible)):
             raise ScenarioConfigError(f"analyst {aid}.eligible_classes must be a nonempty unique list")
-        if set(service) != set(eligible) or not set(eligible).issubset(competence):
-            raise ScenarioConfigError(f"analyst {aid}: service keys and competence must cover eligibility")
+        eligible = set(eligible)
+        if configured_competence and any(value is None for value in configured_competence.values()):
+            universe = demand_classes or set(configured_competence)
+            if set(configured_competence) != universe:
+                raise ScenarioConfigError(f"analyst {aid}: competence with null values must cover the full task-class universe")
+            declared_eligible = {key for key, value in configured_competence.items() if value is not None}
+            if declared_eligible != eligible:
+                raise ScenarioConfigError(f"analyst {aid}: non-null competence keys must equal eligible_classes")
+        elif set(configured_competence) != eligible:
+            raise ScenarioConfigError(f"analyst {aid}: competence keys must equal eligible_classes")
+        competence = {key: configured_competence[key] for key in eligible}
+
+        configured_service = spec.get("service_h")
+        duration_factors = spec.get("duration_factor_by_class")
+        if base_service is not None and duration_factors is not None:
+            level_base = _object(base_service.get(level), f"organization.service_model.base_service_h.{level}")
+            duration_factors = _object(duration_factors, f"analyst {aid}.duration_factor_by_class")
+            if set(level_base) != (demand_classes or set(level_base)) or set(duration_factors) != eligible:
+                raise ScenarioConfigError(f"analyst {aid}: base service must cover task classes and duration factors must cover eligibility")
+            service = {key: _positive(level_base[key], f"analyst {aid}.base_service_h.{key}") *
+                       _positive(duration_factors[key], f"analyst {aid}.duration_factor_by_class.{key}")
+                       for key in eligible}
+            if configured_service is not None:
+                stated = _object(configured_service, f"analyst {aid}.service_h")
+                if set(stated) != eligible or any(not isclose(float(stated[key]), service[key], rel_tol=1e-12, abs_tol=1e-12)
+                                                  for key in eligible):
+                    raise ScenarioConfigError(f"analyst {aid}.service_h must equal base_service_h[level,class] times duration_factor_by_class")
+        else:
+            if configured_service is None:
+                raise ScenarioConfigError(f"analyst {aid} requires service_h or base service plus duration factors")
+            service = _object(configured_service, f"analyst {aid}.service_h")
+            if set(service) != eligible:
+                raise ScenarioConfigError(f"analyst {aid}: service keys must equal eligibility")
         analyst = Analyst(aid, frozenset(eligible), competence)
         calendar = _calendar(spec.get("calendar"), f"analyst {aid}.calendar")
         forecast = spec.get("forecast_service_h", service)
@@ -375,6 +421,20 @@ def load_scenario(path: str | Path) -> LoadedScenario:
             raise ScenarioConfigError(f"organization.teams.{level} must list its analysts in declaration order: {ids}")
         teams.append(TeamConfig(level, tuple(configured)))
     organization = OrganizationConfig(tuple(resources), tuple(teams))
+
+    if demand_classes:
+        for level in ("L1", "L2"):
+            covered = set().union(*(set(resource.analyst.eligible_classes)
+                                    for resource in organization.resources_for(level)))
+            missing = demand_classes - covered
+            if missing:
+                raise ScenarioConfigError(f"team {level} has no eligible analyst for task classes: {sorted(missing)}")
+        qualification_contract = _object(organization_cfg.get("qualification_contract", {}),
+                                         "organization.qualification_contract")
+        if qualification_contract.get("l2_all_classes_eligible", False):
+            if any(set(resource.analyst.eligible_classes) != demand_classes
+                   for resource in organization.resources_for("L2")):
+                raise ScenarioConfigError("qualification contract requires every L2 analyst to be eligible for every configured class")
 
     policy_cfg = _object(config.get("policies"), "policies")
     policies = {}

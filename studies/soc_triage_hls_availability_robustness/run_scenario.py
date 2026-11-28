@@ -6,6 +6,7 @@ from collections import Counter
 import json
 from pathlib import Path
 import sys
+from typing import Mapping
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(ROOT / "src"), str(ROOT)]
@@ -21,7 +22,7 @@ DEFAULT_CONFIG = Path(__file__).with_name("config") / "SOC_REFERENCE_ORGANIZATIO
 
 
 def run_one(config_path: str | Path = DEFAULT_CONFIG, *, seed: int | None = None,
-            policy: str | None = None, flow_mode: str | None = None) -> dict:
+            policy: str | Mapping[str, str] | None = None, flow_mode: str | None = None) -> dict:
     scenario = load_scenario(config_path)
     selected_seed = scenario.seed_start if seed is None else int(seed)
     triage, trace = scenario.triage_scenario_for(selected_seed, policy=policy)
@@ -83,9 +84,19 @@ def main() -> None:
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     parser.add_argument("--seed", type=int)
     parser.add_argument("--policy", choices=("D1", "P1", "WAPS"))
+    parser.add_argument("--l1-policy", choices=("D1", "P1", "WAPS"),
+                        help="override only L1; L2 keeps its configured policy")
+    parser.add_argument("--l2-policy", choices=("D1", "P1", "WAPS"),
+                        help="override only L2; L1 keeps its configured policy")
     parser.add_argument("--flow-mode", choices=sorted(FLOW_MODES))
     args = parser.parse_args()
-    print(json.dumps(run_one(args.config, seed=args.seed, policy=args.policy,
+    if args.policy and (args.l1_policy or args.l2_policy):
+        parser.error("--policy cannot be combined with --l1-policy/--l2-policy")
+    policy = args.policy
+    if args.l1_policy or args.l2_policy:
+        policy = {level: value for level, value in (("L1", args.l1_policy), ("L2", args.l2_policy))
+                  if value is not None}
+    print(json.dumps(run_one(args.config, seed=args.seed, policy=policy,
                              flow_mode=args.flow_mode), indent=2, sort_keys=True))
 
 

@@ -96,6 +96,128 @@ def test_v2_json_generates_seeded_trace_and_builds_configured_single_investigati
     }
 
 
+def test_loader_accepts_null_competence_as_explicit_ineligibility_and_level_specific_policy(tmp_path):
+    source = json.loads((CONFIG / "SOC_REFERENCE_ORGANIZATION_V2_24X7.json").read_text())
+    analyst = source["organization"]["analysts"][0]
+    task_class = "portfolio_tail"
+    analyst["eligible_classes"].remove(task_class)
+    analyst["competence"][task_class] = None
+    for key in ("service_h", "forecast_service_h", "duration_factor_by_class"):
+        analyst[key].pop(task_class)
+    path = tmp_path / "nullable_eligibility.json"
+    path.write_text(json.dumps(source))
+
+    scenario = load_scenario(path)
+    resource = next(r for r in scenario.organization.analysts
+                    if r.analyst.analyst_id == analyst["id"])
+    assert task_class not in resource.analyst.eligible_classes
+    assert task_class not in resource.analyst.competence
+    assert task_class not in resource.service_by_class
+    triage, _ = scenario.triage_scenario_for(998001, policy={"L1": "WAPS"})
+    assert triage.policies["L1"].name == "WAPS"
+    assert triage.policies["L2"].name == source["policies"]["L2"]["default"]
+
+
+def test_loader_rejects_nominal_service_inconsistent_with_effort_and_efficiency(tmp_path):
+    source = json.loads((CONFIG / "SOC_REFERENCE_ORGANIZATION_V2_24X7.json").read_text())
+    source["organization"]["analysts"][0]["service_h"]["portfolio_top5"] *= 1.1
+    path = tmp_path / "inconsistent_service.json"
+    path.write_text(json.dumps(source))
+    with pytest.raises(ScenarioConfigError, match="must equal base_service_h"):
+        load_scenario(path)
+
+
+def test_loader_rejects_level_without_coverage_for_a_configured_class(tmp_path):
+    source = json.loads((CONFIG / "SOC_REFERENCE_ORGANIZATION_V2_24X7.json").read_text())
+    task_class = "portfolio_next5"
+    for analyst in source["organization"]["analysts"]:
+        if analyst["level"] != "L2":
+            continue
+        if task_class in analyst["eligible_classes"]:
+            analyst["eligible_classes"].remove(task_class)
+            analyst["competence"].pop(task_class)
+            for key in ("service_h", "forecast_service_h", "duration_factor_by_class"):
+                analyst[key].pop(task_class)
+    path = tmp_path / "missing_l2_coverage.json"
+    path.write_text(json.dumps(source))
+    with pytest.raises(ScenarioConfigError, match="team L2 has no eligible analyst"):
+        load_scenario(path)
+
+
+def test_conops_reference_profile_has_calibrated_q_routing_and_role_specific_policies():
+    path = CONFIG / "SOC_NEW_MODEL_CONOPS_REFERENCE.json"
+    scenario = load_scenario(path)
+    demand = scenario.demand_profile
+    params = scenario.generation["parameters"]
+    q0 = params["reference_escalation_difficulty_threshold"]
+    pi = 19 / 14449
+    assert (1 - q0) ** 2 * (1 + 2 * q0) == pytest.approx(pi, abs=1e-12)
+    assert set(demand["prevalence_by_class"].values()) == {pi}
+    assert scenario.settings.deadlines.offsets_by_severity_h == {
+        "high": 1.0, "medium": 4.0, "low": 12.0
+    }
+    assert scenario.flow_mode == "triage_single_investigation"
+
+    l1, l2 = scenario.organization.resources_for("L1"), scenario.organization.resources_for("L2")
+    classes = set(demand["class_mix"])
+    assert len(l1) == 5 and len(l2) == 3
+    assert set().union(*(set(r.analyst.eligible_classes) for r in l1)) == classes
+    assert all(set(r.analyst.eligible_classes) == classes for r in l2)
+    assert any(set(r.analyst.competence) != classes for r in l1)
+    assert all(min(r.analyst.competence.values()) >= .90 for r in l2)
+    assert max(max(r.analyst.competence.values()) for r in l1) < min(
+        min(r.analyst.competence.values()) for r in l2
+    )
+    for task_class in classes:
+        fastest_l1 = min(r.service_by_class[task_class] for r in l1
+                         if task_class in r.analyst.eligible_classes)
+        slowest_l2 = max(r.service_by_class[task_class] for r in l2)
+        assert slowest_l2 < fastest_l1
+    triage, trace = scenario.triage_scenario_for(scenario.seed_start)
+    assert triage.policies["L1"].name == "D1"
+    assert triage.policies["L2"].name == "P1"
+    assert triage.alpha == 1 and triage.gamma == 1 and triage.difficulty_service_beta == 1
+    assert all(row.true_escalation_need == (row.difficulty >= q0) for row in trace)
+    # One work unit of effort is completed at V_i,k = 1/(base_h * u_i,k).
+    # Thus the forecast service is the route-conditional expected effort divided
+    # by that speed, while the realized work factor varies with each alert's q.
+    lower = min(q0 - 1e-6, 0.5)
+    higher = q0
+    assert 1 + triage.difficulty_service_beta * (higher - .5) > 1 + triage.difficulty_service_beta * (lower - .5)
+    for resource in scenario.organization.analysts:
+        for task_class, base_time in resource.service_by_class.items():
+            nominal_speed = 1 / base_time
+            work_low = 1 + triage.difficulty_service_beta * (lower - .5)
+            work_high = 1 + triage.difficulty_service_beta * (higher - .5)
+            assert work_high / nominal_speed > work_low / nominal_speed
+            expected_route_factor = (0.9994660381203488 if resource.analyst.analyst_id.startswith("L1")
+                                     else 1.011061764217371)
+            assert resource.forecast_service_by_class[task_class] == pytest.approx(
+                base_time * expected_route_factor
+            )
+    assert all(row.routed.alert.deadline - row.routed.alert.arrival == pytest.approx(
+               scenario.settings.deadlines.offsets_by_severity_h[row.severity])
+               for row in trace)
+
+
+def test_new_conops_runs_one_investigation_on_the_recommended_level():
+    from studies.soc_triage_hls_availability_robustness.execution_api import CalendarBackend
+    from studies.soc_triage_hls_availability_robustness.triage_execution import run_triage_flow
+
+    scenario = load_scenario(CONFIG / "SOC_NEW_MODEL_CONOPS_REFERENCE.json")
+    triage, trace = scenario.triage_scenario_for(scenario.seed_start)
+    result = run_triage_flow(triage, flow_mode=scenario.flow_mode, backend=CalendarBackend())
+    by_id = {row.routed.alert.alert_id: row for row in trace}
+    positives = {aid for aid, value in triage.recommendation_l2_by_alert.items() if value}
+    assert set(result.stage_results["L2"].tasks_by_alert) == positives
+    assert set(result.stage_results["L1"].tasks_by_alert) == set(by_id) - positives
+    assert all(outcome.investigation_count == 1 for outcome in result.outcomes)
+    for outcome in result.outcomes:
+        row = by_id[outcome.alert_id]
+        assert outcome.final_investigation_level == ("L2" if row.routed.soctra_recommendation else "L1")
+        assert outcome.deadline == row.routed.alert.deadline
+
+
 def test_historical_scenario_json_defaults_to_legacy_flow_selector():
     scenario = load_scenario(CONFIG / "HISTORICAL_REFERENCE.json")
     assert scenario.flow_mode == "historical_l1_then_l2"
