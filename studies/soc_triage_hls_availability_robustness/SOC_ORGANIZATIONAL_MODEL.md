@@ -1403,3 +1403,130 @@ Pruebas de compatibilidad técnica comparan los resultados del adaptador
 continuo registro a registro con llamadas directas al motor congelado para D1,
 P1 y HLS-B; otra prueba usa calendarios senior 8x5 individuales. Las ejecuciones
 de humo no son campañas comparativas ni producen selección de política.
+
+## 22. Ejecución diagnóstica única D1: semilla 2026112801
+
+Se ejecutó una sola traza con la configuración versionada de cola común, D1,
+cinco junior, tres senior, 24x7, prevalencia y deadlines heredados sin cambios.
+La admisión fue de 168 h y el corte de evaluación de 336 h. El artefacto
+completo, sin datos externos ni confidenciales, es
+`results/SOC_SHARED_QUEUE_D1_DIAGNOSTIC_SEED_2026112801.json`; incluye las 1.435
+alertas sintéticas, 1.435 asignaciones, 4.305 eventos ordenados, snapshots de
+cola, periodos ocupados, métricas por analista y hashes de configuración/código.
+Se reproduce con:
+
+```sh
+python studies/soc_triage_hls_availability_robustness/run_shared_queue_d1_diagnostic.py
+```
+
+### 22.1 Demanda, severidad y triaje de esta semilla
+
+| Dimensión | Conteos de la ejecución |
+|---|---|
+| Alertas por proyecto | `portfolio_top5` 745; `portfolio_next5` 434; `portfolio_tail` 256 |
+| Alertas por severidad | CRITICAL 215; HIGH 800; MEDIUM 420 |
+| Matriz de triaje (need de referencia × recomendación) | TP 1; FP 58; TN 1.376; FN 0 |
+| Ruta de investigación | Ordinaria 1.376 (95,89 %); especializada 59 (4,11 %) |
+
+La necesidad generada fue 1/1.435 (0,070 %) frente al parámetro configurado
+0,1315 %; es una diferencia muestral de una semilla, no una nueva estimación.
+La intensidad realizada fue 8,542 alertas/h frente a 9,013/h configuradas.
+El trabajo ofrecido esperado, usando servicio forecast medio entre elegibles,
+fue 359,70 h ordinarias y 12,72 h especializadas; el servicio efectivamente
+ejecutado fue 362,56 h y 12,93 h respectivamente.
+
+### 22.2 Utilización y actividad individual
+
+La utilización de la tabla usa las 168 h de admisión como denominador y el
+trabajo ejecutado dentro de esa ventana. Las distribuciones por proyecto,
+severidad y tipo se incluyen por analista en el artefacto; los códigos P/N/X
+significan top5/next5/tail y C/H/M critical/high/medium.
+
+| Analista | Categoría | Investigaciones | Trabajo (h) | Utilización | Tipo O/S | Proyecto P/N/X | Severidad C/H/M |
+|---|---|---:|---:|---:|---:|---|---|
+| L1-01 | Junior | 176 | 44,28 | 26,35 % | 176/0 | 119/57/0 | 20/103/53 |
+| L1-02 | Junior | 111 | 40,88 | 24,33 % | 111/0 | 0/68/43 | 16/57/38 |
+| L1-03 | Junior | 145 | 42,15 | 25,09 % | 145/0 | 116/0/29 | 29/70/46 |
+| L1-04 | Junior | 189 | 54,27 | 32,30 % | 189/0 | 89/65/35 | 26/115/48 |
+| L1-05 | Junior | 179 | 56,85 | 33,79 % | 179/0 | 95/46/38 | 22/102/55 |
+| L2-01 | Senior | 201 | 43,86 | 26,04 % | 185/16 | 95/65/41 | 34/114/53 |
+| L2-02 | Senior | 221 | 48,48 | 28,86 % | 197/24 | 111/69/41 | 29/130/62 |
+| L2-03 | Senior | 213 | 44,74 | 26,63 % | 194/19 | 120/64/29 | 39/109/65 |
+
+En el horizonte completo de 336 h, la utilización agregada fue 13,97 %:
+14,19 % junior y 13,60 % senior. No se interpreta la variación individual
+como inequidad ni se propone balanceo. Los senior realizaron 576 investigaciones
+ordinarias y 59 especializadas. Dedican 124,15 h a las ordinarias y 12,93 h a
+las especializadas: el 90,6 % del tiempo activo senior fue ordinario. Así,
+esta ejecución sí utiliza senior para demanda ordinaria y elimina en la
+representación la prohibición estructural de compartir su tiempo entre colas.
+
+### 22.3 Cola, espera, servicio y SLA
+
+| Métrica | Resultado |
+|---|---:|
+| Longitud máxima de cola única | 2 alertas |
+| Área de cola | 0,216 alerta·h; solo hubo cola especializada |
+| Longitud media ponderada por tiempo (336 h) | 0,000642 alertas |
+| Espera (media / p50 / p90 / p95 / máximo) | 0,000150 / 0 / 0 / 0 / 0,1319 h |
+| Servicio activo (media / p50 / p90 / p95 / máximo) | 0,2617 / 0,2474 / 0,3835 / 0,4310 / 0,6477 h |
+| Resolución total (media / p50 / p90 / p95 / máximo) | 0,2618 / 0,2475 / 0,3835 / 0,4310 / 0,6477 h |
+| Investigaciones pendientes al corte | 0 |
+
+Las 215 CRITICAL, 800 HIGH y 420 MEDIUM cumplieron su deadline; no hubo
+retrasos ni causas de incumplimiento que atribuir. El p90 de espera igual a
+cero indica que al menos el 90 % comenzó en su instante de llegada; la espera
+máxima fue 7,91 min.
+
+Hubo cuatro alertas especializadas que esperaron mientras los tres senior
+estaban ocupados y al menos un junior seguía libre. Esas situaciones sumaron
+0,2157 h (12,94 min) de espera; la mayor espera especializada individual fue
+0,1319 h. En los intervalos registrados, los senior estaban trabajando en
+otras alertas y los junior carecían de elegibilidad especializada. Las cuatro
+alertas se atendieron al liberarse un senior, sin transferencia ni reescalado.
+
+### 22.4 Competencia, velocidad y efecto de la cola compartida
+
+| Proyecto/tipo | Competencia elegible mín.–máx. | Media asignada por D1 | Asignaciones junior/senior | Servicio base elegible mín.–máx. (h) |
+|---|---:|---:|---:|---:|
+| Top5 ordinaria | 0,69–0,93 | 0,823 | 419/296 | 0,176–0,275 |
+| Next5 ordinaria | 0,72–0,93 | 0,825 | 236/179 | 0,216–0,330 |
+| Tail ordinaria | 0,64–0,92 | 0,794 | 145/101 | 0,294–0,440 |
+| Top5 especializada | 0,91–0,93 | 0,919 | 0/30 | 0,176–0,184 |
+| Next5 especializada | 0,90–0,93 | 0,913 | 0/19 | 0,216–0,224 |
+| Tail especializada | 0,90–0,92 | 0,910 | 0/10 | 0,294–0,306 |
+
+D1 usa la competencia propia después de evaluar riesgo de deadline en su
+selector existente; no añadimos ordenación por experiencia. Las medias de
+calidad esperada modelada fueron 0,674 ordinaria y 0,745 especializada, según
+competencia asignada y complejidad sintética. Ni estas cantidades ni las
+competencias representan rendimiento humano observado. La selección por D1
+distribuyó trabajo ordinario entre ambas categorías y todo el especializado
+entre senior; las velocidades por proyecto también variaron según los perfiles
+configurados.
+
+### 22.5 Capacidad compartida y conclusión
+
+El LP conjunto, con ocho restricciones individuales de tiempo y elegibilidad
+proyecto×tipo, estima capacidad máxima de **31,40 alertas/h**; el flujo medio
+configurado equivale al 28,7 % de ese máximo. No se sumaron dos capacidades
+para los senior. Como referencia estrictamente analítica, los equipos
+separados con los mismos perfiles y mix quedarían limitados por la capacidad
+ordinaria L1 a 17,91 alertas/h; el pool compartido da 1,75× esa capacidad al
+permitir que senior absorba trabajo ordinario. El pool especializado separado
+por sí solo tendría 303,72 alertas/h equivalentes por la baja fracción de esa
+ruta, señal del cuello de botella del modelo separado.
+
+En esta semilla, la utilización senior y junior resultó similar y los senior
+dedicaron la mayor parte del tiempo a lo ordinario. El modelo elimina la
+restricción estructural de mantener capacidad senior ociosa detrás de una cola
+L2 independiente, aunque no elimina esperas especializadas cuando los tres
+senior están ocupados. No hay señal de saturación ni incumplimiento SLA en esta
+ejecución.
+
+Es un único resultado sintético condicionado por el generador estacionario,
+la asignación proyecto 50/30/20 del escenario, la prevalencia configurada, los
+perfiles y los tiempos no observados de GMV-CERT. La cola especializada solo
+tuvo 59 alertas, por lo que esta semilla no permite inferir prestaciones del
+clasificador ni comportamiento medio a largo plazo. No se ejecutaron P1,
+HLS-B, barridos ni optimización.
