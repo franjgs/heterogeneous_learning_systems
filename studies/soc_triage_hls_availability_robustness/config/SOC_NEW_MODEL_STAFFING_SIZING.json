@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "study_id": "soc-new-model-staffing-sizing-exploratory-v1",
+  "purpose": "Exploratory staffing and assignable-capacity diagnosis under the frozen CONOPS; no policy comparison or policy change.",
+  "base_scenario": "SOC_NEW_MODEL_CONOPS_REFERENCE.json",
+  "base_scenario_sha256": "1ac1603e69832f9ce607750a7e4d455a67333b66e2ba4345a9d0ae8ed68794e9",
+  "fixed_conditions": {
+    "flow_mode": "triage_single_investigation",
+    "policies": {"L1": "D1", "L2": "P1"},
+    "alpha": 1.0,
+    "difficulty_service_beta": 1.0,
+    "gamma": 1.0,
+    "individual_availability": "continuous_24x7_idealization",
+    "same_absolute_demand_for_all_rosters": true,
+    "no_cross_level_transfers": true
+  },
+  "seed_block": {
+    "seeds": [
+      2026120101, 2026120102, 2026120103, 2026120104,
+      2026120105, 2026120106, 2026120107, 2026120108,
+      2026120109, 2026120110, 2026120111, 2026120112
+    ],
+    "episodes_per_configuration": 12,
+    "note": "Fixed before execution; disjoint from the repository's documented 20261127 and 20261128 blocks, confirmatory 20261129 block, and historical 998001/910000-930000/711000000 blocks."
+  },
+  "queue_sampling_interval_h": 0.25,
+  "roster_profiles": {
+    "L1_5": {
+      "analyst_ids": ["L1-01", "L1-02", "L1-03", "L1-04", "L1-05"],
+      "selection_rule": "All current profiles; baseline."
+    },
+    "L1_4": {
+      "analyst_ids": ["L1-01", "L1-02", "L1-04", "L1-05"],
+      "selection_rule": "Nested reduction from L1_5 by excluding L1-03. L1-04 and L1-05 retain all-class coverage; the effect of removing L1-03's distinct top5/tail competence and speed is measured, not treated as interchangeable."
+    },
+    "L1_3": {
+      "analyst_ids": ["L1-01", "L1-04", "L1-05"],
+      "selection_rule": "Nested reduction from L1_4 by excluding L1-02. L1-04 and L1-05 retain all-class coverage; the reduced roster retains the faster top5 profile L1-01 and higher next5/tail competence profile L1-05. L1-02's distinct faster tail service is lost and assessed."
+    },
+    "L2_3": {
+      "analyst_ids": ["L2-01", "L2-02", "L2-03"],
+      "selection_rule": "All current profiles; baseline."
+    },
+    "L2_2": {
+      "analyst_ids": ["L2-01", "L2-02"],
+      "selection_rule": "Nested reduction from L2_3 by excluding L2-03. Both retained analysts remain eligible for every project; the change in class-specific speed/competence is measured."
+    },
+    "L2_1": {
+      "analyst_ids": ["L2-01"],
+      "selection_rule": "Nested reduction from L2_2 by excluding L2-02. L2-01 covers all projects; this is only a mathematical capacity bound under continuous individual availability, not an operational recommendation because it leaves no redundancy or realistic relief."
+    }
+  },
+  "configurations": [
+    {"id": "L1_5__L2_3", "l1_profile": "L1_5", "l2_profile": "L2_3"},
+    {"id": "L1_5__L2_2", "l1_profile": "L1_5", "l2_profile": "L2_2"},
+    {"id": "L1_5__L2_1", "l1_profile": "L1_5", "l2_profile": "L2_1"},
+    {"id": "L1_4__L2_3", "l1_profile": "L1_4", "l2_profile": "L2_3"},
+    {"id": "L1_4__L2_2", "l1_profile": "L1_4", "l2_profile": "L2_2"},
+    {"id": "L1_4__L2_1", "l1_profile": "L1_4", "l2_profile": "L2_1"},
+    {"id": "L1_3__L2_3", "l1_profile": "L1_3", "l2_profile": "L2_3"},
+    {"id": "L1_3__L2_2", "l1_profile": "L1_3", "l2_profile": "L2_2"},
+    {"id": "L1_3__L2_1", "l1_profile": "L1_3", "l2_profile": "L2_1"}
+  ],
+  "interpretation": {
+    "unit_of_replication": "seeded episode",
+    "primary_scope": "organizational capacity and staffing only; D1/L1 and P1/L2 are held fixed",
+    "not_a_claim": "No empirical validation of service, quality, arrival process, label prevalence, or staffing practice."
+  }
+}

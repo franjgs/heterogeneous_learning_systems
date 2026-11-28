@@ -818,3 +818,186 @@ uso de un proceso Poisson frente a llegadas empíricas, y definir una pregunta
 posterior que explique la infrautilización L2 antes de cambiar plantilla o
 caudal. Los resultados de los pilotos y confirmación V2 anteriores siguen
 intactos y solo describen sus configuraciones originales.
+
+## 18. Diagnóstico exploratorio de dimensionamiento humano
+
+### Diseño y reproducibilidad
+
+El análisis de plantillas conserva sin cambio el CONOPS de la sección 17, la
+demanda absoluta `9.0125 alertas/h`, q0, clasificador, mezclas, W(q), perfiles,
+competencias, SLA, calendarios y flujo. Se mantienen D1 en L1 y P1 en L2; no
+hay transferencias. Se usaron 12 semillas emparejadas nuevas
+(`2026120101`–`2026120112`), con una traza exógena por semilla reutilizada
+literalmente en las nueve plantillas. La traza incluye llegada, proyecto,
+severidad, q, referencia, recomendación y deadline. Hay 9 configuraciones ×
+12 episodios = 108 episodios únicos. Los hashes por semilla están en el
+resultado JSON.
+
+La configuración y la regla explícita de selección de perfiles están en
+[`config/SOC_NEW_MODEL_STAFFING_SIZING.json`](config/SOC_NEW_MODEL_STAFFING_SIZING.json);
+el ejecutor reutiliza el generador, motor, políticas y LP existentes en
+[`run_staffing_sizing.py`](run_staffing_sizing.py). Resultados detallados por
+episodio, analista, severidad, colas y eventos tardíos:
+[`results/soc_new_model_staffing_sizing.json`](results/soc_new_model_staffing_sizing.json).
+La huella de la organización de referencia V2-CONOPS es
+`1ac1603e69832f9ce607750a7e4d455a67333b66e2ba4345a9d0ae8ed68794e9`; el hash
+de la configuración de dimensionamiento es
+`2504af71f00b2a3ecf3b97c4788a8f2f4f8ccb02e2edb51d4cbf464031a2cbce`.
+Reproducción:
+
+```sh
+python studies/soc_triage_hls_availability_robustness/run_staffing_sizing.py \
+  --output studies/soc_triage_hls_availability_robustness/results/soc_new_model_staffing_sizing.json
+```
+
+Las alternativas L1 son anidadas: 5 conserva todos; 4 excluye L1-03; 3
+conserva L1-01/L1-04/L1-05. L1-04 y L1-05 aseguran cobertura de las tres
+clases en las reducciones; no se presupone que sustituyan las velocidades y
+competencias de quienes salen. L2 compara los tres actuales, L2-01/L2-02 y
+solo L2-01; todos son elegibles para todas las clases. Retener L2-01 en los
+subconjuntos produce una comparación anidada, no una afirmación de que ese
+perfil sea intercambiable con L2-02/03. La alternativa L2-1 es un límite de
+capacidad dentro de la idealización continua, no una propuesta real de una
+persona cubriendo una operación 24x7.
+
+### Llegadas, rutas y capacidad asignable ex ante
+
+En 12 episodios se admitieron en promedio 1.513,17 alertas por episodio
+(rango 1.442–1.577; 9,007 alertas/h observadas frente a 9,0125/h configuradas).
+Las tasas analíticas de ruta esperadas son 8,5975 L1/h y 0,4150 L2/h. La
+realización común tuvo, acumulada sobre 18.158 alertas, TP=19, FP=837,
+TN=17.299 y FN=3; 856 (4,71%) fueron a L2 y 97,78% de esas recomendaciones
+fueron FP. Por episodio, los promedios fueron TP=1,58, FP=69,75, TN=1.441,58
+y FN=0,25. Así, con el q0/prevalencia adoptados, el tamaño de la plantilla L2
+no es el factor que limita su demanda: la etiqueta de referencia es muy rara y
+la mayoría de la ruta positiva procede del FPR fijo. La baja cuenta de TP
+implica incertidumbre considerable sobre demanda de trabajo especializado;
+12 semillas no estiman con precisión la cola de eventos raros.
+
+El LP fluido existente considera proporciones de clases en cada ruta,
+elegibilidad, servicio individual por clase y calendario continuo. Maximiza la
+tasa común de alertas asignables, no multiplica personas por una productividad
+media. La columna de horas de trabajo ofrecido usa la convención existente de
+servicio medio entre analistas elegibles por clase; se presenta aparte de la
+capacidad LP y de la utilización observada bajo D1/P1. La utilización analítica
+de horas-persona divide ese trabajo ofrecido por `n` horas-persona/h, porque
+cada profesional se supone disponible continuamente.
+
+| Equipo | n | Tasa de ruta (alertas/h) | Trabajo ofrecido (h-persona/h) | Horas-persona disponibles/h | Fracción de horas ocupadas ex ante | Capacidad LP asignable (alertas/h) | ρ LP |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| L1 | 5 | 8,5975 | 2,5849 | 5 | 51,70% | 17,0881 | 0,5031 |
+| L1 | 4 | 8,5975 | 2,5593 | 4 | 63,98% | 13,7989 | 0,6231 |
+| L1 | 3 | 8,5975 | 2,5342 | 3 | 84,47% | 10,5688 | 0,8135 |
+| L2 | 3 | 0,4150 | 0,09063 | 3 | 3,02% | 13,9859 | 0,0297 |
+| L2 | 2 | 0,4150 | 0,09061 | 2 | 4,53% | 9,2764 | 0,0447 |
+| L2 | 1 | 0,4150 | 0,09038 | 1 | 9,04% | 4,5917 | 0,0904 |
+
+Todas las alternativas mantienen elegibilidad para cada proyecto; no aparece
+una clase descubierta. Todas las personas retenidas son restricciones activas
+del LP a su máximo asignable para esa mezcla, pero eso describe el punto de
+capacidad máxima, no su utilización en la demanda configurada. La diferencia
+entre horas-persona ocupadas y rho LP es esperable: uno usa servicio promedio
+entre elegibles y el otro optimiza una asignación fraccional por velocidad y
+elegibilidad. Ambas son referencias fluidas, no garantías de plazo.
+
+### Ejecución emparejada por plantillas
+
+Media ± desviación estándar entre las 12 semillas; utilización observada se
+calcula como trabajo activo durante las 168 h de admisión dividido por las
+horas-persona disponibles. El cumplimiento SLA agrupa la ruta indicada; la
+tabla por severidad separa los retrasos. Espera/servicio/respuesta se expresan
+en horas.
+
+| L1 roster | Utilización L1 | SLA L1 | Servicio medio | Espera media (p90) | Respuesta media | Calidad proxy completadas | Retrasos medios/episodio | Cola L1 máx media (peor) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| L1-5 actual | 51,26% ± 1,45 pp | 100,00% | 0,2990 | 0,0135 (0,0412) | 0,3126 | 0,6192 | 0 | 4,25 (7) |
+| L1-4 sin L1-03 | 63,32% ± 1,84 pp | 99,982% | 0,2956 | 0,0459 (0,1573) | 0,3414 | 0,6280 | 0,25 | 6,25 (8) |
+| L1-3 sin L1-02/03 | 82,97% ± 2,40 pp | 99,625% | 0,2908 | 0,2015 (0,4797) | 0,4923 | 0,6454 | 5,42 | 11,25 (16) |
+
+| L2 roster | Utilización L2 | SLA L2 | Servicio medio | Espera media (p90) | Respuesta media | Calidad proxy completadas | Retrasos/pendientes |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| L2-3 actual | 3,12% ± 0,32 pp | 100% | 0,2202 | 0 | 0,2202 | 0,7478 | 0 / 0 |
+| L2-2 sin L2-03 | 4,67% ± 0,47 pp | 100% | 0,2202 | <0,0001 | 0,2202 | 0,7478 | 0 / 0 |
+| L2-1 solo L2-01 | 9,34% ± 0,95 pp | 100% | 0,2201 | 0,0109 | 0,2311 | 0,7475 | 0 / 0 |
+
+La utilización individual media en L1-5 fue L1-01 48,9%, L1-02 45,0%,
+L1-03 49,6%, L1-04 55,8% y L1-05 57,1%. En L1-4 fue 60,6%, 55,4%, 68,1%
+y 69,2% para L1-01/02/04/05; en L1-3 fue 77,4%, 84,9% y 86,6% para
+L1-01/04/05. L2-3 utilizó 8,6%, 0,7% y 0,0%; L2-2, 8,6% y 0,7%; L2-1,
+9,3%. Los perfiles no son intercambiables: la reducción L1 elimina dos
+analistas relativamente menos competentes en parte de las clases, y sube el
+proxy medio de calidad; al mismo tiempo sube espera y baja puntualidad. Esta
+subida del proxy no es una mejora causada por menor plantilla, sino un efecto
+de la composición seleccionada y de la asignación D1. No se interpreta como
+calidad empírica.
+
+### SLA, congestión y explicación de los retrasos
+
+No hubo alertas pendientes al corte en ninguna de las 108 ejecuciones. L2
+cumplió 100% en alta/media/baja para las tres plantillas. En L1, la tasa
+puntual por severidad fue:
+
+| L1 roster | Alta (deadline 1 h) | Media (4 h) | Baja (12 h) | Retrasos totales en 12 episodios |
+|---|---:|---:|---:|---:|
+| 5 | 100% | 100% | 100% | 0 |
+| 4 | 99,91% | 100% | 100% | 3 |
+| 3 | 98,08% | 100% | 100% | 65 |
+
+Los 68 incumplimientos observados fueron alertas L1 de severidad alta,
+clase tail/next5 y confusión TN. Todas tenían servicio activo inferior a 1 h
+y `q<q0`; sin cola habrían sido temporalmente viables. En L1-4 las tres
+tardías tuvieron en promedio 0,552 h de espera y 0,541 h de servicio (respuesta
+1,094 h). En L1-3, 65 tardías promediaron 0,678 h de espera y 0,448 h de
+servicio (respuesta 1,125 h). Por tanto, en esta traza son retrasos por
+congestión/espera que interactúa con la cola de servicio de tareas tail y el
+SLA corto, no inviabilidad intrínseca ni cierre de calendario. No se atribuye
+el contrafactual de que otra política hubiera evitado esos eventos.
+
+La cola máxima L1 muestreada cada 15 minutos creció desde 7 alertas en L1-5,
+a 8 en L1-4 y 16 en L1-3; el promedio entre episodios de la cola máxima fue
+4,25/6,25/11,25. Son colas reales de la ejecución, no capacidad estructural.
+L2 tuvo cola de espera nula en todas las trazas salvo la configuración de un
+analista, donde el máximo fue una alerta y el SLA siguió cumpliéndose. El
+agregado temporal completo se conserva en el JSON; colas entre instantes de
+muestreo pueden tener picos no registrados.
+
+### Conclusión de dimensionamiento y alcance
+
+**L1:** cinco perfiles no saturan la demanda (≈51% utilización), pero dan
+holgura y no mostraron retrasos en estas semillas. Cuatro perfiles seleccionados
+proporcionan un punto intermedio (≈63%, con 3 incumplimientos altos de 17.300
+alertas L1). Tres perfiles acercan el equipo a 83% y revelan congestión
+temporal, esperas mayores y 65 incumplimientos altos. Cuatro L1 es una
+alternativa exploratoria defendible para una ocupación media más alta sin
+retirar toda holgura; cinco es preferible si la prioridad única es reducir
+retrasos observados. No hay una meta de utilización prefijada ni evidencia
+suficiente para declarar ninguna plantilla óptima.
+
+**L2:** con la demanda actual, incluso un analista all-class tiene capacidad
+LP ≈11 veces superior a la tasa de ruta y uso simulado ≈9%; dos y tres caen a
+≈4,7% y ≈3,1%. Por capacidad pura no se justifica la plantilla actual de tres;
+sin embargo, tampoco puede recomendarse operativamente un único especialista:
+la hipótesis 24x7 supone una disponibilidad imposible de atribuir a una persona
+real y el simulador no modela ausencias, relevos, turnos, redundancia ni
+continuidad del servicio. No hay evidencia en este modelo para convertir la
+ocupación baja en un requisito de contratación concreto. Para justificar una
+plantilla real harían falta calendarios/roster operativos y requisito de
+cobertura/continuidad; no se debe inflar prevalencia o falsos positivos para
+llenar capacidad.
+
+La parte determinada por demanda es el número de alertas, mezcla, tasa de
+recomendación y, por tanto, trabajo por nivel. La capacidad asignable depende
+de la elegibilidad, plantilla y velocidades sintéticas `b·u`; la duración
+realizada depende además de q y beta. Las competencias alteran el proxy de
+calidad, no la velocidad. Con q0 bajo en prevalencia, D1/P1 no se enfrentan a
+un balance L1/L2 donde un ratio global sea muy informativo: sí es útil para
+describir uso de recursos bajo esta hipótesis, pero no para recomendar un
+ratio real ni estudiar sensibilidad a prevalencia. Cambiar prevalencia,
+servicios o flujo queda fuera de este diagnóstico.
+
+Este estudio es exploratorio de dimensionamiento, con 12 semillas y demanda
+Poisson sintética estacionaria. Sus niveles de servicio, ocupaciones y calidad
+proxy no son datos de operación ni permiten inferencia confirmatoria. La
+configuración CONOPS de referencia permanece en 5 L1/3 L2; estas variantes no
+la sustituyen automáticamente. Las campañas confirmatorias anteriores,
+OLD MODEL, políticas y LaTeX permanecen sin cambios.
