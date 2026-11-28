@@ -1207,3 +1207,90 @@ python studies/soc_triage_hls_availability_robustness/analyze_soctra_demand_capa
   --processed-september data/soctra/processed/soctra_preprocessed.parquet \
   --processed-february data/soctra/processed/soctra_february_reference.parquet
 ```
+
+## 20. Estudio paramétrico algebraico de dimensionamiento
+
+Este análisis complementa §19 con regiones de carga, sin alterar el CONOPS
+de referencia ni ejecutar trazas, colas, campañas o comparación de políticas.
+El script `parametric_soctra_capacity.py` reutiliza el LP de capacidad
+fraccional con elegibilidad por clase/proyecto disponible en
+`scenario_diagnostics.assess_capacity()`.
+
+### 20.1 Parámetros y reparto
+
+El ancla empírica es `p=570/156981=0,363101 %`, la prevalencia observada de
+la etiqueta de escalado estandarizada. Se utiliza solo como proxy de referencia
+para el parámetro experimental de necesidad L2: esa etiqueta no demuestra que
+cada alerta requiera especialización real. Se estudian además p sintéticas de
+1, 2, 5 y 10 %.
+Para cada p, `q0` satisface `P(q≥q0)=p` bajo `q~Beta(2,2)`; no se trata de una
+reestimación observada. Se mantienen sensibilidad 0,8421 y FPR 0,045 del
+escenario. El reparto es `TP=p·sens`, `FN=p·(1−sens)`,
+`FP=(1−p)·FPR`, `TN=(1−p)·(1−FPR)`: por tanto, p no es la proporción enviada
+a L2. A p empírica se envía 4,789 % a L2; 93,6 % de esa ruta son FP. Con
+p=5 %, la ruta L2 es 8,486 %; con p=10 %, 12,471 %.
+
+La sensibilidad a FPR es material: con p empírica, variar FPR de 1 a 4,5 y
+10 % cambia L2 de 1,302 a 4,789 y 10,269 %; los FP forman, respectivamente,
+76,5, 93,6 y 97,0 % de esa ruta. Son sensibilidades hipotéticas, no una
+calibración del clasificador.
+
+### 20.2 Esfuerzo, SLA y plantillas
+
+Se conserva `W(q)=1+β(q−0,5)` y `α=γ=1`, evitando multiplicadores duplicados.
+Con β=1, el cociente de esfuerzo medio complejo/ordinario ronda 1,43–1,48 en
+el rango de p estudiado; con β=0 es 1 y con β=2/3 queda aproximadamente
+1,90–2,44. TN son tareas ordinarias de L1, FN complejas de L1, FP ordinarias
+de L2 y TP complejas de L2. Las contribuciones esperadas por ruta se imprimen
+separadamente en la salida reproducible.
+
+Con perfiles sintéticos actuales, p empírica y β=1, el servicio esperado es
+0,300 h en L1 y 0,222 h en L2. Contra deadlines sintéticos CRITICAL/HIGH/MEDIUM
+de 1/4/12 h, el margen medio crítico es 0,700/0,778 h; la fracción
+intrínsecamente inviable resulta 0 % con la distribución modelada. Esto mide
+servicio sin espera: no predice colas ni resolución total. Los SLA siguen
+siendo hipótesis, al igual que los perfiles y la relación entre q y esfuerzo.
+
+El script amplía equipos ciclando perfiles existentes, con identificadores
+replicados explícitos y conservando clase elegible, competencia y tiempos por
+proyecto. No representa nuevas personas empíricamente observadas. El LP admite
+asignación fraccional y respeta elegibilidad y tiempos distintos. Como control,
+igualar velocidades dentro de cada clase (conservar elegibilidad y medias)
+reduce la capacidad máxima estimada aproximadamente 2,7 % en 10/3 con p=10 %,
+12/4 con p=5 % y 20/2 con p=5 %; competencia no interviene en el LP.
+
+| Plantilla | p sintética | Ventana λ (registros equivalentes/h) para L1 25–80 %, L2 10–60 % y LP estable |
+|---|---:|---:|
+| 5/3 | 5 % | 13,72–14,80 |
+| 5/3 | 10 % | 9,00–15,72 |
+| 10/3 | 10 % | 9,83–31,45 |
+| 12/4 | 10 % | 12,01–37,85 |
+| 20/2 | 5 % | 18,49–54,90 |
+
+Las franjas 25–80 % para L1 y 10–60 % para L2 son filtros exploratorios, no
+umbrales operacionales empíricos. A 9,019 registros/h, el caso 5/3, p=10 % da
+utilización media estimada 45,9/10,0 %; un pulso 2,5× durante 6 h rebasa la
+capacidad LP de L1 (ρ=1,12), acumula aproximadamente 12,35 tareas equivalentes
+y su recuperación fluida ideal a la tasa base es 1,26 h. L2 no se sobrecarga.
+Con 10/3, p=10 %, el pulso mantiene ρ≤0,56 y no acumula atraso en el modelo.
+Estas son cuentas fluidas con mezcla y disponibilidad constantes, no colas
+simuladas. Las llegadas reducidas, normales y elevadas se calculan con la
+misma plantilla (multiplicadores 0,5/1/1,5); la organización no se recalibra.
+
+Con la plantilla original 5/3, p empírica y λ=9,019/h, la utilización L2
+estimada es solo ~3,2 % (L1 ~51,6 %), señal de desbalance en estas hipótesis.
+El caso p empírica presenta infrautilización relativa de L2 con FPR=4,5 %;
+para aumentar su participación sin crear actividades hay que variar p, FPR,
+el ratio de plantilla o la intensidad. 5/3 con p=10 % ofrece una región
+exploratoria próxima a la intensidad media fuente; 10/3 con p=10 % y 20/2 con
+p=5 % son sensibilidades adicionales en intensidades indicadas arriba. No se
+declara ninguna como óptima o representativa de GMV-CERT. La compatibilidad
+operacional depende especialmente de la conversión desconocida de registro a
+investigación (`κ`), del mix real de clases/proyectos y de las duraciones,
+turnos y perfiles no observados.
+
+Reproducir las tablas algebraicas/LP (sin datos privados ni escrituras):
+
+```sh
+python studies/soc_triage_hls_availability_robustness/parametric_soctra_capacity.py
+```
