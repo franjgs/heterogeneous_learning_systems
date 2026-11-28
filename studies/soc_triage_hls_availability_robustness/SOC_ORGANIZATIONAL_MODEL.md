@@ -585,8 +585,14 @@ implementación o registran metodología/resultados históricos.
 
 ### Especificación operativa
 
-La referencia ejecutable actual es
-[`config/SOC_NEW_MODEL_CONOPS_REFERENCE.json`](config/SOC_NEW_MODEL_CONOPS_REFERENCE.json).
+La referencia ejecutable histórica es
+[`config/SOC_NEW_MODEL_CONOPS_REFERENCE.json`](config/SOC_NEW_MODEL_CONOPS_REFERENCE.json)
+y se conserva sin cambios, junto a sus resultados. La nueva versión con
+severidad empírica es
+[`config/SOC_NEW_MODEL_CONOPS_REFERENCE_SOCTRA_SEVERITY_V1.json`](config/SOC_NEW_MODEL_CONOPS_REFERENCE_SOCTRA_SEVERITY_V1.json);
+ambas se cargan con el mismo loader y generador. Esta actualización fundamenta
+la mezcla marginal de severidad, no constituye una campaña ni reemplaza
+resultados históricos.
 El flujo es triaje automático de latencia despreciable, recomendación aceptada
 sin revisión y **una investigación única**: TP/FP se envían directamente a L2;
 TN/FN, directamente a L1. No hay transferencia ni investigación L1 previa a
@@ -595,11 +601,24 @@ continuos en ambos niveles, una idealización de disponibilidad, no una jornada
 laboral.
 
 Las dimensiones de alerta se separan conceptualmente. Proyecto determina la
-cartera; severidad determina el SLA (alta 1 h, media 4 h, baja 12 h); `q` es
-complejidad intrínseca en [0,1] y determina esfuerzo. El escenario base supone
-independencia entre clase, severidad y dificultad, porque no hay datos
-individuales versionados que permitan estimar su asociación. Esto es una
-hipótesis, no un hallazgo empírico.
+cartera; `q` es complejidad intrínseca en [0,1] y determina esfuerzo. En la
+versión histórica, severidades `high/medium/low` y sus plazos pertenecen a la
+hipótesis sintética original. La versión SOCTRA usa `critical/high/medium` y
+las proporciones empíricas exactas 21.937/156.981, 87.545/156.981 y
+47.499/156.981, respectivamente. Sus plazos de resolución son hipótesis del
+simulador: critical 1 h, high 4 h, medium 12 h; no son SLA reales de GMV-CERT.
+El dato SOCTRA `incumplimiento_sla` denota asignación inicial tardía, mientras
+el simulador mide finalización de investigación. No se usa aquel indicador
+para calibrar estos plazos.
+
+En ambas versiones, clase/proyecto, severidad y dificultad se muestrean
+independientemente. Para la versión SOCTRA, independencia severidad-complejidad
+es una simplificación experimental, no una propiedad demostrada por los datos.
+La variación empírica de severidad entre proyectos y periodos queda pendiente
+de incorporarse al generador. Las prevalencias estandarizadas de escalado por
+severidad (critical 137/21.937, high 237/87.545, medium 196/47.499) se registran
+en configuración para estudios posteriores; no cambian `q0` ni el clasificador.
+La distribución marginal no condiciona la severidad al escalado ni a `q`.
 
 La referencia sintética de especialización se define como `Y=1[q≥q0]`, con
 `q~Beta(2,2)`. En vez de introducir la prevalencia previa arbitraria de 10%,

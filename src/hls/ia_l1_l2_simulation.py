@@ -32,6 +32,7 @@ class ScenarioConfig:
     classes: tuple[str, ...] = ("class_0", "class_1", "class_2")
     class_probabilities: tuple[float, ...] = (0.5, 0.3, 0.2)
     severity_probabilities: tuple[float, float, float] = (1 / 3, 1 / 3, 1 / 3)
+    severity_categories: tuple[str, str, str] = ("low", "medium", "high")
     escalation_probability_by_class: tuple[float, ...] = (0.08, 0.16, 0.28)
     escalation_probability_by_class_severity: tuple[tuple[float, float, float], ...] | None = None
     deadline_by_severity: tuple[tuple[str, float], ...] = (("low", 0.12), ("medium", 0.07), ("high", 0.035))
@@ -98,7 +99,7 @@ def generate_alerts(config: ScenarioConfig, seed: int) -> tuple[SimulatedAlert, 
         ix = _categorical(rng, probs)
         class_name = config.classes[ix]
         severity_ix = _categorical(rng, config.severity_probabilities)
-        severity = ("low", "medium", "high")[severity_ix]
+        severity = config.severity_categories[severity_ix]
         difficulty = rng.betavariate(*config.difficulty_beta)
         p_need = (config.escalation_probability_by_class_severity[ix][severity_ix]
                   if config.escalation_probability_by_class_severity is not None
@@ -585,6 +586,9 @@ def _validate_config(config: ScenarioConfig) -> None:
         raise ValueError("class probabilities must sum to one")
     if len(config.severity_probabilities) != 3 or any(p < 0 for p in config.severity_probabilities) or abs(sum(config.severity_probabilities) - 1) > 1e-9:
         raise ValueError("three nonnegative severity probabilities must sum to one")
+    if len(config.severity_categories) != 3 or len(set(config.severity_categories)) != 3 or any(
+            not isinstance(category, str) or not category for category in config.severity_categories):
+        raise ValueError("severity_categories must contain three distinct nonempty names")
     if config.shift_class_probabilities is not None and (
         len(config.shift_class_probabilities) != len(config.classes)
         or any(p < 0 for p in config.shift_class_probabilities)
@@ -601,8 +605,8 @@ def _validate_config(config: ScenarioConfig) -> None:
             raise ValueError("severity-specific AI rates must have three values in [0,1]")
     if any(not 0 <= p <= 1 for p in (config.ai_sensitivity, config.ai_false_positive_rate)):
         raise ValueError("AI error rates must be within [0,1]")
-    if set(dict(config.deadline_by_severity)) != {"low", "medium", "high"} or any(v <= 0 for _, v in config.deadline_by_severity):
-        raise ValueError("positive deadlines are required for low, medium and high severity")
+    if set(dict(config.deadline_by_severity)) != set(config.severity_categories) or any(v <= 0 for _, v in config.deadline_by_severity):
+        raise ValueError("positive deadlines are required for every configured severity")
     if config.burst_window and (config.burst_window[0] < 0 or config.burst_window[1] <= config.burst_window[0] or config.burst_window[2] <= 0):
         raise ValueError("invalid burst window")
     if config.shift_after is not None and not 0 <= config.shift_after < config.horizon:

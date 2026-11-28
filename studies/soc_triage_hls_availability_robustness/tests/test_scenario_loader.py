@@ -200,11 +200,50 @@ def test_conops_reference_profile_has_calibrated_q_routing_and_role_specific_pol
                for row in trace)
 
 
-def test_new_conops_runs_one_investigation_on_the_recommended_level():
+def test_soctra_severity_reference_is_reproducible_and_preserves_other_conops_assumptions():
+    scenario = load_scenario(CONFIG / "SOC_NEW_MODEL_CONOPS_REFERENCE_SOCTRA_SEVERITY_V1.json")
+    demand = scenario.demand_profile
+    categories = ("critical", "high", "medium")
+    expected = {"critical": 21937 / 156981, "high": 87545 / 156981,
+                "medium": 47499 / 156981}
+    assert tuple(demand["severity_order"]) == categories
+    assert dict(demand["severity_mix"]) == pytest.approx(expected)
+    assert scenario.settings.deadlines.offsets_by_severity_h == {
+        "critical": 1.0, "high": 4.0, "medium": 12.0
+    }
+    params = scenario.generation["parameters"]
+    assert params["difficulty_distribution_beta"] == (2.0, 2.0)
+    assert params["reference_escalation_difficulty_threshold"] == pytest.approx(0.9789151127185249)
+    assert demand["sensitivity_by_class"] == {k: 0.8421 for k in demand["class_mix"]}
+    assert demand["false_positive_rate_by_class"] == {k: 0.045 for k in demand["class_mix"]}
+    assert len(scenario.organization.resources_for("L1")) == 5
+    assert len(scenario.organization.resources_for("L2")) == 3
+    assert scenario.triage_scenario_for(scenario.seed_start)[0].policies["L1"].name == "D1"
+    assert scenario.triage_scenario_for(scenario.seed_start)[0].policies["L2"].name == "P1"
+
+    first = scenario.generate_trace(scenario.seed_start)
+    again = scenario.generate_trace(scenario.seed_start)
+    assert first == again
+    assert first
+    assert {row.severity for row in first} <= set(categories)
+    assert {row.severity for row in first}.isdisjoint({"low"})
+    assert all(row.routed.alert.deadline - row.routed.alert.arrival == pytest.approx(
+               scenario.settings.deadlines.offsets_by_severity_h[row.severity])
+               for row in first)
+    observed = {key: sum(row.severity == key for row in first) / len(first)
+                for key in categories}
+    assert observed == pytest.approx(expected, abs=0.04)
+
+
+@pytest.mark.parametrize("config_name", [
+    "SOC_NEW_MODEL_CONOPS_REFERENCE.json",
+    "SOC_NEW_MODEL_CONOPS_REFERENCE_SOCTRA_SEVERITY_V1.json",
+])
+def test_new_conops_runs_one_investigation_on_the_recommended_level(config_name):
     from studies.soc_triage_hls_availability_robustness.execution_api import CalendarBackend
     from studies.soc_triage_hls_availability_robustness.triage_execution import run_triage_flow
 
-    scenario = load_scenario(CONFIG / "SOC_NEW_MODEL_CONOPS_REFERENCE.json")
+    scenario = load_scenario(CONFIG / config_name)
     triage, trace = scenario.triage_scenario_for(scenario.seed_start)
     result = run_triage_flow(triage, flow_mode=scenario.flow_mode, backend=CalendarBackend())
     by_id = {row.routed.alert.alert_id: row for row in trace}

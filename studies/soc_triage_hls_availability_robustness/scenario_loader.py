@@ -95,10 +95,11 @@ class LoadedScenario:
             if set(values) != set(classes) or any(not isfinite(float(v)) or not 0 <= float(v) <= 1 for v in values.values()):
                 raise ScenarioConfigError(f"demand_profile.{name} must cover classes with probabilities in [0,1]")
         severity_mix = demand.get("severity_mix", {})
-        if set(severity_mix) != {"low", "medium", "high"} or any(
+        severity_order = tuple(demand.get("severity_order", ("low", "medium", "high")))
+        if len(severity_order) != 3 or len(set(severity_order)) != 3 or set(severity_mix) != set(severity_order) or any(
                 not isfinite(float(v)) or float(v) < 0 for v in severity_mix.values()) or not isclose(
                 sum(float(v) for v in severity_mix.values()), 1.0, abs_tol=1e-9):
-            raise ScenarioConfigError("demand_profile.severity_mix must define low/medium/high and sum to one")
+            raise ScenarioConfigError("demand_profile.severity_mix must define its three severity_order categories and sum to one")
         point = self.classifier_point()
         if any(not isclose(float(demand["sensitivity_by_class"][k]), point.p_detection, abs_tol=1e-12) or
                not isclose(float(demand["false_positive_rate_by_class"][k]), point.p_false_alarm, abs_tol=1e-12)
@@ -136,12 +137,14 @@ class LoadedScenario:
             if any(not isclose(value, implied_prevalence, rel_tol=1e-10, abs_tol=1e-12)
                    for value in need):
                 raise ScenarioConfigError("prevalence_by_class must equal the Beta(2,2) upper-tail probability implied by q0")
-        severity_order = ("low", "medium", "high")
         deadlines = self.settings.deadlines.offsets_by_severity_h
+        if set(deadlines) != set(severity_order):
+            raise ScenarioConfigError("severity_order categories must match deadlines.offsets_by_severity_h")
         return generate_alerts(ScenarioConfig(
             horizon=horizon, arrival_rate=totals[0], classes=classes,
             class_probabilities=class_mix,
             severity_probabilities=tuple(float(demand["severity_mix"][k]) for k in severity_order),
+            severity_categories=severity_order,
             escalation_probability_by_class=need,
             deadline_by_severity=tuple((k, float(deadlines[k])) for k in severity_order),
             burst_window=burst, arrival_rate_shift_after=shift_after,

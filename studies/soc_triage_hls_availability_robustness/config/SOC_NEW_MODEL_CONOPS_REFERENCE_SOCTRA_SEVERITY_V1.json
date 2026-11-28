@@ -1,0 +1,458 @@
+{
+  "schema_version": 1,
+  "scenario_id": "soc-new-model-conops-reference-soctra-severity-v1",
+  "description": "CONOPS reference v1 with empirical SOCTRA September 2025 processed severity mix; severity-specific completion deadlines remain synthetic hypotheses, independent of complexity; D1 at L1 and P1 at L2; one investigation. Not a new campaign or empirical GMV-CERT SLA calibration.",
+  "generation": {
+    "generator": {
+      "reference": "ia_l1_l2_simulation.generate_alerts"
+    },
+    "classifier": {
+      "reference": "q1_primary_campaign.classifiers",
+      "default": "standardized_lightgbm_apc_symmetric",
+      "options": [
+        "standardized_lightgbm_apc_symmetric"
+      ]
+    },
+    "prevalence": {
+      "reference": "demand_profile.prevalence_by_class"
+    },
+    "parameters": {
+      "alpha": 1.0,
+      "difficulty_service_beta": 1.0,
+      "gamma": 1.0,
+      "difficulty_distribution_beta": [
+        2.0,
+        2.0
+      ],
+      "reference_escalation_difficulty_threshold": 0.9789151127185249
+    },
+    "need_reference": "reference_escalation = difficulty >= q0; q0 is the upper-tail Beta(2,2) quantile calibrated to 19/14449 standardized test labels; process-label proxy only, not objective L2 need"
+  },
+  "organization": {
+    "resource_reference": "Synthetic 5-L1, 3-L2 roster; explicit heterogeneous L1 eligibility/competence, all-class eligible homogeneous high-competence L2; continuous individual availability is an idealization.",
+    "teams": {
+      "L1": [
+        "L1-01",
+        "L1-02",
+        "L1-03",
+        "L1-04",
+        "L1-05"
+      ],
+      "L2": [
+        "L2-01",
+        "L2-02",
+        "L2-03"
+      ]
+    },
+    "service_model": {
+      "base_service_h": {
+        "L1": {
+          "portfolio_top5": 0.25,
+          "portfolio_next5": 0.3,
+          "portfolio_tail": 0.4
+        },
+        "L2": {
+          "portfolio_top5": 0.18,
+          "portfolio_next5": 0.22,
+          "portfolio_tail": 0.3
+        }
+      },
+      "difficulty_service_beta": 1.0,
+      "duration_factor_definition": "T = W(q)/V_i,k; W(q)=1+beta*(q-0.5) work units; V_i,k=1/(base_service_h[level,k]*duration_factor_by_class[i,k]) work units/hour. Thus service_h at q=0.5 is base_service_h*duration_factor.",
+      "classification": "All effort, velocity, competence and duration values are synthetic hypotheses; hours are natural hours of active work, not empirical measurements.",
+      "forecast_basis": "Route-conditional expected service by class from Beta(2,2), q0, pD and pFA; based on population distributions only. No individual difficulty, reference label, TP/FP/FN/TN or realized service is exposed."
+    },
+    "analysts": [
+      {
+        "id": "L1-01",
+        "level": "L1",
+        "eligible_classes": [
+          "portfolio_top5",
+          "portfolio_next5"
+        ],
+        "competence": {
+          "portfolio_top5": 0.78,
+          "portfolio_next5": 0.75,
+          "portfolio_tail": null
+        },
+        "duration_factor_by_class": {
+          "portfolio_top5": 0.9,
+          "portfolio_next5": 1.0
+        },
+        "service_h": {
+          "portfolio_top5": 0.225,
+          "portfolio_next5": 0.3
+        },
+        "forecast_service_h": {
+          "portfolio_top5": 0.22487985857707848,
+          "portfolio_next5": 0.29983981143610466
+        },
+        "calendar": {
+          "kind": "continuous"
+        }
+      },
+      {
+        "id": "L1-02",
+        "level": "L1",
+        "eligible_classes": [
+          "portfolio_next5",
+          "portfolio_tail"
+        ],
+        "competence": {
+          "portfolio_top5": null,
+          "portfolio_next5": 0.76,
+          "portfolio_tail": 0.64
+        },
+        "duration_factor_by_class": {
+          "portfolio_next5": 1.1,
+          "portfolio_tail": 1.05
+        },
+        "service_h": {
+          "portfolio_next5": 0.33,
+          "portfolio_tail": 0.42000000000000004
+        },
+        "forecast_service_h": {
+          "portfolio_next5": 0.3298237925797151,
+          "portfolio_tail": 0.4197757360105466
+        },
+        "calendar": {
+          "kind": "continuous"
+        }
+      },
+      {
+        "id": "L1-03",
+        "level": "L1",
+        "eligible_classes": [
+          "portfolio_top5",
+          "portfolio_tail"
+        ],
+        "competence": {
+          "portfolio_top5": 0.72,
+          "portfolio_next5": null,
+          "portfolio_tail": 0.69
+        },
+        "duration_factor_by_class": {
+          "portfolio_top5": 1.1,
+          "portfolio_tail": 1.0
+        },
+        "service_h": {
+          "portfolio_top5": 0.275,
+          "portfolio_tail": 0.4
+        },
+        "forecast_service_h": {
+          "portfolio_top5": 0.27485316048309594,
+          "portfolio_tail": 0.39978641524813957
+        },
+        "calendar": {
+          "kind": "continuous"
+        }
+      },
+      {
+        "id": "L1-04",
+        "level": "L1",
+        "eligible_classes": [
+          "portfolio_top5",
+          "portfolio_next5",
+          "portfolio_tail"
+        ],
+        "competence": {
+          "portfolio_top5": 0.83,
+          "portfolio_next5": 0.72,
+          "portfolio_tail": 0.75
+        },
+        "duration_factor_by_class": {
+          "portfolio_top5": 1.0,
+          "portfolio_next5": 0.95,
+          "portfolio_tail": 0.95
+        },
+        "service_h": {
+          "portfolio_top5": 0.25,
+          "portfolio_next5": 0.285,
+          "portfolio_tail": 0.38
+        },
+        "forecast_service_h": {
+          "portfolio_top5": 0.2498665095300872,
+          "portfolio_next5": 0.2848478208642994,
+          "portfolio_tail": 0.37979709448573257
+        },
+        "calendar": {
+          "kind": "continuous"
+        }
+      },
+      {
+        "id": "L1-05",
+        "level": "L1",
+        "eligible_classes": [
+          "portfolio_top5",
+          "portfolio_next5",
+          "portfolio_tail"
+        ],
+        "competence": {
+          "portfolio_top5": 0.69,
+          "portfolio_next5": 0.82,
+          "portfolio_tail": 0.78
+        },
+        "duration_factor_by_class": {
+          "portfolio_top5": 1.05,
+          "portfolio_next5": 1.05,
+          "portfolio_tail": 1.1
+        },
+        "service_h": {
+          "portfolio_top5": 0.2625,
+          "portfolio_next5": 0.315,
+          "portfolio_tail": 0.44000000000000006
+        },
+        "forecast_service_h": {
+          "portfolio_top5": 0.2623598350065916,
+          "portfolio_next5": 0.3148318020079099,
+          "portfolio_tail": 0.4397650567729535
+        },
+        "calendar": {
+          "kind": "continuous"
+        }
+      },
+      {
+        "id": "L2-01",
+        "level": "L2",
+        "eligible_classes": [
+          "portfolio_top5",
+          "portfolio_next5",
+          "portfolio_tail"
+        ],
+        "competence": {
+          "portfolio_top5": 0.92,
+          "portfolio_next5": 0.91,
+          "portfolio_tail": 0.9
+        },
+        "duration_factor_by_class": {
+          "portfolio_top5": 0.98,
+          "portfolio_next5": 1.0,
+          "portfolio_tail": 1.02
+        },
+        "service_h": {
+          "portfolio_top5": 0.1764,
+          "portfolio_next5": 0.22,
+          "portfolio_tail": 0.306
+        },
+        "forecast_service_h": {
+          "portfolio_top5": 0.17835129520794424,
+          "portfolio_next5": 0.2224335881278216,
+          "portfolio_tail": 0.3093848998505155
+        },
+        "calendar": {
+          "kind": "continuous"
+        }
+      },
+      {
+        "id": "L2-02",
+        "level": "L2",
+        "eligible_classes": [
+          "portfolio_top5",
+          "portfolio_next5",
+          "portfolio_tail"
+        ],
+        "competence": {
+          "portfolio_top5": 0.91,
+          "portfolio_next5": 0.93,
+          "portfolio_tail": 0.92
+        },
+        "duration_factor_by_class": {
+          "portfolio_top5": 1.02,
+          "portfolio_next5": 0.98,
+          "portfolio_tail": 1.0
+        },
+        "service_h": {
+          "portfolio_top5": 0.18359999999999999,
+          "portfolio_next5": 0.21559999999999999,
+          "portfolio_tail": 0.3
+        },
+        "forecast_service_h": {
+          "portfolio_top5": 0.1856309399103093,
+          "portfolio_next5": 0.21798491636526515,
+          "portfolio_tail": 0.30331852926521125
+        },
+        "calendar": {
+          "kind": "continuous"
+        }
+      },
+      {
+        "id": "L2-03",
+        "level": "L2",
+        "eligible_classes": [
+          "portfolio_top5",
+          "portfolio_next5",
+          "portfolio_tail"
+        ],
+        "competence": {
+          "portfolio_top5": 0.93,
+          "portfolio_next5": 0.9,
+          "portfolio_tail": 0.91
+        },
+        "duration_factor_by_class": {
+          "portfolio_top5": 1.0,
+          "portfolio_next5": 1.02,
+          "portfolio_tail": 0.98
+        },
+        "service_h": {
+          "portfolio_top5": 0.18,
+          "portfolio_next5": 0.22440000000000002,
+          "portfolio_tail": 0.294
+        },
+        "forecast_service_h": {
+          "portfolio_top5": 0.18199111755912675,
+          "portfolio_next5": 0.22688225989037805,
+          "portfolio_tail": 0.29725215867990706
+        },
+        "calendar": {
+          "kind": "continuous"
+        }
+      }
+    ],
+    "qualification_contract": {
+      "l2_all_classes_eligible": true,
+      "description": "Every L2 is eligible for all configured project classes; L2 competence profile is intentionally high with low between-professional dispersion. Synthetic assumption."
+    }
+  },
+  "policies": {
+    "L1": {
+      "default": "D1",
+      "available": [
+        "D1",
+        "P1",
+        "WAPS"
+      ],
+      "waps": {
+        "window_h": 4,
+        "low": 1.05,
+        "high": 1.2,
+        "capacity_per_h": 12
+      }
+    },
+    "L2": {
+      "default": "P1",
+      "available": [
+        "D1",
+        "P1",
+        "WAPS"
+      ],
+      "waps": {
+        "window_h": 4,
+        "low": 1.05,
+        "high": 1.2,
+        "capacity_per_h": 3
+      }
+    }
+  },
+  "deadlines": {
+    "mode": "severity_map",
+    "offsets_by_severity_h": {
+      "critical": 1.0,
+      "high": 4.0,
+      "medium": 12.0
+    },
+    "evidence_note": "Synthetic simulator hypothesis for investigation completion: critical=1 h, high=4 h, medium=12 h. SOCTRA incumplimiento_sla records late initial assignment and is not used to calibrate resolution deadlines."
+  },
+  "time": {
+    "admission_horizon": 168,
+    "evaluation_horizon": 336,
+    "scale": 1
+  },
+  "experiment": {
+    "seed_start": 2026112801,
+    "seed_count": 1,
+    "purpose": "single reproducible technical organizational diagnostic; no policy comparison or campaign"
+  },
+  "demand_profile": {
+    "units": "alerts_per_natural_hour_by_class",
+    "basis": "The documented source aggregate averages 216.3 records/day (214739 IDs over 993 dates; docs/RESEARCH.md and SOC_FOUNDATIONS_AND_MODEL.md). This supplies only a volume scale, not active-work demand or an observed hourly process. Uniform stationary Poisson timing and the class/severity mixes are synthetic assumptions; source timestamps are timezone-naive and do not justify a 24-hour homogeneous Poisson model.",
+    "arrival_intensity_total_per_h": 9.012500000000001,
+    "class_mix": {
+      "portfolio_top5": 0.5,
+      "portfolio_next5": 0.3,
+      "portfolio_tail": 0.2
+    },
+    "severity_mix": {
+      "critical": 0.1397430262261038,
+      "high": 0.5576789547779668,
+      "medium": 0.30257801899592945
+    },
+    "prevalence_by_class": {
+      "portfolio_top5": 0.001314969894110319,
+      "portfolio_next5": 0.001314969894110319,
+      "portfolio_tail": 0.001314969894110319
+    },
+    "sensitivity_by_class": {
+      "portfolio_top5": 0.8421,
+      "portfolio_next5": 0.8421,
+      "portfolio_tail": 0.8421
+    },
+    "false_positive_rate_by_class": {
+      "portfolio_top5": 0.045,
+      "portfolio_next5": 0.045,
+      "portfolio_tail": 0.045
+    },
+    "difficulty_mean_by_class_and_need": {
+      "portfolio_top5": [
+        0.9859684590754233,
+        0.49936012469006014
+      ],
+      "portfolio_next5": [
+        0.9859684590754233,
+        0.49936012469006014
+      ],
+      "portfolio_tail": [
+        0.9859684590754233,
+        0.49936012469006014
+      ]
+    },
+    "alpha": 1.0,
+    "beta": 1.0,
+    "gamma": 1.0,
+    "difficulty_reference": "Standardized SOCTRA test-label prevalence 19/14449; q~Beta(2,2), complex iff q>=q0. Conditional means are exact Beta(2,2) truncation moments; recommendation errors are conditionally independent within reference status.",
+    "regimes": [
+      {
+        "name": "stationary_reference",
+        "start_h": 0,
+        "end_h": 168,
+        "arrival_rate_by_class": {
+          "portfolio_top5": 4.5062500000000005,
+          "portfolio_next5": 2.7037500000000003,
+          "portfolio_tail": 1.8025000000000002
+        }
+      }
+    ],
+    "severity_order": [
+      "critical",
+      "high",
+      "medium"
+    ],
+    "severity_empirical_basis": {
+      "dataset": "SOCTRA processed September 2025",
+      "n": 156981,
+      "counts": {
+        "critical": 21937,
+        "high": 87545,
+        "medium": 47499
+      },
+      "denominator": 156981,
+      "interpretation": "Observed marginal distribution in the processed population; fractions are computed from exact counts."
+    },
+    "severity_complexity_assumption": "Severity and difficulty q are sampled independently. This is a simplifying hypothesis, not a property established by SOCTRA.",
+    "escalation_by_severity_empirical_reference": {
+      "critical": {
+        "positive": 137,
+        "n": 21937
+      },
+      "high": {
+        "positive": 237,
+        "n": 87545
+      },
+      "medium": {
+        "positive": 196,
+        "n": 47499
+      },
+      "label": "escalada_estandarizada; recorded for future studies only; does not alter q0 or the escalation classifier."
+    }
+  },
+  "flow_mode": "triage_single_investigation"
+}
