@@ -16,6 +16,8 @@ docs/literature/**/*.pdf
 /models/
 /checkpoints/
 /runs/
+# SOCTRA raw and processed records are confidential local artifacts.
+/data/soctra/
 **/raw_evaluations/
 **/*.monitor.csv
 **/*.zip

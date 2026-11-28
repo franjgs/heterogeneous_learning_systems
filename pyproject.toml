@@ -12,6 +12,7 @@ dependencies = []
 [project.optional-dependencies]
 test = ["pytest>=7"]
 soc-calibration = ["scipy>=1.10"]
+soctra-data = ["pandas==2.2.3", "numpy==1.26.4", "PyYAML==6.0.2", "pyarrow==20.0.0"]
 
 [project.scripts]
 hls = "hls.__main__:main"

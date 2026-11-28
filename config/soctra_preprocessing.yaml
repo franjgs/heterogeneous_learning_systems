@@ -1,0 +1,72 @@
+pipeline_source:
+  repository: https://github.com/franjgs/SoC_WP4
+  branch: main
+  commit: 486d5b174f38c897d1adeafdde998142074a1cd1
+  configs:
+    escalada: config/config_escalada_A_std.yaml
+    reportado: config/config_reportado_A_std.yaml
+
+data:
+  timestamp_column: "@timestamp0"
+  identifier_column: id_alerta
+  weight_column: sample_weight_dinamic_expertise
+  timestamp_format: "%Y-%m-%d %H:%M:%S"
+  labels: [escalada, reportado]
+
+preprocessing:
+  drop_title_contains: [lucia, cert-eu]
+  drop_projects: [insta, onodajunjiro, savonlinna, savonlinna_pre]
+  drop_mailbox_title: true
+  lower_columns:
+    - titulo_investigacion
+    - use_case_name
+    - url_str
+    - id_str
+    - extra_data_str
+    - action_str
+    - fuente
+    - alert_name
+    - proyecto
+    - severidad
+    - srccountry
+    - dstcountry
+    - user_str
+    - protocol_str
+    - status_str
+    - use_case_id
+    - description
+  uniform:
+    enabled: true
+    mode: dynamic
+    weight_positive: 1
+    scope: global # Original wrapper default when scope is omitted.
+  uniform_columns:
+    - schedule_L1
+    - srcip_exists
+    - dstip_exists
+    - srcip_public
+    - dstip_public
+    - AlertLevel
+    - proyecto
+    - severidad
+    - srccountry
+    - dstcountry
+    - user_str
+    - protocol_str
+    - status_str
+    - use_case_id
+    - titulo_investigacion
+    - use_case_name
+    - url_str
+    - id_str
+    - extra_data_str
+    - action_str
+    - fuente
+    - alert_name
+
+temporal_split:
+  months_train: 12
+  months_validation: 0
+  months_test: 4
+  date_reference: last
+  end_of_day_precision: seconds
