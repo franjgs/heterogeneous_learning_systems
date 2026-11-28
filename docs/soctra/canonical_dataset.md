@@ -41,9 +41,13 @@ Regenerate both local Parquet files and metadata with:
 ```sh
 python tools/prepare_soctra_dataset.py \
   --february-csv /path/to/dataset_2025_febrero.csv \
-  --september-csv /path/to/dataset_20250919.csv \
-  --original-library /path/to/SoC_WP4/libraries/uc3mprep2.py
+  --september-csv /path/to/dataset_20250919.csv
 ```
+
+`--original-library` is optional and only enables an external record-level
+comparison. Without it, regeneration uses the vendored HLS implementation and
+does not access a SoC_WP4 checkout; metadata records that external comparison
+was not run for that invocation.
 
 Install the pinned preparation dependencies with `pip install -e '.[soctra-data]'`.
 No HLS
