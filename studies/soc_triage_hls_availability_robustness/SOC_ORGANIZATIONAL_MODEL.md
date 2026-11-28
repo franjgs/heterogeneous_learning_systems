@@ -2,7 +2,7 @@
 
 > **NEW MODEL / MODELO NUEVO:** este documento especifica la línea activa de triaje automático seguido por exactamente una investigación. Las campañas históricas y el manuscrito LaTeX pertenecen al **OLD MODEL / MODELO VIEJO**. Véase [MODEL_GENERATIONS.md](MODEL_GENERATIONS.md) para estado, evidencia, restricciones de comparabilidad y preguntas pendientes.
 
-**Referencia CONOPS vigente para diagnósticos organizativos:** [SOC_NEW_MODEL_CONOPS_REFERENCE.json](config/SOC_NEW_MODEL_CONOPS_REFERENCE.json), con `triage_single_investigation`, D1 en L1, P1 en L2 y disponibilidad individual continua como idealización experimental, no como jornada laboral real. V2/V2_24X7 y sus pilotos, incluida la validación confirmatoria, permanecen intactos como evidencia obtenida bajo sus parámetros anteriores; no se reinterpretan con este CONOPS.
+**Referencia CONOPS base congelada:** [SOC_NEW_MODEL_CONOPS_REFERENCE.json](config/SOC_NEW_MODEL_CONOPS_REFERENCE.json), con `triage_single_investigation`, D1 en L1, P1 en L2 y disponibilidad individual continua como idealización experimental, no como jornada laboral real. La variante de taxonomía empírica [SOC_NEW_MODEL_CONOPS_REFERENCE_SOCTRA_SEVERITY_V1.json](config/SOC_NEW_MODEL_CONOPS_REFERENCE_SOCTRA_SEVERITY_V1.json) y el diagnóstico de demanda/capacidad que sigue son fundamentación y análisis separados: no cambian la referencia base ni resultados. V2/V2_24X7 y sus pilotos, incluida la validación confirmatoria, permanecen intactos como evidencia obtenida bajo sus parámetros anteriores; no se reinterpretan con este CONOPS.
 
 > **Modelo organizativo vigente (decisión científica):** una herramienta automática recomienda L1 o L2 al llegar cada alerta; su recomendación se acepta automáticamente y se ejecuta una única investigación en el nivel elegido. En la referencia CONOPS la complejidad q determina una referencia sintética de especialización mediante q0, calibrado a la prevalencia de la etiqueta estandarizada SOCTRA (`19/14.449`), que no es verdad objetiva de necesidad. La dificultad determina el esfuerzo W(q); la velocidad profesional V determina la duración T=W/V; competencia determina únicamente la calidad esperada modelada. La organización de referencia es 5 L1 heterogéneos y 3 L2 elegibles para todas las clases, con D1 en L1 y P1 en L2. La ejecución previa V2_24X7 y sus resultados permanecen congelados en sus propios supuestos.
 
@@ -1020,3 +1020,190 @@ proxy no son datos de operación ni permiten inferencia confirmatoria. La
 configuración CONOPS de referencia permanece en 5 L1/3 L2; estas variantes no
 la sustituyen automáticamente. Las campañas confirmatorias anteriores,
 OLD MODEL, políticas y LaTeX permanecen sin cambios.
+
+## 19. Caracterización empírica de demanda y viabilidad L1/L2
+
+Este diagnóstico usa el CSV SOCTRA de septiembre de 2025 (214.739 registros),
+el Parquet canónico procesado (156.981 registros) y el Parquet de febrero.
+Los IDs emparejan las 156.981 filas retenidas; 57.758 registros fuente no
+están en la población procesada. Los códigos de proyecto del análisis son
+anónimos, ordenados por volumen y no representan clientes. La herramienta
+reproducible es
+[`analyze_soctra_demand_capacity.py`](analyze_soctra_demand_capacity.py): lee
+los datos locales existentes, imprime agregados anonimizados, no regenera
+Parquet y no llama al simulador.
+
+### 19.1 Registros, intensidad y patrón temporal
+
+| Intervalo calendario | Media | DE | Mediana | P90 | P95 | Máximo | CV |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Hora | 9,02 | 7,39 | 7 | 18 | 23 | 161 | 0,82 |
+| Día | 216,25 | 89,84 | 211 | 334,8 | 379 | 574 | 0,42 |
+| Semana ISO | 1.501,7 | 379,3 | 1.514 | 1.962 | 2.105,6 | 2.553 | 0,25 |
+| Mes | 6.315,9 | 1.597,8 | 6.833 | 8.011,5 | 8.071,7 | 8.463 | 0,25 |
+
+La cobertura va de 2022-12-31 a 2025-09-18. Diciembre de 2022 contiene un
+registro y septiembre de 2025 es parcial. La población procesada suma 6,59
+registros/h, frente a 9,02/h en la fuente completa. Los máximos de ventanas
+móviles solapadas son 161 registros/1 h, 288/6 h, 690/24 h y 2.668/7 días;
+no son réplicas independientes. Las horas 08–11 aportan 5,95–6,33 % de los
+registros cada una, frente a 2,30–3,33 % en 00–05. Por día de semana hay
+258,8–262,3 registros/día lunes-martes, alrededor de 251–252 miércoles-jueves,
+218,2 viernes y 133,9–137,7 en fin de semana. Los timestamps no incluyen zona
+horaria y no identifican turnos locales ni disponibilidad humana.
+
+Los cinco proyectos más voluminosos contienen 59,2 % de la fuente, los cinco
+siguientes 23,6 % y la cola 17,2 %. En el procesado, usando el ranking propio
+de esa población, los grupos representan 59,4 %, 27,5 % y 13,1 %. No coincide
+exactamente con la mezcla sintética 50/30/20. Proyecto no se equipara a cliente
+ni los grupos a habilidades.
+
+Estos son registros, no mediciones de investigaciones humanas, asignaciones,
+eventos de trabajo o FTE. Por ello 9,02 registros/h no se presenta como
+investigaciones/h sin declarar un factor de conversión `κ` (investigaciones
+por registro), que SOCTRA no identifica. El cálculo de carga escala linealmente
+con κ; κ=1 es únicamente el supuesto del escenario.
+
+### 19.2 Asociación proyecto, severidad y escalado
+
+Proyecto-severidad tiene Cramér V=0,429 en la fuente y 0,308 en el procesado.
+La relación proyecto-etiqueta varía según la etiqueta observada:
+
+| Población / etiqueta | V proyecto×etiqueta | V severidad×etiqueta |
+|---|---:|---:|
+| Fuente `escalada_L2` | 0,034 | 0,024 |
+| Fuente `escalada_procedimiento` | 0,228 | 0,010 |
+| Procesado L2 original | 0,024 | 0,028 |
+| Procesado procedimiento corregido | 0,268 | 0,017 |
+| Procesado combinada pre-estandarización | 0,137 | 0,030 |
+| Procesado estandarizada | 0,178 | 0,020 |
+
+Dentro de las severidades procesadas, la asociación proyecto×etiqueta
+estandarizada persiste: V=0,501 critical, 0,136 high y 0,343 medium. Los
+rangos de prevalencia por proyecto-severidad del script excluyen celdas con
+N<100. Hay variación temporal: entre meses con al menos 500 filas, la tasa
+estandarizada mensual va de 0,016 % (agosto 2025) a 1,339 % (septiembre 2023).
+Estos efectos son descriptivos, no causales; los valores p pequeños no miden
+importancia práctica. La distribución de demanda debe conservar periodo,
+proyecto y severidad como covariables conjuntas para estudiar esta variación.
+
+| Población procesada | N | L2 original | Procedimiento original | Procedimiento corregido | Combinada pre-estand. | Estandarizada |
+|---|---:|---:|---:|---:|---:|---:|
+| Septiembre global | 156.981 | 444 (0,2828 %) | 152 (0,0968 %) | 154 (0,0981 %) | 582 (0,3707 %) | 570 (0,3631 %) |
+| Febrero test | 14.449 | 33 (0,2284 %) | 7 (0,0484 %) | 7 (0,0484 %) | 40 (0,2768 %) | 19 (0,1315 %) |
+
+La prevalencia estandarizada global de septiembre es 2,76 veces la del test de
+febrero. Son snapshots y poblaciones distintas; no es una comparación pareada
+ni una tasa constante. `19/14.449` pertenece al test de febrero.
+
+El script imprime las tablas detalladas por proyecto anonimizado de: conteos
+de severidad, prevalencias históricas y estandarizadas y retención de filas,
+así como prevalencias por mes de L2, procedimiento original/corregido,
+combinada y estandarizada. No se conserva en documentación una tabla de
+correspondencia con los nombres originales.
+
+### 19.3 Capacidad analítica, servicio y SLA
+
+Se conservan D1 en L1, P1 en L2, una investigación por alerta recomendada,
+sin transferencia ni balance, taxonomía critical/high/medium y plazos
+sintéticos de resolución 1/4/12 h. También se mantienen `q~Beta(2,2)`, q0,
+clasificador, W(q), competencias, velocidades y plantilla base 5 L1/3 L2.
+Se mantiene la independencia entre severidad y q como simplificación, no como
+hallazgo.
+
+Con la prevalencia de referencia `19/14.449`, sensibilidad 0,8421 y FPR 0,045,
+el modelo manda a L2 un 4,605 % de los registros: TP 0,1107 % y FP 4,4941 %.
+L1 recibe TN 95,374 % y FN 0,0208 %. Los FP son 97,60 % de rutas a L2 en este
+modelo. Son expectativas del clasificador hipotético, no prevalencias de
+escalado de SOCTRA. FP consume investigación L2 con q ordinaria; TP tiene q
+alto. FN permanece en L1 con q alto; gamma=1 no añade recargo extra.
+
+`W(q)=1+β(q−0,5)`, β=1, genera 0,5–1,5 veces el servicio base; el multiplicador
+esperado en q ordinaria es 0,999 y en q alto 1,486. Para la mezcla base, el
+trabajo esperado es 2,585 h-persona/h en L1 (2,584 TN + 0,001 FN) y 0,091 en L2
+(0,087 FP + 0,003 TP). El 96,5 % del trabajo L2 procede de FP en esta
+construcción; esto cuantifica el costo sintético de esos falsos positivos,
+no trabajo observado.
+
+Por investigación, el servicio medio esperado queda en ~0,301 h L1 para TN,
+~0,447 h L1 para FN, ~0,216 h L2 por FP y ~0,321 h L2 por TP. Así, con
+0,405 FP/h al flujo base, se consumen ~0,087 h-persona/h en trabajo L2 FP.
+Todos son tiempos sintéticos derivados del escenario y la mezcla de clases,
+no mediciones SOCTRA.
+
+| Celdas analista×clase elegible del escenario | L1 | L2 |
+|---|---:|---:|
+| Analistas | 5 | 3 |
+| Competencia min/mediana/máx. | 0,640/0,750/0,830 | 0,900/0,910/0,930 |
+| Servicio base h min/mediana/máx. | 0,225/0,307/0,440 | 0,176/0,220/0,306 |
+| Velocidad 1/servicio min/mediana/máx. | 2,273/3,254/4,444 | 3,268/4,545/5,669 |
+
+El LP fluido de capacidad asignable con elegibilidad calcula 17,088 rutas L1/h
+y 13,986 rutas L2/h (este último es el stream seleccionado hacia L2; equivale
+a ~303,7 registros/h total a una fracción de ruta de 4,605 %). No son colas ni
+SLA garantizados.
+
+| Multiplicador de intensidad | Registros/h | Utilización L1 | Utilización L2 | Carga LP L1 | Carga LP L2 |
+|---:|---:|---:|---:|---:|---:|
+| 0,25 | 2,253 | 12,9 % | 0,8 % | 0,126 | 0,007 |
+| 0,50 | 4,506 | 25,8 % | 1,5 % | 0,252 | 0,015 |
+| 1,00 | 9,013 | 51,7 % | 3,0 % | 0,503 | 0,030 |
+| 1,50 | 13,519 | 77,5 % | 4,5 % | 0,755 | 0,045 |
+| 2,00 | 18,025 | 103,4 % | 6,0 % | 1,006 | 0,059 |
+
+Con 5/3, la carga está marcadamente desequilibrada. En una sensibilidad de
+trabajo medio, las utilizaciones L1/L2 son 51,7/9,1 % con plantilla 5/1;
+51,7/3,0 % con 5/3; 25,8/4,5 % con 10/2; y ~9,2/9,1 % con 28/1 al flujo
+base. Con 28/1 y cinco veces el flujo, el cálculo homogéneo da cerca de 46 %
+en cada nivel: existe una combinación matemática que evita tanto L1 saturado
+como L2 casi ocioso, pero implica una razón de 28 L1 por L2 y una carga x5 sin
+respaldo operacional. No es recomendación de plantilla; un L2 único no tiene
+redundancia y se debe validar elegibilidad en una organización hipotética
+completa antes de cualquier estudio. Para igualar el uso en una plantilla 5/3
+el modelo requeriría aproximadamente 45,4 % de rutas L2, en lugar del 4,6 %
+calculado; no procede inflar etiquetas ni inventar actividad especializada.
+
+Para reservar margen de espera/congestión, el trabajo activo sin colas debe
+ser como máximo la fracción de SLA restante. Con 50 % de holgura: critical
+≤0,5 h, high ≤2 h, medium ≤6 h. Con 75 %: ≤0,25/1/3 h. Los extremos
+teóricos del servicio base actual multiplicado por `W(q)` son ~0,66 h L1 y
+0,46 h L2. El SLA crítico de 1 h resulta posible en el límite sin colas, pero
+el extremo L1 dejaría solo ~20 min; para garantizar 50 % de margen, el
+servicio crítico debe ser ≤0,5 h. Estos son intervalos de viabilidad
+condicionados a supuestos, no duraciones reales estimadas.
+
+### 19.4 Regímenes y recuperación
+
+Con plantilla, habilidades, tiempos, clasificador y ruteo fijos, las
+multiplicaciones de llegada anteriores producen carga reducida (x0,5, L1
+~26 %), normal (x1, ~52 %), elevada (x1,5, ~78 %) y sobrecarga estructural
+(x2, L1 apenas supera capacidad). Un cálculo fluido ilustrativo de x2,5 por
+6 h seguido de retorno a x1 acumula ~8,77 h-persona y se recupera en ~3,63 h
+bajo capacidad libre constante. No es una traza simulada ni un episodio
+empírico. El pico de registros de una hora acredita ráfaga de registros, no
+igual número de investigaciones.
+
+### 19.5 Límite de identificación y recomendación
+
+| Parámetro | Estado | Alcance |
+|---|---|---|
+| Conteos, timestamps, proyecto, severidad y etiquetas | A. Estimable | Dependiente de la población/filtro; asociación no implica causalidad. |
+| Atención generalista a SLA / especialista a proyectos conocidos | B. Cualitativo | No identifica proporción de actividad, tiempo o plantilla. |
+| Registro→investigación (`κ`), proceso de llegada, q/q0, errores, tiempo de investigación, competencia, velocidad, plantilla, SLA de resolución | C. Sintético | No observado en SOCTRA ni calibrado operacionalmente. |
+| Número y actividad de investigaciones L2 | No identificado | No añadir actividades únicamente para llenar capacidad. |
+
+La demanda más defendible para un estudio posterior sería reproducir timestamps
+reales o remuestrear bloques temporales, preservando estacionalidad y ráfagas,
+con `κ` explícito. La Poisson estacionaria de 9 registros/h sirve como escala
+media, no como patrón completo. El flag `incumplimiento_sla` registra
+asignación inicial tardía y no debe calibrar finalización de investigación.
+
+Reproducción (imprime agregados anonimizados; no escribe datos ni ejecuta HLS):
+
+```sh
+export SOCTRA_RAW_SEPTEMBER=/path/local/dataset_20250919.csv
+python studies/soc_triage_hls_availability_robustness/analyze_soctra_demand_capacity.py \
+  --raw-september "$SOCTRA_RAW_SEPTEMBER" \
+  --processed-september data/soctra/processed/soctra_preprocessed.parquet \
+  --processed-february data/soctra/processed/soctra_february_reference.parquet
+```
