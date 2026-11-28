@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "scenario_id": "soc-shared-queue-junior-senior-soctra-v1",
+  "description": "Single shared alert queue with junior ordinary-only eligibility and senior ordinary/specialized eligibility. Synthetic organizational hypothesis; not a verified GMV-CERT reconstruction.",
+  "source_scenario_config": "SOC_NEW_MODEL_CONOPS_REFERENCE_SOCTRA_SEVERITY_V1.json",
+  "organization": {
+    "queue_name": "shared_alert_queue",
+    "junior_ids": ["L1-01", "L1-02", "L1-03", "L1-04", "L1-05"],
+    "senior_ids": ["L2-01", "L2-02", "L2-03"],
+    "prevalence_by_class": {
+      "portfolio_top5": 0.001314969894110319,
+      "portfolio_next5": 0.001314969894110319,
+      "portfolio_tail": 0.001314969894110319
+    },
+    "role_assignment_basis": "Existing heterogeneous L1 profiles instantiate junior eligibility; existing L2 profiles instantiate senior eligibility. Profile competence and project-specific service are retained from the referenced source scenario.",
+    "prevalence_parameter_reference": "source_scenario_config.demand_profile.prevalence_by_class",
+    "calendar_by_analyst": {
+      "L1-01": {"kind": "continuous"},
+      "L1-02": {"kind": "continuous"},
+      "L1-03": {"kind": "continuous"},
+      "L1-04": {"kind": "continuous"},
+      "L1-05": {"kind": "continuous"},
+      "L2-01": {"kind": "continuous"},
+      "L2-02": {"kind": "continuous"},
+      "L2-03": {"kind": "continuous"}
+    },
+    "investigations_per_alert": 1,
+    "transfer_between_types": false
+  },
+  "policy": {
+    "default": "D1",
+    "available": ["D1", "P1", "HLS-B"],
+    "hlsb": {
+      "window_h": 4.0,
+      "low": 1.05,
+      "high": 1.2,
+      "capacity_per_h": 15.0,
+      "capacity_basis": "Sum of previous independent reference inputs (L1=12, L2=3) as a single-pool normalization only; thresholds, window and hysteresis rules are unchanged."
+    }
+  }
+}

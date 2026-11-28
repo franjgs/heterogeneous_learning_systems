@@ -1294,3 +1294,112 @@ Reproducir las tablas algebraicas/LP (sin datos privados ni escrituras):
 ```sh
 python studies/soc_triage_hls_availability_robustness/parametric_soctra_capacity.py
 ```
+
+## 21. Organización activa: cola única y recursos junior/senior compartidos
+
+La configuración activa para este CONOPS es
+`config/SOC_SHARED_QUEUE_JUNIOR_SENIOR_SOCTRA_V1.json`. Es una hipótesis
+organizativa plausible para estudiar el uso de especialistas ante la baja
+prevalencia de escalado observada; no es una reconstrucción verificada del
+funcionamiento real de GMV-CERT. La generación anterior de dos equipos L1/L2,
+sus configuraciones, trazas y resultados conserva su identidad y significado.
+
+### 21.1 Cola, elegibilidad y recursos
+
+Los alertas comparten `shared_alert_queue`. El triaje existente decide el tipo
+único de investigación: recomendación L1 produce `ordinary`; recomendación L2
+produce `specialized`. El adaptador codifica internamente proyecto y tipo en
+`project::ordinary` o `project::specialized`, conserva ID, llegada y deadline
+absoluto, y mantiene severidad, complejidad, necesidad real y recomendación en
+metadatos de evaluación. No hay fase preliminar, transferencia, investigación
+duplicada ni reescalado.
+
+La plantilla inicial asigna los cinco perfiles heterogéneos L1 de la referencia
+como junior y los tres perfiles L2 como senior. Se conservan su competencia,
+velocidad por proyecto y calendarios individuales. Junior solo es elegible para
+investigación ordinaria en sus proyectos habilitados. Senior es elegible para
+investigación ordinaria y especializada en todos los proyectos de la plantilla.
+La categoría junior/senior expresa habilitación; no eleva ni sustituye la
+competencia. Para ordinarias, la velocidad de un senior procede de su perfil
+L2 de referencia; no se ha recalibrado ningún tiempo.
+
+La taxonomía heredada del escenario es CRITICAL/HIGH/MEDIUM, con 21.937,
+87.545 y 47.499 alertas de 156.981 respectivamente. Los plazos de resolución
+siguen siendo hipótesis sintéticas de 1/4/12 h; necesidad/escalado continúa
+parametrizable y no se recalibra en esta organización.
+
+La cola única no impone prioridad por tipo ni reserva senior para lo
+especializado. Tampoco prioriza automáticamente junior para ordinarias. El
+selector configurado decide entre los pares profesional-alerta elegibles. Un
+senior asignado a una alerta ordinaria queda ocupado hasta terminarla y no
+puede realizar simultáneamente trabajo especializado.
+
+### 21.2 Políticas y disponibilidad
+
+La capa superior deja de crear una petición por nivel: entrega toda la plantilla
+y todos los alertas a una única ejecución del motor existente. D1, P1 y HLS-B
+se invocan con sus nombres y selectores actuales; el adaptador no añade
+ordenación por antigüedad o competencia, regla de tipo, reserva ni desempate.
+No añade ordenación por categoría junior/senior; cualquier desempate previo
+del motor (incluido el orden de identificadores cuando corresponda) permanece
+sin cambios.
+La elegibilidad se expresa en las clases internas y la disponibilidad la
+resuelven las funciones existentes. HLS-B conserva ventana de 4 h e
+histéresis 1,05/1,20. Su único `capacity_per_h=15` es una normalización para
+cola común formada por la suma de las antiguas entradas 12+3; no altera el
+controlador, pero sí constituye un parámetro de referencia sintético específico
+de la organización compartida.
+
+La configuración inicial declara todos los calendarios individuales 24x7,
+como idealización. El adaptador también acepta calendarios semanales por
+profesional y usa el motor de disponibilidad existente, donde un trabajo
+iniciado fuera de horario espera y el trabajo en curso se reanuda según el
+calendario. No se añaden guardias, relevos ni interrupciones.
+
+### 21.3 Capacidad e instrumentación
+
+`shared_queue.assess_shared_capacity()` calcula el máximo de llegadas con un
+solo LP sobre todas las clases proyecto×tipo y todas las personas. La
+restricción del LP usa la disponibilidad semanal individual como capacidad
+por analista (1,0 para 24x7; fracción programada para calendarios parciales), con
+elegibilidad por arista. Así, las horas de senior se pueden asignar a ordinario
+o especializado, pero no se suman dos veces como capacidades L1 y L2.
+`run_shared_policy()` expone utilización individual y agregada por rol, trabajo
+realizado por rol/tipo, trabajo ofrecido por tipo, llegadas y cierres por tipo,
+espera, servicio activo, resolución total, cola pendiente y máxima, pendientes,
+SLA por severidad/tipo e indicador esperado de calidad basado en competencia y
+complejidad. Cada alerta tiene cero investigaciones mientras sigue pendiente y
+una cuando se asigna; el motor no admite transferencias.
+
+La prevalencia global de necesidad permanece configurable en
+`organization.prevalence_by_class`; por defecto conserva la referencia del
+escenario fuente. Para cambiarla uniformemente entre proyectos, el adaptador
+deriva el umbral en la Beta(2,2) y conserva el generador, sensibilidad y FPR.
+Prevalencias distintas por proyecto no se admiten aún porque el modelo de
+referencia vincula necesidad a un único umbral global de complejidad.
+Se mantienen la taxonomía CRITICAL/HIGH/MEDIUM y deadlines sintéticos
+1/4/12 h; severidad y complejidad continúan independientes como hipótesis.
+
+Consulta técnica mínima (una política por ejecución; no constituye campaña):
+
+```python
+from studies.soc_triage_hls_availability_robustness.shared_queue import (
+    assess_shared_capacity,
+    generate_shared_trace,
+    load_shared_scenario,
+    run_shared_policy,
+)
+
+scenario = load_shared_scenario()
+trace = generate_shared_trace(scenario, seed=2026112801)
+capacity = assess_shared_capacity(scenario)
+result = run_shared_policy(scenario, trace, policy="D1")
+print(capacity.maximum_arrivals_per_h)
+print(result.utilization_by_role)
+print(result.sla_by_severity_type)
+```
+
+Pruebas de compatibilidad técnica comparan los resultados del adaptador
+continuo registro a registro con llamadas directas al motor congelado para D1,
+P1 y HLS-B; otra prueba usa calendarios senior 8x5 individuales. Las ejecuciones
+de humo no son campañas comparativas ni producen selección de política.
